@@ -1,0 +1,49 @@
+.DS_Store
+
+*.swp
+*~
+
+bin/
+lib/
+out/
+
+# Java Compiled Class Files
+*.class
+
+# Gradle
+build
+.gradle
+
+# Eclipse
+.project
+.classpath
+.settings
+.metadata
+.reccomenders
+
+# Intellij IDEA
+*.iml
+.idea
+
+# Crash reports
+*.log
+
+#UML Diagram
+*.ucls
+
+Thumbs.db
+
+# Merge conflicts
+*.orig
+
+# Local sonar installations
+sonar-project.properties
+.sonar/
+&
+
+.recommenders/
+EngineDB/*
+
+
+# vscode files
+.vscode/
