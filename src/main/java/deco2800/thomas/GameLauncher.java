@@ -25,7 +25,7 @@ public class GameLauncher {
 		LwjglApplication app;
 		config.width = 1280;
 		config.height = 1000;
-		config.title = "DECO2800 2018: Big Pharma";
+		config.title = "DECO2800 2020: Polyhedron";
 		app = new LwjglApplication(new ThomasGame(), config);
 	}
 }

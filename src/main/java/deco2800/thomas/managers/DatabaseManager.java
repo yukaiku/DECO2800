@@ -390,14 +390,12 @@ public final class DatabaseManager extends AbstractManager {
     /**
      * This function loads the current state of the world from the save_file.json
      *
-     * This function is essentially a whole lot of parsing a JSON, which is particularly cumbersome in Java.
-     *
-     * If you have any questions please direct them to me, I'll be writing a wiki page about this regardless.
+     * This function parses the data from a JSON, which is particularly cumbersome in Java.
      *
      * @author @shivy
      *
      * @param world We have a world as a parameter for testing purposes.  In the main game, this will never need to be
-     *              passed, but when testing a TestWorld is needed to be passed.
+     *              passed, but when testing a TestWorld it needs to be passed.
      */
     public static void loadWorld(AbstractWorld world) {
         // This check allows for the world parameter to act as an optional

@@ -32,7 +32,7 @@ public class MainMenuScreen implements Screen {
         background.setFillParent(true);
         stage.addActor(background);
 
-        Label logo = new Label("BIG PHARMA", skin);
+        Label logo = new Label("Polyhedron", skin);
         logo.setFontScale(5.0f);
         logo.setPosition(1280/2 - 225, 720/2 + 100);
         stage.addActor(logo);

@@ -20,8 +20,8 @@ import deco2800.thomas.worlds.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GameScreen implements Screen,KeyDownObserver {
-	private final Logger LOG = LoggerFactory.getLogger(Renderer3D.class);
+public class GameScreen implements Screen, KeyDownObserver {
+	private final Logger LOG = LoggerFactory.getLogger(GameScreen.class);
 	@SuppressWarnings("unused")
 	private final ThomasGame game;
 	/**
@@ -38,7 +38,7 @@ public class GameScreen implements Screen,KeyDownObserver {
 	 * Create a camera for panning and zooming.
 	 * Camera must be updated every render cycle.
 	 */
-	PotateCamera camera,cameraDebug;
+	PotateCamera camera, cameraDebug;
 
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
 

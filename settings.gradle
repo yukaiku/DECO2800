@@ -1,4 +1,3 @@
-include 'iguanachase'
 println "Running gradle version: $gradle.gradleVersion"
 def sout = new StringBuilder(), serr = new StringBuilder()
 def proc = 'java -version'.execute()

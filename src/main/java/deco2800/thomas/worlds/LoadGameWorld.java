@@ -7,7 +7,7 @@ import deco2800.thomas.entities.AbstractEntity;
 
 @SuppressWarnings("unused")
 public class LoadGameWorld extends AbstractWorld {
-	private final Logger logger = LoggerFactory.getLogger(TestWorld.class);
+	private final Logger logger = LoggerFactory.getLogger(LoadGameWorld.class);
 
 
 	public LoadGameWorld() {
