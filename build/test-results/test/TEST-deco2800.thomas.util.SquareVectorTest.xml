@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="deco2800.thomas.util.SquareVectorTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-08-06T14:34:15" hostname="Jennas-MacBook-Pro.local" time="0.002">
+  <properties/>
+  <testcase name="TestDistance" classname="deco2800.thomas.util.SquareVectorTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

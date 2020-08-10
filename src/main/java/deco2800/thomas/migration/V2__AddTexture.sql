@@ -1,0 +1,1 @@
+alter table Entity ADD COLUMN texture varchar(100);
