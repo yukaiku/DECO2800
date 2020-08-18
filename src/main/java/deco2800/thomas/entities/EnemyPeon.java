@@ -27,7 +27,7 @@ public class EnemyPeon extends Peon {
     public void onTick(long i) {
         // Without tickRate reduction the position is updated too rapidly
         // and the enemy can't move, possible less hacky implementation
-        if(reduceTickRate > 50) {
+        if(reduceTickRate > 40) {
             //For some reason it chases in straight lines, might be better
             // if it can move in both directions
             setTask(new MovementTask(this, player.position));
