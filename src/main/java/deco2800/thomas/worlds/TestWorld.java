@@ -6,16 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import deco2800.thomas.entities.*;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Part;
-import deco2800.thomas.entities.StaticEntity;
-import deco2800.thomas.entities.Tree;
-import deco2800.thomas.entities.PlayerPeon;
-import deco2800.thomas.entities.Rock;
 import deco2800.thomas.managers.GameManager;
 
 @SuppressWarnings("unused")
@@ -130,9 +125,9 @@ public class TestWorld extends AbstractWorld {
 		}
 
 		// Create the entities in the game
-		addEntity(new PlayerPeon(10f, 5f, 0.1f));
-
-
+		PlayerPeon player = new PlayerPeon(10f, 5f, 0.1f);
+		addEntity(player);
+		addEntity(new EnemyPeon(player));
 	}
 
 	@Override
