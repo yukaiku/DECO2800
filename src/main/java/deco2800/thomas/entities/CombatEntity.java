@@ -6,6 +6,8 @@ package deco2800.thomas.entities;
  */
 public interface CombatEntity {
     // Health interface / class (WHY WOULD IT BE AN INTERFACE?!)
+    void getHealth();
 
     // Bounding box
+    void getBoundingBox();
 }
