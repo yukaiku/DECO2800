@@ -37,6 +37,34 @@ public class CollisionManager extends TickableManager {
     }
 
     /**
+     * Adds a combat entity to the combat manager.
+     * @param entity Entity to add to manager
+     */
+    public void add(CombatEntity entity) {
+        /*if (entitiesInWorld.contains(entity)) {
+            throw new TBD;
+        }*/
+        entitiesInWorld.add(entity);
+    }
+
+    /**
+     * Removes a combat entity from the combat manager.
+     * @param entity Entity to remove.
+     */
+    public void remove(CombatEntity entity) {
+        if (entitiesInWorld.contains(entity)) {
+            entitiesInWorld.remove(entity);
+        }
+    }
+
+    /**
+     * Removes all entities from the combat manager.
+     */
+    public void clear() {
+        entitiesInWorld.clear();
+    }
+
+    /**
      * Updates the spatial partitioning of collidable entities.
      * @param i
      */
