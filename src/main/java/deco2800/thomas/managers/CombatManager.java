@@ -9,9 +9,9 @@ import java.util.List;
 /**
  * Manages all combat entities.
  */
-public class CollisionManager extends TickableManager {
+public class CombatManager extends TickableManager {
     /* Singleton reference to the instance of this manager */
-    private static CollisionManager instance;
+    private static CombatManager instance;
     /* All combat entities in game world are added to this list */
     private List<CombatEntity> entitiesInWorld;
 
@@ -19,7 +19,7 @@ public class CollisionManager extends TickableManager {
      * Creates an instance of the CollisionManager class. This is private to prevent
      * misuse of the singleton instance.
      */
-    private CollisionManager() {
+    private CombatManager() {
         entitiesInWorld = new ArrayList<>();
     }
 
@@ -28,9 +28,9 @@ public class CollisionManager extends TickableManager {
      * if none exists.
      * @return reference to CollisionManager.
      */
-    public static CollisionManager get() {
+    public static CombatManager get() {
         if (instance == null) {
-            instance = new CollisionManager();
+            instance = new CombatManager();
         }
 
         return instance;
