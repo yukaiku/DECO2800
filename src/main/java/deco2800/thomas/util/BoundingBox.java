@@ -13,10 +13,15 @@ public class BoundingBox {
      * @param origin x/y coordinates of bottom left hand corner
      * @param width width of box
      * @param height height of box
+     * @throws IllegalArgumentException when the width, or height of box <= 0
      */
     public BoundingBox(SquareVector origin, float width, float height) {
+        if (width <= 0 || height <= 0) {
+            throw new IllegalArgumentException(
+                    "Width or height of bounding box cannot be negative.");
+        }
         bottomLeft = new SquareVector(origin);
-        topRight = new SquareVector(bottomLeft.getCol() + width, topRight.getRow() + height);
+        topRight = new SquareVector(bottomLeft.getCol() + width, bottomLeft.getRow() + height);
     }
 
     /**
