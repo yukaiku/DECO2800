@@ -55,4 +55,17 @@ public class BoundingBox {
     public float getTop() {
         return topRight.getRow();
     }
+
+    /**
+     * Returns whether two given bounding boxes overlap.
+     * @param bounds BoundingBox to compare to.
+     * @return True if boxes overlap, false otherwise.
+     */
+    public boolean boundingBoxOverlaps(BoundingBox bounds) {
+        if (this.getLeft() > bounds.getRight() || this.getBottom() > bounds.getTop() ||
+                this.getRight() < bounds.getLeft() || this.getTop() < bounds.getBottom()) {
+            return false;
+        }
+        return true;
+    }
 }

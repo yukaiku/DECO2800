@@ -12,11 +12,4 @@ public interface CombatEntity {
      * @return reference to the health object of the entity.
      */
     void getHealth();
-
-    /**
-     * Get the current bounding box of this entity for use in collision checking.
-     * @return reference to bounding box of entity.
-     * @implNote BoundingBox position needs to be updated when used in AgentEntities.
-     */
-    BoundingBox getBoundingBox();
 }
