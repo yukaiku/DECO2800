@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 import deco2800.thomas.entities.*;
+import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,7 +128,10 @@ public class TestWorld extends AbstractWorld {
 		// Create the entities in the game
 		PlayerPeon player = new PlayerPeon(10f, 5f, 0.1f);
 		addEntity(player);
-		addEntity(new EnemyPeon(player));
+
+		// Add enemy spawning manager targeting the player
+		EnemyManager enemyManager = new EnemyManager(this, player, 10);
+		GameManager.get().addManager(enemyManager);
 	}
 
 	@Override

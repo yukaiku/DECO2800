@@ -11,15 +11,15 @@ public class EnemyPeon extends Peon {
     // Current implementation passes the player object to enemies so they can
     // know the player's position, possible better implementation?
     private PlayerPeon target;
-    private int reduceTickRate;
+    private int tick;
 
-    public EnemyPeon(PlayerPeon target) {
-        super();
+    public EnemyPeon(PlayerPeon target, float row, float col, float speed) {
+        super(row, col, speed);
         this.setObjectName("EnemyPeon");
         this.setTexture("spacman_blue");
         this.setHeight(1);
-        this.speed = 0.04f;
         this.target = target;
+        this.tick = 0;
 
         setTask(new MovementTask(this, this.target.position));
     }
@@ -28,16 +28,16 @@ public class EnemyPeon extends Peon {
     public void onTick(long i) {
         // Without tickRate reduction the position is updated too rapidly
         // and the enemy can't move, possible less hacky implementation
-        if(reduceTickRate > 40) {
-            //For some reason it chases in straight lines, might be better
+        if (tick > 40) {
+            // For some reason it chases in straight lines, might be better
             // if it can move in both directions
             setTask(new MovementTask(this, target.position));
-            reduceTickRate = 0;
+            tick = 0;
         } else {
-            reduceTickRate = reduceTickRate + 1;
+            tick++;
         }
 
-        if(getTask() != null && getTask().isAlive()) {
+        if (getTask() != null && getTask().isAlive()) {
             getTask().onTick(i);
 
             if (getTask().isComplete()) {
