@@ -12,7 +12,6 @@ import deco2800.thomas.entities.Peon;
 import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
-import deco2800.thomas.renderers.PotateCamera;
 import deco2800.thomas.renderers.OverlayRenderer;
 import deco2800.thomas.renderers.Renderer3D;
 import deco2800.thomas.util.CameraUtil;
@@ -39,7 +38,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * Create a camera for panning and zooming.
 	 * Camera must be updated every render cycle.
 	 */
-	PotateCamera camera, cameraDebug;
+	OrthographicCamera camera, cameraDebug;
 
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
 
@@ -86,9 +85,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		gameManager.setWorld(world);
 
-		// Add first peon to the world
-		camera = new PotateCamera(1920, 1080);
-		cameraDebug = new PotateCamera(1920, 1080);
+		// Initialize camera
+		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cameraDebug = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		/* Add the window to the stage */
 		GameManager.get().setSkin(skin);
