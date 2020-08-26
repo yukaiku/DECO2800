@@ -34,4 +34,24 @@ public class BoundingBoxTest {
     public void invalidHeightTest() {
         BoundingBox box = new BoundingBox(new SquareVector(0, 0), 10, -10);
     }
+
+    /**
+     * Tests bounds works with non-overlapping boxes.
+     */
+    @Test
+    public void nonOverlappingTest() {
+        BoundingBox boxA = new BoundingBox(new SquareVector(0, 0), 10, 10);
+        BoundingBox boxB = new BoundingBox(new SquareVector(20, 20), 10, 10);
+        assertFalse(boxA.boundingBoxOverlaps(boxB));
+    }
+
+    /**
+     * Tests bounds works with overlapping boxes.
+     */
+    @Test
+    public void overlappingTest() {
+        BoundingBox boxA = new BoundingBox(new SquareVector(0, 0), 30, 30);
+        BoundingBox boxB = new BoundingBox(new SquareVector(20, 20), 10, 10);
+        assertTrue(boxA.boundingBoxOverlaps(boxB));
+    }
 }
