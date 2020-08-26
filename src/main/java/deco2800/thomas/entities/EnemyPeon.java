@@ -3,24 +3,25 @@ import deco2800.thomas.tasks.MovementTask;
 
 /**
  * EnemyPeon is a prototype implementation of an enemy that chases after the
- * player; consider splitting enemyPeon into seperate classes later on
+ * player; consider splitting enemyPeon into separate classes later on
+ * todo: make the class abstract
  */
 public class EnemyPeon extends Peon {
 
     // Current implementation passes the player object to enemies so they can
-    // know the player's posiiton, possible better implementation?
-    private PlayerPeon player;
+    // know the player's position, possible better implementation?
+    private PlayerPeon target;
     private int reduceTickRate;
 
-    public EnemyPeon (PlayerPeon playerPeon) {
+    public EnemyPeon(PlayerPeon target) {
         super();
         this.setObjectName("EnemyPeon");
+        this.setTexture("spacman_blue");
         this.setHeight(1);
         this.speed = 0.04f;
-        this.setTexture("spacman_blue");
+        this.target = target;
 
-        player = playerPeon;
-        setTask(new MovementTask(this, player.position));
+        setTask(new MovementTask(this, this.target.position));
     }
 
     @Override
@@ -30,7 +31,7 @@ public class EnemyPeon extends Peon {
         if(reduceTickRate > 40) {
             //For some reason it chases in straight lines, might be better
             // if it can move in both directions
-            setTask(new MovementTask(this, player.position));
+            setTask(new MovementTask(this, target.position));
             reduceTickRate = 0;
         } else {
             reduceTickRate = reduceTickRate + 1;
