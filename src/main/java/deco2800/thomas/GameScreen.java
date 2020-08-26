@@ -15,6 +15,7 @@ import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.renderers.PotateCamera;
 import deco2800.thomas.renderers.OverlayRenderer;
 import deco2800.thomas.renderers.Renderer3D;
+import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
 import org.slf4j.Logger;
@@ -114,11 +115,12 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void render(float delta) {
 		handleRenderables();
 		
-		moveCamera();
+//		moveCamera();
+		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
 			
 		cameraDebug.position.set(camera.position);
 		cameraDebug.update();
-		camera.update();
+//		camera.update();
 
 		SpriteBatch batchDebug = new SpriteBatch();
 		batchDebug.setProjectionMatrix(cameraDebug.combined);
