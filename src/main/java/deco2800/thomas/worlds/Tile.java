@@ -37,91 +37,91 @@ public class Tile {
 	 * Texture name of tile
 	 */
 	@Expose
-    private String texture;
+	private String texture;
 
 	/**
 	 * Coordinates, which is a pair of numbers (col, row)
 	 */
-    private SquareVector coords;
+	private SquareVector coords;
 
-    private StaticEntity parent;
-	
+	private StaticEntity parent;
+
 	@Expose
-    private boolean obstructed = false;
+	private boolean obstructed = false;
 
 	/**
 	 * Neighbours
 	 */
 	public static final int NORTH = 0;
 	public static final int SOUTH = 2;
-    public static final int EAST = 1;
-    public static final int WEST = 3;
-    private transient Map<Integer,Tile> neighbours;
-    
-    @Expose
-    private int index = -1;
-    
-    public Tile(String texture) {
-        this(texture, 0, 0);
-    }
+	public static final int EAST = 1;
+	public static final int WEST = 3;
+	private transient Map<Integer, Tile> neighbours;
 
-    public Tile(String texture, float col, float row) {
-        this.texture = texture;
-        coords = new SquareVector(col, row);
-        this.neighbours = new HashMap<Integer,Tile>();
-        this.tileID = Tile.getNextID();
-    }
+	@Expose
+	private int index = -1;
 
-    public Tile() {
-		this.neighbours = new HashMap<Integer,Tile>();
-    }
+	public Tile(String texture) {
+		this(texture, 0, 0);
+	}
 
-    public float getCol() {
-        return coords.getCol();
-    }
+	public Tile(String texture, float col, float row) {
+		this.texture = texture;
+		coords = new SquareVector(col, row);
+		this.neighbours = new HashMap<Integer, Tile>();
+		this.tileID = Tile.getNextID();
+	}
 
-    public float getRow() {
-        return coords.getRow();
-    }
-    
-    public SquareVector getCoordinates() {
-    	return new SquareVector(coords);
-    }
-    
-    public String getTextureName() {
-        return this.texture;
-    }
+	public Tile() {
+		this.neighbours = new HashMap<Integer, Tile>();
+	}
 
-    public Texture getTexture() {
-        return GameManager.get().getManager(TextureManager.class).getTexture(this.texture);
-    }
-    
+	public float getCol() {
+		return coords.getCol();
+	}
 
-    public void addNeighbour(int direction, Tile neighbour) {
-    	neighbours.put(direction, neighbour);
-    }
-    
-    public static int opposite(int dir) {
-    	return (dir + 2) % 4;
-    }
-    
+	public float getRow() {
+		return coords.getRow();
+	}
+
+	public SquareVector getCoordinates() {
+		return new SquareVector(coords);
+	}
+
+	public String getTextureName() {
+		return this.texture;
+	}
+
+	public Texture getTexture() {
+		return GameManager.get().getManager(TextureManager.class).getTexture(this.texture);
+	}
+
+
+	public void addNeighbour(int direction, Tile neighbour) {
+		neighbours.put(direction, neighbour);
+	}
+
+	public static int opposite(int dir) {
+		return (dir + 2) % 4;
+	}
+
 	public void removeReferenceFromNeighbours() {
-		 for(Entry<Integer, Tile> neighbourHash : neighbours.entrySet()) {
-			 neighbourHash.getValue().getNeighbours().remove(Tile.opposite(neighbourHash.getKey()));
-		 }
+		for (Entry<Integer, Tile> neighbourHash : neighbours.entrySet()) {
+			neighbourHash.getValue().getNeighbours().remove(Tile.opposite(neighbourHash.getKey()));
+		}
 	}
 
 	public Tile getNeighbour(int direction) {
 		return neighbours.get(direction);
 	}
-    
-    public void removeNeighbour(int direction) {
-    	neighbours.remove(direction);
-    }
-    
-    public Map<Integer,Tile> getNeighbours() {
-    	return neighbours;
-    }
+
+	public void removeNeighbour(int direction) {
+		neighbours.remove(direction);
+	}
+
+	public Map<Integer, Tile> getNeighbours() {
+		return neighbours;
+	}
 
 	public String toString() {
 		return String.format("[%.0f, %.1f: %d]", coords.getCol(), coords.getRow(), index);
@@ -130,7 +130,7 @@ public class Tile {
 	public StaticEntity getParent() {
 		return parent;
 	}
-	
+
 	public boolean hasParent() {
 		return parent != null;
 	}
@@ -160,15 +160,15 @@ public class Tile {
 		this.removeReferenceFromNeighbours();
 		GameManager.get().getWorld().getTiles().remove(this);
 	}
-	
+
 	public int calculateIndex() {
-		if(index != -1) {
+		if (index != -1) {
 			return index;
 		}
-		
+
 		int max = index;
 
-		if(neighbours.containsKey(NORTH)) {
+		if (neighbours.containsKey(NORTH)) {
 			max = Math.max(max, neighbours.get(NORTH).calculateIndex());
 		}
 
@@ -185,7 +185,7 @@ public class Tile {
 	}
 
 	public void setIndex(Integer indexValue) {
-		this.index = indexValue;		
+		this.index = indexValue;
 	}
 
 	public boolean isObstructed() {

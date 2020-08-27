@@ -25,6 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
+
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 
 
@@ -33,78 +34,78 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 @PowerMockIgnore({"jdk.internal.reflect.*"})
 
 public class SaveLoadTest {
-    private TestWorld w = null;
-   
-    @Mock
-    private GameManager mockGM;
-    
-    
-    @Before
-    public void Setup() {
-        w = new TestWorld();
-        
-        mockGM = mock(GameManager.class);
-        mockStatic(GameManager.class);
-        
-        
-        when(GameManager.get()).thenReturn(mockGM);
-        when(mockGM.getWorld()).thenReturn(w);
-        
-        // Mocked input manager
-        InputManager Im = new InputManager();
-        
-        OnScreenMessageManager mockOSMM = mock(OnScreenMessageManager.class);
-        when(mockGM.getManager(OnScreenMessageManager.class)).thenReturn(mockOSMM);
-        
-        when(GameManager.getManagerFromInstance(InputManager.class)).thenReturn(Im);
-    }
+	private TestWorld w = null;
 
-    // TODO: Split this test up into multiple unit tests that test individual component functionality
-    // TODO: instead of just testing the entire DatabaseManager in a single test.
-    // TODO: Whenever this test fails it's impossible to know what went wrong.
-    // TODO: If this test is intentionally testing system functionality, then
-    // TODO: it still needs to be obvious where the test went wrong so it can be debugged
-    // TODO: rather than it just saying "Test failed, good luck!"
-    @Test
-    public void SetMapTest() {
-        CopyOnWriteArrayList<Tile> saveTileMap = new CopyOnWriteArrayList<>();
-        Map<Integer, AbstractEntity> newEntities = new ConcurrentHashMap<>();
-        float col_one = 1.0f;
-        float row_one = 1.0f;
-        float col_two = 4.0f;
-        float row_two = 5.0f;
-        saveTileMap.add(new Tile("grass_1_0", col_one, row_one));
-        saveTileMap.add(new Tile("grass_1_0", col_two, row_two));
-        w.setTiles(saveTileMap);
-
-        newEntities.put(0, new PlayerPeon(1, 1, 1));
-        
-        List<AbstractEntity> testEntities = new ArrayList<>(w.getEntities());        
-        deco2800.thomas.managers.DatabaseManager.saveWorld(w);
-        
-        
-        TestWorld q = new TestWorld();
-        deco2800.thomas.managers.DatabaseManager.loadWorld(q);
-
-        
-        List<AbstractEntity> worldEntities = new ArrayList<>(q.getEntities());
-
-        Collections.sort(testEntities, new EntityCompare());
-        Collections.sort(worldEntities, new EntityCompare());
+	@Mock
+	private GameManager mockGM;
 
 
-        for (int i = 0; i < saveTileMap.size(); i++) {
-            assertEquals(saveTileMap.get(i).getTextureName(), w.getTiles().get(i).getTextureName());
-            
-            assertEquals(saveTileMap.get(i).getTileID(), w.getTiles().get(i).getTileID());
-            assertEquals(saveTileMap.get(i).getRow(), w.getTiles().get(i).getRow(), 0.001f);
-            assertEquals(saveTileMap.get(i).getCol(), w.getTiles().get(i).getCol(), 0.001f);
-        }
+	@Before
+	public void Setup() {
+		w = new TestWorld();
 
-        for (int i = 0; i < testEntities.size(); i++) {
-            assertEquals(testEntities.get(i).getEntityID(), worldEntities.get(i).getEntityID(), 1f);
-            assertEquals(testEntities.get(i).getTexture(), worldEntities.get(i).getTexture());
-            assertEquals(testEntities.get(i).getPosition(), worldEntities.get(i).getPosition());
-        }
-   }
+		mockGM = mock(GameManager.class);
+		mockStatic(GameManager.class);
+
+
+		when(GameManager.get()).thenReturn(mockGM);
+		when(mockGM.getWorld()).thenReturn(w);
+
+		// Mocked input manager
+		InputManager Im = new InputManager();
+
+		OnScreenMessageManager mockOSMM = mock(OnScreenMessageManager.class);
+		when(mockGM.getManager(OnScreenMessageManager.class)).thenReturn(mockOSMM);
+
+		when(GameManager.getManagerFromInstance(InputManager.class)).thenReturn(Im);
+	}
+
+	// TODO: Split this test up into multiple unit tests that test individual component functionality
+	// TODO: instead of just testing the entire DatabaseManager in a single test.
+	// TODO: Whenever this test fails it's impossible to know what went wrong.
+	// TODO: If this test is intentionally testing system functionality, then
+	// TODO: it still needs to be obvious where the test went wrong so it can be debugged
+	// TODO: rather than it just saying "Test failed, good luck!"
+	@Test
+	public void SetMapTest() {
+		CopyOnWriteArrayList<Tile> saveTileMap = new CopyOnWriteArrayList<>();
+		Map<Integer, AbstractEntity> newEntities = new ConcurrentHashMap<>();
+		float col_one = 1.0f;
+		float row_one = 1.0f;
+		float col_two = 4.0f;
+		float row_two = 5.0f;
+		saveTileMap.add(new Tile("grass_1_0", col_one, row_one));
+		saveTileMap.add(new Tile("grass_1_0", col_two, row_two));
+		w.setTiles(saveTileMap);
+
+		newEntities.put(0, new PlayerPeon(1, 1, 1));
+
+		List<AbstractEntity> testEntities = new ArrayList<>(w.getEntities());
+		deco2800.thomas.managers.DatabaseManager.saveWorld(w);
+
+
+		TestWorld q = new TestWorld();
+		deco2800.thomas.managers.DatabaseManager.loadWorld(q);
+
+
+		List<AbstractEntity> worldEntities = new ArrayList<>(q.getEntities());
+
+		Collections.sort(testEntities, new EntityCompare());
+		Collections.sort(worldEntities, new EntityCompare());
+
+
+		for (int i = 0; i < saveTileMap.size(); i++) {
+			assertEquals(saveTileMap.get(i).getTextureName(), w.getTiles().get(i).getTextureName());
+
+			assertEquals(saveTileMap.get(i).getTileID(), w.getTiles().get(i).getTileID());
+			assertEquals(saveTileMap.get(i).getRow(), w.getTiles().get(i).getRow(), 0.001f);
+			assertEquals(saveTileMap.get(i).getCol(), w.getTiles().get(i).getCol(), 0.001f);
+		}
+
+		for (int i = 0; i < testEntities.size(); i++) {
+			assertEquals(testEntities.get(i).getEntityID(), worldEntities.get(i).getEntityID(), 1f);
+			assertEquals(testEntities.get(i).getTexture(), worldEntities.get(i).getTexture());
+			assertEquals(testEntities.get(i).getPosition(), worldEntities.get(i).getPosition());
+		}
+	}
 }

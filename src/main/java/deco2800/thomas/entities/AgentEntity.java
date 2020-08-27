@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 
 import deco2800.thomas.util.SquareVector;
 
-public abstract class AgentEntity extends AbstractEntity{
+public abstract class AgentEntity extends AbstractEntity {
 	@Expose
 	protected float speed;
 
@@ -21,12 +21,12 @@ public abstract class AgentEntity extends AbstractEntity{
 	public void moveTowards(SquareVector destination) {
 		position.moveToward(destination, speed);
 	}
-	
+
 	public float getSpeed() {
 		return speed;
 	}
 
-	public void setSpeed( float speed) {
+	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
 

@@ -8,21 +8,21 @@ import deco2800.thomas.managers.PathFindingService;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.Tile;
 
-public class MovementTask extends AbstractTask{
-	
+public class MovementTask extends AbstractTask {
+
 	private boolean complete;
-	
+
 	private boolean computingPath = false;
 	private boolean taskAlive = true;
-	
+
 	AgentEntity entity;
 	SquareVector destination;
-	
+
 	private List<Tile> path;
 
 	public MovementTask(AgentEntity entity, SquareVector destination) {
 		super(entity);
-		
+
 		this.entity = entity;
 		this.destination = destination;
 		this.complete = false;    //path == null || path.isEmpty();
@@ -30,18 +30,18 @@ public class MovementTask extends AbstractTask{
 
 	@Override
 	public void onTick(long tick) {
-		
-		if(path != null) {
+
+		if (path != null) {
 			// We have a path.
-			if(path.isEmpty()) {
+			if (path.isEmpty()) {
 				complete = true;
 			} else {
 				entity.moveTowards(path.get(0).getCoordinates());
 				// This is a bit of a hack.
-				if(entity.getPosition().isCloseEnoughToBeTheSame(path.get(0).getCoordinates())) {
-					path.remove(0);					
+				if (entity.getPosition().isCloseEnoughToBeTheSame(path.get(0).getCoordinates())) {
+					path.remove(0);
 				}
-			}			
+			}
 		} else if (computingPath) {
 			// Change sprite to show waiting??
 
@@ -64,7 +64,7 @@ public class MovementTask extends AbstractTask{
 		this.path = path;
 		computingPath = false;
 	}
-	
+
 	public List<Tile> getPath() {
 		return path;
 	}

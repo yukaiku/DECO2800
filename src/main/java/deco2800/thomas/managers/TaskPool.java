@@ -21,7 +21,7 @@ public class TaskPool extends AbstractManager {
 		world = GameManager.get().getWorld();
 		random = new Random();
 	}
-	
+
 	public AbstractTask getTask(AgentEntity entity) {
 		if (taskPool.isEmpty()) {
 			List<Tile> tiles = world.getTiles();

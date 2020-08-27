@@ -18,98 +18,98 @@ import java.util.Map;
  * @author Tim Hadwen
  */
 public class TextureManager extends AbstractManager {
-	
+
 	/**
 	 * The width of the tile to use then positioning the tile.
 	 */
 	public static final int TILE_WIDTH = 320;
-	
+
 	/**
 	 * The height of the tile to use when positioning the tile.
 	 */
 	public static final int TILE_HEIGHT = 278;
 
-	
+
 	//private final Logger log = LoggerFactory.getLogger(TextureManager.class);
 
 
-    /**
-     * A HashMap of all textures with string keys
-     */
-    private Map<String, Texture> textureMap = new HashMap<>();
+	/**
+	 * A HashMap of all textures with string keys
+	 */
+	private Map<String, Texture> textureMap = new HashMap<>();
 
-    /**
-     * Constructor
-     * Currently loads up all the textures but probably shouldn't/doesn't
-     * need to.
-     */
-    public TextureManager() {
-        try {
-            textureMap.put("background", new Texture("resources/background.jpg"));
-            textureMap.put("spacman_ded", new Texture("resources/spacman.png"));
-            textureMap.put("spacman_blue", new Texture("resources/spacman_blue.png"));
+	/**
+	 * Constructor
+	 * Currently loads up all the textures but probably shouldn't/doesn't
+	 * need to.
+	 */
+	public TextureManager() {
+		try {
+			textureMap.put("background", new Texture("resources/background.jpg"));
+			textureMap.put("spacman_ded", new Texture("resources/spacman.png"));
+			textureMap.put("spacman_blue", new Texture("resources/spacman_blue.png"));
 
-            textureMap.put("grass_0", new Texture("resources/square.png"));
-            textureMap.put("grass_1", new Texture("resources/square2.png"));
-            textureMap.put("grass_2", new Texture("resources/square3.png"));
- 
-            textureMap.put("selection", new Texture("resources/square-select.png"));
-            textureMap.put("path", new Texture("resources/yellow_selection.png"));
-            
-            
-            textureMap.put("buildingB", new Texture("resources/building3x2.png"));
-            
-            textureMap.put("buildingA", new Texture("resources/buildingA.png"));
-            textureMap.put("tree", new Texture("resources/tree.png"));
-            textureMap.put("rock", new Texture("resources/rock_L.png"));
-            textureMap.put("fenceN-S", new Texture("resources/fence_N-S.png"));
-            textureMap.put("fenceE-W", new Texture("resources/fence_E-W.png"));
-            textureMap.put("fenceN-W", new Texture("resources/fence_N-W.png"));
-            textureMap.put("fenceS-W", new Texture("resources/fence_S-W.png"));
-            textureMap.put("fenceN-E", new Texture("resources/fence_N-E.png"));
-            textureMap.put("fenceS-E", new Texture("resources/fence_S-E.png"));
+			textureMap.put("grass_0", new Texture("resources/square.png"));
+			textureMap.put("grass_1", new Texture("resources/square2.png"));
+			textureMap.put("grass_2", new Texture("resources/square3.png"));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+			textureMap.put("selection", new Texture("resources/square-select.png"));
+			textureMap.put("path", new Texture("resources/yellow_selection.png"));
 
-    /**
-     * Gets a texture object for a given string id
-     *
-     * @param id Texture identifier
-     * @return Texture for given id
-     */
-    public Texture getTexture(String id) {
-        if (textureMap.containsKey(id)) {
-            return textureMap.get(id);
-        } else {
-        	//log.info("Texture map does not contain P{}, returning default texture.", id);
-            return textureMap.get("spacman_ded");
-        }
 
-    }
+			textureMap.put("buildingB", new Texture("resources/building3x2.png"));
 
-    /**
-     * Checks whether or not a texture is available.
-     *
-     * @param id Texture identifier
-     * @return If texture is available or not.
-     */
-    public boolean hasTexture(String id) {
-        return textureMap.containsKey(id);
+			textureMap.put("buildingA", new Texture("resources/buildingA.png"));
+			textureMap.put("tree", new Texture("resources/tree.png"));
+			textureMap.put("rock", new Texture("resources/rock_L.png"));
+			textureMap.put("fenceN-S", new Texture("resources/fence_N-S.png"));
+			textureMap.put("fenceE-W", new Texture("resources/fence_E-W.png"));
+			textureMap.put("fenceN-W", new Texture("resources/fence_N-W.png"));
+			textureMap.put("fenceS-W", new Texture("resources/fence_S-W.png"));
+			textureMap.put("fenceN-E", new Texture("resources/fence_N-E.png"));
+			textureMap.put("fenceS-E", new Texture("resources/fence_S-E.png"));
 
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    /**
-     * Saves a texture with a given id
-     *
-     * @param id       Texture id
-     * @param filename Filename within the assets folder
-     */
-    public void saveTexture(String id, String filename) {
-        if (!textureMap.containsKey(id)) {
-            textureMap.put(id, new Texture(filename));
-        }
-    }
+	/**
+	 * Gets a texture object for a given string id
+	 *
+	 * @param id Texture identifier
+	 * @return Texture for given id
+	 */
+	public Texture getTexture(String id) {
+		if (textureMap.containsKey(id)) {
+			return textureMap.get(id);
+		} else {
+			//log.info("Texture map does not contain P{}, returning default texture.", id);
+			return textureMap.get("spacman_ded");
+		}
+
+	}
+
+	/**
+	 * Checks whether or not a texture is available.
+	 *
+	 * @param id Texture identifier
+	 * @return If texture is available or not.
+	 */
+	public boolean hasTexture(String id) {
+		return textureMap.containsKey(id);
+
+	}
+
+	/**
+	 * Saves a texture with a given id
+	 *
+	 * @param id       Texture id
+	 * @param filename Filename within the assets folder
+	 */
+	public void saveTexture(String id, String filename) {
+		if (!textureMap.containsKey(id)) {
+			textureMap.put(id, new Texture(filename));
+		}
+	}
 }

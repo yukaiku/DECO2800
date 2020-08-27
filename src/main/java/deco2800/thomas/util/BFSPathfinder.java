@@ -15,7 +15,7 @@ import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 
 public class BFSPathfinder extends Pathfinder {
-	
+
 	@SuppressWarnings("unused")
 	private final Logger log = LoggerFactory.getLogger(BFSPathfinder.class);
 
@@ -37,17 +37,17 @@ public class BFSPathfinder extends Pathfinder {
 		Set<Tile> closedSet = new HashSet<Tile>();
 		Map<Tile, Tile> path = new HashMap<Tile, Tile>();
 		queue.add(origin);
-		
+
 		Tile root;
 
 		while (!queue.isEmpty()) {
 			//log.info("Queue: {}    Closed: {}", queue.size(), closedSet.size());
 			root = queue.remove();
-			
+
 			if (root.equals(destination)) {
 				return reconstructPath(destination, path);
 			}
-			
+
 			for (Tile child : root.getNeighbours().values()) {
 				if (closedSet.contains(child) || queue.contains(child) || child.isObstructed()) {
 					continue;
@@ -55,17 +55,17 @@ public class BFSPathfinder extends Pathfinder {
 				path.put(child, root);
 				queue.add(child);
 			}
-			
+
 			closedSet.add(root);
 		}
 		return null;
 	}
-	
+
 	private List<Tile> reconstructPath(Tile destination, Map<Tile, Tile> pathMap) {
 		Tile root = destination;
 		List<Tile> path = new ArrayList<Tile>();
 		path.add(root);
-		while(pathMap.get(root) != null) {
+		while (pathMap.get(root) != null) {
 			root = pathMap.get(root);
 			path.add(0, root);
 		}
@@ -76,7 +76,7 @@ public class BFSPathfinder extends Pathfinder {
 	// custom tile find to allow for the chartactor to not be centered over the square.
 	private Tile getTileByHexVector(AbstractWorld world, SquareVector vector) {
 		for (Tile tile : world.getTiles()) {
-			if (vector.isCloseEnoughToBeTheSame(tile.getCoordinates(),0.5f) ) {
+			if (vector.isCloseEnoughToBeTheSame(tile.getCoordinates(), 0.5f)) {
 				return tile;
 			}
 		}
