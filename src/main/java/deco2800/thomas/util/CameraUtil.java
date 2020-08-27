@@ -15,7 +15,7 @@ public class CameraUtil {
      * Set the camera's position to a specific target's position,
      * the function have to convert from row column unit to
      * world coordinate in order to use in camera set position function. It
-     * also calculates the size of the target to set the camera at the center
+     * also calculates the render size of the target to set the camera at the center
      * of the target.
      *
      * @param camera the camera we want to set
@@ -23,7 +23,7 @@ public class CameraUtil {
      */
     public static void lockCameraOnTarget(OrthographicCamera camera, AbstractEntity target) {
         float[] targetPosition = WorldUtil.colRowToWorldCords(target.getCol(), target.getRow());
-        float[] targetRenderSize = WorldUtil.colRowToWorldCords(target.getColRenderWidth(), target.getRowRenderLength());
+        float[] targetRenderSize = WorldUtil.colRowToWorldCords(target.getColRenderLength(), target.getRowRenderLength());
         camera.position.set(targetPosition[0] + targetRenderSize[0] / 2, targetPosition[1] + targetRenderSize[1] / 2, 0);
         camera.update();
     }
@@ -45,7 +45,6 @@ public class CameraUtil {
             }
         } else if (Gdx.input.isKeyPressed(zoomOutKey)) {
             camera.zoom += speed;
-            System.out.println(camera.zoom);
             if (camera.zoom > maximumZoom) {
                 camera.zoom = maximumZoom;
             }
