@@ -75,7 +75,7 @@ public class BFSPathfinder extends Pathfinder {
 
 	// custom tile find to allow for the chartactor to not be centered over the square.
 	private Tile getTileByHexVector(AbstractWorld world, SquareVector vector) {
-		for (Tile tile : world.getTileMap()) {
+		for (Tile tile : world.getTiles()) {
 			if (vector.isCloseEnoughToBeTheSame(tile.getCoordinates(),0.5f) ) {
 				return tile;
 			}

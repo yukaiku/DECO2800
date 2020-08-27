@@ -234,7 +234,6 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	public float distance(AbstractEntity e) {
 		return this.position.distance(e.position);
 	}
-	
 
 	public SquareVector getPosition() {
 		return position;
@@ -255,8 +254,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	 * @return Name of object
 	 */
 	public String getObjectName() { return this.objectName; }
-	
-	
+
 	public int getEntityID() {
 		return entityID;
 	}

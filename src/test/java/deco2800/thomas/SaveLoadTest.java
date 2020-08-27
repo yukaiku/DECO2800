@@ -75,7 +75,7 @@ public class SaveLoadTest {
         float row_two = 5.0f;
         saveTileMap.add(new Tile("grass_1_0", col_one, row_one));
         saveTileMap.add(new Tile("grass_1_0", col_two, row_two));
-        w.setTileMap(saveTileMap);
+        w.setTiles(saveTileMap);
 
         newEntities.put(0, new PlayerPeon(1, 1, 1));
         
@@ -94,11 +94,11 @@ public class SaveLoadTest {
 
 
         for (int i = 0; i < saveTileMap.size(); i++) {
-            assertEquals(saveTileMap.get(i).getTextureName(), w.getTileMap().get(i).getTextureName());
+            assertEquals(saveTileMap.get(i).getTextureName(), w.getTiles().get(i).getTextureName());
             
-            assertEquals(saveTileMap.get(i).getTileID(), w.getTileMap().get(i).getTileID());
-            assertEquals(saveTileMap.get(i).getRow(), w.getTileMap().get(i).getRow(), 0.001f);
-            assertEquals(saveTileMap.get(i).getCol(), w.getTileMap().get(i).getCol(), 0.001f);
+            assertEquals(saveTileMap.get(i).getTileID(), w.getTiles().get(i).getTileID());
+            assertEquals(saveTileMap.get(i).getRow(), w.getTiles().get(i).getRow(), 0.001f);
+            assertEquals(saveTileMap.get(i).getCol(), w.getTiles().get(i).getCol(), 0.001f);
         }
 
         for (int i = 0; i < testEntities.size(); i++) {

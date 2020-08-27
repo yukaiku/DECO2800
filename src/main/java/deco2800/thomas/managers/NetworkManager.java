@@ -154,15 +154,15 @@ public class NetworkManager extends TickableManager  {
                 messagesReceived++;
                 if (object instanceof TileUpdateMessage) {
                     GameManager.get().getWorld().updateTile(((TileUpdateMessage) object).tile);
-                    GameManager.get().getWorld().generateNeighbours();
+                    GameManager.get().getWorld().assignTileNeighbours();
                 } else if (object instanceof ChatMessage) {
                     GameManager.get().getManager(OnScreenMessageManager.class).addMessage(object.toString());
                 } else if (object instanceof SingleEntityUpdateMessage){
                     GameManager.get().getWorld().updateEntity(((SingleEntityUpdateMessage) object).entity);
                 } else if (object instanceof TileDeleteMessage) {
-                    GameManager.get().getWorld().deleteTile(((TileDeleteMessage) object).tileID);
+                    GameManager.get().getWorld().disposeTile(((TileDeleteMessage) object).tileID);
                 } else if (object instanceof EntityDeleteMessage) {
-                    GameManager.get().getWorld().deleteEntity(((EntityDeleteMessage) object).entityID);
+                    GameManager.get().getWorld().disposeEntity(((EntityDeleteMessage) object).entityID);
                 }
             }
          });
@@ -242,7 +242,7 @@ public class NetworkManager extends TickableManager  {
                     sendChatMessage(connection.getID() + " connected.");
                     // Reply with the tilemap
                     TileUpdateMessage message = new TileUpdateMessage();
-                    List<Tile> tiles = GameManager.get().getWorld().getTileMap();
+                    List<Tile> tiles = GameManager.get().getWorld().getTiles();
                     for (Tile t : tiles) {
                         message.tile = t;
                         server.sendToTCP(connection.getID(), message);
@@ -250,7 +250,7 @@ public class NetworkManager extends TickableManager  {
                 }
 
                 if (object instanceof TileDeleteMessage) {
-                    GameManager.get().getWorld().deleteTile(((TileDeleteMessage) object).tileID);
+                    GameManager.get().getWorld().disposeTile(((TileDeleteMessage) object).tileID);
                 }
             }
         });

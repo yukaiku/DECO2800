@@ -84,8 +84,7 @@ public class TestWorld extends AbstractWorld {
 		return building;
 		
 	}
-	
-	
+
 	private void addTree(float col, float row) {
 		Map<SquareVector, String> textures = new HashMap<SquareVector, String>();
 		Tile t = GameManager.get().getWorld().getTile(col, row);
@@ -93,12 +92,10 @@ public class TestWorld extends AbstractWorld {
 		entities.add(tree);
 	}
 
-
 	//this get ran on first game tick so the world tiles exist.
 	public void createBuildings() {
-
 		Random random = new Random();
-		int tileCount = GameManager.get().getWorld().getTileMap().size();
+		int tileCount = GameManager.get().getWorld().getTiles().size();
 		// Generate some rocks to mine later
 		for (int i = 0; i < 100;  i++) {
 			Tile t = GameManager.get().getWorld().getTile(random.nextInt(tileCount));
@@ -118,7 +115,7 @@ public class TestWorld extends AbstractWorld {
 	}
 
 	@Override
-	protected void generateWorld() {
+	protected void generateTiles() {
 		Random random = new Random();
 		for (int q = -WORLD_WIDTH; q < WORLD_WIDTH; q++) {
 			for (int r = -WORLD_HEIGHT; r < WORLD_HEIGHT; r++) {
@@ -131,8 +128,6 @@ public class TestWorld extends AbstractWorld {
 
 		// Create the entities in the game
 		addEntity(new PlayerPeon(10f, 5f, 0.1f));
-
-
 	}
 
 	@Override

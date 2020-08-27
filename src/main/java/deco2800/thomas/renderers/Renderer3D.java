@@ -59,7 +59,7 @@ public class Renderer3D implements Renderer {
 		}
 
 		// Render tiles onto the map
-		List<Tile> tileMap = GameManager.get().getWorld().getTileMap();
+		List<Tile> tileMap = GameManager.get().getWorld().getTiles();
 		List<Tile> tilesToBeSkipped = new ArrayList<>();
 
 		batch.begin();
@@ -255,7 +255,7 @@ public class Renderer3D implements Renderer {
 	private void debugRender(SpriteBatch batch, OrthographicCamera camera) {
 
 		if (GameManager.get().showCoords) {
-			List<Tile> tileMap = GameManager.get().getWorld().getTileMap();
+			List<Tile> tileMap = GameManager.get().getWorld().getTiles();
 			for (Tile tile : tileMap) {
 				float[] tileWorldCord = WorldUtil.colRowToWorldCords(tile.getCol(), tile.getRow());
 

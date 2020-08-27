@@ -14,6 +14,9 @@ import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.util.SquareVector;
 
 public class Tile {
+	/**
+	 * Managing ID of tiles
+	 */
 	private static int nextID = 0;
 
 	private static int getNextID() {
@@ -23,27 +26,40 @@ public class Tile {
 	public static void resetID() {
 		nextID = 0;
 	}
+
+	/**
+	 * Tile ID
+	 */
+	@Expose
+	private int tileID = 0;
+
+	/**
+	 * Texture name of tile
+	 */
 	@Expose
     private String texture;
+
+	/**
+	 * Coordinates, which is a pair of numbers (col, row)
+	 */
     private SquareVector coords;
 
     private StaticEntity parent;
 	
 	@Expose
     private boolean obstructed = false;
-    
-    public static final int NORTH = 0;
+
+	/**
+	 * Neighbours
+	 */
+	public static final int NORTH = 0;
 	public static final int SOUTH = 2;
     public static final int EAST = 1;
     public static final int WEST = 3;
-
     private transient Map<Integer,Tile> neighbours;
     
     @Expose
     private int index = -1;
-
-    @Expose
-    private int tileID = 0;
     
     public Tile(String texture) {
         this(texture, 0, 0);
@@ -128,7 +144,6 @@ public class Tile {
 	}
 
 	public void dispose() {
-    	System.out.println("Hmm");
 		if (this.hasParent() && this.parent != null) {
 			for (SquareVector childposn : parent.getChildrenPositions()) {
 				Tile child = GameManager.get().getWorld().getTile(childposn);
@@ -136,7 +151,6 @@ public class Tile {
 					child.setParent(null);
 					child.dispose();
 				} else {
-					// Wat
 				}
 			}
 		}
@@ -144,7 +158,7 @@ public class Tile {
 		GameManager.get().getManager(NetworkManager.class).deleteTile(this);
 
 		this.removeReferenceFromNeighbours();
-		GameManager.get().getWorld().getTileMap().remove(this);
+		GameManager.get().getWorld().getTiles().remove(this);
 	}
 	
 	public int calculateIndex() {

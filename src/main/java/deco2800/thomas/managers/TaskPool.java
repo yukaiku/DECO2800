@@ -24,7 +24,7 @@ public class TaskPool extends AbstractManager {
 	
 	public AbstractTask getTask(AgentEntity entity) {
 		if (taskPool.isEmpty()) {
-			List<Tile> tiles = world.getTileMap();
+			List<Tile> tiles = world.getTiles();
 			if (tiles.size() == 0) {
 				// There are no tiles
 				return null;

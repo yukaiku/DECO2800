@@ -411,8 +411,8 @@ public final class DatabaseManager extends AbstractManager {
         }
 
         // Load all entities and tiles from the database
-        world.queueTilesForDelete(world.getTileMap());
-        world.queueEntitiesForDelete(world.getEntities());
+        world.queueTilesForRemove(world.getTiles());
+        world.queueEntitiesForRemove(world.getEntities());
 
         Map<Integer, AbstractEntity> newEntities = new ConcurrentHashMap<>();
         CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
@@ -426,8 +426,8 @@ public final class DatabaseManager extends AbstractManager {
             return;
         }
 
-        world.setTileMap(newTiles);
-        world.generateNeighbours();
+        world.setTiles(newTiles);
+        world.assignTileNeighbours();
         world.setEntities(new ArrayList<AbstractEntity>(newEntities.values()));
         logger.info("Load succeeded");
         GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Loaded game from the database.");
@@ -498,11 +498,11 @@ public final class DatabaseManager extends AbstractManager {
 
         entireJsonAsString.append("\"tiles\": [");
 
-        int tileLength = world.getTileMap().size();
+        int tileLength = world.getTiles().size();
 
         for (int i = 0; i < tileLength; i++) {
-            Tile tile = world.getTileMap().get(i);
-            if (i == world.getTileMap().size() - 1) {
+            Tile tile = world.getTiles().get(i);
+            if (i == world.getTiles().size() - 1) {
                 generateJsonForTile(tile, entireJsonAsString, false);
             } else {
                 generateJsonForTile(tile, entireJsonAsString, true);
