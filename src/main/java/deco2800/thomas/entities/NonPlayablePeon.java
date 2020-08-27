@@ -1,6 +1,6 @@
 package deco2800.thomas.entities;
 
-public class NonPlayablePlayerPeon extends Peon implements Interactable {
+public class NonPlayablePeon extends Peon implements Interactable {
 
     private PlayerPeon player;
 
