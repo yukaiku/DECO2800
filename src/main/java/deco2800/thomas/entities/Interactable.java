@@ -1,6 +1,8 @@
 package deco2800.thomas.entities;
 
-public interface Interactable {
+import deco2800.thomas.observers.TouchDownObserver;
+
+public interface Interactable extends TouchDownObserver {
     /**
      * Any interactive entity (e.g. an NPC, dropped item, door etc)
      * should implement this method in order to execute a side-effect
