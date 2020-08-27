@@ -134,7 +134,6 @@ public class TestWorld extends AbstractWorld {
 		npnSpawns.add(new NonPlayablePeon(NonPlayablePeonType.TUTORIAL, "Fred", player.getPosition()));
 		NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, player, npnSpawns);
 		GameManager.get().addManager(npcManager);
-
 	}
 
 	@Override
