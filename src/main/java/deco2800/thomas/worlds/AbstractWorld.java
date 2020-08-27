@@ -2,7 +2,6 @@ package deco2800.thomas.worlds;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.AgentEntity;
-import deco2800.thomas.entities.CombatEntity;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.BoundingBox;
