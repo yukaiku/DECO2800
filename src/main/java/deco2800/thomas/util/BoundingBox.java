@@ -25,6 +25,15 @@ public class BoundingBox {
     }
 
     /**
+     * Creates a new instance of a BoundingBox by copying an existing instance.
+     * @param bounds existing BoundingBox to copy.
+     */
+    public BoundingBox(BoundingBox bounds) {
+        bottomLeft = new SquareVector(bounds.getLeft(), bounds.getBottom());
+        topRight = new SquareVector(bounds.getRight(), bounds.getTop());
+    }
+
+    /**
      * Returns the x position of the left side of the box.
      * @return left side col
      */
