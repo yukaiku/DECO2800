@@ -38,6 +38,10 @@ public class MainMenuScreen implements Screen {
 		logo.setPosition(1280 / 2 - 225, 720 / 2 + 100);
 		stage.addActor(logo);
 
+		Button tutorialBtn = new TextButton("TUTORIAL", skin, "main_menu");
+		tutorialBtn.setPosition(10, 200);
+		stage.addActor(tutorialBtn);
+
 		Button newGameBtn = new TextButton("SINGLE PLAYER", skin, "main_menu");
 		newGameBtn.setPosition(10, 150);
 		stage.addActor(newGameBtn);
@@ -50,6 +54,12 @@ public class MainMenuScreen implements Screen {
 		connectToServerButton.setPosition(10, 50);
 		stage.addActor(connectToServerButton);
 
+		tutorialBtn.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.TUTORIAL));
+			}
+		});
 
 		connectToServerButton.addListener(new ClickListener() {
 			@Override

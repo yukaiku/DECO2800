@@ -70,6 +70,14 @@ public class GameScreen implements Screen, KeyDownObserver {
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
+		},
+		TUTORIAL{
+			@Override
+			public AbstractWorld method() {
+				AbstractWorld world = new TutorialWorld();
+				GameManager.get().getManager(NetworkManager.class).startHosting("host");
+				return world;
+			}
 		};
 
 		public abstract AbstractWorld method(); // could also be in an interface that MyEnum implements
