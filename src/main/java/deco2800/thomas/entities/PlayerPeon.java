@@ -9,7 +9,6 @@ import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
 public class PlayerPeon extends Peon implements TouchDownObserver {
-
     /*Variable for orb count*/
     int orbCount = 0;
 
@@ -55,23 +54,23 @@ public class PlayerPeon extends Peon implements TouchDownObserver {
     }
 
 	@Override
-    public void onTick(long i) {
-        if(getTask() != null && getTask().isAlive()) {
-            getTask().onTick(i);
+	public void onTick(long i) {
+		if (getTask() != null && getTask().isAlive()) {
+			getTask().onTick(i);
 
-            if (getTask().isComplete()) {
-                setTask(null);
-            }
-        }
-    }
+			if (getTask().isComplete()) {
+				setTask(null);
+			}
+		}
+	}
 
-    @Override
-    public void notifyTouchDown(int screenX, int screenY, int pointer, int button) {
-        float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(), Gdx.input.getY());
-        float[] clickedPosition = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
+	@Override
+	public void notifyTouchDown(int screenX, int screenY, int pointer, int button) {
+		float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(), Gdx.input.getY());
+		float[] clickedPosition = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
 
-        System.out.printf("mouse: %.2f %.2f%n", mouse[0], mouse[1]);
-        System.out.printf("clickedPosition: %.2f %.2f%n", clickedPosition[0], clickedPosition[1]);
-        setTask(new MovementTask(this, new SquareVector(clickedPosition[0], clickedPosition[1])));
-    }
+		System.out.printf("mouse: %.2f %.2f%n", mouse[0], mouse[1]);
+		System.out.printf("clickedPosition: %.2f %.2f%n", clickedPosition[0], clickedPosition[1]);
+		setTask(new MovementTask(this, new SquareVector(clickedPosition[0], clickedPosition[1])));
+	}
 }
