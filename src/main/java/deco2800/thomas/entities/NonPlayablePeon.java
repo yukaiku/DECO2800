@@ -1,11 +1,14 @@
 package deco2800.thomas.entities;
 
 import com.badlogic.gdx.Gdx;
+import deco2800.thomas.GameScreen;
+import deco2800.thomas.ThomasGame;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
-import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
+import deco2800.thomas.worlds.TestWorld;
+import deco2800.thomas.worlds.Tile;
 
 import java.util.Objects;
 
@@ -15,19 +18,43 @@ public class NonPlayablePeon extends Peon implements Interactable {
     private NonPlayablePeonType type;
     private String name;
 
+    private boolean hasFinishedSetup;
+
     public NonPlayablePeon(NonPlayablePeonType type, String name, SquareVector position) {
         super(position.getRow(), position.getCol(), 0);
         this.setObjectName(String.format("%sNPCPeon", name));
         this.type = type;
         this.name = name;
+        hasFinishedSetup = false;
         // Listen for touch events
         GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
     }
 
+    /**
+     * Obstruct the base (feet) of an NPC. This stops the player from trampling NPCs.
+     * This is run as an initialisation after the world has been added to the GameManager
+     * @see GameScreen#GameScreen(ThomasGame, GameScreen.gameType)
+     * @see TestWorld#generateWorld()
+     */
+    private void setObstructions() {
+        Tile feet = GameManager.get().getWorld().getTile(this.position.getCol(), this.position.getRow());
+        feet.setObstructed(true);
+        GameManager.get().getWorld().updateTile(feet);
+
+        hasFinishedSetup = true;
+    }
+
+    @Override
+    public void onTick(long i) {
+        // Wait for GameManager to have a world before adding obstructive tiles above.
+        if (GameManager.get().getWorld() != null && !hasFinishedSetup) {
+            setObstructions();
+        }
+    }
+
     @Override
     public void interact() {
-        SquareVector pos = new SquareVector(10, 30);
-        this.player.moveTowards(pos);
+        // vibe
     }
 
     public void setPlayer(PlayerPeon player) {
