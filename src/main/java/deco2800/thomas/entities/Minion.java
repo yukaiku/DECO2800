@@ -6,7 +6,7 @@ package deco2800.thomas.entities;
  * and the capability to be spawned by other enemies.
  */
 public class Minion extends EnemyPeon {
-    public Minion(PlayerPeon target, float row, float col, float speed) {
-        super(target, row, col, speed);
+    public Minion(float row, float col, float speed) {
+        super(row, col, speed);
     }
 }

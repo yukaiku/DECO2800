@@ -7,8 +7,8 @@ package deco2800.thomas.entities;
  */
 public class Boss extends EnemyPeon {
 
-    public Boss(PlayerPeon target, float row, float col, float speed) {
-        super(target, row, col, speed);
+    public Boss(float row, float col, float speed) {
+        super(row, col, speed);
     }
 
 }

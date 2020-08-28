@@ -74,7 +74,7 @@ public class EnemyManager extends TickableManager {
                 // generate a random value between -max and -min, or between +min and +max
                 float xOffset = spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin) * (random.nextInt() % 2 * 2 - 1);
                 float yOffset = spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin) * (random.nextInt() % 2 * 2 - 1);
-                EnemyPeon enemy = new Orc(player, player.getRow() + xOffset, player.getCol() + yOffset, 0.03f);
+                EnemyPeon enemy = new Orc(player.getRow() + xOffset, player.getCol() + yOffset, 0.03f, player);
                 spawnEnemy(enemy);
             }
             tick = 0;

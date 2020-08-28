@@ -9,17 +9,21 @@ import deco2800.thomas.tasks.MovementTask;
 public abstract class EnemyPeon extends Peon implements HasHealth {
 
     private PlayerPeon target;
-    private int tick;
 
-    public EnemyPeon(PlayerPeon target, float row, float col, float speed) {
+    public EnemyPeon(float row, float col, float speed) {
         super(row, col, speed);
         this.setObjectName("EnemyPeon");
         this.setTexture("spacman_blue");
         this.setHeight(1);
-        this.target = target;
-        this.tick = 0;
+        this.target = null;
+    }
 
-        setTask(new MovementTask(this, this.target.position));
+    public PlayerPeon getTarget() {
+        return target;
+    }
+
+    public void setTarget(PlayerPeon target) {
+        this.target = target;
     }
 
     public int getHealth() {
@@ -27,23 +31,5 @@ public abstract class EnemyPeon extends Peon implements HasHealth {
     }
 
     public void setHealth(int newHealth) {
-    }
-
-    @Override
-    public void onTick(long i) {
-        if (tick > 40) {
-            setTask(new MovementTask(this, target.position));
-            tick = 0;
-        } else {
-            tick++;
-        }
-
-        if (getTask() != null && getTask().isAlive()) {
-            getTask().onTick(i);
-
-            if (getTask().isComplete()) {
-                setTask(null);
-            }
-        }
     }
 }
