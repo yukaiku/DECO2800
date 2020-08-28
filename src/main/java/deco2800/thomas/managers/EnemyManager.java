@@ -10,9 +10,8 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * EnemyManager handles the spawning and de-spawning of the enemies.
- * Different maps/environments can initialise different EnemyManagers.
- * Each EnemyManager will have a world and a target player as parameters.
+ * EnemyManager handles the spawning mechanism of the enemies.
+ * Different worlds should initialise different EnemyManagers.
  */
 public class EnemyManager extends TickableManager {
 
@@ -31,7 +30,7 @@ public class EnemyManager extends TickableManager {
     private float spawnRangeMax;
 
     private int tick;
-    private Random random;
+    private final Random random;
 
     public EnemyManager(AbstractWorld world, PlayerPeon player, int enemyCap) {
 //        this.world = GameManager.get().getWorld();
@@ -49,12 +48,21 @@ public class EnemyManager extends TickableManager {
     }
 
     /**
-     * Spawns an enemy
+     * Spawns an enemy at the given position on the map.
+     * @param enemy the EnemyPeon object to be spawned
+     * @param x the x position on the map
+     * @param y the y position on the map
+     * @return True if successfully spawned, false otherwise.
      */
-    public void spawnEnemy(EnemyPeon enemy) {
-        world.addEntity(enemy);
-        enemies.add(enemy);
-        enemyCount++;
+    public boolean spawnEnemy(EnemyPeon enemy, float x, float y) {
+        if (enemyCount < enemyCap) {
+            enemy.setPosition(x, y);
+            world.addEntity(enemy);
+            enemies.add(enemy);
+            enemyCount++;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -74,8 +82,8 @@ public class EnemyManager extends TickableManager {
                 // generate a random value between -max and -min, or between +min and +max
                 float xOffset = spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin) * (random.nextInt() % 2 * 2 - 1);
                 float yOffset = spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin) * (random.nextInt() % 2 * 2 - 1);
-                EnemyPeon enemy = new Orc(player.getRow() + xOffset, player.getCol() + yOffset, 0.03f, player);
-                spawnEnemy(enemy);
+                Orc enemy = new Orc(1, 0.03f, 100, player);
+                spawnEnemy(enemy, player.getRow() + xOffset, player.getCol() + yOffset);
             }
             tick = 0;
         } else {
