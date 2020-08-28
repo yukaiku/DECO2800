@@ -19,6 +19,7 @@ import java.util.stream.*;
 public abstract class AbstractWorld {
 
     protected List<AbstractEntity> entities = new CopyOnWriteArrayList<>();
+    protected AgentEntity playerEntity;
 
     protected int width;
     protected int length;
@@ -257,5 +258,13 @@ public abstract class AbstractWorld {
 
     public void queueTilesForDelete(List<Tile> tiles) {
         tilesToDelete.addAll(tiles);
+    }
+
+    public AgentEntity getPlayerEntity() {
+        return playerEntity;
+    }
+
+    public void setPlayerEntity(AgentEntity playerEntity) {
+        this.playerEntity = playerEntity;
     }
 }

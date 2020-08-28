@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.badlogic.gdx.Game;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -129,7 +130,8 @@ public class TestWorld extends AbstractWorld {
 		}
 
 		// Create the entities in the game
-		addEntity(new PlayerPeon(10f, 5f, 0.1f));
+		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
+		addEntity(this.getPlayerEntity());
 
 
 	}
