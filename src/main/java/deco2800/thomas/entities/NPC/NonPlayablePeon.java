@@ -53,7 +53,7 @@ public class NonPlayablePeon extends Peon implements Interactable {
 
     @Override
     public void interact() {
-        // vibe
+        // Overwrite me :)
     }
 
     public void setPlayer(PlayerPeon player) {
