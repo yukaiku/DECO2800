@@ -52,7 +52,6 @@ public class TestWorld extends AbstractWorld {
 	private StaticEntity createBuilding2(float col, float row) {
 		List<Part> parts = new ArrayList<Part>();
 		parts.add(new Part(new SquareVector(0, 0), "buildingA", true));
-
 		// left
 		parts.add(new Part(new SquareVector(-2, 0), "fenceN-S", true));
 		parts.add(new Part(new SquareVector(-2, 1), "fenceN-S", true));
