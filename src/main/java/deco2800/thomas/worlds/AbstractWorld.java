@@ -40,7 +40,7 @@ public abstract class AbstractWorld {
 	/**
 	 * Entities inside the world
 	 */
-	protected List<AbstractEntity> entities = new CopyOnWriteArrayList<>();
+	protected List<AbstractEntity> entities;
 
 	/**
 	 * List of tiles of the world
@@ -55,12 +55,12 @@ public abstract class AbstractWorld {
 	/**
 	 * A queue of entities to be removed in onTick
 	 */
-	protected List<AbstractEntity> entitiesToRemove = new CopyOnWriteArrayList<>();
+	protected List<AbstractEntity> entitiesToRemove;
 
 	/**
 	 * A queue of tiles to be removed in onTick
 	 */
-	protected List<Tile> tilesToRemove = new CopyOnWriteArrayList<>();
+	protected List<Tile> tilesToRemove;
 
 	/**
 	 * Constructor that creates a world with default width and height
@@ -79,13 +79,13 @@ public abstract class AbstractWorld {
 		this.width = width;
 		this.height = height;
 		this.tiles = new CopyOnWriteArrayList<>();
+		this.entities = new CopyOnWriteArrayList<>();
+		this.entitiesToRemove = new CopyOnWriteArrayList<>();
+		this.tilesToRemove = new CopyOnWriteArrayList<>();
 		generateTiles();
 		generateTileMap();
 		assignTileNeighbours();
 		generateTileIndices();
-		this.entities = new CopyOnWriteArrayList<>();
-		this.entitiesToRemove = new CopyOnWriteArrayList<>();
-		this.tilesToRemove = new CopyOnWriteArrayList<>();
 	}
 
 	/**
