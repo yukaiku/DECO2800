@@ -4,6 +4,7 @@ import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Environment.Rock;
+import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.util.SquareVector;
@@ -14,6 +15,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import org.lwjgl.Sys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -218,7 +220,7 @@ public final class DatabaseManager extends AbstractManager {
                 if (entityObjectName.startsWith(s)){ 
                     Rock create = new Rock();
                     create.setObjectName(entityObjectName); 
-                    return (AbstractEntity) create;
+                    return create;
                 }
             }
 
@@ -226,7 +228,7 @@ public final class DatabaseManager extends AbstractManager {
                 if (entityObjectName.startsWith(s)){ 
                     StaticEntity create = new StaticEntity();
                     create.setObjectName(entityObjectName); 
-                    return (AbstractEntity) create;
+                    return create;
                 }
             }
             
@@ -234,22 +236,33 @@ public final class DatabaseManager extends AbstractManager {
                 if (entityObjectName.startsWith(s)){
                      PlayerPeon create = new PlayerPeon(1,1,1);
                      create.setObjectName(entityObjectName); 
-                     return (AbstractEntity) create;
+                     return create;
+                }
+            }
+
+            for (String s:Arrays.asList("npcPeon")) {
+                if (entityObjectName.startsWith(s)) {
+                    NonPlayablePeon create = new NonPlayablePeon();
+                    create.setObjectName(entityObjectName);
+                    return create;
                 }
             }
 
             StringBuilder fullEntityName = new StringBuilder();
             fullEntityName.append("deco2800.thomas");
             HashMap<String, String> entityMap = new HashMap<>();
-            entityMap.put("player", "entities.PlayerPeon");
-            entityMap.put("rock", "entities.rock");
-            entityMap.put("tree", "entities.Tree");
-            entityMap.put("staticEntityID", "entities.StaticEntity");
+            entityMap.put("player", ".entities.Agent.PlayerPeon");
+            entityMap.put("rock", ".entities.Environment.Rock");
+            entityMap.put("tree", ".entities.Environment.Tree");
+            entityMap.put("staticEntityID", ".entities.StaticEntity");
+            entityMap.put("npcPeon", ".entities.NPC.NonPlayablePeon");
 
             fullEntityName.append(entityMap.get(entityObjectName));
+            System.out.println(fullEntityName);
             return (AbstractEntity) Class.forName(fullEntityName.toString()).getDeclaredConstructor().newInstance();
         } catch (ClassNotFoundException|NoSuchMethodException|InstantiationException|
                     IllegalAccessException|InvocationTargetException e) {
+            System.out.println(e);
             return null;
         }
     }
@@ -366,7 +379,8 @@ public final class DatabaseManager extends AbstractManager {
             logger.error("Somehow loaded the JSON file, but it's somewhat corrupted", e);
         }
     }
-    private static void readEntities(JsonReader reader, Map<Integer, AbstractEntity> newEntities, CopyOnWriteArrayList<Tile> newTiles) throws IOException {
+    private static void readEntities(JsonReader reader, Map<Integer, AbstractEntity> newEntities,
+                                     CopyOnWriteArrayList<Tile> newTiles) throws IOException {
         while (reader.hasNext()) {
             if (!startArrayReading(reader, newTiles)) {
                 break;
