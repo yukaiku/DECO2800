@@ -1,7 +1,7 @@
 package deco2800.thomas.tasks;
 
 import deco2800.thomas.Tickable;
-import deco2800.thomas.entities.AgentEntity;
+import deco2800.thomas.entities.Agent.AgentEntity;
 
 public abstract class AbstractTask implements Tickable {
 	

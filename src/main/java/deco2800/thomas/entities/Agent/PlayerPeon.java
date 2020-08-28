@@ -1,4 +1,4 @@
-package deco2800.thomas.entities;
+package deco2800.thomas.entities.Agent;
 
 import com.badlogic.gdx.Gdx;
 import deco2800.thomas.managers.GameManager;

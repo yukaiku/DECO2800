@@ -1,4 +1,6 @@
-package deco2800.thomas.entities;
+package deco2800.thomas.entities.Environment;
+import deco2800.thomas.entities.Agent.HasHealth;
+import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.worlds.Tile;
 
 public class Rock extends StaticEntity implements HasHealth {
