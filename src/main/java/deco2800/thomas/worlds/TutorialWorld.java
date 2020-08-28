@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Part;
 import deco2800.thomas.entities.StaticEntity;
-import deco2800.thomas.entities.Tree;
-import deco2800.thomas.entities.PlayerPeon;
-import deco2800.thomas.entities.Rock;
+//import deco2800.thomas.entities.Tree;
+//import deco2800.thomas.entities.PlayerPeon;
+//import deco2800.thomas.entities.Rock;
 import deco2800.thomas.managers.GameManager;
 
 public class TutorialWorld extends AbstractWorld{
