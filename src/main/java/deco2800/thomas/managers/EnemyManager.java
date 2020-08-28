@@ -24,10 +24,10 @@ public class EnemyManager extends TickableManager {
     // the target player
     private PlayerPeon player;
     // the target world
-    private AbstractWorld world;
+    private final AbstractWorld world;
 
-    private float spawnRangeMin;
-    private float spawnRangeMax;
+    private final float spawnRangeMin;
+    private final float spawnRangeMax;
 
     private int tick;
     private final Random random;
@@ -72,6 +72,10 @@ public class EnemyManager extends TickableManager {
         enemies.remove(enemy);
         world.deleteEntity(enemy.getEntityID());
         enemyCount--;
+    }
+
+    public List<EnemyPeon> getEnemies() {
+        return new ArrayList<>(enemies);
     }
 
     @Override
