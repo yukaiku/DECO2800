@@ -13,14 +13,14 @@ public class EnemyPeonTest {
     @Test
     public void testEnemyTexture() {
         PlayerPeon p = new PlayerPeon(0,0,1);
-        EnemyPeon enemy =  new EnemyPeon(p, 1, 1, 1);
+        EnemyPeon enemy =  new Orc(p, 1, 1, 1);
         assertEquals(enemy.getTexture(), "spacman_blue");
     }
 
     @Test
     public void testEnemyName() {
         PlayerPeon p = new PlayerPeon(0,0,1);
-        EnemyPeon enemy =  new EnemyPeon(p, 1, 1, 1);
+        EnemyPeon enemy =  new Orc(p, 1, 1, 1);
 
         assertEquals(enemy.getObjectName(), "EnemyPeon");
     }

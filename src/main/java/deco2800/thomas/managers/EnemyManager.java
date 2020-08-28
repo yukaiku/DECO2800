@@ -1,6 +1,7 @@
 package deco2800.thomas.managers;
 
 import deco2800.thomas.entities.EnemyPeon;
+import deco2800.thomas.entities.Orc;
 import deco2800.thomas.entities.PlayerPeon;
 import deco2800.thomas.worlds.AbstractWorld;
 
@@ -73,7 +74,7 @@ public class EnemyManager extends TickableManager {
                 // generate a random value between -max and -min, or between +min and +max
                 float xOffset = spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin) * (random.nextInt() % 2 * 2 - 1);
                 float yOffset = spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin) * (random.nextInt() % 2 * 2 - 1);
-                EnemyPeon enemy = new EnemyPeon(player, player.getRow() + xOffset, player.getCol() + yOffset, 0.03f);
+                EnemyPeon enemy = new Orc(player, player.getRow() + xOffset, player.getCol() + yOffset, 0.03f);
                 spawnEnemy(enemy);
             }
             tick = 0;

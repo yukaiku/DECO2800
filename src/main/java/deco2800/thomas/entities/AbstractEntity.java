@@ -1,13 +1,17 @@
 package deco2800.thomas.entities;
 
+import com.badlogic.gdx.Game;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.NetworkManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.Renderable;
+import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
 
 import java.util.Objects;
 
 import com.google.gson.annotations.Expose;
+import org.w3c.dom.Text;
 
 /**
  * AbstractEntity is an item that can exist in both 3D and 2D worlds.
@@ -34,6 +38,8 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	private String texture = "error_box";
 
 	protected SquareVector position;
+
+	protected BoundingBox bounds;
 	
 	private int height;
 
@@ -172,6 +178,23 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	public boolean collidesWith(AbstractEntity entity) {
 		//TODO: Implement this.
 		return false;
+	}
+
+	/**
+	 * Gets the bounding box of this entity.
+	 * @return the bounding box of this entity.
+	 */
+	public BoundingBox getBounds() {
+		return bounds;
+	}
+
+	/**
+	 * Sets the bounding box of this entity.
+	 * @param bounds Bounding box to copy.
+	 */
+	public void setBounds(BoundingBox bounds) {
+		// Copy, do not reference.
+		this.bounds = new BoundingBox(bounds);
 	}
 
 	@Override

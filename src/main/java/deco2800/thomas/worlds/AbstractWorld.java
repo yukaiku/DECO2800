@@ -4,12 +4,10 @@ import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.AgentEntity;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.*;
 
@@ -21,6 +19,7 @@ import java.util.stream.*;
 public abstract class AbstractWorld {
 
     protected List<AbstractEntity> entities = new CopyOnWriteArrayList<>();
+    protected AgentEntity playerEntity;
 
     protected int width;
     protected int length;
@@ -130,7 +129,21 @@ public abstract class AbstractWorld {
 		return e;
     }
 
+    /**
+     * Gets an array list of all the entities contained within the given bounds.
+     * @param bounds Bounding box to check within.
+     * @return ArrayList of all entities within bounds.
+     */
+    public List<AbstractEntity> getEntitiesInBounds(BoundingBox bounds) {
+        List<AbstractEntity> entitiesInBounds = new ArrayList<>();
+        for (AbstractEntity entity : entities) {
+            if (bounds.boundingBoxOverlaps(entity.getBounds())) {
+                entitiesInBounds.add(entity);
+            }
+        }
 
+        return entitiesInBounds;
+    }
 
     /**
      * Adds an entity to the world.
@@ -245,5 +258,13 @@ public abstract class AbstractWorld {
 
     public void queueTilesForDelete(List<Tile> tiles) {
         tilesToDelete.addAll(tiles);
+    }
+
+    public AgentEntity getPlayerEntity() {
+        return playerEntity;
+    }
+
+    public void setPlayerEntity(AgentEntity playerEntity) {
+        this.playerEntity = playerEntity;
     }
 }

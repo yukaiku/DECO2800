@@ -1,15 +1,13 @@
 package deco2800.thomas.entities;
+
 import deco2800.thomas.tasks.MovementTask;
 
 /**
- * EnemyPeon is a prototype implementation of an enemy that chases after the
- * player; consider splitting enemyPeon into separate classes later on
- * todo: make the class abstract
- */
-public class EnemyPeon extends Peon {
+ An abstract class inheriting from Peon that will define the
+ behaviour of all enemies. All enemies must have some form of health.
+ **/
+public abstract class EnemyPeon extends Peon implements HasHealth {
 
-    // Current implementation passes the player object to enemies so they can
-    // know the player's position, possible better implementation?
     private PlayerPeon target;
     private int tick;
 
@@ -24,13 +22,16 @@ public class EnemyPeon extends Peon {
         setTask(new MovementTask(this, this.target.position));
     }
 
+    public int getHealth() {
+        return 0;
+    }
+
+    public void setHealth(int newHealth) {
+    }
+
     @Override
     public void onTick(long i) {
-        // Without tickRate reduction the position is updated too rapidly
-        // and the enemy can't move, possible less hacky implementation
         if (tick > 40) {
-            // For some reason it chases in straight lines, might be better
-            // if it can move in both directions
             setTask(new MovementTask(this, target.position));
             tick = 0;
         } else {
