@@ -252,11 +252,11 @@ public final class DatabaseManager extends AbstractManager {
             StringBuilder fullEntityName = new StringBuilder();
             fullEntityName.append("deco2800.thomas");
             HashMap<String, String> entityMap = new HashMap<>();
-            entityMap.put("player", ".entities.Agent.PlayerPeon");
-            entityMap.put("rock", ".entities.Environment.Rock");
-            entityMap.put("tree", ".entities.Environment.Tree");
-            entityMap.put("staticEntityID", ".entities.StaticEntity");
-            entityMap.put("npcPeon", ".entities.NPC.NonPlayablePeon");
+            entityMap.put("player", "entities.Agent.PlayerPeon");
+            entityMap.put("rock", "entities.Environment.Rock");
+            entityMap.put("tree", "entities.Environment.Tree");
+            entityMap.put("staticEntityID", "entities.StaticEntity");
+            entityMap.put("npcPeon", "entities.NPC.NonPlayablePeon");
 
             fullEntityName.append(entityMap.get(entityObjectName));
             System.out.println(fullEntityName);
