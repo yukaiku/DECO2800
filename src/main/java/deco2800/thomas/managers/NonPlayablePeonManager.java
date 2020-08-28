@@ -2,19 +2,20 @@ package deco2800.thomas.managers;
 
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.util.SpawnList;
 import deco2800.thomas.worlds.AbstractWorld;
+
+import java.util.List;
 
 public class NonPlayablePeonManager extends AbstractManager {
 
     private AbstractWorld world;
     private PlayerPeon player;
-    private SpawnList<NonPlayablePeon> spawns;
+    private List<NonPlayablePeon> allNpcs;
 
-    public NonPlayablePeonManager(AbstractWorld world, PlayerPeon player, SpawnList<NonPlayablePeon> spawnMap) {
+    public NonPlayablePeonManager(AbstractWorld world, PlayerPeon player, List<NonPlayablePeon> npcs) {
         this.world = world;
         this.player = player;
-        this.spawns = spawnMap;
+        this.allNpcs = npcs;
         spawnAll();
     }
 
@@ -22,7 +23,7 @@ public class NonPlayablePeonManager extends AbstractManager {
      * Iteratively initialise and spawn each NPC in the spawn map.
      */
     private void spawnAll() {
-        spawns.forEach(this::spawnOne);
+        allNpcs.forEach(this::spawnOne);
     }
 
     /**
@@ -41,7 +42,15 @@ public class NonPlayablePeonManager extends AbstractManager {
      */
     public void spawnOne(NonPlayablePeon npc, int height) {
         npc.setPlayer(player);
+        npc.setHeight(height);
+        if (!allNpcs.contains(npc)) {
+            allNpcs.add(npc);
+        }
         world.addEntity(npc);
+    }
+
+    public List<NonPlayablePeon> getAllNpcs() {
+        return allNpcs;
     }
 
 }
