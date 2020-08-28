@@ -1,4 +1,4 @@
 package deco2800.thomas.entities;
 
-public class Minions {
+public class Minion {
 }
