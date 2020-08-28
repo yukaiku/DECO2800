@@ -42,14 +42,12 @@ public class OnScreenMessageManager extends AbstractManager implements KeyTypedO
 	public void notifyKeyTyped(char character) {
 		if (character == 't' && !isTyping) {
 			isTyping = true;
-			GameManager.get().getCamera().setPotate(true);
 			return;
 		}
 
 		if (isTyping) {
 			if (character == '`') {
 				isTyping = false;
-				GameManager.get().getCamera().setPotate(false);
 			} else if (character == '\b') {
 				if (unsentMessage.length() > 0) {
 					unsentMessage = unsentMessage.substring(0, unsentMessage.length() - 1); // Backspace
@@ -69,7 +67,6 @@ public class OnScreenMessageManager extends AbstractManager implements KeyTypedO
 				} else {
 					GameManager.get().getManager(NetworkManager.class).sendChatMessage(unsentMessage);
 				}
-				GameManager.get().getCamera().setPotate(false);
 				unsentMessage = "";
 			} else {
 				// Accept input
