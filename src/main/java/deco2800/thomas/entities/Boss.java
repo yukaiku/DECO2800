@@ -5,10 +5,8 @@ package deco2800.thomas.entities;
  * Bosses will generally be stationary and difficult to defeat,
  * and provide rewards when defeated.
  */
-public class Boss extends EnemyPeon {
-
-    public Boss(float row, float col, float speed) {
-        super(row, col, speed);
+public abstract class Boss extends EnemyPeon {
+    public Boss(String name, String texture, int height, float speed, int health, Peon target) {
+        super(name, texture, height, speed, health, target);
     }
-
 }

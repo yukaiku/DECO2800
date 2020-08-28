@@ -5,8 +5,7 @@ package deco2800.thomas.entities;
  * called a Dragon.
  */
 public class Dragon extends Boss implements PassiveEnemy {
-
-    public Dragon(float row, float col, float speed) {
-        super(row, col, speed);
+    public Dragon(int height, float speed, int health, Peon target) {
+        super("Elder Dragon", "spacman_blue", height, speed, health, target);
     }
 }

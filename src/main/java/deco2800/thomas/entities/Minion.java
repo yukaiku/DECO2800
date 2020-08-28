@@ -5,8 +5,8 @@ package deco2800.thomas.entities;
  * Features of the minion class will generally include a smaller size
  * and the capability to be spawned by other enemies.
  */
-public class Minion extends EnemyPeon {
-    public Minion(float row, float col, float speed) {
-        super(row, col, speed);
+public abstract class Minion extends EnemyPeon {
+    public Minion(String name, String texture, int height, float speed, int health, Peon target) {
+        super(name, texture, height, speed, health, target);
     }
 }

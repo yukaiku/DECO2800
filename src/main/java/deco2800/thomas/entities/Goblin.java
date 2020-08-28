@@ -5,7 +5,7 @@ package deco2800.thomas.entities;
  * called a Goblin.
  */
 public class Goblin extends Minion implements AggressiveEnemy {
-    public Goblin(float row, float col, float speed) {
-        super(row, col, speed);
+    public Goblin(int height, float speed, int health, Peon target) {
+        super("Goblin", "spacman_blue", height, speed, health, target);
     }
 }

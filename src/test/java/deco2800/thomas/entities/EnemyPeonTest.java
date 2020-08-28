@@ -12,17 +12,17 @@ public class EnemyPeonTest {
 
     @Test
     public void testEnemyTexture() {
-        PlayerPeon p = new PlayerPeon(0,0,1);
-        EnemyPeon enemy =  new Orc(1, 1, 1, p);
+        PlayerPeon player = new PlayerPeon(0,0,1);
+        EnemyPeon enemy =  new Orc(1, 1, 100, player);
         assertEquals(enemy.getTexture(), "spacman_blue");
     }
 
     @Test
     public void testEnemyName() {
-        PlayerPeon p = new PlayerPeon(0,0,1);
-        EnemyPeon enemy =  new Orc(1, 1, 1, p);
+        PlayerPeon player = new PlayerPeon(0,0,1);
+        EnemyPeon enemy =  new Orc(1, 1, 100, player);
 
-        assertEquals(enemy.getObjectName(), "EnemyPeon");
+        assertEquals(enemy.getObjectName(), "Orc");
     }
 
     //Need some formal way of testing that it approaches the player? For now
