@@ -90,11 +90,7 @@ public class TestWorld extends AbstractWorld {
 	private void addTree(float col, float row) {
 		Map<SquareVector, String> textures = new HashMap<SquareVector, String>();
 		Tile t = GameManager.get().getWorld().getTile(col, row);
-<<<<<<< HEAD
-		Tree tree = new Tree(t, true);
-=======
 		Tree tree = new  Tree(t, true);
->>>>>>> NPC
 		entities.add(tree);
 	}
 
