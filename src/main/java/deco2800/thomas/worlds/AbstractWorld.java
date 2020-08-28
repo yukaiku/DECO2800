@@ -56,7 +56,7 @@ public abstract class AbstractWorld {
 		for(Tile tile : tiles) {
 			int col = (int) (tile.getCol());
 			int row = (int) (tile.getRow());
-			System.out.println("tile coords were: " + col + " " + row);
+			//System.out.println("tile coords were: " + col + " " + row);
 			
 			// West
 			if(tileMap.containsKey(col - 1)) {
