@@ -1,5 +1,6 @@
 package deco2800.thomas.entities;
 
+import deco2800.thomas.entities.Agent.PlayerPeon;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;

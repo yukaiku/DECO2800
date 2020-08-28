@@ -2,7 +2,7 @@ package deco2800.thomas.tasks;
 
 import java.util.List;
 
-import deco2800.thomas.entities.AgentEntity;
+import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PathFindingService;
 import deco2800.thomas.util.SquareVector;

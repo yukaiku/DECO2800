@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import deco2800.thomas.entities.AgentEntity;
+import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.worlds.AbstractWorld;

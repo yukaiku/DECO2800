@@ -1,4 +1,4 @@
-package deco2800.thomas.entities;
+package deco2800.thomas.entities.Agent;
 
 public interface HasHealth {
 	int getHealth();

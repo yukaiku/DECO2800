@@ -1,4 +1,4 @@
-package deco2800.thomas.entities;
+package deco2800.thomas.entities.Agent;
 
 import deco2800.thomas.Tickable;
 import deco2800.thomas.managers.GameManager;
