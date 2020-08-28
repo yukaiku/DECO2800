@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 public class EnemyManagerTest {
@@ -17,7 +17,7 @@ public class EnemyManagerTest {
         TestWorld world = new TestWorld();
         PlayerPeon player = new PlayerPeon(0,0,1);
         EnemyManager em = new EnemyManager(world, player, 10);
-        assertSame(em.getEnemies(), new ArrayList<>());
+        assertEquals(em.getEnemies(), new ArrayList<>());
     }
 
     @Test
