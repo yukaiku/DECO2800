@@ -7,6 +7,10 @@ import java.util.Map;
 import java.util.Random;
 
 import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.Environment.Rock;
+import deco2800.thomas.entities.Environment.Tree;
+import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.managers.NonPlayablePeonManager;
 import deco2800.thomas.util.SpawnList;
 import deco2800.thomas.util.SquareVector;
@@ -86,7 +90,7 @@ public class TestWorld extends AbstractWorld {
 	private void addTree(float col, float row) {
 		Map<SquareVector, String> textures = new HashMap<SquareVector, String>();
 		Tile t = GameManager.get().getWorld().getTile(col, row);
-		Tree tree = new  Tree(t, true);		
+		Tree tree = new  Tree(t, true);
 		entities.add(tree);
 	}
 
@@ -131,7 +135,7 @@ public class TestWorld extends AbstractWorld {
 		addEntity(player);
 
 		SpawnList<NonPlayablePeon> npnSpawns = new SpawnList<>();
-		npnSpawns.add(new NonPlayablePeon(NonPlayablePeonType.TUTORIAL, "Fred", player.getPosition()));
+		npnSpawns.add(new NonPlayablePeon("Fred", player.getPosition()));
 		NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, player, npnSpawns);
 		GameManager.get().addManager(npcManager);
 	}

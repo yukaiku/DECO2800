@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;

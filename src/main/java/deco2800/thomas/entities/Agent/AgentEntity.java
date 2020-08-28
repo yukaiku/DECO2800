@@ -1,10 +1,11 @@
-package deco2800.thomas.entities;
+package deco2800.thomas.entities.Agent;
 
 import com.google.gson.annotations.Expose;
 
+import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.util.SquareVector;
 
-public abstract class AgentEntity extends AbstractEntity{
+public abstract class AgentEntity extends AbstractEntity {
 	@Expose
 	protected float speed;
 

@@ -1,6 +1,7 @@
 package deco2800.thomas;
 
 import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
