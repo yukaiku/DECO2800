@@ -240,6 +240,7 @@ public final class DatabaseManager extends AbstractManager {
                 }
             }
 
+            // Load npc's
             for (String s:Arrays.asList("npcPeon")) {
                 if (entityObjectName.startsWith(s)) {
                     NonPlayablePeon create = new NonPlayablePeon();
