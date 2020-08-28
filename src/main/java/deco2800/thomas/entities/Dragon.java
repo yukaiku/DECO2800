@@ -1,4 +1,8 @@
 package deco2800.thomas.entities;
 
-public class Dragon {
+/**
+ * A class that defines an implementation of a boss
+ * called a Dragon.
+ */
+public class Dragon extends Boss implements PassiveEnemy {
 }

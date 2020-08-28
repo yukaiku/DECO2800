@@ -1,4 +1,8 @@
 package deco2800.thomas.entities;
 
-public class Goblin {
+/**
+ * A class that defines an implementation of a minion enemy type
+ * called a Goblin.
+ */
+public class Goblin extends Minion implements AggressiveEnemy {
 }
