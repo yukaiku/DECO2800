@@ -18,14 +18,15 @@ public class Orc extends Monster implements AggressiveEnemy {
 
     public Orc(int height, float speed, int health) {
         super("Orc", "spacman_blue", height, speed, health);
-        this.tick = 0;
+        this.tick = 60;
     }
 
     public void detectTarget() {
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
         if (player != null && (Math.abs(Math.round(super.getCol()) - Math.round(player.getCol()))
-                + Math.abs(Math.round(super.getRow()) - Math.round(player.getRow())) < 10)) {
+                + Math.abs(Math.round(super.getRow()) - Math.round(player.getRow())) < 12)) {
             super.setTarget((PlayerPeon) player);
+            setTask(new MovementTask(this, super.getTarget().getPosition()));
         }
     }
 
@@ -35,14 +36,13 @@ public class Orc extends Monster implements AggressiveEnemy {
             if (super.getTarget() != null) {
                 setTask(new MovementTask(this, super.getTarget().getPosition()));
             }
-//            if (super.getTarget() == null) {
-//                detectTarget();
-//            } else {
-//                setTask(new MovementTask(this, super.getTarget().getPosition()));
-//            }
             tick = 0;
         } else {
             tick++;
+        }
+
+        if (super.getTarget() == null) {
+            detectTarget();
         }
 
         if (getTask() != null && getTask().isAlive()) {

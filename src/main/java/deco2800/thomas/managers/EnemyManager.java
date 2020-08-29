@@ -59,8 +59,8 @@ public class EnemyManager extends TickableManager {
         this.tick = 25;
         this.random = new Random();
 
-        this.spawnRangeMin = 3;
-        this.spawnRangeMax = 7;
+        this.spawnRangeMin = 5;
+        this.spawnRangeMax = 14;
     }
 
     public EnemyManager(AbstractWorld world, int enemyCap, List<EnemyPeon> enemyConfigs, Boss boss) {
@@ -103,6 +103,7 @@ public class EnemyManager extends TickableManager {
      * @param x the x position on the map
      * @param y the y position on the map
      * @return True if successfully spawned, false otherwise.
+     * todo: check if the position is out of map
      */
     public boolean spawnEnemy(EnemyPeon enemy, float x, float y) {
         if (running && enemyCount < enemyCap) {
@@ -137,8 +138,7 @@ public class EnemyManager extends TickableManager {
                 float xOffset = (spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin)) * (random.nextInt(2) * 2 - 1);
                 float yOffset = (spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin)) * (random.nextInt(2) * 2 - 1);
                 Orc enemy = new Orc(1, 0.05f, 100);
-                // manually set the target at the moment
-                enemy.setTarget((Peon) player);
+//                enemy.setTarget((Peon) player);
                 spawnEnemy(enemy, player.getCol() + xOffset, player.getRow() + yOffset);
             }
             tick = 0;
