@@ -1,4 +1,7 @@
-package deco2800.thomas.entities;
+package deco2800.thomas.entities.enemies;
+
+import deco2800.thomas.entities.HasHealth;
+import deco2800.thomas.entities.Peon;
 
 import java.util.Objects;
 
@@ -9,6 +12,9 @@ import java.util.Objects;
 public abstract class EnemyPeon extends Peon implements HasHealth {
 
     // The target to follow and attack. This can be players or even enemies, or null for passive enemies.
+    // Enemies are initialised with no target.
+    // Aggressive enemies set a target when they detected a target.
+    // Passive enemies set a target when being hit.
     private Peon target;
 
     // The health of the enemy.
@@ -17,13 +23,13 @@ public abstract class EnemyPeon extends Peon implements HasHealth {
     /**
      * Initialise an abstract Enemy. The position of the enemy is normally set by the spawnEnemy() in EnemyManager.
      */
-    public EnemyPeon(String name, String texture, int height, float speed, int health, Peon target) {
+    public EnemyPeon(String name, String texture, int height, float speed, int health) {
         super(0, 0, speed < 0 ? 1f : speed);
         this.setObjectName(Objects.requireNonNullElse(name, "EnemyPeon"));
         this.setTexture(Objects.requireNonNullElse(texture, "spacman_blue"));
         this.setHeight(height <= 0 ? 1 : height);
+        this.target = null;
         this.health = health;
-        this.target = target;
     }
 
     /**
