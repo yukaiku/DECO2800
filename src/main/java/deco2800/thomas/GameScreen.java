@@ -226,7 +226,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	@Override
 	public void notifyKeyDown(int keycode) {
-		PlayerPeon.increaseOrbs();
 
 		if (keycode == Input.Keys.F12) {
 			GameManager.get().debugMode = !GameManager.get().debugMode;
