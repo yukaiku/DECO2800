@@ -19,6 +19,8 @@ import deco2800.thomas.entities.Rock;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 
+import javax.lang.model.type.ArrayType;
+
 @SuppressWarnings("unused")
 public class TestWorld extends AbstractWorld {
 	private final Logger logger = LoggerFactory.getLogger(TestWorld.class);
@@ -133,9 +135,8 @@ public class TestWorld extends AbstractWorld {
 		addEntity(this.getPlayerEntity());
 
 		// Add enemy spawning manager targeting the player
-		EnemyManager enemyManager = new EnemyManager(this, (PlayerPeon) this.getPlayerEntity(), 5);
+		EnemyManager enemyManager = new EnemyManager(this, 10, new ArrayList<>());
 		GameManager.get().addManager(enemyManager);
-
 	}
 
 	@Override
