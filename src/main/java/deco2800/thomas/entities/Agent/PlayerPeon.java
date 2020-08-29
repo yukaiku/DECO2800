@@ -10,7 +10,7 @@ import deco2800.thomas.util.WorldUtil;
 
 public class PlayerPeon extends Peon implements TouchDownObserver {
     /*Variable for orb count*/
-    int orbCount = 0;
+    private static int orbCount = 0;
 
     public PlayerPeon(float row, float col, float speed) {
         super(row, col, speed);
@@ -25,7 +25,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver {
      *
      * @return orbCount the number of orbs the user currently has
      */
-    public int questTracker(){
+    public static int questTracker(){
         return orbCount;
     }
 
@@ -36,7 +36,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver {
      * To be used on when a new game is run or upon death
      *
      */
-    public void resetQuest(){
+    public static void resetQuest(){
         orbCount = 0;
     }
 
@@ -48,7 +48,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver {
      * To be used on when player picks up an orb
      *
      */
-    public void increaseOrbs(){
+    public static void increaseOrbs(){
         orbCount += 1;
         questTracker();
     }
