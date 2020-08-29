@@ -6,6 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.Environment.Rock;
+import deco2800.thomas.entities.Environment.Tree;
+import deco2800.thomas.entities.NPC.NonPlayablePeon;
+import deco2800.thomas.entities.NPC.TutorialNPC;
+import deco2800.thomas.managers.NonPlayablePeonManager;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +26,7 @@ import deco2800.thomas.managers.GameManager;
 
 public class TutorialWorld extends AbstractWorld{
 
+    boolean notGenerated = true;
     static final int TUTORIAL_WORLD_WIDTH = 10; // Height and width vars for the map size; constrains tile gen
     static final int TUTORIAL_WORLD_HEIGHT = 7; // Note the map will double these numbers (bounds are +/- these limits)
 
@@ -37,12 +44,27 @@ public class TutorialWorld extends AbstractWorld{
         }
     }
 
+    public void createBuildings() {
+        PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f);
+        addEntity(player);
+
+        List<NonPlayablePeon> npnSpawns = new ArrayList<>();
+        npnSpawns.add(new TutorialNPC("Fred", new SquareVector(0, 2)));
+        NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, player, npnSpawns);
+        GameManager.get().addManager(npcManager);
+    }
+
     @Override
     public void onTick(long i) {
         super.onTick(i);
-        //addTree(0f, 0f);
         for (AbstractEntity e : this.getEntities()) {
             e.onTick(0);
+        }
+
+        if (notGenerated) {
+            createBuildings();
+
+            notGenerated = false;
         }
     }
 }
