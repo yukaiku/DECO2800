@@ -43,34 +43,34 @@ public class PlayerPeon extends Peon implements TouchDownObserver {
     /**
      *
      * Increase the number of orbs the user has
-     * and run the questTracker function to update progress
      * Notes:
      * To be used on when player picks up an orb
      *
      */
     public static void increaseOrbs(){
-        orbCount += 1;
-        questTracker();
+        if(orbCount < 5){
+            orbCount += 1;
+        }
     }
 
-	@Override
-	public void onTick(long i) {
-		if (getTask() != null && getTask().isAlive()) {
-			getTask().onTick(i);
+    @Override
+    public void onTick(long i) {
+        if (getTask() != null && getTask().isAlive()) {
+            getTask().onTick(i);
 
-			if (getTask().isComplete()) {
-				setTask(null);
-			}
-		}
-	}
+            if (getTask().isComplete()) {
+                setTask(null);
+            }
+        }
+    }
 
-	@Override
-	public void notifyTouchDown(int screenX, int screenY, int pointer, int button) {
-		float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(), Gdx.input.getY());
-		float[] clickedPosition = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
+    @Override
+    public void notifyTouchDown(int screenX, int screenY, int pointer, int button) {
+        float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(), Gdx.input.getY());
+        float[] clickedPosition = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
 
-		System.out.printf("mouse: %.2f %.2f%n", mouse[0], mouse[1]);
-		System.out.printf("clickedPosition: %.2f %.2f%n", clickedPosition[0], clickedPosition[1]);
-		setTask(new MovementTask(this, new SquareVector(clickedPosition[0], clickedPosition[1])));
-	}
+        System.out.printf("mouse: %.2f %.2f%n", mouse[0], mouse[1]);
+        System.out.printf("clickedPosition: %.2f %.2f%n", clickedPosition[0], clickedPosition[1]);
+        setTask(new MovementTask(this, new SquareVector(clickedPosition[0], clickedPosition[1])));
+    }
 }
