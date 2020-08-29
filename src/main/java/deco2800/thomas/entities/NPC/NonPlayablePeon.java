@@ -20,10 +20,21 @@ public class NonPlayablePeon extends Peon implements Interactable {
     private boolean hasFinishedSetup;
 
     public NonPlayablePeon(String name, SquareVector position) {
-        super(position.getRow(), position.getCol(), 0);
-        this.setObjectName(String.format("%sNPCPeon", name));
+        super();
+        this.setPosition(position.getCol(), position.getRow(), 1);
         this.name = name;
+        setup();
+    }
+
+    public NonPlayablePeon() {
+        super();
+        setup();
+    }
+
+    private void setup() {
+        this.setObjectName("npcPeon");
         hasFinishedSetup = false;
+        this.setSpeed(0f);
         // Listen for touch events
         GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
     }
@@ -36,11 +47,15 @@ public class NonPlayablePeon extends Peon implements Interactable {
      * @see TestWorld#generateWorld()
      */
     private void setObstructions() {
-        Tile feet = GameManager.get().getWorld().getTile(this.position.getCol(), this.position.getRow());
-        feet.setObstructed(true);
-        GameManager.get().getWorld().updateTile(feet);
+        try {
+            Tile feet = GameManager.get().getWorld().getTile(this.position.getCol(), this.position.getRow());
+            feet.setObstructed(true);
+            GameManager.get().getWorld().updateTile(feet);
 
-        hasFinishedSetup = true;
+            hasFinishedSetup = true;
+        } catch (NullPointerException e) {
+            // do nothing, it'll work eventually.
+        }
     }
 
     @Override
@@ -53,7 +68,11 @@ public class NonPlayablePeon extends Peon implements Interactable {
 
     @Override
     public void interact() {
-        // vibe
+        // Overwrite me :)
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setPlayer(PlayerPeon player) {

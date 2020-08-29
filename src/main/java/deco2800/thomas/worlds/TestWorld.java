@@ -12,7 +12,6 @@ import deco2800.thomas.entities.Environment.Rock;
 import deco2800.thomas.entities.Environment.Tree;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.managers.NonPlayablePeonManager;
-import deco2800.thomas.util.SpawnList;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -134,7 +133,7 @@ public class TestWorld extends AbstractWorld {
 		PlayerPeon player = new PlayerPeon(10f, 5f, 0.1f);
 		addEntity(player);
 
-		SpawnList<NonPlayablePeon> npnSpawns = new SpawnList<>();
+		List<NonPlayablePeon> npnSpawns = new ArrayList<>();
 		npnSpawns.add(new NonPlayablePeon("Fred", player.getPosition()));
 		NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, player, npnSpawns);
 		GameManager.get().addManager(npcManager);
