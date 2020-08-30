@@ -1,9 +1,7 @@
 package deco2800.thomas.renderers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.FPSLogger;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -22,7 +20,6 @@ public class OverlayRenderer implements Renderer {
 
 	long peakRAM = 0;
 
-
 	/**
 	 * Renders onto a batch, given a renderables with entities.
 	 * It is expected that AbstractWorld contains some entities and a Map to read tiles from.
@@ -40,8 +37,8 @@ public class OverlayRenderer implements Renderer {
 			font.getData().setScale(1f);
 		}
 
+		// Debug Info and Chat Message Overlay
 		batch.begin();
-
 
 		if (GameManager.get().debugMode) {
 			renderDebugText(batch, camera);
