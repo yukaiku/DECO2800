@@ -23,13 +23,14 @@ public class BoundingBox {
             throw new IllegalArgumentException(
                     "Width or height of bounding box cannot be negative.");
         }
-        bottomLeft = new SquareVector(origin);
+        bottomLeft = origin;
         this.width = width;
         this.height = height;
     }
 
     /**
      * Creates a new instance of a BoundingBox by copying an existing instance.
+     * @apiNote this will create a clone, and will not copy by reference.
      * @param bounds existing BoundingBox to copy.
      */
     public BoundingBox(BoundingBox bounds) {
