@@ -1,14 +1,9 @@
 package deco2800.thomas.managers;
 
-import deco2800.thomas.entities.AgentEntity;
-import deco2800.thomas.entities.Peon;
 import deco2800.thomas.entities.enemies.Boss;
 import deco2800.thomas.entities.enemies.EnemyPeon;
-import deco2800.thomas.entities.enemies.Orc;
-import deco2800.thomas.entities.PlayerPeon;
 import deco2800.thomas.worlds.AbstractWorld;
 
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -21,23 +16,23 @@ public class EnemyManager extends TickableManager {
     // true if the spawning mechanism is active, false otherwise (default true)
     private boolean running;
 
-    // list of configured enemies allowed to spawn
-    private List<EnemyPeon> enemyConfigs;
+    // the target world
+    private final AbstractWorld world;
 
     // the maximum number of enemies allowed being alive at one time (will change in the future depending on types)
     private int enemyCap;
 
-    // the current number of enemies alive in the world
+    // list of configured enemies allowed to spawn
+    private final List<EnemyPeon> enemyConfigs;
+
+    // the current number of enemies alive in the world (excludes boss)
     private int enemyCount;
 
-    // current enemies alive
-    private List<EnemyPeon> enemies;
+    // current enemies alive (excludes boss)
+    private final List<EnemyPeon> enemies;
 
-    // the target player
-    private AgentEntity player;
-
-    // the target world
-    private final AbstractWorld world;
+    // the current boss (this can be null)
+    private Boss boss;
 
     private final float spawnRangeMin;
     private final float spawnRangeMax;
@@ -45,6 +40,13 @@ public class EnemyManager extends TickableManager {
     private int tick;
     private final Random random;
 
+    /**
+     * Initialise an EnemyManager for the world.
+     * @param world The world where the manager will operate on.
+     * @param enemyCap The maximum number of wild enemies allowed to exist at one time.
+     * @param enemyConfigs Blueprints of enemies (one for each type) the manager will automatically spawn.
+     *                     The enemyConfigs should not contain bosses, or they will be randomly placed and generated.
+     */
     public EnemyManager(AbstractWorld world, int enemyCap, List<EnemyPeon> enemyConfigs) {
         this.running = true;
 
@@ -54,17 +56,30 @@ public class EnemyManager extends TickableManager {
 
         this.enemyCount = 0;
         this.enemies = new ArrayList<>();
-        this.player = world.getPlayerEntity();
-        // give an initial tick offset
-        this.tick = 25;
-        this.random = new Random();
+        this.boss = null;
 
         this.spawnRangeMin = 5;
-        this.spawnRangeMax = 14;
+        this.spawnRangeMax = 10;
+
+        this.tick = 100;
+        this.random = new Random();
     }
 
+    /**
+     * Initialise an EnemyManager with a boss.
+     * Bosses need to be later manually placed using the spawnBoss() method.
+     */
     public EnemyManager(AbstractWorld world, int enemyCap, List<EnemyPeon> enemyConfigs, Boss boss) {
         this(world, enemyCap, enemyConfigs);
+        this.boss = boss;
+    }
+
+    /**
+     * Check if the enemy is currently spawning.
+     * @return true if the enemy is currently spawning, false otherwise
+     */
+    public boolean checkEnemySpawning() {
+        return this.running;
     }
 
     /**
@@ -81,20 +96,8 @@ public class EnemyManager extends TickableManager {
         this.running = false;
     }
 
-    /**
-     * Check if the enemy is currently spawning.
-     * @return true if the enemy is currently spawning, false otherwise
-     */
-    public boolean checkEnemySpawning() {
-        return this.running;
-    }
-
-    /**
-     * Special Enemies (such as bosses and storyline-specific enemies) will bypass the enemyCap limit and
-     * need to be manually placed.
-     */
-    public void spawnSpecialEnemy(EnemyPeon enemy, float x, float y) {
-
+    public List<EnemyPeon> getEnemies() {
+        return new ArrayList<>(enemies);
     }
 
     /**
@@ -103,7 +106,7 @@ public class EnemyManager extends TickableManager {
      * @param x the x position on the map
      * @param y the y position on the map
      * @return True if successfully spawned, false otherwise.
-     * todo: check if the position is out of map
+     * todo: check if the position is outside of map
      */
     public boolean spawnEnemy(EnemyPeon enemy, float x, float y) {
         if (running && enemyCount < enemyCap) {
@@ -117,6 +120,28 @@ public class EnemyManager extends TickableManager {
     }
 
     /**
+     * Spawns a random enemy from the configuration list.
+     * Normally it will be called automatically by the manager.
+     */
+    public void spawnRandomEnemy() {
+        // currently spawns an enemy every 100 ticks
+        // generate a random value between -max and -min, or between +min and +max
+        float xOffset = (spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin)) * (random.nextInt(2) * 2 - 1);
+        float yOffset = (spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin)) * (random.nextInt(2) * 2 - 1);
+        // choose a random enemy blueprint
+        EnemyPeon enemy = enemyConfigs.get(random.nextInt(enemyConfigs.size())).deepCopy();
+        spawnEnemy(enemy, world.getPlayerEntity().getCol() + xOffset, world.getPlayerEntity().getRow() + yOffset);
+    }
+
+    /**
+     * Spawns the boss at the given position.
+     */
+    public void spawnBoss(Boss boss, float x, float y) {
+        boss.setPosition(x, y);
+        world.addEntity(boss);
+    }
+
+    /**
      * Removes an enemy (when it's dead or de-spawned)
      */
     public void removeEnemy(EnemyPeon enemy) {
@@ -125,25 +150,36 @@ public class EnemyManager extends TickableManager {
         enemyCount--;
     }
 
-    public List<EnemyPeon> getEnemies() {
-        return new ArrayList<>(enemies);
+    public Boss getBoss() {
+        return boss;
+    }
+
+    public void setBoss(Boss boss) {
+        this.boss = boss;
+    }
+
+    /**
+     * Removes the boss.
+     */
+    public void removeBoss() {
+        world.deleteEntity(boss.getEntityID());
+    }
+
+    public int getEnemyCap() {
+        return enemyCap;
+    }
+
+    public void setEnemyCap(int enemyCap) {
+        this.enemyCap = enemyCap;
     }
 
     @Override
     public void onTick(long i) {
-        if (tick > 100) {
+        if (++tick > 100) {
             if (enemyCount < enemyCap) {
-                // currently spawns a dummy enemy every 50 ticks
-                // generate a random value between -max and -min, or between +min and +max
-                float xOffset = (spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin)) * (random.nextInt(2) * 2 - 1);
-                float yOffset = (spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin)) * (random.nextInt(2) * 2 - 1);
-                Orc enemy = new Orc(1, 0.05f, 100);
-//                enemy.setTarget((Peon) player);
-                spawnEnemy(enemy, player.getCol() + xOffset, player.getRow() + yOffset);
+                spawnRandomEnemy();
             }
             tick = 0;
-        } else {
-            tick++;
         }
     }
 }
