@@ -24,7 +24,7 @@ public abstract class EnemyPeon extends Peon implements HasHealth {
      * Initialise an abstract Enemy. The position of the enemy is normally set by the spawnEnemy() in EnemyManager.
      */
     public EnemyPeon(String name, String texture, int height, float speed, int health) {
-        super(0, 0, speed < 0 ? 1f : speed);
+        super(0, 0, speed < 0 ? 0.05f : speed);
         this.setObjectName(Objects.requireNonNullElse(name, "EnemyPeon"));
         this.setTexture(Objects.requireNonNullElse(texture, "spacman_blue"));
         this.setHeight(height <= 0 ? 1 : height);
@@ -57,5 +57,13 @@ public abstract class EnemyPeon extends Peon implements HasHealth {
 
     public void setHealth(int newHealth) {
         this.health = newHealth;
+    }
+
+    /**
+     * Construct a new enemy from the blueprint.
+     * @return A new enemy
+     */
+    public EnemyPeon deepCopy() {
+        return null;
     }
 }

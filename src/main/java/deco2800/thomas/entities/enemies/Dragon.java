@@ -1,8 +1,6 @@
 package deco2800.thomas.entities.enemies;
 
 import deco2800.thomas.entities.Peon;
-import deco2800.thomas.entities.enemies.Boss;
-import deco2800.thomas.entities.enemies.PassiveEnemy;
 
 /**
  * A class that defines an implementation of a boss
@@ -11,6 +9,19 @@ import deco2800.thomas.entities.enemies.PassiveEnemy;
 public class Dragon extends Boss implements PassiveEnemy {
     public Dragon(int height, float speed, int health) {
         super("Elder Dragon", "spacman_blue", height, speed, health);
+    }
+
+    @Override
+    public void setHealth(int newHealth) {
+        super.setHealth(newHealth);
+        if (newHealth <= 0) {
+            onBossDefeat();
+        }
+    }
+
+    @Override
+    public void onBossDefeat() {
+
     }
 
     public void hitByTarget(Peon Target) {}
