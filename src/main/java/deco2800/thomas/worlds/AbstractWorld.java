@@ -137,7 +137,7 @@ public abstract class AbstractWorld {
     public List<AbstractEntity> getEntitiesInBounds(BoundingBox bounds) {
         List<AbstractEntity> entitiesInBounds = new ArrayList<>();
         for (AbstractEntity entity : entities) {
-            if (bounds.boundingBoxOverlaps(entity.getBounds())) {
+            if (bounds.overlaps(entity.getBounds())) {
                 entitiesInBounds.add(entity);
             }
         }

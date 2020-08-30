@@ -3,10 +3,13 @@ package deco2800.thomas.util;
 /**
  * Represents an Axis Aligned Bounding Box for collision checking,
  * implemented with existing SquareVectors as used in the game engine.
+ * Note: the origin vector is stored as a reference, so if set to the
+ * reference of the position vector of an entity, it will automatically
+ * update the position of the bounds.
  */
 public class BoundingBox {
     private SquareVector bottomLeft;
-    private SquareVector topRight;
+    private float width, height;
 
     /**
      * Creates a new instance of a BoundingBox with the given parameters.
@@ -21,7 +24,8 @@ public class BoundingBox {
                     "Width or height of bounding box cannot be negative.");
         }
         bottomLeft = new SquareVector(origin);
-        topRight = new SquareVector(bottomLeft.getCol() + width, bottomLeft.getRow() + height);
+        this.width = width;
+        this.height = height;
     }
 
     /**
@@ -30,7 +34,8 @@ public class BoundingBox {
      */
     public BoundingBox(BoundingBox bounds) {
         bottomLeft = new SquareVector(bounds.getLeft(), bounds.getBottom());
-        topRight = new SquareVector(bounds.getRight(), bounds.getTop());
+        width = bounds.getRight() - bounds.getLeft();
+        height = bounds.getTop() - bounds.getBottom();
     }
 
     /**
@@ -46,7 +51,7 @@ public class BoundingBox {
      * @return right side col
      */
     public float getRight() {
-        return topRight.getCol();
+        return bottomLeft.getCol() + width;
     }
 
     /**
@@ -62,7 +67,7 @@ public class BoundingBox {
      * @return top side row
      */
     public float getTop() {
-        return topRight.getRow();
+        return bottomLeft.getRow() + height;
     }
 
     /**
@@ -70,9 +75,11 @@ public class BoundingBox {
      * @param bounds BoundingBox to compare to.
      * @return True if boxes overlap, false otherwise.
      */
-    public boolean boundingBoxOverlaps(BoundingBox bounds) {
-        if (this.getLeft() > bounds.getRight() || this.getBottom() > bounds.getTop() ||
-                this.getRight() < bounds.getLeft() || this.getTop() < bounds.getBottom()) {
+    public boolean overlaps(BoundingBox bounds) {
+        if (this.getLeft() > bounds.getRight() ||
+                this.getBottom() > bounds.getTop() ||
+                this.getRight() < bounds.getLeft() ||
+                this.getTop() < bounds.getBottom()) {
             return false;
         }
         return true;
