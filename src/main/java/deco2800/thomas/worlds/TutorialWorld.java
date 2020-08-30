@@ -14,7 +14,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.Environment.Portal;
 import deco2800.thomas.entities.Environment.Rock;
+import deco2800.thomas.entities.Environment.Target;
 import deco2800.thomas.entities.Environment.Tree;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.NPC.TutorialNPC;
@@ -38,7 +40,7 @@ public class TutorialWorld extends AbstractWorld{
 
     boolean notGenerated = true;
     static final int TUTORIAL_WORLD_WIDTH = 10; // Height and width vars for the map size; constrains tile gen
-    static final int TUTORIAL_WORLD_HEIGHT = 7; // Note the map will double these numbers (bounds are +/- these limits)
+    static final int TUTORIAL_WORLD_HEIGHT = 6; // Note the map will double these numbers (bounds are +/- these limits)
 
     public TutorialWorld() {
         super(TUTORIAL_WORLD_WIDTH, TUTORIAL_WORLD_HEIGHT);
@@ -48,13 +50,13 @@ public class TutorialWorld extends AbstractWorld{
     protected void generateTiles() {
         for (int col = -TUTORIAL_WORLD_WIDTH; col < TUTORIAL_WORLD_WIDTH; col++) {
             for (int row = -TUTORIAL_WORLD_HEIGHT; row < TUTORIAL_WORLD_HEIGHT; row++) {
-                String type = "grass_1";
+                String type = "stone_floor";
                 tiles.add(new Tile(type, col, row));
             }
         }
     }
 
-    public void createBuildings() {
+    public void createEntities() {
         PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f);
         addEntity(player);
 
@@ -62,6 +64,24 @@ public class TutorialWorld extends AbstractWorld{
         npnSpawns.add(new TutorialNPC("Master", new SquareVector(0, 2)));
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, player, npnSpawns);
         GameManager.get().addManager(npcManager);
+
+        for (int i = -6; i < 6 + 1; i = i + 2) {
+            Tile t = GameManager.get().getWorld().getTile(i, TUTORIAL_WORLD_HEIGHT - 1);
+            if (t != null) {
+                entities.add(new Target(t, true));
+            }
+        }
+        for (int i = -6; i < 6 + 1; i = i + 2) {
+            if (i == 0) {
+                continue;
+            }
+            Tile t = GameManager.get().getWorld().getTile(i, -TUTORIAL_WORLD_HEIGHT);
+            if (t != null) {
+                entities.add(new Target(t, true));
+            }
+        }
+        Tile t = GameManager.get().getWorld().getTile(0, -TUTORIAL_WORLD_HEIGHT);
+        entities.add(new Portal(t, true));
     }
 
     @Override
@@ -72,7 +92,7 @@ public class TutorialWorld extends AbstractWorld{
         }
 
         if (notGenerated) {
-            createBuildings();
+            createEntities();
 
             notGenerated = false;
         }

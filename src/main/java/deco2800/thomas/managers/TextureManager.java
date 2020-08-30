@@ -69,6 +69,11 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("fenceN-E", new Texture("resources/fence_N-E.png"));
 			textureMap.put("fenceS-E", new Texture("resources/fence_S-E.png"));
 
+			textureMap.put("stone_floor", new Texture("resources/tutorial-tile-design-opt1.png"));
+			textureMap.put("target", new Texture("resources/tutorial-target.png"));
+			textureMap.put("portal", new Texture("resources/tutorial-portal.png"));
+			textureMap.put("dialog-box", new Texture("resources/dialogbox.png"));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
