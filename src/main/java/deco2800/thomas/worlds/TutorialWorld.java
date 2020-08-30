@@ -6,12 +6,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Environment.Rock;
 import deco2800.thomas.entities.Environment.Tree;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.managers.NonPlayablePeonManager;
+import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.renderers.Guideline;
+import deco2800.thomas.renderers.OverlayRenderer;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +59,7 @@ public class TutorialWorld extends AbstractWorld{
         addEntity(player);
 
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
-        npnSpawns.add(new TutorialNPC("Fred", new SquareVector(0, 2)));
+        npnSpawns.add(new TutorialNPC("Master", new SquareVector(0, 2)));
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, player, npnSpawns);
         GameManager.get().addManager(npcManager);
     }

@@ -12,6 +12,7 @@ import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
+import deco2800.thomas.renderers.Guideline;
 import deco2800.thomas.renderers.PotateCamera;
 import deco2800.thomas.renderers.OverlayRenderer;
 import deco2800.thomas.renderers.Renderer3D;
@@ -29,6 +30,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * 3D is for Isometric worlds
 	 * Check the documentation for each renderer to see how it handles WorldEntity coordinates
 	 */
+	private boolean tutorial = false;
 	Renderer3D renderer = new Renderer3D();
 	OverlayRenderer rendererDebug = new OverlayRenderer();
 	AbstractWorld world;
@@ -85,6 +87,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 
 	public GameScreen(final ThomasGame game, final gameType startType) {
+		if (startType == gameType.TUTORIAL) {
+			tutorial = true;
+		}
 		/* Create an example world for the engine */
 		this.game = game;
 
@@ -141,6 +146,14 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		rerenderMapObjects(batch, camera);
 		rendererDebug.render(batchDebug, cameraDebug);
+
+		// Add guidline if we are in the TutorialWorld
+		if (tutorial) {
+			SpriteBatch batchGuideline = new SpriteBatch();
+			batchGuideline.setProjectionMatrix(cameraDebug.combined);
+			Guideline guideline = new Guideline();
+			guideline.render(batchGuideline, cameraDebug);
+		}
 
 		/* Refresh the experience UI for if information was updated */
 		stage.act(delta);
