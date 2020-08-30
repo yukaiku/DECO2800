@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import com.badlogic.gdx.utils.Null;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,6 +105,7 @@ public class SwampWorld extends AbstractWorld {
     @Override
     public void onTick(long i) {
         super.onTick(i);
+
         for (AbstractEntity e : this.getEntities()) {
             e.onTick(0);
         }

@@ -20,7 +20,6 @@ public class OverlayRenderer implements Renderer {
 
 	long peakRAM = 0;
 
-
 	/**
 	 * Renders onto a batch, given a renderables with entities.
 	 * It is expected that AbstractWorld contains some entities and a Map to read tiles from.
@@ -38,23 +37,7 @@ public class OverlayRenderer implements Renderer {
 			font.getData().setScale(1f);
 		}
 
-//		System.out.println("Cam pos x: " + camera.position.x);
-//		System.out.println("Cam pos y: " + camera.position.y);
-//		System.out.println("Cam pos z: " + camera.position.z);
-//		System.out.println("Cam vpwidth: " + camera.viewportWidth);
-//		System.out.println("Cam vpheight: " + camera.viewportHeight);
-
-		// Dark screen overlay
-//		Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
-//		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-//		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-//
-//		shapeRenderer.setColor(new Color(0, 0, 0, 0.8f));
-//		shapeRenderer.rect(0, 0, camera.viewportWidth, camera.viewportHeight);
-//
-//		shapeRenderer.end();
-//		Gdx.gl.glDisable(GL20.GL_BLEND);
-
+		// Debug Info and Chat Message Overlay
 		batch.begin();
 
 		if (GameManager.get().debugMode) {
