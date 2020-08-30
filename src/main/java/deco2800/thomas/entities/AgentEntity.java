@@ -2,11 +2,13 @@ package deco2800.thomas.entities;
 
 import com.google.gson.annotations.Expose;
 
+import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.util.SquareVector;
 
 public abstract class AgentEntity extends AbstractEntity{
 	@Expose
 	protected float speed;
+	private MovementTask.Direction movingDirection = MovementTask.Direction.NONE;
 
 
 	public AgentEntity(float col, float row, int renderOrder, float speed) {
@@ -30,4 +32,11 @@ public abstract class AgentEntity extends AbstractEntity{
 		this.speed = speed;
 	}
 
+	public MovementTask.Direction getMovingDirection() {
+		return movingDirection;
+	}
+
+	public void setMovingDirection(MovementTask.Direction movingDirection) {
+		this.movingDirection = movingDirection;
+	}
 }
