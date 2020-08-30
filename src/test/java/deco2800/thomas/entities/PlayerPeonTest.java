@@ -1,6 +1,7 @@
 package deco2800.thomas.entities;
 
 import com.badlogic.gdx.Input;
+import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.tasks.MovementTask;
 import org.junit.Test;
 
@@ -8,7 +9,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
-public class PlayerPeonTest {
+public class PlayerPeonTest extends BaseGDXTest {
     @Test
     public void testPlayerSet() {
         PlayerPeon p = new PlayerPeon(0, 0, 1);
