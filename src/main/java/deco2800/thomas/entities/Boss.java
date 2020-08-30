@@ -6,4 +6,9 @@ package deco2800.thomas.entities;
  * and provide rewards when defeated.
  */
 public class Boss extends EnemyPeon {
+
+    public Boss(float row, float col, float speed) {
+        super(row, col, speed);
+    }
+
 }

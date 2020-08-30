@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import com.badlogic.gdx.Game;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +16,7 @@ import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.entities.Tree;
 import deco2800.thomas.entities.PlayerPeon;
 import deco2800.thomas.entities.Rock;
+import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 
 @SuppressWarnings("unused")
@@ -128,11 +128,13 @@ public class TestWorld extends AbstractWorld {
 					tiles.add(new Tile(type, q, r));
 			}
 		}
-
 		// Create the entities in the game
 		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
 		addEntity(this.getPlayerEntity());
 
+		// Add enemy spawning manager targeting the player
+		EnemyManager enemyManager = new EnemyManager(this, (PlayerPeon) this.getPlayerEntity(), 5);
+		GameManager.get().addManager(enemyManager);
 
 	}
 
