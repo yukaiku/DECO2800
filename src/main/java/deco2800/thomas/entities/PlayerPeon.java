@@ -35,12 +35,6 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
 
     @Override
     public void notifyTouchDown(int screenX, int screenY, int pointer, int button) {
-        float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(), Gdx.input.getY());
-        float[] clickedPosition = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
-
-        System.out.printf("mouse: %.2f %.2f%n", mouse[0], mouse[1]);
-        System.out.printf("clickedPosition: %.2f %.2f%n", clickedPosition[0], clickedPosition[1]);
-        setTask(new MovementTask(this, new SquareVector(clickedPosition[0], clickedPosition[1])));
     }
 
     @Override
