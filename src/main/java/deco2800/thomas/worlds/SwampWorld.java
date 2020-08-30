@@ -38,7 +38,7 @@ public class SwampWorld extends AbstractWorld {
         Random random = new Random();
         for (int x = -width; x < width; x++) {
             for (int y = -height; y < height; y++) {
-                tiles.add(new Tile("swamp_4", x, y));
+                tiles.add(new SwampTile("swamp_4", x, y));
             }
         }
 

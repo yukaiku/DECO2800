@@ -1,9 +1,7 @@
 package deco2800.thomas.renderers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.FPSLogger;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -40,8 +38,24 @@ public class OverlayRenderer implements Renderer {
 			font.getData().setScale(1f);
 		}
 
-		batch.begin();
+//		System.out.println("Cam pos x: " + camera.position.x);
+//		System.out.println("Cam pos y: " + camera.position.y);
+//		System.out.println("Cam pos z: " + camera.position.z);
+//		System.out.println("Cam vpwidth: " + camera.viewportWidth);
+//		System.out.println("Cam vpheight: " + camera.viewportHeight);
 
+		// Dark screen overlay
+//		Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
+//		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+//		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+//
+//		shapeRenderer.setColor(new Color(0, 0, 0, 0.8f));
+//		shapeRenderer.rect(0, 0, camera.viewportWidth, camera.viewportHeight);
+//
+//		shapeRenderer.end();
+//		Gdx.gl.glDisable(GL20.GL_BLEND);
+
+		batch.begin();
 
 		if (GameManager.get().debugMode) {
 			renderDebugText(batch, camera);

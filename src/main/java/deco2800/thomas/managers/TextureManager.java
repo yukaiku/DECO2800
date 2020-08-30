@@ -49,10 +49,10 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("spacman_ded", new Texture("resources/spacman.png"));
 			textureMap.put("spacman_blue", new Texture("resources/spacman_blue.png"));
 
-			textureMap.put("swamp_1", new Texture("resources/SwampTile/swamp_1.png"));
-			textureMap.put("swamp_2", new Texture("resources/SwampTile/swamp_2.png"));
-			textureMap.put("swamp_3", new Texture("resources/SwampTile/swamp_3.png"));
-			textureMap.put("swamp_4", new Texture("resources/SwampTile/swamp_4.png"));
+			textureMap.put("swamp_1", new Texture("resources/environment/swamp/tile/swamp_1.png"));
+			textureMap.put("swamp_2", new Texture("resources/environment/swamp/tile/swamp_2.png"));
+			textureMap.put("swamp_3", new Texture("resources/environment/swamp/tile/swamp_3.png"));
+			textureMap.put("swamp_4", new Texture("resources/environment/swamp/tile/swamp_4.png"));
 
 			textureMap.put("grass_0", new Texture("resources/square.png"));
 			textureMap.put("grass_1", new Texture("resources/square2.png"));
