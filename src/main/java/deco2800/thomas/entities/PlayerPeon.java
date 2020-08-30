@@ -1,6 +1,5 @@
 package deco2800.thomas.entities;
 
-import com.badlogic.gdx.Gdx;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.observers.KeyDownObserver;
@@ -8,7 +7,6 @@ import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.util.SquareVector;
-import deco2800.thomas.util.WorldUtil;
 import com.badlogic.gdx.Input;
 
 public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserver, KeyUpObserver {
@@ -80,7 +78,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
                 break;
         }
         if (this.getTask() == null || this.getTask().isComplete()) {
-            setTask(new MovementTask(this, new SquareVector(this.getCol(), this.getRow())));
+            this.setTask(new MovementTask(this, new SquareVector(this.getCol(), this.getRow())));
         }
     }
 
