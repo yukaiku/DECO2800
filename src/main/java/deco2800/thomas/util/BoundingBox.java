@@ -19,7 +19,7 @@ public class BoundingBox {
      * @throws IllegalArgumentException when the width, or height of box <= 0
      */
     public BoundingBox(SquareVector origin, float width, float height) {
-        if (width <= 0 || height <= 0) {
+        if (width < 0 || height < 0) {
             throw new IllegalArgumentException(
                     "Width or height of bounding box cannot be negative.");
         }
@@ -37,6 +37,22 @@ public class BoundingBox {
         bottomLeft = new SquareVector(bounds.getLeft(), bounds.getBottom());
         width = bounds.getRight() - bounds.getLeft();
         height = bounds.getTop() - bounds.getBottom();
+    }
+
+    public void setCol(float col) {
+        bottomLeft.setCol(col);
+    }
+
+    public void setRow(float row) {
+        bottomLeft.setRow(row);
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
     }
 
     /**

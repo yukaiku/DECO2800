@@ -1,5 +1,6 @@
 package deco2800.thomas.entities;
 
+import deco2800.thomas.BaseGDXTest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +9,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-public class EnemyPeonTest {
+public class EnemyPeonTest extends BaseGDXTest {
 
     @Test
     public void testEnemyTexture() {

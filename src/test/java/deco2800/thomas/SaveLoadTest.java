@@ -1,10 +1,8 @@
 package deco2800.thomas;
 
+import com.badlogic.gdx.graphics.Texture;
 import deco2800.thomas.entities.*;
-import deco2800.thomas.managers.DatabaseManager;
-import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.InputManager;
-import deco2800.thomas.managers.OnScreenMessageManager;
+import deco2800.thomas.managers.*;
 import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
 import org.junit.Before;
@@ -31,8 +29,7 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({GameManager.class, DatabaseManager.class, PlayerPeon.class})
 @PowerMockIgnore({"jdk.internal.reflect.*"})
-
-public class SaveLoadTest {
+public class SaveLoadTest extends BaseGDXTest {
     private TestWorld w = null;
    
     @Mock
@@ -57,6 +54,10 @@ public class SaveLoadTest {
         when(mockGM.getManager(OnScreenMessageManager.class)).thenReturn(mockOSMM);
         
         when(GameManager.getManagerFromInstance(InputManager.class)).thenReturn(Im);
+
+        // Mocked texture manager
+        TextureManager mockTM = new TextureManager();
+        when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(mockTM);
     }
 
     // TODO: Split this test up into multiple unit tests that test individual component functionality

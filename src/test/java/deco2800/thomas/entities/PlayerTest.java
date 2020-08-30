@@ -1,12 +1,13 @@
 package deco2800.thomas.entities;
 
+import deco2800.thomas.BaseGDXTest;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class PlayerTest {
+public class PlayerTest extends BaseGDXTest {
 	@Test
 	public void testPlayerSet() {
 		PlayerPeon p = new PlayerPeon(0,0,1);
