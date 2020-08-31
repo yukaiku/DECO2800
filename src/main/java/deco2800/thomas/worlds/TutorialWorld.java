@@ -20,6 +20,7 @@ import deco2800.thomas.entities.Environment.Target;
 import deco2800.thomas.entities.Environment.Tree;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.NPC.TutorialNPC;
+import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.NonPlayablePeonManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.Guideline;
@@ -47,6 +48,11 @@ public class TutorialWorld extends AbstractWorld{
     }
 
     @Override
+    protected void generateWorld() {
+
+    }
+
+    @Override
     protected void generateTiles() {
         for (int col = -TUTORIAL_WORLD_WIDTH; col < TUTORIAL_WORLD_WIDTH; col++) {
             for (int row = -TUTORIAL_WORLD_HEIGHT; row < TUTORIAL_WORLD_HEIGHT; row++) {
@@ -54,17 +60,21 @@ public class TutorialWorld extends AbstractWorld{
                 tiles.add(new Tile(type, col, row));
             }
         }
-    }
-
-    public void createEntities() {
         PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f);
-        addEntity(player);
+//        addEntity(player);
+        this.setPlayerEntity(player);
+        addEntity(this.getPlayerEntity());
+
+        EnemyManager enemyManager = new EnemyManager(this, (PlayerPeon) this.getPlayerEntity(), 5);
+        GameManager.get().addManager(enemyManager);
 
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
         npnSpawns.add(new TutorialNPC("Master", new SquareVector(0, 2)));
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, player, npnSpawns);
         GameManager.get().addManager(npcManager);
+    }
 
+    public void createObjects() {
         for (int i = -6; i < 6 + 1; i = i + 2) {
             Tile t = GameManager.get().getWorld().getTile(i, TUTORIAL_WORLD_HEIGHT - 1);
             if (t != null) {
@@ -92,8 +102,7 @@ public class TutorialWorld extends AbstractWorld{
         }
 
         if (notGenerated) {
-            createEntities();
-
+            createObjects();
             notGenerated = false;
         }
     }

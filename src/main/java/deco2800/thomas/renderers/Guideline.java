@@ -19,7 +19,6 @@ public class Guideline implements Renderer {
         batch.begin();
         Texture img = GameManager.get().getManager(TextureManager.class).getTexture("dialog-box");
         Sprite sprite = new Sprite(img);
-        System.out.println("cam-x:" + camera.position.x + "/ cam-y:" + camera.position.y + "/ cam-w:" + camera.viewportWidth + "/ cam-h:" + camera.viewportHeight);
         batch.draw(sprite, camera.position.x - sprite.getWidth()/2, camera.position.y + camera.viewportHeight / 2 - sprite.getHeight());
         batch.end();
     }

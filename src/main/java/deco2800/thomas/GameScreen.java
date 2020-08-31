@@ -17,6 +17,7 @@ import deco2800.thomas.renderers.Guideline;
 import deco2800.thomas.renderers.PotateCamera;
 import deco2800.thomas.renderers.OverlayRenderer;
 import deco2800.thomas.renderers.Renderer3D;
+import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
 import org.slf4j.Logger;
@@ -43,7 +44,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * Create a camera for panning and zooming.
 	 * Camera must be updated every render cycle.
 	 */
-	PotateCamera camera, cameraDebug;
+	OrthographicCamera camera, cameraDebug;
 
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
 
@@ -102,9 +103,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		gameManager.setWorld(world);
 
-		// Add first peon to the world
-		camera = new PotateCamera(1920, 1080);
-		cameraDebug = new PotateCamera(1920, 1080);
+		// Initialize camera
+		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cameraDebug = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		//Add Quest tracker to the game UI
 		String questTrackerText = "Orbs: " + Integer.toString(PlayerPeon.questTracker()) + "/4";
@@ -142,12 +143,12 @@ public class GameScreen implements Screen, KeyDownObserver {
 		questTracker.setText(questTrackerText);
 
 		handleRenderables();
-
-		moveCamera();
+		
+		CameraUtil.zoomableCamera(camera, Input.Keys.MINUS, Input.Keys.EQUALS, delta);
+		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
 
 		cameraDebug.position.set(camera.position);
 		cameraDebug.update();
-		camera.update();
 
 		SpriteBatch batchDebug = new SpriteBatch();
 		batchDebug.setProjectionMatrix(cameraDebug.combined);
@@ -282,45 +283,4 @@ public class GameScreen implements Screen, KeyDownObserver {
 		}
 	}
 
-	public void moveCamera() {
-		//timmeh to fix hack.  // fps is not updated cycle by cycle
-		float normilisedGameSpeed = (60.0f / Gdx.graphics.getFramesPerSecond());
-
-		int goFastSpeed = (int) (5 * normilisedGameSpeed * camera.zoom);
-
-		if (!camera.isPotate()) {
-
-			if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-				goFastSpeed *= goFastSpeed * goFastSpeed;
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-				camera.translate(-goFastSpeed, 0, 0);
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-				camera.translate(goFastSpeed, 0, 0);
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-				camera.translate(0, -goFastSpeed, 0);
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-				camera.translate(0, goFastSpeed, 0);
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.EQUALS)) {
-				camera.zoom *= 1 - 0.01 * normilisedGameSpeed;
-				if (camera.zoom < 0.5) {
-					camera.zoom = 0.5f;
-				}
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.MINUS)) {
-				camera.zoom *= 1 + 0.01 * normilisedGameSpeed;
-			}
-		}
-
-	}
 }

@@ -17,6 +17,11 @@ public class LoadGameWorld extends AbstractWorld {
 		super();
 	}
 
+	@Override
+	protected void generateWorld() {
+
+	}
+
 	/**
 	 * TODO Implement this function
 	 */
