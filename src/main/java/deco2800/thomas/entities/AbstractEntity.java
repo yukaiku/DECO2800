@@ -1,13 +1,21 @@
 package deco2800.thomas.entities;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.Texture;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.NetworkManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.Renderable;
+import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
 
 import java.util.Objects;
 
 import com.google.gson.annotations.Expose;
+import deco2800.thomas.util.WorldUtil;
+import org.w3c.dom.Text;
+
+import static deco2800.thomas.managers.GameManager.getManagerFromInstance;
 
 /**
  * AbstractEntity is an item that can exist in both 3D and 2D worlds.
@@ -34,6 +42,8 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	private String texture = "error_box";
 
 	protected SquareVector position;
+
+	protected BoundingBox bounds;
 
 	private int height;
 
@@ -67,6 +77,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 
 	public AbstractEntity() {
 		this.position = new SquareVector();
+		this.bounds = new BoundingBox(this.position, 0, 0);
 		this.colRenderLength = 1f;
 		this.rowRenderLength = 1f;
 		entityID = AbstractEntity.getNextID();
@@ -85,6 +96,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	 */
 	public AbstractEntity(float col, float row, int height, float colRenderLength, float rowRenderLength) {
 		this.position = new SquareVector(col, row);
+		this.bounds = new BoundingBox(this.position, 0, 0);
 		this.height = height;
 		this.colRenderLength = colRenderLength;
 		this.rowRenderLength = rowRenderLength;
@@ -180,6 +192,27 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 		return false;
 	}
 
+	/**
+	 * Gets the bounding box of this entity.
+	 * @return the bounding box of this entity.
+	 */
+	public BoundingBox getBounds() {
+		return bounds;
+	}
+
+	/**
+	 * Sets the width and height of the bounding box of this entity
+	 * based off of the current texture.
+	 */
+	public void setBounds() {
+		TextureManager textureManager =
+				GameManager.getManagerFromInstance(TextureManager.class);
+		bounds.setWidth(textureManager.getTexture(texture).getWidth()
+				* WorldUtil.SCALE_X);
+		bounds.setHeight(textureManager.getTexture(texture).getHeight()
+				* WorldUtil.SCALE_Y);
+	}
+
 	@Override
 	public float getColRenderLength() {
 		return this.colRenderLength;
@@ -208,6 +241,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	 */
 	public void setTexture(String texture) {
 		this.texture = texture;
+		setBounds();
 	}
 
 

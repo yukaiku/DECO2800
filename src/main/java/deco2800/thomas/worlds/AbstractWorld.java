@@ -4,10 +4,12 @@ import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.*;
 
@@ -22,10 +24,12 @@ public abstract class AbstractWorld {
 	 */
 	static final int DEFAULT_WIDTH = 25;
 
+
 	/**
 	 * Default height of the world; vertical coordinates of the world will be within `[-DEFAULT_HEIGHT, DEFAULT_HEIGHT]`
 	 */
 	static final int DEFAULT_HEIGHT = 25;
+    protected AgentEntity playerEntity;
 
 	/**
 	 * Width of the world; horizontal coordinates of the world will be within `[-width, width]`
@@ -87,6 +91,8 @@ public abstract class AbstractWorld {
 		assignTileNeighbours();
 		generateTileIndices();
 	}
+
+	protected abstract void generateWorld();
 
 	/**
 	 * Generates the tiles for the world
@@ -277,6 +283,22 @@ public abstract class AbstractWorld {
 		return e;
 	}
 
+    /**
+     * Gets an array list of all the entities contained within the given bounds.
+     * @param bounds Bounding box to check within.
+     * @return ArrayList of all entities within bounds.
+     */
+    public List<AbstractEntity> getEntitiesInBounds(BoundingBox bounds) {
+        List<AbstractEntity> entitiesInBounds = new ArrayList<>();
+        for (AbstractEntity entity : entities) {
+            if (bounds.overlaps(entity.getBounds())) {
+                entitiesInBounds.add(entity);
+            }
+        }
+
+        return entitiesInBounds;
+    }
+
 	/**
 	 * Adds an entity to the world.
 	 *
@@ -352,4 +374,13 @@ public abstract class AbstractWorld {
 			tiles.remove(tile);
 		}
 	}
+
+	public AgentEntity getPlayerEntity() {
+		return playerEntity;
+	}
+
+	public void setPlayerEntity(AgentEntity playerEntity) {
+		this.playerEntity = playerEntity;
+	}
+
 }
