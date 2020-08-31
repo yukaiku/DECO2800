@@ -10,5 +10,7 @@ public abstract class Boss extends EnemyPeon {
         super(name, texture, height, speed, health);
     }
 
-    public void onBossDefeat() {}
+    public void onBossDefeat() {
+
+    }
 }

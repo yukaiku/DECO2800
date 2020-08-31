@@ -13,6 +13,6 @@ public class Goblin extends Minion implements AggressiveEnemy {
 
     @Override
     public Goblin deepCopy() {
-        return new Goblin(super.getHeight(), super.getSpeed(), super.getHealth());
+        return new Goblin(super.getHeight(), super.getSpeed(), super.getMaxHealth());
     }
 }

@@ -59,6 +59,6 @@ public class Orc extends Monster implements AggressiveEnemy {
 
     @Override
     public Orc deepCopy() {
-        return new Orc(super.getHeight(), super.getSpeed(), super.getHealth());
+        return new Orc(super.getHeight(), super.getSpeed(), super.getMaxHealth());
     }
 }
