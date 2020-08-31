@@ -19,8 +19,8 @@ public class VolcanoWorld extends AbstractWorld{
         Random random = new Random();
         for (int q = -WORLD_WIDTH; q < WORLD_WIDTH; q++) {
             for (int r = -WORLD_HEIGHT; r < WORLD_HEIGHT; r++) {
-                int elevation = random.nextInt(3);
-                String type = "grass_";
+                int elevation = random.nextInt(5);
+                String type = "Volcano_";
                 type += elevation;
                 tiles.add(new Tile(type, q, r));
                 //MAKE THE ABOVE SWAMP TILE
