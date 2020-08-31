@@ -1,11 +1,8 @@
 package deco2800.thomas.worlds;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
+import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -132,10 +129,11 @@ public class TestWorld extends AbstractWorld {
 		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
 		addEntity(this.getPlayerEntity());
 
-		// Add enemy spawning manager targeting the player
-		EnemyManager enemyManager = new EnemyManager(this, (PlayerPeon) this.getPlayerEntity(), 5);
+		// Provide available enemies to the EnemyManager
+		Orc orc = new Orc(1, 0.05f, 100);
+		Orc speedyOrc = new Orc(1, 0.07f, 50);
+		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(orc, speedyOrc));
 		GameManager.get().addManager(enemyManager);
-
 	}
 
 	@Override
