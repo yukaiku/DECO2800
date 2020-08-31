@@ -4,10 +4,11 @@ import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.AgentEntity;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
 
-import java.util.Collections;
-import java.util.List;
+
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.*;
 
@@ -26,6 +27,9 @@ public abstract class AbstractWorld {
 	 * Default height of the world; vertical coordinates of the world will be within `[-DEFAULT_HEIGHT, DEFAULT_HEIGHT]`
 	 */
 	static final int DEFAULT_HEIGHT = 25;
+
+    protected AgentEntity playerEntity;
+
 
 	/**
 	 * Width of the world; horizontal coordinates of the world will be within `[-width, width]`
@@ -276,6 +280,21 @@ public abstract class AbstractWorld {
 		Collections.sort(e);
 		return e;
 	}
+    /**
+     * Gets an array list of all the entities contained within the given bounds.
+     * @param bounds Bounding box to check within.
+     * @return ArrayList of all entities within bounds.
+     */
+    public List<AbstractEntity> getEntitiesInBounds(BoundingBox bounds) {
+        List<AbstractEntity> entitiesInBounds = new ArrayList<>();
+        for (AbstractEntity entity : entities) {
+            if (bounds.boundingBoxOverlaps(entity.getBounds())) {
+                entitiesInBounds.add(entity);
+            }
+        }
+
+        return entitiesInBounds;
+    }
 
 	/**
 	 * Adds an entity to the world.
@@ -352,4 +371,31 @@ public abstract class AbstractWorld {
 			tiles.remove(tile);
 		}
 	}
+
+    public void setTileMap(CopyOnWriteArrayList<Tile> tileMap) {
+        this.tiles = tileMap;
+    }
+
+    public void deleteTile(int tileid) {
+        Tile tile = GameManager.get().getWorld().getTile(tileid);
+        if (tile != null) {
+            tile.dispose();
+        }
+    }
+
+    public void deleteEntity(int entityID) {
+        for (AbstractEntity e : this.getEntities()) {
+            if (e.getEntityID() == entityID) {
+                e.dispose();
+            }
+        }
+    }
+
+    public AgentEntity getPlayerEntity() {
+        return playerEntity;
+    }
+
+    public void setPlayerEntity(AgentEntity playerEntity) {
+        this.playerEntity = playerEntity;
+    }
 }

@@ -16,6 +16,7 @@ import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.entities.Tree;
 import deco2800.thomas.entities.PlayerPeon;
 import deco2800.thomas.entities.Rock;
+import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 
 @SuppressWarnings("unused")
@@ -53,7 +54,6 @@ public class TestWorld extends AbstractWorld {
 	private StaticEntity createBuilding2(float col, float row) {
 		List<Part> parts = new ArrayList<Part>();
 		parts.add(new Part(new SquareVector(0, 0), "buildingA", true));
-
 		// left
 		parts.add(new Part(new SquareVector(-2, 0), "fenceN-S", true));
 		parts.add(new Part(new SquareVector(-2, 1), "fenceN-S", true));
@@ -126,9 +126,15 @@ public class TestWorld extends AbstractWorld {
 				tiles.add(new Tile(type, q, r));
 			}
 		}
-
 		// Create the entities in the game
-		addEntity(new PlayerPeon(10f, 5f, 0.1f));
+
+		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
+		addEntity(this.getPlayerEntity());
+
+		// Add enemy spawning manager targeting the player
+		EnemyManager enemyManager = new EnemyManager(this, (PlayerPeon) this.getPlayerEntity(), 5);
+		GameManager.get().addManager(enemyManager);
+
 	}
 
 	@Override

@@ -14,10 +14,11 @@ import deco2800.thomas.entities.Peon;
 import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
-import deco2800.thomas.renderers.PotateCamera;
 import deco2800.thomas.renderers.OverlayRenderer;
 import deco2800.thomas.renderers.DayCycleRenderer;
+import deco2800.thomas.renderers.PotateCamera;
 import deco2800.thomas.renderers.Renderer3D;
+import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
 import org.slf4j.Logger;
@@ -51,7 +52,11 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * Create a camera for panning and zooming.
 	 * Camera must be updated every render cycle.
 	 */
-	PotateCamera camera, cameraDebug, cameraDayCycle;
+
+	PotateCamera cameraDayCycle;
+
+	OrthographicCamera camera, cameraDebug;
+
 
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
 
@@ -98,10 +103,14 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		gameManager.setWorld(world);
 
+
 		// Add first peon to the world
-		camera = new PotateCamera(1920, 1080);
-		cameraDebug = new PotateCamera(1920, 1080);
 		cameraDayCycle = new PotateCamera(1920, 1080);
+
+		// Initialize camera
+		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cameraDebug = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
 
 		/* Add the window to the stage */
 		GameManager.get().setSkin(skin);
@@ -141,11 +150,13 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void render(float delta) {
 		handleRenderables();
 
-		moveCamera();
+		//MoveCamera Function was here for dayNight Cycle?
+		
+		CameraUtil.zoomableCamera(camera, Input.Keys.MINUS, Input.Keys.EQUALS, delta);
+		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
 
 		cameraDebug.position.set(camera.position);
 		cameraDebug.update();
-		camera.update();
 
 		SpriteBatch batchDayCycle = new SpriteBatch();
 		batchDayCycle.setProjectionMatrix(cameraDayCycle.combined);
@@ -274,7 +285,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 			DatabaseManager.loadWorld(null);
 		}
 	}
-
+/*
 	public void moveCamera() {
 		//timmeh to fix hack.  // fps is not updated cycle by cycle
 		float normilisedGameSpeed = (60.0f / Gdx.graphics.getFramesPerSecond());
@@ -315,4 +326,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 			}
 		}
 	}
+	//This method has been made redundant for the moment since the camera follows
+	the player
+ */
+
 }
