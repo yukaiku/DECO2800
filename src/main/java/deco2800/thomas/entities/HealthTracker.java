@@ -33,7 +33,7 @@ public class HealthTracker {
     /**
      * Sets the new maximumHealthValue.
      * <P>
-     * Can not be set bellow 0.
+     * Can not be set below 0.
      *
      * @param healthValue new value to which maximumHealthValue is set.
      */

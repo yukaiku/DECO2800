@@ -12,17 +12,17 @@ public class Dragon extends Boss implements PassiveEnemy {
     }
 
     @Override
-    public void setHealth(int newHealth) {
-        super.setHealth(newHealth);
-        if (newHealth <= 0) {
+    public void setMaxHealth(int newHealth) {
+        super.setMaxHealth(newHealth);
+        if (getCurrentHealth() <= 0) {
             onBossDefeat();
         }
     }
 
     @Override
     public void onBossDefeat() {
-
     }
 
-    public void hitByTarget(Peon Target) {}
+    public void hitByTarget(Peon Target) {
+    }
 }
