@@ -22,6 +22,7 @@ public class Fireball extends CombatEntity implements Projectile, Tickable {
 
     public Fireball (float row, float col, int damage, float speed) {
         super(row, col, RenderConstants.PROJECTILE_RENDER, damage, speed);
+        this.setObjectName("combatFireball");
         this.setTexture("projectile");
     }
 

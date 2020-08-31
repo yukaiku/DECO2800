@@ -1,6 +1,7 @@
 package deco2800.thomas.managers;
 
 import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.util.SquareVector;
@@ -235,6 +236,13 @@ public final class DatabaseManager extends AbstractManager {
                 }
             }
 
+            for (String s:Arrays.asList("combat")) {
+                if (entityObjectName.startsWith(s)){
+                    Fireball create = new Fireball(1, 5, 1, 1);
+                    return (AbstractEntity) create;
+                }
+            }
+
             StringBuilder fullEntityName = new StringBuilder();
             fullEntityName.append("deco2800.thomas");
             HashMap<String, String> entityMap = new HashMap<>();
@@ -242,6 +250,7 @@ public final class DatabaseManager extends AbstractManager {
             entityMap.put("rock", "entities.rock");
             entityMap.put("tree", "entities.Tree");
             entityMap.put("staticEntityID", "entities.StaticEntity");
+            entityMap.put("fireball", "entities.fireball");
 
             fullEntityName.append(entityMap.get(entityObjectName));
             return (AbstractEntity) Class.forName(fullEntityName.toString()).getDeclaredConstructor().newInstance();

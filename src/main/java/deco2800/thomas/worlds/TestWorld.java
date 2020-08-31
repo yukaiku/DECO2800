@@ -124,7 +124,7 @@ public class TestWorld extends AbstractWorld {
 		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
 		addEntity(this.getPlayerEntity());
 		Fireball fireball = new Fireball(10f, 5f, 10, 0.15f);
-		//this.addEntity(fireball);
+		this.addEntity(fireball);
 
 		// Provide available enemies to the EnemyManager
 		Orc orc = new Orc(1, 0.05f, 100);
