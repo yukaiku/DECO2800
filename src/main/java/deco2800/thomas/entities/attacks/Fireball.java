@@ -1,17 +1,27 @@
 package deco2800.thomas.entities.attacks;
 
+import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.CombatEntity;
 import deco2800.thomas.entities.RenderConstants;
+import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.util.SquareVector;
 
-public class Fireball extends CombatEntity implements Projectile {
+public class Fireball extends CombatEntity implements Projectile, Tickable {
     protected float speed;
     private MovementTask.Direction movingDirection = MovementTask.Direction.NONE;
+    private transient AbstractTask task;
+
+    public Fireball() {
+        super();
+        this.setTexture("projectile");
+        this.setObjectName("Peon");
+        this.setHeight(1);
+        this.speed = 0.05f;
+    }
 
     public Fireball (float row, float col, int damage, float speed) {
         super(row, col, RenderConstants.PROJECTILE_RENDER, damage, speed);
-        this.setObjectName("Fireball");
         this.setTexture("projectile");
     }
 
@@ -38,5 +48,9 @@ public class Fireball extends CombatEntity implements Projectile {
     @Override
     public void setMovingDirection(MovementTask.Direction movingDirection) {
         this.movingDirection = movingDirection;
+    }
+
+    public void onTick(long i) {
+        return;
     }
 }

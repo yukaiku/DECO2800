@@ -62,13 +62,13 @@ public class TextureManager extends AbstractManager {
             textureMap.put("buildingA", new Texture("resources/buildingA.png"));
             textureMap.put("tree", new Texture("resources/tree.png"));
             textureMap.put("rock", new Texture("resources/rock_L.png"));
-            textureMap.put("projectile", new Texture("resources/rocks"));
             textureMap.put("fenceN-S", new Texture("resources/fence_N-S.png"));
             textureMap.put("fenceE-W", new Texture("resources/fence_E-W.png"));
             textureMap.put("fenceN-W", new Texture("resources/fence_N-W.png"));
             textureMap.put("fenceS-W", new Texture("resources/fence_S-W.png"));
             textureMap.put("fenceN-E", new Texture("resources/fence_N-E.png"));
             textureMap.put("fenceS-E", new Texture("resources/fence_S-E.png"));
+            textureMap.put("projectile", new Texture("resources/rocks.png"));
 
         } catch (Exception e) {
             e.printStackTrace();

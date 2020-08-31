@@ -4,7 +4,6 @@ import deco2800.thomas.Tickable;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TaskPool;
 import deco2800.thomas.tasks.AbstractTask;
-import deco2800.thomas.entities.RenderConstants;
 
 public class Peon extends AgentEntity implements Tickable {
 	private transient AbstractTask task;

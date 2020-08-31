@@ -1,20 +1,15 @@
 package deco2800.thomas.worlds;
 
-import java.util.*;
-
+import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.managers.EnemyManager;
+import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Part;
-import deco2800.thomas.entities.StaticEntity;
-import deco2800.thomas.entities.Tree;
-import deco2800.thomas.entities.PlayerPeon;
-import deco2800.thomas.entities.Rock;
-import deco2800.thomas.managers.EnemyManager;
-import deco2800.thomas.managers.GameManager;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class TestWorld extends AbstractWorld {
@@ -128,6 +123,8 @@ public class TestWorld extends AbstractWorld {
 		// Create the entities in the game
 		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
 		addEntity(this.getPlayerEntity());
+		Fireball fireball = new Fireball(10f, 5f, 10, 0.15f);
+		this.addEntity(fireball);
 
 		// Provide available enemies to the EnemyManager
 		Orc orc = new Orc(1, 0.05f, 100);
