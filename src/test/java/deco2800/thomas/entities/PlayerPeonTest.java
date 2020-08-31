@@ -78,4 +78,24 @@ public class PlayerPeonTest extends BaseGDXTest {
         assertEquals(MovementTask.Direction.NONE, playerPeon.getMovingDirection());
         assertNull(playerPeon.getTask());
     }
+
+    /**
+     * Test player press serial keys in WASD keys
+     */
+    @Test
+    public void testPlayerPressSerialKeys() {
+        PlayerPeon playerPeon = new PlayerPeon(10f, 10f, 0.15f);
+
+        playerPeon.notifyKeyDown(Input.Keys.W);
+        playerPeon.notifyKeyDown(Input.Keys.D);
+        playerPeon.notifyKeyUp(Input.Keys.W);
+        playerPeon.notifyKeyDown(Input.Keys.S);
+        playerPeon.notifyKeyUp(Input.Keys.D);
+
+        assertEquals(MovementTask.Direction.DOWN, playerPeon.getMovingDirection());
+        assertNotNull(playerPeon.getTask());
+
+        playerPeon.notifyKeyUp(Input.Keys.S);
+        assertEquals(MovementTask.Direction.NONE, playerPeon.getMovingDirection());
+    }
 }
