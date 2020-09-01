@@ -1,8 +1,8 @@
 package deco2800.thomas.worlds;
 
 import deco2800.thomas.entities.*;
-import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
@@ -123,14 +123,16 @@ public class TestWorld extends AbstractWorld {
 		// Create the entities in the game
 		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f, 50));
 		addEntity(this.getPlayerEntity());
-		Fireball fireball = new Fireball(10f, 10f, 10, 0.15f);
-		this.addEntity(fireball);
 
 		// Provide available enemies to the EnemyManager
 		Orc orc = new Orc(1, 0.05f, 100);
 		Orc speedyOrc = new Orc(1, 0.07f, 50);
 		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(orc, speedyOrc));
 		GameManager.get().addManager(enemyManager);
+
+		// Create a combatManager to create combatEntities on click
+		CombatManager combatManager = new CombatManager(this);
+		GameManager.get().addManager(combatManager);
 	}
 
 	@Override
