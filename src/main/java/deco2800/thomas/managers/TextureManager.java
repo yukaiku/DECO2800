@@ -73,6 +73,7 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("target", new Texture("resources/tutorial-target.png"));
 			textureMap.put("portal", new Texture("resources/tutorial-portal.png"));
 			textureMap.put("dialog-box", new Texture("resources/dialog-box.png"));
+			textureMap.put("orb", new Texture("resources/orb.png"));
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -13,10 +13,7 @@ import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
-import deco2800.thomas.renderers.Guideline;
-import deco2800.thomas.renderers.PotateCamera;
-import deco2800.thomas.renderers.OverlayRenderer;
-import deco2800.thomas.renderers.Renderer3D;
+import deco2800.thomas.renderers.*;
 import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
@@ -37,8 +34,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 	OverlayRenderer rendererDebug = new OverlayRenderer();
 	AbstractWorld world;
 	static Skin skin;
-	//Quest Tracker Label
-	Label questTracker = new Label("Orbs: 0/4", GameManager.get().getSkin());
+//	//Quest Tracker Label
+//	Label questTracker = new Label("Orbs: 0/4", GameManager.get().getSkin());
 
 	/**
 	 * Create a camera for panning and zooming.
@@ -108,11 +105,11 @@ public class GameScreen implements Screen, KeyDownObserver {
 		cameraDebug = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		//Add Quest tracker to the game UI
-		String questTrackerText = "Orbs: " + Integer.toString(PlayerPeon.questTracker()) + "/4";
-		questTracker.setText(questTrackerText);
-		questTracker.setFontScale(1.0f);
-		questTracker.setPosition(stage.getWidth()-questTracker.getWidth(),stage.getHeight()-questTracker.getHeight());
-		stage.addActor(questTracker);
+//		String questTrackerText = "Orbs: " + Integer.toString(PlayerPeon.questTracker()) + "/4";
+//		questTracker.setText(questTrackerText);
+//		questTracker.setFontScale(1.0f);
+//		questTracker.setPosition(stage.getWidth()-questTracker.getWidth(),stage.getHeight()-questTracker.getHeight());
+//		stage.addActor(questTracker);
 
 		/* Add the window to the stage */
 		GameManager.get().setSkin(skin);
@@ -137,10 +134,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	@Override
 	public void render(float delta) {
-
-		//Update the quest tracker on each render
-		String questTrackerText = "Orbs: " + Integer.toString(PlayerPeon.questTracker()) + "/4";
-		questTracker.setText(questTrackerText);
 
 		handleRenderables();
 		
@@ -170,6 +163,11 @@ public class GameScreen implements Screen, KeyDownObserver {
 			Guideline guideline = new Guideline();
 			guideline.render(batchGuideline, cameraDebug);
 		}
+		//Questtracker UI
+		SpriteBatch batchGuideline = new SpriteBatch();
+		batchGuideline.setProjectionMatrix(cameraDebug.combined);
+		QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
+		questTrackerRenderer.render(batchGuideline, cameraDebug);
 
 		/* Refresh the experience UI for if information was updated */
 		stage.act(delta);
