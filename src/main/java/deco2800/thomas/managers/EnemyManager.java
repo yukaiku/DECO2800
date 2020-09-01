@@ -147,6 +147,7 @@ public class EnemyManager extends TickableManager {
     public void removeEnemy(EnemyPeon enemy) {
         enemies.remove(enemy);
         world.deleteEntity(enemy.getEntityID());
+        world.removeEntity(enemy);
         enemyCount--;
     }
 
