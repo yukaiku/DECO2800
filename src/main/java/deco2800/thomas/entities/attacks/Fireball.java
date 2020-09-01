@@ -48,7 +48,12 @@ public class Fireball extends CombatEntity implements Projectile, Tickable {
             if (movementTask.isComplete()) {
                 GameManager.get().getManager(CombatManager.class).removeEntity(this);
             }
+            if (!movementTask.isAlive()) {
+                GameManager.get().getManager(CombatManager.class).removeEntity(this);
+            }
             movementTask.onTick(i);
+        } else {
+            GameManager.get().getManager(CombatManager.class).removeEntity(this);
         }
     }
 
