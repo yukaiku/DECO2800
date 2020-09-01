@@ -30,7 +30,7 @@ public class QuestTrackerRenderer implements Renderer {
             /*
             * To be edited to allow different orb images if needed
             * */
-            batch.draw(sprite,  camera.position.x + camera.viewportWidth / 2 - sprite.getWidth() * (4-i+1),  camera.position.y + camera.viewportHeight / 2 - sprite.getHeight());
+            batch.draw(sprite,  camera.position.x + camera.viewportWidth / 2 - sprite.getWidth() * (3-i+1),  camera.position.y + camera.viewportHeight / 2 - sprite.getHeight());
 
         }
         if (font == null) {
