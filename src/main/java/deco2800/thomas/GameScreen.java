@@ -34,8 +34,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 	OverlayRenderer rendererDebug = new OverlayRenderer();
 	AbstractWorld world;
 	static Skin skin;
-//	//Quest Tracker Label
-//	Label questTracker = new Label("Orbs: 0/4", GameManager.get().getSkin());
 
 	/**
 	 * Create a camera for panning and zooming.
@@ -103,13 +101,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 		// Initialize camera
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cameraDebug = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-		//Add Quest tracker to the game UI
-//		String questTrackerText = "Orbs: " + Integer.toString(PlayerPeon.questTracker()) + "/4";
-//		questTracker.setText(questTrackerText);
-//		questTracker.setFontScale(1.0f);
-//		questTracker.setPosition(stage.getWidth()-questTracker.getWidth(),stage.getHeight()-questTracker.getHeight());
-//		stage.addActor(questTracker);
 
 		/* Add the window to the stage */
 		GameManager.get().setSkin(skin);
