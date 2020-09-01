@@ -12,6 +12,6 @@ public class RenderConstants {
 	public static final int PEON_RENDER = 3;
 	public static final int TREE_RENDER = 5;
 	public static final int TARGET_RENDER = 5;
-	public static final int PORTAL_RENDER = 5;
+	public static final int PORTAL_RENDER = 1;
 	public static final int BUILDING_RENDER = 4;
 }

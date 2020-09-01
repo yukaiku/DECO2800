@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import deco2800.thomas.GameScreen;
+import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Environment.Portal;
 import deco2800.thomas.entities.Environment.Rock;
@@ -42,6 +44,8 @@ public class TutorialWorld extends AbstractWorld{
     boolean notGenerated = true;
     static final int TUTORIAL_WORLD_WIDTH = 10; // Height and width vars for the map size; constrains tile gen
     static final int TUTORIAL_WORLD_HEIGHT = 6; // Note the map will double these numbers (bounds are +/- these limits)
+    private final int PORTAL_COL = 0;
+    private final int PORTAL_ROW = -TUTORIAL_WORLD_HEIGHT;
 
     public TutorialWorld() {
         super(TUTORIAL_WORLD_WIDTH, TUTORIAL_WORLD_HEIGHT);
@@ -75,6 +79,7 @@ public class TutorialWorld extends AbstractWorld{
     }
 
     public void createObjects() {
+        // Add targets
         for (int i = -6; i < 6 + 1; i = i + 2) {
             Tile t = GameManager.get().getWorld().getTile(i, TUTORIAL_WORLD_HEIGHT - 1);
             if (t != null) {
@@ -90,8 +95,10 @@ public class TutorialWorld extends AbstractWorld{
                 entities.add(new Target(t, true));
             }
         }
-        Tile t = GameManager.get().getWorld().getTile(0, -TUTORIAL_WORLD_HEIGHT);
-        entities.add(new Portal(t, true));
+
+        // Add portal
+        Tile t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW);
+        entities.add(new Portal(t, false));
     }
 
     @Override
@@ -104,6 +111,20 @@ public class TutorialWorld extends AbstractWorld{
         if (notGenerated) {
             createObjects();
             notGenerated = false;
+        }
+
+        AgentEntity player = this.getPlayerEntity();
+        // Check if the player is in the portal
+        if (Math.abs(player.getCol() - PORTAL_COL) < 0.1 &
+                Math.abs(player.getRow() - PORTAL_ROW) < 0.1) {
+            // Remove guideline modal
+            GameScreen.tutorial = false;
+            GameManager.get().inTutorial = false;
+
+            // Set new world
+            GameManager gameManager = GameManager.get();
+            gameManager.setWorld(GameScreen.gameType.NEW_GAME.method());
+
         }
     }
 }

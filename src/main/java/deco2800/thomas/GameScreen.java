@@ -32,7 +32,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * 3D is for Isometric worlds
 	 * Check the documentation for each renderer to see how it handles WorldEntity coordinates
 	 */
-	private boolean tutorial = false;
+	public static boolean tutorial = false;
 	Renderer3D renderer = new Renderer3D();
 	OverlayRenderer rendererDebug = new OverlayRenderer();
 	AbstractWorld world;
@@ -92,6 +92,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	public GameScreen(final ThomasGame game, final gameType startType) {
 		if (startType == gameType.TUTORIAL) {
+			GameManager.get().inTutorial = true;
 			tutorial = true;
 		}
 		/* Create an example world for the engine */
@@ -163,7 +164,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		rerenderMapObjects(batch, camera);
 		rendererDebug.render(batchDebug, cameraDebug);
 
-		// Add guidline if we are in the TutorialWorld
+		// Add guideline if we are in the TutorialWorld
 		if (tutorial) {
 			SpriteBatch batchGuideline = new SpriteBatch();
 			batchGuideline.setProjectionMatrix(cameraDebug.combined);
@@ -243,6 +244,10 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		if (keycode == Input.Keys.F12) {
 			GameManager.get().debugMode = !GameManager.get().debugMode;
+		}
+
+		if (keycode == Input.Keys.F9 & GameManager.get().inTutorial) {
+			tutorial = !tutorial;
 		}
 
 		if (keycode == Input.Keys.F5) {
