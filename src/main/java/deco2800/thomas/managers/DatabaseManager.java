@@ -230,7 +230,7 @@ public final class DatabaseManager extends AbstractManager {
             
             for (String s:Arrays.asList("playerPeon")){
                 if (entityObjectName.startsWith(s)){
-                     PlayerPeon create = new PlayerPeon(1,1,1);
+                     PlayerPeon create = new PlayerPeon(1,1,1, 1);
                      create.setObjectName(entityObjectName); 
                      return (AbstractEntity) create;
                 }

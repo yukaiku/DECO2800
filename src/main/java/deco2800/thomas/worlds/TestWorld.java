@@ -121,9 +121,9 @@ public class TestWorld extends AbstractWorld {
 			}
 		}
 		// Create the entities in the game
-		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
+		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f, 50));
 		addEntity(this.getPlayerEntity());
-		Fireball fireball = new Fireball(10f, 5f, 10, 0.15f);
+		Fireball fireball = new Fireball(10f, 10f, 10, 0.15f);
 		this.addEntity(fireball);
 
 		// Provide available enemies to the EnemyManager

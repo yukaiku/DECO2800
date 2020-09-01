@@ -14,9 +14,10 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
     // The health of the player
     private HealthTracker health;
 
-    public PlayerPeon(float row, float col, float speed) {
+    public PlayerPeon(float row, float col, float speed, int health) {
         super(row, col, speed);
         this.setObjectName("playerPeon");
+        this.health = new HealthTracker(health);
         GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).addKeyUpListener(this);
@@ -81,6 +82,11 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
                 setTask(null);
             }
         }
+
+        System.out.printf("PlayerBottom: %f\n",this.getBounds().getBottom());
+        System.out.printf("PlayerLeft: %f\n", this.getBounds().getLeft());
+        System.out.printf("PlayerRight: %f\n", this.getBounds().getRight());
+        System.out.printf("PlayerTop: %f\n", this.getBounds().getTop());
     }
 
     @Override
