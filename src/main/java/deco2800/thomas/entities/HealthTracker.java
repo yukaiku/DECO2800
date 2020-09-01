@@ -16,8 +16,8 @@ public class HealthTracker {
 
     public HealthTracker(int maxHealthValue) {
 
-        this.maxHealthValue = maxHealthValue;
-        this.currentHealthValue = this.maxHealthValue;
+            this.maxHealthValue = maxHealthValue;
+            this.currentHealthValue = this.maxHealthValue;
 
     }
 
