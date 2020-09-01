@@ -113,7 +113,7 @@ public abstract class EnemyPeon extends Peon {
     }
 
     public void death() {
-        GameManager.getManagerFromInstance(EnemyManager.class).removeEnemy(this);
+        GameManager.getManagerFromInstance(EnemyManager.class).removeEnemyAuto(this);
     }
 
     /**
