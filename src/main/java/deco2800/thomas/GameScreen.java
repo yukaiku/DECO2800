@@ -75,10 +75,44 @@ public class GameScreen implements Screen, KeyDownObserver {
 				return world;
 			}
 		},
-		NEW_GAME {
+		TEST_WORLD {
+			@Override
+			public AbstractWorld method() {
+				AbstractWorld world = new TestWorld();
+				GameManager.get().getManager(NetworkManager.class).startHosting("host");
+				return world;
+			}
+		},
+		DESERT_WORLD {
+			@Override
+			public AbstractWorld method() {
+				AbstractWorld world = new DesertWorld();
+				GameManager.get().getManager(NetworkManager.class).startHosting("host");
+				return world;
+			}
+		},
+		SWAMP_WORLD {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new SwampWorld();
+				GameManager.get().getManager(NetworkManager.class).startHosting("host");
+				return world;
+			}
+		},
+		VOLCANIC_WORLD {
+			@Override
+			public AbstractWorld method() {
+				// change TestWorld to Volcano once implemented
+				AbstractWorld world = new TestWorld();
+				GameManager.get().getManager(NetworkManager.class).startHosting("host");
+				return world;
+			}
+		},
+		TUNDRA_WORLD {
+			@Override
+			public AbstractWorld method() {
+				// change TestWorld to Tundra once implemented
+				AbstractWorld world = new TestWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
