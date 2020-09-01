@@ -20,7 +20,7 @@ public abstract class EnemyPeon extends Peon {
     private Peon target;
 
     // The health of the enemy.
-    private HealthTracker health;
+    private final HealthTracker health;
 
     /**
      * Initialise an abstract Enemy. The position of the enemy is normally set by the spawnEnemy() in EnemyManager.

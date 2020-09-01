@@ -61,6 +61,6 @@ public class EnemyPeonTest extends BaseGDXTest {
         assertEquals(enemy.getCurrentHealth(), 50);
     }
 
-    //Need some formal way of testing that it approaches the player? For now
-    // ingame testing has confirmed it
+    // Need some formal way of testing that it approaches the player? For now
+    // in-game testing has confirmed it
 }
