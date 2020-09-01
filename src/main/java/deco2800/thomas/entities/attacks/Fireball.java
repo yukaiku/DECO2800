@@ -3,6 +3,7 @@ package deco2800.thomas.entities.attacks;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.CombatEntity;
 import deco2800.thomas.entities.RenderConstants;
+import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TaskPool;
 import deco2800.thomas.tasks.AbstractTask;
@@ -12,7 +13,8 @@ import deco2800.thomas.util.SquareVector;
 public class Fireball extends CombatEntity implements Projectile, Tickable {
     protected float speed;
     private MovementTask.Direction movingDirection = MovementTask.Direction.NONE;
-    private transient AbstractTask task;
+    private transient AbstractTask combatTask;
+    private transient AbstractTask movementTask;
 
     public Fireball() {
         super();
@@ -22,46 +24,33 @@ public class Fireball extends CombatEntity implements Projectile, Tickable {
         this.speed = 0.05f;
     }
 
-    public Fireball (float row, float col, int damage, float speed) {
+    public Fireball (float row, float col, int damage, float speed, SquareVector destination) {
         super(row, col, RenderConstants.PROJECTILE_RENDER, damage, speed);
         this.setObjectName("combatFireball");
         this.setTexture("projectile");
+        this.movementTask = new MovementTask(this, destination);
     }
 
-    @Override
-    public float getSpeed() {
-        return speed;
-    }
-
-    @Override
-    public void setSpeed(float speed) {
-        this.speed = speed;
-    }
-
-    @Override
-    public void moveTowards(SquareVector destination) {
-        this.getPosition().moveToward(destination, speed);
-    }
-
-    @Override
-    public MovementTask.Direction getMovingDirection() {
-        return movingDirection;
-    }
-
-    @Override
-    public void setMovingDirection(MovementTask.Direction movingDirection) {
-        this.movingDirection = movingDirection;
-    }
+    public void setMovementTask(AbstractTask task) {this.movementTask = task;}
 
     @Override
     public void onTick(long i) {
-        if(task != null && task.isAlive()) {
-            if(task.isComplete()) {
-                this.task = GameManager.getManagerFromInstance(TaskPool.class).getCombatTask(this);
+        if(combatTask != null) {
+            if(combatTask.isComplete()) {
+                GameManager.get().getManager(CombatManager.class).removeEntity(this);
             }
-            task.onTick(i);
+            combatTask.onTick(i);
         } else {
-            task = GameManager.getManagerFromInstance(TaskPool.class).getCombatTask(this);
+            combatTask = GameManager.getManagerFromInstance(TaskPool.class).getCombatTask(this);
+        }
+
+        if (movementTask != null) {
+            if (movementTask.isComplete()) {
+                GameManager.get().getManager(CombatManager.class).removeEntity(this);
+            }
+            movementTask.onTick(i);
         }
     }
+
+
 }
