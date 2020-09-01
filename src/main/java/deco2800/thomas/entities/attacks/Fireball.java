@@ -10,11 +10,13 @@ import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.util.SquareVector;
 
-public class Fireball extends CombatEntity implements Projectile, Tickable {
+public class Fireball extends CombatEntity implements Projectile, Tickable{
     protected float speed;
     private MovementTask.Direction movingDirection = MovementTask.Direction.NONE;
     private transient AbstractTask combatTask;
     private transient AbstractTask movementTask;
+    private SquareVector destination;
+    int range;
 
     public Fireball() {
         super();
@@ -24,14 +26,20 @@ public class Fireball extends CombatEntity implements Projectile, Tickable {
         this.speed = 0.05f;
     }
 
-    public Fireball (float row, float col, int damage, float speed, SquareVector destination) {
+    public Fireball (float row, float col, int damage, float speed, int range) {
         super(row, col, RenderConstants.PROJECTILE_RENDER, damage, speed);
         this.setObjectName("combatFireball");
         this.setTexture("projectile");
-        this.movementTask = new MovementTask(this, destination);
+        this.destination = null;
+        this.movementTask = null;
+        this.range = range;
     }
 
     public void setMovementTask(AbstractTask task) {this.movementTask = task;}
+
+    public void setDestination(SquareVector destination) {this.destination = destination;}
+
+    public int getRange() {return this.range;}
 
     @Override
     public void onTick(long i) {
@@ -53,9 +61,7 @@ public class Fireball extends CombatEntity implements Projectile, Tickable {
             }
             movementTask.onTick(i);
         } else {
-            GameManager.get().getManager(CombatManager.class).removeEntity(this);
+            movementTask = new MovementTask(this, destination);
         }
     }
-
-
 }

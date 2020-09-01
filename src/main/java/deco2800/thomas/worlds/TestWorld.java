@@ -121,7 +121,7 @@ public class TestWorld extends AbstractWorld {
 			}
 		}
 		// Create the entities in the game
-		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f, 50));
+		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.2f, 50));
 		addEntity(this.getPlayerEntity());
 
 		// Provide available enemies to the EnemyManager
