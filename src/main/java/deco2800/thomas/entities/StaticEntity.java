@@ -114,4 +114,14 @@ public class StaticEntity extends AbstractEntity {
 	public void setChildren(Map<SquareVector, String> children) {
 		this.children = children;
 	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("StaticEntity{");
+		sb.append("children=").append(children);
+		sb.append(", position=").append(position);
+		sb.append('}');
+		sb.append("\n");
+		return sb.toString();
+	}
 }

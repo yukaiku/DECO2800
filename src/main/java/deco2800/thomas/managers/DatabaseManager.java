@@ -210,13 +210,25 @@ public final class DatabaseManager extends AbstractManager {
 
 	private static AbstractEntity resolveEntityToLoad(String entityObjectName) {
 		try {
-			for (String s : Arrays.asList("rock")) {
-				if (entityObjectName.startsWith(s)) {
-					Rock create = new Rock();
-					create.setObjectName(entityObjectName);
-					return (AbstractEntity) create;
-				}
+			if (entityObjectName.startsWith(Rock.ENTITY_ID_STRING)) {
+				Rock rock = new Rock();
+				rock.setObjectName(entityObjectName);
+				return rock;
 			}
+
+			if (entityObjectName.startsWith(Tree.ENTITY_ID_STRING)) {
+				Tree tree = new Tree();
+				tree.setObjectName(entityObjectName);
+				return tree;
+			}
+
+//			for (String s : Arrays.asList("rock")) {
+//				if (entityObjectName.startsWith(s)) {
+//					Rock create = new Rock();
+//					create.setObjectName(entityObjectName);
+//					return (AbstractEntity) create;
+//				}
+//			}
 
 			for (String s : Arrays.asList("staticEntityID")) {
 				if (entityObjectName.startsWith(s)) {
