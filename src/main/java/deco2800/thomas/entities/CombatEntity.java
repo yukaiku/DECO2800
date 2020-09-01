@@ -4,7 +4,7 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TaskPool;
 import deco2800.thomas.tasks.AbstractTask;
 
-public abstract class CombatEntity extends AbstractEntity {
+public abstract class CombatEntity extends AgentEntity {
     private boolean projectile;
     private int damage;
     private float speed;
@@ -14,15 +14,9 @@ public abstract class CombatEntity extends AbstractEntity {
         super();
     }
 
-    public CombatEntity(float col, float row, int renderOrder, int damage) {
-        super(col, row, renderOrder);
-        this.damage = damage;
-    }
-
     public CombatEntity(float col, float row, int renderOrder, int damage, float speed) {
-        super(col, row, renderOrder);
+        super(col, row, renderOrder, speed);
         this.damage = damage;
-        this.speed = speed;
     }
 
     public int getDamage() {
