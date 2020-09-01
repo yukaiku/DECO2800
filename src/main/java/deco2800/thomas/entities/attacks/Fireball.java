@@ -3,6 +3,8 @@ package deco2800.thomas.entities.attacks;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.CombatEntity;
 import deco2800.thomas.entities.RenderConstants;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.TaskPool;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.util.SquareVector;
@@ -51,7 +53,15 @@ public class Fireball extends CombatEntity implements Projectile, Tickable {
         this.movingDirection = movingDirection;
     }
 
+    @Override
     public void onTick(long i) {
-        return;
+        if(task != null && task.isAlive()) {
+            if(task.isComplete()) {
+                this.task = GameManager.getManagerFromInstance(TaskPool.class).getCombatTask(this);
+            }
+            task.onTick(i);
+        } else {
+            task = GameManager.getManagerFromInstance(TaskPool.class).getCombatTask(this);
+        }
     }
 }
