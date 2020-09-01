@@ -96,6 +96,14 @@ public class EnemyManager extends TickableManager {
         this.running = false;
     }
 
+    /**
+     * Get the current number of enemies on the map. (includes boss)
+     * @return the number of enemies alive.
+     */
+    public int getEnemyCount() {
+        return this.boss == null ? this.enemyCount : this.enemyCount + 1;
+    }
+
     public List<EnemyPeon> getEnemies() {
         return new ArrayList<>(enemies);
     }

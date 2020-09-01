@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.NetworkManager;
-import deco2800.thomas.managers.OnScreenMessageManager;
-import deco2800.thomas.managers.PathFindingService;
+import deco2800.thomas.managers.*;
 import deco2800.thomas.util.WorldUtil;
 
 public class OverlayRenderer implements Renderer {
@@ -105,5 +102,16 @@ public class OverlayRenderer implements Renderer {
 				String.format("Messages Sent: %d", GameManager.get().getManager(NetworkManager.class).getMessagesSent()));
 		debugLine(batch, camera, line++,
 				String.format("Username: %s", GameManager.get().getManager(NetworkManager.class).getUsername()));
+
+		line++;
+		debugLine(batch, camera, line++, "== Enemies ==");
+		debugLine(batch, camera, line++,
+				String.format("Enemy Spawning: %s",
+						GameManager.get().getManager(EnemyManager.class).checkEnemySpawning() ? "active" : "disabled"));
+		debugLine(batch, camera, line++,
+				String.format("Current Enemies: %d", GameManager.get().getManager(EnemyManager.class).getEnemyCount()));
+		debugLine(batch, camera, line++,
+				String.format("Boss: %s", GameManager.get().getManager(EnemyManager.class).getBoss() == null ? "n/a" :
+						GameManager.get().getManager(EnemyManager.class).getBoss().getObjectName()));
 	}
 }
