@@ -1,8 +1,9 @@
 package deco2800.thomas.entities.enemies;
 
-import deco2800.thomas.entities.HasHealth;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.entities.Peon;
+import deco2800.thomas.managers.EnemyManager;
+import deco2800.thomas.managers.GameManager;
 
 import java.util.Objects;
 
@@ -105,6 +106,14 @@ public abstract class EnemyPeon extends Peon {
      */
     public void regenerateHealth (int regen) {
         this.health.regenerateHealth(regen);
+    }
+
+    public boolean isDead () {
+        return (this.getCurrentHealth() <= 0);
+    }
+
+    public void death() {
+        GameManager.getManagerFromInstance(EnemyManager.class).removeEnemy(this);
     }
 
     /**
