@@ -1,7 +1,8 @@
 package deco2800.thomas;
 
-import com.badlogic.gdx.graphics.Texture;
-import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.EntityCompare;
+import deco2800.thomas.entities.PlayerPeon;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
@@ -9,13 +10,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.util.Map;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -23,7 +25,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
 
 
 @RunWith(PowerMockRunner.class)
@@ -78,7 +79,7 @@ public class SaveLoadTest extends BaseGDXTest {
         saveTileMap.add(new Tile("grass_1_0", col_two, row_two));
         w.setTileMap(saveTileMap);
 
-        newEntities.put(0, new PlayerPeon(1, 1, 1));
+        newEntities.put(0, new PlayerPeon(1, 1, 1,10));
         
         List<AbstractEntity> testEntities = new ArrayList<>(w.getEntities());        
         deco2800.thomas.managers.DatabaseManager.saveWorld(w);
