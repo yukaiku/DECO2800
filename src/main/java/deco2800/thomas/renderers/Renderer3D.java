@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.CombatEntity;
+import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.entities.Peon;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;

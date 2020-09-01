@@ -82,13 +82,6 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
                 setTask(null);
             }
         }
-        /*
-        System.out.printf("PlayerBottom: %f\n",this.getBounds().getBottom());
-        System.out.printf("PlayerLeft: %f\n", this.getBounds().getLeft());
-        System.out.printf("PlayerRight: %f\n", this.getBounds().getRight());
-        System.out.printf("PlayerTop: %f\n", this.getBounds().getTop());
-
-         */
     }
 
     @Override
