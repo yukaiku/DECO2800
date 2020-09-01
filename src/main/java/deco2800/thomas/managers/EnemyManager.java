@@ -13,49 +13,48 @@ import java.util.Random;
  * Different worlds should initialise different EnemyManagers.
  */
 public class EnemyManager extends TickableManager {
-    // true if the spawning mechanism is active, false otherwise (default true)
-    private boolean running;
-
     // the target world
     private final AbstractWorld world;
 
+    // true if the spawning mechanism is active, false otherwise (default true)
+    private boolean wildSpawning;
+
     // the maximum number of enemies allowed being alive at one time (will change in the future depending on types)
-    private int enemyCap;
+    private int wildEnemyCap;
 
     // list of configured enemies allowed to spawn
-    private final List<EnemyPeon> enemyConfigs;
+    private final List<EnemyPeon> wildEnemyConfigs;
 
-    // the current number of enemies alive in the world (excludes boss)
-    private int enemyCount;
+    // current wild enemies alive (excludes boss)
+    private final List<EnemyPeon> wildEnemiesAlive;
 
-    // current enemies alive (excludes boss)
-    private final List<EnemyPeon> enemies;
+    // current special enemies alive (excludes boss)
+    private final List<EnemyPeon> specialEnemiesAlive;
 
     // the current boss (this can be null)
     private Boss boss;
 
     private final float spawnRangeMin;
     private final float spawnRangeMax;
-
     private int tick;
     private final Random random;
 
     /**
      * Initialise an EnemyManager for the world.
      * @param world The world where the manager will operate on.
-     * @param enemyCap The maximum number of wild enemies allowed to exist at one time.
-     * @param enemyConfigs Blueprints of enemies (one for each type) the manager will automatically spawn.
-     *                     The enemyConfigs should not contain bosses, or they will be randomly placed and generated.
+     * @param wildEnemyCap The maximum number of wild enemies allowed to exist at one time.
+     * @param wildEnemyConfigs Blueprints of enemies (one for each type) the manager will automatically spawn.
+     * The wildEnemyConfigs should not contain bosses, or they will be randomly placed and generated.
      */
-    public EnemyManager(AbstractWorld world, int enemyCap, List<EnemyPeon> enemyConfigs) {
-        this.running = true;
-
+    public EnemyManager(AbstractWorld world, int wildEnemyCap, List<EnemyPeon> wildEnemyConfigs) {
         this.world = world;
-        this.enemyCap = enemyCap;
-        this.enemyConfigs = enemyConfigs;
 
-        this.enemyCount = 0;
-        this.enemies = new ArrayList<>();
+        this.wildSpawning = wildEnemyConfigs.size() > 0;
+        this.wildEnemyCap = wildEnemyCap;
+        this.wildEnemyConfigs = wildEnemyConfigs;
+        this.wildEnemiesAlive = new ArrayList<>();
+
+        this.specialEnemiesAlive = new ArrayList<>();
         this.boss = null;
 
         this.spawnRangeMin = 5;
@@ -69,8 +68,8 @@ public class EnemyManager extends TickableManager {
      * Initialise an EnemyManager with a boss.
      * Bosses need to be later manually placed using the spawnBoss() method.
      */
-    public EnemyManager(AbstractWorld world, int enemyCap, List<EnemyPeon> enemyConfigs, Boss boss) {
-        this(world, enemyCap, enemyConfigs);
+    public EnemyManager(AbstractWorld world, int wildEnemyCap, List<EnemyPeon> wildEnemyConfigs, Boss boss) {
+        this(world, wildEnemyCap, wildEnemyConfigs);
         this.boss = boss;
     }
 
@@ -78,107 +77,141 @@ public class EnemyManager extends TickableManager {
      * Check if the enemy is currently spawning.
      * @return true if the enemy is currently spawning, false otherwise
      */
-    public boolean checkEnemySpawning() {
-        return this.running;
+    public boolean checkWildEnemySpawning() {
+        return wildSpawning;
+    }
+
+    /** Start the enemy spawning after stopped. */
+    public void enableWildEnemySpawning() {
+        wildSpawning = true;
+    }
+
+    /** Stop the enemy spawning. */
+    public void disableWildEnemySpawning() {
+        wildSpawning = false;
+    }
+
+    /** Get the maximum number of wild enemies allowed existing at one time. */
+    public int getWildEnemyCap() {
+        return wildEnemyCap;
+    }
+
+    /** Set the maximum number of wild enemies allowed existing at one time. */
+    public void setWildEnemyCap(int wildEnemyCap) {
+        this.wildEnemyCap = wildEnemyCap;
     }
 
     /**
-     * Start the enemy spawning after stopped.
+     * Get the current number of enemies on the map. (includes boss)
+     * @return the number of enemies alive.
      */
-    public void startEnemySpawning() {
-        this.running = true;
+    public int getEnemyCount() {
+        return wildEnemiesAlive.size() + specialEnemiesAlive.size() + (boss == null ? 0 : 1);
     }
 
-    /**
-     * Stop the enemy spawning.
-     */
-    public void stopEnemySpawning() {
-        this.running = false;
+    /** Get the current wild enemies alive in the map. */
+    public List<EnemyPeon> getWildEnemiesAlive() {
+        return new ArrayList<>(wildEnemiesAlive);
     }
 
-    public List<EnemyPeon> getEnemies() {
-        return new ArrayList<>(enemies);
+    /** Get the current special enemies alive in the map. */
+    public List<EnemyPeon> getSpecialEnemiesAlive() {
+        return new ArrayList<>(specialEnemiesAlive);
     }
 
-    /**
-     * Spawns an enemy at the given position on the map. It will be automatically called by the configuration
-     * @param enemy the EnemyPeon object to be spawned
-     * @param x the x position on the map
-     * @param y the y position on the map
-     * @return True if successfully spawned, false otherwise.
-     * todo: check if the position is outside of map
-     */
-    public boolean spawnEnemy(EnemyPeon enemy, float x, float y) {
-        if (running && enemyCount < enemyCap) {
+    /** get the current boss config in the map. */
+    public Boss getBoss() {
+        return boss;
+    }
+
+    /** Set the boss for the map. (not summon yet, to summon use spawnBoss()) */
+    public void setBoss(Boss boss) {
+        this.boss = boss;
+    }
+
+    /** Spawn the wild enemy at the given position. This should be automatically called by the configuration. */
+    private void spawnWildEnemy(EnemyPeon enemy, float x, float y) {
+        // todo: check if the position is outside of map
+        if (wildSpawning && wildEnemiesAlive.size() < wildEnemyCap) {
             enemy.setPosition(x, y);
             world.addEntity(enemy);
-            enemies.add(enemy);
-            enemyCount++;
-            return true;
+            wildEnemiesAlive.add(enemy);
         }
-        return false;
     }
 
     /**
-     * Spawns a random enemy from the configuration list.
-     * Normally it will be called automatically by the manager.
+     * Spawn the special enemies (e.g. minions, dummies) at the given position.
+     * Special Enemies will bypass the wild enemy limits and configs.
+     * @param enemy The special EnemyPeon to spawn.
+     * @param x The x position on the map (col?)
+     * @param y The y position on the map (row?)
      */
-    public void spawnRandomEnemy() {
+    public void spawnSpecialEnemy(EnemyPeon enemy, float x, float y) {
+        enemy.setPosition(x, y);
+        world.addEntity(enemy);
+        specialEnemiesAlive.add(enemy);
+    }
+
+    /** Spawn the boss at the given position. To specify the boss use setBoss(). */
+    public void spawnBoss(float x, float y) {
+        boss.setPosition(x, y);
+        world.addEntity(boss);
+    }
+
+    /** Spawns a random enemy from the configuration list. Normally it will be called automatically by the manager. */
+    private void spawnRandomWildEnemy() {
         // currently spawns an enemy every 100 ticks
         // generate a random value between -max and -min, or between +min and +max
         float xOffset = (spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin)) * (random.nextInt(2) * 2 - 1);
         float yOffset = (spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin)) * (random.nextInt(2) * 2 - 1);
         // choose a random enemy blueprint
-        EnemyPeon enemy = enemyConfigs.get(random.nextInt(enemyConfigs.size())).deepCopy();
-        spawnEnemy(enemy, world.getPlayerEntity().getCol() + xOffset, world.getPlayerEntity().getRow() + yOffset);
+        EnemyPeon enemy = wildEnemyConfigs.get(random.nextInt(wildEnemyConfigs.size())).deepCopy();
+        spawnWildEnemy(enemy, world.getPlayerEntity().getCol() + xOffset, world.getPlayerEntity().getRow() + yOffset);
     }
 
-    /**
-     * Spawns the boss at the given position.
-     */
-    public void spawnBoss(Boss boss, float x, float y) {
-        boss.setPosition(x, y);
-        world.addEntity(boss);
+    /** Removes a wild enemy (when it's dead or de-spawned) @require The enemy exists */
+    public void removeWildEnemy(EnemyPeon wildEnemy) {
+        wildEnemiesAlive.remove(wildEnemy);
+        world.deleteEntity(wildEnemy.getEntityID());
+        world.removeEntity(wildEnemy);
     }
 
-    /**
-     * Removes an enemy (when it's dead or de-spawned)
-     */
-    public void removeEnemy(EnemyPeon enemy) {
-        enemies.remove(enemy);
-        world.deleteEntity(enemy.getEntityID());
-        world.removeEntity(enemy);
-        enemyCount--;
+    /** Removes a special enemy (when it's dead or de-spawned) @require The enemy exists */
+    public void removeSpecialEnemy(EnemyPeon specialEnemy) {
+        specialEnemiesAlive.remove(specialEnemy);
+        world.deleteEntity(specialEnemy.getEntityID());
+        world.removeEntity(specialEnemy);
     }
 
-    public Boss getBoss() {
-        return boss;
-    }
-
-    public void setBoss(Boss boss) {
-        this.boss = boss;
-    }
-
-    /**
-     * Removes the boss.
-     */
+    /** Remove the boss after being defeated. */
     public void removeBoss() {
-        world.deleteEntity(boss.getEntityID());
+        if (boss != null) {
+            world.removeEntity(boss);
+            world.deleteEntity(boss.getEntityID());
+            boss = null;
+        }
     }
 
-    public int getEnemyCap() {
-        return enemyCap;
-    }
-
-    public void setEnemyCap(int enemyCap) {
-        this.enemyCap = enemyCap;
+    /** Automatically detects the enemy type and remove from the world. (Not recommended since it takes some time) */
+    public void removeEnemyAuto(EnemyPeon enemy) {
+        if (wildEnemiesAlive.contains(enemy)) {
+            removeWildEnemy(enemy);
+            return;
+        }
+        if (specialEnemiesAlive.contains(enemy)) {
+            removeSpecialEnemy(enemy);
+            return;
+        }
+        if (boss == enemy) {
+            removeBoss();
+        }
     }
 
     @Override
     public void onTick(long i) {
-        if (++tick > 100) {
-            if (enemyCount < enemyCap) {
-                spawnRandomEnemy();
+        if (++tick > 120) {
+            if (wildEnemiesAlive.size() < wildEnemyCap) {
+                spawnRandomWildEnemy();
             }
             tick = 0;
         }

@@ -3,8 +3,9 @@ package deco2800.thomas.entities.enemies;
 import deco2800.thomas.entities.Peon;
 
 /**
- * A class that defines an implementation of a boss
- * called a Dragon.
+ * A class that defines an implementation of a Dragon.
+ * Dragons are bosses and they need to be manually initialised (using constructor or setBoss())
+ * and spawned (using spawnBoss()) inside EnemyManager.
  */
 public class Dragon extends Boss implements PassiveEnemy {
     public Dragon(int height, float speed, int health) {
@@ -12,15 +13,8 @@ public class Dragon extends Boss implements PassiveEnemy {
     }
 
     @Override
-    public void setMaxHealth(int newHealth) {
-        super.setMaxHealth(newHealth);
-        if (getCurrentHealth() <= 0) {
-            onBossDefeat();
-        }
-    }
-
-    @Override
-    public void onBossDefeat() {
+    public void death() {
+        // some special rules when the boss is dead.
     }
 
     public void hitByTarget(Peon Target) {
