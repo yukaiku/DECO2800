@@ -397,11 +397,15 @@ public final class DatabaseManager extends AbstractManager {
 	 * @author @shivy
 	 */
 	public static void loadWorld(AbstractWorld world) {
+		String saveLocationAndFilename = "resources/save_file.json";
+		loadWorld(world, saveLocationAndFilename);
+	}
+
+	public static void loadWorld(AbstractWorld world, String saveLocationAndFilename) {
 		// This check allows for the world parameter to act as an optional
 		if (world == null) {
 			world = GameManager.get().getWorld();
 		}
-		String saveLocationAndFilename = "resources/save_file.json";
 		File f = new File(saveLocationAndFilename);
 		if (!f.exists()) {
 			GameManager.get().getManager(OnScreenMessageManager.class).
@@ -469,13 +473,18 @@ public final class DatabaseManager extends AbstractManager {
 	 *              passed, but when testing a TestWorld is needed to be passed.
 	 */
 	public static void saveWorld(AbstractWorld world) {
+		String saveName = "save_file.json";
+		saveWorld(world, saveName);
+	}
+
+	public static void saveWorld(AbstractWorld world, String saveName) {
 		logger.info("Saving the world to database.");
 		// This check allows for world to act as an optional parameter
 		if (world == null) {
 			world = GameManager.get().getWorld();
 		}
 
-		saveName = "save_file.json";
+		DatabaseManager.saveName = saveName;
 
 		saveNameList.add(saveName);
 
