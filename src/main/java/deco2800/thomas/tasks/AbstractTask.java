@@ -1,14 +1,14 @@
 package deco2800.thomas.tasks;
 
 import deco2800.thomas.Tickable;
-import deco2800.thomas.entities.AgentEntity;
+import deco2800.thomas.entities.AbstractEntity;
 
 public abstract class AbstractTask implements Tickable {
 	
-	protected AgentEntity entity;
+	protected AbstractEntity entity;
 	
 	
-	public AbstractTask(AgentEntity entity) {
+	public AbstractTask(AbstractEntity entity) {
 		this.entity = entity;
 	}
 	

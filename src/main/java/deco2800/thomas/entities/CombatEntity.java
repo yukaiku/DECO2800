@@ -20,12 +20,16 @@ public abstract class CombatEntity extends AbstractEntity {
         this.speed = speed;
     }
 
-    public void applyDamange (Peon entity){
-        // Used to apply damage to an entity
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     @Override
     public void onTick(long i) {
-        // Needs to check if colliding with enemy. If it is then deal damage.
+
     }
 }
