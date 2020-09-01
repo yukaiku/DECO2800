@@ -111,6 +111,10 @@ public class OverlayRenderer implements Renderer {
 		debugLine(batch, camera, line++,
 				String.format("Current Enemies: %d", GameManager.get().getManager(EnemyManager.class).getEnemyCount()));
 		debugLine(batch, camera, line++,
+				String.format("(%d/%d wild, %d special)", GameManager.get().getManager(EnemyManager.class).getWildEnemiesAlive().size(),
+						GameManager.get().getManager(EnemyManager.class).getWildEnemyCap(),
+						GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size()));
+		debugLine(batch, camera, line++,
 				String.format("Boss: %s", GameManager.get().getManager(EnemyManager.class).getBoss() == null ? "n/a" :
 						GameManager.get().getManager(EnemyManager.class).getBoss().getObjectName()));
 	}

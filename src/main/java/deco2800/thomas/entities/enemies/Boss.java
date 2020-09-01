@@ -10,7 +10,8 @@ public abstract class Boss extends EnemyPeon {
         super(name, texture, height, speed, health);
     }
 
-    public void onBossDefeat() {
-
+    @Override
+    public void death() {
+        // some special rules when the boss is dead.
     }
 }
