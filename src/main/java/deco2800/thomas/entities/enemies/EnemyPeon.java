@@ -112,6 +112,10 @@ public abstract class EnemyPeon extends Peon {
         return this.getCurrentHealth() <= 0;
     }
 
+    /**
+     * For best performance, please override this method using removeWildEnemy(), removeSpecialEnemy() or removeBoss()
+     * instead depending on enemy types.
+     */
     public void death() {
         GameManager.getManagerFromInstance(EnemyManager.class).removeEnemyAuto(this);
     }
