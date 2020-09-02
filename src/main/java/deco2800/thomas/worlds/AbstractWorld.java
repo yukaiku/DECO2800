@@ -22,7 +22,7 @@ public abstract class AbstractWorld {
     protected AgentEntity playerEntity;
 
     protected int width;
-    protected int length;
+    protected int height;
 
     protected CopyOnWriteArrayList<Tile> tiles;
 
@@ -237,8 +237,8 @@ public abstract class AbstractWorld {
         }
     }
 
-    public void deleteTile(int tileid) {
-        Tile tile = GameManager.get().getWorld().getTile(tileid);
+    public void deleteTile(int tileId) {
+        Tile tile = GameManager.get().getWorld().getTile(tileId);
         if (tile != null) {
             tile.dispose();
         }
@@ -250,6 +250,22 @@ public abstract class AbstractWorld {
                 e.dispose();
             }
         }
+    }
+
+    /**
+     * Get (half of) the width of the world.
+     * @return the width of the world
+     */
+    public int getWidth() {
+        return this.width;
+    }
+
+    /**
+     * Get (half of) the height of the world.
+     * @return the height of the world
+     */
+    public int getHeight() {
+        return this.height;
     }
 
     public void queueEntitiesForDelete(List<AbstractEntity> entities) {

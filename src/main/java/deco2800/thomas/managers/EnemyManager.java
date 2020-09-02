@@ -63,8 +63,8 @@ public class EnemyManager extends TickableManager {
         this.specialEnemiesAlive = new ArrayList<>();
         this.boss = null;
 
-        this.spawnRangeMin = 5;
-        this.spawnRangeMax = 10;
+        this.spawnRangeMin = 6;
+        this.spawnRangeMax = 12;
         this.tick = 100;
         this.random = new Random();
     }
@@ -190,13 +190,21 @@ public class EnemyManager extends TickableManager {
     private void spawnRandomWildEnemy() {
         // currently spawns an enemy every 100 ticks
         // generate a random value between -max and -min, or between +min and +max
-        float xOffset = (spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin)) *
-                (random.nextInt(2) * 2 - 1);
-        float yOffset = (spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin)) *
-                (random.nextInt(2) * 2 - 1);
-        // choose a random enemy blueprint
-        EnemyPeon enemy = wildEnemyConfigs.get(random.nextInt(wildEnemyConfigs.size())).deepCopy();
-        spawnWildEnemy(enemy, world.getPlayerEntity().getCol() + xOffset, world.getPlayerEntity().getRow() + yOffset);
+        float xOffset = Math.round((spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin)) *
+                (random.nextInt(2) * 2 - 1));
+        float yOffset = Math.round((spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin)) *
+                (random.nextInt(2) * 2 - 1));
+
+        float tileX = world.getPlayerEntity().getCol() + xOffset;
+        float tileY = world.getPlayerEntity().getRow() + yOffset;
+
+        // prevent spawning outside of the map
+        if (tileX > -world.getWidth() && tileX < world.getWidth() &&
+                tileY > -world.getHeight() && tileY < world.getHeight()) {
+            // choose a random enemy blueprint
+            EnemyPeon enemy = wildEnemyConfigs.get(random.nextInt(wildEnemyConfigs.size())).deepCopy();
+            spawnWildEnemy(enemy, tileX, tileY);
+        }
     }
 
     /** Removes a wild enemy (when it's dead or de-spawned) @require The enemy exists */
