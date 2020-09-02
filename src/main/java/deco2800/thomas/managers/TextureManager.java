@@ -55,7 +55,6 @@ public class TextureManager extends AbstractManager {
  
             textureMap.put("selection", new Texture("resources/square-select.png"));
             textureMap.put("path", new Texture("resources/yellow_selection.png"));
-            textureMap.put("goblin", new Texture("resources/goblin.png"));
 
             textureMap.put("buildingA", new Texture("resources/buildingA.png"));
             textureMap.put("buildingB", new Texture("resources/building3x2.png"));
@@ -71,6 +70,7 @@ public class TextureManager extends AbstractManager {
             textureMap.put("projectile", new Texture("resources/rocks.png"));
 
             // enemies
+            textureMap.put("goblin", new Texture("resources/goblin.png"));
             textureMap.put("spacman_red", new Texture("resources/spacman_red.png"));
             textureMap.put("spatman_blue", new Texture("resources/spatman_blue.png"));
             textureMap.put("spatman_green", new Texture("resources/spatman_green.png"));
