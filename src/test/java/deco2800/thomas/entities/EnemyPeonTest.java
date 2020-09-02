@@ -23,6 +23,47 @@ public class EnemyPeonTest extends BaseGDXTest {
 
     }
 
-    //Need some formal way of testing that it approaches the player? For now
-    // ingame testing has confirmed it
+    @Test
+    public void testGetMaxHealth() {
+        EnemyPeon enemy =  new Orc(1, 1, 100);
+        assertEquals(enemy.getMaxHealth(), 100);
+    }
+
+    @Test
+    public void testSetMaxHealth() {
+        EnemyPeon enemy =  new Orc(1, 1, 100);
+        enemy.setMaxHealth(500);
+        assertEquals(enemy.getMaxHealth(), 500);
+    }
+
+    @Test
+    public void testGetCurrentHealth() {
+        EnemyPeon enemy =  new Orc(1, 1, 100);
+        assertEquals(enemy.getCurrentHealth(), 100);
+    }
+
+    @Test
+    public void testSetCurrentHealth() {
+        EnemyPeon enemy =  new Orc(1, 1, 100);
+        enemy.setCurrentHealthValue(20);
+        assertEquals(enemy.getCurrentHealth(), 20);
+    }
+
+    @Test
+    public void testReduceHealth() {
+        EnemyPeon enemy =  new Orc(1, 1, 100);
+        enemy.reduceHealth(50);
+        assertEquals(enemy.getCurrentHealth(), 50);
+    }
+
+    @Test
+    public void testRegeneHealth() {
+        EnemyPeon enemy =  new Orc(1, 1, 100);
+        enemy.setCurrentHealthValue(10);
+        enemy.regenerateHealth(40);
+        assertEquals(enemy.getCurrentHealth(), 50);
+    }
+
+    // Need some formal way of testing that it approaches the player? For now
+    // in-game testing has confirmed it
 }

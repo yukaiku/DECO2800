@@ -1,27 +1,28 @@
 package deco2800.thomas.renderers;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import deco2800.thomas.entities.*;
-import deco2800.thomas.managers.InputManager;
-import deco2800.thomas.util.SquareVector;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.attacks.CombatEntity;
+import deco2800.thomas.entities.Peon;
+import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.MovementTask;
+import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.Vector2;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * A ~simple~ complex square renderer for DECO2800 games
@@ -174,6 +175,11 @@ public class Renderer3D implements Renderer {
 				}
 				renderAbstractEntity(batch, entity, entityWorldCoord, tex);
 			 }
+
+			/* Draw CombatEntity */
+			if (entity instanceof CombatEntity) {
+				renderAbstractEntity(batch, entity, entityWorldCoord, tex);
+			}
 			
 			if (entity instanceof StaticEntity) {	 
 				StaticEntity staticEntity = ((StaticEntity) entity);

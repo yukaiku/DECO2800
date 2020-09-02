@@ -1,20 +1,15 @@
 package deco2800.thomas.worlds;
 
-import java.util.*;
-
+import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.managers.CombatManager;
+import deco2800.thomas.managers.EnemyManager;
+import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Part;
-import deco2800.thomas.entities.StaticEntity;
-import deco2800.thomas.entities.Tree;
-import deco2800.thomas.entities.PlayerPeon;
-import deco2800.thomas.entities.Rock;
-import deco2800.thomas.managers.EnemyManager;
-import deco2800.thomas.managers.GameManager;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class TestWorld extends AbstractWorld {
@@ -126,14 +121,19 @@ public class TestWorld extends AbstractWorld {
 			}
 		}
 		// Create the entities in the game
-		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
+		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.2f, 50));
 		addEntity(this.getPlayerEntity());
 
 		// Provide available enemies to the EnemyManager
 		Orc orc = new Orc(1, 0.05f, 100);
-		Orc speedyOrc = new Orc(1, 0.07f, 50);
-		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(orc, speedyOrc));
+		Orc speedyOrc = new Orc(1, 0.08f, 50, "spacman_red");
+		Orc hostileTree = new Orc(1, 0.12f, 20, "tree"); // be careful with this one
+		EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(orc, speedyOrc));
 		GameManager.get().addManager(enemyManager);
+
+		// Create a combatManager to create combatEntities on click
+		CombatManager combatManager = new CombatManager(this);
+		GameManager.get().addManager(combatManager);
 	}
 
 	@Override

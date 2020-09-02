@@ -1,21 +1,15 @@
 package deco2800.thomas.entities;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.Texture;
+import com.google.gson.annotations.Expose;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.NetworkManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.Renderable;
 import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
+import deco2800.thomas.util.WorldUtil;
 
 import java.util.Objects;
-
-import com.google.gson.annotations.Expose;
-import deco2800.thomas.util.WorldUtil;
-import org.w3c.dom.Text;
-
-import static deco2800.thomas.managers.GameManager.getManagerFromInstance;
 
 /**
  * AbstractEntity is an item that can exist in both 3D and 2D worlds.
@@ -201,10 +195,10 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	public void setBounds() {
 		TextureManager textureManager =
 				GameManager.getManagerFromInstance(TextureManager.class);
-		bounds.setWidth(textureManager.getTexture(texture).getWidth()
-				* WorldUtil.SCALE_X);
-		bounds.setHeight(textureManager.getTexture(texture).getHeight()
-				* WorldUtil.SCALE_Y);
+		bounds.setWidth((textureManager.getTexture(texture).getWidth()
+				* WorldUtil.SCALE_X)/textureManager.getTexture("grass_0").getWidth());
+		bounds.setHeight((textureManager.getTexture(texture).getHeight()
+				* WorldUtil.SCALE_Y)/textureManager.getTexture("grass_0").getHeight());
 	}
 
 	@Override

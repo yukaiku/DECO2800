@@ -1,8 +1,9 @@
 package deco2800.thomas.entities.enemies;
 
-import deco2800.thomas.entities.HasHealth;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.entities.Peon;
+import deco2800.thomas.managers.EnemyManager;
+import deco2800.thomas.managers.GameManager;
 
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ public abstract class EnemyPeon extends Peon {
     private Peon target;
 
     // The health of the enemy.
-    private HealthTracker health;
+    private final HealthTracker health;
 
     /**
      * Initialise an abstract Enemy. The position of the enemy is normally set by the spawnEnemy() in EnemyManager.
@@ -80,7 +81,7 @@ public abstract class EnemyPeon extends Peon {
      * Returns the current health of this enemy.
      */
     public int getCurrentHealth() {
-        return this.health.getCurrentHealthValue();
+        return health.getCurrentHealthValue();
     }
 
     /**
@@ -88,23 +89,35 @@ public abstract class EnemyPeon extends Peon {
      * @param newHealth The new current health of this enemy.
      */
     public void setCurrentHealthValue(int newHealth) {
-        this.health.setCurrentHealthValue(newHealth);
+        health.setCurrentHealthValue(newHealth);
     }
 
     /**
      * Reduces the health of this enemy by the given amount.
      * @param damage The amount of damage to be taken by this enemy.
      */
-    public void reduceHealth (int damage) {
-        this.health.reduceHealth(damage);
+    public void reduceHealth(int damage) {
+        health.reduceHealth(damage);
     }
 
     /**
      * Increases the health of this enemy by the given amount.
      * @param regen The amount of health this enemy is to be healed by.
      */
-    public void regenerateHealth (int regen) {
-        this.health.regenerateHealth(regen);
+    public void regenerateHealth(int regen) {
+        health.regenerateHealth(regen);
+    }
+
+    public boolean isDead() {
+        return this.getCurrentHealth() <= 0;
+    }
+
+    /**
+     * For best performance, please override this method using removeWildEnemy(), removeSpecialEnemy() or removeBoss()
+     * instead depending on enemy types.
+     */
+    public void death() {
+        GameManager.getManagerFromInstance(EnemyManager.class).removeEnemyAuto(this);
     }
 
     /**
