@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,56 +21,22 @@ import deco2800.thomas.managers.GameManager;
 
 @SuppressWarnings("unused")
 public class SwampWorld extends AbstractWorld {
+    public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/swamp-game-map.json";
+
     private final Logger logger = LoggerFactory.getLogger(TestWorld.class);
 
     boolean notGenerated = true;
 
     public SwampWorld() {
-        super();
+        this(AbstractWorld.DEFAULT_WIDTH, AbstractWorld.DEFAULT_HEIGHT);
     }
 
     public SwampWorld(int width, int height) {
-        super(width, height);
+        DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
     }
 
     @Override
     protected void generateTiles() {
-        Random random = new Random();
-        for (int x = -width; x < width; x++) {
-            for (int y = -height; y < height; y++) {
-                tiles.add(new SwampTile("swamp_4", x, y));
-            }
-        }
-
-        // Middle area has "swamp_3" texture
-        for (int y = -height + 5; y < height - 5; y++) {
-            int count = random.nextInt(41) + 10;
-            int startX = -count / 2;
-            for (int i = 0; i < count; i++) {
-                this.getTile(startX + i, y).setTexture("swamp_3");
-            }
-        }
-
-        // South-East area has "swamp_2" texture
-        for (int y = -height; y < -height + 15; y++) {
-            int count = random.nextInt(16) + 10;
-            int startX = (-count / 2) + 12; // Shift the y axis 12 to the right
-            for (int i = 0; i < count; i++) {
-                this.getTile(startX + i, y).setTexture("swamp_2");
-            }
-        }
-
-        // North-West area has "swamp_2" texture
-        for (int y = 0; y < height; y++) {
-            int count = random.nextInt(16) + 15;
-            int startX = (-count / 2) - 5; // Shift the y axis 5 to the left
-            for (int i = 0; i < count; i++) {
-                this.getTile(startX + i, y).setTexture("swamp_2");
-            }
-        }
-
-        // Create the player entity
-        this.addEntity(new PlayerPeon(10f, 5f, 0.1f));
     }
 
     public void createStaticEntities() {
@@ -89,15 +56,6 @@ public class SwampWorld extends AbstractWorld {
             Tile t = this.getTile(random.nextInt(tileCount));
             if (t != null) {
                 entities.add(new Tree(t, true));
-            }
-        }
-
-        // 100 randomly-placed tiles and their corresponding neighbors have "swamp_1" texture
-        for (int i = 0; i < 20; i++) {
-            Tile t = this.getTile(random.nextInt(width * height * 4));
-            t.setTexture("swamp_1");
-            for (Tile neighbor : t.getNeighbours().values()) {
-                neighbor.setTexture("swamp_1");
             }
         }
     }

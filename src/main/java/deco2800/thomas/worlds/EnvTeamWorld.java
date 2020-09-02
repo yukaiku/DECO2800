@@ -3,7 +3,7 @@ package deco2800.thomas.worlds;
 import deco2800.thomas.managers.DatabaseManager;
 
 public class EnvTeamWorld extends AbstractWorld {
-	public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/tundra_game_map.json";
+	public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/swamp-game-map.json";
 
 	public EnvTeamWorld() {
 		this(AbstractWorld.DEFAULT_WIDTH, AbstractWorld.DEFAULT_HEIGHT);
