@@ -16,7 +16,7 @@ public class Fireball extends RangedEntity implements Tickable{
     public Fireball() {
         super();
         this.setTexture("projectile");
-        this.setObjectName("Peon");
+        this.setObjectName("combatFireball");
         this.setHeight(1);
         this.speed = 0.05f;
     }
