@@ -2,7 +2,6 @@ package deco2800.thomas.managers;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.enemies.Orc;
-import deco2800.thomas.entities.PlayerPeon;
 import deco2800.thomas.worlds.TestWorld;
 import org.junit.Test;
 
@@ -17,14 +16,13 @@ public class EnemyManagerTest extends BaseGDXTest {
     public void testEnemyManager() {
         TestWorld world = new TestWorld();
         EnemyManager em = new EnemyManager(world, 10, new ArrayList<>());
-        assertEquals(em.getEnemies(), new ArrayList<>());
+        assertEquals(em.getWildEnemiesAlive(), new ArrayList<>());
     }
 
     @Test
     public void testEnemyCap() {
         TestWorld world = new TestWorld();
-        Orc orc = new Orc(1, 1, 100);
-        EnemyManager em = new EnemyManager(world, 0, new ArrayList<>());
-        assertFalse(em.spawnEnemy(orc, 0, 0));
+        EnemyManager em = new EnemyManager(world, 10, new ArrayList<>());
+        assertEquals(em.getWildEnemyCap(), 10);
     }
 }

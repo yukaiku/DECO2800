@@ -3,12 +3,13 @@ package deco2800.thomas.entities.enemies;
 
 import deco2800.thomas.entities.AgentEntity;
 import deco2800.thomas.entities.PlayerPeon;
+import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.MovementTask;
 
 /**
- * A class that defines an implementation of an enemy
- * called an Orc.
+ * A class that defines an implementation of an orc.
+ * Orcs are wild enemies and they can be automatically spawned inside EnemyManager.
  */
 public class Orc extends Monster implements AggressiveEnemy {
 
@@ -18,7 +19,7 @@ public class Orc extends Monster implements AggressiveEnemy {
     private final int awareRadius;
 
     public Orc(int height, float speed, int health) {
-        super("Orc", "spacman_blue", height, speed, health);
+        super("Orc", "spacman_blue", height, speed, health, true);
         this.tick = 60;
         this.awareRadius = 8;
     }
@@ -33,6 +34,11 @@ public class Orc extends Monster implements AggressiveEnemy {
             super.setTarget((PlayerPeon) player);
             setTask(new MovementTask(this, super.getTarget().getPosition()));
         }
+    }
+
+    @Override
+    public void death() {
+        GameManager.getManagerFromInstance(EnemyManager.class).removeWildEnemy(this);
     }
 
     @Override
