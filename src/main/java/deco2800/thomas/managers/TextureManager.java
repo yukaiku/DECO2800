@@ -70,9 +70,11 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("fenceS-E", new Texture("resources/fence_S-E.png"));
 
 			textureMap.put("stone_floor", new Texture("resources/tutorial-tile-design-opt1.png"));
-			textureMap.put("target", new Texture("resources/tutorial-target.png"));
-			textureMap.put("portal", new Texture("resources/tutorial-portal.png"));
-			textureMap.put("dialog-box", new Texture("resources/dialog-box.png"));
+			textureMap.put("target", new Texture("resources/tutorial-decoration-target.png"));
+			textureMap.put("portal", new Texture("resources/tutorial-decoration-portal.png"));
+			textureMap.put("stash", new Texture("resources/tutorial-decoration-weapon-stash.png"));
+			textureMap.put("barrel", new Texture("resources/tutorial-decoration-barrel.png"));
+			textureMap.put("dialog-box", new Texture("resources/tutorial-helper-box.png"));
 			textureMap.put("orb", new Texture("resources/orb.png"));
 
 		} catch (Exception e) {

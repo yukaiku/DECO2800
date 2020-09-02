@@ -14,4 +14,6 @@ public class RenderConstants {
 	public static final int TARGET_RENDER = 5;
 	public static final int PORTAL_RENDER = 5;
 	public static final int BUILDING_RENDER = 4;
+	public static final int BARREL_RENDER = 5;
+	public static final int STASH_RENDER = 5;
 }

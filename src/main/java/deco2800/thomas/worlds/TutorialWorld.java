@@ -14,10 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.Environment.Portal;
-import deco2800.thomas.entities.Environment.Rock;
-import deco2800.thomas.entities.Environment.Target;
-import deco2800.thomas.entities.Environment.Tree;
+import deco2800.thomas.entities.Environment.*;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.managers.EnemyManager;
@@ -75,7 +72,7 @@ public class TutorialWorld extends AbstractWorld{
     }
 
     public void createObjects() {
-        for (int i = -6; i < 6 + 1; i = i + 2) {
+        for (int i = -4; i < 4 + 1; i = i + 2) {
             Tile t = GameManager.get().getWorld().getTile(i, TUTORIAL_WORLD_HEIGHT - 1);
             if (t != null) {
                 entities.add(new Target(t, true));
@@ -90,8 +87,23 @@ public class TutorialWorld extends AbstractWorld{
                 entities.add(new Target(t, true));
             }
         }
+
         Tile t = GameManager.get().getWorld().getTile(0, -TUTORIAL_WORLD_HEIGHT);
         entities.add(new Portal(t, true));
+
+        for (int i = 0; i < 2 + 1; i = i + 2) {
+            Tile b = GameManager.get().getWorld().getTile(9, -TUTORIAL_WORLD_HEIGHT + i);
+            if (b != null) {
+                entities.add(new Barrel(b, true));
+            }
+        }
+
+        for (int i = -6; i < 6 + 1; i = i + 12) {
+            Tile s = GameManager.get().getWorld().getTile(i, TUTORIAL_WORLD_HEIGHT - 1);
+            if (s != null) {
+                entities.add(new Stash(s, true));
+            }
+        }
     }
 
     @Override
