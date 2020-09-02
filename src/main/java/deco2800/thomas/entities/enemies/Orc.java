@@ -25,6 +25,14 @@ public class Orc extends Monster implements AggressiveEnemy {
     }
 
     /**
+     * Initialise an orc with custom textures (for different variations)
+     */
+    public Orc(int height, float speed, int health, String texture) {
+        this(height, speed, health);
+        this.setTexture(texture);
+    }
+
+    /**
      * Detects the target with the given aware radius.
      */
     public void detectTarget() {
@@ -65,6 +73,6 @@ public class Orc extends Monster implements AggressiveEnemy {
 
     @Override
     public Orc deepCopy() {
-        return new Orc(super.getHeight(), super.getSpeed(), super.getMaxHealth());
+        return new Orc(super.getHeight(), super.getSpeed(), super.getMaxHealth(), super.getTexture());
     }
 }
