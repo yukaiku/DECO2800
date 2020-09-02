@@ -4,6 +4,7 @@ import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.entities.Peon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.tasks.MovementTask;
 
 import java.util.Objects;
 

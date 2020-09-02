@@ -56,13 +56,12 @@ public class EnemyPeonTest extends BaseGDXTest {
     }
 
     @Test
-    public void testRegeneHealth() {
+    public void testRegenHealth() {
         EnemyPeon enemy =  new Orc(1, 1, 100);
         enemy.setCurrentHealthValue(10);
         enemy.regenerateHealth(40);
         assertEquals(enemy.getCurrentHealth(), 50);
     }
-
     // Need some formal way of testing that it approaches the player? For now
     // in-game testing has confirmed it
 }

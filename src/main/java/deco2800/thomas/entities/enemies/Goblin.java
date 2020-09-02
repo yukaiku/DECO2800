@@ -14,8 +14,8 @@ import deco2800.thomas.util.EnemyUtil;
  * directly target towards players when spawning.
  */
 public class Goblin extends Minion implements AggressiveEnemy {
-
     private int tickFollowing = 30;
+    private int awarenessRadius = 12;
 
     public Goblin(int height, float speed, int health) {
         super("Goblin", "goblin", height, speed, health);
@@ -28,7 +28,7 @@ public class Goblin extends Minion implements AggressiveEnemy {
 
     public void detectTarget() {
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
-        if (player != null && EnemyUtil.playerInRadius(this, player, 12)) {
+        if (player != null && EnemyUtil.playerInRadius(this, player, awarenessRadius)) {
             super.setTarget((PlayerPeon) player);
             setTask(new MovementTask(this, super.getTarget().getPosition()));
         }
