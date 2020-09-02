@@ -210,13 +210,25 @@ public final class DatabaseManager extends AbstractManager {
 
 	private static AbstractEntity resolveEntityToLoad(String entityObjectName) {
 		try {
-			for (String s : Arrays.asList("rock")) {
-				if (entityObjectName.startsWith(s)) {
-					Rock create = new Rock();
-					create.setObjectName(entityObjectName);
-					return (AbstractEntity) create;
-				}
+			if (entityObjectName.startsWith(Rock.ENTITY_ID_STRING)) {
+				Rock rock = new Rock();
+				rock.setObjectName(entityObjectName);
+				return rock;
 			}
+
+			if (entityObjectName.startsWith(Tree.ENTITY_ID_STRING)) {
+				Tree tree = new Tree();
+				tree.setObjectName(entityObjectName);
+				return tree;
+			}
+
+//			for (String s : Arrays.asList("rock")) {
+//				if (entityObjectName.startsWith(s)) {
+//					Rock create = new Rock();
+//					create.setObjectName(entityObjectName);
+//					return (AbstractEntity) create;
+//				}
+//			}
 
 			for (String s : Arrays.asList("staticEntityID")) {
 				if (entityObjectName.startsWith(s)) {
@@ -397,11 +409,15 @@ public final class DatabaseManager extends AbstractManager {
 	 * @author @shivy
 	 */
 	public static void loadWorld(AbstractWorld world) {
+		String saveLocationAndFilename = "resources/save_file.json";
+		loadWorld(world, saveLocationAndFilename);
+	}
+
+	public static void loadWorld(AbstractWorld world, String saveLocationAndFilename) {
 		// This check allows for the world parameter to act as an optional
 		if (world == null) {
 			world = GameManager.get().getWorld();
 		}
-		String saveLocationAndFilename = "resources/save_file.json";
 		File f = new File(saveLocationAndFilename);
 		if (!f.exists()) {
 			GameManager.get().getManager(OnScreenMessageManager.class).
@@ -469,13 +485,18 @@ public final class DatabaseManager extends AbstractManager {
 	 *              passed, but when testing a TestWorld is needed to be passed.
 	 */
 	public static void saveWorld(AbstractWorld world) {
+		String saveName = "save_file.json";
+		saveWorld(world, saveName);
+	}
+
+	public static void saveWorld(AbstractWorld world, String saveName) {
 		logger.info("Saving the world to database.");
 		// This check allows for world to act as an optional parameter
 		if (world == null) {
 			world = GameManager.get().getWorld();
 		}
 
-		saveName = "save_file.json";
+		DatabaseManager.saveName = saveName;
 
 		saveNameList.add(saveName);
 

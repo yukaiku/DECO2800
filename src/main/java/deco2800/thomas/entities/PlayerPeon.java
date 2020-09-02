@@ -9,10 +9,11 @@ import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
 public class PlayerPeon extends Peon implements TouchDownObserver {
+	public static String ENTITY_ID_STRING = "playerPeon";
 
 	public PlayerPeon(float row, float col, float speed) {
 		super(row, col, speed);
-		this.setObjectName("playerPeon");
+		this.setObjectName(ENTITY_ID_STRING);
 		GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
 	}
 
