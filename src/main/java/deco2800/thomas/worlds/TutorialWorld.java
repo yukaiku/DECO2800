@@ -16,10 +16,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import deco2800.thomas.GameScreen;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.Environment.Portal;
-import deco2800.thomas.entities.Environment.Rock;
-import deco2800.thomas.entities.Environment.Target;
-import deco2800.thomas.entities.Environment.Tree;
+import deco2800.thomas.entities.Environment.*;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.managers.EnemyManager;
@@ -79,13 +76,14 @@ public class TutorialWorld extends AbstractWorld{
     }
 
     public void createObjects() {
-        // Add targets
-        for (int i = -6; i < 6 + 1; i = i + 2) {
+        // Add stashs
+        for (int i = -6; i < 6 + 1; i = i + 3) {
             Tile t = GameManager.get().getWorld().getTile(i, TUTORIAL_WORLD_HEIGHT - 1);
             if (t != null) {
-                entities.add(new Target(t, true));
+                entities.add(new Stash(t, true));
             }
         }
+        // Add targets
         for (int i = -6; i < 6 + 1; i = i + 2) {
             if (i == 0) {
                 continue;
@@ -96,8 +94,17 @@ public class TutorialWorld extends AbstractWorld{
             }
         }
 
+        Tile t;
+        // Add barrels
+        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH - 1, TUTORIAL_WORLD_HEIGHT - 1);
+        entities.add(new Barrel(t, true));
+
+        t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, TUTORIAL_WORLD_HEIGHT - 1);
+        entities.add(new Barrel(t, true));
+
+
         // Add portal
-        Tile t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW);
+        t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW);
         entities.add(new Portal(t, false));
     }
 

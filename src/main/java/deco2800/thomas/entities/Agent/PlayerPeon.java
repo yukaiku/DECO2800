@@ -56,6 +56,19 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         }
     }
 
+    /**
+     *
+     * Decrease the number of orbs the user has
+     * Notes:
+     * To be used on when player picks up an orb
+     *
+     */
+    public static void decreaseOrbs(){
+        if(orbCount > 1){
+            orbCount -= 1;
+        }
+    }
+
     @Override
     public void onTick(long i) {
         if (getTask() != null && getTask().isAlive()) {
