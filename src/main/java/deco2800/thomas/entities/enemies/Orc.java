@@ -6,6 +6,7 @@ import deco2800.thomas.entities.PlayerPeon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.MovementTask;
+import deco2800.thomas.util.EnemyUtil;
 
 /**
  * A class that defines an implementation of an orc.
@@ -33,10 +34,8 @@ public class Orc extends Monster implements AggressiveEnemy {
      * Detects the target with the given aware radius.
      */
     public void detectTarget() {
-        int awareRadius = 8;
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
-        if (player != null && Math.sqrt(Math.pow(Math.round(super.getCol()) - Math.round(player.getCol()), 2) +
-                Math.pow(Math.round(super.getRow()) - Math.round(player.getRow()), 2)) < awareRadius) {
+        if (player != null && EnemyUtil.playerInRadius(this, player, 8)) {
             super.setTarget((PlayerPeon) player);
             setTask(new MovementTask(this, super.getTarget().getPosition()));
         }
