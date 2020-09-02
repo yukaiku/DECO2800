@@ -9,7 +9,8 @@ import deco2800.thomas.entities.Peon;
  */
 public class Dragon extends Boss implements PassiveEnemy {
     public Dragon(int height, float speed, int health) {
-        super("Elder Dragon", "spacman_blue", height, speed, health);
+        super("Elder Dragon", "goblin", height, speed, health);
+
     }
 
     @Override

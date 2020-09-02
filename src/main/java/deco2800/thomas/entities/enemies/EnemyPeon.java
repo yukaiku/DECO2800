@@ -4,6 +4,7 @@ import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.entities.Peon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.tasks.MovementTask;
 
 import java.util.Objects;
 
@@ -112,6 +113,10 @@ public abstract class EnemyPeon extends Peon {
         return this.getCurrentHealth() <= 0;
     }
 
+    /**
+     * For best performance, please override this method using removeWildEnemy(), removeSpecialEnemy() or removeBoss()
+     * instead depending on enemy types.
+     */
     public void death() {
         GameManager.getManagerFromInstance(EnemyManager.class).removeEnemyAuto(this);
     }
