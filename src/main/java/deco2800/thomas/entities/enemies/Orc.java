@@ -9,20 +9,16 @@ import deco2800.thomas.tasks.MovementTask;
 
 /**
  * A class that defines an implementation of an orc.
- * Orcs are wild enemies and they can be automatically spawned inside EnemyManager.
+ *
+ * Orcs are wild enemies. They can be automatically spawned using EnemyManager.
  */
 public class Orc extends Monster implements AggressiveEnemy {
 
-    private int tick;
-
-    // the radius for detecting the target
-    private final int awareRadius;
+    private int tickFollowing = 60;
+    private int tickDetecting = 15;
 
     public Orc(int height, float speed, int health) {
         super("Orc", "spacman_blue", height, speed, health, true);
-
-        this.tick = 60;
-        this.awareRadius = 8;
     }
 
     /**
@@ -37,6 +33,7 @@ public class Orc extends Monster implements AggressiveEnemy {
      * Detects the target with the given aware radius.
      */
     public void detectTarget() {
+        int awareRadius = 8;
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
         if (player != null && Math.sqrt(Math.pow(Math.round(super.getCol()) - Math.round(player.getCol()), 2) +
                 Math.pow(Math.round(super.getRow()) - Math.round(player.getRow()), 2)) < awareRadius) {
@@ -52,16 +49,19 @@ public class Orc extends Monster implements AggressiveEnemy {
 
     @Override
     public void onTick(long i) {
-        // update target following path every 60 ticks
-        if (++tick > 60) {
+        // update target following path every 1 second (60 ticks)
+        if (++tickFollowing > 60) {
             if (super.getTarget() != null) {
                 setTask(new MovementTask(this, super.getTarget().getPosition()));
             }
-            tick = 0;
+            tickFollowing = 0;
         }
-        // detect targets for every tick
-        if (super.getTarget() == null) {
-            detectTarget();
+        // detect targets every 0.25 second (15 ticks)
+        if (++tickDetecting > 15) {
+            if (super.getTarget() == null) {
+                detectTarget();
+            }
+            tickDetecting = 0;
         }
         // execute tasks
         if (getTask() != null && getTask().isAlive()) {

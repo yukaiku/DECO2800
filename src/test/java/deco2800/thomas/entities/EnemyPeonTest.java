@@ -11,8 +11,8 @@ import static org.junit.Assert.assertEquals;
 public class EnemyPeonTest extends BaseGDXTest {
     @Test
     public void testEnemyTexture() {
-        EnemyPeon enemy =  new Goblin(1, 1, 100);
-        assertEquals(enemy.getTexture(), "goblin");
+        EnemyPeon enemy =  new Orc(1, 1, 100);
+        assertEquals(enemy.getTexture(), "spacman_blue");
 
     }
 
@@ -20,7 +20,6 @@ public class EnemyPeonTest extends BaseGDXTest {
     public void testEnemyName() {
         EnemyPeon enemy =  new Goblin(1, 1, 100);
         assertEquals(enemy.getObjectName(), "Goblin");
-
     }
 
     @Test

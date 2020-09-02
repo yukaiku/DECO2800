@@ -153,7 +153,6 @@ public class EnemyManager extends TickableManager {
 
     /** Spawn the wild enemy at the given position. This should be automatically called by the configuration. */
     private void spawnWildEnemy(EnemyPeon enemy, float x, float y) {
-        // todo: check if the position is outside of map
         if (wildSpawning && wildEnemiesAlive.size() < wildEnemyCap) {
             enemy.setPosition(x, y);
             world.addEntity(enemy);
