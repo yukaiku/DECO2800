@@ -80,6 +80,53 @@ public class DesertWorld extends AbstractWorld {
         addEntity(new PlayerPeon(10f, 5f, 0.1f));
     }
 
+    public void createWalls() {
+        int[] leftWallX = new int[]{-8, -8, -8, -8, -8, -8, -7, -7, -7, -7, -7,
+                -7, -6, -6, -6, -6, -5, -5, -5, -5};
+
+        int[] rightWallX = new int[]{12, 12, 12, 12, 11, 11, 11, 11, 10,
+                10, 10, 10, 10, 10, 9, 9, 9, 9, 8, 8, 8, 7, 7};
+
+        int[] topWallStartY = new int[]{3, 4, 5, 5, 6, 6, 7, 7, 8, 9, 10};
+
+        // make the left wall, closing the south-west area
+        for (int i = 0; i < leftWallX.length; i++) {
+            Tile tile = getTile(leftWallX[i], i - 25);
+            if (tile != null) {
+                entities.add(new Rock(tile, true));
+                for (Tile neighbour : tile.getNeighbours().values()) {
+                    if (neighbour.getCol() <= tile.getCol()) {
+                        entities.add(new Rock(neighbour, true));
+                    }
+                }
+            }
+        }
+
+        // make the right wall, closing the south-east area
+        for (int i = 0; i < rightWallX.length; i++) {
+            Tile tile = getTile(rightWallX[i], i - 25);
+            if (tile != null) {
+                entities.add(new Rock(tile, true));
+                for (Tile neighbour : tile.getNeighbours().values()) {
+                    if (neighbour.getCol() <= tile.getCol()) {
+                        entities.add(new Rock(neighbour, true));
+                    }
+                }
+            }
+        }
+
+        // make the start of the top wall, to enclose the north-east area
+        for (int i = 0; i < topWallStartY.length; i++) {
+            Tile tile = getTile(i-10, topWallStartY[i]);
+            if (tile != null) {
+                entities.add(new Rock(tile, true));
+                for (Tile neighbour : tile.getNeighbours().values()) {
+                    entities.add(new Rock(neighbour, true));
+                }
+            }
+        }
+    }
+
 
     public void createStaticEntities() {
         Random rand = new Random();
@@ -99,9 +146,9 @@ public class DesertWorld extends AbstractWorld {
 
         // 100 Rocks randomly placed
         for (int i = 0; i < 100; i++) {
-            Tile t = this.getTile(rand.nextInt(tileCount));
-            if (t != null) {
-                entities.add(new Rock(t, true));
+            Tile tile = this.getTile(rand.nextInt(tileCount));
+            if (tile != null) {
+                entities.add(new Rock(tile, true));
             }
         }
 
@@ -124,6 +171,7 @@ public class DesertWorld extends AbstractWorld {
 
         if (notGenerated) {
             createStaticEntities();
+            createWalls();
             notGenerated = false;
         }
     }
