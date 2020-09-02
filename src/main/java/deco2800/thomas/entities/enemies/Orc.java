@@ -18,7 +18,7 @@ public class Orc extends Monster implements AggressiveEnemy {
     private final int awareRadius;
 
     public Orc(int height, float speed, int health) {
-        super("Orc", "spacman_blue", height, speed, health);
+        super("Orc", "goblin", height, speed, health);
         this.tick = 60;
         this.awareRadius = 8;
     }

@@ -55,10 +55,10 @@ public class TextureManager extends AbstractManager {
  
             textureMap.put("selection", new Texture("resources/square-select.png"));
             textureMap.put("path", new Texture("resources/yellow_selection.png"));
+            textureMap.put("goblin", new Texture("resources/goblin.png"));
             
             
             textureMap.put("buildingB", new Texture("resources/building3x2.png"));
-            
             textureMap.put("buildingA", new Texture("resources/buildingA.png"));
             textureMap.put("tree", new Texture("resources/tree.png"));
             textureMap.put("rock", new Texture("resources/rock_L.png"));

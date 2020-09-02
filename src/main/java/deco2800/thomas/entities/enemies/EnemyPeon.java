@@ -27,7 +27,7 @@ public abstract class EnemyPeon extends Peon {
     public EnemyPeon(String name, String texture, int height, float speed, int health) {
         super(0, 0, speed < 0 ? 0.05f : speed);
         this.setObjectName(Objects.requireNonNullElse(name, "EnemyPeon"));
-        this.setTexture(Objects.requireNonNullElse(texture, "spacman_blue"));
+        this.setTexture(Objects.requireNonNullElse(texture, "goblin"));
         this.setHeight(height <= 0 ? 1 : height);
         this.target = null;
         this.health = new HealthTracker(health);
