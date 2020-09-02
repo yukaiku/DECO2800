@@ -77,7 +77,7 @@ public class DesertWorld extends AbstractWorld {
         }
 
         // Creates the player entity
-        addEntity(new PlayerPeon(10f, 5f, 0.1f));
+        addEntity(new PlayerPeon(0f, -23f, 0.1f));
     }
 
     public void createWalls() {
@@ -87,7 +87,10 @@ public class DesertWorld extends AbstractWorld {
         int[] rightWallX = new int[]{12, 12, 12, 12, 11, 11, 11, 11, 10,
                 10, 10, 10, 10, 10, 9, 9, 9, 9, 8, 8, 8, 7, 7};
 
-        int[] topWallStartY = new int[]{3, 4, 5, 5, 6, 6, 7, 7, 8, 9, 10};
+        int[] topWallStartY = new int[]{3, 4, 5, 5, 6, 8, 9, 9, 10, 10};
+
+        int[] topWallEndY = new int[]{10, 10, 10, 10, 9, 8, 7, 7, 6, 6, 5, 5, 4, 4,
+                3, 3, 2, 2, 1, 1, 0, 0, -1, -1, -2, -2};
 
         // make the left wall, closing the south-west area
         for (int i = 0; i < leftWallX.length; i++) {
@@ -118,6 +121,17 @@ public class DesertWorld extends AbstractWorld {
         // make the start of the top wall, to enclose the north-east area
         for (int i = 0; i < topWallStartY.length; i++) {
             Tile tile = getTile(i-10, topWallStartY[i]);
+            if (tile != null) {
+                entities.add(new Rock(tile, true));
+                for (Tile neighbour : tile.getNeighbours().values()) {
+                    entities.add(new Rock(neighbour, true));
+                }
+            }
+        }
+
+        // make the end of the top wall, closing the north-east area
+        for (int i = 0; i < topWallEndY.length; i++) {
+            Tile tile = getTile(i, topWallEndY[i]);
             if (tile != null) {
                 entities.add(new Rock(tile, true));
                 for (Tile neighbour : tile.getNeighbours().values()) {
