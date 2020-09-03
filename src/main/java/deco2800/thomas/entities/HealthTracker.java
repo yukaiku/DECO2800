@@ -15,10 +15,10 @@ public class HealthTracker {
     private int currentHealthValue;
 
     public HealthTracker(int maxHealthValue) {
-
+        if (maxHealthValue > 0) {
             this.maxHealthValue = maxHealthValue;
             this.currentHealthValue = this.maxHealthValue;
-
+        }
     }
 
     /**
@@ -38,7 +38,9 @@ public class HealthTracker {
      * @param healthValue new value to which maximumHealthValue is set.
      */
     public void setMaxHealthValue(int healthValue) {
-        this.maxHealthValue = healthValue;
+        if (healthValue > 0) {
+            this.maxHealthValue = healthValue;
+        }
     }
 
     /**
@@ -47,7 +49,7 @@ public class HealthTracker {
      * @return currentHealthValue
      */
     public int getCurrentHealthValue() {
-        return currentHealthValue;
+        return this.currentHealthValue;
     }
 
     /**
@@ -62,7 +64,9 @@ public class HealthTracker {
      * @param healthValue new value to which currentHealthValue is set.
      */
     public void setCurrentHealthValue(int healthValue) {
-        this.currentHealthValue = healthValue;
+        if (healthValue >=0 && healthValue <= maxHealthValue) {
+            this.currentHealthValue = healthValue;
+        }
     }
 
     /**
@@ -76,7 +80,9 @@ public class HealthTracker {
      */
 
     public void reduceHealth(int damage) {
-        this.currentHealthValue -= damage;
+        if (damage >= 0) {
+            this.currentHealthValue -= damage;
+        }
     }
 
     /**
@@ -89,14 +95,9 @@ public class HealthTracker {
      *              increased.
      */
     public void regenerateHealth(int regen) {
-        this.currentHealthValue += regen;
-    }
-
-    /**
-     * Takes appropriate action
-     */
-    public void death() {
-
+        if (regen >= 0) {
+            this.currentHealthValue += regen;
+        }
     }
 }
 
