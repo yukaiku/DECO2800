@@ -148,18 +148,3 @@ public class TestWorld extends AbstractWorld {
 	}
 
 }
-
-/*
- * print out Neighbours for (Tile tile : tiles) { System.out.println();
- * System.out.println(tile); for (Entry<Integer, Tile> firend :
- * tile.getNeighbours().entrySet()) { switch (firend.getKey()) { case
- * Tile.north: System.out.println("north " +(firend.getValue())); break; case
- * Tile.north_east: System.out.println("north_east " + (firend.getValue()));
- * break; case Tile.north_west: System.out.println("north_west " +
- * (firend.getValue())); break; case Tile.south: System.out.println("south " +
- * (firend.getValue())); break; case Tile.south_east:
- * System.out.println("south_east " +(firend.getValue())); break; case
- * Tile.south_west: System.out.println("south_west " + (firend.getValue()));
- * break; } } }
- *
- */
