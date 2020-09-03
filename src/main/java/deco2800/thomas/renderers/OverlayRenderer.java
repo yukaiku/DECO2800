@@ -104,16 +104,20 @@ public class OverlayRenderer implements Renderer {
 				String.format("Username: %s", GameManager.get().getManager(NetworkManager.class).getUsername()));
 
 		line++;
+		EnemyManager enemyManager = GameManager.get().getManager(EnemyManager.class);
 		debugLine(batch, camera, ++line, "== Enemies ==");
 		debugLine(batch, camera, ++line, String.format("Wild Spawning: %s",
-				GameManager.get().getManager(EnemyManager.class).checkWildEnemySpawning() ? "active" : "disabled"));
-		debugLine(batch, camera, ++line, String.format("Current Enemies: %d",
-				GameManager.get().getManager(EnemyManager.class).getEnemyCount()));
-		debugLine(batch, camera, ++line, String.format("(%d/%d wild, %d special)",
-				GameManager.get().getManager(EnemyManager.class).getWildEnemiesAlive().size(),
-				GameManager.get().getManager(EnemyManager.class).getWildEnemyCap(),
-				GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size()));
-		Boss boss = GameManager.get().getManager(EnemyManager.class).getBoss();
+				enemyManager.checkWildEnemySpawning() ? "active" : "disabled"));
+		debugLine(batch, camera, ++line, String.format("Current Enemies: %d", enemyManager.getEnemyCount()));
+		if (enemyManager.getEnemyCount() - (enemyManager.getBoss() == null ? 0 : 1) > 0) {
+			debugLine(batch, camera, ++line, String.format("(%s%s%s)",
+					enemyManager.getWildEnemiesAlive().size() > 0 ? String.format("%d/%d wild",
+							enemyManager.getWildEnemiesAlive().size(), enemyManager.getWildEnemyCap()) : "",
+					enemyManager.getWildEnemiesAlive().size() > 0 && enemyManager.getSpecialEnemiesAlive().size() > 0 ? ", " : "",
+					enemyManager.getSpecialEnemiesAlive().size() > 0 ? String.format("%d special",
+							enemyManager.getSpecialEnemiesAlive().size()) : ""));
+		}
+		Boss boss = enemyManager.getBoss();
 		debugLine(batch, camera, ++line, String.format("Boss: %s%s", boss == null ? "n/a" : boss.getObjectName(),
 				boss == null ? "" : String.format(" (%d/%d)", boss.getCurrentHealth(), boss.getMaxHealth())));
 	}

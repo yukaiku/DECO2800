@@ -39,6 +39,11 @@ public class Orc extends Monster implements AggressiveEnemy {
         this.setTexture(texture);
     }
 
+    public void summonGoblin() {
+        Goblin goblin = new Goblin(1, 0.1f, 10);
+        GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(goblin, this.getCol(), this.getRow());
+    }
+
     /**
      * Detects the target with the given aware radius.
      */
@@ -62,11 +67,6 @@ public class Orc extends Monster implements AggressiveEnemy {
             super.setTarget(null);
             setTask(null);
         }
-    }
-
-    public void summonGoblin() {
-        Goblin goblin = new Goblin(1, 0.1f, 10);
-        GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(goblin, this.getCol(), this.getRow());
     }
 
     @Override
