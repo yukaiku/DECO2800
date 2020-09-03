@@ -13,11 +13,12 @@ public class HealthTracker {
     private int maxHealthValue;
     /** Represents the current health value of a character  **/
     private int currentHealthValue;
-
-    public HealthTracker(int maxHealthValue) {
+    public HealthTracker(int maxHealthValue) throws Exception {
         if (maxHealthValue > 0) {
             this.maxHealthValue = maxHealthValue;
             this.currentHealthValue = this.maxHealthValue;
+        } else {
+            throw new Exception("Value entered is wrong");
         }
     }
 
@@ -37,9 +38,11 @@ public class HealthTracker {
      *
      * @param healthValue new value to which maximumHealthValue is set.
      */
-    public void setMaxHealthValue(int healthValue) {
+    public void setMaxHealthValue(int healthValue) throws Exception {
         if (healthValue > 0) {
             this.maxHealthValue = healthValue;
+        } else {
+            throw new Exception("Cannot set the provided value");
         }
     }
 
@@ -63,9 +66,11 @@ public class HealthTracker {
      *
      * @param healthValue new value to which currentHealthValue is set.
      */
-    public void setCurrentHealthValue(int healthValue) {
+    public void setCurrentHealthValue(int healthValue) throws Exception {
         if (healthValue >=0 && healthValue <= maxHealthValue) {
             this.currentHealthValue = healthValue;
+        } else {
+            throw new Exception("Cannot set the provided value");
         }
     }
 
@@ -79,9 +84,11 @@ public class HealthTracker {
      *               reduced.
      */
 
-    public void reduceHealth(int damage) {
+    public void reduceHealth(int damage) throws Exception {
         if (damage >= 0) {
             this.currentHealthValue -= damage;
+        } else {
+            throw new Exception("Cannot do damage");
         }
     }
 
@@ -94,10 +101,13 @@ public class HealthTracker {
      * @param regen the integer amount by which currentHealthValue is to be
      *              increased.
      */
-    public void regenerateHealth(int regen) {
+    public void regenerateHealth(int regen) throws Exception {
         if (regen >= 0) {
             this.currentHealthValue += regen;
+        }else {
+            throw new Exception("Cannot regen");
         }
     }
+
 }
 
