@@ -42,7 +42,7 @@ public class MeleeEntity extends CombatEntity {
         this.task = task;
     }
 
-    public MeleeAttackTask getTask() {
+    public MeleeAttackTask getMovementTask() {
         return task;
     }
 

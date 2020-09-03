@@ -16,7 +16,6 @@ public class RangedEntity extends CombatEntity {
 
     private float speed;
     private float range;
-    private AbstractTask task;
     private SquareVector destination;
     private AbstractWorld world;
 
@@ -54,46 +53,30 @@ public class RangedEntity extends CombatEntity {
 
     public void setDestination(SquareVector destination) {this.destination = destination;}
 
+    /**
+     * Executes a single tick of the RangedEntity.
+     * @param i current game tick
+     */
     @Override
     public void onTick(long i) {
         // Update movement task
-        if (task != null) {
-            if( task.isComplete()) {
+        if (movementTask != null) {
+            if( movementTask.isComplete()) {
                 GameManager.get().getManager(CombatManager.class).removeEntity(this);
             }
-            task.onTick(i);
+            movementTask.onTick(i);
         } else {
             GameManager.get().getManager(CombatManager.class).removeEntity(this);
         }
 
         // Update combat task
-        List<AbstractEntity> collidingEntities = world.getEntitiesInBounds(bounds);
-        if (collidingEntities.size() > 1) { // Own bounding box should always be present
-            boolean destroyMe = false;
-            for (AbstractEntity entity : collidingEntities) {
-                if (entity.getObjectName() == "Orc") {
-                    EnemyPeon e = (EnemyPeon)entity;
-                    e.reduceHealth(getDamage());
-                    if (e.isDead()) {
-                        e.death();
-                    }
-                    destroyMe = true;
-                }
-                if (entity instanceof StaticEntity) {
-                    destroyMe = true;
-                }
-            }
-            if (destroyMe) {
+        if (combatTask != null) {
+            if (combatTask.isComplete()) {
                 GameManager.get().getManager(CombatManager.class).removeEntity(this);
             }
+            combatTask.onTick(i);
+        } else {
+            GameManager.get().getManager(CombatManager.class).removeEntity(this);
         }
-    }
-
-    public void setTask(AbstractTask task) {
-        this.task = task;
-    }
-
-    public AbstractTask getTask() {
-        return task;
     }
 }
