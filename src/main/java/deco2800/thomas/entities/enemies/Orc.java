@@ -1,6 +1,7 @@
 package deco2800.thomas.entities.enemies;
 
 
+import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.AgentEntity;
 import deco2800.thomas.entities.PlayerPeon;
 import deco2800.thomas.managers.EnemyManager;
@@ -61,6 +62,11 @@ public class Orc extends Monster implements AggressiveEnemy {
             super.setTarget(null);
             setTask(null);
         }
+    }
+
+    public void summonGoblin() {
+        Goblin goblin = new Goblin(1, 0.1f, 10);
+        GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(goblin, this.getCol(), this.getRow());
     }
 
     @Override

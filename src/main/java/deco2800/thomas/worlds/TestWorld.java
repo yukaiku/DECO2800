@@ -1,6 +1,7 @@
 package deco2800.thomas.worlds;
 
 import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.EnemyManager;
@@ -131,6 +132,7 @@ public class TestWorld extends AbstractWorld {
 		Orc orc = new Orc(1, 0.05f, 100);
 		Orc speedyOrc = new Orc(1, 0.09f, 50, "spacman_red");
 		Orc hostileTree = new Orc(1, 0.18f, 20, "tree"); // be careful with this enemy
+//		Dragon boss = new Dragon(1, 1, 1000);
 		EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(orc, speedyOrc));
 		GameManager.get().addManager(enemyManager);
 

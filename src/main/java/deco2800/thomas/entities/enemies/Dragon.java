@@ -1,6 +1,8 @@
 package deco2800.thomas.entities.enemies;
 
 import deco2800.thomas.entities.Peon;
+import deco2800.thomas.managers.EnemyManager;
+import deco2800.thomas.managers.GameManager;
 
 /**
  * A class that defines an implementation of a Dragon.
@@ -12,7 +14,15 @@ import deco2800.thomas.entities.Peon;
 public class Dragon extends Boss implements PassiveEnemy {
     public Dragon(int height, float speed, int health) {
         super("Elder Dragon", "goblin", height, speed, health);
+    }
 
+    public void summonGoblin() {
+        Goblin goblin = new Goblin(1, 0.1f, 10);
+        GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(goblin, this.getCol(), this.getRow());
+    }
+
+    public void hitByTarget(Peon Target) {
+        summonGoblin();
     }
 
     @Override
@@ -20,6 +30,8 @@ public class Dragon extends Boss implements PassiveEnemy {
         // some special rules when the boss is dead.
     }
 
-    public void hitByTarget(Peon Target) {
+    @Override
+    public void onTick(long i) {
+
     }
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import deco2800.thomas.entities.enemies.Boss;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.WorldUtil;
 
@@ -71,51 +72,49 @@ public class OverlayRenderer implements Renderer {
 
 	private void renderDebugText(SpriteBatch batch, Camera camera) {
 		int line = 0; // Set this to set the line number you want to debug message to
-		debugLine(batch, camera, line++, "== Game Info ==");
-		debugLine(batch, camera, line++,
+		debugLine(batch, camera, line, "== Game Info ==");
+		debugLine(batch, camera, ++line,
 				String.format("Rendered: %d/%d entities, %d/%d tiles", GameManager.get().entitiesRendered,
 						GameManager.get().entitiesCount, GameManager.get().tilesRendered,
 						GameManager.get().tilesCount));
-		debugLine(batch, camera, line++, String.format("FPS: %d", Gdx.graphics.getFramesPerSecond()));
-		debugLine(batch, camera, line++,
+		debugLine(batch, camera, ++line, String.format("FPS: %d", Gdx.graphics.getFramesPerSecond()));
+		debugLine(batch, camera, ++line,
 				String.format("RAM: %dMB PEAK: %dMB", Gdx.app.getJavaHeap() / 1000000, peakRAM / 1000000));
 
 		float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(), Gdx.input.getY());
-		debugLine(batch, camera, line++, String.format("Mouse: X:%d Y:%d", Gdx.input.getX(), Gdx.input.getY()));
-		debugLine(batch, camera, line++, String.format("World: X:%.0f Y:%.0f", mouse[0], mouse[1]));
+		debugLine(batch, camera, ++line, String.format("Mouse: X:%d Y:%d", Gdx.input.getX(), Gdx.input.getY()));
+		debugLine(batch, camera, ++line, String.format("World: X:%.0f Y:%.0f", mouse[0], mouse[1]));
 
 		float[] ColRow = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
-		debugLine(batch, camera, line++, String.format("World: X:%.0f Y:%.0f", ColRow[0], ColRow[1]));
+		debugLine(batch, camera, ++line, String.format("World: X:%.0f Y:%.0f", ColRow[0], ColRow[1]));
 
 		line++;
-
-		debugLine(batch, camera, line++, "PathfindingService");
-		debugLine(batch, camera, line++, GameManager.get().getManager(PathFindingService.class).toString());
+		debugLine(batch, camera, ++line, "PathfindingService");
+		debugLine(batch, camera, ++line, GameManager.get().getManager(PathFindingService.class).toString());
 
 		line++;
-		debugLine(batch, camera, line++, "== Networking ==");
-		debugLine(batch, camera, line++,
+		debugLine(batch, camera, ++line, "== Networking ==");
+		debugLine(batch, camera, ++line,
 				String.format("ID: %d", GameManager.get().getManager(NetworkManager.class).getID()));
-		debugLine(batch, camera, line++, String.format("Messages Received: %d",
+		debugLine(batch, camera, ++line, String.format("Messages Received: %d",
 				GameManager.get().getManager(NetworkManager.class).getMessagesReceived()));
-		debugLine(batch, camera, line++,
+		debugLine(batch, camera, ++line,
 				String.format("Messages Sent: %d", GameManager.get().getManager(NetworkManager.class).getMessagesSent()));
-		debugLine(batch, camera, line++,
+		debugLine(batch, camera, ++line,
 				String.format("Username: %s", GameManager.get().getManager(NetworkManager.class).getUsername()));
 
 		line++;
-		debugLine(batch, camera, line++, "== Enemies ==");
-		debugLine(batch, camera, line++,
-				String.format("Wild Spawning: %s",
-						GameManager.get().getManager(EnemyManager.class).checkWildEnemySpawning() ? "active" : "disabled"));
-		debugLine(batch, camera, line++,
-				String.format("Current Enemies: %d", GameManager.get().getManager(EnemyManager.class).getEnemyCount()));
-		debugLine(batch, camera, line++,
-				String.format("(%d/%d wild, %d special)", GameManager.get().getManager(EnemyManager.class).getWildEnemiesAlive().size(),
-						GameManager.get().getManager(EnemyManager.class).getWildEnemyCap(),
-						GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size()));
-		debugLine(batch, camera, line++,
-				String.format("Boss: %s", GameManager.get().getManager(EnemyManager.class).getBoss() == null ? "n/a" :
-						GameManager.get().getManager(EnemyManager.class).getBoss().getObjectName()));
+		debugLine(batch, camera, ++line, "== Enemies ==");
+		debugLine(batch, camera, ++line, String.format("Wild Spawning: %s",
+				GameManager.get().getManager(EnemyManager.class).checkWildEnemySpawning() ? "active" : "disabled"));
+		debugLine(batch, camera, ++line, String.format("Current Enemies: %d",
+				GameManager.get().getManager(EnemyManager.class).getEnemyCount()));
+		debugLine(batch, camera, ++line, String.format("(%d/%d wild, %d special)",
+				GameManager.get().getManager(EnemyManager.class).getWildEnemiesAlive().size(),
+				GameManager.get().getManager(EnemyManager.class).getWildEnemyCap(),
+				GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size()));
+		Boss boss = GameManager.get().getManager(EnemyManager.class).getBoss();
+		debugLine(batch, camera, ++line, String.format("Boss: %s%s", boss == null ? "n/a" : boss.getObjectName(),
+				boss == null ? "" : String.format(" (%d/%d)", boss.getCurrentHealth(), boss.getMaxHealth())));
 	}
 }
