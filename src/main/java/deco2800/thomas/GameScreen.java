@@ -55,7 +55,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	PotateCamera cameraDayCycle;
 
-	OrthographicCamera camera, cameraDebug;
+
+	OrthographicCamera cameraDebug;
+	PotateCamera camera;
 
 
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
@@ -83,7 +85,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 		NEW_GAME {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new SwampWorld();
+				AbstractWorld swampWorld = new SwampWorld();
+				AbstractWorld volcanoWorld = new VolcanoWorld();
+				AbstractWorld world = volcanoWorld;
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
@@ -108,7 +112,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		cameraDayCycle = new PotateCamera(1920, 1080);
 
 		// Initialize camera
-		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera = new PotateCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cameraDebug = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 
@@ -150,7 +154,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void render(float delta) {
 		handleRenderables();
 
-		//MoveCamera Function was here for dayNight Cycle?
+		//MoveCamera Function was here for dayNight Cycle
+		moveCamera();
 		
 		CameraUtil.zoomableCamera(camera, Input.Keys.MINUS, Input.Keys.EQUALS, delta);
 		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
@@ -285,7 +290,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 			DatabaseManager.loadWorld(null);
 		}
 	}
-/*
+
 	public void moveCamera() {
 		//timmeh to fix hack.  // fps is not updated cycle by cycle
 		float normilisedGameSpeed = (60.0f / Gdx.graphics.getFramesPerSecond());
@@ -326,8 +331,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 			}
 		}
 	}
-	//This method has been made redundant for the moment since the camera follows
-	the player
- */
+
 
 }

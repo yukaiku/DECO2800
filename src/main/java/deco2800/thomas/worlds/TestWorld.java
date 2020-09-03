@@ -127,7 +127,6 @@ public class TestWorld extends AbstractWorld {
 			}
 		}
 		// Create the entities in the game
-
 		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
 		addEntity(this.getPlayerEntity());
 

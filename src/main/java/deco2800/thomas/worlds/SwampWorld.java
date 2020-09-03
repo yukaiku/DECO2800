@@ -69,7 +69,8 @@ public class SwampWorld extends AbstractWorld {
         }
 
         // Create the player entity
-        this.addEntity(new PlayerPeon(10f, 5f, 0.1f));
+        this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
+        addEntity(this.getPlayerEntity());
     }
 
     public void createStaticEntities() {
