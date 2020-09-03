@@ -85,9 +85,20 @@ public class GameScreen implements Screen, KeyDownObserver {
 		NEW_GAME {
 			@Override
 			public AbstractWorld method() {
+
 				AbstractWorld swampWorld = new SwampWorld();
 				AbstractWorld volcanoWorld = new VolcanoWorld();
+				AbstractWorld testWorld = new TestWorld();
 				AbstractWorld world = volcanoWorld;
+
+				GameManager.get().getManager(NetworkManager.class).startHosting("host");
+				return world;
+			}
+		},
+		ENV_TEAM_GAME {
+			@Override
+			public AbstractWorld method() {
+				AbstractWorld world = new EnvTeamWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
@@ -288,6 +299,16 @@ public class GameScreen implements Screen, KeyDownObserver {
 		if (keycode == Input.Keys.F4) { // F4
 			// Load the world to the DB
 			DatabaseManager.loadWorld(null);
+		}
+
+		if (keycode == Input.Keys.F6) { // F3
+			// Save the world to the DB
+			DatabaseManager.saveWorld(world, "env_team_output.json");
+		}
+
+		if (keycode == Input.Keys.F7) { // F4
+			// Load the world to the DB
+			DatabaseManager.loadWorld(world, "resources/env_team_input.json");
 		}
 	}
 
