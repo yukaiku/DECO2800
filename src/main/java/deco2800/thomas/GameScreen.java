@@ -98,7 +98,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		ENV_TEAM_GAME {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new EnvTeamWorld();
+				AbstractWorld world = new VolcanoWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
@@ -167,7 +167,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		//MoveCamera Function was here for dayNight Cycle
 		moveCamera();
-		
+
 		CameraUtil.zoomableCamera(camera, Input.Keys.MINUS, Input.Keys.EQUALS, delta);
 		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
 

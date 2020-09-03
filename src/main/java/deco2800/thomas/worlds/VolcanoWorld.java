@@ -23,9 +23,15 @@ public class VolcanoWorld extends AbstractWorld {
 
     public VolcanoWorld() {
         super();
+        DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
+        this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.1f));
+        addEntity(this.getPlayerEntity());
     }
     public VolcanoWorld(int width, int height) {
+        super(width, height);
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
+        this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.1f));
+        addEntity(this.getPlayerEntity());
 
     }
 
@@ -34,61 +40,6 @@ public class VolcanoWorld extends AbstractWorld {
      * Generates the tiles for the world
      */
     protected void generateTiles() {
-        /*Random random = new Random();
-        //Volcano Bottom half
-        int tileCount = 0;
-        for (int q = -width; q < width; q++) {
-            for (int r = -height; r < height/5; r++) {
-                tileCount += 1;
-                int elevation = random.nextInt(2) + 1;
-                String type = "Volcano_";
-                type += elevation;
-                tiles.add(new VolcanoDefaultTile(type, q, r));
-            }
-
-        }
-        //Volcano Lava tiles
-        for (int q = -width+width/8; q < width-width/8+1; q++) {
-            for (int r = height / 5; r < height; r++) {
-                tileCount += 1;
-                int elevation = random.nextInt(4) + 5;
-                String type = "Volcano_";
-                type += elevation;
-                tiles.add(new VolcanoDefaultTile(type, q, r));
-            }
-        }
-        //Volcano Left Side
-        for (int q = -width; q < -width+width/8; q++) {
-            for (int r = height / 5; r < height; r++) {
-                tileCount += 1;
-                int elevation = random.nextInt(2) + 1;
-                String type = "Volcano_";
-                type += elevation;
-                tiles.add(new VolcanoDefaultTile(type, q, r));
-            }
-        }//Volcano Right Side
-        for (int q = width - 1; q > width-width/8; q--) {
-            for (int r = height / 5; r < height; r++) {
-                tileCount += 1;
-                int elevation = random.nextInt(2) + 1;
-                String type = "Volcano_";
-                type += elevation;
-                tiles.add(new VolcanoDefaultTile(type, q, r));
-            }
-        }//Volcano Front
-        for (int q = -width; q < width; q++) {
-            for (int r = height/5-height/8; r < height/5; r++) {
-                tileCount += 1;
-                int elevation = random.nextInt(2) + 1;
-                String type = "Volcano_";
-                type += elevation;
-                tiles.add(new VolcanoDefaultTile(type, q, r));
-            }
-        }
-        */
-        // Create the entities in the game
-        this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
-        addEntity(this.getPlayerEntity());
 
     }
 
@@ -109,9 +60,9 @@ public class VolcanoWorld extends AbstractWorld {
         Random random = new Random();
         int tileCount = GameManager.get().getWorld().getTiles().size();
 
-        //addBones();
-        //addGraveYard();
-        //addRuins();
+        addBones();
+        addGraveYard();
+        addRuins();
         addRandomLavaPools();
 
         // 100 randomly-placed tiles and their corresponding neighbors have "swamp_1" texture
@@ -130,19 +81,19 @@ public class VolcanoWorld extends AbstractWorld {
     }
 
 
-    public void addRuins(float col, float row){
+    public void addRuins(){
 
     }
 
-    public void addLavaPool(float col, float row){
+    public void addLavaPool(){
 
     }
 
-    public void addBones(float col, float row){
+    public void addBones(){
 
     }
 
-    public void addGraveYard(float col, float row){
+    public void addGraveYard(){
        /* List<Part> parts = new ArrayList<Part>();
         parts.add(new Part(new SquareVector(0, 0), "buildingA", true));
         // Bottom
