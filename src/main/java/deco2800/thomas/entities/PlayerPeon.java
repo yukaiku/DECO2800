@@ -19,9 +19,8 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
     private Map<String, String> dialogues = new HashMap<>();
 
     public PlayerPeon(float row, float col, float speed, int health) {
-        super(row, col, speed);
+        super(row, col, speed, health);
         this.setObjectName("playerPeon");
-        this.health = new HealthTracker(health);
         GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).addKeyUpListener(this);
@@ -61,58 +60,11 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         return dialogues.get(target);
     }
 
-    /**
-     * Returns the maximum health of the player.
-     */
-    public int getMaxHealth() {
-        return health.getMaxHealthValue();
-    }
-
-    /**
-     * Sets the maximum health of the player.
-     * @param newMaxHealth the new maximum health of the player.
-     */
-    public void setMaxHealth(int newMaxHealth) {
-        this.health.setMaxHealthValue(newMaxHealth);
-    }
-
-    /**
-     * Returns the current health of the player.
-     */
-    public int getCurrentHealth() {
-        return this.health.getCurrentHealthValue();
-    }
-
-    /**
-     * Sets the current health of this player to be a new value.
-     * @param newHealth The new current health of this player.
-     */
-    public void setCurrentHealthValue(int newHealth) {
-        this.health.setCurrentHealthValue(newHealth);
-    }
-
-    /**
-     * Reduces the health of the player by the given amount.
-     * @param damage The amount of damage to be taken by the player.
-     */
-    public void reduceHealth (int damage) {
-        this.health.reduceHealth(damage);
-    }
-
-    /**
-     * Increases the health of the player by the given amount.
-     * @param regen The amount of health the player is to be healed by.
-     */
-    public void regenerateHealth (int regen) {
-        this.health.regenerateHealth(regen);
-    }
-
-    public boolean isDead () {
-        return (this.getCurrentHealth() <= 0);
-    }
-
     @Override
     public void onTick(long i) {
+        if (isDead()) {
+            death();
+        }
         if (getTask() != null && getTask().isAlive()) {
             getTask().onTick(i);
 
@@ -208,4 +160,10 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         }
         this.setMovingDirection(MovementTask.Direction.NONE);
     }
+/*
+    @Override
+    public void death() {
+        GameManager.get().getWorld().removeEntity(this);
+    }
+    */
 }
