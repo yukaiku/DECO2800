@@ -75,7 +75,7 @@ public class TutorialWorld extends AbstractWorld{
         GameManager.get().addManager(npcManager);
     }
 
-    public void createObjects() {
+    public void generateEntities() {
         // Add stashs
         for (int i = -6; i < 6 + 1; i = i + 3) {
             Tile t = GameManager.get().getWorld().getTile(i, TUTORIAL_WORLD_HEIGHT - 1);
@@ -116,7 +116,7 @@ public class TutorialWorld extends AbstractWorld{
         }
 
         if (notGenerated) {
-            createObjects();
+            generateEntities();
             notGenerated = false;
         }
 
