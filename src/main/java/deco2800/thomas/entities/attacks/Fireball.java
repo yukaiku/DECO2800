@@ -5,25 +5,36 @@ import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.ApplyDamageOnCollisionTask;
 import deco2800.thomas.tasks.DirectProjectileMovementTask;
-import deco2800.thomas.tasks.RangedAttackTask;
 import deco2800.thomas.util.SquareVector;
 
+/**
+ * A fireball is a projectile that moves in a straight line until it
+ * a) hits an enemy and deals damage, or
+ * b) its lifetime expires.
+ */
 public class Fireball extends RangedEntity implements Tickable{
-    protected float speed;
-    private transient RangedAttackTask task;
-
+    /**
+     * Default constructor, sets texture and object name.
+     */
     public Fireball() {
         super();
-        this.setTexture("projectile");
+        this.setTexture("fireball_left");
         this.setObjectName("combatFireball");
-        this.setHeight(1);
-        this.speed = 0.05f;
     }
 
-    public Fireball (float row, float col, int damage, float speed, int range) {
-        super(row, col, RenderConstants.PROJECTILE_RENDER, damage, speed, range);
+    /**
+     * Parametric constructor, that sets the initial conditions of the projectile
+     * as well as texture and name.
+     * @param col Initial X position
+     * @param row Initial Y position
+     * @param damage Damage to apply on impact
+     * @param speed Speed of projectile
+     * @param range Deprecated TODO: REMOVE
+     */
+    public Fireball (float col, float row, int damage, float speed, int range) {
+        super(col, row, RenderConstants.PROJECTILE_RENDER, damage, speed, range);
         this.setObjectName("combatFireball");
-        this.setTexture("projectile");
+        this.setTexture("fireball_left");
     }
 
     /**

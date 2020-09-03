@@ -77,6 +77,9 @@ public class TextureManager extends AbstractManager {
             textureMap.put("spatman_red", new Texture("resources/spatman_red.png"));
             textureMap.put("spatman_yellow", new Texture("resources/spatman_yellow.png"));
 
+            // Attacks
+            textureMap.put("fireball_left", new Texture("resources/combat/fireball_left.png"));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
