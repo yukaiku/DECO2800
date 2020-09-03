@@ -1,8 +1,6 @@
 package deco2800.thomas.worlds;
 
-import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.AgentEntity;
-import deco2800.thomas.entities.StaticEntity;
+import deco2800.thomas.entities.*;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
 
@@ -63,6 +61,18 @@ public abstract class AbstractWorld {
 	protected List<Tile> tilesToRemove;
 
 	/**
+	 * The agent entity which is the player. All maps
+	 * have only one player entity
+	 */
+	private PlayerPeon playerEntity;
+
+	/**
+	 * The static entity which is the Orb. All maps
+	 * have only one Orb entity
+	 */
+	private Rock rockEntity;
+
+	/**
 	 * Constructor that creates a world with default width and height
 	 */
 	protected AbstractWorld() {
@@ -92,6 +102,33 @@ public abstract class AbstractWorld {
 	 * Generates the tiles for the world
 	 */
 	protected abstract void generateTiles();
+
+	/**
+	 * Set the playerEntity and add it to the entities list
+	 * @param playerEntity
+	 */
+	protected void setPlayerEntity(PlayerPeon playerEntity) {
+		this.playerEntity = playerEntity;
+		this.entities.add(playerEntity);
+	}
+
+	/**
+	 * Set the orbEntity and add it to the entities list
+	 * @param rock
+	 */
+	protected void setOrbEntity(Rock rock) {
+		this.rockEntity = rock;
+		this.entities.add(rock);
+	}
+
+	/**
+	 * Check if the player's position is same as the orb's position
+	 */
+	protected void checkObtainedOrb() {
+		if (playerEntity.getPosition().equals(rockEntity.getPosition())) {
+			GameManager.get().setNextWorld();
+		}
+	}
 
 	/**
 	 * Generates a tileMap from the list of tiles
@@ -133,7 +170,7 @@ public abstract class AbstractWorld {
 	/**
 	 * TODO Find out what this method does, reconsider it, and write doc comment for it
 	 */
-	private void generateTileIndices() {
+	protected void generateTileIndices() {
 		for (Tile tile : tiles) {
 			tile.calculateIndex();
 		}
@@ -344,6 +381,10 @@ public abstract class AbstractWorld {
 	}
 
 	public void onTick(long i) {
+//		System.out.println(playerEntity.getPosition().
+//				isCloseEnoughToBeTheSame(rockEntity.getPosition(), 0.1f));
+		this.checkObtainedOrb();
+
 		for (AbstractEntity entity : entitiesToRemove) {
 			entities.remove(entity);
 		}

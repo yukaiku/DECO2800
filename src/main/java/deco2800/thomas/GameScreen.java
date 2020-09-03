@@ -93,9 +93,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		GameManager gameManager = GameManager.get();
 
-		world = startType.method();
+//		world = startType.method();
 
-		gameManager.setWorld(world);
+		gameManager.setNextWorld();
 
 		// Add first peon to the world
 		camera = new PotateCamera(1920, 1080);

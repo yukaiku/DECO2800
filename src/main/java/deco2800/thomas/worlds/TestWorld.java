@@ -98,15 +98,18 @@ public class TestWorld extends AbstractWorld {
 		Random random = new Random();
 		int tileCount = GameManager.get().getWorld().getTiles().size();
 		// Generate some rocks to mine later
-		for (int i = 0; i < 100; i++) {
-			Tile t = GameManager.get().getWorld().getTile(random.nextInt(tileCount));
-			if (t != null) {
-				entities.add(new Rock(t, true));
-			}
-		}
+//		for (int i = 0; i < 100; i++) {
+//			Tile t = GameManager.get().getWorld().getTile(random.nextInt(tileCount));
+//			if (t != null) {
+//				entities.add(new Rock(t, true));
+//			}
+//		}
+		this.setOrbEntity(new Rock(GameManager.get().getWorld().
+				getTile(15, -10), false));
+
 		// Add some trees
 		for (int i = 0; i < 50; i++) {
-			Tile t = GameManager.get().getWorld().getTile(random.nextInt(tileCount));
+			Tile t = this.getTile(random.nextInt(tileCount));
 			if (t != null) {
 				entities.add(new Tree(t, true));
 			}
@@ -117,6 +120,7 @@ public class TestWorld extends AbstractWorld {
 
 	@Override
 	protected void generateTiles() {
+		Tile.resetID();
 		Random random = new Random();
 		for (int q = -WORLD_WIDTH; q < WORLD_WIDTH; q++) {
 			for (int r = -WORLD_HEIGHT; r < WORLD_HEIGHT; r++) {
@@ -128,22 +132,22 @@ public class TestWorld extends AbstractWorld {
 		}
 
 		// Create the entities in the game
-		addEntity(new PlayerPeon(10f, 5f, 0.1f));
+		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
 	}
 
 	@Override
 	public void onTick(long i) {
+		if (notGenerated) {
+			createBuildings();
+			//addTree(-1, -3f);
+			notGenerated = false;
+			System.out.println(entities.size());
+		}
+
 		super.onTick(i);
 		//addTree(0f, 0f);
 		for (AbstractEntity e : this.getEntities()) {
 			e.onTick(0);
-		}
-
-		if (notGenerated) {
-			createBuildings();
-			//addTree(-1, -3f);
-
-			notGenerated = false;
 		}
 	}
 

@@ -8,11 +8,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import deco2800.thomas.renderers.PotateCamera;
 import deco2800.thomas.worlds.AbstractWorld;
 
+import deco2800.thomas.worlds.SwampWorld;
+import deco2800.thomas.worlds.TestWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 
 public class GameManager {
@@ -57,6 +61,13 @@ public class GameManager {
 	 */
 	public boolean showCoordsEntity = false;
 
+	private static enum WorldType {
+		TEST_WORLD,
+		SWAMP_WORLD,
+	}
+	private int currentWorld = 0;
+	private ArrayList<WorldType> worldOrder;
+
 	/**
 	 * Returns an instance of the GM
 	 *
@@ -73,7 +84,9 @@ public class GameManager {
 	 * Private constructor to enforce use of get()
 	 */
 	private GameManager() {
-
+		worldOrder = new ArrayList<>(EnumSet.allOf(WorldType.class));
+		Collections.shuffle(worldOrder);
+		System.out.println(worldOrder.toString());
 	}
 
 	/**
@@ -233,6 +246,21 @@ public class GameManager {
 		return gameWorld;
 	}
 
+	/**
+	 * Teleport the player to the next world by setting
+	 * it as current world
+	 */
+	public void setNextWorld() {
+		switch(worldOrder.get(currentWorld)) {
+			case TEST_WORLD:
+				this.setWorld(new TestWorld());
+				break;
+			case SWAMP_WORLD:
+				this.setWorld(new SwampWorld());
+				break;
+		}
+		currentWorld = (currentWorld + 1) % worldOrder.size();
+	}
 
 	public void setCamera(PotateCamera camera) {
 		this.camera = camera;
