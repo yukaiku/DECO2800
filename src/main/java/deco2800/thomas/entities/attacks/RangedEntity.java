@@ -2,6 +2,7 @@ package deco2800.thomas.entities.attacks;
 
 import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.RangedAttackTask;
 import deco2800.thomas.util.SquareVector;
 
@@ -9,7 +10,7 @@ public class RangedEntity extends CombatEntity {
 
     private float speed;
     private float range;
-    private transient RangedAttackTask task;
+    private AbstractTask task;
     private SquareVector destination;
 
     public RangedEntity () {
@@ -57,11 +58,11 @@ public class RangedEntity extends CombatEntity {
         }
     }
 
-    public void setTask(RangedAttackTask task) {
+    public void setTask(AbstractTask task) {
         this.task = task;
     }
 
-    public RangedAttackTask getTask() {
+    public AbstractTask getTask() {
         return task;
     }
 }

@@ -6,6 +6,8 @@ import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.TouchDownObserver;
+import deco2800.thomas.tasks.DirectProjectileMovementTask;
+import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.tasks.RangedAttackTask;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
@@ -34,7 +36,7 @@ public class CombatManager extends AbstractManager implements TouchDownObserver,
             SquareVector destination = new SquareVector(clickedPosition[0], clickedPosition[1]);
 
             Fireball fireball = new Fireball(world.getPlayerEntity().getCol(), world.getPlayerEntity().getRow(), 10, 0.15f, 5);
-            fireball.setTask(new RangedAttackTask(fireball, destination));
+            fireball.setTask(new DirectProjectileMovementTask(fireball, destination, 120));
 
             world.addEntity(fireball);
         }
