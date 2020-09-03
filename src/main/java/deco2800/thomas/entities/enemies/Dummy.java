@@ -7,6 +7,8 @@ import deco2800.thomas.managers.GameManager;
 /**
  * A dummy enemy has limited movement and will apply zero or minor damage to the players.
  * Dummies are special enemies and need to be spawned manually using spawnSpecialEnemy() inside EnemyManager.
+ *
+ * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/monsters/dummy
  */
 public class Dummy extends Monster implements PassiveEnemy {
     public Dummy(int height, float speed, int health) {

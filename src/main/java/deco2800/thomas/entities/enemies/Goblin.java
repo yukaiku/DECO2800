@@ -9,13 +9,14 @@ import deco2800.thomas.util.EnemyUtil;
 
 /**
  * A class that defines an implementation of a minion enemy type called a Goblin.
- *
  * Goblins are special enemies. They are summoned by monsters or bosses and
  * directly target towards players when spawning.
+ *
+ * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/minions/goblin
  */
 public class Goblin extends Minion implements AggressiveEnemy {
     private int tickFollowing = 30;
-    private int awarenessRadius = 12;
+    private final int detectRadius = 12;
 
     public Goblin(int height, float speed, int health) {
         super("Goblin", "goblin", height, speed, health);
@@ -28,7 +29,7 @@ public class Goblin extends Minion implements AggressiveEnemy {
 
     public void detectTarget() {
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
-        if (player != null && EnemyUtil.playerInRadius(this, player, awarenessRadius)) {
+        if (player != null && EnemyUtil.playerInRadius(this, player, detectRadius)) {
             super.setTarget((PlayerPeon) player);
             setTask(new MovementTask(this, super.getTarget().getPosition()));
         }

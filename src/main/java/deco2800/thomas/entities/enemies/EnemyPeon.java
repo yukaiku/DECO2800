@@ -9,9 +9,11 @@ import deco2800.thomas.tasks.MovementTask;
 import java.util.Objects;
 
 /**
- An abstract class inheriting from Peon that will define the
- behaviour of all enemies. All enemies must have some form of health.
- **/
+ * An abstract class inheriting from Peon that will define the
+ * behaviour of all enemies. All enemies must have some form of health.
+ *
+ * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies
+ */
 public abstract class EnemyPeon extends Peon {
 
     // The target to follow and attack. This can be players or even enemies, or null for passive enemies.

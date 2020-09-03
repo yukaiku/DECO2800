@@ -10,20 +10,21 @@ import deco2800.thomas.util.EnemyUtil;
 
 /**
  * A class that defines an implementation of an orc.
- *
  * Orcs are wild enemies. They can be automatically spawned using EnemyManager.
+ *
+ * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/monsters/orc
  */
 public class Orc extends Monster implements AggressiveEnemy {
 
     private int tickFollowing = 60;
     private int tickDetecting = 15;
-    private int awarenessRange = 8;
+    private final int detectRadius = 8;
+    private final int discardRadius = 12;
 
     String textureFacingUp = "spacman_blue";
     String textureFacingRight = "spacman_green";
     String textureFacingDown = "spacman_red";
     String textureFacingLeft = "spacman_yellow";
-
 
     public Orc(int height, float speed, int health) {
         super("Orc", "spacman_blue", height, speed, health, true);
@@ -43,7 +44,7 @@ public class Orc extends Monster implements AggressiveEnemy {
     public void detectTarget() {
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
         if (player != null && EnemyUtil.playerInRadius(this, player,
-                awarenessRange)) {
+                detectRadius)) {
             super.setTarget((PlayerPeon) player);
             setTask(new MovementTask(this,
                     super.getTarget().getPosition()));
@@ -56,7 +57,7 @@ public class Orc extends Monster implements AggressiveEnemy {
     public void discardTarget() {
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
         if (player != null && !EnemyUtil.playerInRadius(this, player,
-                awarenessRange)) {
+                discardRadius)) {
             super.setTarget(null);
             setTask(null);
         }
