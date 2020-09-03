@@ -49,8 +49,12 @@ public class RangedAttackTask extends AbstractTask{
         List<AbstractEntity> collidingEntities = world.getEntitiesInBounds(entity.getBounds());
 
         if (!collidingEntities.isEmpty()) {
+            System.out.printf("%d entities\n", collidingEntities.size());
+            System.out.printf("Self: Left: %f, Right: %f, Top: %f, Bottom: %f\n", entity.getBounds().getLeft(), entity.getBounds().getRight(), entity.getBounds().getTop(), entity.getBounds().getBottom());
             for (AbstractEntity e : collidingEntities) {
+                System.out.printf("Other: Left: %f, Right: %f, Top: %f, Bottom: %f\n", e.getBounds().getLeft(), e.getBounds().getRight(), e.getBounds().getTop(), e.getBounds().getBottom());
                 if (e.getObjectName() == "Orc") {
+                    System.out.printf("orc hit");
                     applyDamage(((EnemyPeon) e));
                 }
                 if (e instanceof StaticEntity) {
