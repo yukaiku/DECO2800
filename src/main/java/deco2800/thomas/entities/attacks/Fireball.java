@@ -34,7 +34,8 @@ public class Fireball extends RangedEntity implements Tickable{
 
     @Override
     public void onTick(long i) {
-        if (getTask() != null && getTask().isAlive()) {
+        super.onTick(i);
+        /*if (getTask() != null && getTask().isAlive()) {
             getTask().onTick(i);
 
             if (getTask().isComplete()) {
@@ -42,6 +43,6 @@ public class Fireball extends RangedEntity implements Tickable{
             }
         } else {
             GameManager.get().getManager(CombatManager.class).removeEntity(this);
-        }
+        }*/
     }
 }

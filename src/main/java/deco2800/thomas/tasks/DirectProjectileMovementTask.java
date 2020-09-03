@@ -1,9 +1,7 @@
 package deco2800.thomas.tasks;
 
 import deco2800.thomas.entities.attacks.RangedEntity;
-import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
-import deco2800.thomas.worlds.AbstractWorld;
 
 /**
  * This task provides straight movement across the map directly to the
@@ -13,8 +11,6 @@ import deco2800.thomas.worlds.AbstractWorld;
 public class DirectProjectileMovementTask extends AbstractTask {
     // Entity who owns this task
     private RangedEntity entity;
-    // Current game world
-    private AbstractWorld world;
     // Delta step size to move towards
     private float direction[];
     // Lifetime of task
@@ -43,7 +39,6 @@ public class DirectProjectileMovementTask extends AbstractTask {
         this.lifetime = lifetime;
         this.currentLifetime = 0;
         this.taskComplete = false;
-        world = GameManager.get().getWorld();
     }
 
     /**
