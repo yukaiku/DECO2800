@@ -1,6 +1,6 @@
 package deco2800.thomas.tasks;
 
-import deco2800.thomas.entities.attacks.RangedEntity;
+import deco2800.thomas.entities.attacks.Projectile;
 import deco2800.thomas.util.SquareVector;
 
 /**
@@ -10,7 +10,7 @@ import deco2800.thomas.util.SquareVector;
  */
 public class DirectProjectileMovementTask extends AbstractTask {
     // Entity who owns this task
-    private RangedEntity entity;
+    private Projectile entity;
     // Delta step size to move towards
     private float direction[];
     // Lifetime of task
@@ -27,7 +27,7 @@ public class DirectProjectileMovementTask extends AbstractTask {
      * @param destination coordinates of target
      * @param lifetime lifetime of task in ticks
      */
-    public DirectProjectileMovementTask(RangedEntity entity, SquareVector destination, long lifetime) {
+    public DirectProjectileMovementTask(Projectile entity, SquareVector destination, long lifetime) {
         super(entity);
 
         // Copy arguments

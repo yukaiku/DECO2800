@@ -59,27 +59,27 @@ public class CombatManager extends AbstractManager implements TouchDownObserver,
     private void generateFireball(int keycode) {
         switch (keycode) {
             case Input.Keys.UP:
-                Fireball fireballUp = new Fireball(world.getPlayerEntity().getCol(), world.getPlayerEntity().getRow() + 1, 50, 0.4f, 5);
+                Fireball fireballUp = new Fireball(world.getPlayerEntity().getCol(), world.getPlayerEntity().getRow() + 1, 50, 0.4f);
 
-                SquareVector destinationUp = new SquareVector(world.getPlayerEntity().getCol(), world.getPlayerEntity().getRow() + fireballUp.getRange());
+                SquareVector destinationUp = new SquareVector(world.getPlayerEntity().getCol(), world.getPlayerEntity().getRow() + 5);
                 fireballUp.setMovementTask(new RangedAttackTask(fireballUp, destinationUp));
                 world.addEntity(fireballUp);
                 break;
             case Input.Keys.DOWN:
-                Fireball fireballDown = new Fireball(world.getPlayerEntity().getCol(), world.getPlayerEntity().getRow() - 1, 50, 0.4f, 5);
-                SquareVector destinationDown = new SquareVector(world.getPlayerEntity().getCol(), world.getPlayerEntity().getRow() - fireballDown.getRange());
+                Fireball fireballDown = new Fireball(world.getPlayerEntity().getCol(), world.getPlayerEntity().getRow() - 1, 50, 0.4f);
+                SquareVector destinationDown = new SquareVector(world.getPlayerEntity().getCol(), world.getPlayerEntity().getRow() - 5);
                 fireballDown.setMovementTask(new RangedAttackTask(fireballDown, destinationDown));
                 world.addEntity(fireballDown);
                 break;
             case Input.Keys.LEFT:
-                Fireball fireballLeft = new Fireball(world.getPlayerEntity().getCol() - 1, world.getPlayerEntity().getRow(), 50, 0.4f, 5);
-                SquareVector destinationLeft = new SquareVector(world.getPlayerEntity().getCol() - fireballLeft.getRange(), world.getPlayerEntity().getRow());
+                Fireball fireballLeft = new Fireball(world.getPlayerEntity().getCol() - 1, world.getPlayerEntity().getRow(), 50, 0.4f);
+                SquareVector destinationLeft = new SquareVector(world.getPlayerEntity().getCol() - 5, world.getPlayerEntity().getRow());
                 fireballLeft.setMovementTask(new RangedAttackTask(fireballLeft,destinationLeft));
                 world.addEntity(fireballLeft);
                 return;
             case Input.Keys.RIGHT:
-                Fireball fireballRight = new Fireball(world.getPlayerEntity().getCol() + 1, world.getPlayerEntity().getRow(), 50, 0.4f, 5);
-                SquareVector destinationRight = new SquareVector(world.getPlayerEntity().getCol() + fireballRight.getRange(), world.getPlayerEntity().getRow());
+                Fireball fireballRight = new Fireball(world.getPlayerEntity().getCol() + 1, world.getPlayerEntity().getRow(), 50, 0.4f);
+                SquareVector destinationRight = new SquareVector(world.getPlayerEntity().getCol() + 5, world.getPlayerEntity().getRow());
                 fireballRight.setMovementTask(new RangedAttackTask(fireballRight,destinationRight));
                 world.addEntity(fireballRight);
                 return;

@@ -12,7 +12,7 @@ import deco2800.thomas.util.SquareVector;
  * a) hits an enemy and deals damage, or
  * b) its lifetime expires.
  */
-public class Fireball extends RangedEntity implements Tickable{
+public class Fireball extends Projectile implements Tickable{
     /**
      * Default constructor, sets texture and object name.
      */
@@ -29,10 +29,9 @@ public class Fireball extends RangedEntity implements Tickable{
      * @param row Initial Y position
      * @param damage Damage to apply on impact
      * @param speed Speed of projectile
-     * @param range Deprecated TODO: REMOVE
      */
-    public Fireball (float col, float row, int damage, float speed, int range) {
-        super(col, row, RenderConstants.PROJECTILE_RENDER, damage, speed, range);
+    public Fireball (float col, float row, int damage, float speed) {
+        super(col, row, RenderConstants.PROJECTILE_RENDER, damage, speed);
         this.setObjectName("combatFireball");
         this.setTexture("fireball_left");
     }
@@ -51,7 +50,7 @@ public class Fireball extends RangedEntity implements Tickable{
      */
     public static void spawn(float col, float row, float targetCol, float targetRow,
                              int damage, float speed, long lifetime) {
-        Fireball fireball = new Fireball(col, row, damage, speed, 0);
+        Fireball fireball = new Fireball(col, row, damage, speed);
         fireball.setMovementTask(new DirectProjectileMovementTask(fireball,
                 new SquareVector(targetCol, targetRow), lifetime));
         fireball.setCombatTask(new ApplyDamageOnCollisionTask(fireball));
