@@ -61,6 +61,7 @@ public class ApplyDamageOnCollisionTask extends AbstractTask{
         List<AbstractEntity> collidingEntities = world.getEntitiesInBounds(entity.getBounds());
         if (collidingEntities.size() > 1) { // Own bounding box should always be present
             for (AbstractEntity e : collidingEntities) {
+                // TODO("Combat"): This needs to be a generic method of identify whether the entity is a friend or foe
                 if (e.getObjectName() == "Orc") {
                     applyDamage((EnemyPeon)e);
                 }

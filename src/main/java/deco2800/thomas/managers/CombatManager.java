@@ -35,11 +35,9 @@ public class CombatManager extends AbstractManager implements TouchDownObserver,
             float[] clickedPosition = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
             SquareVector destination = new SquareVector(clickedPosition[0], clickedPosition[1]);
 
-            Fireball fireball = new Fireball(world.getPlayerEntity().getCol(), world.getPlayerEntity().getRow(), 10, 0.15f, 5);
-            fireball.setMovementTask(new DirectProjectileMovementTask(fireball, destination, 120));
-            fireball.setCombatTask(new ApplyDamageOnCollisionTask(fireball));
-
-            world.addEntity(fireball);
+            // Spawn a fireball
+            Fireball.spawn(world.getPlayerEntity().getCol(), world.getPlayerEntity().getRow(),
+                    clickedPosition[0], clickedPosition[1], 10, 0.5f, 60);
         }
     }
 
