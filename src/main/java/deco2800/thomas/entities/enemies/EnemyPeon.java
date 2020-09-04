@@ -29,7 +29,7 @@ public abstract class EnemyPeon extends Peon {
      * Initialise an abstract Enemy. The position of the enemy is normally set by the spawnEnemy() in EnemyManager.
      */
     public EnemyPeon(String name, String texture, int height, float speed, int health) {
-        super(0, 0, speed < 0 ? 0.05f : speed);
+        super(0, 0, speed < 0 ? 0.05f : speed, health);
         this.setObjectName(Objects.requireNonNullElse(name, "EnemyPeon"));
         this.setTexture(Objects.requireNonNullElse(texture, "spacman_blue"));
         this.setHeight(height <= 0 ? 1 : height);
@@ -63,64 +63,6 @@ public abstract class EnemyPeon extends Peon {
      */
     public void setTarget(Peon target) {
         this.target = target;
-    }
-
-    /**
-     * Returns the maximum health of this enemy.
-     */
-    public int getMaxHealth() {
-        return health.getMaxHealthValue();
-    }
-
-    /**
-     * Sets the maximum health of this enemy.
-     * @param newMaxHealth the new maximum health of this enemy.
-     */
-    public void setMaxHealth(int newMaxHealth) {
-        this.health.setMaxHealthValue(newMaxHealth);
-    }
-
-    /**
-     * Returns the current health of this enemy.
-     */
-    public int getCurrentHealth() {
-        return health.getCurrentHealthValue();
-    }
-
-    /**
-     * Sets the current health of this enemy to be a new value.
-     * @param newHealth The new current health of this enemy.
-     */
-    public void setCurrentHealthValue(int newHealth) {
-        health.setCurrentHealthValue(newHealth);
-    }
-
-    /**
-     * Reduces the health of this enemy by the given amount.
-     * @param damage The amount of damage to be taken by this enemy.
-     */
-    public void reduceHealth(int damage) {
-        health.reduceHealth(damage);
-    }
-
-    /**
-     * Increases the health of this enemy by the given amount.
-     * @param regen The amount of health this enemy is to be healed by.
-     */
-    public void regenerateHealth(int regen) {
-        health.regenerateHealth(regen);
-    }
-
-    public boolean isDead() {
-        return this.getCurrentHealth() <= 0;
-    }
-
-    /**
-     * For best performance, please override this method using removeWildEnemy(), removeSpecialEnemy() or removeBoss()
-     * instead depending on enemy types.
-     */
-    public void death() {
-        GameManager.getManagerFromInstance(EnemyManager.class).removeEnemyAuto(this);
     }
 
     /**
