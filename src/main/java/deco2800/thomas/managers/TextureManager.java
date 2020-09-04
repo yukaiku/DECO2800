@@ -49,11 +49,31 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("spacman_ded", new Texture("resources/spacman.png"));
 			textureMap.put("spacman_blue", new Texture("resources/spacman_blue.png"));
 
+			// 4 Orb Textures
+			textureMap.put("orb_1", new Texture("resources/orbs/orb1.png"));
+			textureMap.put("orb_2", new Texture("resources/orbs/orb2.png"));
+			textureMap.put("orb_3", new Texture("resources/orbs/orb3.png"));
+			textureMap.put("orb_4", new Texture("resources/orbs/orb4.png"));
+
+			// Swamp Zone Tile Textures
 			textureMap.put("swamp_1", new Texture("resources/environment/swamp/tile/swamp_1.png"));
 			textureMap.put("swamp_2", new Texture("resources/environment/swamp/tile/swamp_2.png"));
 			textureMap.put("swamp_3", new Texture("resources/environment/swamp/tile/swamp_3.png"));
 			textureMap.put("swamp_4", new Texture("resources/environment/swamp/tile/swamp_4.png"));
 
+			// Swamp Zone Entity Textures
+			textureMap.put("swamp_dead_tree",
+					new Texture("resources/environment/swamp/entities/swamp_dead_tree.png"));
+			textureMap.put("swamp_fallen_tree",
+					new Texture("resources/environment/swamp/entities/swamp_fallen_tree.png"));
+			textureMap.put("swamp_pond",
+					new Texture("resources/environment/swamp/entities/swamp_lake.png"));
+			textureMap.put("swamp_tree_log",
+					new Texture("resources/environment/swamp/entities/swamp_tree_log.png"));
+			textureMap.put("swamp_tree_stub",
+					new Texture("resources/environment/swamp/entities/swamp_tree_stub.png"));
+
+			// Tundra Zone Tile Texture
 			textureMap.put("tundra-tile-1", new Texture("resources/environment/tundra/tundra-tile-1.png"));
 			textureMap.put("tundra-tile-2", new Texture("resources/environment/tundra/tundra-tile-2.png"));
 			textureMap.put("tundra-tile-3", new Texture("resources/environment/tundra/tundra-tile-3.png"));

@@ -11,11 +11,11 @@ public class SwampPond extends StaticEntity {
         super();
     }
 
-    public SwampPond(Tile tile, int renderOrder, String texture, boolean obstructed) {
-        super(tile, renderOrder, texture, obstructed);
+    public SwampPond(Tile tile, boolean obstructed) {
+        super(tile, RenderConstants.SWAMP_POND, "swamp_pond", obstructed);
     }
 
-    public SwampPond(float col, float row, int renderOrder, List<Part> entityParts) {
-        super(col, row, renderOrder, entityParts);
+    public SwampPond(float col, float row, List<Part> entityParts) {
+        super(col, row, RenderConstants.SWAMP_POND, entityParts);
     }
 }

@@ -6,16 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import deco2800.thomas.entities.*;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Part;
-import deco2800.thomas.entities.StaticEntity;
-import deco2800.thomas.entities.Tree;
-import deco2800.thomas.entities.PlayerPeon;
-import deco2800.thomas.entities.Rock;
 import deco2800.thomas.managers.GameManager;
 
 @SuppressWarnings("unused")
@@ -104,7 +99,7 @@ public class TestWorld extends AbstractWorld {
 //				entities.add(new Rock(t, true));
 //			}
 //		}
-		this.setOrbEntity(new Rock(GameManager.get().getWorld().
+		this.setOrbEntity(new Orb(GameManager.get().getWorld().
 				getTile(15, -10), false));
 
 		// Add some trees
@@ -141,7 +136,6 @@ public class TestWorld extends AbstractWorld {
 			createBuildings();
 			//addTree(-1, -3f);
 			notGenerated = false;
-			System.out.println(entities.size());
 		}
 
 		super.onTick(i);

@@ -70,7 +70,7 @@ public abstract class AbstractWorld {
 	 * The static entity which is the Orb. All maps
 	 * have only one Orb entity
 	 */
-	private Rock rockEntity;
+	private Orb orbEntity;
 
 	/**
 	 * Constructor that creates a world with default width and height
@@ -114,18 +114,18 @@ public abstract class AbstractWorld {
 
 	/**
 	 * Set the orbEntity and add it to the entities list
-	 * @param rock
+	 * @param orb
 	 */
-	protected void setOrbEntity(Rock rock) {
-		this.rockEntity = rock;
-		this.entities.add(rock);
+	protected void setOrbEntity(Orb orb) {
+		this.orbEntity = orb;
+		this.entities.add(orb);
 	}
 
 	/**
 	 * Check if the player's position is same as the orb's position
 	 */
 	protected void checkObtainedOrb() {
-		if (playerEntity.getPosition().equals(rockEntity.getPosition())) {
+		if (playerEntity.getPosition().equals(orbEntity.getPosition())) {
 			GameManager.get().setNextWorld();
 		}
 	}
@@ -381,8 +381,6 @@ public abstract class AbstractWorld {
 	}
 
 	public void onTick(long i) {
-//		System.out.println(playerEntity.getPosition().
-//				isCloseEnoughToBeTheSame(rockEntity.getPosition(), 0.1f));
 		this.checkObtainedOrb();
 
 		for (AbstractEntity entity : entitiesToRemove) {

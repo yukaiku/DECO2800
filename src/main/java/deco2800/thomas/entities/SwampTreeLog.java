@@ -11,11 +11,11 @@ public class SwampTreeLog extends StaticEntity {
         super();
     }
 
-    public SwampTreeLog(Tile tile, int renderOrder, String texture, boolean obstructed) {
-        super(tile, renderOrder, texture, obstructed);
+    public SwampTreeLog(Tile tile, boolean obstructed) {
+        super(tile, RenderConstants.SWAMP_TREE_LOG, "swamp_tree_log", obstructed);
     }
 
     public SwampTreeLog(float col, float row, int renderOrder, List<Part> entityParts) {
-        super(col, row, renderOrder, entityParts);
+        super(col, row, RenderConstants.SWAMP_TREE_LOG, entityParts);
     }
 }

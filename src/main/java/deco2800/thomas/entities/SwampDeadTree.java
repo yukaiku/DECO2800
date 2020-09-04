@@ -11,11 +11,11 @@ public class SwampDeadTree extends StaticEntity {
         super();
     }
 
-    public SwampDeadTree(Tile tile, int renderOrder, String texture, boolean obstructed) {
-        super(tile, renderOrder, texture, obstructed);
+    public SwampDeadTree(Tile tile, boolean obstructed) {
+        super(tile, RenderConstants.SWAMP_DEAD_TREE, "swamp_dead_tree", obstructed);
     }
 
-    public SwampDeadTree(float col, float row, int renderOrder, List<Part> entityParts) {
-        super(col, row, renderOrder, entityParts);
+    public SwampDeadTree(float col, float row, List<Part> entityParts) {
+        super(col, row, RenderConstants.SWAMP_DEAD_TREE, entityParts);
     }
 }

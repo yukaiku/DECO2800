@@ -11,11 +11,11 @@ public class SwampFallenTree extends StaticEntity {
         super();
     }
 
-    public SwampFallenTree(Tile tile, int renderOrder, String texture, boolean obstructed) {
-        super(tile, renderOrder, texture, obstructed);
+    public SwampFallenTree(Tile tile, boolean obstructed) {
+        super(tile, RenderConstants.SWAMP_FALLEN_TREE, "swamp_fallen_tree", obstructed);
     }
 
-    public SwampFallenTree(float col, float row, int renderOrder, List<Part> entityParts) {
-        super(col, row, renderOrder, entityParts);
+    public SwampFallenTree(float col, float row, List<Part> entityParts) {
+        super(col, row, RenderConstants.SWAMP_FALLEN_TREE, entityParts);
     }
 }

@@ -7,7 +7,6 @@ public class RenderConstants {
 	}
 
 	// the higher the constant value, the topmost they are in the world
-	// i.e. if trees have a higher value 
 	public static final int ROCK_RENDER = 1;
 	public static final int PEON_RENDER = 3;
 	public static final int BUILDING_RENDER = 4;
@@ -15,9 +14,11 @@ public class RenderConstants {
 
 	// Entities in Swamp Zone
 	public static final int SWAMP_DEAD_TREE = 6;
-	public static final int SWAMP_VINE_TREE = 7;
-	public static final int SWAMP_POND = 8;
-	public static final int SWAMP_FALLEN_TREE = 9;
-	public static final int SWAMP_TREE_STUB = 10;
-	public static final int SWAMP_TREE_LOG = 11;
+	public static final int SWAMP_POND = 6;
+	public static final int SWAMP_FALLEN_TREE = 6;
+	public static final int SWAMP_TREE_STUB = 6;
+	public static final int SWAMP_TREE_LOG = 6;
+
+	// Orb
+	public static final int ORB = 12;
 }
