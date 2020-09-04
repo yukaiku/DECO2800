@@ -131,11 +131,13 @@ public class TestWorld extends AbstractWorld {
 		// Provide available enemies to the EnemyManager
 		Orc orc = new Orc(1, 0.05f, 100);
 		Orc speedyOrc = new Orc(1, 0.09f, 50, "spacman_red");
-		Dragon boss = new Dragon(2, 1, 5000);
-		EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(orc, speedyOrc));
-		enemyManager.setBoss(boss);
-		enemyManager.spawnBoss(0, 0);
+		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(orc, speedyOrc));
 		GameManager.get().addManager(enemyManager);
+
+		// Add the boss to the game
+		Dragon boss = new Dragon(2, 1, 2000);
+		enemyManager.setBoss(boss);
+		enemyManager.spawnBoss(-2, 0);
 
 		// Create a combatManager to create combatEntities on click
 		CombatManager combatManager = new CombatManager(this);
