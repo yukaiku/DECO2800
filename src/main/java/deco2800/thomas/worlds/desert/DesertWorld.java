@@ -79,8 +79,7 @@ public class DesertWorld extends AbstractWorld {
                 // add the cactus plants and dead trees
                 case "desert_3":
                     // half of all plant spawn locations are cacti - half are dead trees
-                    randIndex = rand.nextInt(2);
-                    if (randIndex == 0) {
+                    if (tile.getType().equals("Cactus")) {
                         entities.add(new DesertCactus(tile));
                     } else {
                         entities.add(new DesertDeadTree(tile));

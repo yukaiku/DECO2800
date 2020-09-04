@@ -435,6 +435,10 @@ public final class DatabaseManager extends AbstractManager {
 			return;
 		}
 
+		System.out.println(saveLocationAndFilename);
+		if (saveLocationAndFilename.equals("resources/environment/desert/desert_map.json")) {
+			newTiles = setDesertTiles(newTiles);
+		}
 
 		world.setTiles(newTiles);
 		world.assignTileNeighbours();
@@ -443,6 +447,12 @@ public final class DatabaseManager extends AbstractManager {
 		GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Loaded game from the database.");
 	}
 
+	/**
+	 * Converts the required Tiles from a Desert World into Cactus or Quicksand Tiles.
+	 *
+	 * @param oldTiles The tiles generated from the Json that have not been converted.
+	 * @return The tile array, with necessary tiles converted to cacti or quicksand.
+	 */
 	private static CopyOnWriteArrayList<Tile> setDesertTiles(CopyOnWriteArrayList<Tile> oldTiles) {
 		CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
 		Random rand = new Random();
@@ -456,6 +466,8 @@ public final class DatabaseManager extends AbstractManager {
 					randIndex = rand.nextInt(2);
 					if (randIndex == 0) {
 						newTiles.add(new CactusTile("desert_3", tile.getCol(), tile.getRow()));
+					} else {
+						newTiles.add(tile);
 					}
 					break;
 
