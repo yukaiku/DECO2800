@@ -6,6 +6,8 @@ import deco2800.thomas.worlds.Tile;
 
 /**
  * A dead tree entity which spawns in the Desert World.
+ *
+ * @author Zachary Oar (Gitlab: @zachary_oar) (Slack: Zac Oar)
  */
 public class DesertDeadTree extends StaticEntity {
     private static final String ENTITY_ID_STRING = "DesertDeadTree";

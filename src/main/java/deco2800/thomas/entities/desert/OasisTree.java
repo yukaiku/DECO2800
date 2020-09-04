@@ -6,6 +6,8 @@ import deco2800.thomas.worlds.Tile;
 
 /**
  * A palm tree which spawns in the Desert World's oasis area.
+ *
+ * @author Zachary Oar (Gitlab: @zachary_oar) (Slack: Zac Oar)
  */
 public class OasisTree extends StaticEntity {
     private static final String ENTITY_ID_STRING = "OasisTree";

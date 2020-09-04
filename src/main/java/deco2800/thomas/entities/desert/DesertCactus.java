@@ -7,6 +7,8 @@ import deco2800.thomas.worlds.Tile;
 /**
  * A cactus plant which spawns in the Desert World.
  * Damages the player if they are on a neighbouring tile.
+ *
+ * @author Zachary Oar (Gitlab: @zachary_oar) (Slack: Zac Oar)
  */
 public class DesertCactus extends StaticEntity {
     private static final String ENTITY_ID_STRING = "DesertCactus";

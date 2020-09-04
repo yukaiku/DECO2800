@@ -8,6 +8,13 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import java.util.Random;
 
+/**
+ * The Desert World of the game.
+ * Contains obstacles such as quicksand and cactus plants that force the player
+ * to be careful about their movement.
+ *
+ * @author Zachary Oar (Gitlab: @zachary_oar) (Slack: Zac Oar)
+ */
 public class DesertWorld extends AbstractWorld {
 
     // a bool to signal that entities still need to be generated

@@ -7,6 +7,8 @@ import deco2800.thomas.worlds.Tile;
 /**
  * Quicksand which spawns in parts of the Desert World. Damages and slows the player
  * if stood on.
+ *
+ * @author Zachary Oar (Gitlab: @zachary_oar) (Slack: Zac Oar)
  */
 public class DesertQuicksand extends StaticEntity {
     private static final String ENTITY_ID_STRING = "DesertQuicksand";

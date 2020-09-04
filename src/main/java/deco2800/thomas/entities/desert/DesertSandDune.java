@@ -7,6 +7,8 @@ import deco2800.thomas.worlds.Tile;
 /**
  * A sand dune which spawns in the Desert World.
  * Used to create large walls which channel the player's movement.
+ *
+ * @author Zachary Oar (Gitlab: @zachary_oar) (Slack: Zac Oar)
  */
 public class DesertSandDune extends StaticEntity {
     private static final String ENTITY_ID_STRING = "DesertSandDune";
