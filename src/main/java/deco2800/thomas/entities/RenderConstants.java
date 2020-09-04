@@ -20,4 +20,10 @@ public class RenderConstants {
 	public static final int SWAMP_FALLEN_TREE = 9;
 	public static final int SWAMP_TREE_STUB = 10;
 	public static final int SWAMP_TREE_LOG = 11;
+
+	// Entities in the Desert Zone
+	public static final int DESERT_CACTUS = 12;
+	public static final int DESERT_QUICKSAND = 13;
+	public static final int DESERT_SAND_DUNE = 14;
+	public static final int DESERT_DEAD_TREE = 15;
 }

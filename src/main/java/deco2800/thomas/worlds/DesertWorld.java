@@ -4,6 +4,9 @@ import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.PlayerPeon;
 import deco2800.thomas.entities.Rock;
 import deco2800.thomas.entities.Tree;
+import deco2800.thomas.entities.desert.DesertCactus;
+import deco2800.thomas.entities.desert.DesertQuicksand;
+import deco2800.thomas.entities.desert.DesertSandDune;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
@@ -48,28 +51,24 @@ public class DesertWorld extends AbstractWorld {
         // Check each tile for specific textures which indicate that an entity must be added
         for (Tile tile : tiles) {
 
-            // make the three main wall sections of the world with rocks
+            // make the three main wall sections of the world with sand dunes
             if (tile.getTextureName().equals("desert_5")) {
-
-                // change if new texture is drawn
-                entities.add(new Rock(tile, true));
+                entities.add(new DesertSandDune(tile, true));
             }
 
-            // make the outer wall of the world with rocks
+            // make the outer wall of the world with sand dunes
             if (tile.getTextureName().equals("desert_6")) {
-                // change if new texture is drawn
-                entities.add(new Rock(tile, true));
+                entities.add(new DesertSandDune(tile, true));
             }
 
             // add the cactus plants
             if (tile.getTextureName().equals("desert_3")) {
-                // change if new texture is drawn
-                entities.add(new Tree(tile, true));
+                entities.add(new DesertCactus(tile, true));
             }
 
             // add the quicksand
             if (tile.getTextureName().equals("desert_7")) {
-                // add once texture is drawn
+                entities.add(new DesertQuicksand(tile, true));
             }
         }
     }
@@ -83,7 +82,7 @@ public class DesertWorld extends AbstractWorld {
         }
 
         if (notGenerated) {
-            createStaticEntities();
+            //createStaticEntities();
             notGenerated = false;
         }
     }
