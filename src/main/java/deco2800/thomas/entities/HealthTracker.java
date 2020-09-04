@@ -13,11 +13,22 @@ public class HealthTracker {
     private int maxHealthValue;
     /** Represents the current health value of a character  **/
     private int currentHealthValue;
+<<<<<<< HEAD
     public HealthTracker(int maxHealthValue)  {
         if (maxHealthValue > 0) {
             this.maxHealthValue = maxHealthValue;
             this.currentHealthValue = this.maxHealthValue;
         }
+=======
+    /** Represents whether or not the entity has reached 0 health  **/
+    private boolean isDead;
+
+    public HealthTracker(int maxHealthValue) {
+
+        this.maxHealthValue = maxHealthValue;
+        this.currentHealthValue = this.maxHealthValue;
+        this.isDead = false;
+>>>>>>> health-feature-branch
     }
 
     /**
@@ -37,9 +48,13 @@ public class HealthTracker {
      * @param healthValue new value to which maximumHealthValue is set.
      */
     public void setMaxHealthValue(int healthValue) {
+<<<<<<< HEAD
         if (healthValue > 0) {
             this.maxHealthValue = healthValue;
         }
+=======
+        this.maxHealthValue = Math.max(healthValue, 0);
+>>>>>>> health-feature-branch
     }
 
     /**
@@ -62,10 +77,18 @@ public class HealthTracker {
      *
      * @param healthValue new value to which currentHealthValue is set.
      */
+<<<<<<< HEAD
     public void setCurrentHealthValue(int healthValue)  {
         if (healthValue >=0 && healthValue <= maxHealthValue) {
             this.currentHealthValue = healthValue;
         }
+=======
+    public void setCurrentHealthValue(int healthValue) {
+        if(healthValue <= 0) {
+            this.currentHealthValue = 0;
+        } else
+            this.currentHealthValue = Math.min(healthValue, maxHealthValue);
+>>>>>>> health-feature-branch
     }
 
     /**
@@ -79,9 +102,15 @@ public class HealthTracker {
      */
 
     public void reduceHealth(int damage) {
+<<<<<<< HEAD
         if (damage >= 0) {
             this.currentHealthValue -= damage;
         }
+=======
+        int newHealth = this.currentHealthValue;
+        newHealth -= damage;
+        this.currentHealthValue = Math.max(newHealth, 0);
+>>>>>>> health-feature-branch
     }
 
     /**
@@ -94,9 +123,29 @@ public class HealthTracker {
      *              increased.
      */
     public void regenerateHealth(int regen) {
+<<<<<<< HEAD
         if (regen >= 0) {
             this.currentHealthValue += regen;
         }
+=======
+        int newHealth = this.currentHealthValue;
+        newHealth += regen;
+        this.currentHealthValue = Math.min(newHealth, maxHealthValue);
+    }
+
+    /**
+     * Internally checks is currentHealthValue is 0. If it is, isDead boolean
+     * is set to true, other wise, set to false.
+     * <p>
+     * After this check isDead boolean is returned
+     *
+     * @return isDead
+     */
+
+    public boolean isDead () {
+        this.isDead = (currentHealthValue == 0);
+        return isDead;
+>>>>>>> health-feature-branch
     }
 }
 
