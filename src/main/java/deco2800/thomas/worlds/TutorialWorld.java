@@ -1,39 +1,23 @@
 package deco2800.thomas.worlds;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import deco2800.thomas.GameScreen;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Environment.*;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.NPC.TutorialNPC;
+import deco2800.thomas.entities.enemies.Dragon;
+import deco2800.thomas.entities.enemies.Dummy;
+import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.NonPlayablePeonManager;
-import deco2800.thomas.managers.TextureManager;
-import deco2800.thomas.renderers.Guideline;
-import deco2800.thomas.renderers.OverlayRenderer;
-import deco2800.thomas.util.SquareVector;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Part;
-import deco2800.thomas.entities.StaticEntity;
-//import deco2800.thomas.entities.Tree;
-//import deco2800.thomas.entities.PlayerPeon;
-//import deco2800.thomas.entities.Rock;
 import deco2800.thomas.managers.GameManager;
 
 public class TutorialWorld extends AbstractWorld{
@@ -61,14 +45,17 @@ public class TutorialWorld extends AbstractWorld{
                 tiles.add(new Tile(type, col, row));
             }
         }
-        PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f);
+        PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f, 50);
 //        addEntity(player);
         this.setPlayerEntity(player);
         addEntity(this.getPlayerEntity());
 
-        EnemyManager enemyManager = new EnemyManager(this, (PlayerPeon) this.getPlayerEntity(), 5);
+        // Provide dummy enemies to the EnemyManager
+        Dummy dummy = new Dummy(1, 0.05f, 100);
+        EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(dummy));
         GameManager.get().addManager(enemyManager);
 
+        // Add NPC
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
         npnSpawns.add(new TutorialNPC("Master", new SquareVector(0, 2)));
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, player, npnSpawns);

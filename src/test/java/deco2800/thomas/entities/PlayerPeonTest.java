@@ -13,13 +13,13 @@ import static org.junit.Assert.*;
 public class PlayerPeonTest extends BaseGDXTest {
     @Test
     public void testPlayerSet() {
-        PlayerPeon p = new PlayerPeon(0, 0, 1);
+        PlayerPeon p = new PlayerPeon(0, 0, 1, 10);
         assertThat("", p.getTexture(), is(equalTo("spacman_ded")));
     }
 
     @Test
     public void testConstructor() {
-        PlayerPeon p = new PlayerPeon(1, 1, 1);
+        PlayerPeon p = new PlayerPeon(1, 1, 1, 10);
         assertThat("", p.getCol(), is(equalTo(1f)));
         assertThat("", p.getRow(), is(equalTo(1f)));
         assertThat("", p.getSpeed(), is(equalTo(1f)));
@@ -31,10 +31,10 @@ public class PlayerPeonTest extends BaseGDXTest {
      */
     @Test
     public void testPlayerPressKeyToMove() {
-        PlayerPeon playerPressW = new PlayerPeon(10f, 10f, 0.15f);
-        PlayerPeon playerPressA = new PlayerPeon(10f, 10f, 0.15f);
-        PlayerPeon playerPressS = new PlayerPeon(10f, 10f, 0.15f);
-        PlayerPeon playerPressD = new PlayerPeon(10f, 10f, 0.15f);
+        PlayerPeon playerPressW = new PlayerPeon(10f, 10f, 0.15f, 10);
+        PlayerPeon playerPressA = new PlayerPeon(10f, 10f, 0.15f, 10);
+        PlayerPeon playerPressS = new PlayerPeon(10f, 10f, 0.15f, 10);
+        PlayerPeon playerPressD = new PlayerPeon(10f, 10f, 0.15f, 10);
 
         playerPressW.notifyKeyDown(Input.Keys.W);
         playerPressA.notifyKeyDown(Input.Keys.A);
@@ -73,10 +73,30 @@ public class PlayerPeonTest extends BaseGDXTest {
      */
     @Test
     public void testPlayerPressKeyNotBelongToWASD() {
-        PlayerPeon playerPeon = new PlayerPeon(10f, 10f, 0.15f);
+        PlayerPeon playerPeon = new PlayerPeon(10f, 10f, 0.15f, 10);
         playerPeon.notifyKeyDown(Input.Keys.J);
 
         assertEquals(MovementTask.Direction.NONE, playerPeon.getMovingDirection());
         assertNull(playerPeon.getTask());
+    }
+
+    /**
+     * Test player press serial keys in WASD keys
+     */
+    @Test
+    public void testPlayerPressSerialKeys() {
+        PlayerPeon playerPeon = new PlayerPeon(10f, 10f, 0.15f, 10);
+
+        playerPeon.notifyKeyDown(Input.Keys.W);
+        playerPeon.notifyKeyDown(Input.Keys.D);
+        playerPeon.notifyKeyUp(Input.Keys.W);
+        playerPeon.notifyKeyDown(Input.Keys.S);
+        playerPeon.notifyKeyUp(Input.Keys.D);
+
+        assertEquals(MovementTask.Direction.DOWN, playerPeon.getMovingDirection());
+        assertNotNull(playerPeon.getTask());
+
+        playerPeon.notifyKeyUp(Input.Keys.S);
+        assertEquals(MovementTask.Direction.NONE, playerPeon.getMovingDirection());
     }
 }

@@ -383,4 +383,19 @@ public abstract class AbstractWorld {
 		this.playerEntity = playerEntity;
 	}
 
+	/**
+	 * Get (half of) the width of the world.
+	 * @return the width of the world
+	 */
+	public int getWidth() {
+		return this.width;
+	}
+
+	/**
+	 * Get (half of) the height of the world.
+	 * @return the height of the world
+	 */
+	public int getHeight() {
+		return this.height;
+	}
 }
