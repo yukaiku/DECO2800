@@ -11,11 +11,11 @@ public class VolcanoDragonSkull extends StaticEntity{
         super();
     }
 
-    public VolcanoDragonSkull(Tile tile, int renderOrder, String texture, boolean obstructed) {
-        super(tile, renderOrder, texture, obstructed);
+    public VolcanoDragonSkull(Tile tile, String texture, boolean obstructed) {
+        super(tile, RenderConstants.VOLCANO_DRAGON_SKULL, texture, obstructed);
     }
 
-    public VolcanoDragonSkull(float col, float row, int renderOrder, List<Part> entityParts) {
-        super(col, row, renderOrder, entityParts);
+    public VolcanoDragonSkull(float col, float row, List<Part> entityParts) {
+        super(col, row, RenderConstants.VOLCANO_DRAGON_SKULL, entityParts);
     }
 }

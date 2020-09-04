@@ -2,7 +2,6 @@ package deco2800.thomas.worlds;
 
 import deco2800.thomas.entities.*;
 import deco2800.thomas.managers.DatabaseManager;
-import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
@@ -75,11 +74,17 @@ public class VolcanoWorld extends AbstractWorld {
 
     public void createStaticEntities() {
 
+        //Add Main Static entities
         entities.add(createGraveYard(7, -15));
-        //entities.addRuins();
+        entities.add(createRuins(0, -4));
         entities.add(createDragonSkull(-23, 23));
         //entities.addBones();
+        entities.add(createVolcanoOrb(21, 20));
+
+        //For objects that are added randomly & require more specific addition
+        //entities, they're methodology will folllow add()
         addBoulders();
+
 
     }
 
@@ -103,21 +108,28 @@ public class VolcanoWorld extends AbstractWorld {
             }
         }
 
-        public StaticEntity createDragonSkull(float col, float row) {
+        public Orb createVolcanoOrb(float col, float row) {
+            List<Part> parts = new ArrayList<Part>();
+            parts.add(new Part(new SquareVector(0, 0), "Orb_Volcano", false));
+            Orb VolcanoOrb = new Orb(col, row, 1, parts);
+            return VolcanoOrb;
+        }
+
+        public VolcanoDragonSkull createDragonSkull(float col, float row) {
         List<Part> parts = new ArrayList<Part>();
         parts.add(new Part(new SquareVector(0, 0), "tree", true));
-        StaticEntity dragonSkull = new StaticEntity(col, row, 1, parts);
+        VolcanoDragonSkull dragonSkull = new VolcanoDragonSkull(col, row, parts);
         return dragonSkull;
         }
 
-        public StaticEntity addRuins(float col, float row) {
+        public VolcanoRuins createRuins(float col, float row) {
         List<Part> parts = new ArrayList<Part>();
         parts.add(new Part(new SquareVector(12, -3), "tree", true));
-        StaticEntity graveYard = new StaticEntity(col, row, 1, parts);
+        VolcanoRuins graveYard = new VolcanoRuins(col, row, parts);
         return graveYard;
         }
 
-        public StaticEntity createGraveYard(float col, float row) {
+        public VolcanoGraveYard createGraveYard(float col, float row) {
         List<Part> parts = new ArrayList<Part>();
         //Top left
         parts.add(new Part(new SquareVector(1, 0), "fenceE-W", true));
@@ -164,7 +176,7 @@ public class VolcanoWorld extends AbstractWorld {
         parts.add(new Part(new SquareVector(12, -1), "tree", true));
         parts.add(new Part(new SquareVector(1,  -6), "tree", true));
         parts.add(new Part(new SquareVector(12, -6), "tree", true));
-        StaticEntity graveYard = new StaticEntity(col, row, 1, parts);
+        VolcanoGraveYard graveYard = new VolcanoGraveYard(col, row, parts);
         return graveYard;
         }
 

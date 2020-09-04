@@ -11,11 +11,11 @@ public class VolcanoBones extends StaticEntity{
         super();
     }
 
-    public VolcanoBones(Tile tile, int renderOrder, String texture, boolean obstructed) {
-        super(tile, renderOrder, texture, obstructed);
+    public VolcanoBones(Tile tile, String texture, boolean obstructed) {
+        super(tile, RenderConstants.VOLCANO_BONES, texture, obstructed);
     }
 
-    public VolcanoBones(float col, float row, int renderOrder, List<Part> entityParts) {
-        super(col, row, renderOrder, entityParts);
+    public VolcanoBones(float col, float row, List<Part> entityParts) {
+        super(col, row, RenderConstants.VOLCANO_BONES, entityParts);
     }
 }

@@ -11,11 +11,11 @@ public class VolcanoBurningTree extends StaticEntity{
         super();
     }
 
-    public VolcanoBurningTree(Tile tile, int renderOrder, String texture, boolean obstructed) {
-        super(tile, renderOrder, texture, obstructed);
+    public VolcanoBurningTree(Tile tile, String texture, boolean obstructed) {
+        super(tile, RenderConstants.VOLCANO_BURNING_TREE, texture, obstructed);
     }
 
-    public VolcanoBurningTree(float col, float row, int renderOrder, List<Part> entityParts) {
-        super(col, row, renderOrder, entityParts);
+    public VolcanoBurningTree(float col, float row, List<Part> entityParts) {
+        super(col, row, RenderConstants.VOLCANO_BURNING_TREE, entityParts);
     }
 }

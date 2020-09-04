@@ -3,7 +3,9 @@ package deco2800.thomas.entities;
 // Class for storing the order that entities are ordered by when rendered 
 
 public class RenderConstants {
-	private RenderConstants() {
+    public static final int ORB = 2;
+
+    private RenderConstants() {
 	}
 
 	// the higher the constant value, the topmost they are in the world
@@ -20,4 +22,12 @@ public class RenderConstants {
 	public static final int SWAMP_FALLEN_TREE = 9;
 	public static final int SWAMP_TREE_STUB = 10;
 	public static final int SWAMP_TREE_LOG = 11;
+
+	// Entities in Volcano Zone
+	public static final int VOLCANO_RUINS = 12;
+	public static final int VOLCANO_BONES = 13;
+	public static final int VOLCANO_BURNING_TREE = 14;
+	public static final int VOLCANO_DRAGON_SKULL = 15;
+	public static final int VOLCANO_LAVA_POOL = 16;
+	public static final int VOLCANO_GRAVEYARD = 17;
 }
