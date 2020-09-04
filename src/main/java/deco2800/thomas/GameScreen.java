@@ -20,6 +20,7 @@ import deco2800.thomas.renderers.DayCycleRenderer;
 import deco2800.thomas.renderers.Renderer3D;
 import deco2800.thomas.worlds.*;
 
+import deco2800.thomas.worlds.desert.DesertWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

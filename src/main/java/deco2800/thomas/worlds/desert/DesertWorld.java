@@ -1,4 +1,4 @@
-package deco2800.thomas.worlds;
+package deco2800.thomas.worlds.desert;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.PlayerPeon;
@@ -6,6 +6,9 @@ import deco2800.thomas.entities.desert.*;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.worlds.AbstractWorld;
+import deco2800.thomas.worlds.Tile;
+
 import java.util.Random;
 
 /**
@@ -79,6 +82,7 @@ public class DesertWorld extends AbstractWorld {
                     randIndex = rand.nextInt(2);
                     if (randIndex == 0) {
                         entities.add(new DesertCactus(tile));
+                        tile.setCactus(true);
                     } else {
                         entities.add(new DesertDeadTree(tile));
                     }
