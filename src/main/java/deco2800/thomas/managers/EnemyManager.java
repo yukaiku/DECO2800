@@ -1,8 +1,6 @@
 package deco2800.thomas.managers;
 
 import deco2800.thomas.entities.enemies.EnemyPeon;
-import deco2800.thomas.entities.Orc;
-import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.Boss;
 import deco2800.thomas.worlds.AbstractWorld;
 
