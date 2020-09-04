@@ -23,7 +23,7 @@ public class SoundManagerTest {
 		Gdx.audio = mock(Audio.class);
 		Gdx.files = mock(Files.class);
 		Sound sm = mock(Sound.class);
-		
+
 		// Need to mock the call to Gdx.files.internal(...) even though its value is not used.
 		when(Gdx.files.internal("resources/sounds/" + "file")).thenReturn(null);
 		when(Gdx.audio.newSound(Gdx.files.internal("resources/sounds/" + "file"))).thenReturn(sm);

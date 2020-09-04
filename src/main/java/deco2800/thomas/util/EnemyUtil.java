@@ -1,6 +1,6 @@
 package deco2800.thomas.util;
 
-import deco2800.thomas.entities.AgentEntity;
+import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 
 /**

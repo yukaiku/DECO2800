@@ -1,7 +1,7 @@
 package deco2800.thomas.managers;
 
-import deco2800.thomas.entities.enemies.Boss;
 import deco2800.thomas.entities.enemies.EnemyPeon;
+import deco2800.thomas.entities.enemies.Boss;
 import deco2800.thomas.worlds.AbstractWorld;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.Random;
  * (different enemies will have various spawning rates in the future sprints);
  * Special enemies do not randomly spawn and need to be manually placed at the given position.
  *
- * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies
+ * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/enemy-manager
  */
 public class EnemyManager extends TickableManager {
     // the target world
@@ -44,8 +44,9 @@ public class EnemyManager extends TickableManager {
     // util variables for auto spawning
     private final float spawnRangeMin;
     private final float spawnRangeMax;
-    private int tick;
     private final Random random;
+    private int tick = 0;
+    private int nextTick = 120;
 
     /**
      * Initialise an enemy manager without wild enemies. (e.g. for tutorial maps)
@@ -63,9 +64,8 @@ public class EnemyManager extends TickableManager {
         this.specialEnemiesAlive = new ArrayList<>();
         this.boss = null;
 
-        this.spawnRangeMin = 6;
-        this.spawnRangeMax = 12;
-        this.tick = 100;
+        this.spawnRangeMin = 10;
+        this.spawnRangeMax = 16;
         this.random = new Random();
     }
 
@@ -187,19 +187,15 @@ public class EnemyManager extends TickableManager {
 
     /** Spawns a random enemy from the configuration list. Normally it will be called automatically by the manager. */
     private void spawnRandomWildEnemy() {
-        // currently spawns an enemy every 100 ticks
-        // generate a random value between -max and -min, or between +min and +max
-        float xOffset = Math.round((spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin)) *
-                (random.nextInt(2) * 2 - 1));
-        float yOffset = Math.round((spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin)) *
-                (random.nextInt(2) * 2 - 1));
-
-        float tileX = world.getPlayerEntity().getCol() + xOffset;
-        float tileY = world.getPlayerEntity().getRow() + yOffset;
+        // generate a random position within radius range
+        float degree = random.nextFloat() * 360;
+        float radius = spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin);
+        float tileX = world.getPlayerEntity().getCol() + Math.round(Math.sin(degree) * radius);
+        float tileY = world.getPlayerEntity().getRow() + Math.round(Math.cos(degree) * radius);
 
         // prevent spawning outside of the map
-        if (tileX > -world.getWidth() && tileX < world.getWidth() &&
-                tileY > -world.getHeight() && tileY < world.getHeight()) {
+        if (tileX > -world.getWidth() + 1 && tileX < world.getWidth() - 2 &&
+                tileY > -world.getHeight() + 1 && tileY < world.getHeight() - 1) {
             // choose a random enemy blueprint
             EnemyPeon enemy = wildEnemyConfigs.get(random.nextInt(wildEnemyConfigs.size())).deepCopy();
             spawnWildEnemy(enemy, tileX, tileY);
@@ -209,14 +205,14 @@ public class EnemyManager extends TickableManager {
     /** Removes a wild enemy (when it's dead or de-spawned) @require The enemy exists */
     public void removeWildEnemy(EnemyPeon wildEnemy) {
         wildEnemiesAlive.remove(wildEnemy);
-        world.deleteEntity(wildEnemy.getEntityID());
+        world.disposeEntity(wildEnemy.getEntityID());
         world.removeEntity(wildEnemy);
     }
 
     /** Removes a special enemy (when it's dead or de-spawned) @require The enemy exists */
     public void removeSpecialEnemy(EnemyPeon specialEnemy) {
         specialEnemiesAlive.remove(specialEnemy);
-        world.deleteEntity(specialEnemy.getEntityID());
+        world.disposeEntity(specialEnemy.getEntityID());
         world.removeEntity(specialEnemy);
     }
 
@@ -224,7 +220,7 @@ public class EnemyManager extends TickableManager {
     public void removeBoss() {
         if (boss != null) {
             world.removeEntity(boss);
-            world.deleteEntity(boss.getEntityID());
+            world.disposeEntity(boss.getEntityID());
             boss = null;
         }
     }
@@ -246,11 +242,14 @@ public class EnemyManager extends TickableManager {
 
     @Override
     public void onTick(long i) {
-        if (++tick > 120) {
+        if (++tick > nextTick) {
             if (wildSpawning && wildEnemiesAlive.size() < wildEnemyCap) {
                 spawnRandomWildEnemy();
+                nextTick = 15 + random.nextInt(180);
             }
             tick = 0;
+        } else {
+            tick++;
         }
     }
 }

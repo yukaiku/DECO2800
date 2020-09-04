@@ -10,8 +10,9 @@ public interface Selectable {
 
 	/**
 	 * Returns if the object is selected
+	 *
 	 * @return true if the object is selected, false if not
-     */
+	 */
 	boolean isSelected();
 
 	/**
@@ -21,8 +22,9 @@ public interface Selectable {
 
 	/**
 	 * Getter for the button of the object
+	 *
 	 * @return the button of the object
-     */
+	 */
 	Button getButton();
 
 	/**
@@ -32,7 +34,8 @@ public interface Selectable {
 
 	/**
 	 * Gets the help text for the object
+	 *
 	 * @return the help text for the object
-     */
+	 */
 	Label getHelpText();
 }

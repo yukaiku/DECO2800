@@ -1,6 +1,6 @@
 package deco2800.thomas.tasks;
 
-import deco2800.thomas.entities.PlayerPeon;
+import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import org.junit.Before;

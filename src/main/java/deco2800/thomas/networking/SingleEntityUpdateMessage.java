@@ -6,5 +6,5 @@ import deco2800.thomas.entities.AbstractEntity;
  * Updates (or creates) a single entity in the game.
  */
 public class SingleEntityUpdateMessage {
-    public AbstractEntity entity;
+	public AbstractEntity entity;
 }

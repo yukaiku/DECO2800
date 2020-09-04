@@ -7,16 +7,16 @@ public interface InputObserver {
 
 	/**
 	 * Notifies the observers of a KeyDown action
-	 *
+	 * <p>
 	 * This method is overridden in the class that implements InputObserver
 	 *
 	 * @param keycode the key that is pressed down
-     */
+	 */
 	void notifyKeyDown(int keycode);
 
 	/**
 	 * Notifies the observers of a KeyUp action
-	 *
+	 * <p>
 	 * This method is overridden in the class that implements InputObserver
 	 *
 	 * @param keycode the key that is released
@@ -25,7 +25,7 @@ public interface InputObserver {
 
 	/**
 	 * Notifies the observers of a key being typed action
-	 *
+	 * <p>
 	 * This method is overridden in the class that implements InputObserver
 	 *
 	 * @param character the character that is typed
@@ -34,56 +34,56 @@ public interface InputObserver {
 
 	/**
 	 * Notifies the observers of a mousing clicking down action
-	 *
+	 * <p>
 	 * This method is overridden in the class that implements InputObserver
 	 *
 	 * @param screenX the x coordinate that is clicked on the screen
 	 * @param screenY the y coordinate that is clicked on the screen
 	 * @param pointer
-     * @param button the button that is touchedDown
-     */
+	 * @param button  the button that is touchedDown
+	 */
 	void notifyTouchDown(int screenX, int screenY, int pointer, int button);
 
 	/**
 	 * Notifies the observers of a mousing buton releasing action
-	 *
+	 * <p>
 	 * This method is overridden in the class that implements InputObserver
 	 *
 	 * @param screenX the x coordinate that is clicked on the screen
 	 * @param screenY the y coordinate that is clicked on the screen
 	 * @param pointer
-	 * @param button the button that is released
+	 * @param button  the button that is released
 	 */
 	void notifyTouchUp(int screenX, int screenY, int pointer, int button);
 
 	/**
 	 * Notifies the observers of a mousing dragging action
-	 *
+	 * <p>
 	 * This method is overridden in the class that implements InputObserver
 	 *
 	 * @param screenX the x coordinate that is dragged on the screen
 	 * @param screenY the y coordinate that is dragged on the screen
 	 * @param pointer
-     */
+	 */
 	void notifyTouchDragged(int screenX, int screenY, int pointer);
 
 	/**
 	 * Notifies the observers of a mousing moving action
-	 *
+	 * <p>
 	 * This method is overridden in the class that implements InputObserver
 	 *
 	 * @param screenX the x coordinate that is hovered over on the screen
 	 * @param screenY the y coordinate that is hovered on the screen
-     */
+	 */
 	void notifyMouseMoved(int screenX, int screenY);
 
 	/**
 	 * Notifies the observers of a scrolling action
-	 *
+	 * <p>
 	 * This method is overridden in the class that implements InputObserver
 	 *
 	 * @param amount the amount that is scrolled
-     */
+	 */
 	void notifyScrolled(int amount);
 
 }
