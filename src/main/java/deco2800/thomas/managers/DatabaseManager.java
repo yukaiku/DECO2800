@@ -11,6 +11,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import deco2800.thomas.worlds.desert.CactusTile;
+import deco2800.thomas.worlds.desert.QuicksandTile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -221,14 +223,6 @@ public final class DatabaseManager extends AbstractManager {
 				tree.setObjectName(entityObjectName);
 				return tree;
 			}
-
-//			for (String s : Arrays.asList("rock")) {
-//				if (entityObjectName.startsWith(s)) {
-//					Rock create = new Rock();
-//					create.setObjectName(entityObjectName);
-//					return (AbstractEntity) create;
-//				}
-//			}
 
 			for (String s : Arrays.asList("staticEntityID")) {
 				if (entityObjectName.startsWith(s)) {
@@ -441,11 +435,42 @@ public final class DatabaseManager extends AbstractManager {
 			return;
 		}
 
+
 		world.setTiles(newTiles);
 		world.assignTileNeighbours();
 		world.setEntities(new ArrayList<AbstractEntity>(newEntities.values()));
 		logger.info("Load succeeded");
 		GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Loaded game from the database.");
+	}
+
+	private static CopyOnWriteArrayList<Tile> setDesertTiles(CopyOnWriteArrayList<Tile> oldTiles) {
+		CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
+		Random rand = new Random();
+		int randIndex;
+
+		for (Tile tile : oldTiles) {
+			switch (tile.getTextureName()) {
+
+				// half of the tiles with this texture become cactus plants
+				case "desert_3":
+					randIndex = rand.nextInt(2);
+					if (randIndex == 0) {
+						newTiles.add(new CactusTile("desert_3", tile.getCol(), tile.getRow()));
+					}
+					break;
+
+				// tiles with this texture become quicksand
+				case "desert_7":
+					newTiles.add(new QuicksandTile("desert_7", tile.getCol(), tile.getRow()));
+					break;
+
+				default:
+					newTiles.add(tile);
+					break;
+			}
+		}
+
+		return newTiles;
 	}
 
 	private static void writeToJson(String entireString) {

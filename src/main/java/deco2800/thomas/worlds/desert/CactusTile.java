@@ -14,4 +14,9 @@ public class CactusTile extends Tile {
 
     public CactusTile() {
     }
+
+    @Override
+    public String getType() {
+        return "Cactus";
+    }
 }

@@ -82,7 +82,6 @@ public class DesertWorld extends AbstractWorld {
                     randIndex = rand.nextInt(2);
                     if (randIndex == 0) {
                         entities.add(new DesertCactus(tile));
-                        tile.setCactus(true);
                     } else {
                         entities.add(new DesertDeadTree(tile));
                     }

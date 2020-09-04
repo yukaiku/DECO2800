@@ -14,4 +14,9 @@ public class QuicksandTile extends Tile {
 
     public QuicksandTile() {
     }
+
+    @Override
+    public String getType() {
+        return "Quicksand";
+    }
 }

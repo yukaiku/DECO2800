@@ -15,9 +15,6 @@ import deco2800.thomas.util.SquareVector;
 
 public class Tile {
 
-	// a boolean for whether the tile is a cactus or not
-	private boolean isCactus;
-
 	/**
 	 * Managing ID of tiles
 	 */
@@ -67,7 +64,6 @@ public class Tile {
 
 	public Tile(String texture) {
 		this(texture, 0, 0);
-		isCactus = false;
 	}
 
 	public Tile(String texture, float col, float row) {
@@ -75,12 +71,14 @@ public class Tile {
 		coords = new SquareVector(col, row);
 		this.neighbours = new HashMap<Integer, Tile>();
 		this.tileID = Tile.getNextID();
-		isCactus = false;
 	}
 
 	public Tile() {
 		this.neighbours = new HashMap<Integer, Tile>();
-		isCactus = false;
+	}
+
+	public String getType() {
+		return "Tile";
 	}
 
 	public float getCol() {
@@ -209,13 +207,5 @@ public class Tile {
 
 	public void setRow(float row) {
 		this.coords.setRow(row);
-	}
-
-	public boolean isCactus() {
-		return isCactus;
-	}
-
-	public void setCactus(boolean cactus) {
-		isCactus = cactus;
 	}
 }
