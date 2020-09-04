@@ -8,6 +8,7 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
+import org.lwjgl.Sys;
 
 import java.util.Random;
 
@@ -43,6 +44,16 @@ public class DesertWorld extends AbstractWorld {
     public DesertWorld(int width, int height) {
         super(width, height);
         generateTiles();
+    }
+
+    /**
+     * Returns the type of this world.
+     *
+     * @return The type of this world.
+     */
+    @Override
+    public String getType() {
+        return "Desert";
     }
 
     /**

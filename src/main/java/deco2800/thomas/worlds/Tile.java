@@ -77,6 +77,11 @@ public class Tile {
 		this.neighbours = new HashMap<Integer, Tile>();
 	}
 
+	/**
+	 * Returns the type of this Tile.
+	 *
+	 * @return The type of this Tile.
+	 */
 	public String getType() {
 		return "Tile";
 	}
