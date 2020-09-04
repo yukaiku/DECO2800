@@ -6,6 +6,7 @@ import deco2800.thomas.entities.desert.*;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import org.lwjgl.Sys;
@@ -142,6 +143,11 @@ public class DesertWorld extends AbstractWorld {
         if (notGenerated) {
             createStaticEntities();
             notGenerated = false;
+
+            // Set the camera location to its starting position
+            float[] position = WorldUtil.colRowToWorldCords(5f, -20f);
+            GameManager.get().getCamera().position.set(position[0], position[1], 0);
+            GameManager.get().getCamera().update();
         }
     }
 }
