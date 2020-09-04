@@ -435,7 +435,6 @@ public final class DatabaseManager extends AbstractManager {
 			return;
 		}
 
-		System.out.println(saveLocationAndFilename);
 		if (saveLocationAndFilename.equals("resources/environment/desert/desert_map.json")) {
 			newTiles = setDesertTiles(newTiles);
 		}

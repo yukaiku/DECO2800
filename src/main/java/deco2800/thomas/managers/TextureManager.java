@@ -69,6 +69,7 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("oasis_5", new Texture("resources/environment/desert/tile/oasis/oasis_5.png"));
 			textureMap.put("oasis_6", new Texture("resources/environment/desert/tile/oasis/oasis_6.png"));
 			// change these textures once they are drawn
+			textureMap.put("desertOrb", new Texture("resources/rock_L.png"));
 			textureMap.put("desertCactus", new Texture("resources/tree.png"));
 			textureMap.put("desertSandDune", new Texture("resources/rock_L.png"));
 			textureMap.put("desertDeadTree", new Texture("resources/tree.png"));

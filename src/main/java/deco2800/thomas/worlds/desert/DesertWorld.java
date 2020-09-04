@@ -77,6 +77,9 @@ public class DesertWorld extends AbstractWorld {
         Random rand = new Random();
         int randIndex;
 
+        // add the orb to a specific location
+        entities.add(new DesertOrb(GameManager.get().getWorld().getTile(21, 6)));
+
         // Check each tile for specific textures which indicate that an entity must be added
         for (Tile tile : tiles) {
 
