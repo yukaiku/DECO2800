@@ -63,33 +63,35 @@ public class DesertWorld extends AbstractWorld {
                 // make the wall sections of the world with sand dunes
                 case "desert_5":
                 case "desert_6":
-                    entities.add(new DesertSandDune(tile, true));
+                    entities.add(new DesertSandDune(tile));
                     break;
 
                 // add the cactus plants and dead trees
                 case "desert_3":
+                    // half of all plant spawn locations are cacti - half are dead trees
                     randIndex = rand.nextInt(2);
                     if (randIndex == 0) {
-                        entities.add(new DesertCactus(tile, true));
+                        entities.add(new DesertCactus(tile));
                     } else {
-                        entities.add(new DesertDeadTree(tile, true));
+                        entities.add(new DesertDeadTree(tile));
                     }
                     break;
 
                 // add the quicksand
                 case "desert_7":
-                    entities.add(new DesertQuicksand(tile, false));
+                    entities.add(new DesertQuicksand(tile));
                     break;
 
                 // add the oasis plants
                 case "oasis_1":
                 case "oasis_2":
                 case "oasis_3":
+                    // one third of grass area should be plants, with half tree - half shrub
                     randIndex = rand.nextInt(6);
                     if (randIndex == 0) {
-                        entities.add(new OasisShrub(tile, false));
+                        entities.add(new OasisShrub(tile));
                     } else if (randIndex == 1) {
-                        entities.add(new OasisTree(tile, true));
+                        entities.add(new OasisTree(tile));
                     }
                     break;
 
@@ -102,6 +104,9 @@ public class DesertWorld extends AbstractWorld {
         }
     }
 
+    /**
+     * Handles what happens after each tick of the game.
+     */
     @Override
     public void onTick(long i) {
         super.onTick(i);
@@ -110,6 +115,7 @@ public class DesertWorld extends AbstractWorld {
             e.onTick(0);
         }
 
+        // generates the static entities if they have not been created
         if (notGenerated) {
             createStaticEntities();
             notGenerated = false;
