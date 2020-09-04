@@ -1,6 +1,7 @@
 package deco2800.thomas.entities;
 
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.enemies.AggressiveEnemy;
 import deco2800.thomas.tasks.MovementTask;
 
 /**
@@ -34,5 +35,10 @@ public class Orc extends EnemyPeon implements AggressiveEnemy {
                 setTask(null);
             }
         }
+    }
+
+    @Override
+    public void detectTarget() {
+
     }
 }

@@ -1,5 +1,6 @@
 package deco2800.thomas.entities.Agent;
 
+import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.observers.KeyDownObserver;
@@ -9,19 +10,75 @@ import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.util.SquareVector;
 import com.badlogic.gdx.Input;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserver, KeyUpObserver {
 
     private static int orbCount = 0;
     private Map<String, String> dialogues = new HashMap<>();
 
-    public PlayerPeon(float row, float col, float speed) {
+    // The health of the player
+    private HealthTracker health;
+
+    public PlayerPeon(float row, float col, float speed, int health) {
         super(row, col, speed);
         this.setObjectName("playerPeon");
+        this.health = new HealthTracker(health);
         GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).addKeyUpListener(this);
     }
 
+    /**
+     * Returns the maximum health of the player.
+     */
+    public int getMaxHealth() {
+        return health.getMaxHealthValue();
+    }
+
+    /**
+     * Sets the maximum health of the player.
+     * @param newMaxHealth the new maximum health of the player.
+     */
+    public void setMaxHealth(int newMaxHealth) {
+        this.health.setMaxHealthValue(newMaxHealth);
+    }
+
+    /**
+     * Returns the current health of the player.
+     */
+    public int getCurrentHealth() {
+        return this.health.getCurrentHealthValue();
+    }
+
+    /**
+     * Sets the current health of this player to be a new value.
+     * @param newHealth The new current health of this player.
+     */
+    public void setCurrentHealthValue(int newHealth) {
+        this.health.setCurrentHealthValue(newHealth);
+    }
+
+    /**
+     * Reduces the health of the player by the given amount.
+     * @param damage The amount of damage to be taken by the player.
+     */
+    public void reduceHealth (int damage) {
+        this.health.reduceHealth(damage);
+    }
+
+    /**
+     * Increases the health of the player by the given amount.
+     * @param regen The amount of health the player is to be healed by.
+     */
+    public void regenerateHealth (int regen) {
+        this.health.regenerateHealth(regen);
+    }
+
+    public boolean isDead () {
+        return (this.getCurrentHealth() <= 0);
+    }
     /**
      * Returns a dialogue string depending on the target string
      * @param target The target string identifier

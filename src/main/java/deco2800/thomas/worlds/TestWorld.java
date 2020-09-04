@@ -1,5 +1,11 @@
 package deco2800.thomas.worlds;
 
+import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.enemies.Dragon;
+import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.managers.CombatManager;
+import deco2800.thomas.managers.EnemyManager;
+import deco2800.thomas.managers.GameManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +31,7 @@ import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Environment.Rock;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class TestWorld extends AbstractWorld {
@@ -32,7 +39,7 @@ public class TestWorld extends AbstractWorld {
 	/*
 	 * radius for tiles 1 - 7 2 - 19 3 - 37 4 - 61 5 - 91 10 - 331 25 - 1951 50 -
 	 * 7,651 100 - 30,301 150 - 67,951 200 - 120601
-	 *
+	 * 
 	 * N = 1 + 6 * summation[0 -> N]
 	 */
 	boolean notGenerated = true;
@@ -41,6 +48,8 @@ public class TestWorld extends AbstractWorld {
 
 	public TestWorld() {
 		super();
+		this.width = WORLD_WIDTH;
+		this.height = WORLD_HEIGHT;
 	}
 
 	@Override
@@ -61,7 +70,7 @@ public class TestWorld extends AbstractWorld {
 
 		return new StaticEntity(col, row, 1, parts);
 	}
-
+	
 	//building with a fence
 	private StaticEntity createBuilding2(float col, float row) {
 		List<Part> parts = new ArrayList<Part>();
@@ -105,6 +114,7 @@ public class TestWorld extends AbstractWorld {
 		entities.add(tree);
 	}
 
+
 	//this get ran on first game tick so the world tiles exist.
 	public void createBuildings() {
 		Random random = new Random();
@@ -139,22 +149,20 @@ public class TestWorld extends AbstractWorld {
 			}
 		}
 		// Create the entities in the game
-
-//		addEntity(new PlayerPeon(10f, 5f, 0.1f));
-
-//		PlayerPeon player = new PlayerPeon(10f, 5f, 0.1f);
-		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
+		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f, 50));
 		addEntity(this.getPlayerEntity());
 
-		// Add enemy spawning manager targeting the player
-		EnemyManager enemyManager = new EnemyManager(this, (PlayerPeon) this.getPlayerEntity(), 5);
+		// Provide available enemies to the EnemyManager
+		Orc orc = new Orc(1, 0.05f, 100);
+		Orc speedyOrc = new Orc(1, 0.09f, 50, "spacman_red");
+		Orc hostileTree = new Orc(1, 0.18f, 20, "tree"); // be careful with this enemy
+		Dragon boss = new Dragon(1, 1, 1000);
+		EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(orc, speedyOrc));
 		GameManager.get().addManager(enemyManager);
 
-
-//		List<NonPlayablePeon> npnSpawns = new ArrayList<>();
-//		npnSpawns.add(new NonPlayablePeon("Fred", player.getPosition()));
-//		NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, player, npnSpawns);
-//		GameManager.get().addManager(npcManager);
+		// Create a combatManager to create combatEntities on click
+		CombatManager combatManager = new CombatManager(this);
+		GameManager.get().addManager(combatManager);
 	}
 
 	@Override
@@ -168,7 +176,7 @@ public class TestWorld extends AbstractWorld {
 		if (notGenerated) {
 			createBuildings();
 			//addTree(-1, -3f);
-
+			
 			notGenerated = false;
 		}
 	}
@@ -187,5 +195,5 @@ public class TestWorld extends AbstractWorld {
  * System.out.println("south_east " +(firend.getValue())); break; case
  * Tile.south_west: System.out.println("south_west " + (firend.getValue()));
  * break; } } }
- *
+ * 
  */
