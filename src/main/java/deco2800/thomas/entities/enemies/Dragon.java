@@ -13,7 +13,7 @@ import deco2800.thomas.managers.GameManager;
  */
 public class Dragon extends Boss implements PassiveEnemy {
     public Dragon(int height, float speed, int health) {
-        super("Elder Dragon", "goblin", height, speed, health);
+        super("Elder Dragon", "goblinLeft", height, speed, health);
     }
 
     public void summonGoblin() {
