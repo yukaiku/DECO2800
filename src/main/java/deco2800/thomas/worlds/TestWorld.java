@@ -131,9 +131,10 @@ public class TestWorld extends AbstractWorld {
 		// Provide available enemies to the EnemyManager
 		Orc orc = new Orc(1, 0.05f, 100);
 		Orc speedyOrc = new Orc(1, 0.09f, 50, "spacman_red");
-		Orc hostileTree = new Orc(1, 0.18f, 20, "tree"); // be careful with this enemy
-		Dragon boss = new Dragon(1, 1, 1000);
+		Dragon boss = new Dragon(2, 1, 5000);
 		EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(orc, speedyOrc));
+		enemyManager.setBoss(boss);
+		enemyManager.spawnBoss(0, 0);
 		GameManager.get().addManager(enemyManager);
 
 		// Create a combatManager to create combatEntities on click

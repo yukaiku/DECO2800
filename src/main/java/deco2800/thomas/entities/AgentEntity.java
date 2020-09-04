@@ -96,6 +96,10 @@ public abstract class AgentEntity extends AbstractEntity{
 		return this.getCurrentHealth() <= 0;
 	}
 
+	public HealthTracker getHealthTracker() {
+		return this.health;
+	}
+
 	/**
 	 * Defines behaviour when an agent entity dies
 	 */

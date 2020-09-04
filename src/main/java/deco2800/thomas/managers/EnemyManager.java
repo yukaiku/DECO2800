@@ -221,7 +221,6 @@ public class EnemyManager extends TickableManager {
         if (boss != null) {
             world.removeEntity(boss);
             world.deleteEntity(boss.getEntityID());
-            boss = null;
         }
     }
 
