@@ -13,8 +13,7 @@ public class HealthTracker {
     private int maxHealthValue;
     /** Represents the current health value of a character  **/
     private int currentHealthValue;
-
-    public HealthTracker(int maxHealthValue) {
+    public HealthTracker(int maxHealthValue)  {
         if (maxHealthValue > 0) {
             this.maxHealthValue = maxHealthValue;
             this.currentHealthValue = this.maxHealthValue;
@@ -63,7 +62,7 @@ public class HealthTracker {
      *
      * @param healthValue new value to which currentHealthValue is set.
      */
-    public void setCurrentHealthValue(int healthValue) {
+    public void setCurrentHealthValue(int healthValue)  {
         if (healthValue >=0 && healthValue <= maxHealthValue) {
             this.currentHealthValue = healthValue;
         }
