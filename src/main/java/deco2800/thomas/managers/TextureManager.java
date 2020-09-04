@@ -72,6 +72,7 @@ public class TextureManager extends AbstractManager {
             // enemies
             textureMap.put("goblinLeft", new Texture("resources/goblinLeft.png"));
             textureMap.put("goblinRight", new Texture("resources/goblinRight.png"));
+            textureMap.put("orcswamp", new Texture("resources/orcswamp.png"));
             textureMap.put("spacman_red", new Texture("resources/spacman_red.png"));
             textureMap.put("spatman_blue", new Texture("resources/spatman_blue.png"));
             textureMap.put("spatman_green", new Texture("resources/spatman_green.png"));
