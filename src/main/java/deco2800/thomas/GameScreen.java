@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Peon;
@@ -16,7 +14,6 @@ import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.renderers.PotateCamera;
 import deco2800.thomas.renderers.OverlayRenderer;
-import deco2800.thomas.renderers.DayCycleRenderer;
 import deco2800.thomas.renderers.Renderer3D;
 import deco2800.thomas.worlds.*;
 
@@ -35,12 +32,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	Renderer3D renderer = new Renderer3D();
 
-	private int counter = 0;
-	private float opacity = 0;
-	private float opacityDelta = 0.001f;
-	Timer timer = new Timer();
-	DayCycleRenderer dayCycleRenderer = new DayCycleRenderer();
-
 	OverlayRenderer debugRenderer = new OverlayRenderer();
 
 	AbstractWorld world;
@@ -51,7 +42,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * Create a camera for panning and zooming.
 	 * Camera must be updated every render cycle.
 	 */
-	PotateCamera camera, cameraDebug, cameraDayCycle;
+	PotateCamera camera, cameraDebug;
 
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
 
@@ -109,7 +100,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 		// Add first peon to the world
 		camera = new PotateCamera(1920, 1080);
 		cameraDebug = new PotateCamera(1920, 1080);
-		cameraDayCycle = new PotateCamera(1920, 1080);
 
 		/* Add the window to the stage */
 		GameManager.get().setSkin(skin);
@@ -126,19 +116,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 		Gdx.input.setInputProcessor(multiplexer);
 
 		GameManager.get().getManager(KeyboardManager.class).registerForKeyDown(this);
-
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				opacity += opacityDelta;
-				dayCycleRenderer.setScreenOverlayOpacity(opacity);
-				if (counter == 700) {
-					counter = -1;
-					opacityDelta = -opacityDelta;
-				}
-				counter++;
-			}
-		}, 0, 1000);
 	}
 
 	/**
@@ -155,9 +132,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 		cameraDebug.update();
 		camera.update();
 
-		SpriteBatch batchDayCycle = new SpriteBatch();
-		batchDayCycle.setProjectionMatrix(cameraDayCycle.combined);
-
 		SpriteBatch batchDebug = new SpriteBatch();
 		batchDebug.setProjectionMatrix(cameraDebug.combined);
 
@@ -170,7 +144,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		rerenderMapObjects(batch, camera);
 		debugRenderer.render(batchDebug, cameraDebug);
-		dayCycleRenderer.render(batchDayCycle, cameraDayCycle);
 
 		/* Refresh the experience UI for if information was updated */
 		stage.act(delta);
