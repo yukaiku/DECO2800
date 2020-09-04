@@ -13,12 +13,14 @@ public class HealthTracker {
     private int maxHealthValue;
     /** Represents the current health value of a character  **/
     private int currentHealthValue;
+    /** Represents whether or not the entity has reached 0 health  **/
+    private boolean isDead;
 
     public HealthTracker(int maxHealthValue) {
 
-            this.maxHealthValue = maxHealthValue;
-            this.currentHealthValue = this.maxHealthValue;
-
+        this.maxHealthValue = maxHealthValue;
+        this.currentHealthValue = this.maxHealthValue;
+        this.isDead = false;
     }
 
     /**
@@ -38,7 +40,7 @@ public class HealthTracker {
      * @param healthValue new value to which maximumHealthValue is set.
      */
     public void setMaxHealthValue(int healthValue) {
-        this.maxHealthValue = healthValue;
+        this.maxHealthValue = Math.max(healthValue, 0);
     }
 
     /**
@@ -47,7 +49,7 @@ public class HealthTracker {
      * @return currentHealthValue
      */
     public int getCurrentHealthValue() {
-        return currentHealthValue;
+        return this.currentHealthValue;
     }
 
     /**
@@ -62,7 +64,10 @@ public class HealthTracker {
      * @param healthValue new value to which currentHealthValue is set.
      */
     public void setCurrentHealthValue(int healthValue) {
-        this.currentHealthValue = healthValue;
+        if(healthValue <= 0) {
+            this.currentHealthValue = 0;
+        } else
+            this.currentHealthValue = Math.min(healthValue, maxHealthValue);
     }
 
     /**
@@ -76,7 +81,10 @@ public class HealthTracker {
      */
 
     public void reduceHealth(int damage) {
-        this.currentHealthValue -= damage;
+
+        int newHealth = this.currentHealthValue;
+        newHealth -= damage;
+        this.currentHealthValue = Math.max(newHealth, 0);
     }
 
     /**
@@ -89,14 +97,23 @@ public class HealthTracker {
      *              increased.
      */
     public void regenerateHealth(int regen) {
-        this.currentHealthValue += regen;
+        int newHealth = this.currentHealthValue;
+        newHealth += regen;
+        this.currentHealthValue = Math.min(newHealth, maxHealthValue);
     }
 
     /**
-     * Takes appropriate action
+     * Internally checks is currentHealthValue is 0. If it is, isDead boolean
+     * is set to true, other wise, set to false.
+     * <p>
+     * After this check isDead boolean is returned
+     *
+     * @return isDead
      */
-    public void death() {
 
+    public boolean isDead () {
+        this.isDead = (currentHealthValue == 0);
+        return isDead;
     }
 }
 
