@@ -73,6 +73,8 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("desertSandDune", new Texture("resources/rock_L.png"));
 			textureMap.put("desertDeadTree", new Texture("resources/tree.png"));
 			textureMap.put("desertQuicksand", new Texture("resources/rock_L.png"));
+			textureMap.put("oasisTree", new Texture("resources/tree.png"));
+			textureMap.put("oasisShrub", new Texture("resources/tree.png"));
 
 
 			textureMap.put("grass_0", new Texture("resources/square.png"));

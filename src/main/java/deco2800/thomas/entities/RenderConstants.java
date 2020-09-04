@@ -26,4 +26,6 @@ public class RenderConstants {
 	public static final int DESERT_QUICKSAND = 13;
 	public static final int DESERT_SAND_DUNE = 14;
 	public static final int DESERT_DEAD_TREE = 15;
+	public static final int OASIS_TREE = 16;
+	public static final int OASIS_SHRUB = 17;
 }

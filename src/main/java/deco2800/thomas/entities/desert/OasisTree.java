@@ -4,16 +4,16 @@ import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.worlds.Tile;
 
-public class DesertQuicksand extends StaticEntity {
-    private static final String ENTITY_ID_STRING = "DesertQuicksand";
+public class OasisTree extends StaticEntity {
+    private static final String ENTITY_ID_STRING = "OasisTree";
 
-    public DesertQuicksand() {
+    public OasisTree() {
         super();
         this.setObjectName(ENTITY_ID_STRING);
     }
 
-    public DesertQuicksand(Tile tile, boolean obstructed) {
-        super(tile, RenderConstants.DESERT_QUICKSAND, "desertQuicksand", obstructed);
+    public OasisTree(Tile tile, boolean obstructed) {
+        super(tile, RenderConstants.OASIS_TREE, "oasisTree", obstructed);
         this.setObjectName(ENTITY_ID_STRING);
     }
 }
