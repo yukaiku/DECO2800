@@ -36,13 +36,13 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
      * @param target The target string identifier
      */
     public String getDialogue(String target) {
-        dialogues.put("welcome","Welcome to (Game Name) the world has been devastated " +
+        dialogues.put("welcome","Welcome to Decodia the world has been devastated " +
                 "with the re-emergence of the five pythagoras orbs. In order to save this world, " +
                 "you will need to collect all the orbs and restore balance to the world.");
         dialogues.put("WASD", "To move your character press W for up, S for down, A for left, D for right, " +
                 "please move to the " +
                 "checkpoint marked with a flag to proceed.");
-        dialogues.put("attack", "An enemy is in front of you, get closer and click (attack key) to kill the monster");
+        dialogues.put("attack", "An enemy is in front of you, get closer and click M1 to kill the monster");
         dialogues.put("orb", "There is an orb in front of you, pick it up by interacting with it.");
         dialogues.put("congrats", "Congratulations on completing the tutorial, would you like to move to the next stage or redo " +
                 "the tutorial?");
@@ -52,10 +52,20 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         dialogues.put("earth", "I am a Geomancer, pick me and I'll crush all monsters with mother earth.");
         dialogues.put("shield", "I am the shield knight, nothing shall get past my shield.");
         dialogues.put("sword", "I am the sword knight, i will make quick work of your enemies.");
-        dialogues.put("zone", "Welcome adventure to (zone name) , to complete this stage, " +
-                "you will have to locate the orb of (depend on zone). The monsters here are " +
-                "vulnerable to (element) and have high (attack/defense) " +
-                "but low (attack/defense). Choose your character wisely.");
+        dialogues.put("swamp", "Welcome adventure to Swamp Zone , to complete this stage, " +
+                "you will have to locate the orb of muck. The monsters here are " +
+                "vulnerable to air");
+        dialogues.put("volcano", "Welcome adventure to Volcano Zone , to complete this stage, " +
+                "you will have to locate the orb of lava. The monsters here are " +
+                "vulnerable to earth");
+        dialogues.put("tundra", "Welcome adventure to Tundra Zone , to complete this stage, " +
+                "you will have to locate the orb of ice. The monsters here are " +
+                "vulnerable to fire");
+        dialogues.put("desert", "Welcome adventure to Desert Zone , to complete this stage, " +
+                "you will have to locate the orb of sand. The monsters here are " +
+                "vulnerable to water");
+        dialogues.put("next", "Congratulations for collecting the orb and completing the quest, you will now proceed on to " +
+                "the next stage.");
         dialogues.put("next", "Congratulations for collecting the orb and completing the quest, you will now proceed on to " +
                 "the next stage.");
         dialogues.put("roar", "Roar!!!");

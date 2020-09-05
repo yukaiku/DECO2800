@@ -1,5 +1,6 @@
 package deco2800.thomas.worlds;
 
+import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.StaticEntity;
@@ -18,7 +19,7 @@ import java.util.stream.*;
  * <p>
  * It provides storage for the WorldEntities and other universal world level items.
  */
-public abstract class AbstractWorld {
+public abstract class AbstractWorld implements Tickable {
 	/**
 	 * Default width of the world; horizontal coordinates of the world will be within `[-DEFAULT_WIDTH, DEFAULT_WIDTH]`
 	 */

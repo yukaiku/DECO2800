@@ -36,6 +36,7 @@ public class OverlayRenderer implements Renderer {
 		if (font == null) {
 			font = new BitmapFont();
 			font.getData().setScale(1f);
+//			font.setColor(255, 255, 255, 0.9f);
 		}
 
 		batch.begin();
@@ -107,10 +108,11 @@ public class OverlayRenderer implements Renderer {
 		line++;
 		EnemyManager enemyManager = GameManager.get().getManager(EnemyManager.class);
 		debugLine(batch, camera, ++line, "== Enemies ==");
+		debugLine(batch, camera, ++line, String.format("World: %s", enemyManager.getWorldName()));
 		debugLine(batch, camera, ++line, String.format("Wild Spawning: %s",
-				enemyManager.checkWildEnemySpawning() ? "active" : "disabled"));
+				enemyManager.checkWildEnemySpawning() ? "enabled" : "disabled"));
 		debugLine(batch, camera, ++line, String.format("Current Enemies: %d", enemyManager.getEnemyCount()));
-		if (enemyManager.getEnemyCount() - (enemyManager.getBoss() == null ? 0 : 1) > 0) {
+		if (enemyManager.getEnemyCount() - (enemyManager.getBoss() == null ? 0 : enemyManager.getBoss().isDead() ? 0 : 1) > 0) {
 			debugLine(batch, camera, ++line, String.format("(%s%s%s)",
 					enemyManager.getWildEnemiesAlive().size() > 0 ? String.format("%d/%d wild",
 							enemyManager.getWildEnemiesAlive().size(), enemyManager.getWildEnemyCap()) : "",

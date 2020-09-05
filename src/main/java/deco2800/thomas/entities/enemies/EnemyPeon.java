@@ -27,7 +27,8 @@ public abstract class EnemyPeon extends Peon {
     private final HealthTracker health;
 
     /**
-     * Initialise an abstract Enemy. The position of the enemy is normally set by the spawnEnemy() in EnemyManager.
+     * Initialise an abstract Enemy.
+     * The position of the enemy is normally set by the spawnSpecialEnemy() in EnemyManager.
      */
     public EnemyPeon(String name, String texture, int height, float speed, int health) {
         super(0, 0, speed < 0 ? 0.05f : speed, health);
@@ -40,8 +41,9 @@ public abstract class EnemyPeon extends Peon {
     }
 
     /**
-     * Sets the position of the enemy. Called from the spawnEnemy() in EnemyManager.
-     * Can also be used for fancy combats. e.g. teleportation
+     * Sets the position of the enemy.
+     * This will be automatically called from the spawnSpecialEnemy() in EnemyManager.
+     * Can also be manually used for fancy combats. e.g. teleportation
      *
      * @param x the x position on the map
      * @param y the y position on the map

@@ -11,5 +11,5 @@ import deco2800.thomas.entities.Agent.Peon;
  */
 public interface PassiveEnemy {
 
-    void hitByTarget(Peon Target);
+    void hitByTarget();
 }
