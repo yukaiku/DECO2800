@@ -9,20 +9,20 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Orb extends StaticEntity implements Tickable {
-    private final Logger LOG = LoggerFactory.getLogger(Orb.class);
+public class Orb1 extends StaticEntity implements Tickable {
+    private final Logger LOG = LoggerFactory.getLogger(Orb1.class);
 
     AbstractWorld world;
 
 
-    public Orb(float col, float row, int renderOrder, List<Part> parts) {
+    public Orb1(float col, float row, int renderOrder, List<Part> parts) {
         super(col, row, renderOrder, parts);
         LOG.info("Making a orb at {}, {}", col, row);
-        this.setTexture("orbs");
+        this.setTexture("orb1");
     }
 
-    public Orb(Tile t, boolean obstructed) {
-        super(t, RenderConstants.ORB, "orb", obstructed);
+    public Orb1(Tile t, boolean obstructed) {
+        super(t, RenderConstants.ORB, "orb1", obstructed);
     }
 
 
@@ -31,10 +31,10 @@ public class Orb extends StaticEntity implements Tickable {
         if (other == null) {
             return false;
         }
-        if (!(other instanceof Orb)) {
+        if (!(other instanceof Orb1)) {
             return false;
         }
-        Orb otherOrbs = (Orb) other;
+        Orb1 otherOrbs = (Orb1) other;
         if (this.getCol() != otherOrbs.getCol() || this.getRow() != otherOrbs.getRow() || this.getHeight() != otherOrbs.getHeight()) {
             return false;
         }

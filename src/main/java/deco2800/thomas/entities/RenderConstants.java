@@ -20,4 +20,7 @@ public class RenderConstants {
 	public static final int SWAMP_FALLEN_TREE = 9;
 	public static final int SWAMP_TREE_STUB = 10;
 	public static final int SWAMP_TREE_LOG = 11;
+
+	// Orb
+	public static final int ORB = 12;
 }
