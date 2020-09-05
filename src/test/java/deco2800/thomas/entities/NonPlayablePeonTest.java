@@ -17,7 +17,7 @@ import java.util.List;
 public class NonPlayablePeonTest {
 	SquareVector position1 = new SquareVector(1,1); 
 	SquareVector position2 = new SquareVector(2,3);
-	PlayerPeon current_player = new PlayerPeon(5,3,2);
+	PlayerPeon current_player = new PlayerPeon(5,3,2, 10);
 	
 	@Test 
 	public void checkPosition(){
