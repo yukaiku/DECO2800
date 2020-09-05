@@ -103,12 +103,12 @@ public class AbstractWorldTest extends BaseGDXTest {
         entityA.setRow(20);
         world.addEntity(entityA);
         TestAbstractEntity entityB = new TestAbstractEntity();
-        entityB.setCol(40);
-        entityB.setRow(40);
+        entityB.setCol(20);
+        entityB.setRow(20);
         world.addEntity(entityB);
 
         // Get list of all entities in bounds
-        BoundingBox bounds = new BoundingBox(new SquareVector(0, 0), 50, 50);
+        BoundingBox bounds = new BoundingBox(new SquareVector(20, 20), 50, 50);
         List<AbstractEntity> collidingEntities = world.getEntitiesInBounds(bounds);
         assertEquals(2, collidingEntities.size());
         assertTrue(collidingEntities.contains(entityA));

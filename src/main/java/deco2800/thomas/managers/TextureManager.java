@@ -129,6 +129,9 @@ public class TextureManager extends AbstractManager {
             textureMap.put("health100", new Texture("resources/healthResources/health-bar-100.png"));
             textureMap.put("game-over", new Texture("resources/healthResources/game-over.png"));
 
+            // Attacks
+            textureMap.put("fireball_left", new Texture("resources/combat/fireball_left.png"));
+
         } catch (Exception e) {
 			e.printStackTrace();
 		}

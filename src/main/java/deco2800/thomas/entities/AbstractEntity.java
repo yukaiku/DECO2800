@@ -201,10 +201,13 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	public void setBounds() {
 		TextureManager textureManager =
 				GameManager.getManagerFromInstance(TextureManager.class);
-		bounds.setWidth((textureManager.getTexture(texture).getWidth()
-				* WorldUtil.SCALE_X)/textureManager.getTexture("grass_0").getWidth());
-		bounds.setHeight((textureManager.getTexture(texture).getHeight()
-				* WorldUtil.SCALE_Y)/textureManager.getTexture("grass_0").getHeight());
+		float[] dimensions = {
+				// Scale texture into correct world coordinates
+				textureManager.getTexture(texture).getWidth() * WorldUtil.SCALE_X * getColRenderLength(),
+				textureManager.getTexture(texture).getHeight() * WorldUtil.SCALE_Y * getRowRenderLength()
+		};
+		bounds.setWidth(dimensions[0]);
+		bounds.setHeight(dimensions[1]);
 	}
 
 	@Override
