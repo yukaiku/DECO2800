@@ -1,8 +1,9 @@
 package deco2800.thomas.tasks;
 
 import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.CombatEntity;
-import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.worlds.AbstractWorld;
 
@@ -61,9 +62,9 @@ public class ApplyDamageOnCollisionTask extends AbstractTask{
         List<AbstractEntity> collidingEntities = world.getEntitiesInBounds(entity.getBounds());
         if (collidingEntities.size() > 1) { // Own bounding box should always be present
             for (AbstractEntity e : collidingEntities) {
-                // TODO("Combat"): This needs to be a generic method of identify whether the entity is a friend or foe
-                if (e.getObjectName() == "Orc") {
-                    applyDamage((EnemyPeon)e);
+                EntityFaction faction = e.getFaction();
+                if (faction != EntityFaction.None && faction != entity.getFaction()) {
+                    applyDamage(e);
                 }
             }
         }
@@ -73,11 +74,15 @@ public class ApplyDamageOnCollisionTask extends AbstractTask{
      * Applies damage to a given entity as per the parent's entity damage value.
      * @param e Enemy entity
      */
-    private void applyDamage (EnemyPeon e) {
-        e.reduceHealth(entity.getDamage());
-        this.taskComplete = true;
-        if (e.isDead()) {
-            e.death();
+    private void applyDamage (AbstractEntity e) {
+        if (e instanceof AgentEntity) {
+            AgentEntity agentEntity = (AgentEntity) e;
+
+            agentEntity.reduceHealth(entity.getDamage());
+            this.taskComplete = true;
+            if (agentEntity.isDead()) {
+                agentEntity.death();
+            }
         }
     }
 }

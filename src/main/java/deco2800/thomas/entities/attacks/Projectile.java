@@ -1,5 +1,6 @@
 package deco2800.thomas.entities.attacks;
 
+import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
@@ -13,6 +14,8 @@ import deco2800.thomas.worlds.AbstractWorld;
 public class Projectile extends CombatEntity {
     // Speed projectile moves at
     private float speed;
+    // Direction (in degrees) projectile is moving
+    private float direction;
     // Reference to current game world
     private AbstractWorld world;
 
@@ -30,10 +33,12 @@ public class Projectile extends CombatEntity {
      * @param renderOrder Render order
      * @param damage Damage to apply
      * @param speed Speed projectile moves at
+     * @param faction EntityFaction of the projectile
      */
-    public Projectile(float col, float row, int renderOrder, int damage, float speed) {
-        super(col, row, renderOrder, damage);
+    public Projectile(float col, float row, int renderOrder, int damage, float speed, EntityFaction faction) {
+        super(col, row, renderOrder, damage, faction);
         this.speed = speed;
+        this.direction = 0;
         this.world = GameManager.get().getWorld();
     }
 
@@ -54,10 +59,23 @@ public class Projectile extends CombatEntity {
     }
 
     /**
+     * Returns the direction the projectile is moving in degrees.
+     * Note: 0 degrees = towards the right.
+     * @return Direction of projectile.
+     */
+    public float getDirection() {
+        return direction;
+    }
+
+    /**
      * Updates the position of this projectile, by moving towards a given SquareVector.
      * @param destination Vector to step towards.
      */
     public void moveTowards(SquareVector destination) {
+        // Update direction
+        direction = (float)Math.toDegrees(
+                Math.atan2(destination.getRow() - position.getRow(), destination.getCol() - position.getCol()));
+        // Move vector
         position.moveToward(destination, speed);
     }
 

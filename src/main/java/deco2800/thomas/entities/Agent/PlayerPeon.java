@@ -1,5 +1,6 @@
 package deco2800.thomas.entities.Agent;
 
+import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
@@ -24,6 +25,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
     public PlayerPeon(float row, float col, float speed, int health) {
         super(row, col, speed, health);
         this.setObjectName("playerPeon");
+        this.setFaction(EntityFaction.Ally);
         GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).addKeyUpListener(this);

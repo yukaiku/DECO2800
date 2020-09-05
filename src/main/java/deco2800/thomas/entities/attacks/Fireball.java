@@ -1,6 +1,7 @@
 package deco2800.thomas.entities.attacks;
 
 import deco2800.thomas.Tickable;
+import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.ApplyDamageOnCollisionTask;
@@ -18,7 +19,7 @@ public class Fireball extends Projectile implements Tickable{
      */
     public Fireball() {
         super();
-        this.setTexture("fireball_left");
+        this.setTexture("fireball_right");
         this.setObjectName("combatFireball");
     }
 
@@ -29,11 +30,12 @@ public class Fireball extends Projectile implements Tickable{
      * @param row Initial Y position
      * @param damage Damage to apply on impact
      * @param speed Speed of projectile
+     * @param faction EntityFaction of the projectile
      */
-    public Fireball (float col, float row, int damage, float speed) {
-        super(col, row, RenderConstants.PROJECTILE_RENDER, damage, speed);
+    public Fireball (float col, float row, int damage, float speed, EntityFaction faction) {
+        super(col, row, RenderConstants.PROJECTILE_RENDER, damage, speed, faction);
         this.setObjectName("combatFireball");
-        this.setTexture("fireball_left");
+        this.setTexture("fireball_right");
     }
 
     /**
@@ -47,10 +49,11 @@ public class Fireball extends Projectile implements Tickable{
      * @param damage Damage to apply to enemies
      * @param speed Speed of projectile
      * @param lifetime Lifetime (in ticks) of projectile
+     * @param faction EntityFaction of projectile
      */
     public static void spawn(float col, float row, float targetCol, float targetRow,
-                             int damage, float speed, long lifetime) {
-        Fireball fireball = new Fireball(col, row, damage, speed);
+                             int damage, float speed, long lifetime, EntityFaction faction) {
+        Fireball fireball = new Fireball(col, row, damage, speed, faction);
         fireball.setMovementTask(new DirectProjectileMovementTask(fireball,
                 new SquareVector(targetCol, targetRow), lifetime));
         fireball.setCombatTask(new ApplyDamageOnCollisionTask(fireball));

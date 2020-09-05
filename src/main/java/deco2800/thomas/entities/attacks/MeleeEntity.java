@@ -1,5 +1,6 @@
 package deco2800.thomas.entities.attacks;
 
+import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.MeleeAttackTask;
@@ -14,7 +15,7 @@ public class MeleeEntity extends CombatEntity {
     }
 
     public MeleeEntity (float col, float row, int renderOrder, int damage, int range) {
-        super(col, row, renderOrder, damage);
+        super(col, row, renderOrder, damage, EntityFaction.None);
         this.range = range;
     }
 
