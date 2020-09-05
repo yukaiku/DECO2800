@@ -31,7 +31,7 @@ public class Goblin extends Minion implements AggressiveEnemy {
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
         if (player != null && EnemyUtil.playerInRadius(this, player, detectRadius)) {
             super.setTarget((PlayerPeon) player);
-            setTask(new MovementTask(this, super.getTarget().getPosition()));
+            setMovementTask(new MovementTask(this, super.getTarget().getPosition()));
         }
     }
 
@@ -45,7 +45,7 @@ public class Goblin extends Minion implements AggressiveEnemy {
         // update target following path every 0.5 second (30 ticks)
         if (++tickFollowing > 30) {
             if (super.getTarget() != null) {
-                setTask(new MovementTask(this, super.getTarget().getPosition()));
+                setMovementTask(new MovementTask(this, super.getTarget().getPosition()));
             }
             tickFollowing = 0;
         }
@@ -54,10 +54,10 @@ public class Goblin extends Minion implements AggressiveEnemy {
             detectTarget();
         }
         // execute tasks
-        if (getTask() != null && getTask().isAlive()) {
-            getTask().onTick(i);
-            if (getTask().isComplete()) {
-                setTask(null);
+        if (getMovementTask() != null && getMovementTask().isAlive()) {
+            getMovementTask().onTick(i);
+            if (getMovementTask().isComplete()) {
+                setMovementTask(null);
             }
         }
     }
