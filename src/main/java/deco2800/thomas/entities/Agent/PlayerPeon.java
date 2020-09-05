@@ -1,5 +1,7 @@
 package deco2800.thomas.entities.Agent;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.managers.GameManager;
@@ -9,7 +11,7 @@ import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.util.SquareVector;
-import com.badlogic.gdx.Input;
+import deco2800.thomas.util.WorldUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -138,12 +140,31 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
 
     @Override
     public void notifyTouchDown(int screenX, int screenY, int pointer, int button) {
+        float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(), Gdx.input.getY());
+        float[] clickedPosition = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
+
+
         if (button == Input.Buttons.LEFT) {
             //Set combat task to fireball task
             // this.setCombatTask(new CombatTask);
         } else if (button == Input.Buttons.RIGHT) {
             // Set combat task to melee task
             // this.setCombatTask(new meleeTask);
+            double angle = Math.toDegrees(Math.atan2(clickedPosition[0] - this.getCol(), clickedPosition[1] - this.getRow()));
+            System.out.println(angle);
+            if (angle > -45 && angle < 45) {
+                // Spawn above player
+                System.out.println("Above");
+            } else if (angle >= -135 && angle <= -45) {
+                // Spawn to left of player
+                System.out.println("Left");
+            } else if (angle < -135 || angle > 135) {
+                // Spawn below player
+                System.out.println("Below");
+            } else if (angle >= 45 && angle <= 135) {
+                // Spawn right of player
+                System.out.println("Right");
+            }
         }
     }
 
