@@ -1,6 +1,6 @@
 package deco2800.thomas.entities.enemies;
 
-import deco2800.thomas.entities.Peon;
+import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 
@@ -12,7 +12,7 @@ import deco2800.thomas.managers.GameManager;
  */
 public class Dummy extends Monster implements PassiveEnemy {
     public Dummy(int height, float speed, int health) {
-        super("Dummy", "spacman_blue", height, speed, health, false);
+        super("Dummy", "spatman_blue", height, speed, health, false);
     }
 
     public void hitByTarget() {

@@ -1,7 +1,8 @@
 package deco2800.thomas.entities.enemies;
 
+import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.HealthTracker;
-import deco2800.thomas.entities.Peon;
+import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.MovementTask;
@@ -36,6 +37,7 @@ public abstract class EnemyPeon extends Peon {
         this.setHeight(height <= 0 ? 1 : height);
         this.target = null;
         this.health = new HealthTracker(health);
+        this.setFaction(EntityFaction.Evil);
     }
 
     /**

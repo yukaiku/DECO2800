@@ -2,6 +2,7 @@ package deco2800.thomas.entities;
 
 import com.badlogic.gdx.Input;
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.tasks.MovementTask;
 import org.junit.Test;
 

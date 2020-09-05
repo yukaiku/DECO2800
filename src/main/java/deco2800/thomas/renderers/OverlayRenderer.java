@@ -12,54 +12,55 @@ import deco2800.thomas.managers.*;
 import deco2800.thomas.util.WorldUtil;
 
 public class OverlayRenderer implements Renderer {
-	
-    BitmapFont font;
-    ShapeRenderer shapeRenderer;
-     
-    FPSLogger fpsLogger = new FPSLogger();
 
-    long peakRAM = 0;
+	BitmapFont font;
+	ShapeRenderer shapeRenderer;
+
+	FPSLogger fpsLogger = new FPSLogger();
+
+	long peakRAM = 0;
 
 
-    /**
-     * Renders onto a batch, given a renderables with entities.
-     * It is expected that AbstractWorld contains some entities and a Map to read tiles from.
-     * @param batch Batch to render onto
-     */
-    @Override
-    public void render(SpriteBatch batch, OrthographicCamera camera) {
-    	 if (shapeRenderer == null) {
-             shapeRenderer = new ShapeRenderer();
-         }
-    	 
-        if (font == null) {
-            font = new BitmapFont();
-            font.getData().setScale(1f);
-            font.setColor(255, 255, 255, 0.9f);
-        }
-           
-        batch.begin();
-        
-        
-        if (GameManager.get().debugMode) {
-        	renderDebugText(batch, camera);
-        }
+	/**
+	 * Renders onto a batch, given a renderables with entities.
+	 * It is expected that AbstractWorld contains some entities and a Map to read tiles from.
+	 *
+	 * @param batch Batch to render onto
+	 */
+	@Override
+	public void render(SpriteBatch batch, OrthographicCamera camera) {
+		if (shapeRenderer == null) {
+			shapeRenderer = new ShapeRenderer();
+		}
 
-        int line = GameManager.get().getManager(OnScreenMessageManager.class).getMessages().size();
-        for (String message : GameManager.get().getManager(OnScreenMessageManager.class).getMessages()) {
-            chatLine(batch, camera, line--, message);
-        }
+		if (font == null) {
+			font = new BitmapFont();
+			font.getData().setScale(1f);
+//			font.setColor(255, 255, 255, 0.9f);
+		}
 
-        if (GameManager.get().getManager(OnScreenMessageManager.class).isTyping()) {
-            chatLine(batch, camera, 0, GameManager.get().getManager(OnScreenMessageManager.class).getUnsentMessage());
-        }
+		batch.begin();
 
-        if (peakRAM < Gdx.app.getJavaHeap()) {
-            peakRAM = Gdx.app.getJavaHeap();
-        }
 
-        batch.end();
-    }
+		if (GameManager.get().debugMode) {
+			renderDebugText(batch, camera);
+		}
+
+		int line = GameManager.get().getManager(OnScreenMessageManager.class).getMessages().size();
+		for (String message : GameManager.get().getManager(OnScreenMessageManager.class).getMessages()) {
+			chatLine(batch, camera, line--, message);
+		}
+
+		if (GameManager.get().getManager(OnScreenMessageManager.class).isTyping()) {
+			chatLine(batch, camera, 0, GameManager.get().getManager(OnScreenMessageManager.class).getUnsentMessage());
+		}
+
+		if (peakRAM < Gdx.app.getJavaHeap()) {
+			peakRAM = Gdx.app.getJavaHeap();
+		}
+
+		batch.end();
+	}
 
 	private void debugLine(SpriteBatch batch, Camera camera, int line, String string) {
 		font.draw(batch, string, camera.position.x - camera.viewportWidth / 2 + 10,
@@ -107,8 +108,9 @@ public class OverlayRenderer implements Renderer {
 		line++;
 		EnemyManager enemyManager = GameManager.get().getManager(EnemyManager.class);
 		debugLine(batch, camera, ++line, "== Enemies ==");
+		debugLine(batch, camera, ++line, String.format("World: %s", enemyManager.getWorldName()));
 		debugLine(batch, camera, ++line, String.format("Wild Spawning: %s",
-				enemyManager.checkWildEnemySpawning() ? "active" : "disabled"));
+				enemyManager.checkWildEnemySpawning() ? "enabled" : "disabled"));
 		debugLine(batch, camera, ++line, String.format("Current Enemies: %d", enemyManager.getEnemyCount()));
 		if (enemyManager.getEnemyCount() - (enemyManager.getBoss() == null ? 0 : enemyManager.getBoss().isDead() ? 0 : 1) > 0) {
 			debugLine(batch, camera, ++line, String.format("(%s%s%s)",

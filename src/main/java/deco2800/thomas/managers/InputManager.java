@@ -30,14 +30,16 @@ public class InputManager extends AbstractManager implements InputProcessor {
 
 	/**
 	 * Adds an observer to observe the keyDown action
+	 *
 	 * @param observer the observer to add
-     */
+	 */
 	public void addKeyDownListener(KeyDownObserver observer) {
 		keyDownListeners.add(observer);
 	}
 
 	/**
 	 * Removes an observer from observing the KeyDown action
+	 *
 	 * @param observer the observer to remove
 	 */
 	public void removeKeyDownListener(KeyDownObserver observer) {
@@ -46,6 +48,7 @@ public class InputManager extends AbstractManager implements InputProcessor {
 
 	/**
 	 * Adds an observer to observe the keyUp action
+	 *
 	 * @param observer the observer to add
 	 */
 	public void addKeyUpListener(KeyUpObserver observer) {
@@ -54,6 +57,7 @@ public class InputManager extends AbstractManager implements InputProcessor {
 
 	/**
 	 * removes an observer from observing the keyUp action
+	 *
 	 * @param observer the observer to remove
 	 */
 	public void removeKeyUpListener(KeyUpObserver observer) {
@@ -62,6 +66,7 @@ public class InputManager extends AbstractManager implements InputProcessor {
 
 	/**
 	 * Adds an observer to observe the touchDown action
+	 *
 	 * @param observer the observer to add
 	 */
 	public void addTouchDownListener(TouchDownObserver observer) {
@@ -70,6 +75,7 @@ public class InputManager extends AbstractManager implements InputProcessor {
 
 	/**
 	 * removes an observer from observing the touchDown action
+	 *
 	 * @param observer the observer to remove
 	 */
 	public void removeTouchDownListener(TouchDownObserver observer) {
@@ -78,6 +84,7 @@ public class InputManager extends AbstractManager implements InputProcessor {
 
 	/**
 	 * Adds an observer to observe the touchUp action
+	 *
 	 * @param observer the observer to add
 	 */
 	public void addTouchUpListener(TouchUpObserver observer) {
@@ -86,6 +93,7 @@ public class InputManager extends AbstractManager implements InputProcessor {
 
 	/**
 	 * removes an observer from observing the touchUp action
+	 *
 	 * @param observer the observer to remove
 	 */
 	public void removeTouchUpListener(TouchUpObserver observer) {
@@ -94,6 +102,7 @@ public class InputManager extends AbstractManager implements InputProcessor {
 
 	/**
 	 * Adds an observer to observe the TouchDragged action
+	 *
 	 * @param observer the observer to add
 	 */
 	public void addTouchDraggedListener(TouchDraggedObserver observer) {
@@ -102,6 +111,7 @@ public class InputManager extends AbstractManager implements InputProcessor {
 
 	/**
 	 * removes an observer from observing the touchDragged action
+	 *
 	 * @param observer the observer to remove
 	 */
 	public void removeTouchDraggedListener(TouchDraggedObserver observer) {
@@ -110,6 +120,7 @@ public class InputManager extends AbstractManager implements InputProcessor {
 
 	/**
 	 * Adds an observer to observe the mouseMoved action
+	 *
 	 * @param observer the observer to add
 	 */
 	public void addMouseMovedListener(MouseMovedObserver observer) {
@@ -118,6 +129,7 @@ public class InputManager extends AbstractManager implements InputProcessor {
 
 	/**
 	 * removes an observer from observing the mouseMoved action
+	 *
 	 * @param observer the observer to remove
 	 */
 	public void removeMouseMovedListener(MouseMovedObserver observer) {
@@ -126,6 +138,7 @@ public class InputManager extends AbstractManager implements InputProcessor {
 
 	/**
 	 * Adds an observer to observe the scroll action
+	 *
 	 * @param observer the observer to add
 	 */
 	public void addScrollListener(ScrollObserver observer) {
@@ -134,6 +147,7 @@ public class InputManager extends AbstractManager implements InputProcessor {
 
 	/**
 	 * removes an observer from observing the scrolling action
+	 *
 	 * @param observer the observer to remove
 	 */
 	public void removeScrollListener(ScrollObserver observer) {

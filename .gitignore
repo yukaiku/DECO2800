@@ -49,3 +49,6 @@ EngineDB/*
 
 # vscode files
 .vscode/
+
+#save_file
+resources/save_file.json

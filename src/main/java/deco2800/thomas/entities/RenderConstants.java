@@ -8,8 +8,12 @@ public class RenderConstants{
 	// the higher the constant value, the topmost they are in the world
 	// i.e. if trees have a higher value 
 	public static final int ROCK_RENDER = 1;
-	public static final int PEON_RENDER = 3; 
+	public static final int TARGET_RENDER = 1;
+	public static final int STASH_RENDER = 1;
+	public static final int PORTAL_RENDER = 1;
+	public static final int PEON_RENDER = 3;
 	public static final int TREE_RENDER = 5;
 	public static final int PROJECTILE_RENDER = 6;
-	public static final int BUILDING_RENDER = 4;  
+	public static final int BUILDING_RENDER = 4;
+	public static final int BARREL_RENDER = 5;
 }

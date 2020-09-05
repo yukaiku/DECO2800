@@ -1,47 +1,63 @@
 package deco2800.thomas.entities.attacks;
 
 import deco2800.thomas.Tickable;
+import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.RenderConstants;
-import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.tasks.MovementTask;
-import deco2800.thomas.tasks.RangedAttackTask;
+import deco2800.thomas.tasks.ApplyDamageOnCollisionTask;
+import deco2800.thomas.tasks.DirectProjectileMovementTask;
+import deco2800.thomas.util.SquareVector;
 
-public class Fireball extends RangedEntity implements Tickable{
-    protected float speed;
-    private MovementTask.Direction movingDirection = MovementTask.Direction.NONE;
-    private transient RangedAttackTask task;
-
-
+/**
+ * A fireball is a projectile that moves in a straight line until it
+ * a) hits an enemy and deals damage, or
+ * b) its lifetime expires.
+ */
+public class Fireball extends Projectile implements Tickable{
+    /**
+     * Default constructor, sets texture and object name.
+     */
     public Fireball() {
         super();
-        this.setTexture("projectile");
-        this.setObjectName("Peon");
-        this.setHeight(1);
-        this.speed = 0.05f;
-    }
-
-    public Fireball (float row, float col, int damage, float speed, int range) {
-        super(row, col, RenderConstants.PROJECTILE_RENDER, damage, speed, range);
+        this.setTexture("fireball_right");
         this.setObjectName("combatFireball");
-        this.setTexture("projectile");
     }
 
-    public void setMovementTask(RangedAttackTask task) {this.task = task;}
+    /**
+     * Parametric constructor, that sets the initial conditions of the projectile
+     * as well as texture and name.
+     * @param col Initial X position
+     * @param row Initial Y position
+     * @param damage Damage to apply on impact
+     * @param speed Speed of projectile
+     * @param faction EntityFaction of the projectile
+     */
+    public Fireball (float col, float row, int damage, float speed, EntityFaction faction) {
+        super(col, row, RenderConstants.PROJECTILE_RENDER, damage, speed, faction);
+        this.setObjectName("combatFireball");
+        this.setTexture("fireball_right");
+    }
 
+    /**
+     * Spawns a new fireball into the game world, that will move in the direction
+     * specified. Note, the fireball will continue in the same direction if it passes
+     * the target.
+     * @param col X position to spawn at
+     * @param row Y position to spawn at
+     * @param targetCol X position to move towards
+     * @param targetRow Y position to move towards
+     * @param damage Damage to apply to enemies
+     * @param speed Speed of projectile
+     * @param lifetime Lifetime (in ticks) of projectile
+     * @param faction EntityFaction of projectile
+     */
+    public static void spawn(float col, float row, float targetCol, float targetRow,
+                             int damage, float speed, long lifetime, EntityFaction faction) {
+        Fireball fireball = new Fireball(col, row, damage, speed, faction);
+        fireball.setMovementTask(new DirectProjectileMovementTask(fireball,
+                new SquareVector(targetCol, targetRow), lifetime));
+        fireball.setCombatTask(new ApplyDamageOnCollisionTask(fireball));
 
-
-
-    @Override
-    public void onTick(long i) {
-        if (getTask() != null && getTask().isAlive()) {
-            getTask().onTick(i);
-
-            if (getTask().isComplete()) {
-                GameManager.get().getManager(CombatManager.class).removeEntity(this);
-            }
-        } else {
-            GameManager.get().getManager(CombatManager.class).removeEntity(this);
-        }
+        GameManager.get().getWorld().addEntity(fireball);
     }
 }

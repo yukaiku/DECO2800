@@ -8,8 +8,9 @@ public interface ScrollObserver {
 
 	/**
 	 * Notifies the observes of a scroll action
+	 *
 	 * @param amount the amount scrolled
-     */
+	 */
 	void notifyScrolled(int amount);
 
 }

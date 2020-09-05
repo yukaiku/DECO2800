@@ -2,7 +2,14 @@ package deco2800.thomas;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.EntityCompare;
-import deco2800.thomas.entities.PlayerPeon;
+import deco2800.thomas.entities.Agent.PlayerPeon;
+import com.badlogic.gdx.graphics.Texture;
+import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.managers.DatabaseManager;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.InputManager;
+import deco2800.thomas.managers.OnScreenMessageManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
@@ -25,6 +32,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 
 
 @RunWith(PowerMockRunner.class)
@@ -77,7 +85,7 @@ public class SaveLoadTest extends BaseGDXTest {
         float row_two = 5.0f;
         saveTileMap.add(new Tile("grass_1_0", col_one, row_one));
         saveTileMap.add(new Tile("grass_1_0", col_two, row_two));
-        w.setTileMap(saveTileMap);
+        w.setTiles(saveTileMap);
 
         newEntities.put(0, new PlayerPeon(1, 1, 1,10));
         
@@ -96,11 +104,11 @@ public class SaveLoadTest extends BaseGDXTest {
 
 
         for (int i = 0; i < saveTileMap.size(); i++) {
-            assertEquals(saveTileMap.get(i).getTextureName(), w.getTileMap().get(i).getTextureName());
+            assertEquals(saveTileMap.get(i).getTextureName(), w.getTiles().get(i).getTextureName());
             
-            assertEquals(saveTileMap.get(i).getTileID(), w.getTileMap().get(i).getTileID());
-            assertEquals(saveTileMap.get(i).getRow(), w.getTileMap().get(i).getRow(), 0.001f);
-            assertEquals(saveTileMap.get(i).getCol(), w.getTileMap().get(i).getCol(), 0.001f);
+            assertEquals(saveTileMap.get(i).getTileID(), w.getTiles().get(i).getTileID());
+            assertEquals(saveTileMap.get(i).getRow(), w.getTiles().get(i).getRow(), 0.001f);
+            assertEquals(saveTileMap.get(i).getCol(), w.getTiles().get(i).getCol(), 0.001f);
         }
 
         for (int i = 0; i < testEntities.size(); i++) {

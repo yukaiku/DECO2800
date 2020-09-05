@@ -1,11 +1,14 @@
-package deco2800.thomas.entities;
+package deco2800.thomas.entities.Agent;
 
 import com.google.gson.annotations.Expose;
 
+
+import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.util.SquareVector;
 
-public abstract class AgentEntity extends AbstractEntity{
+public abstract class AgentEntity extends AbstractEntity {
 	@Expose
 	protected float speed;
 	private MovementTask.Direction movingDirection = MovementTask.Direction.NONE;
@@ -25,12 +28,12 @@ public abstract class AgentEntity extends AbstractEntity{
 	public void moveTowards(SquareVector destination) {
 		position.moveToward(destination, speed);
 	}
-	
+
 	public float getSpeed() {
 		return speed;
 	}
 
-	public void setSpeed( float speed) {
+	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
 

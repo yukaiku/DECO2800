@@ -6,10 +6,31 @@ import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.Environment.Rock;
+import deco2800.thomas.entities.Environment.Tree;
+import deco2800.thomas.entities.NPC.NonPlayablePeon;
+import deco2800.thomas.managers.NonPlayablePeonManager;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
+import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.Part;
+import deco2800.thomas.entities.StaticEntity;
+import deco2800.thomas.entities.Environment.Tree;
+import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.Environment.Rock;
+import deco2800.thomas.managers.EnemyManager;
+import deco2800.thomas.managers.GameManager;
 import java.util.*;
 
 @SuppressWarnings("unused")
@@ -32,17 +53,17 @@ public class TestWorld extends AbstractWorld {
 	}
 
 	//5 tile building
-	private StaticEntity  createBuilding1(float col, float row) {
+	private StaticEntity createBuilding1(float col, float row) {
 		StaticEntity building;
-		List<Part> parts = new ArrayList<Part>();	
-		
+		List<Part> parts = new ArrayList<Part>();
+
 		parts.add(new Part(new SquareVector(1, -1f), "spacman_ded", true));
 		parts.add(new Part(new SquareVector(-1, -1f), "spacman_ded", true));
 		parts.add(new Part(new SquareVector(-1, 1f), "spacman_ded", true));
 		parts.add(new Part(new SquareVector(1, 1f), "spacman_ded", true));
 		parts.add(new Part(new SquareVector(0, 0), "spacman_ded", true));
 
-		return  new StaticEntity(col, row, 1, parts);	
+		return new StaticEntity(col, row, 1, parts);
 	}
 	
 	//building with a fence
@@ -54,59 +75,57 @@ public class TestWorld extends AbstractWorld {
 		parts.add(new Part(new SquareVector(-2, 1), "fenceN-S", true));
 
 		// Bottom
-		parts.add(new Part(new SquareVector(-1, -1) , "fenceE-W", true));
-		parts.add(new Part(new SquareVector(0, -1) , "fenceE-W", true));
-		parts.add(new Part(new SquareVector(1, -1) , "fenceE-W", true));
+		parts.add(new Part(new SquareVector(-1, -1), "fenceE-W", true));
+		parts.add(new Part(new SquareVector(0, -1), "fenceE-W", true));
+		parts.add(new Part(new SquareVector(1, -1), "fenceE-W", true));
 
 		// Top
-		parts.add(new Part(new SquareVector(-1, 2) , "fenceE-W", true));
-		parts.add(new Part(new SquareVector(0, 2) , "fenceE-W", true));
-		parts.add(new Part(new SquareVector(1, 2) , "fenceE-W", true));
+		parts.add(new Part(new SquareVector(-1, 2), "fenceE-W", true));
+		parts.add(new Part(new SquareVector(0, 2), "fenceE-W", true));
+		parts.add(new Part(new SquareVector(1, 2), "fenceE-W", true));
 
 		// bottom right corner
-		parts.add(new Part(new SquareVector(2,-1), "fenceN-W", true));
+		parts.add(new Part(new SquareVector(2, -1), "fenceN-W", true));
 
 		// bottom left
-		parts.add(new Part(new SquareVector(-2,-1), "fenceN-E", true));
+		parts.add(new Part(new SquareVector(-2, -1), "fenceN-E", true));
 
 		// top left
-		parts.add(new Part(new SquareVector(-2,2), "fenceS-E", true));
+		parts.add(new Part(new SquareVector(-2, 2), "fenceS-E", true));
 
 		// top right
-		parts.add(new Part(new SquareVector(2,2), "fenceS-W", true));
+		parts.add(new Part(new SquareVector(2, 2), "fenceS-W", true));
 
-		StaticEntity building =  new StaticEntity(col, row,1, parts);
+		StaticEntity building = new StaticEntity(col, row, 1, parts);
 		entities.add(building);
 		return building;
-		
+
 	}
-	
-	
+
 	private void addTree(float col, float row) {
 		Map<SquareVector, String> textures = new HashMap<SquareVector, String>();
 		Tile t = GameManager.get().getWorld().getTile(col, row);
-		Tree tree = new  Tree(t, true);		
+		Tree tree = new  Tree(t, true);
 		entities.add(tree);
 	}
 
 
 	//this get ran on first game tick so the world tiles exist.
 	public void createBuildings() {
-
 		Random random = new Random();
-		int tileCount = GameManager.get().getWorld().getTileMap().size();
+		int tileCount = GameManager.get().getWorld().getTiles().size();
 		// Generate some rocks to mine later
-		for (int i = 0; i < 100;  i++) {
+		for (int i = 0; i < 100; i++) {
 			Tile t = GameManager.get().getWorld().getTile(random.nextInt(tileCount));
 			if (t != null) {
-				entities.add(new Rock(t,true));
+				entities.add(new Rock(t, true));
 			}
 		}
 		// Add some trees
-		for (int i = 0; i < 50;  i++) {
+		for (int i = 0; i < 50; i++) {
 			Tile t = GameManager.get().getWorld().getTile(random.nextInt(tileCount));
 			if (t != null) {
-				entities.add(new Tree(t,true));
+				entities.add(new Tree(t, true));
 			}
 		}
 		entities.add(createBuilding2(-5, 0f));
@@ -114,18 +133,18 @@ public class TestWorld extends AbstractWorld {
 	}
 
 	@Override
-	protected void generateWorld() {
+	protected void generateTiles() {
 		Random random = new Random();
 		for (int q = -WORLD_WIDTH; q < WORLD_WIDTH; q++) {
 			for (int r = -WORLD_HEIGHT; r < WORLD_HEIGHT; r++) {
-					int elevation = random.nextInt(3);
-					String type = "grass_";
-					type += elevation;
-					tiles.add(new Tile(type, q, r));
+				int elevation = random.nextInt(3);
+				String type = "grass_";
+				type += elevation;
+				tiles.add(new Tile(type, q, r));
 			}
 		}
 		// Create the entities in the game
-		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.2f, 50));
+		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f, 50));
 		addEntity(this.getPlayerEntity());
 
 		// Provide available enemies to the EnemyManager

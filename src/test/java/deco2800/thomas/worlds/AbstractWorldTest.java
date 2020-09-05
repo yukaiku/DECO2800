@@ -3,7 +3,8 @@ package deco2800.thomas.worlds;
 import com.badlogic.gdx.Game;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.PlayerPeon;
+import deco2800.thomas.worlds.AbstractWorld;
+import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
@@ -35,8 +36,8 @@ public class AbstractWorldTest extends BaseGDXTest {
      */
     private class TestAbstractWorld extends AbstractWorld {
         @Override
-        protected void generateWorld() {
-            // No action required.
+        protected void generateTiles() {
+
         }
     }
 
@@ -102,12 +103,12 @@ public class AbstractWorldTest extends BaseGDXTest {
         entityA.setRow(20);
         world.addEntity(entityA);
         TestAbstractEntity entityB = new TestAbstractEntity();
-        entityB.setCol(40);
-        entityB.setRow(40);
+        entityB.setCol(20);
+        entityB.setRow(20);
         world.addEntity(entityB);
 
         // Get list of all entities in bounds
-        BoundingBox bounds = new BoundingBox(new SquareVector(0, 0), 50, 50);
+        BoundingBox bounds = new BoundingBox(new SquareVector(20, 20), 50, 50);
         List<AbstractEntity> collidingEntities = world.getEntitiesInBounds(bounds);
         assertEquals(2, collidingEntities.size());
         assertTrue(collidingEntities.contains(entityA));

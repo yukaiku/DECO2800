@@ -52,7 +52,7 @@ public class BoundingBoxTest {
     @Test
     public void overlappingTest() {
         BoundingBox boxA = new BoundingBox(new SquareVector(0, 0), 30, 30);
-        BoundingBox boxB = new BoundingBox(new SquareVector(20, 20), 10, 10);
+        BoundingBox boxB = new BoundingBox(new SquareVector(0, 0), 10, 10);
         assertTrue(boxA.overlaps(boxB));
         assertTrue(boxB.overlaps(boxA));
     }
