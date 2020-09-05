@@ -6,7 +6,7 @@ import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.tasks.MovementTask;
+import deco2800.thomas.tasks.movement.MovementTask;
 
 /**
  * A class that defines an implementation of a Dragon.

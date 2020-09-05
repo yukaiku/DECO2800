@@ -5,6 +5,7 @@ import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.tasks.combat.ApplyDamageOnCollisionTask;
 import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;

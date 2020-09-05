@@ -1,6 +1,7 @@
-package deco2800.thomas.tasks;
+package deco2800.thomas.tasks.movement;
 
 import deco2800.thomas.entities.attacks.Projectile;
+import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.util.SquareVector;
 
 /**

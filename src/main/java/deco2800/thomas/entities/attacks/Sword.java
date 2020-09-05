@@ -4,8 +4,8 @@ import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.tasks.ApplyDamageOnCollisionTask;
-import deco2800.thomas.tasks.MovementTask;
+import deco2800.thomas.tasks.combat.ApplyDamageOnCollisionTask;
+import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.worlds.AbstractWorld;
 
 public class Sword extends MeleeEntity implements Tickable {

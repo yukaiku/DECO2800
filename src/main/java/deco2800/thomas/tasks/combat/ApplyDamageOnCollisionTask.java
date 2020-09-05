@@ -1,51 +1,47 @@
-package deco2800.thomas.tasks;
+package deco2800.thomas.tasks.combat;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.util.BoundingBox;
-import deco2800.thomas.util.SquareVector;
-import deco2800.thomas.util.WorldUtil;
+import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.worlds.AbstractWorld;
 
 import java.util.List;
 
 /**
- * The MeleeAttackTask executes a single melee attack.
+ * This task checks for colliding entities, and when an enemy entity is detected
+ * it applies damage.
  */
-public class MeleeAttackTask extends AbstractTask {
-    /* Reference to the current game world */
+public class ApplyDamageOnCollisionTask extends AbstractTask {
+    // Reference to current game world
     private AbstractWorld world;
-    /* Bounding box to attack */
-    private BoundingBox bounds;
-    /* Damage to apply */
-    private int damage;
+    // Lifetime of task
+    private long lifetime, currentLifetime;
 
     // Task state
     private boolean taskAlive = true;
     private boolean taskComplete = false;
 
     /**
-     * Creates an instance of the MeleeAttackTask.
+     * Creates an instance of the task.
      * @param entity Parent entity
-     * @param origin Origin of bounds to test
-     * @param width Width of bounds to test
-     * @param height Height of bounds to test
-     * @param damage Damage to apply
      */
-    public MeleeAttackTask(CombatEntity entity, SquareVector origin, float width, float height, int damage) {
+    public ApplyDamageOnCollisionTask(CombatEntity entity, long lifetime) {
         super(entity);
-        float dimensions[] = WorldUtil.colRowToWorldCords(width, height);
-        this.bounds = new BoundingBox(origin, dimensions[0], dimensions[1]);
-        this.damage = damage;
-        this.world = GameManager.get().getWorld();
+
+        //this.entity = entity;
+        this.taskComplete = false;
+        world = GameManager.get().getWorld();
+
+        this.lifetime = lifetime;
+        this.currentLifetime = 0;
     }
 
     /**
      * Returns whether the task is complete.
-     * @return True when the task is complete.
+     * @return True when the task has applied damage.
      */
     @Override
     public boolean isComplete() {
@@ -62,13 +58,12 @@ public class MeleeAttackTask extends AbstractTask {
     }
 
     /**
-     * Called each tick to update the melee attack. The attack is executed on the first tick,
-     * and the remaining life is the cooldown.
+     * Executes a single game tick, where it detects collisions with the enemy.
      * @param tick Current game tick
      */
     @Override
     public void onTick(long tick) {
-        List<AbstractEntity> collidingEntities = world.getEntitiesInBounds(this.bounds);
+        List<AbstractEntity> collidingEntities = world.getEntitiesInBounds(entity.getBounds());
         if (collidingEntities.size() > 1) { // Own bounding box should always be present
             for (AbstractEntity e : collidingEntities) {
                 EntityFaction faction = e.getFaction();
@@ -77,7 +72,11 @@ public class MeleeAttackTask extends AbstractTask {
                 }
             }
         }
-        taskComplete = true;
+
+        // Check if lifetime has expired
+        if (++currentLifetime >= lifetime) {
+            taskComplete = true;
+        }
     }
 
     /**
@@ -88,7 +87,8 @@ public class MeleeAttackTask extends AbstractTask {
         if (e instanceof AgentEntity) {
             AgentEntity agentEntity = (AgentEntity) e;
 
-            agentEntity.reduceHealth(damage);
+            agentEntity.reduceHealth(((CombatEntity) entity).getDamage());
+            this.taskComplete = true;
             if (agentEntity.isDead()) {
                 agentEntity.death();
             }

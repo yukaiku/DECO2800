@@ -3,7 +3,7 @@ package deco2800.thomas.entities.attacks;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.tasks.MeleeAttackTask;
+import deco2800.thomas.tasks.combat.MeleeAttackTask;
 
 public class MeleeEntity extends CombatEntity {
 

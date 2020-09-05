@@ -1,7 +1,8 @@
-package deco2800.thomas.tasks;
+package deco2800.thomas.tasks.combat;
 
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.attacks.Fireball;
+import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.worlds.AbstractWorld;
 
 /**
@@ -9,7 +10,7 @@ import deco2800.thomas.worlds.AbstractWorld;
  * Implementing this as a task, so that "Inductions" or, Cooldowns may be implemented in future
  * builds.
  */
-public class RangedAttackTask extends AbstractTask {
+public abstract class RangedAttackTask extends AbstractTask {
     /* Reference to the current game world */
     private AbstractWorld world;
 
@@ -29,9 +30,24 @@ public class RangedAttackTask extends AbstractTask {
     public RangedAttackTask(AbstractEntity entity, float targetCol, float targetRow, int damage,
                             float speed, int lifetime) {
         super(entity);
-        Fireball.spawn(entity.getCol(), entity.getRow(), targetCol, targetRow, damage, speed,
+        spawn(entity.getCol(), entity.getRow(), targetCol, targetRow, damage, speed,
                 lifetime, entity.getFaction());
     }
+
+    /**
+     * Implemented by the extending class. This is the method that actually spawns the relevant
+     * projectile into the game world.
+     * @param col Initial x position
+     * @param row Initial y position
+     * @param targetCol X direction to move towards
+     * @param targetRow Y direction to move towards
+     * @param damage Damage to apply
+     * @param speed Speed to move at
+     * @param lifetime Lifetime of projectile
+     * @param faction Faction of projectile
+     */
+    protected abstract void spawn(float col, float row, float targetCol, float targetRow, int damage, float speed,
+                                  long lifetime, EntityFaction faction);
 
     /**
      * Returns whether the task is completed.

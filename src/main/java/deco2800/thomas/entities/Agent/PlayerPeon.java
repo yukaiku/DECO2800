@@ -9,7 +9,7 @@ import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
-import deco2800.thomas.tasks.MovementTask;
+import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
