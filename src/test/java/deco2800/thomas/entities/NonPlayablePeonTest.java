@@ -1,5 +1,6 @@
 package deco2800.thomas.entities;
 
+import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile; 
@@ -14,7 +15,7 @@ import deco2800.thomas.entities.Agent.PlayerPeon;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NonPlayablePeonTest {
+public class NonPlayablePeonTest extends BaseGDXTest {
 	SquareVector position1 = new SquareVector(1,1); 
 	SquareVector position2 = new SquareVector(2,3);
 	PlayerPeon current_player = new PlayerPeon(5,3,2, 10);
