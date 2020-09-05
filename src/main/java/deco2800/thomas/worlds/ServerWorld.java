@@ -14,11 +14,6 @@ public class ServerWorld extends AbstractWorld {
 		tiles = new CopyOnWriteArrayList<Tile>();
 	}
 
-	@Override
-	protected void generateWorld() {
-
-	}
-
 	/**
 	 * Do not tick entities in this onTick method, entities will be ticked by the server.
 	 */

@@ -52,11 +52,6 @@ public class TestWorld extends AbstractWorld {
 		this.height = WORLD_HEIGHT;
 	}
 
-	@Override
-	protected void generateWorld() {
-
-	}
-
 	//5 tile building
 	private StaticEntity createBuilding1(float col, float row) {
 		StaticEntity building;

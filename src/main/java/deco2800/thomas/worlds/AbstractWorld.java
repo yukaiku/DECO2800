@@ -93,8 +93,6 @@ public abstract class AbstractWorld implements Tickable {
 		generateTileIndices();
 	}
 
-	protected abstract void generateWorld();
-
 	/**
 	 * Generates the tiles for the world
 	 */
