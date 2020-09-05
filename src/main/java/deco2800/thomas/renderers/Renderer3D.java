@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.Agent.Peon;
+import deco2800.thomas.entities.attacks.Projectile;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
@@ -231,7 +233,12 @@ public class Renderer3D implements Renderer {
 
 		float width = tex.getWidth() * entity.getColRenderLength() * WorldUtil.SCALE_X;
 		float height = tex.getHeight() * entity.getRowRenderLength() * WorldUtil.SCALE_Y;
-		batch.draw(tex, x, y, width, height);
+		if (entity instanceof Projectile) {
+			batch.draw(new TextureRegion(tex), x, y, width / 2, height / 2, width, height, 1,
+					1, ((Projectile) entity).getDirection());
+		} else {
+			batch.draw(tex, x, y, width, height);
+		}
 	}
 
 	private void renderPeonMovementTiles(SpriteBatch batch, OrthographicCamera camera, AbstractEntity entity, float[] entityWorldCord) {

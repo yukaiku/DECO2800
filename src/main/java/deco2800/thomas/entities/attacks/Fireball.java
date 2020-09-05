@@ -19,7 +19,7 @@ public class Fireball extends Projectile implements Tickable{
      */
     public Fireball() {
         super();
-        this.setTexture("fireball_left");
+        this.setTexture("fireball_right");
         this.setObjectName("combatFireball");
     }
 
@@ -35,7 +35,7 @@ public class Fireball extends Projectile implements Tickable{
     public Fireball (float col, float row, int damage, float speed, EntityFaction faction) {
         super(col, row, RenderConstants.PROJECTILE_RENDER, damage, speed, faction);
         this.setObjectName("combatFireball");
-        this.setTexture("fireball_left");
+        this.setTexture("fireball_right");
     }
 
     /**
