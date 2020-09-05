@@ -270,7 +270,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
                     }
                 } else if (keycode == Input.Keys.S) {
                     // Ctrl + S: Spawn a special enemy
-                    Goblin goblin = new Goblin(1, 1,10);
+                    Goblin goblin = new Goblin(1, 0.1f, 20);
                     spawnSpecialEnemy(goblin, 0, 0);
                 }
             }
