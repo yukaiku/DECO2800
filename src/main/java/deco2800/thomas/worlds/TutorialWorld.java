@@ -8,7 +8,6 @@ import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.NPC.TutorialNPC;
-import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Dummy;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.Barrel;
@@ -47,10 +46,6 @@ public class TutorialWorld extends AbstractWorld{
 //        addEntity(player);
         this.setPlayerEntity(player);
         addEntity(this.getPlayerEntity());
-
-        // Create a combatManager to create combatEntities on click
-//        CombatManager combatManager = new CombatManager(this);
-//        GameManager.get().addManager(combatManager);
 
         // Create an enemy manager without wild enemy spawning.
         EnemyManager enemyManager = new EnemyManager(this);

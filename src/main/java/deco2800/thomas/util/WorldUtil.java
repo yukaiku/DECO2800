@@ -6,6 +6,8 @@ import java.util.Set;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.worlds.Tile;
@@ -75,6 +77,15 @@ public class WorldUtil {
 		}
 
 		return (pos.getRow()) % 1 == 0;
+	}
+
+	/**
+	 * Removes an Entity from the Game World.
+	 * @param entity Entity to remove.
+	 */
+	public static void removeEntity(AbstractEntity entity) {
+		GameManager.get().getWorld().removeEntity(entity);
+		GameManager.get().getWorld().disposeEntity(entity.getEntityID());
 	}
 
 	/**

@@ -1,7 +1,5 @@
 package deco2800.thomas.entities.enemies;
 
-import deco2800.thomas.tasks.MovementTask;
-
 public abstract class Monster extends EnemyPeon {
 
     public boolean wild;
