@@ -66,6 +66,15 @@ public class TextureManager extends AbstractManager {
             textureMap.put("fenceS-E", new Texture("resources/fence_S-E.png"));
             textureMap.put("projectile", new Texture("resources/rocks.png"));
 
+            //npcs
+            textureMap.put("basic_npc", new Texture("resources/npcs/tutorial_npc.jpg"));
+            textureMap.put("volcano_npc1", new Texture("resources/npcs/npc1_volcano.jpg"));
+            textureMap.put("tundra_npc1", new Texture("resources/npcs/npc1_tundra.jpg"));
+            textureMap.put("swamp_npc1", new Texture("resources/npcs/npc1_swamp.jpg"));
+            textureMap.put("npc3", new Texture("resources/npcs/npc3"));
+            textureMap.put("npc4", new Texture("resources/npcs/npc4"));
+            textureMap.put("npc5", new Texture("resources/npcs/npc5"));
+
             // enemies
             textureMap.put("goblin_swamp_left", new Texture("resources/enemies/goblin_swamp_left.png"));
             textureMap.put("goblin_swamp_right", new Texture("resources/enemies/goblin_swamp_right.png"));
