@@ -110,7 +110,7 @@ public class OverlayRenderer implements Renderer {
 		debugLine(batch, camera, ++line, "== Enemies ==");
 		debugLine(batch, camera, ++line, String.format("World: %s", enemyManager.getWorldName()));
 		debugLine(batch, camera, ++line, String.format("Wild Spawning: %s",
-				enemyManager.checkWildEnemySpawning() ? "enabled" : "disabled"));
+				enemyManager.checkWildEnemySpawning() ? "active" : "disabled"));
 		debugLine(batch, camera, ++line, String.format("Current Enemies: %d", enemyManager.getEnemyCount()));
 		if (enemyManager.getEnemyCount() - (enemyManager.getBoss() == null ? 0 : enemyManager.getBoss().isDead() ? 0 : 1) > 0) {
 			debugLine(batch, camera, ++line, String.format("(%s%s%s)",

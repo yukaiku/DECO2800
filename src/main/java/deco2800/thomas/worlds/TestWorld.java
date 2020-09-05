@@ -148,14 +148,14 @@ public class TestWorld extends AbstractWorld {
 		addEntity(this.getPlayerEntity());
 
 		// Provide available enemies to the EnemyManager
-		Orc orc = new Orc(1, 0.05f, 100);
-		Orc speedyOrc = new Orc(1, 0.09f, 50, "spacman_red");
-		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(orc, speedyOrc));
+		Orc swampOrc = new Orc(1, 0.05f, 100);
+		Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano_left");
+		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc, volcanoOrc));
 		GameManager.get().addManager(enemyManager);
 
 		// Uncomment the following lines to add a boss. (WARNING: uncommenting these lines will currently break
 		// the SaveLoadTest, may need to modify that test later)
-//		Dragon boss = new Dragon(2, 1, 2000);
+//		Dragon boss = new Dragon(3, 1, 2000);
 //		enemyManager.setBoss(boss);
 //		enemyManager.spawnBoss(-2, 0);
 

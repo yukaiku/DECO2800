@@ -23,11 +23,7 @@ public class NonPlayablePeon extends Peon implements Interactable {
         super();
         this.setPosition(position.getCol(), position.getRow(), 1);
         this.name = name;
-        setup();
-    }
-
-    public NonPlayablePeon() {
-        super();
+        this.save = false; // Don't save NPC's as they're loaded automatically.
         setup();
     }
 
@@ -69,6 +65,7 @@ public class NonPlayablePeon extends Peon implements Interactable {
     @Override
     public void interact() {
         // Overwrite me :)
+        
     }
 
     public String getName() {
