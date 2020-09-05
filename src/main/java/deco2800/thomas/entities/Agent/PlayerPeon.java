@@ -142,7 +142,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
             getCombatTask().onTick(i);
 
             if (getCombatTask().isComplete()) {
-                setCombatTask(dwnull);
+                setCombatTask(null);
             }
         }
     }
