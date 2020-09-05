@@ -2,11 +2,7 @@ package deco2800.thomas.entities.enemies;
 
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.entities.Agent.Peon;
-import deco2800.thomas.managers.EnemyManager;
-import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.tasks.MovementTask;
 
 import java.util.Objects;
 

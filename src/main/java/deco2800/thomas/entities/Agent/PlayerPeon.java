@@ -1,5 +1,7 @@
 package deco2800.thomas.entities.Agent;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.managers.GameManager;
@@ -7,9 +9,12 @@ import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
-import deco2800.thomas.tasks.MovementTask;
+import deco2800.thomas.tasks.combat.FireballAttackTask;
+import deco2800.thomas.tasks.combat.MeleeAttackTask;
+import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.SquareVector;
-import com.badlogic.gdx.Input;
+import deco2800.thomas.util.WorldUtil;
+import deco2800.thomas.worlds.AbstractWorld;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -127,17 +132,66 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         if (isDead()) {
             death();
         }
-        if (getTask() != null && getTask().isAlive()) {
-            getTask().onTick(i);
+        if (getMovementTask() != null && getMovementTask().isAlive()) {
+            getMovementTask().onTick(i);
 
-            if (getTask().isComplete()) {
-                setTask(null);
+            if (getMovementTask().isComplete()) {
+                setMovementTask(null);
+            }
+        }
+
+        if (getCombatTask() != null) {
+            getCombatTask().onTick(i);
+
+            if (getCombatTask().isComplete()) {
+                setCombatTask(null);
             }
         }
     }
 
     @Override
     public void notifyTouchDown(int screenX, int screenY, int pointer, int button) {
+        float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(), Gdx.input.getY());
+        float[] clickedPosition = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
+
+
+        if (button == Input.Buttons.LEFT) {
+            //Set combat task to fireball task
+            AbstractWorld world = GameManager.get().getWorld();
+            this.setCombatTask(new FireballAttackTask(world.getPlayerEntity(), clickedPosition[0], clickedPosition[1],
+                    10, 0.5f, 60));
+        } else if (button == Input.Buttons.RIGHT) {
+            // Set combat task to melee task
+            // this.setCombatTask(new meleeTask);
+            SquareVector origin;
+            double angle = Math.toDegrees(Math.atan2(clickedPosition[0] - this.getCol(), clickedPosition[1] - this.getRow()));
+            System.out.println(angle);
+            if (angle > -45 && angle < 45) {
+                // Spawn above player
+                System.out.println("Above");
+                origin = new SquareVector(this.getCol(), this.getRow() + 1);
+                this.setCombatTask(new MeleeAttackTask(this, origin, 2,2, 30));
+
+            } else if (angle >= -135 && angle <= -45) {
+                // Spawn to left of player
+                System.out.println("Left");
+                origin = new SquareVector(this.getCol() - 1, this.getRow());
+                this.setCombatTask(new MeleeAttackTask(this, origin, 2,2, 30));
+
+            } else if (angle < -135 || angle > 135) {
+                // Spawn below player
+                System.out.println("Below");
+                origin = new SquareVector(this.getCol(), this.getRow() - 1);
+                this.setCombatTask(new MeleeAttackTask(this, origin, 2,2, 30));
+
+            } else if (angle >= 45 && angle <= 135) {
+                // Spawn right of player
+                System.out.println("Right");
+                origin = new SquareVector(this.getCol() + 1, this.getRow());
+                this.setCombatTask(new MeleeAttackTask(this, origin, 2,2, 30));
+
+            }
+        }
     }
 
     @Override
@@ -182,8 +236,8 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
             default:
                 break;
         }
-        if (this.getTask() == null || this.getTask().isComplete()) {
-            this.setTask(new MovementTask(this, new SquareVector(this.getCol(), this.getRow())));
+        if (this.getMovementTask() == null || this.getMovementTask().isComplete()) {
+            this.setMovementTask(new MovementTask(this, new SquareVector(this.getCol(), this.getRow())));
         }
     }
 

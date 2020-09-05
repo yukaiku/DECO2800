@@ -6,8 +6,7 @@ import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.tasks.MovementTask;
-import deco2800.thomas.util.EnemyUtil;
+import deco2800.thomas.tasks.movement.MovementTask;
 
 import java.lang.reflect.GenericArrayType;
 
@@ -45,7 +44,7 @@ public class Dragon extends Boss implements PassiveEnemy {
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
         if (player != null) {
             super.setTarget((PlayerPeon) player);
-            setTask(new MovementTask(this,
+            setMovementTask(new MovementTask(this,
                     super.getTarget().getPosition()));
         }
     }
@@ -58,16 +57,16 @@ public class Dragon extends Boss implements PassiveEnemy {
                 summonGoblin();
                 Fireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
                         getTarget().getRow(), 10, 0.2f, 60, EntityFaction.Evil);
-                setTask(new MovementTask(this, super.getTarget().
+                setMovementTask(new MovementTask(this, super.getTarget().
                         getPosition()));
             }
             tickFollowing = 0;
         }
         // execute tasks
-        if (getTask() != null && getTask().isAlive()) {
-            getTask().onTick(i);
-            if (getTask().isComplete()) {
-                setTask(null);
+        if (getMovementTask() != null && getMovementTask().isAlive()) {
+            getMovementTask().onTick(i);
+            if (getMovementTask().isComplete()) {
+                setMovementTask(null);
             }
         }
     }

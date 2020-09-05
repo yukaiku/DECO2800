@@ -1,9 +1,7 @@
 package deco2800.thomas.worlds;
 
-import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
-import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import java.util.ArrayList;
@@ -12,12 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Environment.Rock;
 import deco2800.thomas.entities.Environment.Tree;
-import deco2800.thomas.entities.NPC.NonPlayablePeon;
-import deco2800.thomas.managers.NonPlayablePeonManager;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,11 +21,7 @@ import org.slf4j.LoggerFactory;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Part;
 import deco2800.thomas.entities.StaticEntity;
-import deco2800.thomas.entities.Environment.Tree;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.Environment.Rock;
-import deco2800.thomas.managers.EnemyManager;
-import deco2800.thomas.managers.GameManager;
+
 import java.util.*;
 
 @SuppressWarnings("unused")

@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.HealthTracker;
-import deco2800.thomas.tasks.MovementTask;
+import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.SquareVector;
 
 public abstract class AgentEntity extends AbstractEntity {

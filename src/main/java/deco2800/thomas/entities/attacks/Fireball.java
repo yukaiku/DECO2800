@@ -4,8 +4,8 @@ import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.tasks.ApplyDamageOnCollisionTask;
-import deco2800.thomas.tasks.DirectProjectileMovementTask;
+import deco2800.thomas.tasks.combat.ApplyDamageOnCollisionTask;
+import deco2800.thomas.tasks.movement.DirectProjectileMovementTask;
 import deco2800.thomas.util.SquareVector;
 
 /**
@@ -56,7 +56,7 @@ public class Fireball extends Projectile implements Tickable{
         Fireball fireball = new Fireball(col, row, damage, speed, faction);
         fireball.setMovementTask(new DirectProjectileMovementTask(fireball,
                 new SquareVector(targetCol, targetRow), lifetime));
-        fireball.setCombatTask(new ApplyDamageOnCollisionTask(fireball));
+        fireball.setCombatTask(new ApplyDamageOnCollisionTask(fireball, lifetime));
 
         GameManager.get().getWorld().addEntity(fireball);
     }

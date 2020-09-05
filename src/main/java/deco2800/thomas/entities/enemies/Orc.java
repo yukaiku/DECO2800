@@ -1,13 +1,11 @@
 package deco2800.thomas.entities.enemies;
 
 
-import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.tasks.ApplyDamageOnCollisionTask;
-import deco2800.thomas.tasks.MovementTask;
+import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
 
 import java.util.Random;
@@ -54,7 +52,7 @@ public class Orc extends Monster implements AggressiveEnemy {
         if (player != null && EnemyUtil.playerInRadius(this, player,
                 detectRadius)) {
             super.setTarget((PlayerPeon) player);
-            setTask(new MovementTask(this,
+            setMovementTask(new MovementTask(this,
                     super.getTarget().getPosition()));
         }
     }
@@ -67,7 +65,7 @@ public class Orc extends Monster implements AggressiveEnemy {
         if (player != null && !EnemyUtil.playerInRadius(this, player,
                 discardRadius)) {
             super.setTarget(null);
-            setTask(null);
+            setMovementTask(null);
         }
     }
 
@@ -92,7 +90,7 @@ public class Orc extends Monster implements AggressiveEnemy {
         // update target following path every 1 second (60 ticks)
         if (++tickFollowing > 60) {
             if (super.getTarget() != null) {
-                setTask(new MovementTask(this, super.getTarget().
+                setMovementTask(new MovementTask(this, super.getTarget().
                         getPosition()));
                 setOrcTexture();
             }
@@ -108,10 +106,10 @@ public class Orc extends Monster implements AggressiveEnemy {
             tickDetecting = 0;
         }
         // execute tasks
-        if (getTask() != null && getTask().isAlive()) {
-            getTask().onTick(i);
-            if (getTask().isComplete()) {
-                setTask(null);
+        if (getMovementTask() != null && getMovementTask().isAlive()) {
+            getMovementTask().onTick(i);
+            if (getMovementTask().isComplete()) {
+                setMovementTask(null);
             }
         }
     }
