@@ -56,7 +56,7 @@ public class Fireball extends Projectile implements Tickable{
         Fireball fireball = new Fireball(col, row, damage, speed, faction);
         fireball.setMovementTask(new DirectProjectileMovementTask(fireball,
                 new SquareVector(targetCol, targetRow), lifetime));
-        fireball.setCombatTask(new ApplyDamageOnCollisionTask(fireball));
+        fireball.setCombatTask(new ApplyDamageOnCollisionTask(fireball, lifetime));
 
         GameManager.get().getWorld().addEntity(fireball);
     }

@@ -18,6 +18,8 @@ public class ApplyDamageOnCollisionTask extends AbstractTask{
     private CombatEntity entity;
     // Reference to current game world
     private AbstractWorld world;
+    // Lifetime of task
+    private long lifetime, currentLifetime;
 
     // Task state
     private boolean taskAlive = true;
@@ -27,12 +29,15 @@ public class ApplyDamageOnCollisionTask extends AbstractTask{
      * Creates an instance of the task.
      * @param entity Parent entity
      */
-    public ApplyDamageOnCollisionTask(CombatEntity entity) {
+    public ApplyDamageOnCollisionTask(CombatEntity entity, long lifetime) {
         super(entity);
 
         this.entity = entity;
         this.taskComplete = false;
         world = GameManager.get().getWorld();
+
+        this.lifetime = lifetime;
+        this.currentLifetime = 0;
     }
 
     /**
@@ -67,6 +72,11 @@ public class ApplyDamageOnCollisionTask extends AbstractTask{
                     applyDamage(e);
                 }
             }
+        }
+
+        // Check if lifetime has expired
+        if (++currentLifetime >= lifetime) {
+            taskComplete = true;
         }
     }
 

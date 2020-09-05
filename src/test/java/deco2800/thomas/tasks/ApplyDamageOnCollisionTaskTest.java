@@ -55,7 +55,7 @@ public class ApplyDamageOnCollisionTaskTest extends BaseGDXTest {
      */
     public void applyingDamageOnCollisionTest() {
         // Start task
-        ApplyDamageOnCollisionTask task = new ApplyDamageOnCollisionTask(combatEntity);
+        ApplyDamageOnCollisionTask task = new ApplyDamageOnCollisionTask(combatEntity, 1);
         task.onTick(1);
 
         // Verify getDamage and reduceHealth are called
