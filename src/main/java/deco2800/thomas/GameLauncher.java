@@ -9,7 +9,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
  * @author Tim Hadwen
  */
 public class GameLauncher {
-
 	/**
 	 * Private constructor to hide the implicit constructor
 	 */

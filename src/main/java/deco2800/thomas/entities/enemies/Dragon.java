@@ -9,6 +9,8 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
 
+import java.lang.reflect.GenericArrayType;
+
 /**
  * A class that defines an implementation of a Dragon.
  * Dragons are bosses and they need to be manually initialised (using constructor or setBoss())
@@ -24,8 +26,10 @@ public class Dragon extends Boss implements PassiveEnemy {
     }
 
     public void summonGoblin() {
-        Goblin goblin = new Goblin(1, 0.1f, 30);
-        GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(goblin, this.getCol() + 1, this.getRow() + 2);
+        if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() < 10) {
+            Goblin goblin = new Goblin(1, 0.1f, 20, "goblin_swamp");
+            GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(goblin, this.getCol() + 1, this.getRow() + 2);
+        }
     }
 
     @Override
