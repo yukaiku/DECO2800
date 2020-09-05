@@ -45,9 +45,12 @@ public class TutorialWorld extends AbstractWorld{
         this.setPlayerEntity(player);
         addEntity(this.getPlayerEntity());
 
-        // Provide dummy enemies to the EnemyManager
-        Dummy dummy = new Dummy(1, 0.05f, 100);
-        EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(dummy));
+        // Create an enemy manager without wild enemy spawning.
+        EnemyManager enemyManager = new EnemyManager(this);
+        // Add dummy (special enemy) to the world
+        Dummy dummy = new Dummy(1, 0, 100);
+        // Spawn a dummy
+        enemyManager.spawnSpecialEnemy(dummy, 5, 0);
         GameManager.get().addManager(enemyManager);
 
         // Add NPC
