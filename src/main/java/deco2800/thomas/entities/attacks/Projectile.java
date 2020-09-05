@@ -1,5 +1,7 @@
 package deco2800.thomas.entities.attacks;
 
+import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
@@ -30,9 +32,10 @@ public class Projectile extends CombatEntity {
      * @param renderOrder Render order
      * @param damage Damage to apply
      * @param speed Speed projectile moves at
+     * @param faction EntityFaction of the projectile
      */
-    public Projectile(float col, float row, int renderOrder, int damage, float speed) {
-        super(col, row, renderOrder, damage);
+    public Projectile(float col, float row, int renderOrder, int damage, float speed, EntityFaction faction) {
+        super(col, row, renderOrder, damage, faction);
         this.speed = speed;
         this.world = GameManager.get().getWorld();
     }

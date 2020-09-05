@@ -1,6 +1,7 @@
 package deco2800.thomas.entities.attacks;
 
 import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.tasks.AbstractTask;
 
 public abstract class CombatEntity extends AbstractEntity {
@@ -11,9 +12,18 @@ public abstract class CombatEntity extends AbstractEntity {
         super();
     }
 
-    public CombatEntity(float col, float row, int renderOrder, int damage) {
+    /**
+     *
+     * @param col
+     * @param row
+     * @param renderOrder
+     * @param damage
+     * @param faction
+     */
+    public CombatEntity(float col, float row, int renderOrder, int damage, EntityFaction faction) {
         super(col, row, renderOrder);
         this.damage = damage;
+        setFaction(faction);
     }
 
     public int getDamage() {

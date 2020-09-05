@@ -49,6 +49,9 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	@Expose
 	private int entityID = 0;
 
+	/* Faction of entity defaults to none */
+	private EntityFaction faction = EntityFaction.None;
+
 	/**
 	 * Whether an entity should trigger a collision.
 	 */
@@ -176,17 +179,6 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	}
 
 	/**
-	 * Tests to see if the item collides with another entity in the world.
-	 *
-	 * @param entity the entity to test collision with
-	 * @return true if they collide, false if they do not collide
-	 */
-	public boolean collidesWith(AbstractEntity entity) {
-		//TODO: Implement this.
-		return false;
-	}
-
-	/**
 	 * Gets the bounding box of this entity.
 	 * @return the bounding box of this entity.
 	 */
@@ -208,6 +200,22 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 		};
 		bounds.setWidth(dimensions[0]);
 		bounds.setHeight(dimensions[1]);
+	}
+
+	/**
+	 * Returns the faction this entity belongs to.
+	 * @return EntityFaction of this entity.
+	 */
+	public EntityFaction getFaction() {
+		return faction;
+	}
+
+	/**
+	 * Sets the faction this entity belongs to.
+	 * @param faction EntityFaction for this entity.
+	 */
+	public void setFaction(EntityFaction faction) {
+		this.faction = faction;
 	}
 
 	@Override
