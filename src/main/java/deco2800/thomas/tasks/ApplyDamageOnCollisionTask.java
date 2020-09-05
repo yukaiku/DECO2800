@@ -13,9 +13,7 @@ import java.util.List;
  * This task checks for colliding entities, and when an enemy entity is detected
  * it applies damage.
  */
-public class ApplyDamageOnCollisionTask extends AbstractTask{
-    // Reference to parent entity
-    private CombatEntity entity;
+public class ApplyDamageOnCollisionTask extends AbstractTask {
     // Reference to current game world
     private AbstractWorld world;
     // Lifetime of task
@@ -32,7 +30,7 @@ public class ApplyDamageOnCollisionTask extends AbstractTask{
     public ApplyDamageOnCollisionTask(CombatEntity entity, long lifetime) {
         super(entity);
 
-        this.entity = entity;
+        //this.entity = entity;
         this.taskComplete = false;
         world = GameManager.get().getWorld();
 
@@ -88,7 +86,7 @@ public class ApplyDamageOnCollisionTask extends AbstractTask{
         if (e instanceof AgentEntity) {
             AgentEntity agentEntity = (AgentEntity) e;
 
-            agentEntity.reduceHealth(entity.getDamage());
+            agentEntity.reduceHealth(((CombatEntity) entity).getDamage());
             this.taskComplete = true;
             if (agentEntity.isDead()) {
                 agentEntity.death();
