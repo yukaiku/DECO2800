@@ -39,4 +39,9 @@ public class RenderConstants {
 	public static final int VOLCANO_DRAGON_SKULL = 15;
 	public static final int VOLCANO_LAVA_POOL = 16;
 	public static final int VOLCANO_GRAVEYARD = 17;
+
+	// Entities in Tundra Zone
+	public static final int TUNDRA_CAMPFIRE = 1;
+	public static final int TUNDRA_TREE_LOG = 1;
+	public static final int TUNDRA_ROCK = 1;
 }

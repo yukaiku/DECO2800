@@ -3,6 +3,7 @@ package deco2800.thomas;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -44,11 +45,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * Create a camera for panning and zooming.
 	 * Camera must be updated every render cycle.
 	 */
-
-
-	//OrthographicCamera cameraDebug;
-	//PotateCamera camera;
-
 	PotateCamera camera, cameraDebug;
 
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
@@ -73,13 +69,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 				return world;
 			}
 		},
-		TEST_WORLD {
+		NEW_GAME {
 			@Override
 			public AbstractWorld method() {
-
-//				AbstractWorld swampWorld = new SwampWorld();
-//				AbstractWorld volcanoWorld = new VolcanoWorld();
-//				AbstractWorld testWorld = new TestWorld();
 				AbstractWorld world = new TestWorld();
 
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
@@ -145,13 +137,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 
 		// Add first peon to the world
-
-
-
-		// Initialize camera
-		//camera = new PotateCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		//cameraDebug = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
 		camera = new PotateCamera(1920, 1080);
 		cameraDebug = new PotateCamera(1920, 1080);
 
@@ -362,6 +347,4 @@ public class GameScreen implements Screen, KeyDownObserver {
 			}
 		}
 	}
-
-
 }
