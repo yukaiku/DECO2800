@@ -100,12 +100,15 @@ public class Renderer3D implements Renderer {
 		}
 		float[] tileWorldCord = WorldUtil.colRowToWorldCords(tile.getCol(), tile.getRow());
 
-		if (WorldUtil.areCoordinatesOffScreen(tileWorldCord[0], tileWorldCord[1], camera)) {
+		//This is temporarily commented out as it results in entities not being drawn despite the peon
+		//Being in the area
+
+		/*if (WorldUtil.areCoordinatesOffScreen(tileWorldCord[0], tileWorldCord[1], camera)) {
 			tilesSkipped++;
 			GameManager.get().setTilesRendered(tileMap.size() - tilesSkipped);
 			GameManager.get().setTilesCount(tileMap.size());
 			return;
-		}
+		}*/
 
 		Texture tex = tile.getTexture();
 		batch.draw(tex, tileWorldCord[0], tileWorldCord[1], tex.getWidth() * WorldUtil.SCALE_X,
@@ -161,10 +164,13 @@ public class Renderer3D implements Renderer {
 			Texture tex = textureManager.getTexture(entity.getTexture());
 			float[] entityWorldCoord = WorldUtil.colRowToWorldCords(entity.getCol(), entity.getRow());
 			// If it's offscreen
-			if (WorldUtil.areCoordinatesOffScreen(entityWorldCoord[0], entityWorldCoord[1], camera)) {
+
+			//This is temporarily commented out as it results in entities not being drawn despite the peon
+			//Being in the area
+			/*if (WorldUtil.areCoordinatesOffScreen(entityWorldCoord[0], entityWorldCoord[1], camera)) {
 				entitiesSkipped++;
 				continue;
-			}
+			}*/
 			/* Draw Peon */
 			// Place movement tiles
 			if (entity instanceof Peon) {
@@ -231,10 +237,10 @@ public class Renderer3D implements Renderer {
 				Texture tex = path.get(path.size() - 1) == tile ?
 						textureManager.getTexture(TEXTURE_DESTINATION) : textureManager.getTexture(TEXTURE_PATH);
 				float[] tileWorldCord = WorldUtil.colRowToWorldCords(tile.getCol(), tile.getRow());
-				if (WorldUtil.areCoordinatesOffScreen(tileWorldCord[0], tileWorldCord[1], camera)) {
+				/*if (WorldUtil.areCoordinatesOffScreen(tileWorldCord[0], tileWorldCord[1], camera)) {
 					tilesSkipped++;
 					continue;
-				}
+				}*/
 				batch.draw(tex, tileWorldCord[0],
 						tileWorldCord[1]// + ((tile.getElevation() + 1) * elevationZeroThiccness * WorldUtil.SCALE_Y)
 						, tex.getWidth() * WorldUtil.SCALE_X,

@@ -11,6 +11,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import deco2800.thomas.worlds.VolcanoBurnTile;
+import deco2800.thomas.worlds.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -441,6 +443,8 @@ public final class DatabaseManager extends AbstractManager {
 			return;
 		}
 
+		checkVolcanoWorld(newTiles);
+
 		world.setTiles(newTiles);
 		world.assignTileNeighbours();
 		world.setEntities(new ArrayList<AbstractEntity>(newEntities.values()));
@@ -533,6 +537,32 @@ public final class DatabaseManager extends AbstractManager {
 		entireJsonAsString.append("]}");
 		writeToJson(entireJsonAsString.toString());
 		GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Game saved to the database.");
+	}
+
+	/**
+	 * Modifies the world so burning tiles can be implemented for health
+	 * -reduction functionality.
+	 *
+	 * @param newTiles A CopyOnWriteArrayList containing the current tile list
+	 *                 loaded from a local JSON file that is to be modified
+	 *                 for the volcano zone to contain burning tiles.
+	 */
+	static private void checkVolcanoWorld(CopyOnWriteArrayList<Tile> newTiles) {
+		if (GameManager.get().getWorld() instanceof VolcanoWorld) {
+			for (Tile t : newTiles) {
+				String tileTexture = t.getTextureName();
+				int tileNumber = Integer.parseInt(tileTexture.split("_")[1]);
+				if (tileNumber > 4) {
+					int index = newTiles.indexOf(t);
+					float row = t.getRow();
+					float col = t.getCol();
+					t = new VolcanoBurnTile(tileTexture, col, row, 5);
+					newTiles.add(t);
+				} else {
+					newTiles.add(t);
+				}
+			}
+		}
 	}
 
 }
