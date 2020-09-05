@@ -239,6 +239,11 @@ public class EnemyManager extends TickableManager {
         }
     }
 
+    /** Get the world name the manager is operating on */
+    public String getWorldName() {
+        return world.toString().substring(world.toString().lastIndexOf('.') + 1);
+    }
+
     @Override
     public void onTick(long i) {
         if (++tick > nextTick) {
