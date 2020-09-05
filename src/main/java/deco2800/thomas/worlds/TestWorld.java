@@ -146,10 +146,6 @@ public class TestWorld extends AbstractWorld {
 		Dragon boss = new Dragon(3, 0.03f, 2000);
 		enemyManager.setBoss(boss);
 		enemyManager.spawnBoss(-2, 0);
-
-		// Create a combatManager to create combatEntities on click
-		CombatManager combatManager = new CombatManager(this);
-		GameManager.get().addManager(combatManager);
 	}
 
 	@Override
