@@ -240,7 +240,7 @@ public final class DatabaseManager extends AbstractManager {
                      return (AbstractEntity) create;
                 }
             }
-
+            
             for (String s:Arrays.asList("combat")) {
                 if (entityObjectName.startsWith(s)){
                     SquareVector destination = new SquareVector(0,0);
@@ -248,7 +248,7 @@ public final class DatabaseManager extends AbstractManager {
                     return (AbstractEntity) create;
                 }
             }
-
+            
             StringBuilder fullEntityName = new StringBuilder();
             fullEntityName.append("deco2800.thomas");
             HashMap<String, String> entityMap = new HashMap<>();
@@ -492,7 +492,7 @@ public final class DatabaseManager extends AbstractManager {
             world = GameManager.get().getWorld();
         }
      
-            saveName = "save_file.json";
+        saveName = "save_file.json";
        
         saveNameList.add(saveName);
 
@@ -502,10 +502,16 @@ public final class DatabaseManager extends AbstractManager {
 
         for (int i = 0; i < entityLength; i++) {
             AbstractEntity entity = world.getEntities().get(i);
-            if (i == world.getEntities().size() - 1) {
-                generateJsonForEntity(entity, entireJsonAsString, false);
-            } else {
-                generateJsonForEntity(entity, entireJsonAsString, true);
+            if (entity.save) {
+                AbstractEntity nextEntity = null;
+                if (i < entityLength - 1) {
+                    nextEntity = world.getEntities().get(i + 1);
+                }
+                if (i == entityLength - 1 || (nextEntity != null && !nextEntity.save)) {
+                    generateJsonForEntity(entity, entireJsonAsString, false);
+                } else {
+                    generateJsonForEntity(entity, entireJsonAsString, true);
+                }
             }
             entireJsonAsString.append('\n');
         }

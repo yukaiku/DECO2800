@@ -16,6 +16,7 @@ import deco2800.thomas.worlds.Tile;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.lwjgl.Sys;
 import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -89,14 +90,14 @@ public class SaveLoadTest extends BaseGDXTest {
 
         newEntities.put(0, new PlayerPeon(1, 1, 1,10));
         
-        List<AbstractEntity> testEntities = new ArrayList<>(w.getEntities());        
+        List<AbstractEntity> testEntities = new ArrayList<>(w.getEntities());
+        System.out.println(testEntities.get(1));
         deco2800.thomas.managers.DatabaseManager.saveWorld(w);
         
         
         TestWorld q = new TestWorld();
         deco2800.thomas.managers.DatabaseManager.loadWorld(q);
 
-        
         List<AbstractEntity> worldEntities = new ArrayList<>(q.getEntities());
 
         Collections.sort(testEntities, new EntityCompare());
@@ -112,9 +113,12 @@ public class SaveLoadTest extends BaseGDXTest {
         }
 
         for (int i = 0; i < testEntities.size(); i++) {
-            assertEquals(testEntities.get(i).getEntityID(), worldEntities.get(i).getEntityID(), 1f);
-            assertEquals(testEntities.get(i).getTexture(), worldEntities.get(i).getTexture());
-            assertEquals(testEntities.get(i).getPosition(), worldEntities.get(i).getPosition());
+            // Entities that aren't saved won't be in the list and therefore will cause an index range exception.
+            if (testEntities.get(i).save) {
+                assertEquals(testEntities.get(i).getEntityID(), worldEntities.get(i).getEntityID(), 1f);
+                assertEquals(testEntities.get(i).getTexture(), worldEntities.get(i).getTexture());
+                assertEquals(testEntities.get(i).getPosition(), worldEntities.get(i).getPosition());
+            }
         }
    }
 }

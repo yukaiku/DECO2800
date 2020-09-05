@@ -24,6 +24,8 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 
 	static int nextID = 0;
 
+	public boolean save = true;
+
 	public static void resetID() {
 		nextID = 0;
 	}
@@ -44,7 +46,6 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	private float colRenderLength;
 
 	private float rowRenderLength;
-
 
 	@Expose
 	private int entityID = 0;
