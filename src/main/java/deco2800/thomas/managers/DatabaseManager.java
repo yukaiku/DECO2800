@@ -6,6 +6,7 @@ import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Environment.Rock;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.attacks.Fireball;
+import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.util.SquareVector;
@@ -248,6 +249,13 @@ public final class DatabaseManager extends AbstractManager {
                     return (AbstractEntity) create;
                 }
             }
+
+            for (String s:Arrays.asList("Elder Dragon")) {
+                if (entityObjectName.startsWith(s)){
+                    Dragon create = new Dragon(2, 0.3f, 2000);
+                    return (AbstractEntity) create;
+                }
+            }
             
             StringBuilder fullEntityName = new StringBuilder();
             fullEntityName.append("deco2800.thomas");
@@ -257,6 +265,7 @@ public final class DatabaseManager extends AbstractManager {
             entityMap.put("tree", "entities.Environment.Tree");
             entityMap.put("staticEntityID", "entities.StaticEntity");
             entityMap.put("fireball", "entities.fireball");
+            entityMap.put("dragon", "entities.enemies.Dragon");
 
             fullEntityName.append(entityMap.get(entityObjectName));
             return (AbstractEntity) Class.forName(fullEntityName.toString()).getDeclaredConstructor().newInstance();
@@ -325,7 +334,7 @@ public final class DatabaseManager extends AbstractManager {
             if ( entityName.startsWith("objectName")) {
                 entityName = reader.nextString();
                 entity = resolveEntityToLoad(entityName);
-                if (entity == null) {
+                    if (entity == null) {
                     logger.error("Unable to resolve an " + entityName +" from the save file, on load.");
                     logger.error("This is likely due to the entity being a new addition to the game.");
                     return;
