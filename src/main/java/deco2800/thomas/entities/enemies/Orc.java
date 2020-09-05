@@ -28,13 +28,11 @@ public class Orc extends Monster implements AggressiveEnemy {
     private final int detectRadius = 8;
     private final int discardRadius = 12;
 
-    String textureFacingUp = "spacman_blue";
-    String textureFacingRight = "spacman_green";
-    String textureFacingDown = "spacman_red";
-    String textureFacingLeft = "spacman_yellow";
+    String textureFacingLeft = "orc_swamp_left";
+    String textureFacingRight = "orc_swamp_right";
 
     public Orc(int height, float speed, int health) {
-        super("Orc", "spacman_blue", height, speed, health, true);
+        super("Orc", "orc_swamp_left", height, speed, health, true);
         this.random = new Random();
     }
 
