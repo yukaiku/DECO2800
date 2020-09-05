@@ -9,10 +9,12 @@ import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
+import deco2800.thomas.tasks.combat.FireballAttackTask;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
+import deco2800.thomas.worlds.AbstractWorld;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -155,7 +157,9 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
 
         if (button == Input.Buttons.LEFT) {
             //Set combat task to fireball task
-            // this.setCombatTask(new CombatTask);
+            AbstractWorld world = GameManager.get().getWorld();
+            this.setCombatTask(new FireballAttackTask(world.getPlayerEntity(), clickedPosition[0], clickedPosition[1],
+                    10, 0.5f, 60));
         } else if (button == Input.Buttons.RIGHT) {
             // Set combat task to melee task
             // this.setCombatTask(new meleeTask);

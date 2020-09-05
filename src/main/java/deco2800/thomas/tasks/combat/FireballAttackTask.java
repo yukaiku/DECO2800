@@ -10,7 +10,7 @@ import deco2800.thomas.util.SquareVector;
 /**
  * Spawns a Fireball into the game world.
  */
-public abstract class FireballAttackTask extends RangedAttackTask {
+public class FireballAttackTask extends RangedAttackTask {
     /**
      * Creates an instance of the FireballAttackTask.
      * @param entity Parent entity of the fireball

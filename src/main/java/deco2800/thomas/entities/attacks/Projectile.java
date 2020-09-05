@@ -1,9 +1,9 @@
 package deco2800.thomas.entities.attacks;
 
 import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
+import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.AbstractWorld;
 
 /**
@@ -88,21 +88,21 @@ public class Projectile extends CombatEntity {
         // Update movement task
         if (movementTask != null) {
             if( movementTask.isComplete()) {
-                GameManager.get().getManager(CombatManager.class).removeEntity(this);
+                WorldUtil.removeEntity(this);
             }
             movementTask.onTick(i);
         } else {
-            GameManager.get().getManager(CombatManager.class).removeEntity(this);
+            WorldUtil.removeEntity(this);
         }
 
         // Update combat task
         if (combatTask != null) {
             if (combatTask.isComplete()) {
-                GameManager.get().getManager(CombatManager.class).removeEntity(this);
+                WorldUtil.removeEntity(this);
             }
             combatTask.onTick(i);
         } else {
-            GameManager.get().getManager(CombatManager.class).removeEntity(this);
+            WorldUtil.removeEntity(this);
         }
     }
 }
