@@ -32,6 +32,10 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public static boolean tutorial = false;
 	Renderer3D renderer = new Renderer3D();
 	OverlayRenderer rendererDebug = new OverlayRenderer();
+
+	Guideline guideline = new Guideline();
+	QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
+
 	AbstractWorld world;
 	static Skin skin;
 
@@ -44,7 +48,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
 
 	long lastGameTick = 0;
-
 
 	static public enum gameType {
 		LOAD_GAME {
@@ -152,13 +155,11 @@ public class GameScreen implements Screen, KeyDownObserver {
 		if (tutorial) {
 			SpriteBatch batchGuideline = new SpriteBatch();
 			batchGuideline.setProjectionMatrix(cameraDebug.combined);
-			Guideline guideline = new Guideline();
 			guideline.render(batchGuideline, cameraDebug);
 		}
-		//Questtracker UI
+		// Questtracker UI
 		SpriteBatch batchGuideline = new SpriteBatch();
 		batchGuideline.setProjectionMatrix(cameraDebug.combined);
-		QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
 		questTrackerRenderer.render(batchGuideline, cameraDebug);
 
 		/* Refresh the experience UI for if information was updated */

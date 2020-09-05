@@ -6,6 +6,7 @@ import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.tasks.ApplyDamageOnCollisionTask;
 import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
 
@@ -42,11 +43,6 @@ public class Orc extends Monster implements AggressiveEnemy {
     public Orc(int height, float speed, int health, String texture) {
         this(height, speed, health);
         this.setTexture(texture);
-    }
-
-    public void summonGoblin() {
-        Goblin goblin = new Goblin(1, 0.1f, 10);
-        GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(goblin, this.getCol(), this.getRow());
     }
 
     /**
@@ -99,14 +95,7 @@ public class Orc extends Monster implements AggressiveEnemy {
             }
             tickDetecting = 0;
         }
-        // summon goblin every 5 ~ 15 secs
-        if (++tickSummon > nextTickSummon) {
-            if (super.getTarget() != null) {
-                summonGoblin();
-                nextTickSummon = 300 + random.nextInt(600);
-            }
-            tickSummon = 0;
-        }
+
         // execute tasks
         if (getTask() != null && getTask().isAlive()) {
             getTask().onTick(i);

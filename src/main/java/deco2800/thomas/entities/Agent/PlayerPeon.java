@@ -222,10 +222,9 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         }
         this.setMovingDirection(MovementTask.Direction.NONE);
     }
-/*
+
     @Override
     public void death() {
         GameManager.get().getWorld().removeEntity(this);
     }
-    */
 }
