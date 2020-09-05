@@ -15,6 +15,7 @@ public class Peon extends AgentEntity implements Tickable {
 		this.setObjectName("Peon");
 		this.setHeight(1);
 		this.speed = 0.05f;
+		this.save = true;
 	}
 
 	/**
