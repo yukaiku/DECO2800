@@ -17,14 +17,13 @@ public class EnemyPeonTest extends BaseGDXTest {
 
     public void testConstructor() {
         Orc enemy = new Orc(1, 1, 100, "orc_swamp");
-        assertEquals(enemy.getTexture(), "orc_swamp_left");
+        assertEquals(enemy.getTexture(), "orc_swamp_right");
     }
 
     @Test
     public void testEnemyTexture() {
         EnemyPeon enemy =  new Orc(1, 1, 100);
-        assertEquals(enemy.getTexture(), "orc_swamp_left");
-
+        assertEquals(enemy.getTexture(), "orc_swamp_right");
     }
 
     @Test
