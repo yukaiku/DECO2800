@@ -23,12 +23,6 @@ public class RenderConstants {
 	// Orb
 	public static final int ORB = 12;
 
-	public static final int SWAMP_VINE_TREE = 7;
-	public static final int SWAMP_POND = 8;
-	public static final int SWAMP_FALLEN_TREE = 9;
-	public static final int SWAMP_TREE_STUB = 10;
-	public static final int SWAMP_TREE_LOG = 11;
-
 	// Entities in the Desert Zone
 	public static final int DESERT_CACTUS = 12;
 	public static final int DESERT_QUICKSAND = 13;
