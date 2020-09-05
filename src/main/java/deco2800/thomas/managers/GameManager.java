@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import deco2800.thomas.worlds.AbstractWorld;
 
-import deco2800.thomas.worlds.SwampWorld;
+import deco2800.thomas.worlds.swamp.SwampWorld;
 import deco2800.thomas.worlds.TestWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

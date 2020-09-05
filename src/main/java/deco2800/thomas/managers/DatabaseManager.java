@@ -13,8 +13,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import deco2800.thomas.worlds.desert.CactusTile;
 import deco2800.thomas.worlds.desert.QuicksandTile;
-import deco2800.thomas.worlds.VolcanoBurnTile;
-import deco2800.thomas.worlds.VolcanoWorld;
+import deco2800.thomas.worlds.volcano.VolcanoBurnTile;
+import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -576,7 +576,6 @@ public final class DatabaseManager extends AbstractManager {
 
 		for (Tile tile : oldTiles) {
 			switch (tile.getTextureName()) {
-
 				// half of the tiles with this texture become cactus plants
 				case "desert_3":
 					randIndex = rand.nextInt(2);

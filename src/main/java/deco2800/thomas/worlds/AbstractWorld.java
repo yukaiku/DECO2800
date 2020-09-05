@@ -19,12 +19,12 @@ public abstract class AbstractWorld {
 	/**
 	 * Default width of the world; horizontal coordinates of the world will be within `[-DEFAULT_WIDTH, DEFAULT_WIDTH]`
 	 */
-	static final int DEFAULT_WIDTH = 25;
+	protected static final int DEFAULT_WIDTH = 25;
 
 	/**
 	 * Default height of the world; vertical coordinates of the world will be within `[-DEFAULT_HEIGHT, DEFAULT_HEIGHT]`
 	 */
-	static final int DEFAULT_HEIGHT = 25;
+	protected static final int DEFAULT_HEIGHT = 25;
 
     protected AgentEntity playerEntity;
 
@@ -111,15 +111,6 @@ public abstract class AbstractWorld {
 	protected abstract void generateTiles();
 
 	/**
-	 * Set the playerEntity and add it to the entities list
-	 * @param playerEntity
-	 */
-	protected void setPlayerEntity(PlayerPeon playerEntity) {
-		this.playerEntity = playerEntity;
-		this.entities.add(playerEntity);
-	}
-
-	/**
 	 * Set the orbEntity and add it to the entities list
 	 * @param orb
 	 */
@@ -131,11 +122,11 @@ public abstract class AbstractWorld {
 	/**
 	 * Check if the player's position is same as the orb's position
 	 */
-	protected void checkObtainedOrb() {
-		if (playerEntity.getPosition().equals(orbEntity.getPosition())) {
-			GameManager.get().setNextWorld();
-		}
-	}
+//	protected void checkObtainedOrb() {
+//		if (playerEntity.getPosition().equals(orbEntity.getPosition())) {
+//			GameManager.get().setNextWorld();
+//		}
+//	}
 
 	/**
 	 * Generates a tileMap from the list of tiles
@@ -403,7 +394,7 @@ public abstract class AbstractWorld {
 	}
 
 	public void onTick(long i) {
-		this.checkObtainedOrb();
+//		this.checkObtainedOrb();
 
 		for (AbstractEntity entity : entitiesToRemove) {
 			entities.remove(entity);

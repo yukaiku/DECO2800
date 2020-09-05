@@ -1,4 +1,6 @@
-package deco2800.thomas.worlds;
+package deco2800.thomas.worlds.volcano;
+
+import deco2800.thomas.worlds.Tile;
 
 public class VolcanoBurnTile extends Tile {
     private float burnDamage;

@@ -2,7 +2,7 @@ package deco2800.thomas.worlds.desert;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.PlayerPeon;
-import deco2800.thomas.entities.desert.*;
+import deco2800.thomas.entities.environment.desert.*;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
@@ -11,7 +11,9 @@ import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import org.lwjgl.Sys;
 
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * The Desert World of the game.
@@ -32,8 +34,7 @@ public class DesertWorld extends AbstractWorld {
      * Constructor that creates a world with default width and height.
      */
     public DesertWorld() {
-        super();
-        generateTiles();
+        this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
     /**
@@ -62,10 +63,11 @@ public class DesertWorld extends AbstractWorld {
      */
     @Override
     protected void generateTiles() {
+        System.out.println("in generateTiles()");
+        System.out.flush();
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
-
-        // Add the player entity
-        addEntity(new PlayerPeon(5f, -23f, 0.1f));
+        this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
+        addEntity(this.getPlayerEntity());
     }
 
     /**

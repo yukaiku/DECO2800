@@ -1,9 +1,12 @@
-package deco2800.thomas.worlds;
+package deco2800.thomas.worlds.tundra;
 
+import deco2800.thomas.entities.PlayerPeon;
 import deco2800.thomas.entities.environment.tundra.TundraCampfire;
 import deco2800.thomas.entities.environment.tundra.TundraRock;
 import deco2800.thomas.entities.environment.tundra.TundraTreeLog;
 import deco2800.thomas.managers.DatabaseManager;
+import deco2800.thomas.worlds.AbstractWorld;
+import deco2800.thomas.worlds.Tile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +27,8 @@ public class TundraWorld extends AbstractWorld {
 	public TundraWorld(int width, int height) {
 		DatabaseManager.loadWorld(this, MAP_FILE);
 		generateStaticEntities();
+		this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.1f));
+		addEntity(this.getPlayerEntity());
 	}
 
 	private void generateStaticEntities() {

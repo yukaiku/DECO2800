@@ -1,6 +1,4 @@
-package deco2800.thomas.worlds;
-
-import java.util.Random;
+package deco2800.thomas.worlds.swamp;
 
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.SwampDeadTree;
@@ -9,6 +7,8 @@ import deco2800.thomas.entities.SwampPond;
 import deco2800.thomas.entities.SwampTreeLog;
 import deco2800.thomas.entities.SwampTreeStub;
 import deco2800.thomas.managers.DatabaseManager;
+import deco2800.thomas.worlds.AbstractWorld;
+import deco2800.thomas.worlds.TestWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,24 +16,18 @@ import deco2800.thomas.managers.GameManager;
 
 @SuppressWarnings("unused")
 public class SwampWorld extends AbstractWorld {
-    public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/swamp-game-map.json";
-
     private final Logger logger = LoggerFactory.getLogger(TestWorld.class);
-
-    boolean notGenerated = true;
+    public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/swamp/swamp-game-map.json";
 
     public SwampWorld() {
         this(AbstractWorld.DEFAULT_WIDTH, AbstractWorld.DEFAULT_HEIGHT);
-        // Create the player entity
-        this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
-        addEntity(this.getPlayerEntity());
     }
 
     public SwampWorld(int width, int height) {
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
-        this.setPlayerEntity(new PlayerPeon(5, 10, 0.1f));
         this.generateTileMap();
         this.generateTileIndices();
+        this.generateStaticEntities();
         // Create the player entity
         this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
         addEntity(this.getPlayerEntity());
@@ -145,26 +139,7 @@ public class SwampWorld extends AbstractWorld {
     }
 
     public void generateStaticEntities() {
-//        Random random = new Random();
-//        int tileCount = GameManager.get().getWorld().getTiles().size();
-
-        // 100 Rocks randomly placed
-//        for (int i = 0; i < 100; i++) {
-//            Tile t = this.getTile(random.nextInt(tileCount));
-//            if (t != null) {
-//                entities.add(new Rock(t, true));
-//            }
-//        }
         this.setOrbEntity(new Orb(this.getTile(23, -24), false));
-
-        // 50 Trees randomly placed
-//        for (int i = 0; i < 50; i++) {
-//            Tile t = this.getTile(random.nextInt(tileCount));
-//            if (t != null) {
-//                entities.add(new Tree(t, true));
-//            }
-//        }
-
         this.createPond();
         this.generateDeadTree();
         this.createTreeStub();
@@ -174,11 +149,6 @@ public class SwampWorld extends AbstractWorld {
 
     @Override
     public void onTick(long i) {
-        if (notGenerated) {
-            generateStaticEntities();
-            notGenerated = false;
-        }
-
         super.onTick(i);
         for (AbstractEntity e : this.getEntities()) {
             e.onTick(0);

@@ -1,16 +1,21 @@
-package deco2800.thomas.worlds;
+package deco2800.thomas.worlds.volcano;
 
 import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.VolcanoBurningTree;
+import deco2800.thomas.entities.VolcanoDragonSkull;
+import deco2800.thomas.entities.VolcanoGraveYard;
+import deco2800.thomas.entities.VolcanoRuins;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
+import deco2800.thomas.worlds.AbstractWorld;
+import deco2800.thomas.worlds.Tile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class VolcanoWorld extends AbstractWorld {
     private final Logger logger = LoggerFactory.getLogger(VolcanoWorld.class);
@@ -22,11 +27,7 @@ public class VolcanoWorld extends AbstractWorld {
      * Default Constructor for volcano world.
      */
     public VolcanoWorld() {
-        super();
-        DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
-        //Add player to game
-        this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.1f));
-        addEntity(this.getPlayerEntity());
+        this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
     /**
@@ -67,6 +68,8 @@ public class VolcanoWorld extends AbstractWorld {
             for (Tile t : GameManager.get().getWorld().getTiles()) {
             }
             notGenerated = false;
+            System.out.println(this.getEntities());
+            System.out.flush();
         }
     }
 
@@ -87,12 +90,11 @@ public class VolcanoWorld extends AbstractWorld {
         entities.add(createGraveYard(7, -15));
         entities.add(createRuins(-25, -5));
         entities.add(createDragonSkull(-23, 23));
-        entities.add(createVolcanoOrb(21, 20));
+//        entities.add(createVolcanoOrb(21, 20));
 
         //For objects that are added randomly & require more specific addition
         //entities, they're methodology will folllow add()
         addRandoms();
-
     }
 
     /**
@@ -130,12 +132,12 @@ public class VolcanoWorld extends AbstractWorld {
      * @param row - The specified row coordinate of the orb.
      * @return  A static entity for the Volcano Zone
      */
-    public Orb createVolcanoOrb(float col, float row) {
-        List<Part> parts = new ArrayList<Part>();
-        parts.add(new Part(new SquareVector(0, 0), "Orb_Volcano", false));
-        Orb VolcanoOrb = new Orb(col, row, 1, parts);
-        return VolcanoOrb;
-    }
+//    public Orb createVolcanoOrb(float col, float row) {
+//        List<Part> parts = new ArrayList<Part>();
+//        parts.add(new Part(new SquareVector(0, 0), "", false));
+//        Orb volcanoOrb = new Orb(col, row, 1, parts);
+//        return volcanoOrb;
+//    }
 
     /**
      *  Creates a dragon skull entity to be added to the zone
@@ -303,6 +305,4 @@ public class VolcanoWorld extends AbstractWorld {
     public void volcanoEvent () {
 
     }
-
-
 }

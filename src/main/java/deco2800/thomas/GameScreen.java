@@ -3,7 +3,6 @@ package deco2800.thomas;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -20,6 +19,9 @@ import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
 import deco2800.thomas.worlds.desert.DesertWorld;
+import deco2800.thomas.worlds.swamp.SwampWorld;
+import deco2800.thomas.worlds.tundra.TundraWorld;
+import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,44 +80,10 @@ public class GameScreen implements Screen, KeyDownObserver {
 				return world;
 			}
 		},
-		DESERT_WORLD {
-			@Override
-			public AbstractWorld method() {
-				AbstractWorld world = new DesertWorld();
-				GameManager.get().getManager(NetworkManager.class).startHosting("host");
-				return world;
-			}
-		},
-		SWAMP_WORLD {
-			@Override
-			public AbstractWorld method() {
-				AbstractWorld world = new SwampWorld();
-				GameManager.get().getManager(NetworkManager.class).startHosting("host");
-				return world;
-			}
-		},
 		ENV_TEAM_GAME {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new VolcanoWorld();
-				GameManager.get().getManager(NetworkManager.class).startHosting("host");
-				return world;
-			}
-		},
-		VOLCANIC_WORLD {
-			@Override
-			public AbstractWorld method() {
-				// change TestWorld to Volcano once implemented
-				AbstractWorld world = new TestWorld();
-				GameManager.get().getManager(NetworkManager.class).startHosting("host");
-				return world;
-			}
-		},
-		TUNDRA_WORLD {
-			@Override
-			public AbstractWorld method() {
-				// change TestWorld to Tundra once implemented
-				AbstractWorld world = new TestWorld();
+				AbstractWorld world = new DesertWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
@@ -129,11 +97,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 		/* Create an example world for the engine */
 		this.game = game;
 
-		GameManager gameManager = GameManager.get();
+		GameManager.get().setWorld(startType.method());
 
-//		world = startType.method();
-
-		gameManager.setNextWorld();
+//		gameManager.setNextWorld();
 
 
 		// Add first peon to the world
@@ -168,6 +134,13 @@ public class GameScreen implements Screen, KeyDownObserver {
 		//MoveCamera Function was here for dayNight Cycle
 
 		CameraUtil.zoomableCamera(camera, Input.Keys.MINUS, Input.Keys.EQUALS, delta);
+
+		//
+		if (GameManager.get().getWorld().getPlayerEntity() == null) {
+			throw new RuntimeException("You are stupid");
+		}
+		//
+
 		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
 
 		cameraDebug.position.set(camera.position);

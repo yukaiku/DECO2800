@@ -1,4 +1,4 @@
-package deco2800.thomas.entities.desert;
+package deco2800.thomas.entities.environment.desert;
 
 import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.RenderConstants;
