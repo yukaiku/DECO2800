@@ -30,6 +30,9 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
     public PlayerPeon(float row, float col, float speed, int health) {
         super(row, col, speed, health);
         this.setObjectName("playerPeon");
+        this.setTexture("player_right");
+        this.setColRenderLength(1.4f);
+        this.setRowRenderLength(1.8f);
         this.setFaction(EntityFaction.Ally);
         GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
@@ -228,9 +231,11 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
                 this.setMovingDirection(MovementTask.Direction.DOWN);
                 break;
             case Input.Keys.A:
+                this.setTexture("player_left");
                 this.setMovingDirection(MovementTask.Direction.LEFT);
                 break;
             case Input.Keys.D:
+                this.setTexture("player_right");
                 this.setMovingDirection(MovementTask.Direction.RIGHT);
                 break;
             default:
