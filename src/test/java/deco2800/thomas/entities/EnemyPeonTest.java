@@ -15,7 +15,7 @@ public class EnemyPeonTest extends BaseGDXTest {
     @Test
     public void testEnemyTexture() {
         EnemyPeon enemy =  new Orc(1, 1, 100);
-        assertEquals(enemy.getTexture(), "spacman_blue");
+        assertEquals(enemy.getTexture(), "orc_swamp_left");
 
     }
 
