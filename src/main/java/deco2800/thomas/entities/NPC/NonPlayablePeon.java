@@ -69,6 +69,7 @@ public class NonPlayablePeon extends Peon implements Interactable {
     @Override
     public void interact() {
         // Overwrite me :)
+        
     }
 
     public String getName() {
