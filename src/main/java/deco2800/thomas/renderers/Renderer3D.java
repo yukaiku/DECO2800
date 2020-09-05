@@ -234,7 +234,7 @@ public class Renderer3D implements Renderer {
 
 	private void renderPeonMovementTiles(SpriteBatch batch, OrthographicCamera camera, AbstractEntity entity, float[] entityWorldCord) {
 		Peon actor = (Peon) entity;
-		AbstractTask task = actor.getTask();
+		AbstractTask task = actor.getMovementTask();
 		if (task instanceof MovementTask) {
 			if (((MovementTask) task).getPath() == null) { //related to issue #8
 				return;

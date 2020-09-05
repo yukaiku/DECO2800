@@ -9,6 +9,7 @@ import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
+import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
@@ -136,6 +137,14 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
                 setMovementTask(null);
             }
         }
+
+        if (getCombatTask() != null) {
+            getCombatTask().onTick(i);
+
+            if (getCombatTask().isComplete()) {
+                setCombatTask(null);
+            }
+        }
     }
 
     @Override
@@ -150,20 +159,33 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         } else if (button == Input.Buttons.RIGHT) {
             // Set combat task to melee task
             // this.setCombatTask(new meleeTask);
+            SquareVector origin;
             double angle = Math.toDegrees(Math.atan2(clickedPosition[0] - this.getCol(), clickedPosition[1] - this.getRow()));
             System.out.println(angle);
             if (angle > -45 && angle < 45) {
                 // Spawn above player
                 System.out.println("Above");
+                origin = new SquareVector(this.getCol(), this.getRow() + 1);
+                this.setCombatTask(new MeleeAttackTask(this, origin, 2,2, 30));
+
             } else if (angle >= -135 && angle <= -45) {
                 // Spawn to left of player
                 System.out.println("Left");
+                origin = new SquareVector(this.getCol() - 1, this.getRow());
+                this.setCombatTask(new MeleeAttackTask(this, origin, 2,2, 30));
+
             } else if (angle < -135 || angle > 135) {
                 // Spawn below player
                 System.out.println("Below");
+                origin = new SquareVector(this.getCol(), this.getRow() - 1);
+                this.setCombatTask(new MeleeAttackTask(this, origin, 2,2, 30));
+
             } else if (angle >= 45 && angle <= 135) {
                 // Spawn right of player
                 System.out.println("Right");
+                origin = new SquareVector(this.getCol() + 1, this.getRow());
+                this.setCombatTask(new MeleeAttackTask(this, origin, 2,2, 30));
+
             }
         }
     }
