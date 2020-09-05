@@ -15,7 +15,7 @@ public class Dummy extends Monster implements PassiveEnemy {
         super("Dummy", "spacman_blue", height, speed, health, false);
     }
 
-    public void hitByTarget(Peon Target) {
+    public void hitByTarget() {
         // ouch
     }
 
