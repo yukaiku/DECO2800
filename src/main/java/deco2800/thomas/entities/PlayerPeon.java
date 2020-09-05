@@ -7,14 +7,92 @@ import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
+import deco2800.thomas.worlds.AbstractWorld;
+import deco2800.thomas.worlds.Tile;
+
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class PlayerPeon extends Peon implements TouchDownObserver {
 	public static String ENTITY_ID_STRING = "playerPeon";
+	private AbstractWorld world;
+
+	// a list storing all of the locations of damage tiles on the current world
+	private CopyOnWriteArrayList<Tile> damageTiles;
+
+	// a list storing all of the locations of slowing tiles on the current world
+	private CopyOnWriteArrayList<Tile> slowTiles;
+
+	// a bool for if the above lists have been generated
+	private boolean notGenerated = true;
+
+	// booleans for whether the player is slowed or taking damage from standing on a tile
+	private boolean slowed = false;
+	private boolean takingDamage = false;
 
 	public PlayerPeon(float row, float col, float speed) {
 		super(row, col, speed);
 		this.setObjectName(ENTITY_ID_STRING);
 		GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
+	}
+
+	/**
+	 * Adds a Tile to a list of tiles, if it is not already present in the list.
+	 *
+	 * @param tile The Tile being added.
+	 * @param list The list being added to.
+	 */
+	private void addTile(Tile tile, CopyOnWriteArrayList<Tile> list) {
+		for (Tile t : list) {
+			// Tile toStrings should be unique in the list
+			if (t.toString().equals(tile.toString())) {
+				return;
+			}
+		}
+		list.add(tile);
+	}
+
+	/**
+	 * Adds all tiles that should slow the player in a specific world to a slowTiles list.
+	 */
+	private void slowTiles() {
+		slowTiles = new CopyOnWriteArrayList<>();
+
+		// the Desert World has quicksand which slows the player
+		if (world.getType().equals("Desert")) {
+
+			for (Tile tile : world.getTiles()) {
+
+				// Quicksand slows the player if they stand on top of it
+				if (tile.getType().equals("Quicksand")) {
+					addTile(tile, slowTiles);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Adds all tiles that should damage the player in a specific world to a damageTiles list.
+	 */
+	private void damageTiles() {
+		damageTiles = new CopyOnWriteArrayList<>();
+
+		// the Desert World has quicksand and cactus plants which damage the player
+		if (world.getType().equals("Desert")) {
+
+			for (Tile tile : world.getTiles()) {
+
+				// Quicksand damages the player if they stand on top of it
+				if (tile.getType().equals("Quicksand")) {
+					addTile(tile, damageTiles);
+
+				// Cactus plants damage the player if they stand in a neighbouring tile
+				} else if (tile.getType().equals("Cactus")) {
+					for (Tile neighbour : tile.getNeighbours().values()) {
+						addTile(neighbour, damageTiles);
+					}
+				}
+			}
+		}
 	}
 
 
@@ -26,6 +104,17 @@ public class PlayerPeon extends Peon implements TouchDownObserver {
 			if (getTask().isComplete()) {
 				setTask(null);
 			}
+		}
+
+		//TODO Implement damage/slowing effects when standing on tiles in
+		// the damageTiles/slowTiles lists
+
+		// Get the lists of all important tiles for player interaction
+		if (notGenerated) {
+			world = GameManager.get().getWorld();
+			slowTiles();
+			damageTiles();
+			notGenerated = false;
 		}
 	}
 

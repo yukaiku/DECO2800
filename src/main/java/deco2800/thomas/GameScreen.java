@@ -17,6 +17,7 @@ import deco2800.thomas.renderers.OverlayRenderer;
 import deco2800.thomas.renderers.Renderer3D;
 import deco2800.thomas.worlds.*;
 
+import deco2800.thomas.worlds.desert.DesertWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +67,23 @@ public class GameScreen implements Screen, KeyDownObserver {
 				return world;
 			}
 		},
-		NEW_GAME {
+		TEST_WORLD {
+			@Override
+			public AbstractWorld method() {
+				AbstractWorld world = new TestWorld();
+				GameManager.get().getManager(NetworkManager.class).startHosting("host");
+				return world;
+			}
+		},
+		DESERT_WORLD {
+			@Override
+			public AbstractWorld method() {
+				AbstractWorld world = new DesertWorld();
+				GameManager.get().getManager(NetworkManager.class).startHosting("host");
+				return world;
+			}
+		},
+		SWAMP_WORLD {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new SwampWorld();
@@ -78,6 +95,24 @@ public class GameScreen implements Screen, KeyDownObserver {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new EnvTeamWorld();
+				GameManager.get().getManager(NetworkManager.class).startHosting("host");
+				return world;
+			}
+		},
+		VOLCANIC_WORLD {
+			@Override
+			public AbstractWorld method() {
+				// change TestWorld to Volcano once implemented
+				AbstractWorld world = new TestWorld();
+				GameManager.get().getManager(NetworkManager.class).startHosting("host");
+				return world;
+			}
+		},
+		TUNDRA_WORLD {
+			@Override
+			public AbstractWorld method() {
+				// change TestWorld to Tundra once implemented
+				AbstractWorld world = new TestWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}

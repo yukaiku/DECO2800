@@ -80,6 +80,33 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("tundra-tile-4", new Texture("resources/environment/tundra/tundra-tile-4.png"));
 			textureMap.put("tundra-tile-5", new Texture("resources/environment/tundra/tundra-tile-5.png"));
 
+			// textures for the desert zone
+			textureMap.put("desert_1", new Texture("resources/environment/desert/tile/sand/desert_1.png"));
+			textureMap.put("desert_2", new Texture("resources/environment/desert/tile/sand/desert_2.png"));
+			textureMap.put("desert_3", new Texture("resources/environment/desert/tile/sand/desert_3.png"));
+			textureMap.put("desert_4", new Texture("resources/environment/desert/tile/sand/desert_4.png"));
+			textureMap.put("desert_5", new Texture("resources/environment/desert/tile/sand/desert_5.png"));
+			textureMap.put("desert_6", new Texture("resources/environment/desert/tile/sand/desert_6.png"));
+			textureMap.put("desert_7", new Texture("resources/environment/desert/tile/sand/desert_7.png"));
+			textureMap.put("oasis_1", new Texture("resources/environment/desert/tile/oasis/oasis_1.png"));
+			textureMap.put("oasis_2", new Texture("resources/environment/desert/tile/oasis/oasis_2.png"));
+			textureMap.put("oasis_3", new Texture("resources/environment/desert/tile/oasis/oasis_1.png"));
+			textureMap.put("oasis_4", new Texture("resources/environment/desert/tile/oasis/oasis_4.png"));
+			textureMap.put("oasis_5", new Texture("resources/environment/desert/tile/oasis/oasis_5.png"));
+			textureMap.put("oasis_6", new Texture("resources/environment/desert/tile/oasis/oasis_6.png"));
+			// change these textures once they are drawn
+			textureMap.put("desertOrb", new Texture("resources/environment/desert/entities/desert_orb.png"));
+			textureMap.put("desertCactus1", new Texture("resources/environment/desert/entities/desert_cactus1.png"));
+			textureMap.put("desertCactus2", new Texture("resources/environment/desert/entities/desert_cactus2.png"));
+			textureMap.put("desertCactus3", new Texture("resources/environment/desert/entities/desert_cactus3.png"));
+			textureMap.put("desertCactus4", new Texture("resources/environment/desert/entities/desert_cactus4.png"));
+			textureMap.put("desertSandDune", new Texture("resources/environment/desert/entities/desert_sand_dune.png"));
+			textureMap.put("desertDeadTree1", new Texture("resources/environment/desert/entities/desert_dead_tree1.png"));
+			textureMap.put("desertDeadTree2", new Texture("resources/environment/desert/entities/desert_dead_tree2.png"));
+			textureMap.put("desertQuicksand", new Texture("resources/environment/desert/entities/desert_quicksand.png"));
+			textureMap.put("oasisTree1", new Texture("resources/environment/desert/entities/oasis_tree1.png"));
+			textureMap.put("oasisTree2", new Texture("resources/environment/desert/entities/oasis_tree2.png"));
+
 			textureMap.put("grass_0", new Texture("resources/square.png"));
 			textureMap.put("grass_1", new Texture("resources/square2.png"));
 			textureMap.put("grass_2", new Texture("resources/square3.png"));

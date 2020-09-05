@@ -99,6 +99,15 @@ public abstract class AbstractWorld {
 	}
 
 	/**
+	 * Returns the type of this world.
+	 *
+	 * @return The type of this world.
+	 */
+	public String getType() {
+		return "World";
+	}
+
+	/**
 	 * Generates the tiles for the world
 	 */
 	protected abstract void generateTiles();

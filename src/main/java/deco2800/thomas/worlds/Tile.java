@@ -14,6 +14,7 @@ import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.util.SquareVector;
 
 public class Tile {
+
 	/**
 	 * Managing ID of tiles
 	 */
@@ -74,6 +75,15 @@ public class Tile {
 
 	public Tile() {
 		this.neighbours = new HashMap<Integer, Tile>();
+	}
+
+	/**
+	 * Returns the type of this Tile.
+	 *
+	 * @return The type of this Tile.
+	 */
+	public String getType() {
+		return "Tile";
 	}
 
 	public float getCol() {
