@@ -14,7 +14,6 @@ public class RenderConstants {
 
 	// Entities in Swamp Zone
 	public static final int SWAMP_DEAD_TREE = 6;
-
 	public static final int SWAMP_POND = 6;
 	public static final int SWAMP_FALLEN_TREE = 6;
 	public static final int SWAMP_TREE_STUB = 6;
