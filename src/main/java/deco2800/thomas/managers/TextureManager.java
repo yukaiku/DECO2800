@@ -47,7 +47,7 @@ public class TextureManager extends AbstractManager {
             textureMap.put("background", new Texture("resources/background.jpg"));
             textureMap.put("spacman_ded", new Texture("resources/spacman.png"));
             textureMap.put("spacman_blue", new Texture("resources/spacman_blue.png"));
-            textureMap.put("basic_npc", new Texture("resources/basic_npc.jpg"));
+            textureMap.put("basic_npc", new Texture("resources/tutorial/basic_npc.jpg"));
 
 	/**
 	 * Constructor
