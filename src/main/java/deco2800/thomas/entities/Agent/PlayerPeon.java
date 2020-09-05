@@ -13,6 +13,8 @@ import deco2800.thomas.tasks.combat.FireballAttackTask;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.SquareVector;
+import com.badlogic.gdx.Input;
+import org.objenesis.instantiator.basic.ClassDefinitionUtils;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.AbstractWorld;
 
@@ -20,12 +22,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserver, KeyUpObserver {
-
+    public static int DEFAULT_HEALTH = 50;
     private static int orbCount = 0;
 
     // The health of the player
     private HealthTracker health;
     private Map<String, String> dialogues = new HashMap<>();
+
+    public PlayerPeon(float row, float col, float speed) {
+        this(row, col, speed, DEFAULT_HEALTH);
+    }
 
     public PlayerPeon(float row, float col, float speed, int health) {
         super(row, col, speed, health);

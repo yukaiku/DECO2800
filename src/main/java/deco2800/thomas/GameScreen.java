@@ -9,14 +9,16 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.Peon;
-import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.renderers.*;
+import deco2800.thomas.renderers.OverlayRenderer;
+import deco2800.thomas.renderers.Renderer3D;
 import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
+import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	private final Logger LOG = LoggerFactory.getLogger(GameScreen.class);
 	@SuppressWarnings("unused")
 	private final ThomasGame game;
+
 	/**
 	 * Set the renderer.
 	 * 3D is for Isometric worlds
@@ -37,6 +40,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
 
 	AbstractWorld world;
+
 	static Skin skin;
 
 	/**
@@ -71,6 +75,15 @@ public class GameScreen implements Screen, KeyDownObserver {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new TestWorld();
+
+				GameManager.get().getManager(NetworkManager.class).startHosting("host");
+				return world;
+			}
+		},
+		ENV_TEAM_GAME {
+			@Override
+			public AbstractWorld method() {
+				AbstractWorld world = new VolcanoWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
@@ -92,15 +105,14 @@ public class GameScreen implements Screen, KeyDownObserver {
 		if (startType == gameType.TUTORIAL) {
 			GameManager.get().inTutorial = true;
 			tutorial = true;
+			GameManager.get().setWorld(startType.method());
+		} else if (startType == gameType.NEW_GAME) {
+			GameManager.get().setWorld(startType.method());
+		} else {
+			GameManager.get().setNextWorld();
 		}
 		/* Create an example world for the engine */
 		this.game = game;
-
-		GameManager gameManager = GameManager.get();
-
-		world = startType.method();
-
-		gameManager.setWorld(world);
 
 		// Initialize camera
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -131,7 +143,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void render(float delta) {
 
 		handleRenderables();
-		
+
 		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta);
 		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
 

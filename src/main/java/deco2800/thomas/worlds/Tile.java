@@ -14,6 +14,7 @@ import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.util.SquareVector;
 
 public class Tile {
+
 	/**
 	 * Managing ID of tiles
 	 */
@@ -76,6 +77,15 @@ public class Tile {
 		this.neighbours = new HashMap<Integer, Tile>();
 	}
 
+	/**
+	 * Returns the type of this Tile.
+	 *
+	 * @return The type of this Tile.
+	 */
+	public String getType() {
+		return "Tile";
+	}
+
 	public float getCol() {
 		return coords.getCol();
 	}
@@ -124,7 +134,7 @@ public class Tile {
 	}
 
 	public String toString() {
-		return String.format("[%.0f, %.1f: %d]", coords.getCol(), coords.getRow(), index);
+		return String.format("{Tile[%.0f, %.1f: %d]}", coords.getCol(), coords.getRow(), index);
 	}
 
 	public StaticEntity getParent() {
@@ -203,4 +213,6 @@ public class Tile {
 	public void setRow(float row) {
 		this.coords.setRow(row);
 	}
+
+
 }

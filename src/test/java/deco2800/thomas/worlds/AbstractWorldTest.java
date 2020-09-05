@@ -35,7 +35,15 @@ public class AbstractWorldTest extends BaseGDXTest {
      * Test class for testing on AbstractWorld.
      */
     private class TestAbstractWorld extends AbstractWorld {
-        @Override
+
+        protected void generateWorld() {
+            // No action required.
+        }
+
+        /**
+         * Generates the tiles for the world
+         */
+
         protected void generateTiles() {
 
         }
