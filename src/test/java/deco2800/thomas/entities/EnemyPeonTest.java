@@ -12,6 +12,14 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class EnemyPeonTest extends BaseGDXTest {
+
+    @Test
+
+    public void testConstructor() {
+        Orc enemy = new Orc(1, 1, 100, "orc_swamp");
+        assertEquals(enemy.getTexture(), "orc_swamp_left");
+    }
+
     @Test
     public void testEnemyTexture() {
         EnemyPeon enemy =  new Orc(1, 1, 100);

@@ -20,7 +20,7 @@ import java.util.Random;
  */
 public class Orc extends Monster implements AggressiveEnemy {
 
-    private int tickFollowing = 60;
+    private int tickFollowing = 30;
     private int tickDetecting = 15;
     private int tickSummon = 0;
     private int nextTickSummon = 300;
@@ -28,9 +28,8 @@ public class Orc extends Monster implements AggressiveEnemy {
 
     private final int detectRadius = 8;
     private final int discardRadius = 12;
-
-    String textureFacingLeft = "orc_swamp_left";
-    String textureFacingRight = "orc_swamp_right";
+    private String leftTexture;
+    private String rightTexture;
 
     public Orc(int height, float speed, int health) {
         super("Orc", "orc_swamp_left", height, speed, health, true);
@@ -42,7 +41,9 @@ public class Orc extends Monster implements AggressiveEnemy {
      */
     public Orc(int height, float speed, int health, String texture) {
         this(height, speed, health);
-        this.setTexture(texture);
+        leftTexture = texture + "_left";
+        rightTexture = texture + "_right";
+        this.setTexture(rightTexture);
     }
 
     /**
@@ -76,6 +77,16 @@ public class Orc extends Monster implements AggressiveEnemy {
                 removeWildEnemy(this);
     }
 
+    private void setOrcTexture() {
+        if (getTarget() != null) {
+            if (getTarget().getCol() < this.getCol()) {
+                setTexture(leftTexture);
+            } else {
+                setTexture(rightTexture);
+            }
+        }
+    }
+
     @Override
     public void onTick(long i) {
         // update target following path every 1 second (60 ticks)
@@ -83,6 +94,7 @@ public class Orc extends Monster implements AggressiveEnemy {
             if (super.getTarget() != null) {
                 setTask(new MovementTask(this, super.getTarget().
                         getPosition()));
+                setOrcTexture();
             }
             tickFollowing = 0;
         }
@@ -95,7 +107,6 @@ public class Orc extends Monster implements AggressiveEnemy {
             }
             tickDetecting = 0;
         }
-
         // execute tasks
         if (getTask() != null && getTask().isAlive()) {
             getTask().onTick(i);
