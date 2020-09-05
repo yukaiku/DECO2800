@@ -6,10 +6,14 @@ import java.util.List;
 import deco2800.thomas.GameScreen;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.Environment.*;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.entities.enemies.Dummy;
+import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.entities.environment.Barrel;
+import deco2800.thomas.entities.environment.Portal;
+import deco2800.thomas.entities.environment.Stash;
+import deco2800.thomas.entities.environment.Target;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.NonPlayablePeonManager;
 
