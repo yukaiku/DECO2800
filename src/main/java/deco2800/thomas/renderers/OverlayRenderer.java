@@ -101,7 +101,9 @@ public class OverlayRenderer implements Renderer {
 				String.format("Messages Sent: %d", GameManager.get().getManager(NetworkManager.class).getMessagesSent()));
 		debugLine(batch, camera, ++line,
 				String.format("Username: %s", GameManager.get().getManager(NetworkManager.class).getUsername()));
-
+		line++;
+		debugLine(batch, camera, ++line, "== Health ==");
+		debugLine(batch, camera, ++line, String.format("Health: %d", GameManager.get().getWorld().getPlayerEntity().getCurrentHealth()));
 		line++;
 		EnemyManager enemyManager = GameManager.get().getManager(EnemyManager.class);
 		debugLine(batch, camera, ++line, "== Enemies ==");

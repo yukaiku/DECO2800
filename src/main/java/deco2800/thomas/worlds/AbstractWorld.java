@@ -126,8 +126,11 @@ public abstract class AbstractWorld implements Tickable {
 	 * Check if the player's position is same as the orb's position
 	 */
 	protected void checkObtainedOrb() {
-		if (playerEntity.getPosition().equals(orbEntity.getPosition())) {
-			GameManager.get().setNextWorld();
+		if (orbEntity != null) {
+			if (playerEntity.getPosition().equals(orbEntity.getPosition())) {
+				this.removeEntity(playerEntity);
+				GameManager.get().setNextWorld();
+			}
 		}
 	}
 

@@ -7,12 +7,17 @@ import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
+import deco2800.thomas.util.EnemyUtil;
+import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
+import deco2800.thomas.worlds.Tile;
 
 import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * A class that defines an implementation of a Dragon.
@@ -23,9 +28,12 @@ import java.util.Arrays;
  */
 public class Dragon extends Boss implements PassiveEnemy {
     private int tickFollowing = 60;
+    private int attackRange = 8;
+    Random random;
 
     public Dragon(int height, float speed, int health) {
         super("Elder Dragon", "elder_dragon", height, speed, health);
+        this.random = new Random();
     }
 
     public Dragon(int height, float speed, int health, String texture) {
@@ -69,6 +77,13 @@ public class Dragon extends Boss implements PassiveEnemy {
     }
 
     @Override
+    public void attackPlayer() {
+        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange));
+        SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
+        setCombatTask(new MeleeAttackTask(this, origin, 8, 8, 20));
+    }
+
+    @Override
     public void onTick(long i) {
         // update target following path every 1 second (60 ticks)
         if (++tickFollowing > 60) {
@@ -78,6 +93,7 @@ public class Dragon extends Boss implements PassiveEnemy {
                         getTarget().getRow(), 10, 0.2f, 60, EntityFaction.Evil);
                 setMovementTask(new MovementTask(this, super.getTarget().
                         getPosition()));
+                attackPlayer();
                 setDragonTexture();
             }
             tickFollowing = 0;
@@ -89,12 +105,19 @@ public class Dragon extends Boss implements PassiveEnemy {
                 setMovementTask(null);
             }
         }
+        if (getCombatTask() != null && getCombatTask().isAlive()) {
+            getCombatTask().onTick(i);
+            if (getCombatTask().isComplete()) {
+                setCombatTask(null);
+            }
+        }
     }
 
     @Override
     public void death() {
         GameManager.getManagerFromInstance(EnemyManager.class).removeBoss();
         AbstractWorld world = GameManager.get().getWorld();
-        world.setOrbEntity(new Orb(world.getTile(this.getCol(), this.getRow()), "orb_1"));
+        Tile tile = world.getTile((float) Math.ceil((this.getCol())), (float) Math.ceil((this.getRow())));
+        world.setOrbEntity(new Orb(tile, "orb_" + ((random.nextInt(4)) + 1)));
     }
 }

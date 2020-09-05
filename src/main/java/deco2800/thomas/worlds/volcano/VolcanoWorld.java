@@ -1,10 +1,12 @@
 package deco2800.thomas.worlds.volcano;
 
+import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.VolcanoDragonSkull;
 import deco2800.thomas.entities.VolcanoGraveYard;
 import deco2800.thomas.entities.VolcanoRuins;
+import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.volcano.VolcanoBurningTree;
 import deco2800.thomas.managers.DatabaseManager;
@@ -47,22 +49,25 @@ public class VolcanoWorld extends AbstractWorld {
         super(width, height);
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
         //Add player to game
-        this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.1f));
+        this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.15f));
         addEntity(this.getPlayerEntity());
 
-        // Provide available enemies to the EnemyManager
-        Orc swampOrc = new Orc(1, 0.05f, 100);
-        Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano_left");
-        EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc, volcanoOrc));
+        GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
+        Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano");
+        EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(volcanoOrc));
         GameManager.get().addManager(enemyManager);
+
+        Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_volcano");
+        enemyManager.setBoss(boss);
+        enemyManager.spawnBoss(16, 20);
     }
 
 
     /**
      * Generates the tiles for the world
      */
+    @Override
     protected void generateTiles() {
-
     }
 
     /**
@@ -102,8 +107,6 @@ public class VolcanoWorld extends AbstractWorld {
         entities.add(createGraveYard(7, -15));
         entities.add(createRuins(-25, -5));
         entities.add(createDragonSkull(-23, 23));
-        this.setOrbEntity(new Orb(this.getTile(16, 20), "orb_4"));
-
         //For objects that are added randomly & require more specific addition
         //entities, they're methodology will folllow add()
         addRandoms();

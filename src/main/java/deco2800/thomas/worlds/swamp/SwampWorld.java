@@ -7,6 +7,7 @@ import deco2800.thomas.entities.SwampFallenTree;
 import deco2800.thomas.entities.SwampPond;
 import deco2800.thomas.entities.SwampTreeLog;
 import deco2800.thomas.entities.SwampTreeStub;
+import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
@@ -35,14 +36,18 @@ public class SwampWorld extends AbstractWorld {
         this.generateStaticEntities();
 
         // Create the player entity
-        this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
+        this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
 
         // Provide available enemies to the EnemyManager
-        Orc swampOrc = new Orc(1, 0.05f, 100);
-        Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano_left");
-        EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc, volcanoOrc));
+        GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
+        Orc swampOrc = new Orc(1, 0.09f, 50, "orc_swamp");
+        EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc));
         GameManager.get().addManager(enemyManager);
+
+        Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_swamp");
+        enemyManager.setBoss(boss);
+        enemyManager.spawnBoss(23, -24);
     }
 
     @Override
@@ -151,7 +156,6 @@ public class SwampWorld extends AbstractWorld {
     }
 
     public void generateStaticEntities() {
-        this.setOrbEntity(new Orb(this.getTile(23, -24), "orb_2"));
         this.createPond();
         this.generateDeadTree();
         this.createTreeStub();

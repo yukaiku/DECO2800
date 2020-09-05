@@ -1,7 +1,9 @@
 package deco2800.thomas.worlds.tundra;
 
+import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Orb;
+import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.tundra.TundraCampfire;
 import deco2800.thomas.entities.environment.tundra.TundraRock;
@@ -31,16 +33,19 @@ public class TundraWorld extends AbstractWorld {
 
 	public TundraWorld(int width, int height) {
 		DatabaseManager.loadWorld(this, MAP_FILE);
-		this.setOrbEntity(new Orb(this.getTile(0, 0), "orb_3"));
 		generateStaticEntities();
-		this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.1f));
+		this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.15f));
 		addEntity(this.getPlayerEntity());
 
 		// Provide available enemies to the EnemyManager
-		Orc swampOrc = new Orc(1, 0.05f, 100);
-		Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano_left");
-		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc, volcanoOrc));
+		GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
+		Orc tundraOrc = new Orc(1, 0.05f, 100, "orc_tundra");
+		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(tundraOrc));
 		GameManager.get().addManager(enemyManager);
+
+		Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_tundra");
+		enemyManager.setBoss(boss);
+		enemyManager.spawnBoss(0, 0);
 	}
 
 	private void generateStaticEntities() {
@@ -101,6 +106,7 @@ public class TundraWorld extends AbstractWorld {
 
 	@Override
 	protected void generateTiles() {
+		// Provide available enemies to the EnemyManager
 	}
 
 	@Override

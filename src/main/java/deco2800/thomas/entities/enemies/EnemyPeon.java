@@ -61,6 +61,9 @@ public abstract class EnemyPeon extends Peon {
         this.target = target;
     }
 
+    public void attackPlayer() {
+    }
+
     /**
      * Construct a new enemy from the blueprint.
      * @return A new enemy

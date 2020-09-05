@@ -3,8 +3,10 @@ import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
+import deco2800.thomas.util.SquareVector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +24,7 @@ public class Orc extends Monster implements AggressiveEnemy {
 
     private final int detectRadius = 8;
     private final int discardRadius = 12;
+    private int attackRange = 2;
 
     public Orc(int height, float speed, int health) {
         super("Orc", "orc_swamp_right", height, speed, health, true);
@@ -52,7 +55,7 @@ public class Orc extends Monster implements AggressiveEnemy {
     /**
      * Stops targeting the player once they leave the awareness
      */
-    public void discardTarget() {
+    public void pursueTarget() {
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
         if (player != null && !EnemyUtil.playerInRadius(this, player,
                 discardRadius)) {
@@ -78,6 +81,13 @@ public class Orc extends Monster implements AggressiveEnemy {
     }
 
     @Override
+    public void attackPlayer() {
+        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange));
+            SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
+            setCombatTask(new MeleeAttackTask(this, origin, 2, 2, 10));
+    }
+
+    @Override
     public void onTick(long i) {
         // update target following path every 1 second (60 ticks)
         if (++tickFollowing > 60) {
@@ -85,6 +95,7 @@ public class Orc extends Monster implements AggressiveEnemy {
                 setMovementTask(new MovementTask(this, super.getTarget().
                         getPosition()));
                 setOrcTexture();
+                attackPlayer();
             }
             tickFollowing = 0;
         }
@@ -93,7 +104,7 @@ public class Orc extends Monster implements AggressiveEnemy {
             if (super.getTarget() == null) {
                 detectTarget();
             } else {
-                discardTarget();
+                pursueTarget();
             }
             tickDetecting = 0;
         }
@@ -102,6 +113,12 @@ public class Orc extends Monster implements AggressiveEnemy {
             getMovementTask().onTick(i);
             if (getMovementTask().isComplete()) {
                 setMovementTask(null);
+            }
+        }
+        if (getCombatTask() != null && getCombatTask().isAlive()) {
+            getCombatTask().onTick(i);
+            if (getCombatTask().isComplete()) {
+                setCombatTask(null);
             }
         }
     }

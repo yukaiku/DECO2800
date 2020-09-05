@@ -3,6 +3,7 @@ package deco2800.thomas.worlds.desert;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Orb;
+import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.desert.*;
 import deco2800.thomas.managers.*;
@@ -62,14 +63,17 @@ public class DesertWorld extends AbstractWorld {
     @Override
     protected void generateTiles() {
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
-        this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
+        this.setPlayerEntity(new PlayerPeon(8f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
 
-        // Provide available enemies to the EnemyManager
-        Orc swampOrc = new Orc(1, 0.05f, 100);
-        Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano_left");
-        EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc, volcanoOrc));
+        GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
+        Orc desertOrc = new Orc(1, 0.09f, 50, "orc_desert");
+        EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(desertOrc));
         GameManager.get().addManager(enemyManager);
+
+        Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_desert");
+        enemyManager.setBoss(boss);
+        enemyManager.spawnBoss(21, 6);
     }
 
     /**
@@ -81,9 +85,6 @@ public class DesertWorld extends AbstractWorld {
         TextureManager tex = new TextureManager();
         Random rand = new Random();
         int randIndex;
-
-        // add the orb to a specific location
-        this.setOrbEntity(new Orb(GameManager.get().getWorld().getTile(21, 6), "orb_1"));
 
         // Check each tile for specific textures which indicate that an entity must be added
         for (Tile tile : tiles) {

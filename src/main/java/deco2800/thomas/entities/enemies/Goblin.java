@@ -5,8 +5,10 @@ import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
+import deco2800.thomas.util.SquareVector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +22,7 @@ import java.util.Arrays;
  */
 public class Goblin extends Minion implements AggressiveEnemy {
     private int tickFollowing = 30;
+    private int attackRange = 2;
     private final int detectRadius = 12;
 
     public Goblin(int height, float speed, int health) {
@@ -57,12 +60,20 @@ public class Goblin extends Minion implements AggressiveEnemy {
     }
 
     @Override
+    public void attackPlayer() {
+        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange));
+            SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
+            setCombatTask(new MeleeAttackTask(this, origin, 1, 1, 5));
+    }
+
+    @Override
     public void onTick(long i){
         // update target following path every 0.5 second (30 ticks)
         if (++tickFollowing > 30) {
             if (super.getTarget() != null) {
                 setMovementTask(new MovementTask(this, super.getTarget().getPosition()));
                 setGoblinTexture();
+                attackPlayer();
             }
             tickFollowing = 0;
         }
@@ -71,6 +82,12 @@ public class Goblin extends Minion implements AggressiveEnemy {
             getMovementTask().onTick(i);
             if (getMovementTask().isComplete()) {
                 setMovementTask(null);
+            }
+        }
+        if (getCombatTask() != null && getCombatTask().isAlive()) {
+            getCombatTask().onTick(i);
+            if (getCombatTask().isComplete()) {
+                setCombatTask(null);
             }
         }
     }
