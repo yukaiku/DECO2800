@@ -1,10 +1,10 @@
 package deco2800.thomas.entities.Agent;
 
 import deco2800.thomas.Tickable;
+import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TaskPool;
 import deco2800.thomas.tasks.AbstractTask;
-import deco2800.thomas.entities.RenderConstants;
 
 public class Peon extends AgentEntity implements Tickable {
 	private transient AbstractTask movementTask;
@@ -36,6 +36,16 @@ public class Peon extends AgentEntity implements Tickable {
 			movementTask.onTick(i);
 		} else {
 			movementTask = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
+		}
+
+		// Update combat task
+		if (combatTask != null) {
+			if (combatTask.isComplete()) {
+				combatTask = null;
+			}
+			combatTask.onTick(i);
+		} else {
+			// Do nothing??
 		}
 	}
 
