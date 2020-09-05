@@ -3,10 +3,12 @@ package deco2800.thomas.entities.enemies;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.movement.MovementTask;
+import deco2800.thomas.worlds.AbstractWorld;
 
 import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
@@ -92,5 +94,7 @@ public class Dragon extends Boss implements PassiveEnemy {
     @Override
     public void death() {
         GameManager.getManagerFromInstance(EnemyManager.class).removeBoss();
+        AbstractWorld world = GameManager.get().getWorld();
+        world.setOrbEntity(new Orb(world.getTile(this.getCol(), this.getRow()), "orb_1"));
     }
 }

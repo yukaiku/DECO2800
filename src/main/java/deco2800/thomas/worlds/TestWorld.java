@@ -1,6 +1,7 @@
 package deco2800.thomas.worlds;
 import deco2800.thomas.entities.*;
 
+import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.Tree;
 import deco2800.thomas.managers.EnemyManager;
@@ -158,8 +159,6 @@ public class TestWorld extends AbstractWorld {
 
 		if (notGenerated) {
 			createBuildings();
-			//addTree(-1, -3f);
-			this.setOrbEntity(new Orb(this.getTile(0, 0), "orb_1"));
 			notGenerated = false;
 		}
 		super.onTick(i);

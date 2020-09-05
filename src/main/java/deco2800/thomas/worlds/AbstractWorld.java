@@ -117,7 +117,7 @@ public abstract class AbstractWorld implements Tickable {
 	 * Set the orbEntity and add it to the entities list
 	 * @param orb
 	 */
-	protected void setOrbEntity(Orb orb) {
+	public void setOrbEntity(Orb orb) {
 		this.orbEntity = orb;
 		this.entities.add(orb);
 	}
