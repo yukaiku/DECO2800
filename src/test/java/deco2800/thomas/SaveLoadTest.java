@@ -91,7 +91,6 @@ public class SaveLoadTest extends BaseGDXTest {
         newEntities.put(0, new PlayerPeon(1, 1, 1,10));
         
         List<AbstractEntity> testEntities = new ArrayList<>(w.getEntities());
-        System.out.println(testEntities.get(1));
         deco2800.thomas.managers.DatabaseManager.saveWorld(w);
         
         
