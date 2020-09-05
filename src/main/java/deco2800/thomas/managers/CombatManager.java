@@ -4,10 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.entities.attacks.Fireball;
-import deco2800.thomas.entities.attacks.Sword;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.TouchDownObserver;
-import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.AbstractWorld;
@@ -39,6 +37,7 @@ public class CombatManager extends AbstractManager implements TouchDownObserver,
                     clickedPosition[0], clickedPosition[1], 10, 0.5f, 60,
                     world.getPlayerEntity().getFaction());
         }
+        /*
         if (button == Input.Buttons.RIGHT) {
             float direction[] = new float[] {
                     destination.getCol() - world.getPlayerEntity().getCol(),
@@ -67,7 +66,7 @@ public class CombatManager extends AbstractManager implements TouchDownObserver,
                     Sword.spawn(MovementTask.Direction.DOWN,  30, 3, world.getPlayerEntity().getFaction());
                 }
             }
-        }
+        }*/
     }
 
 

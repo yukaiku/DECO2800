@@ -3,7 +3,6 @@ package deco2800.thomas.tasks;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
@@ -35,7 +34,7 @@ public class MeleeAttackTask extends AbstractTask {
      * @param height Height of bounds to test
      * @param damage Damage to apply
      */
-    public MeleeAttackTask(CombatEntity entity, SquareVector origin, float width, float height, int damage) {
+    public MeleeAttackTask(AbstractEntity entity, SquareVector origin, float width, float height, int damage) {
         super(entity);
         float dimensions[] = WorldUtil.colRowToWorldCords(width, height);
         this.bounds = new BoundingBox(origin, dimensions[0], dimensions[1]);
