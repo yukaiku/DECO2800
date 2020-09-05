@@ -96,6 +96,11 @@ public class GameManager {
 		managers.add(manager);
 	}
 
+	/** Removes a manager */
+	public void removeManager(AbstractManager manager) {
+		managers.remove(manager);
+	}
+
 	/**
 	 * Retrieves a manager from the list.
 	 * If the manager does not exist one will be created, added to the list and returned

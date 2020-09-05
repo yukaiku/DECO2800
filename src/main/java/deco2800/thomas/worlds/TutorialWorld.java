@@ -112,6 +112,8 @@ public class TutorialWorld extends AbstractWorld{
             // Remove guideline modal
             GameScreen.tutorial = false;
             GameManager.get().inTutorial = false;
+            // Remove the current map's enemy manager
+            GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
 
             // Set new world
             GameManager gameManager = GameManager.get();
