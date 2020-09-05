@@ -92,8 +92,6 @@ public abstract class AbstractWorld {
 		generateTileIndices();
 	}
 
-	protected abstract void generateWorld();
-
 	/**
 	 * Generates the tiles for the world
 	 */

@@ -33,11 +33,6 @@ public class TutorialWorld extends AbstractWorld{
     }
 
     @Override
-    protected void generateWorld() {
-
-    }
-
-    @Override
     protected void generateTiles() {
         for (int col = -TUTORIAL_WORLD_WIDTH; col < TUTORIAL_WORLD_WIDTH; col++) {
             for (int row = -TUTORIAL_WORLD_HEIGHT; row < TUTORIAL_WORLD_HEIGHT; row++) {

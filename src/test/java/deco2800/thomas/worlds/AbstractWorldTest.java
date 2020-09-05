@@ -36,11 +36,6 @@ public class AbstractWorldTest extends BaseGDXTest {
      */
     private class TestAbstractWorld extends AbstractWorld {
         @Override
-        protected void generateWorld() {
-
-        }
-
-        @Override
         protected void generateTiles() {
 
         }
