@@ -127,17 +127,24 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         if (isDead()) {
             death();
         }
-        if (getTask() != null && getTask().isAlive()) {
-            getTask().onTick(i);
+        if (getMovementTask() != null && getMovementTask().isAlive()) {
+            getMovementTask().onTick(i);
 
-            if (getTask().isComplete()) {
-                setTask(null);
+            if (getMovementTask().isComplete()) {
+                setMovementTask(null);
             }
         }
     }
 
     @Override
     public void notifyTouchDown(int screenX, int screenY, int pointer, int button) {
+        if (button == Input.Buttons.LEFT) {
+            //Set combat task to fireball task
+            // this.setCombatTask(new CombatTask);
+        } else if (button == Input.Buttons.RIGHT) {
+            // Set combat task to melee task
+            // this.setCombatTask(new meleeTask);
+        }
     }
 
     @Override
@@ -182,8 +189,8 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
             default:
                 break;
         }
-        if (this.getTask() == null || this.getTask().isComplete()) {
-            this.setTask(new MovementTask(this, new SquareVector(this.getCol(), this.getRow())));
+        if (this.getMovementTask() == null || this.getMovementTask().isComplete()) {
+            this.setMovementTask(new MovementTask(this, new SquareVector(this.getCol(), this.getRow())));
         }
     }
 

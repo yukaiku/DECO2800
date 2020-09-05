@@ -7,7 +7,8 @@ import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.entities.RenderConstants;
 
 public class Peon extends AgentEntity implements Tickable {
-	private transient AbstractTask task;
+	private transient AbstractTask movementTask;
+	private transient AbstractTask combatTask;
 
 	public Peon() {
 		super();
@@ -28,21 +29,29 @@ public class Peon extends AgentEntity implements Tickable {
 
 	@Override
 	public void onTick(long i) {
-		if (task != null && task.isAlive()) {
-			if (task.isComplete()) {
-				this.task = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
+		if (movementTask != null && movementTask.isAlive()) {
+			if (movementTask.isComplete()) {
+				this.movementTask = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
 			}
-			task.onTick(i);
+			movementTask.onTick(i);
 		} else {
-			task = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
+			movementTask = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
 		}
 	}
 
-	protected void setTask(AbstractTask task) {
-		this.task = task;
+	protected void setMovementTask(AbstractTask movementTask) {
+		this.movementTask = movementTask;
 	}
 
-	public AbstractTask getTask() {
-		return task;
+	public AbstractTask getMovementTask() {
+		return movementTask;
+	}
+
+	public AbstractTask getCombatTask() {
+		return combatTask;
+	}
+
+	public void setCombatTask(AbstractTask combatTask) {
+		this.combatTask = combatTask;
 	}
 }
