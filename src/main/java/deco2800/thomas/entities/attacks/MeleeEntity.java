@@ -14,37 +14,20 @@ public class MeleeEntity extends CombatEntity {
         super();
     }
 
-    public MeleeEntity (float col, float row, int renderOrder, int damage, int range) {
-        super(col, row, renderOrder, damage, EntityFaction.None);
-        this.range = range;
-    }
-
-    public int getRange() {
-        return range;
-    }
-
-    public void setRange(int range) {
-        this.range = range;
+    public MeleeEntity (float col, float row, int renderOrder, int damage, long lifetime, EntityFaction faction) {
+        super(col, row, renderOrder, damage, faction);
     }
 
     @Override
     public void onTick(long i) {
-        if(task != null) {
-            if(task.isComplete()) {
+        // Update combat task
+        if(combatTask != null) {
+            if(combatTask.isComplete()) {
                 GameManager.get().getManager(CombatManager.class).removeEntity(this);
             }
-            task.onTick(i);
+            combatTask.onTick(i);
         } else {
             GameManager.get().getManager(CombatManager.class).removeEntity(this);
         }
     }
-
-    public void setTask(MeleeAttackTask task) {
-        this.task = task;
-    }
-
-    public MeleeAttackTask getMovementTask() {
-        return task;
-    }
-
 }
