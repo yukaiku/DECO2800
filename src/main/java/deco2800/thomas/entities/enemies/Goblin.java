@@ -61,7 +61,7 @@ public class Goblin extends Minion implements AggressiveEnemy {
         // update target following path every 0.5 second (30 ticks)
         if (++tickFollowing > 30) {
             if (super.getTarget() != null) {
-                setMovementTask(new MovementTask(this, super.getTarget().getPosition()))
+                setMovementTask(new MovementTask(this, super.getTarget().getPosition()));
                 setGoblinTexture();
             }
             tickFollowing = 0;
