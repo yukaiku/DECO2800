@@ -1,6 +1,10 @@
 package deco2800.thomas.managers;
 
 import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.Environment.Rock;
+import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
@@ -12,6 +16,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import org.lwjgl.Sys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,14 +32,14 @@ import java.lang.reflect.InvocationTargetException;
 
 
 public final class DatabaseManager extends AbstractManager {
-    private static final Logger logger = LoggerFactory.getLogger(DatabaseManager.class);
-    private static final String TEXTURESTRING = "texture";
-    private static final String ROWPOSSTRING = "rowPos";
-    private static final String COLPOSSTRING = "colPos";
-    private static String saveName = "";
-    private static List<String> saveNameList = new ArrayList<>();
+	private static final Logger logger = LoggerFactory.getLogger(DatabaseManager.class);
+	private static final String TEXTURESTRING = "texture";
+	private static final String ROWPOSSTRING = "rowPos";
+	private static final String COLPOSSTRING = "colPos";
+	private static String saveName = "";
+	private static List<String> saveNameList = new ArrayList<>();
 
-    private DatabaseManager() {
+	private DatabaseManager() {
         /*
          This constructor is not called, but added to deal with the:
              Add a private constructor to hide the implicit public one.
@@ -247,9 +252,9 @@ public final class DatabaseManager extends AbstractManager {
             StringBuilder fullEntityName = new StringBuilder();
             fullEntityName.append("deco2800.thomas");
             HashMap<String, String> entityMap = new HashMap<>();
-            entityMap.put("player", "entities.PlayerPeon");
-            entityMap.put("rock", "entities.rock");
-            entityMap.put("tree", "entities.Tree");
+            entityMap.put("player", "entities.Agent.PlayerPeon");
+            entityMap.put("rock", "entities.Environment.Rock");
+            entityMap.put("tree", "entities.Environment.Tree");
             entityMap.put("staticEntityID", "entities.StaticEntity");
             entityMap.put("fireball", "entities.fireball");
 
@@ -373,7 +378,8 @@ public final class DatabaseManager extends AbstractManager {
             logger.error("Somehow loaded the JSON file, but it's somewhat corrupted", e);
         }
     }
-    private static void readEntities(JsonReader reader, Map<Integer, AbstractEntity> newEntities, CopyOnWriteArrayList<Tile> newTiles) throws IOException {
+    private static void readEntities(JsonReader reader, Map<Integer, AbstractEntity> newEntities,
+                                     CopyOnWriteArrayList<Tile> newTiles) throws IOException {
         while (reader.hasNext()) {
             if (!startArrayReading(reader, newTiles)) {
                 break;
@@ -421,8 +427,8 @@ public final class DatabaseManager extends AbstractManager {
         }
 
         // Load all entities and tiles from the database
-        world.queueTilesForDelete(world.getTileMap());
-        world.queueEntitiesForDelete(world.getEntities());
+        world.queueTilesForRemove(world.getTiles());
+        world.queueEntitiesForRemove(world.getEntities());
 
         Map<Integer, AbstractEntity> newEntities = new ConcurrentHashMap<>();
         CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
@@ -436,8 +442,8 @@ public final class DatabaseManager extends AbstractManager {
             return;
         }
 
-        world.setTileMap(newTiles);
-        world.generateNeighbours();
+        world.setTiles(newTiles);
+        world.assignTileNeighbours();
         world.setEntities(new ArrayList<AbstractEntity>(newEntities.values()));
         logger.info("Load succeeded");
         GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Loaded game from the database.");
@@ -508,11 +514,11 @@ public final class DatabaseManager extends AbstractManager {
 
         entireJsonAsString.append("\"tiles\": [");
 
-        int tileLength = world.getTileMap().size();
+        int tileLength = world.getTiles().size();
 
         for (int i = 0; i < tileLength; i++) {
-            Tile tile = world.getTileMap().get(i);
-            if (i == world.getTileMap().size() - 1) {
+            Tile tile = world.getTiles().get(i);
+            if (i == world.getTiles().size() - 1) {
                 generateJsonForTile(tile, entireJsonAsString, false);
             } else {
                 generateJsonForTile(tile, entireJsonAsString, true);

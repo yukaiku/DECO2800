@@ -2,13 +2,15 @@ package deco2800.thomas.tasks;
 
 import java.util.List;
 
-import deco2800.thomas.entities.AgentEntity;
-import deco2800.thomas.entities.PlayerPeon;
+
+import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PathFindingService;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
+
 
 public class MovementTask extends AbstractTask{
 	public enum Direction{

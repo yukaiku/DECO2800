@@ -1,5 +1,6 @@
-package deco2800.thomas.entities;
+package deco2800.thomas.entities.Agent;
 
+import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.observers.KeyDownObserver;
@@ -13,6 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserver, KeyUpObserver {
+
+    private static int orbCount = 0;
 
     // The health of the player
     private HealthTracker health;
@@ -58,6 +61,53 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         dialogues.put("died", "Too bad, you died, would you like to restart from your previous checkpoint or start anew?");
         dialogues.put("finish", "Congratulations hero, you have collected all the orbs and restored peace to the world.");
         return dialogues.get(target);
+    }
+
+    /**
+     *
+     * Quest Tracker function that tracks the orbs the user currently has
+     *
+     * @return orbCount the number of orbs the user currently has
+     */
+    public static int questTracker(){
+        return orbCount;
+    }
+
+    /**
+     *
+     * Resets the number of orb user has
+     * Notes:
+     * To be used on when a new game is run or upon death
+     *
+     */
+    public static void resetQuest(){
+        orbCount = 0;
+    }
+
+    /**
+     *
+     * Increase the number of orbs the user has
+     * Notes:
+     * To be used on when player picks up an orb
+     *
+     */
+    public static void increaseOrbs(){
+        if(orbCount < 5){
+            orbCount += 1;
+        }
+    }
+
+    /**
+     *
+     * Decrease the number of orbs the user has
+     * Notes:
+     * To be used on when player picks up an orb
+     *
+     */
+    public static void decreaseOrbs(){
+        if(orbCount > 1){
+            orbCount -= 1;
+        }
     }
 
     @Override

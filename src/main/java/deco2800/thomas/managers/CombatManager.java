@@ -24,7 +24,7 @@ public class CombatManager extends AbstractManager implements TouchDownObserver,
 
     public void removeEntity(CombatEntity entity) {
         world.removeEntity(entity);
-        world.deleteEntity(entity.getEntityID());
+        world.disposeEntity(entity.getEntityID());
     }
 
     @Override

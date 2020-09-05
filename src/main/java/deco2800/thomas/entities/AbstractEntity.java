@@ -18,10 +18,10 @@ import java.util.Objects;
  */
 public abstract class AbstractEntity implements Comparable<AbstractEntity>, Renderable {
 	private static final String ENTITY_ID_STRING = "entityID";
-	
+
 	@Expose
 	private String objectName = null;
-		
+
 	static int nextID = 0;
 
 	public static void resetID() {
@@ -38,30 +38,33 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	protected SquareVector position;
 
 	protected BoundingBox bounds;
-	
+
 	private int height;
 
 	private float colRenderLength;
 
 	private float rowRenderLength;
-	
+
 
 	@Expose
 	private int entityID = 0;
 
-	/** Whether an entity should trigger a collision. */
-	private boolean collidable = true; 
-	
-	private int renderOrder = 0; 
-	
+	/**
+	 * Whether an entity should trigger a collision.
+	 */
+	private boolean collidable = true;
+
+	private int renderOrder = 0;
+
 	/**
 	 * Constructor for an abstract entity.
+	 *
 	 * @param col the col position on the world
 	 * @param row the row position on the world
-     */
+	 */
 	public AbstractEntity(float col, float row, int renderOrder) {
 		this(col, row, renderOrder, 1f, 1f);
-		
+
 		this.setObjectName(ENTITY_ID_STRING);
 		this.renderOrder = renderOrder;
 	}
@@ -78,12 +81,13 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 
 	/**
 	 * Constructor for an abstract entity.
-	 * @param col the col position on the world
-	 * @param row the row position on the world
-	 * @param height the height position on the world
+	 *
+	 * @param col             the col position on the world
+	 * @param row             the row position on the world
+	 * @param height          the height position on the world
 	 * @param colRenderLength the rendered length in col direction
 	 * @param rowRenderLength the rendered length in the row direction
-     */
+	 */
 	public AbstractEntity(float col, float row, int height, float colRenderLength, float rowRenderLength) {
 		this.position = new SquareVector(col, row);
 		this.bounds = new BoundingBox(this.position, 0, 0);
@@ -109,16 +113,16 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 
 	/**
 	 * Get the Z position of this AbstractWorld Entity.
-	 * 
+	 *
 	 * @return The Z position
 	 */
 	public int getHeight() {
 		return height;
 	}
-	
+
 	/**
 	 * Sets the col coordinate for the entity.
-     */
+	 */
 	public void setCol(float col) {
 		this.position.setCol(col);
 	}
@@ -139,10 +143,11 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 
 	/**
 	 * Sets the position of the entity in the world.
-	 * @param col the x coordinate for the entity
-	 * @param row the y coordinate for the entity
-     * @param height the z coordinate for the entity
-     */
+	 *
+	 * @param col    the x coordinate for the entity
+	 * @param row    the y coordinate for the entity
+	 * @param height the z coordinate for the entity
+	 */
 	public void setPosition(float col, float row, int height) {
 		setCol(col);
 		setRow(row);
@@ -156,25 +161,26 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	public float getRowRenderWidth() {
 		return rowRenderLength;
 	}
-	
+
 	public void setRenderOrder(int newLevel) {
 		this.renderOrder = newLevel;
 	}
-	
+
 	public int getRenderOrder() {
 		return renderOrder;
-	} 
-	
-	@Override 
+	}
+
+	@Override
 	public int compareTo(AbstractEntity otherEntity) {
 		return this.renderOrder - otherEntity.getRenderOrder();
 	}
 
 	/**
 	 * Tests to see if the item collides with another entity in the world.
+	 *
 	 * @param entity the entity to test collision with
 	 * @return true if they collide, false if they do not collide
-     */
+	 */
 	public boolean collidesWith(AbstractEntity entity) {
 		//TODO: Implement this.
 		return false;
@@ -217,7 +223,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	/**
 	 * Gives the string for the texture of this entity.
 	 * This does not mean the texture is currently registered.
-	 * 
+	 *
 	 * @return texture string
 	 */
 	public String getTexture() {
@@ -227,7 +233,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	/**
 	 * Sets the texture string for this entity.
 	 * Check the texture is registered with the TextureRegister.
-	 * 
+	 *
 	 * @param texture String texture id
 	 */
 	public void setTexture(String texture) {
@@ -259,13 +265,13 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 
 	/**
 	 * Gets the distance from an abstract entity.
+	 *
 	 * @param e the abstract entity
 	 * @return the distance as a float
-     */
+	 */
 	public float distance(AbstractEntity e) {
 		return this.position.distance(e.position);
 	}
-	
 
 	public SquareVector getPosition() {
 		return position;
@@ -275,6 +281,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 
 	/**
 	 * Set objectID (If applicable).
+	 *
 	 * @param name of object
 	 */
 	public void setObjectName(String name) {
@@ -283,11 +290,13 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 
 	/**
 	 * Get objectID (If applicable).
+	 *
 	 * @return Name of object
 	 */
-	public String getObjectName() { return this.objectName; }
-	
-	
+	public String getObjectName() {
+		return this.objectName;
+	}
+
 	public int getEntityID() {
 		return entityID;
 	}
@@ -299,5 +308,5 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	public void dispose() {
 		GameManager.get().getManager(NetworkManager.class).deleteEntity(this);
 		GameManager.get().getWorld().getEntities().remove(this);
-	}	
+	}
 }

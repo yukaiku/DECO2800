@@ -37,19 +37,19 @@ public class GameManager {
 
 	// The UI skin being used by the game for libGDX elements.
 	private Skin skin;
-	
 
 
 	public float fps = 0;
 
 	public boolean debugMode = true;
 
+	public boolean inTutorial = false;
 	/**
 	 * Whether or not we render info over the tiles.
 	 */
 	// Whether or not we render the movement path for Players.
 	public boolean showCoords = false;
-	
+
 	// The game screen for a game that's currently running.
 	public boolean showPath = false;
 
@@ -139,66 +139,83 @@ public class GameManager {
 		return get().getManager(type);
 	}
 
-	
+
 	/* ------------------------------------------------------------------------
 	 * 				GETTERS AND SETTERS BELOW THIS COMMENT.
 	 * ------------------------------------------------------------------------ */
 
-	/**Get entities rendered count
+	/**
+	 * Get entities rendered count
+	 *
 	 * @return entities rendered count
 	 */
 	public int getEntitiesRendered() {
 		return this.entitiesRendered;
 	}
 
-	/** Set entities rendered to new amount
+	/**
+	 * Set entities rendered to new amount
+	 *
 	 * @param entitiesRendered the new amount
 	 */
 	public void setEntitiesRendered(int entitiesRendered) {
 		this.entitiesRendered = entitiesRendered;
 	}
-	/**Get number of entities
+
+	/**
+	 * Get number of entities
+	 *
 	 * @return entities count
 	 */
 	public int getEntitiesCount() {
 		return this.entitiesCount;
 	}
 
-	/** Set entities count to new amount
+	/**
+	 * Set entities count to new amount
+	 *
 	 * @param entitiesCount the new amount
 	 */
 	public void setEntitiesCount(int entitiesCount) {
 		this.entitiesCount = entitiesCount;
 	}
 
-	/**Get tiles rendered count
+	/**
+	 * Get tiles rendered count
+	 *
 	 * @return tiles rendered count
 	 */
 	public int getTilesRendered() {
 		return this.tilesRendered;
 	}
 
-	/** Set tiles rendered to new amount
+	/**
+	 * Set tiles rendered to new amount
+	 *
 	 * @param tilesRendered the new amount
 	 */
 	public void setTilesRendered(int tilesRendered) {
 		this.tilesRendered = tilesRendered;
 	}
 
-	/**Get number of tiles
+	/**
+	 * Get number of tiles
+	 *
 	 * @return tiles count
 	 */
 	public int getTilesCount() {
 		return this.tilesCount;
 	}
 
-	/** Set tiles count to new amount
+	/**
+	 * Set tiles count to new amount
+	 *
 	 * @param tilesCount the new amount
 	 */
 	public void setTilesCount(int tilesCount) {
 		this.tilesCount = tilesCount;
 	}
-	
+
 	/**
 	 * Sets the current game world
 	 *
@@ -267,7 +284,6 @@ public class GameManager {
 		}
 		gameWorld.onTick(0);
 	}
-	
-	
+
 
 }

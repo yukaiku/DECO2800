@@ -5,6 +5,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 /**
  * DesktopLauncher
+ *
  * @author Tim Hadwen
  */
 public class GameLauncher {
@@ -12,15 +13,16 @@ public class GameLauncher {
 	/**
 	 * Private constructor to hide the implicit constructor
 	 */
-	private GameLauncher () {
+	private GameLauncher() {
 	}
 
 	/**
 	 * Main function for the game.
+	 *
 	 * @param arg Command line arguments (we won't use these)
 	 */
 	@SuppressWarnings("unused")
-	public static void main (String[] arg) {
+	public static void main(String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		LwjglApplication app;
 		config.width = 1280;
