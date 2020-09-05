@@ -22,8 +22,8 @@ import java.util.Arrays;
  */
 public class Goblin extends Minion implements AggressiveEnemy {
     private int tickFollowing = 30;
+    // Range at which the goblin will attempt to melee attack the player
     private int attackRange = 2;
-    private final int detectRadius = 12;
 
     public Goblin(int height, float speed, int health) {
         super("Goblin", "goblin_swamp_right", height, speed, health);
@@ -36,14 +36,22 @@ public class Goblin extends Minion implements AggressiveEnemy {
         detectTarget();
     }
 
+    /**
+     * Locks onto the player and begins to pursue once it has been spawned
+     * by another enemy
+     */
     public void detectTarget() {
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
-        if (player != null && EnemyUtil.playerInRadius(this, player, detectRadius)) {
+        if (player != null) {
             super.setTarget(GameManager.get().getWorld().getPlayerEntity());
             setMovementTask(new MovementTask(this, super.getTarget().getPosition()));
         }
     }
 
+    /**
+     * Sets the appropriate texture based on the direction the goblin
+     * is moving
+     */
     private void setGoblinTexture() {
         if (getTarget() != null) {
             if (getTarget().getCol() < this.getCol()) {
@@ -61,9 +69,10 @@ public class Goblin extends Minion implements AggressiveEnemy {
 
     @Override
     public void attackPlayer() {
-        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange));
+        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange)) {
             SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
             setCombatTask(new MeleeAttackTask(this, origin, 1, 1, 5));
+        }
     }
 
     @Override

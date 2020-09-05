@@ -22,8 +22,11 @@ public class Orc extends Monster implements AggressiveEnemy {
     private int tickFollowing = 30;
     private int tickDetecting = 15;
 
+    // Range at which the orc will begin to chase the player
     private final int detectRadius = 8;
+    // Range at which the orc will stop chasing the player
     private final int discardRadius = 12;
+    // Range at which the orc will attempt to melee attack the player
     private int attackRange = 2;
 
     public Orc(int height, float speed, int health) {
@@ -70,6 +73,9 @@ public class Orc extends Monster implements AggressiveEnemy {
                 removeWildEnemy(this);
     }
 
+    /**
+     * Sets the texture of the orc based on the way it is moving
+     */
     private void setOrcTexture() {
         if (getTarget() != null) {
             if (getTarget().getCol() < this.getCol()) {
