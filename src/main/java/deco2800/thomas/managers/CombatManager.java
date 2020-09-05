@@ -14,17 +14,14 @@ import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.AbstractWorld;
 
 public class CombatManager extends AbstractManager implements TouchDownObserver, KeyDownObserver {
-    private AbstractWorld world;
-
-    public CombatManager(AbstractWorld world) {
+    public CombatManager() {
         GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
-        this.world = world;
     }
 
     public void removeEntity(CombatEntity entity) {
-        world.removeEntity(entity);
-        world.disposeEntity(entity.getEntityID());
+        GameManager.get().getWorld().removeEntity(entity);
+        GameManager.get().getWorld().disposeEntity(entity.getEntityID());
     }
 
     @Override
@@ -36,17 +33,11 @@ public class CombatManager extends AbstractManager implements TouchDownObserver,
             SquareVector destination = new SquareVector(clickedPosition[0], clickedPosition[1]);
 
             // Spawn a fireball
+            AbstractWorld world = GameManager.get().getWorld();
             Fireball.spawn(world.getPlayerEntity().getCol(), world.getPlayerEntity().getRow(),
                     clickedPosition[0], clickedPosition[1], 10, 0.5f, 60,
-                    world.getPlayerEntity().getFaction());
+                    GameManager.get().getWorld().getPlayerEntity().getFaction());
         }
-    }
-
-
-
-    private void calculateDestination(AbstractWorld world, float[] clickedPosition) {
-        world.getPlayerEntity().getCol();
-        world.getPlayerEntity().getRow();
     }
 
     @Override

@@ -1,11 +1,15 @@
 package deco2800.thomas.worlds.volcano;
 
 import deco2800.thomas.entities.*;
-import deco2800.thomas.entities.VolcanoBurningTree;
+import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.VolcanoDragonSkull;
 import deco2800.thomas.entities.VolcanoGraveYard;
 import deco2800.thomas.entities.VolcanoRuins;
+import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.entities.environment.volcano.VolcanoBurningTree;
+import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.DatabaseManager;
+import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
@@ -14,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -45,6 +50,16 @@ public class VolcanoWorld extends AbstractWorld {
         //Add player to game
         this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.1f));
         addEntity(this.getPlayerEntity());
+
+        // Provide available enemies to the EnemyManager
+        Orc swampOrc = new Orc(1, 0.05f, 100);
+        Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano_left");
+        EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc, volcanoOrc));
+        GameManager.get().addManager(enemyManager);
+
+        // Create a combatManager to create combatEntities on click
+//        CombatManager combatManager = new CombatManager(this);
+//        GameManager.get().addManager(combatManager);
     }
 
 

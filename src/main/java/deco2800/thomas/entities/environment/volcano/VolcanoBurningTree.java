@@ -1,10 +1,11 @@
-package deco2800.thomas.entities;
+package deco2800.thomas.entities.environment.volcano;
 
+import deco2800.thomas.entities.Agent.HasHealth;
+import deco2800.thomas.entities.RenderConstants;
+import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.worlds.Tile;
 
-import java.util.List;
-
-public class VolcanoBurningTree extends StaticEntity implements HasHealth{
+public class VolcanoBurningTree extends StaticEntity implements HasHealth {
     private static final String ENTITY_ID_STRING = "VolcanoBurningTree";
     private int health = 100;
 

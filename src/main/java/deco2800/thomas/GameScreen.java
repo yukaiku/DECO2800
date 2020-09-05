@@ -10,12 +10,12 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.environment.tundra.TundraTreeLog;
 import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.renderers.*;
 import deco2800.thomas.renderers.OverlayRenderer;
-import deco2800.thomas.renderers.PotateCamera;
 import deco2800.thomas.renderers.Renderer3D;
 import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
@@ -110,12 +110,17 @@ public class GameScreen implements Screen, KeyDownObserver {
 		if (startType == gameType.TUTORIAL) {
 			GameManager.get().inTutorial = true;
 			tutorial = true;
+			GameManager.get().setWorld(startType.method());
+		} else if (startType == gameType.NEW_GAME) {
+			GameManager.get().setWorld(startType.method());
+		} else {
+			GameManager.get().setNextWorld();
 		}
 		/* Create an example world for the engine */
 		this.game = game;
 
-//		GameManager.get().setWorld(startType.method());
-		GameManager.get().setNextWorld();
+		CombatManager combatManager = new CombatManager();
+		GameManager.get().addManager(combatManager);
 
 		// Initialize camera
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

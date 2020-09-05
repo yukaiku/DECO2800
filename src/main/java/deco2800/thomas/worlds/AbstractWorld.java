@@ -398,7 +398,9 @@ public abstract class AbstractWorld implements Tickable {
 	}
 
 	public void onTick(long i) {
-		this.checkObtainedOrb();
+		if (!GameManager.get().inTutorial) {
+			this.checkObtainedOrb();
+		}
 
 		for (AbstractEntity entity : entitiesToRemove) {
 			entities.remove(entity);
@@ -432,10 +434,6 @@ public abstract class AbstractWorld implements Tickable {
         return playerEntity;
     }
 
-	public AgentEntity getPlayerEntity() {
-		return playerEntity;
-	}
-
 	public void setPlayerEntity(AgentEntity playerEntity) {
 		this.playerEntity = playerEntity;
 	}
@@ -455,7 +453,4 @@ public abstract class AbstractWorld implements Tickable {
 	public int getHeight() {
 		return this.height;
 	}
-    public void setPlayerEntity(AgentEntity playerEntity) {
-        this.playerEntity = playerEntity;
-    }
 }

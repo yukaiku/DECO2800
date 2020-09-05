@@ -3,8 +3,6 @@ package deco2800.thomas.managers;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.Environment.Rock;
-import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.worlds.AbstractWorld;
@@ -17,7 +15,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-import org.lwjgl.Sys;
 import deco2800.thomas.worlds.desert.CactusTile;
 import deco2800.thomas.worlds.desert.QuicksandTile;
 import deco2800.thomas.worlds.volcano.VolcanoBurnTile;
@@ -220,17 +217,13 @@ public final class DatabaseManager extends AbstractManager {
 
 	private static AbstractEntity resolveEntityToLoad(String entityObjectName) {
 		try {
-			if (entityObjectName.startsWith(Rock.ENTITY_ID_STRING)) {
-				Rock rock = new Rock();
-				rock.setObjectName(entityObjectName);
-				return rock;
-			}
-
-			if (entityObjectName.startsWith(Tree.ENTITY_ID_STRING)) {
-				Tree tree = new Tree();
-				tree.setObjectName(entityObjectName);
-				return tree;
-			}
+            for (String s:Arrays.asList("rock")){
+                if (entityObjectName.startsWith(s)){
+                    Rock create = new Rock();
+                    create.setObjectName(entityObjectName);
+                    return (AbstractEntity) create;
+                }
+            }
 
             for (String s:Arrays.asList("staticEntityID")){
                 if (entityObjectName.startsWith(s)){

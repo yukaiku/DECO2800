@@ -1,8 +1,8 @@
 package deco2800.thomas.worlds;
 
 import deco2800.thomas.entities.*;
-import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.entities.environment.Tree;
 import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -14,10 +14,6 @@ import java.util.Random;
 
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.Environment.Rock;
-import deco2800.thomas.entities.Environment.Tree;
-import deco2800.thomas.entities.NPC.NonPlayablePeon;
-import deco2800.thomas.managers.NonPlayablePeonManager;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,11 +22,6 @@ import org.slf4j.LoggerFactory;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Part;
 import deco2800.thomas.entities.StaticEntity;
-import deco2800.thomas.entities.Environment.Tree;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.Environment.Rock;
-import deco2800.thomas.managers.EnemyManager;
-import deco2800.thomas.managers.GameManager;
 import java.util.*;
 
 @SuppressWarnings("unused")
@@ -106,7 +97,7 @@ public class TestWorld extends AbstractWorld {
 	private void addTree(float col, float row) {
 		Map<SquareVector, String> textures = new HashMap<SquareVector, String>();
 		Tile t = GameManager.get().getWorld().getTile(col, row);
-		Tree tree = new  Tree(t, true);
+		Tree tree = new Tree(t, true);
 		entities.add(tree);
 	}
 
@@ -162,13 +153,12 @@ public class TestWorld extends AbstractWorld {
 //		enemyManager.spawnBoss(-2, 0);
 
 		// Create a combatManager to create combatEntities on click
-		CombatManager combatManager = new CombatManager(this);
-		GameManager.get().addManager(combatManager);
+//		CombatManager combatManager = new CombatManager(this);
+//		GameManager.get().addManager(combatManager);
 	}
 
 	@Override
 	public void onTick(long i) {
-		super.onTick(i);
 		//addTree(0f, 0f);
 		for (AbstractEntity e : this.getEntities()) {
 			e.onTick(0);
@@ -177,9 +167,10 @@ public class TestWorld extends AbstractWorld {
 		if (notGenerated) {
 			createBuildings();
 			//addTree(-1, -3f);
-
+			this.setOrbEntity(new Orb(this.getTile(0, 0), "orb_1"));
 			notGenerated = false;
 		}
+		super.onTick(i);
 	}
 
 }

@@ -1,18 +1,24 @@
 package deco2800.thomas.worlds.swamp;
 
 import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.SwampDeadTree;
 import deco2800.thomas.entities.SwampFallenTree;
 import deco2800.thomas.entities.SwampPond;
 import deco2800.thomas.entities.SwampTreeLog;
 import deco2800.thomas.entities.SwampTreeStub;
+import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.DatabaseManager;
+import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.TestWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import deco2800.thomas.managers.GameManager;
+
+import java.util.Arrays;
 
 @SuppressWarnings("unused")
 public class SwampWorld extends AbstractWorld {
@@ -28,9 +34,20 @@ public class SwampWorld extends AbstractWorld {
         this.generateTileMap();
         this.generateTileIndices();
         this.generateStaticEntities();
+
         // Create the player entity
         this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
         addEntity(this.getPlayerEntity());
+
+        // Provide available enemies to the EnemyManager
+        Orc swampOrc = new Orc(1, 0.05f, 100);
+        Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano_left");
+        EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc, volcanoOrc));
+        GameManager.get().addManager(enemyManager);
+
+        // Create a combatManager to create combatEntities on click
+//        CombatManager combatManager = new CombatManager(this);
+//        GameManager.get().addManager(combatManager);
     }
 
     @Override

@@ -1,20 +1,17 @@
 package deco2800.thomas.worlds.desert;
 
 import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Orb;
-import deco2800.thomas.entities.PlayerPeon;
+import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.desert.*;
-import deco2800.thomas.managers.DatabaseManager;
-import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.managers.*;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
-import org.lwjgl.Sys;
 
-import java.util.List;
+import java.util.Arrays;
 import java.util.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * The Desert World of the game.
@@ -64,11 +61,19 @@ public class DesertWorld extends AbstractWorld {
      */
     @Override
     protected void generateTiles() {
-        System.out.println("in generateTiles()");
-        System.out.flush();
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
         this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
         addEntity(this.getPlayerEntity());
+
+        // Provide available enemies to the EnemyManager
+        Orc swampOrc = new Orc(1, 0.05f, 100);
+        Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano_left");
+        EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc, volcanoOrc));
+        GameManager.get().addManager(enemyManager);
+
+        // Create a combatManager to create combatEntities on click
+//        CombatManager combatManager = new CombatManager(this);
+//        GameManager.get().addManager(combatManager);
     }
 
     /**
@@ -153,6 +158,9 @@ public class DesertWorld extends AbstractWorld {
             float[] position = WorldUtil.colRowToWorldCords(5f, -20f);
             GameManager.get().getCamera().position.set(position[0], position[1], 0);
             GameManager.get().getCamera().update();
+
+            System.out.println(getTiles());
+            System.out.flush();
         }
 
         super.onTick(i);
