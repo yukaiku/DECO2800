@@ -131,35 +131,6 @@ public class TextureManager extends AbstractManager {
             textureMap.put("fireball_right", new Texture("resources/combat/fireball_right.png"));
 
         } catch (Exception e) {
-=======
-			//health & game over screen
-			textureMap.put("health0", new Texture("resources/healthResources/health-bar-0.png"));
-			textureMap.put("health5", new Texture("resources/healthResources/health-bar-5.png"));
-			textureMap.put("health10", new Texture("resources/healthResources/health-bar-10.png"));
-			textureMap.put("health15", new Texture("resources/healthResources/health-bar-15.png"));
-			textureMap.put("health20", new Texture("resources/healthResources/health-bar-20.png"));
-			textureMap.put("health25", new Texture("resources/healthResources/health-bar-25.png"));
-			textureMap.put("health30", new Texture("resources/healthResources/health-bar-30.png"));
-			textureMap.put("health35", new Texture("resources/healthResources/health-bar-35.png"));
-			textureMap.put("health40", new Texture("resources/healthResources/health-bar-40.png"));
-			textureMap.put("health45", new Texture("resources/healthResources/health-bar-45.png"));
-			textureMap.put("health50", new Texture("resources/healthResources/health-bar-50.png"));
-			textureMap.put("health55", new Texture("resources/healthResources/health-bar-55.png"));
-			textureMap.put("health60", new Texture("resources/healthResources/health-bar-60.png"));
-			textureMap.put("health65", new Texture("resources/healthResources/health-bar-65.png"));
-			textureMap.put("health70", new Texture("resources/healthResources/health-bar-70.png"));
-			textureMap.put("health75", new Texture("resources/healthResources/health-bar-75.png"));
-			textureMap.put("health80", new Texture("resources/healthResources/health-bar-80.png"));
-			textureMap.put("health85", new Texture("resources/healthResources/health-bar-85.png"));
-			textureMap.put("health90", new Texture("resources/healthResources/health-bar-90.png"));
-			textureMap.put("health95", new Texture("resources/healthResources/health-bar-95.png"));
-			textureMap.put("health100", new Texture("resources/healthResources/health-bar-100.png"));
-			textureMap.put("game-over", new Texture("resources/healthResources/game-over.png"));
-
-			// Attacks
-			textureMap.put("fireball_right", new Texture("resources/combat/fireball_right.png"));
-
-		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		addEnvironmentTextures();
