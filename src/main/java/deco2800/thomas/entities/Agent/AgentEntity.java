@@ -13,8 +13,7 @@ public abstract class AgentEntity extends AbstractEntity {
 	protected float speed;
 	private MovementTask.Direction movingDirection = MovementTask.Direction.NONE;
 	protected HealthTracker health;
-
-
+	
 	public AgentEntity(float col, float row, int renderOrder, float speed, int health) {
 		super(col, row, renderOrder);
 		this.speed = speed;

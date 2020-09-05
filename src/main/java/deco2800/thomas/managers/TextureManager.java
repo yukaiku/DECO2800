@@ -48,14 +48,11 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("background", new Texture("resources/background.jpg"));
 			textureMap.put("spacman_ded", new Texture("resources/spacman.png"));
 			textureMap.put("spacman_blue", new Texture("resources/spacman_blue.png"));
-
             textureMap.put("grass_0", new Texture("resources/square.png"));
             textureMap.put("grass_1", new Texture("resources/square2.png"));
             textureMap.put("grass_2", new Texture("resources/square3.png"));
- 
             textureMap.put("selection", new Texture("resources/square-select.png"));
             textureMap.put("path", new Texture("resources/yellow_selection.png"));
-
             textureMap.put("buildingA", new Texture("resources/buildingA.png"));
             textureMap.put("buildingB", new Texture("resources/building3x2.png"));
 
@@ -70,34 +67,16 @@ public class TextureManager extends AbstractManager {
             textureMap.put("projectile", new Texture("resources/rocks.png"));
 
             // enemies
-            textureMap.put("goblinLeft", new Texture("resources/goblinLeft.png"));
-            textureMap.put("goblinRight", new Texture("resources/goblinRight.png"));
-            textureMap.put("dragon", new Texture("resources/dragon.png"));
-            textureMap.put("spacman_red", new Texture("resources/spacman_red.png"));
-            textureMap.put("spatman_blue", new Texture("resources/spatman_blue.png"));
-            textureMap.put("spatman_green", new Texture("resources/spatman_green.png"));
-            textureMap.put("spatman_red", new Texture("resources/spatman_red.png"));
-            textureMap.put("spatman_yellow", new Texture("resources/spatman_yellow.png"));
-			textureMap.put("grass_0", new Texture("resources/square.png"));
-			textureMap.put("grass_1", new Texture("resources/square2.png"));
-			textureMap.put("grass_2", new Texture("resources/square3.png"));
+            textureMap.put("goblin_swamp_left", new Texture("resources/enemies/goblin_swamp_left.png"));
+            textureMap.put("goblin_swamp_right", new Texture("resources/enemies/goblin_swamp_right.png"));
+            textureMap.put("orc_swamp_left", new Texture("resources/enemies/orc_swamp_left.png"));
+            textureMap.put("orc_swamp_right", new Texture("resources/enemies/orc_swamp_right.png"));
+            textureMap.put("orc_volcano_left", new Texture("resources/enemies/orc_volcano_left.png"));
+            textureMap.put("orc_volcano_right", new Texture("resources/enemies/orc_volcano_right.png"));
+            textureMap.put("dummy", new Texture("resources/enemies/dummy.png"));
+            textureMap.put("elder_dragon", new Texture("resources/enemies/elder_dragon.png"));
 
-			textureMap.put("selection", new Texture("resources/square-select.png"));
-			textureMap.put("path", new Texture("resources/yellow_selection.png"));
-
-
-			textureMap.put("buildingB", new Texture("resources/building3x2.png"));
-
-			textureMap.put("buildingA", new Texture("resources/buildingA.png"));
-			textureMap.put("tree", new Texture("resources/tree.png"));
-			textureMap.put("rock", new Texture("resources/rock_L.png"));
-			textureMap.put("fenceN-S", new Texture("resources/fence_N-S.png"));
-			textureMap.put("fenceE-W", new Texture("resources/fence_E-W.png"));
-			textureMap.put("fenceN-W", new Texture("resources/fence_N-W.png"));
-			textureMap.put("fenceS-W", new Texture("resources/fence_S-W.png"));
-			textureMap.put("fenceN-E", new Texture("resources/fence_N-E.png"));
-			textureMap.put("fenceS-E", new Texture("resources/fence_S-E.png"));
-
+            // storyline
 			textureMap.put("stone_floor", new Texture("resources/tutorial/tutorial-tile-design-opt1.png"));
 			textureMap.put("target", new Texture("resources/tutorial/tutorial-decoration-target.png"));
 			textureMap.put("portal", new Texture("resources/tutorial/tutorial-decoration-portal.png"));
