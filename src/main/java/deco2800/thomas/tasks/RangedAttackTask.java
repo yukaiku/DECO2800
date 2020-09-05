@@ -50,7 +50,7 @@ public class RangedAttackTask extends AbstractTask{
 
         if (!collidingEntities.isEmpty()) {
             for (AbstractEntity e : collidingEntities) {
-                if (e.getObjectName() == "Orc") {
+                if (e instanceof EnemyPeon) {
                     applyDamage(((EnemyPeon) e));
                 }
                 if (e instanceof StaticEntity) {
