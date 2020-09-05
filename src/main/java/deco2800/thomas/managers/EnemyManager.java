@@ -1,7 +1,11 @@
 package deco2800.thomas.managers;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.Boss;
+import deco2800.thomas.entities.enemies.Goblin;
+import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.worlds.AbstractWorld;
 
 import java.util.ArrayList;
@@ -19,7 +23,7 @@ import java.util.Random;
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/enemy-manager
  */
-public class EnemyManager extends TickableManager {
+public class EnemyManager extends TickableManager implements KeyDownObserver {
     // the target world
     private final AbstractWorld world;
 
@@ -67,6 +71,7 @@ public class EnemyManager extends TickableManager {
         this.spawnRangeMin = 10;
         this.spawnRangeMax = 16;
         this.random = new Random();
+        GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
     }
 
     /**
@@ -205,15 +210,15 @@ public class EnemyManager extends TickableManager {
     /** Removes a wild enemy (when it's dead or de-spawned) @require The enemy exists */
     public void removeWildEnemy(EnemyPeon wildEnemy) {
         wildEnemiesAlive.remove(wildEnemy);
-        world.disposeEntity(wildEnemy.getEntityID());
         world.removeEntity(wildEnemy);
+        world.disposeEntity(wildEnemy.getEntityID());
     }
 
     /** Removes a special enemy (when it's dead or de-spawned) @require The enemy exists */
     public void removeSpecialEnemy(EnemyPeon specialEnemy) {
         specialEnemiesAlive.remove(specialEnemy);
-        world.disposeEntity(specialEnemy.getEntityID());
         world.removeEntity(specialEnemy);
+        world.disposeEntity(specialEnemy.getEntityID());
     }
 
     /** Remove the boss after being defeated. */
@@ -242,6 +247,34 @@ public class EnemyManager extends TickableManager {
     /** Get the world name the manager is operating on */
     public String getWorldName() {
         return world.toString().substring(world.toString().lastIndexOf('.') + 1);
+    }
+
+    /**
+     * Keyboard inputs (in debug mode only)
+     * @param keycode the key being pressed
+     */
+    @Override
+    public void notifyKeyDown(int keycode) {
+        if (GameManager.get().debugMode) {
+            if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT)) {
+                if (keycode == Input.Keys.P) {
+                    // Ctrl + P: Toggle wild enemy spawning
+                    wildSpawning = !wildSpawning;
+                } else if (keycode == Input.Keys.K) {
+                    // Ctrl + K: kill all wild and special enemies (excludes boss)
+                    for (EnemyPeon enemy : new ArrayList<>(wildEnemiesAlive)) {
+                        removeWildEnemy(enemy);
+                    }
+                    for (EnemyPeon enemy : new ArrayList<>(specialEnemiesAlive)) {
+                        removeSpecialEnemy(enemy);
+                    }
+                } else if (keycode == Input.Keys.S) {
+                    // Ctrl + S: Spawn a special enemy
+                    Goblin goblin = new Goblin(1, 1,10);
+                    spawnSpecialEnemy(goblin, 0, 0);
+                }
+            }
+        }
     }
 
     @Override

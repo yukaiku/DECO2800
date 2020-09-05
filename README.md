@@ -15,5 +15,12 @@
 
 **T** - Opens chat window
 
+#### Enemies (In debug mode only)
+`Ctrl` + `P` - Toggle wild enemy spawning
+
+`Ctrl` + `S` - Spawn a new goblin
+
+`Ctrl` + `K` - Kill all wild and special enemies (excludes boss)
+
 ### Chat Commands
 `/duck` - Spawns 1000 peons
