@@ -1,6 +1,5 @@
 package deco2800.thomas.entities.attacks;
 
-import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.GameManager;
