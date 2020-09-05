@@ -37,6 +37,17 @@ public class TextureManager extends AbstractManager {
 	 * A HashMap of all textures with string keys
 	 */
 	private Map<String, Texture> textureMap = new HashMap<>();
+    /**
+     * Constructor
+     * Currently loads up all the textures but probably shouldn't/doesn't
+     * need to.
+     */
+    public TextureManager() {
+        try {
+            textureMap.put("background", new Texture("resources/background.jpg"));
+            textureMap.put("spacman_ded", new Texture("resources/spacman.png"));
+            textureMap.put("spacman_blue", new Texture("resources/spacman_blue.png"));
+            textureMap.put("basic_npc", new Texture("resources/basic_npc.jpg"));
 
 	/**
 	 * Constructor
