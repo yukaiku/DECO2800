@@ -10,6 +10,8 @@ import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
 
 import java.lang.reflect.GenericArrayType;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A class that defines an implementation of a Dragon.
@@ -25,9 +27,15 @@ public class Dragon extends Boss implements PassiveEnemy {
         super("Elder Dragon", "elder_dragon", height, speed, health);
     }
 
+    public Dragon(int height, float speed, int health, String texture) {
+        this(height, speed, health);
+        super.setTextureDirections(new ArrayList<>(Arrays.asList(texture, texture + "_left", texture + "_right")));
+        this.setTexture(texture + "_left");
+    }
+
     public void summonGoblin() {
         if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() < 10) {
-            Goblin goblin = new Goblin(1, 0.1f, 20, "goblin_swamp");
+            Goblin goblin = new Goblin(1, 0.1f, 20, "goblin" + getTextureDirection(TEXTURE_BASE).substring(6));
             GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(goblin, this.getCol() + 1, this.getRow() + 2);
         }
     }
@@ -49,6 +57,15 @@ public class Dragon extends Boss implements PassiveEnemy {
                     super.getTarget().getPosition()));
         }
     }
+    private void setDragonTexture() {
+        if (getTarget() != null) {
+            if (getTarget().getCol() < this.getCol()) {
+                setTexture(getTextureDirection(TEXTURE_LEFT));
+            } else {
+                setTexture(getTextureDirection(TEXTURE_RIGHT));
+            }
+        }
+    }
 
     @Override
     public void onTick(long i) {
@@ -60,6 +77,7 @@ public class Dragon extends Boss implements PassiveEnemy {
                         getTarget().getRow(), 10, 0.2f, 60, EntityFaction.Evil);
                 setTask(new MovementTask(this, super.getTarget().
                         getPosition()));
+                setDragonTexture();
             }
             tickFollowing = 0;
         }

@@ -1,11 +1,15 @@
 package deco2800.thomas.entities.enemies;
 
+import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A class that defines an implementation of a minion enemy type called a Goblin.
@@ -24,14 +28,23 @@ public class Goblin extends Minion implements AggressiveEnemy {
 
     public Goblin(int height, float speed, int health, String texture) {
         this(height, speed, health);
-        this.setTexture(texture);
+        super.setTextureDirections(new ArrayList<>(Arrays.asList(texture, texture + "_left", texture + "_right")));
+        this.setTexture(texture + "_right");
+        detectTarget();
     }
 
     public void detectTarget() {
-        AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
-        if (player != null && EnemyUtil.playerInRadius(this, player, detectRadius)) {
-            super.setTarget((PlayerPeon) player);
-            setTask(new MovementTask(this, super.getTarget().getPosition()));
+        super.setTarget(GameManager.get().getWorld().getPlayerEntity());
+        setTask(new MovementTask(this, super.getTarget().getPosition()));
+    }
+
+    private void setGoblinTexture() {
+        if (getTarget() != null) {
+            if (getTarget().getCol() < this.getCol()) {
+                setTexture(getTextureDirection(TEXTURE_LEFT));
+            } else {
+                setTexture(getTextureDirection(TEXTURE_RIGHT));
+            }
         }
     }
 
@@ -46,12 +59,9 @@ public class Goblin extends Minion implements AggressiveEnemy {
         if (++tickFollowing > 30) {
             if (super.getTarget() != null) {
                 setTask(new MovementTask(this, super.getTarget().getPosition()));
+                setGoblinTexture();
             }
             tickFollowing = 0;
-        }
-        // detect targets every tick
-        if (super.getTarget() == null) {
-            detectTarget();
         }
         // execute tasks
         if (getTask() != null && getTask().isAlive()) {
