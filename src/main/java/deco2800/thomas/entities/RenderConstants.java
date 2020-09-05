@@ -20,4 +20,9 @@ public class RenderConstants {
 	public static final int SWAMP_FALLEN_TREE = 9;
 	public static final int SWAMP_TREE_STUB = 10;
 	public static final int SWAMP_TREE_LOG = 11;
+
+	// Entities in Tundra Zone
+	public static final int TUNDRA_CAMPFIRE = 1;
+	public static final int TUNDRA_TREE_LOG = 1;
+	public static final int TUNDRA_ROCK = 1;
 }

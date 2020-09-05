@@ -54,11 +54,19 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("swamp_3", new Texture("resources/environment/swamp/tile/swamp_3.png"));
 			textureMap.put("swamp_4", new Texture("resources/environment/swamp/tile/swamp_4.png"));
 
-			textureMap.put("tundra-tile-1", new Texture("resources/environment/tundra/tundra-tile-1.png"));
-			textureMap.put("tundra-tile-2", new Texture("resources/environment/tundra/tundra-tile-2.png"));
-			textureMap.put("tundra-tile-3", new Texture("resources/environment/tundra/tundra-tile-3.png"));
-			textureMap.put("tundra-tile-4", new Texture("resources/environment/tundra/tundra-tile-4.png"));
-			textureMap.put("tundra-tile-5", new Texture("resources/environment/tundra/tundra-tile-5.png"));
+			textureMap.put("tundra-tile-1", new Texture("resources/environment/tundra/tiles/tundra-tile-1.png"));
+			textureMap.put("tundra-tile-2", new Texture("resources/environment/tundra/tiles/tundra-tile-2.png"));
+			textureMap.put("tundra-tile-3", new Texture("resources/environment/tundra/tiles/tundra-tile-3.png"));
+			textureMap.put("tundra-tile-4", new Texture("resources/environment/tundra/tiles/tundra-tile-4.png"));
+			textureMap.put("tundra-tile-5", new Texture("resources/environment/tundra/tiles/tundra-tile-5.png"));
+			textureMap.put("tundra-campfire", new Texture("resources/environment/tundra/entities/campfire.png"));
+			textureMap.put("tundra-tree-log", new Texture("resources/environment/tundra/entities/tree-log.png"));
+			textureMap.put("tundra-rock-1", new Texture("resources/environment/tundra/entities/rock-1.png"));
+			textureMap.put("tundra-rock-2", new Texture("resources/environment/tundra/entities/rock-2.png"));
+			textureMap.put("tundra-rock-3", new Texture("resources/environment/tundra/entities/rock-3.png"));
+			textureMap.put("tundra-rock-4", new Texture("resources/environment/tundra/entities/rock-4.png"));
+			textureMap.put("tundra-rock-5", new Texture("resources/environment/tundra/entities/rock-5.png"));
+
 
 			textureMap.put("grass_0", new Texture("resources/square.png"));
 			textureMap.put("grass_1", new Texture("resources/square2.png"));
