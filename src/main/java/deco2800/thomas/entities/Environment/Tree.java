@@ -16,7 +16,7 @@ public class Tree extends StaticEntity implements Tickable {
 	private final Logger LOG = LoggerFactory.getLogger(Tree.class);
 
 	AbstractWorld world;
-	
+
 
 	public Tree(float col, float row, int renderOrder, List<Part> parts) {
 		super(col, row, renderOrder, parts);
@@ -25,7 +25,7 @@ public class Tree extends StaticEntity implements Tickable {
 	}
 
 	public Tree(Tile t, boolean obstructed) {
-        super(t, RenderConstants.TREE_RENDER, "tree", obstructed);
+		super(t, RenderConstants.TREE_RENDER, "tree", obstructed);
 	}
 
 
@@ -63,7 +63,7 @@ public class Tree extends StaticEntity implements Tickable {
 
 	/**
 	 * Animates the tree on every game tick.
-
+	 *
 	 * @param tick current game tick
 	 */
 	@Override

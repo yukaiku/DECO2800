@@ -5,6 +5,8 @@ import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Environment.Rock;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
+import deco2800.thomas.entities.attacks.Fireball;
+import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.util.SquareVector;
@@ -31,14 +33,14 @@ import java.lang.reflect.InvocationTargetException;
 
 
 public final class DatabaseManager extends AbstractManager {
-    private static final Logger logger = LoggerFactory.getLogger(DatabaseManager.class);
-    private static final String TEXTURESTRING = "texture";
-    private static final String ROWPOSSTRING = "rowPos";
-    private static final String COLPOSSTRING = "colPos";
-    private static String saveName = "";
-    private static List<String> saveNameList = new ArrayList<>();
+	private static final Logger logger = LoggerFactory.getLogger(DatabaseManager.class);
+	private static final String TEXTURESTRING = "texture";
+	private static final String ROWPOSSTRING = "rowPos";
+	private static final String COLPOSSTRING = "colPos";
+	private static String saveName = "";
+	private static List<String> saveNameList = new ArrayList<>();
 
-    private DatabaseManager() {
+	private DatabaseManager() {
         /*
          This constructor is not called, but added to deal with the:
              Add a private constructor to hide the implicit public one.
@@ -220,7 +222,7 @@ public final class DatabaseManager extends AbstractManager {
                 if (entityObjectName.startsWith(s)){ 
                     Rock create = new Rock();
                     create.setObjectName(entityObjectName); 
-                    return create;
+                    return (AbstractEntity) create;
                 }
             }
 
@@ -228,18 +230,33 @@ public final class DatabaseManager extends AbstractManager {
                 if (entityObjectName.startsWith(s)){ 
                     StaticEntity create = new StaticEntity();
                     create.setObjectName(entityObjectName); 
-                    return create;
+                    return (AbstractEntity) create;
                 }
             }
             
             for (String s:Arrays.asList("playerPeon")){
                 if (entityObjectName.startsWith(s)){
-                     PlayerPeon create = new PlayerPeon(1,1,1);
+                     PlayerPeon create = new PlayerPeon(1,1,1, 1);
                      create.setObjectName(entityObjectName); 
-                     return create;
+                     return (AbstractEntity) create;
+                }
+            }
+            
+            for (String s:Arrays.asList("combat")) {
+                if (entityObjectName.startsWith(s)){
+                    SquareVector destination = new SquareVector(0,0);
+                    Fireball create = new Fireball(1, 5, 1, 1, EntityFaction.Ally);
+                    return (AbstractEntity) create;
                 }
             }
 
+            for (String s:Arrays.asList("Elder Dragon")) {
+                if (entityObjectName.startsWith(s)){
+                    Dragon create = new Dragon(2, 0.3f, 2000);
+                    return (AbstractEntity) create;
+                }
+            }
+            
             StringBuilder fullEntityName = new StringBuilder();
             fullEntityName.append("deco2800.thomas");
             HashMap<String, String> entityMap = new HashMap<>();
@@ -247,13 +264,13 @@ public final class DatabaseManager extends AbstractManager {
             entityMap.put("rock", "entities.Environment.Rock");
             entityMap.put("tree", "entities.Environment.Tree");
             entityMap.put("staticEntityID", "entities.StaticEntity");
+            entityMap.put("fireball", "entities.fireball");
+            entityMap.put("dragon", "entities.enemies.Dragon");
 
             fullEntityName.append(entityMap.get(entityObjectName));
-            System.out.println(fullEntityName);
             return (AbstractEntity) Class.forName(fullEntityName.toString()).getDeclaredConstructor().newInstance();
         } catch (ClassNotFoundException|NoSuchMethodException|InstantiationException|
                     IllegalAccessException|InvocationTargetException e) {
-            System.out.println(e);
             return null;
         }
     }
@@ -317,7 +334,7 @@ public final class DatabaseManager extends AbstractManager {
             if ( entityName.startsWith("objectName")) {
                 entityName = reader.nextString();
                 entity = resolveEntityToLoad(entityName);
-                if (entity == null) {
+                    if (entity == null) {
                     logger.error("Unable to resolve an " + entityName +" from the save file, on load.");
                     logger.error("This is likely due to the entity being a new addition to the game.");
                     return;
@@ -419,8 +436,8 @@ public final class DatabaseManager extends AbstractManager {
         }
 
         // Load all entities and tiles from the database
-        world.queueTilesForDelete(world.getTileMap());
-        world.queueEntitiesForDelete(world.getEntities());
+        world.queueTilesForRemove(world.getTiles());
+        world.queueEntitiesForRemove(world.getEntities());
 
         Map<Integer, AbstractEntity> newEntities = new ConcurrentHashMap<>();
         CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
@@ -434,8 +451,8 @@ public final class DatabaseManager extends AbstractManager {
             return;
         }
 
-        world.setTileMap(newTiles);
-        world.generateNeighbours();
+        world.setTiles(newTiles);
+        world.assignTileNeighbours();
         world.setEntities(new ArrayList<AbstractEntity>(newEntities.values()));
         logger.info("Load succeeded");
         GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Loaded game from the database.");
@@ -512,11 +529,11 @@ public final class DatabaseManager extends AbstractManager {
 
         entireJsonAsString.append("\"tiles\": [");
 
-        int tileLength = world.getTileMap().size();
+        int tileLength = world.getTiles().size();
 
         for (int i = 0; i < tileLength; i++) {
-            Tile tile = world.getTileMap().get(i);
-            if (i == world.getTileMap().size() - 1) {
+            Tile tile = world.getTiles().get(i);
+            if (i == world.getTiles().size() - 1) {
                 generateJsonForTile(tile, entireJsonAsString, false);
             } else {
                 generateJsonForTile(tile, entireJsonAsString, true);

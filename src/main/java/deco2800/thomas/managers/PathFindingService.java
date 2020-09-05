@@ -33,6 +33,6 @@ public class PathFindingService extends TickableManager {
 	@Override
 	public void onTick(long i) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

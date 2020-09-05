@@ -21,15 +21,15 @@ public class Peon extends AgentEntity implements Tickable {
 	/**
 	 * Peon constructor
      */
-	public Peon(float row, float col, float speed) {
-		super(row, col, RenderConstants.PEON_RENDER, speed);
+	public Peon(float row, float col, float speed, int health) {
+		super(row, col, RenderConstants.PEON_RENDER, speed, health);
 		this.setTexture("spacman_ded");
 	}
 
 	@Override
 	public void onTick(long i) {
-		if(task != null && task.isAlive()) {
-			if(task.isComplete()) {
+		if (task != null && task.isAlive()) {
+			if (task.isComplete()) {
 				this.task = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
 			}
 			task.onTick(i);
@@ -41,7 +41,7 @@ public class Peon extends AgentEntity implements Tickable {
 	protected void setTask(AbstractTask task) {
 		this.task = task;
 	}
-	
+
 	public AbstractTask getTask() {
 		return task;
 	}

@@ -1,11 +1,11 @@
 package deco2800.thomas.managers;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 //import deco2800.thomas.managers.Manager;
 
-import deco2800.thomas.renderers.PotateCamera;
 import deco2800.thomas.worlds.AbstractWorld;
 
 import org.slf4j.Logger;
@@ -30,26 +30,26 @@ public class GameManager {
 	private AbstractWorld gameWorld;
 
 	// The camera being used by the Game Screen to project the game world.
-	private PotateCamera camera;
+	private OrthographicCamera camera;
 
 	// The stage the game world is being rendered on to.
 	private Stage stage;
 
 	// The UI skin being used by the game for libGDX elements.
 	private Skin skin;
-	
 
 
 	public float fps = 0;
 
 	public boolean debugMode = true;
 
+	public boolean inTutorial = false;
 	/**
 	 * Whether or not we render info over the tiles.
 	 */
 	// Whether or not we render the movement path for Players.
 	public boolean showCoords = false;
-	
+
 	// The game screen for a game that's currently running.
 	public boolean showPath = false;
 
@@ -96,6 +96,11 @@ public class GameManager {
 		managers.add(manager);
 	}
 
+	/** Removes a manager */
+	public void removeManager(AbstractManager manager) {
+		managers.remove(manager);
+	}
+
 	/**
 	 * Retrieves a manager from the list.
 	 * If the manager does not exist one will be created, added to the list and returned
@@ -139,66 +144,83 @@ public class GameManager {
 		return get().getManager(type);
 	}
 
-	
+
 	/* ------------------------------------------------------------------------
 	 * 				GETTERS AND SETTERS BELOW THIS COMMENT.
 	 * ------------------------------------------------------------------------ */
 
-	/**Get entities rendered count
+	/**
+	 * Get entities rendered count
+	 *
 	 * @return entities rendered count
 	 */
 	public int getEntitiesRendered() {
 		return this.entitiesRendered;
 	}
 
-	/** Set entities rendered to new amount
+	/**
+	 * Set entities rendered to new amount
+	 *
 	 * @param entitiesRendered the new amount
 	 */
 	public void setEntitiesRendered(int entitiesRendered) {
 		this.entitiesRendered = entitiesRendered;
 	}
-	/**Get number of entities
+
+	/**
+	 * Get number of entities
+	 *
 	 * @return entities count
 	 */
 	public int getEntitiesCount() {
 		return this.entitiesCount;
 	}
 
-	/** Set entities count to new amount
+	/**
+	 * Set entities count to new amount
+	 *
 	 * @param entitiesCount the new amount
 	 */
 	public void setEntitiesCount(int entitiesCount) {
 		this.entitiesCount = entitiesCount;
 	}
 
-	/**Get tiles rendered count
+	/**
+	 * Get tiles rendered count
+	 *
 	 * @return tiles rendered count
 	 */
 	public int getTilesRendered() {
 		return this.tilesRendered;
 	}
 
-	/** Set tiles rendered to new amount
+	/**
+	 * Set tiles rendered to new amount
+	 *
 	 * @param tilesRendered the new amount
 	 */
 	public void setTilesRendered(int tilesRendered) {
 		this.tilesRendered = tilesRendered;
 	}
 
-	/**Get number of tiles
+	/**
+	 * Get number of tiles
+	 *
 	 * @return tiles count
 	 */
 	public int getTilesCount() {
 		return this.tilesCount;
 	}
 
-	/** Set tiles count to new amount
+	/**
+	 * Set tiles count to new amount
+	 *
 	 * @param tilesCount the new amount
 	 */
 	public void setTilesCount(int tilesCount) {
 		this.tilesCount = tilesCount;
 	}
-	
+
 	/**
 	 * Sets the current game world
 	 *
@@ -218,7 +240,7 @@ public class GameManager {
 	}
 
 
-	public void setCamera(PotateCamera camera) {
+	public void setCamera(OrthographicCamera camera) {
 		this.camera = camera;
 	}
 
@@ -250,7 +272,7 @@ public class GameManager {
 		this.skin = skin;
 	}
 
-	public PotateCamera getCamera() {
+	public OrthographicCamera getCamera() {
 		return camera;
 	}
 
@@ -267,7 +289,6 @@ public class GameManager {
 		}
 		gameWorld.onTick(0);
 	}
-	
-	
+
 
 }

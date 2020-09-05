@@ -8,11 +8,12 @@ public interface TouchUpObserver {
 
 	/**
 	 * Called when the the mouse button is released and notifies the observers
- 	 * @param screenX the x position on the screen that the mouse was released
+	 *
+	 * @param screenX the x position on the screen that the mouse was released
 	 * @param screenY the y position on the screen that the mouse was released
 	 * @param pointer
-	 * @param button the button that was released
-     */
-    void notifyTouchUp(int screenX, int screenY, int pointer, int button);
+	 * @param button  the button that was released
+	 */
+	void notifyTouchUp(int screenX, int screenY, int pointer, int button);
 
 }
