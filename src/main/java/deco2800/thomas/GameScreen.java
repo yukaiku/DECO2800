@@ -8,12 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Peon;
+import deco2800.thomas.entities.Agent.Peon;
+import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
-import deco2800.thomas.renderers.OverlayRenderer;
-import deco2800.thomas.renderers.Renderer3D;
+import deco2800.thomas.renderers.*;
 import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
@@ -29,6 +29,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * 3D is for Isometric worlds
 	 * Check the documentation for each renderer to see how it handles WorldEntity coordinates
 	 */
+	public static boolean tutorial = false;
 	Renderer3D renderer = new Renderer3D();
 	OverlayRenderer rendererDebug = new OverlayRenderer();
 	AbstractWorld world;
@@ -43,10 +44,10 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
 
 	long lastGameTick = 0;
-	
+
 
 	static public enum gameType {
-		LOAD_GAME{
+		LOAD_GAME {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new LoadGameWorld();
@@ -55,7 +56,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 				return world;
 			}
 		},
-		CONNECT_TO_SERVER{
+		CONNECT_TO_SERVER {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new ServerWorld();
@@ -63,24 +64,37 @@ public class GameScreen implements Screen, KeyDownObserver {
 				return world;
 			}
 		},
-		NEW_GAME{
+		NEW_GAME {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new TestWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
+		},
+		TUTORIAL{
+			@Override
+			public AbstractWorld method() {
+				AbstractWorld world = new TutorialWorld();
+				GameManager.get().getManager(NetworkManager.class).startHosting("host");
+				return world;
+			}
 		};
-		public abstract AbstractWorld method(); // could also be in an interface that MyEnum implements
-	  }
 
-	
+		public abstract AbstractWorld method(); // could also be in an interface that MyEnum implements
+	}
+
+
 	public GameScreen(final ThomasGame game, final gameType startType) {
+		if (startType == gameType.TUTORIAL) {
+			GameManager.get().inTutorial = true;
+			tutorial = true;
+		}
 		/* Create an example world for the engine */
 		this.game = game;
 
 		GameManager gameManager = GameManager.get();
-		
+
 		world = startType.method();
 
 		gameManager.setWorld(world);
@@ -93,16 +107,16 @@ public class GameScreen implements Screen, KeyDownObserver {
 		GameManager.get().setSkin(skin);
 		GameManager.get().setStage(stage);
 		GameManager.get().setCamera(camera);
-		
+
 		PathFindingService pathFindingService = new PathFindingService();
 		GameManager.get().addManager(pathFindingService);
-		
+
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(stage);
 		multiplexer.addProcessor(GameManager.get().getManager(KeyboardManager.class));
 		multiplexer.addProcessor(GameManager.get().getManager(InputManager.class));
 		Gdx.input.setInputProcessor(multiplexer);
-		
+
 		GameManager.get().getManager(KeyboardManager.class).registerForKeyDown(this);
 	}
 
@@ -112,27 +126,41 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	@Override
 	public void render(float delta) {
+
 		handleRenderables();
 		
 		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta);
 		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
-			
+
 		cameraDebug.position.set(camera.position);
 		cameraDebug.update();
 
 		SpriteBatch batchDebug = new SpriteBatch();
 		batchDebug.setProjectionMatrix(cameraDebug.combined);
-		
+
 		SpriteBatch batch = new SpriteBatch();
 		batch.setProjectionMatrix(camera.combined);
-		
+
 		// Clear the entire display as we are using lazy rendering
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		rerenderMapObjects(batch, camera);
 		rendererDebug.render(batchDebug, cameraDebug);
-		
+
+		// Add guideline if we are in the TutorialWorld
+		if (tutorial) {
+			SpriteBatch batchGuideline = new SpriteBatch();
+			batchGuideline.setProjectionMatrix(cameraDebug.combined);
+			Guideline guideline = new Guideline();
+			guideline.render(batchGuideline, cameraDebug);
+		}
+		//Questtracker UI
+		SpriteBatch batchGuideline = new SpriteBatch();
+		batchGuideline.setProjectionMatrix(cameraDebug.combined);
+		QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
+		questTrackerRenderer.render(batchGuideline, cameraDebug);
+
 		/* Refresh the experience UI for if information was updated */
 		stage.act(delta);
 		stage.draw();
@@ -170,10 +198,10 @@ public class GameScreen implements Screen, KeyDownObserver {
 		camera.viewportWidth = width;
 		camera.viewportHeight = height;
 		camera.update();
-		
+
 		cameraDebug.viewportWidth = width;
 		cameraDebug.viewportHeight = height;
-		cameraDebug.update();		
+		cameraDebug.update();
 	}
 
 	@Override
@@ -190,7 +218,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void hide() {
 		//do nothing
 	}
-	
+
 	/**
 	 * Disposes of assets etc when the rendering system is stopped.
 	 */
@@ -206,6 +234,10 @@ public class GameScreen implements Screen, KeyDownObserver {
 			GameManager.get().debugMode = !GameManager.get().debugMode;
 		}
 
+		if (keycode == Input.Keys.F9 & GameManager.get().inTutorial) {
+			tutorial = !tutorial;
+		}
+
 		if (keycode == Input.Keys.F5) {
 			world = new TestWorld();
 			AbstractEntity.resetID();
@@ -216,13 +248,13 @@ public class GameScreen implements Screen, KeyDownObserver {
 			// Add first peon to the world
 			world.addEntity(new Peon(0f, 0f, 0.05f, 50));
 		}
-		
+
 		if (keycode == Input.Keys.F11) { // F11
 			GameManager.get().showCoords = !GameManager.get().showCoords;
 			LOG.info("Show coords is now {}", GameManager.get().showCoords);
 		}
-		
-		
+
+
 		if (keycode == Input.Keys.C) { // F11
 			GameManager.get().showCoords = !GameManager.get().showCoords;
 			LOG.info("Show coords is now {}", GameManager.get().showCoords);
@@ -243,4 +275,5 @@ public class GameScreen implements Screen, KeyDownObserver {
 			DatabaseManager.loadWorld(null);
 		}
 	}
+
 }

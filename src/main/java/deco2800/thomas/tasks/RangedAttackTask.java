@@ -2,7 +2,7 @@ package deco2800.thomas.tasks;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.StaticEntity;
-import deco2800.thomas.entities.attacks.RangedEntity;
+import deco2800.thomas.entities.attacks.Projectile;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.managers.AttackPathFindingService;
 import deco2800.thomas.managers.GameManager;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class RangedAttackTask extends AbstractTask{
 
-    RangedEntity entity;
+    Projectile entity;
     SquareVector destination;
     private AbstractWorld world;
 
@@ -25,7 +25,7 @@ public class RangedAttackTask extends AbstractTask{
 
     private List<Tile> path;
 
-    public RangedAttackTask(RangedEntity entity, SquareVector destination) {
+    public RangedAttackTask(Projectile entity, SquareVector destination) {
         super(entity);
 
         this.entity = entity;
@@ -50,7 +50,7 @@ public class RangedAttackTask extends AbstractTask{
 
         if (!collidingEntities.isEmpty()) {
             for (AbstractEntity e : collidingEntities) {
-                if (e.getObjectName() == "Orc") {
+                if (e instanceof EnemyPeon) {
                     applyDamage(((EnemyPeon) e));
                 }
                 if (e instanceof StaticEntity) {

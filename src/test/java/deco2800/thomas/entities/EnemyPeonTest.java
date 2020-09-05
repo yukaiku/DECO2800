@@ -1,6 +1,9 @@
 package deco2800.thomas.entities;
 
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.entities.Agent.PlayerPeon;
+import org.junit.Assert;
+import org.junit.Before;
 
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.Goblin;
@@ -12,7 +15,7 @@ public class EnemyPeonTest extends BaseGDXTest {
     @Test
     public void testEnemyTexture() {
         EnemyPeon enemy =  new Orc(1, 1, 100);
-        assertEquals(enemy.getTexture(), "spacman_blue");
+        assertEquals(enemy.getTexture(), "orc_swamp_left");
 
     }
 

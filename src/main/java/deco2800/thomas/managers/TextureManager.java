@@ -29,33 +29,30 @@ public class TextureManager extends AbstractManager {
 	 */
 	public static final int TILE_HEIGHT = 278;
 
-	
+
 	//private final Logger log = LoggerFactory.getLogger(TextureManager.class);
 
 
-    /**
-     * A HashMap of all textures with string keys
-     */
-    private Map<String, Texture> textureMap = new HashMap<>();
+	/**
+	 * A HashMap of all textures with string keys
+	 */
+	private Map<String, Texture> textureMap = new HashMap<>();
 
-    /**
-     * Constructor
-     * Currently loads up all the textures but probably shouldn't/doesn't
-     * need to.
-     */
-    public TextureManager() {
-        try {
-            textureMap.put("background", new Texture("resources/background.jpg"));
-            textureMap.put("spacman_ded", new Texture("resources/spacman.png"));
-            textureMap.put("spacman_blue", new Texture("resources/spacman_blue.png"));
-
+	/**
+	 * Constructor
+	 * Currently loads up all the textures but probably shouldn't/doesn't
+	 * need to.
+	 */
+	public TextureManager() {
+		try {
+			textureMap.put("background", new Texture("resources/background.jpg"));
+			textureMap.put("spacman_ded", new Texture("resources/spacman.png"));
+			textureMap.put("spacman_blue", new Texture("resources/spacman_blue.png"));
             textureMap.put("grass_0", new Texture("resources/square.png"));
             textureMap.put("grass_1", new Texture("resources/square2.png"));
             textureMap.put("grass_2", new Texture("resources/square3.png"));
- 
             textureMap.put("selection", new Texture("resources/square-select.png"));
             textureMap.put("path", new Texture("resources/yellow_selection.png"));
-
             textureMap.put("buildingA", new Texture("resources/buildingA.png"));
             textureMap.put("buildingB", new Texture("resources/building3x2.png"));
 
@@ -70,15 +67,24 @@ public class TextureManager extends AbstractManager {
             textureMap.put("projectile", new Texture("resources/rocks.png"));
 
             // enemies
-            textureMap.put("goblinLeft", new Texture("resources/goblinLeft.png"));
-            textureMap.put("goblinRight", new Texture("resources/goblinRight.png"));
-            textureMap.put("orcswamp", new Texture("resources/orcswamp.png"));
-            textureMap.put("spacman_red", new Texture("resources/spacman_red.png"));
-            textureMap.put("spatman_blue", new Texture("resources/spatman_blue.png"));
-            textureMap.put("spatman_green", new Texture("resources/spatman_green.png"));
-            textureMap.put("spatman_red", new Texture("resources/spatman_red.png"));
-            textureMap.put("spatman_yellow", new Texture("resources/spatman_yellow.png"));
-            
+            textureMap.put("goblin_swamp_left", new Texture("resources/enemies/goblin_swamp_left.png"));
+            textureMap.put("goblin_swamp_right", new Texture("resources/enemies/goblin_swamp_right.png"));
+            textureMap.put("orc_swamp_left", new Texture("resources/enemies/orc_swamp_left.png"));
+            textureMap.put("orc_swamp_right", new Texture("resources/enemies/orc_swamp_right.png"));
+            textureMap.put("orc_volcano_left", new Texture("resources/enemies/orc_volcano_left.png"));
+            textureMap.put("orc_volcano_right", new Texture("resources/enemies/orc_volcano_right.png"));
+            textureMap.put("dummy", new Texture("resources/enemies/dummy.png"));
+            textureMap.put("elder_dragon", new Texture("resources/enemies/elder_dragon.png"));
+
+            // storyline
+			textureMap.put("stone_floor", new Texture("resources/tutorial/tutorial-tile-design-opt1.png"));
+			textureMap.put("target", new Texture("resources/tutorial/tutorial-decoration-target.png"));
+			textureMap.put("portal", new Texture("resources/tutorial/tutorial-decoration-portal.png"));
+			textureMap.put("stash", new Texture("resources/tutorial/tutorial-decoration-weapon-stash.png"));
+			textureMap.put("barrel", new Texture("resources/tutorial/tutorial-decoration-barrel.png"));
+			textureMap.put("dialog-box", new Texture("resources/tutorial/tutorial-helper-box.png"));
+			textureMap.put("orb", new Texture("resources/orb.png"));
+
             //health & game over screen
             textureMap.put("health0", new Texture("resources/healthResources/health-bar-0.png"));
             textureMap.put("health5", new Texture("resources/healthResources/health-bar-5.png"));
@@ -102,11 +108,14 @@ public class TextureManager extends AbstractManager {
             textureMap.put("health95", new Texture("resources/healthResources/health-bar-95.png"));
             textureMap.put("health100", new Texture("resources/healthResources/health-bar-100.png"));
             textureMap.put("game-over", new Texture("resources/healthResources/game-over.png"));
-			
+
+            // Attacks
+            textureMap.put("fireball_right", new Texture("resources/combat/fireball_right.png"));
+
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+			e.printStackTrace();
+		}
+	}
 
     /**
      * Gets a texture object for a given string id
@@ -122,28 +131,28 @@ public class TextureManager extends AbstractManager {
             return textureMap.get("spacman_ded");
         }
 
-    }
+	}
 
-    /**
-     * Checks whether or not a texture is available.
-     *
-     * @param id Texture identifier
-     * @return If texture is available or not.
-     */
-    public boolean hasTexture(String id) {
-        return textureMap.containsKey(id);
+	/**
+	 * Checks whether or not a texture is available.
+	 *
+	 * @param id Texture identifier
+	 * @return If texture is available or not.
+	 */
+	public boolean hasTexture(String id) {
+		return textureMap.containsKey(id);
 
-    }
+	}
 
-    /**
-     * Saves a texture with a given id
-     *
-     * @param id       Texture id
-     * @param filename Filename within the assets folder
-     */
-    public void saveTexture(String id, String filename) {
-        if (!textureMap.containsKey(id)) {
-            textureMap.put(id, new Texture(filename));
-        }
-    }
+	/**
+	 * Saves a texture with a given id
+	 *
+	 * @param id       Texture id
+	 * @param filename Filename within the assets folder
+	 */
+	public void saveTexture(String id, String filename) {
+		if (!textureMap.containsKey(id)) {
+			textureMap.put(id, new Texture(filename));
+		}
+	}
 }

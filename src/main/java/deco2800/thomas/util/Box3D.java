@@ -6,12 +6,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Representation of a box in 3d space, defined by a corner point in XYZ and
  * extends in x (xLength), y (yLength), and z (zLength).
- * 
- * @author leggy
  *
+ * @author leggy
  */
 public class Box3D {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(Box3D.class);
 
 	private float x;
@@ -24,10 +23,10 @@ public class Box3D {
 
 	/**
 	 * Constructs a new Box3D with the given corner point and dimensions.
-	 * 
-	 * @param x corner point x-coordinate.
-	 * @param y corner point y-coordinate.
-	 * @param z corner point z-coordinate.
+	 *
+	 * @param x       corner point x-coordinate.
+	 * @param y       corner point y-coordinate.
+	 * @param z       corner point z-coordinate.
 	 * @param xLength xLength (in x).
 	 * @param yLength yLength (in y).
 	 * @param zLength zLength (in z).
@@ -44,7 +43,7 @@ public class Box3D {
 
 	/**
 	 * Constructs a new Box3D based on the given box.
-	 * 
+	 *
 	 * @param box box to copy.
 	 */
 	public Box3D(Box3D box) {
@@ -58,7 +57,7 @@ public class Box3D {
 
 	/**
 	 * Returns the x coordinate.
-	 * 
+	 *
 	 * @return Returns the x coordinate.
 	 */
 	public float getX() {
@@ -67,7 +66,7 @@ public class Box3D {
 
 	/**
 	 * Sets the x coordinate.
-	 * 
+	 *
 	 * @param x new x coordinate.
 	 */
 	public void setX(float x) {
@@ -76,7 +75,7 @@ public class Box3D {
 
 	/**
 	 * Returns the y coordinate.
-	 * 
+	 *
 	 * @return Returns the y coordinate.
 	 */
 	public float getY() {
@@ -85,7 +84,7 @@ public class Box3D {
 
 	/**
 	 * Sets the y coordinate.
-	 * 
+	 *
 	 * @param y new y coordinate.
 	 */
 	public void setY(float y) {
@@ -94,7 +93,7 @@ public class Box3D {
 
 	/**
 	 * Returns the z coordinate.
-	 * 
+	 *
 	 * @return Returns the z coordinate.
 	 */
 	public float getZ() {
@@ -103,7 +102,7 @@ public class Box3D {
 
 	/**
 	 * Sets the z coordinate.
-	 * 
+	 *
 	 * @param z new z coordinate.
 	 */
 	public void setZ(float z) {
@@ -112,7 +111,7 @@ public class Box3D {
 
 	/**
 	 * Returns the xLength (in x).
-	 * 
+	 *
 	 * @return Returns the xLength.
 	 */
 	public float getXLength() {
@@ -121,7 +120,7 @@ public class Box3D {
 
 	/**
 	 * Returns the yLength (in y).
-	 * 
+	 *
 	 * @return Returns the yLength.
 	 */
 	public float getYLength() {
@@ -130,7 +129,7 @@ public class Box3D {
 
 	/**
 	 * Returns the zLength (in z).
-	 * 
+	 *
 	 * @return Returns the zLength.
 	 */
 	public float getZLength() {
@@ -139,9 +138,10 @@ public class Box3D {
 
 	/**
 	 * Checks for collisions in all directions.
+	 *
 	 * @param box the Box3D to check for collisions
 	 * @return true if there is an overlap, false if there isn't
-     */
+	 */
 	public boolean overlaps(Box3D box) {
 		/*
 		 * Checking non-collision on all 6 directions.
@@ -182,11 +182,12 @@ public class Box3D {
 
 	/**
 	 * Gets the diagonal distance of the Box3D.
+	 *
 	 * @param o the Box3D
 	 * @return the diagonal distance of the Box3D
-     */
+	 */
 	public float distance(Box3D o) {
-		return (float)(Math.sqrt(Math.pow(o.x - this.x, 2) + Math.pow(o.y - this.y, 2) + Math.pow(o.z - this.z, 2)));
+		return (float) (Math.sqrt(Math.pow(o.x - this.x, 2) + Math.pow(o.y - this.y, 2) + Math.pow(o.z - this.z, 2)));
 	}
 
 }

@@ -1,7 +1,7 @@
 package deco2800.thomas.entities.enemies;
 
-import deco2800.thomas.entities.AgentEntity;
-import deco2800.thomas.entities.PlayerPeon;
+import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.MovementTask;
@@ -19,7 +19,7 @@ public class Goblin extends Minion implements AggressiveEnemy {
     private final int detectRadius = 12;
 
     public Goblin(int height, float speed, int health) {
-        super("Goblin", "goblinLeft", height, speed, health);
+        super("Goblin", "goblin_swamp_left", height, speed, health);
     }
 
     public Goblin(int height, float speed, int health, String texture) {

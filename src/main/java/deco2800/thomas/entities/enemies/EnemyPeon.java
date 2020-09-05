@@ -1,7 +1,8 @@
 package deco2800.thomas.entities.enemies;
 
+import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.HealthTracker;
-import deco2800.thomas.entities.Peon;
+import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.MovementTask;
@@ -22,9 +23,6 @@ public abstract class EnemyPeon extends Peon {
     // Passive enemies set a target when being hit.
     private Peon target;
 
-    // The health of the enemy.
-    private final HealthTracker health;
-
     /**
      * Initialise an abstract Enemy.
      * The position of the enemy is normally set by the spawnSpecialEnemy() in EnemyManager.
@@ -32,10 +30,10 @@ public abstract class EnemyPeon extends Peon {
     public EnemyPeon(String name, String texture, int height, float speed, int health) {
         super(0, 0, speed < 0 ? 0.05f : speed, health);
         this.setObjectName(Objects.requireNonNullElse(name, "EnemyPeon"));
-        this.setTexture(Objects.requireNonNullElse(texture, "spacman_blue"));
+        this.setTexture(Objects.requireNonNullElse(texture, "orc_swamp_left"));
         this.setHeight(height <= 0 ? 1 : height);
+        this.setFaction(EntityFaction.Evil);
         this.target = null;
-        this.health = new HealthTracker(health);
     }
 
     /**

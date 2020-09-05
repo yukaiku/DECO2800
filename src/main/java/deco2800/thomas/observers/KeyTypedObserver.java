@@ -8,7 +8,8 @@ public interface KeyTypedObserver {
 
 	/**
 	 * Notifies the observer of the key that is pressed
+	 *
 	 * @param character the character of the key
-     */
+	 */
 	void notifyKeyTyped(char character);
 }

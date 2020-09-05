@@ -8,8 +8,9 @@ public interface KeyDownObserver {
 
 	/**
 	 * notifies the observer of a key being pressed down
+	 *
 	 * @param keycode the key being pressed
-     */
+	 */
 	void notifyKeyDown(int keycode);
 
 

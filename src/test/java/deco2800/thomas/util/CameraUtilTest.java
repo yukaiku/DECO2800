@@ -3,7 +3,7 @@ package deco2800.thomas.util;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import deco2800.thomas.entities.PlayerPeon;
+import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Rock;
 import org.junit.Test;
 

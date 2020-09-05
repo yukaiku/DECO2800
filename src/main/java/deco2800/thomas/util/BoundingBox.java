@@ -56,35 +56,35 @@ public class BoundingBox {
     }
 
     /**
-     * Returns the x position of the left side of the box.
+     * Returns the x position of the left side of the box. (In world coordinates)
      * @return left side col
      */
     public float getLeft() {
-        return bottomLeft.getCol();
+        return WorldUtil.colRowToWorldCords(bottomLeft.getCol(), 0)[0];
     }
 
     /**
-     * Returns the x position of the right side of the box.
+     * Returns the x position of the right side of the box. (In world coordinates)
      * @return right side col
      */
     public float getRight() {
-        return bottomLeft.getCol() + width;
+        return getLeft() + width;
     }
 
     /**
-     * Returns the y position of the bottom side of the box.
+     * Returns the y position of the bottom side of the box. (In world coordinates)
      * @return bottom side row
      */
     public float getBottom() {
-        return bottomLeft.getRow();
+        return WorldUtil.colRowToWorldCords(0, bottomLeft.getRow())[1];
     }
 
     /**
-     * Returns the y position of the top side of the box.
+     * Returns the y position of the top side of the box. (In world coordinates)
      * @return top side row
      */
     public float getTop() {
-        return bottomLeft.getRow() + height;
+        return getBottom() + height;
     }
 
     /**

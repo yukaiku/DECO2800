@@ -34,18 +34,18 @@ public class StaticEntity extends AbstractEntity {
 		super();
 	}
 
-	public StaticEntity(Tile tile, int renderOrder , String texture , boolean obstructed) {
+	public StaticEntity(Tile tile, int renderOrder, String texture, boolean obstructed) {
 		super(tile.getCol(), tile.getRow(), renderOrder);
 		this.setObjectName(ENTITY_ID_STRING);
-		
+
 		children = new HashMap<>();
 		children.put(tile.getCoordinates(), texture);
-		if(!WorldUtil.validColRow(tile.getCoordinates())) {
-			 log.debug(tile.getCoordinates() + " is Invalid:");
-			 return;
+		if (!WorldUtil.validColRow(tile.getCoordinates())) {
+			log.debug(tile.getCoordinates() + " is Invalid:");
+			return;
 		}
 		tile.setParent(this);
-		tile.setObstructed(obstructed);	
+		tile.setObstructed(obstructed);
 	}
 
 	public StaticEntity(float col, float row, int renderOrder, List<Part> entityParts) {
@@ -57,10 +57,10 @@ public class StaticEntity extends AbstractEntity {
 			log.debug("Centre is null");
 			return;
 		}
-		
-		if(!WorldUtil.validColRow(centre.getCoordinates())) {
-			 log.debug(centre.getCoordinates() + " Is Invalid:");
-			 return;
+
+		if (!WorldUtil.validColRow(centre.getCoordinates())) {
+			log.debug(centre.getCoordinates() + " Is Invalid:");
+			return;
 		}
 
 		children = new HashMap<>();
@@ -71,10 +71,10 @@ public class StaticEntity extends AbstractEntity {
 				children.put(tile.getCoordinates(), part.textureString);
 				//Tile child = GameManager.get().getWorld().getTile(part.getPostion());
 				tile.setObstructed(part.isObstructed());
-			}	
+			}
 		}
 	}
-	
+
 
 	public void setup() {
 		if (children != null) {
@@ -86,7 +86,7 @@ public class StaticEntity extends AbstractEntity {
 			}
 		}
 	}
-	
+
 
 	@Override
 	public void onTick(long i) {
@@ -94,14 +94,14 @@ public class StaticEntity extends AbstractEntity {
 	}
 
 	private Tile textureToTile(SquareVector offset, SquareVector centre) {
-		if(!WorldUtil.validColRow(offset)) {
-			 log.debug(offset + " Is Invaid:"); 
-			 return null;
+		if (!WorldUtil.validColRow(offset)) {
+			log.debug(offset + " Is Invaid:");
+			return null;
 		}
 		SquareVector targetTile = centre.add(offset);
-		return GameManager.get().getWorld().getTile(targetTile);	
+		return GameManager.get().getWorld().getTile(targetTile);
 	}
-	
+
 	public Set<SquareVector> getChildrenPositions() {
 		return children.keySet();
 	}

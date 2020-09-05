@@ -2,12 +2,14 @@ package deco2800.thomas.entities.enemies;
 
 
 import com.badlogic.gdx.Game;
-import deco2800.thomas.entities.AgentEntity;
-import deco2800.thomas.entities.PlayerPeon;
+import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
+
+import java.util.Random;
 
 /**
  * A class that defines an implementation of an orc.
@@ -19,11 +21,19 @@ public class Orc extends Monster implements AggressiveEnemy {
 
     private int tickFollowing = 60;
     private int tickDetecting = 15;
+    private int tickSummon = 0;
+    private int nextTickSummon = 300;
+    private final Random random;
+
     private final int detectRadius = 8;
     private final int discardRadius = 12;
 
+    String textureFacingLeft = "orc_swamp_left";
+    String textureFacingRight = "orc_swamp_right";
+
     public Orc(int height, float speed, int health) {
-        super("Orc", "orcswamp.png", height, speed, health, true);
+        super("Orc", "orc_swamp_left", height, speed, health, true);
+        this.random = new Random();
     }
 
     /**
@@ -88,6 +98,14 @@ public class Orc extends Monster implements AggressiveEnemy {
                 discardTarget();
             }
             tickDetecting = 0;
+        }
+        // summon goblin every 5 ~ 15 secs
+        if (++tickSummon > nextTickSummon) {
+            if (super.getTarget() != null) {
+                summonGoblin();
+                nextTickSummon = 300 + random.nextInt(600);
+            }
+            tickSummon = 0;
         }
         // execute tasks
         if (getTask() != null && getTask().isAlive()) {

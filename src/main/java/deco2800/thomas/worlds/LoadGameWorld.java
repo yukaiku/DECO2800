@@ -5,6 +5,9 @@ import org.slf4j.LoggerFactory;
 
 import deco2800.thomas.entities.AbstractEntity;
 
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
+
 @SuppressWarnings("unused")
 public class LoadGameWorld extends AbstractWorld {
 	private final Logger logger = LoggerFactory.getLogger(LoadGameWorld.class);
@@ -14,9 +17,11 @@ public class LoadGameWorld extends AbstractWorld {
 		super();
 	}
 
+	/**
+	 * TODO Implement this function
+	 */
 	@Override
-	protected void generateWorld() {
-		// TODO Auto-generated method stub
+	protected void generateTiles() {
 	}
 
 	@Override
