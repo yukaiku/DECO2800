@@ -112,7 +112,6 @@ public class TextureManager extends AbstractManager {
         // Attacks
         textureMap.put("fireball_right", new Texture("resources/combat/fireball_right.png"));
         textureMap.put("fireball_left", new Texture("resources/combat/fireball_left.png"));
-
 	}
 
     /**
