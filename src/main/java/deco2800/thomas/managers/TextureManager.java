@@ -55,7 +55,12 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("orb_3", new Texture("resources/orbs/orb3.png"));
 			textureMap.put("orb_4", new Texture("resources/orbs/orb4.png"));
 
-			// Swamp Zone Tile Textures
+//			// Swamp Zone Tile Textures
+//			textureMap.put("Orb_Volcano", new Texture("resources/orb1.png"));
+//			textureMap.put("Orb_Tundra", new Texture("resources/orb1.png"));
+//			textureMap.put("Orb_Desert", new Texture("resources/orb1.png"));
+//			textureMap.put("Orb_Swamp", new Texture("resources/orb1.png"));
+
 			textureMap.put("swamp_1", new Texture("resources/environment/swamp/tile/swamp_1.png"));
 			textureMap.put("swamp_2", new Texture("resources/environment/swamp/tile/swamp_2.png"));
 			textureMap.put("swamp_3", new Texture("resources/environment/swamp/tile/swamp_3.png"));
@@ -74,6 +79,29 @@ public class TextureManager extends AbstractManager {
 					new Texture("resources/environment/swamp/entities/swamp_tree_stub.png"));
 
 			// Tundra Zone Tile Texture
+			//Volcano Tiles
+			textureMap.put("Volcano_1", new Texture("resources/environment/volcano/tile/Volcano_1.png"));
+			textureMap.put("Volcano_2", new Texture("resources/environment/volcano/tile/Volcano_2.png"));
+			textureMap.put("Volcano_3", new Texture("resources/environment/volcano/tile/Volcano_3.png"));
+			textureMap.put("Volcano_4", new Texture("resources/environment/volcano/tile/Volcano_4.png"));
+			textureMap.put("Volcano_5", new Texture("resources/environment/volcano/tile/Volcano_5.png"));
+			textureMap.put("Volcano_6", new Texture("resources/environment/volcano/tile/Volcano_6.png"));
+			textureMap.put("Volcano_7", new Texture("resources/environment/volcano/tile/Volcano_7.png"));
+			textureMap.put("Volcano_8", new Texture("resources/environment/volcano/tile/Volcano_8.png"));
+
+			//Volcano Entities
+			textureMap.put("Ruins_1", new Texture("resources/environment/volcano/entities/Ruins_1.png"));
+			textureMap.put("Ruins_2", new Texture("resources/environment/volcano/entities/Ruins_2.png"));
+			textureMap.put("Ruins_3", new Texture("resources/environment/volcano/entities/Ruins_3.png"));
+			textureMap.put("Ruins_4", new Texture("resources/environment/volcano/entities/Ruins_4.png"));
+			textureMap.put("Ruins_5", new Texture("resources/environment/volcano/entities/Ruins_5.png"));
+			textureMap.put("Ruins_6", new Texture("resources/environment/volcano/entities/Ruins_6.png"));
+			textureMap.put("Ruins_7", new Texture("resources/environment/volcano/entities/Ruins_7.png"));
+			textureMap.put("Ruins_7", new Texture("resources/environment/volcano/entities/Ruins_7.png"));
+			textureMap.put("Bones", new Texture("resources/environment/volcano/entities/Bones.png"));
+			textureMap.put("BurningTree", new Texture("resources/environment/volcano/entities/BurningTreePlaceholder.png"));
+			textureMap.put("DragonSkull", new Texture("resources/environment/volcano/entities/DragonSkull2.png"));
+
 			textureMap.put("tundra-tile-1", new Texture("resources/environment/tundra/tundra-tile-1.png"));
 			textureMap.put("tundra-tile-2", new Texture("resources/environment/tundra/tundra-tile-2.png"));
 			textureMap.put("tundra-tile-3", new Texture("resources/environment/tundra/tundra-tile-3.png"));

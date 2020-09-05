@@ -29,6 +29,7 @@ public class Orb extends StaticEntity implements Tickable {
         if (other == null) {
             return false;
         }
+
         if (!(other instanceof Orb)) {
             return false;
         }
@@ -38,7 +39,6 @@ public class Orb extends StaticEntity implements Tickable {
         }
         return true;
     }
-
     /**
      * Gets the hashCode of the orbs.
      *

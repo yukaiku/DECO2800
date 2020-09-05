@@ -13,6 +13,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import deco2800.thomas.worlds.desert.CactusTile;
 import deco2800.thomas.worlds.desert.QuicksandTile;
+import deco2800.thomas.worlds.VolcanoBurnTile;
+import deco2800.thomas.worlds.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -437,6 +439,8 @@ public final class DatabaseManager extends AbstractManager {
 
 		if (saveLocationAndFilename.equals("resources/environment/desert/desert_map.json")) {
 			newTiles = setDesertTiles(newTiles);
+		} else if (saveLocationAndFilename.equals("resources/environment/volcano/VolcanoZone.json")) {
+			checkVolcanoWorld(newTiles);
 		}
 
 		world.setTiles(newTiles);
@@ -444,44 +448,6 @@ public final class DatabaseManager extends AbstractManager {
 		world.setEntities(new ArrayList<AbstractEntity>(newEntities.values()));
 		logger.info("Load succeeded");
 		GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Loaded game from the database.");
-	}
-
-	/**
-	 * Converts the required Tiles from a Desert World into Cactus or Quicksand Tiles.
-	 *
-	 * @param oldTiles The tiles generated from the Json that have not been converted.
-	 * @return The tile array, with necessary tiles converted to cacti or quicksand.
-	 */
-	private static CopyOnWriteArrayList<Tile> setDesertTiles(CopyOnWriteArrayList<Tile> oldTiles) {
-		CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
-		Random rand = new Random();
-		int randIndex;
-
-		for (Tile tile : oldTiles) {
-			switch (tile.getTextureName()) {
-
-				// half of the tiles with this texture become cactus plants
-				case "desert_3":
-					randIndex = rand.nextInt(2);
-					if (randIndex == 0) {
-						newTiles.add(new CactusTile("desert_3", tile.getCol(), tile.getRow()));
-					} else {
-						newTiles.add(tile);
-					}
-					break;
-
-				// tiles with this texture become quicksand
-				case "desert_7":
-					newTiles.add(new QuicksandTile("desert_7", tile.getCol(), tile.getRow()));
-					break;
-
-				default:
-					newTiles.add(tile);
-					break;
-			}
-		}
-
-		return newTiles;
 	}
 
 	private static void writeToJson(String entireString) {
@@ -571,4 +537,67 @@ public final class DatabaseManager extends AbstractManager {
 		GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Game saved to the database.");
 	}
 
+	/**
+	 * Modifies the world so burning tiles can be implemented for health
+	 * -reduction functionality.
+	 *
+	 * @param newTiles A CopyOnWriteArrayList containing the current tile list
+	 *                 loaded from a local JSON file that is to be modified
+	 *                 for the volcano zone to contain burning tiles.
+	 */
+	static private void checkVolcanoWorld(CopyOnWriteArrayList<Tile> newTiles) {
+		if (GameManager.get().getWorld() instanceof VolcanoWorld) {
+			for (Tile t : newTiles) {
+				String tileTexture = t.getTextureName();
+				int tileNumber = Integer.parseInt(tileTexture.split("_")[1]);
+				if (tileNumber > 4) {
+					int index = newTiles.indexOf(t);
+					float row = t.getRow();
+					float col = t.getCol();
+					t = new VolcanoBurnTile(tileTexture, col, row, 5);
+					newTiles.add(t);
+				} else {
+					newTiles.add(t);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Converts the required Tiles from a Desert World into Cactus or Quicksand Tiles.
+	 *
+	 * @param oldTiles The tiles generated from the Json that have not been converted.
+	 * @return The tile array, with necessary tiles converted to cacti or quicksand.
+	 */
+	private static CopyOnWriteArrayList<Tile> setDesertTiles(CopyOnWriteArrayList<Tile> oldTiles) {
+		CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
+		Random rand = new Random();
+		int randIndex;
+
+		for (Tile tile : oldTiles) {
+			switch (tile.getTextureName()) {
+
+				// half of the tiles with this texture become cactus plants
+				case "desert_3":
+					randIndex = rand.nextInt(2);
+					if (randIndex == 0) {
+						newTiles.add(new CactusTile("desert_3", tile.getCol(), tile.getRow()));
+					} else {
+						newTiles.add(tile);
+					}
+					break;
+
+				// tiles with this texture become quicksand
+				case "desert_7":
+					newTiles.add(new QuicksandTile("desert_7", tile.getCol(), tile.getRow()));
+					break;
+
+				default:
+					newTiles.add(tile);
+					break;
+			}
+		}
+
+		return newTiles;
+	}
 }

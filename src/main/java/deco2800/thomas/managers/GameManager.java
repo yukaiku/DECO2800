@@ -1,11 +1,11 @@
 package deco2800.thomas.managers;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 //import deco2800.thomas.managers.Manager;
 
-import deco2800.thomas.renderers.PotateCamera;
 import deco2800.thomas.worlds.AbstractWorld;
 
 import deco2800.thomas.worlds.SwampWorld;
@@ -34,7 +34,7 @@ public class GameManager {
 	private AbstractWorld gameWorld;
 
 	// The camera being used by the Game Screen to project the game world.
-	private PotateCamera camera;
+	private OrthographicCamera camera;
 
 	// The stage the game world is being rendered on to.
 	private Stage stage;
@@ -262,7 +262,7 @@ public class GameManager {
 		currentWorld = (currentWorld + 1) % worldOrder.size();
 	}
 
-	public void setCamera(PotateCamera camera) {
+	public void setCamera(OrthographicCamera camera) {
 		this.camera = camera;
 	}
 
@@ -294,7 +294,7 @@ public class GameManager {
 		this.skin = skin;
 	}
 
-	public PotateCamera getCamera() {
+	public OrthographicCamera getCamera() {
 		return camera;
 	}
 

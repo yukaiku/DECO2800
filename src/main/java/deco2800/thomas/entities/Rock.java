@@ -1,7 +1,6 @@
 package deco2800.thomas.entities;
 
 import deco2800.thomas.worlds.Tile;
-import deco2800.thomas.entities.RenderConstants;
 
 public class Rock extends StaticEntity implements HasHealth {
 	public static final String ENTITY_ID_STRING = "rock";

@@ -3,6 +3,11 @@ package deco2800.thomas.worlds;
 import java.util.Random;
 
 import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.SwampDeadTree;
+import deco2800.thomas.entities.SwampFallenTree;
+import deco2800.thomas.entities.SwampPond;
+import deco2800.thomas.entities.SwampTreeLog;
+import deco2800.thomas.entities.SwampTreeStub;
 import deco2800.thomas.managers.DatabaseManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +24,9 @@ public class SwampWorld extends AbstractWorld {
 
     public SwampWorld() {
         this(AbstractWorld.DEFAULT_WIDTH, AbstractWorld.DEFAULT_HEIGHT);
+        // Create the player entity
+        this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
+        addEntity(this.getPlayerEntity());
     }
 
     public SwampWorld(int width, int height) {
@@ -26,6 +34,9 @@ public class SwampWorld extends AbstractWorld {
         this.setPlayerEntity(new PlayerPeon(5, 10, 0.1f));
         this.generateTileMap();
         this.generateTileIndices();
+        // Create the player entity
+        this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
+        addEntity(this.getPlayerEntity());
     }
 
     @Override

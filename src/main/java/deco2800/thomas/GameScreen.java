@@ -12,9 +12,10 @@ import deco2800.thomas.entities.Peon;
 import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
-import deco2800.thomas.renderers.PotateCamera;
 import deco2800.thomas.renderers.OverlayRenderer;
+import deco2800.thomas.renderers.PotateCamera;
 import deco2800.thomas.renderers.Renderer3D;
+import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
 import deco2800.thomas.worlds.desert.DesertWorld;
@@ -43,6 +44,11 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * Create a camera for panning and zooming.
 	 * Camera must be updated every render cycle.
 	 */
+
+
+	//OrthographicCamera cameraDebug;
+	//PotateCamera camera;
+
 	PotateCamera camera, cameraDebug;
 
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
@@ -70,7 +76,12 @@ public class GameScreen implements Screen, KeyDownObserver {
 		TEST_WORLD {
 			@Override
 			public AbstractWorld method() {
+
+//				AbstractWorld swampWorld = new SwampWorld();
+//				AbstractWorld volcanoWorld = new VolcanoWorld();
+//				AbstractWorld testWorld = new TestWorld();
 				AbstractWorld world = new TestWorld();
+
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
@@ -94,7 +105,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		ENV_TEAM_GAME {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new EnvTeamWorld();
+				AbstractWorld world = new VolcanoWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
@@ -132,7 +143,15 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		gameManager.setNextWorld();
 
+
 		// Add first peon to the world
+
+
+
+		// Initialize camera
+		//camera = new PotateCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		//cameraDebug = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
 		camera = new PotateCamera(1920, 1080);
 		cameraDebug = new PotateCamera(1920, 1080);
 
@@ -161,11 +180,13 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void render(float delta) {
 		handleRenderables();
 
-		moveCamera();
+		//MoveCamera Function was here for dayNight Cycle
+
+		CameraUtil.zoomableCamera(camera, Input.Keys.MINUS, Input.Keys.EQUALS, delta);
+		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
 
 		cameraDebug.position.set(camera.position);
 		cameraDebug.update();
-		camera.update();
 
 		SpriteBatch batchDebug = new SpriteBatch();
 		batchDebug.setProjectionMatrix(cameraDebug.combined);
@@ -341,4 +362,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 			}
 		}
 	}
+
+
 }

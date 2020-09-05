@@ -6,11 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import deco2800.thomas.entities.*;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.Part;
+import deco2800.thomas.entities.StaticEntity;
+import deco2800.thomas.entities.Tree;
+import deco2800.thomas.entities.PlayerPeon;
+import deco2800.thomas.entities.Rock;
 import deco2800.thomas.managers.GameManager;
 
 @SuppressWarnings("unused")
@@ -93,18 +98,15 @@ public class TestWorld extends AbstractWorld {
 		Random random = new Random();
 		int tileCount = GameManager.get().getWorld().getTiles().size();
 		// Generate some rocks to mine later
-//		for (int i = 0; i < 100; i++) {
-//			Tile t = GameManager.get().getWorld().getTile(random.nextInt(tileCount));
-//			if (t != null) {
-//				entities.add(new Rock(t, true));
-//			}
-//		}
-		this.setOrbEntity(new Orb(GameManager.get().getWorld().
-				getTile(15, -10), false));
-
+		for (int i = 0; i < 100; i++) {
+			Tile t = GameManager.get().getWorld().getTile(random.nextInt(tileCount));
+			if (t != null) {
+				entities.add(new Rock(t, true));
+			}
+		}
 		// Add some trees
 		for (int i = 0; i < 50; i++) {
-			Tile t = this.getTile(random.nextInt(tileCount));
+			Tile t = GameManager.get().getWorld().getTile(random.nextInt(tileCount));
 			if (t != null) {
 				entities.add(new Tree(t, true));
 			}
@@ -115,7 +117,6 @@ public class TestWorld extends AbstractWorld {
 
 	@Override
 	protected void generateTiles() {
-		Tile.resetID();
 		Random random = new Random();
 		for (int q = -WORLD_WIDTH; q < WORLD_WIDTH; q++) {
 			for (int r = -WORLD_HEIGHT; r < WORLD_HEIGHT; r++) {
@@ -127,21 +128,22 @@ public class TestWorld extends AbstractWorld {
 		}
 
 		// Create the entities in the game
-		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.1f));
+		addEntity(new PlayerPeon(10f, 5f, 0.1f));
 	}
 
 	@Override
 	public void onTick(long i) {
-		if (notGenerated) {
-			createBuildings();
-			//addTree(-1, -3f);
-			notGenerated = false;
-		}
-
 		super.onTick(i);
 		//addTree(0f, 0f);
 		for (AbstractEntity e : this.getEntities()) {
 			e.onTick(0);
+		}
+
+		if (notGenerated) {
+			createBuildings();
+			//addTree(-1, -3f);
+
+			notGenerated = false;
 		}
 	}
 
