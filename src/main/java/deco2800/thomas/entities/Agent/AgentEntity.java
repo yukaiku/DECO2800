@@ -33,10 +33,15 @@ public abstract class AgentEntity extends AbstractEntity {
 		super();
 	}
 
+	/** Get the texture string with the given direction */
 	public String getTextureDirection(int direction) {
 		return textureDirections.get(direction);
 	}
 
+	/**
+	 * Store the texture strings with different directions
+	 * @param textures List of textures [base, left, right]. For example: ["orc", "orc_left", "orc_right"]
+	 */
 	public void setTextureDirections(List<String> textures) {
 		for (int i = 0; i < textures.size(); i++) {
 			this.textureDirections.put(i, textures.get(i));

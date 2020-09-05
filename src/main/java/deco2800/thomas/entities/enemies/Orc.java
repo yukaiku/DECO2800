@@ -26,7 +26,7 @@ public class Orc extends Monster implements AggressiveEnemy {
     private final int discardRadius = 12;
 
     public Orc(int height, float speed, int health) {
-        super("Orc", "orc_swamp_left", height, speed, health, true);
+        super("Orc", "orc_swamp_right", height, speed, health, true);
     }
 
     /**

@@ -23,7 +23,7 @@ public class Goblin extends Minion implements AggressiveEnemy {
     private final int detectRadius = 12;
 
     public Goblin(int height, float speed, int health) {
-        super("Goblin", "goblin_swamp_left", height, speed, health);
+        super("Goblin", "goblin_swamp_right", height, speed, health);
     }
 
     public Goblin(int height, float speed, int health, String texture) {
