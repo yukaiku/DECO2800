@@ -42,7 +42,6 @@ public class FireballAttackTask extends RangedAttackTask {
         fireball.setMovementTask(new DirectProjectileMovementTask(fireball,
                 new SquareVector(targetCol, targetRow), lifetime));
         fireball.setCombatTask(new ApplyDamageOnCollisionTask(fireball, lifetime));
-
         GameManager.get().getWorld().addEntity(fireball);
     }
 }

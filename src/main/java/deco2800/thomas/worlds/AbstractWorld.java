@@ -1,5 +1,6 @@
 package deco2800.thomas.worlds;
 
+import deco2800.thomas.entities.*;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.AgentEntity;
@@ -8,8 +9,6 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.*;
@@ -23,14 +22,21 @@ public abstract class AbstractWorld implements Tickable {
 	/**
 	 * Default width of the world; horizontal coordinates of the world will be within `[-DEFAULT_WIDTH, DEFAULT_WIDTH]`
 	 */
-	static final int DEFAULT_WIDTH = 25;
+	protected static final int DEFAULT_WIDTH = 25;
 
 
 	/**
 	 * Default height of the world; vertical coordinates of the world will be within `[-DEFAULT_HEIGHT, DEFAULT_HEIGHT]`
 	 */
-	static final int DEFAULT_HEIGHT = 25;
+	protected static final int DEFAULT_HEIGHT = 25;
+
     protected AgentEntity playerEntity;
+
+	/**
+	 * The static entity which is the Orb. All maps
+	 * have only one Orb entity
+	 */
+	private Orb orbEntity;
 
 	/**
 	 * Width of the world; horizontal coordinates of the world will be within `[-width, width]`
@@ -94,9 +100,39 @@ public abstract class AbstractWorld implements Tickable {
 	}
 
 	/**
+	 * Returns the type of this world.
+	 *
+	 * @return The type of this world.
+	 */
+	public String getType() {
+		return "World";
+	}
+
+	/**
 	 * Generates the tiles for the world
 	 */
 	protected abstract void generateTiles();
+
+	/**
+	 * Set the orbEntity and add it to the entities list
+	 * @param orb
+	 */
+	public void setOrbEntity(Orb orb) {
+		this.orbEntity = orb;
+		this.entities.add(orb);
+	}
+
+	/**
+	 * Check if the player's position is same as the orb's position
+	 */
+	protected void checkObtainedOrb() {
+		if (orbEntity != null) {
+			if (playerEntity.getPosition().equals(orbEntity.getPosition())) {
+				this.removeEntity(playerEntity);
+				GameManager.get().setNextWorld();
+			}
+		}
+	}
 
 	/**
 	 * Generates a tileMap from the list of tiles
@@ -138,7 +174,7 @@ public abstract class AbstractWorld implements Tickable {
 	/**
 	 * TODO Find out what this method does, reconsider it, and write doc comment for it
 	 */
-	private void generateTileIndices() {
+	protected void generateTileIndices() {
 		for (Tile tile : tiles) {
 			tile.calculateIndex();
 		}
@@ -365,6 +401,10 @@ public abstract class AbstractWorld implements Tickable {
 	}
 
 	public void onTick(long i) {
+		if (!GameManager.get().inTutorial) {
+			this.checkObtainedOrb();
+		}
+
 		for (AbstractEntity entity : entitiesToRemove) {
 			entities.remove(entity);
 		}
@@ -374,9 +414,28 @@ public abstract class AbstractWorld implements Tickable {
 		}
 	}
 
-	public AgentEntity getPlayerEntity() {
-		return playerEntity;
-	}
+    public void setTileMap(CopyOnWriteArrayList<Tile> tileMap) {
+        this.tiles = tileMap;
+    }
+
+    public void deleteTile(int tileid) {
+        Tile tile = GameManager.get().getWorld().getTile(tileid);
+        if (tile != null) {
+            tile.dispose();
+        }
+    }
+
+    public void deleteEntity(int entityID) {
+        for (AbstractEntity e : this.getEntities()) {
+            if (e.getEntityID() == entityID) {
+                e.dispose();
+            }
+        }
+    }
+
+    public AgentEntity getPlayerEntity() {
+        return playerEntity;
+    }
 
 	public void setPlayerEntity(AgentEntity playerEntity) {
 		this.playerEntity = playerEntity;

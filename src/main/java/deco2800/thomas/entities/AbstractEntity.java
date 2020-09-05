@@ -326,4 +326,21 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 		GameManager.get().getManager(NetworkManager.class).deleteEntity(this);
 		GameManager.get().getWorld().getEntities().remove(this);
 	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("AbstractEntity{");
+		sb.append("objectName='").append(objectName).append('\'');
+		sb.append(", texture='").append(texture).append('\'');
+		sb.append(", position=").append(position);
+		sb.append(", height=").append(height);
+		sb.append(", colRenderLength=").append(colRenderLength);
+		sb.append(", rowRenderLength=").append(rowRenderLength);
+		sb.append(", entityID=").append(entityID);
+		sb.append(", collidable=").append(collidable);
+		sb.append(", renderOrder=").append(renderOrder);
+		sb.append('}');
+		sb.append("\n");
+		return sb.toString();
+	}
 }
