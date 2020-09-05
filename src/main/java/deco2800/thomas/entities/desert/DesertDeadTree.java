@@ -13,7 +13,7 @@ public class DesertDeadTree extends StaticEntity {
     private static final String ENTITY_ID_STRING = "DesertDeadTree";
 
     /**
-     * Creates a DesertDeadTree without a designated Tile.
+     * Creates a DesertDeadTree without a designated Tile or texture.
      */
     public DesertDeadTree() {
         super();
@@ -21,12 +21,13 @@ public class DesertDeadTree extends StaticEntity {
     }
 
     /**
-     * Creates a DesertDeadTree with a designated Tile.
+     * Creates a DesertDeadTree with a designated Tile and texture.
      *
      * @param tile The tile that the tree is spawned on.
+     * @param texture The designated texture.
      */
-    public DesertDeadTree(Tile tile) {
-        super(tile, RenderConstants.DESERT_DEAD_TREE, "desertDeadTree", true);
+    public DesertDeadTree(Tile tile, String texture) {
+        super(tile, RenderConstants.DESERT_DEAD_TREE, texture, true);
         this.setObjectName(ENTITY_ID_STRING);
     }
 }

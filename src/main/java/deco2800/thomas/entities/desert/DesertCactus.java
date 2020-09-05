@@ -14,7 +14,7 @@ public class DesertCactus extends StaticEntity {
     private static final String ENTITY_ID_STRING = "DesertCactus";
 
     /**
-     * Creates a DesertCactus without a designated Tile.
+     * Creates a DesertCactus without a designated Tile or texture.
      */
     public DesertCactus() {
         super();
@@ -22,12 +22,13 @@ public class DesertCactus extends StaticEntity {
     }
 
     /**
-     * Creates a DesertCactus with a designated Tile.
+     * Creates a DesertCactus with a designated Tile and texture.
      *
      * @param tile The tile that the cactus is spawned on.
+     * @param texture The designated texture.
      */
-    public DesertCactus(Tile tile) {
-        super(tile, RenderConstants.DESERT_CACTUS, "desertCactus", true);
+    public DesertCactus(Tile tile, String texture) {
+        super(tile, RenderConstants.DESERT_CACTUS, texture, true);
         this.setObjectName(ENTITY_ID_STRING);
     }
 }

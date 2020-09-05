@@ -13,7 +13,7 @@ public class OasisTree extends StaticEntity {
     private static final String ENTITY_ID_STRING = "OasisTree";
 
     /**
-     * Creates the OasisTree without a designated Tile.
+     * Creates the OasisTree without a designated Tile or texture.
      */
     public OasisTree() {
         super();
@@ -21,12 +21,13 @@ public class OasisTree extends StaticEntity {
     }
 
     /**
-     * Creates the OasisTree with a designated Tile.
+     * Creates the OasisTree with a designated Tile and texture.
      *
      * @param tile The tile that the tree is spawned on.
+     * @param texture The designated texture.
      */
-    public OasisTree(Tile tile) {
-        super(tile, RenderConstants.OASIS_TREE, "oasisTree", true);
+    public OasisTree(Tile tile, String texture) {
+        super(tile, RenderConstants.OASIS_TREE, texture, true);
         this.setObjectName(ENTITY_ID_STRING);
     }
 }

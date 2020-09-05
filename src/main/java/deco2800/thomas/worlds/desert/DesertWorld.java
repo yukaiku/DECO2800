@@ -95,9 +95,13 @@ public class DesertWorld extends AbstractWorld {
                 case "desert_3":
                     // half of all plant spawn locations are cacti - half are dead trees
                     if (tile.getType().equals("Cactus")) {
-                        entities.add(new DesertCactus(tile));
+                        // get a random cactus texture
+                        randIndex = rand.nextInt(4);
+                        entities.add(new DesertCactus(tile, String.format("desertCactus%d", randIndex + 1)));
                     } else {
-                        entities.add(new DesertDeadTree(tile));
+                        // get a random dead tree texture
+                        randIndex = rand.nextInt(2);
+                        entities.add(new DesertDeadTree(tile, String.format("desertDeadTree%d", randIndex + 1)));
                     }
                     break;
 
@@ -110,12 +114,12 @@ public class DesertWorld extends AbstractWorld {
                 case "oasis_1":
                 case "oasis_2":
                 case "oasis_3":
-                    // one third of grass area should be plants, with half tree - half shrub
+                    // one third of grass area should be trees
                     randIndex = rand.nextInt(6);
                     if (randIndex == 0) {
-                        entities.add(new OasisShrub(tile));
+                        entities.add(new OasisTree(tile, "oasisTree1"));
                     } else if (randIndex == 1) {
-                        entities.add(new OasisTree(tile));
+                        entities.add(new OasisTree(tile, "oasisTree2"));
                     }
                     break;
 

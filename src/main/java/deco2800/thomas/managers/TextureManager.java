@@ -69,14 +69,17 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("oasis_5", new Texture("resources/environment/desert/tile/oasis/oasis_5.png"));
 			textureMap.put("oasis_6", new Texture("resources/environment/desert/tile/oasis/oasis_6.png"));
 			// change these textures once they are drawn
-			textureMap.put("desertOrb", new Texture("resources/rock_L.png"));
-			textureMap.put("desertCactus", new Texture("resources/tree.png"));
-			textureMap.put("desertSandDune", new Texture("resources/rock_L.png"));
-			textureMap.put("desertDeadTree", new Texture("resources/tree.png"));
-			textureMap.put("desertQuicksand", new Texture("resources/rock_L.png"));
-			textureMap.put("oasisTree", new Texture("resources/tree.png"));
-			textureMap.put("oasisShrub", new Texture("resources/tree.png"));
-
+			textureMap.put("desertOrb", new Texture("resources/environment/desert/entities/desert_orb.png"));
+			textureMap.put("desertCactus1", new Texture("resources/environment/desert/entities/desert_cactus1.png"));
+			textureMap.put("desertCactus2", new Texture("resources/environment/desert/entities/desert_cactus2.png"));
+			textureMap.put("desertCactus3", new Texture("resources/environment/desert/entities/desert_cactus3.png"));
+			textureMap.put("desertCactus4", new Texture("resources/environment/desert/entities/desert_cactus4.png"));
+			textureMap.put("desertSandDune", new Texture("resources/environment/desert/entities/desert_sand_dune.png"));
+			textureMap.put("desertDeadTree1", new Texture("resources/environment/desert/entities/desert_dead_tree1.png"));
+			textureMap.put("desertDeadTree2", new Texture("resources/environment/desert/entities/desert_dead_tree2.png"));
+			textureMap.put("desertQuicksand", new Texture("resources/environment/desert/entities/desert_quicksand.png"));
+			textureMap.put("oasisTree1", new Texture("resources/environment/desert/entities/oasis_tree1.png"));
+			textureMap.put("oasisTree2", new Texture("resources/environment/desert/entities/oasis_tree2.png"));
 
 			textureMap.put("grass_0", new Texture("resources/square.png"));
 			textureMap.put("grass_1", new Texture("resources/square2.png"));
