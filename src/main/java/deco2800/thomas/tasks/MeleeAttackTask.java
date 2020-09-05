@@ -4,6 +4,7 @@ import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.CombatEntity;
+import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
@@ -39,6 +40,7 @@ public class MeleeAttackTask extends AbstractTask {
         float dimensions[] = WorldUtil.colRowToWorldCords(width, height);
         this.bounds = new BoundingBox(origin, dimensions[0], dimensions[1]);
         this.damage = damage;
+        this.world = GameManager.get().getWorld();
     }
 
     /**
