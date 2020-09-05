@@ -28,6 +28,11 @@ public abstract class AbstractWorld {
 
     protected AgentEntity playerEntity;
 
+	/**
+	 * The static entity which is the Orb. All maps
+	 * have only one Orb entity
+	 */
+	private Orb orbEntity;
 
 	/**
 	 * Width of the world; horizontal coordinates of the world will be within `[-width, width]`
@@ -63,12 +68,6 @@ public abstract class AbstractWorld {
 	 * A queue of tiles to be removed in onTick
 	 */
 	protected List<Tile> tilesToRemove;
-
-	/**
-	 * The static entity which is the Orb. All maps
-	 * have only one Orb entity
-	 */
-	private Orb orbEntity;
 
 	/**
 	 * Constructor that creates a world with default width and height
@@ -122,11 +121,11 @@ public abstract class AbstractWorld {
 	/**
 	 * Check if the player's position is same as the orb's position
 	 */
-//	protected void checkObtainedOrb() {
-//		if (playerEntity.getPosition().equals(orbEntity.getPosition())) {
-//			GameManager.get().setNextWorld();
-//		}
-//	}
+	protected void checkObtainedOrb() {
+		if (playerEntity.getPosition().equals(orbEntity.getPosition())) {
+			GameManager.get().setNextWorld();
+		}
+	}
 
 	/**
 	 * Generates a tileMap from the list of tiles
@@ -394,7 +393,7 @@ public abstract class AbstractWorld {
 	}
 
 	public void onTick(long i) {
-//		this.checkObtainedOrb();
+		this.checkObtainedOrb();
 
 		for (AbstractEntity entity : entitiesToRemove) {
 			entities.remove(entity);

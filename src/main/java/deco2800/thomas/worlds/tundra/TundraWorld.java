@@ -1,5 +1,6 @@
 package deco2800.thomas.worlds.tundra;
 
+import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.PlayerPeon;
 import deco2800.thomas.entities.environment.tundra.TundraCampfire;
 import deco2800.thomas.entities.environment.tundra.TundraRock;
@@ -26,6 +27,7 @@ public class TundraWorld extends AbstractWorld {
 
 	public TundraWorld(int width, int height) {
 		DatabaseManager.loadWorld(this, MAP_FILE);
+		this.setOrbEntity(new Orb(this.getTile(0, 0), "orb_3"));
 		generateStaticEntities();
 		this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.1f));
 		addEntity(this.getPlayerEntity());

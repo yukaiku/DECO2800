@@ -1,6 +1,7 @@
 package deco2800.thomas.worlds.desert;
 
 import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.PlayerPeon;
 import deco2800.thomas.entities.environment.desert.*;
 import deco2800.thomas.managers.DatabaseManager;
@@ -81,7 +82,7 @@ public class DesertWorld extends AbstractWorld {
         int randIndex;
 
         // add the orb to a specific location
-        entities.add(new DesertOrb(GameManager.get().getWorld().getTile(21, 6)));
+        this.setOrbEntity(new Orb(GameManager.get().getWorld().getTile(21, 6), "orb_1"));
 
         // Check each tile for specific textures which indicate that an entity must be added
         for (Tile tile : tiles) {
@@ -139,8 +140,6 @@ public class DesertWorld extends AbstractWorld {
      */
     @Override
     public void onTick(long i) {
-        super.onTick(i);
-
         for (AbstractEntity e : this.getEntities()) {
             e.onTick(0);
         }
@@ -155,5 +154,7 @@ public class DesertWorld extends AbstractWorld {
             GameManager.get().getCamera().position.set(position[0], position[1], 0);
             GameManager.get().getCamera().update();
         }
+
+        super.onTick(i);
     }
 }

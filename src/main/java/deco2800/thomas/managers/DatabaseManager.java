@@ -437,11 +437,11 @@ public final class DatabaseManager extends AbstractManager {
 			return;
 		}
 
-		if (saveLocationAndFilename.equals("resources/environment/desert/desert_map.json")) {
-			newTiles = setDesertTiles(newTiles);
-		} else if (saveLocationAndFilename.equals("resources/environment/volcano/VolcanoZone.json")) {
-			checkVolcanoWorld(newTiles);
-		}
+//		if (saveLocationAndFilename.equals("resources/environment/desert/desert_map.json")) {
+//			newTiles = setDesertTiles(newTiles);
+//		} else if (saveLocationAndFilename.equals("resources/environment/volcano/VolcanoZone.json")) {
+//			checkVolcanoWorld(newTiles);
+//		}
 
 		world.setTiles(newTiles);
 		world.assignTileNeighbours();

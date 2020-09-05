@@ -21,7 +21,10 @@ public class VolcanoWorld extends AbstractWorld {
     private final Logger logger = LoggerFactory.getLogger(VolcanoWorld.class);
     public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/volcano/VolcanoZone.json";
 
-    boolean notGenerated = true;
+    private final int ORB_COLUMN = 21;
+    private final int ORB_ROW = 20;
+
+    private boolean notGenerated = true;
 
     /**
      * Default Constructor for volcano world.
@@ -57,8 +60,6 @@ public class VolcanoWorld extends AbstractWorld {
      * @param i - tick count
      */
     public void onTick(long i) {
-        super.onTick(i);
-
         for (AbstractEntity e : this.getEntities()) {
             e.onTick(0);
         }
@@ -71,6 +72,7 @@ public class VolcanoWorld extends AbstractWorld {
             System.out.println(this.getEntities());
             System.out.flush();
         }
+        super.onTick(i);
     }
 
     /**
@@ -90,7 +92,7 @@ public class VolcanoWorld extends AbstractWorld {
         entities.add(createGraveYard(7, -15));
         entities.add(createRuins(-25, -5));
         entities.add(createDragonSkull(-23, 23));
-//        entities.add(createVolcanoOrb(21, 20));
+        this.setOrbEntity(new Orb(this.getTile(16, 20), "orb_4"));
 
         //For objects that are added randomly & require more specific addition
         //entities, they're methodology will folllow add()
@@ -124,20 +126,6 @@ public class VolcanoWorld extends AbstractWorld {
             }
         }
     }
-
-    /**
-     * Creates & returns a static orb entity at the given coordinates.
-     *
-     * @param col - The specified column coordinate of the orb.
-     * @param row - The specified row coordinate of the orb.
-     * @return  A static entity for the Volcano Zone
-     */
-//    public Orb createVolcanoOrb(float col, float row) {
-//        List<Part> parts = new ArrayList<Part>();
-//        parts.add(new Part(new SquareVector(0, 0), "", false));
-//        Orb volcanoOrb = new Orb(col, row, 1, parts);
-//        return volcanoOrb;
-//    }
 
     /**
      *  Creates a dragon skull entity to be added to the zone

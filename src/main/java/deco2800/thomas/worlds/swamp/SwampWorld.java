@@ -139,7 +139,7 @@ public class SwampWorld extends AbstractWorld {
     }
 
     public void generateStaticEntities() {
-        this.setOrbEntity(new Orb(this.getTile(23, -24), false));
+        this.setOrbEntity(new Orb(this.getTile(23, -24), "orb_2"));
         this.createPond();
         this.generateDeadTree();
         this.createTreeStub();

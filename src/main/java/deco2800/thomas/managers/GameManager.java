@@ -8,8 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import deco2800.thomas.worlds.AbstractWorld;
 
+import deco2800.thomas.worlds.desert.DesertWorld;
 import deco2800.thomas.worlds.swamp.SwampWorld;
 import deco2800.thomas.worlds.TestWorld;
+import deco2800.thomas.worlds.tundra.TundraWorld;
+import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,8 +65,10 @@ public class GameManager {
 	public boolean showCoordsEntity = false;
 
 	private static enum WorldType {
-		TEST_WORLD,
 		SWAMP_WORLD,
+		TUNDRA_WORLD,
+		VOLCANO_WORLD,
+		DESERT_WORLD
 	}
 	private int currentWorld = 0;
 	private ArrayList<WorldType> worldOrder;
@@ -86,7 +91,6 @@ public class GameManager {
 	private GameManager() {
 		worldOrder = new ArrayList<>(EnumSet.allOf(WorldType.class));
 		Collections.shuffle(worldOrder);
-		System.out.println(worldOrder.toString());
 	}
 
 	/**
@@ -252,11 +256,17 @@ public class GameManager {
 	 */
 	public void setNextWorld() {
 		switch(worldOrder.get(currentWorld)) {
-			case TEST_WORLD:
-				this.setWorld(new TestWorld());
+			case TUNDRA_WORLD:
+				this.setWorld(new TundraWorld());
 				break;
 			case SWAMP_WORLD:
 				this.setWorld(new SwampWorld());
+				break;
+			case DESERT_WORLD:
+				this.setWorld(new DesertWorld());
+				break;
+			case VOLCANO_WORLD:
+				this.setWorld(new VolcanoWorld());
 				break;
 		}
 		currentWorld = (currentWorld + 1) % worldOrder.size();

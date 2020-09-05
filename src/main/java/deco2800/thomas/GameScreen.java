@@ -83,7 +83,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		ENV_TEAM_GAME {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new DesertWorld();
+				AbstractWorld world = new VolcanoWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
@@ -97,10 +97,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 		/* Create an example world for the engine */
 		this.game = game;
 
-		GameManager.get().setWorld(startType.method());
+//		GameManager.get().setWorld(startType.method());
 
-//		gameManager.setNextWorld();
-
+		GameManager.get().setNextWorld();
 
 		// Add first peon to the world
 		camera = new PotateCamera(1920, 1080);

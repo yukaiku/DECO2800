@@ -14,14 +14,14 @@ public class Orb extends StaticEntity implements Tickable {
 
     AbstractWorld world;
 
-    public Orb(float col, float row, int renderOrder, List<Part> parts) {
+    public Orb(float col, float row, String texture, int renderOrder, List<Part> parts) {
         super(col, row, renderOrder, parts);
         LOG.info("Making a orb at {}, {}", col, row);
-        this.setTexture("orb_1");
+        this.setTexture(texture);
     }
 
-    public Orb(Tile t, boolean obstructed) {
-        super(t, RenderConstants.ORB, "orb_1", obstructed);
+    public Orb(Tile t, String texture) {
+        super(t, RenderConstants.ORB, texture, false);
     }
 
     @Override
