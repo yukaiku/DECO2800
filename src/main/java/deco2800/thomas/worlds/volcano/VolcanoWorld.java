@@ -7,7 +7,6 @@ import deco2800.thomas.entities.VolcanoGraveYard;
 import deco2800.thomas.entities.VolcanoRuins;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.volcano.VolcanoBurningTree;
-import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -56,10 +55,6 @@ public class VolcanoWorld extends AbstractWorld {
         Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano_left");
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc, volcanoOrc));
         GameManager.get().addManager(enemyManager);
-
-        // Create a combatManager to create combatEntities on click
-//        CombatManager combatManager = new CombatManager(this);
-//        GameManager.get().addManager(combatManager);
     }
 
 

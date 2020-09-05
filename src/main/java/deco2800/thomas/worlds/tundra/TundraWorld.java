@@ -6,7 +6,6 @@ import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.tundra.TundraCampfire;
 import deco2800.thomas.entities.environment.tundra.TundraRock;
 import deco2800.thomas.entities.environment.tundra.TundraTreeLog;
-import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -42,10 +41,6 @@ public class TundraWorld extends AbstractWorld {
 		Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano_left");
 		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc, volcanoOrc));
 		GameManager.get().addManager(enemyManager);
-
-		// Create a combatManager to create combatEntities on click
-//		CombatManager combatManager = new CombatManager(this);
-//		GameManager.get().addManager(combatManager);
 	}
 
 	private void generateStaticEntities() {

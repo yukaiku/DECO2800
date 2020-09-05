@@ -70,10 +70,6 @@ public class DesertWorld extends AbstractWorld {
         Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano_left");
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc, volcanoOrc));
         GameManager.get().addManager(enemyManager);
-
-        // Create a combatManager to create combatEntities on click
-//        CombatManager combatManager = new CombatManager(this);
-//        GameManager.get().addManager(combatManager);
     }
 
     /**

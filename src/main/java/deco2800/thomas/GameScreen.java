@@ -9,8 +9,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.Peon;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.environment.tundra.TundraTreeLog;
 import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
@@ -20,9 +18,6 @@ import deco2800.thomas.renderers.Renderer3D;
 import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
-import deco2800.thomas.worlds.desert.DesertWorld;
-import deco2800.thomas.worlds.swamp.SwampWorld;
-import deco2800.thomas.worlds.tundra.TundraWorld;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,9 +113,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 		}
 		/* Create an example world for the engine */
 		this.game = game;
-
-		CombatManager combatManager = new CombatManager();
-		GameManager.get().addManager(combatManager);
 
 		// Initialize camera
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
