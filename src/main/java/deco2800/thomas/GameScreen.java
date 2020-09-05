@@ -8,10 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Peon;
+import deco2800.thomas.entities.Agent.Peon;
+import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
+import deco2800.thomas.renderers.*;
 import deco2800.thomas.renderers.OverlayRenderer;
 import deco2800.thomas.renderers.PotateCamera;
 import deco2800.thomas.renderers.Renderer3D;
@@ -35,9 +37,12 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * 3D is for Isometric worlds
 	 * Check the documentation for each renderer to see how it handles WorldEntity coordinates
 	 */
+	public static boolean tutorial = false;
 	Renderer3D renderer = new Renderer3D();
+	OverlayRenderer rendererDebug = new OverlayRenderer();
 
-	OverlayRenderer debugRenderer = new OverlayRenderer();
+	Guideline guideline = new Guideline();
+	QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
 
 	AbstractWorld world;
 
@@ -47,7 +52,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * Create a camera for panning and zooming.
 	 * Camera must be updated every render cycle.
 	 */
-	PotateCamera camera, cameraDebug;
+	OrthographicCamera camera, cameraDebug;
 
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
 
@@ -87,6 +92,14 @@ public class GameScreen implements Screen, KeyDownObserver {
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
+		},
+		TUTORIAL{
+			@Override
+			public AbstractWorld method() {
+				AbstractWorld world = new TutorialWorld();
+				GameManager.get().getManager(NetworkManager.class).startHosting("host");
+				return world;
+			}
 		};
 
 		public abstract AbstractWorld method(); // could also be in an interface that MyEnum implements
@@ -94,16 +107,19 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 
 	public GameScreen(final ThomasGame game, final gameType startType) {
+		if (startType == gameType.TUTORIAL) {
+			GameManager.get().inTutorial = true;
+			tutorial = true;
+		}
 		/* Create an example world for the engine */
 		this.game = game;
 
 //		GameManager.get().setWorld(startType.method());
-
 		GameManager.get().setNextWorld();
 
-		// Add first peon to the world
-		camera = new PotateCamera(1920, 1080);
-		cameraDebug = new PotateCamera(1920, 1080);
+		// Initialize camera
+		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cameraDebug = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		/* Add the window to the stage */
 		GameManager.get().setSkin(skin);
@@ -128,18 +144,10 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	@Override
 	public void render(float delta) {
+
 		handleRenderables();
 
-		//MoveCamera Function was here for dayNight Cycle
-
-		CameraUtil.zoomableCamera(camera, Input.Keys.MINUS, Input.Keys.EQUALS, delta);
-
-		//
-		if (GameManager.get().getWorld().getPlayerEntity() == null) {
-			throw new RuntimeException("You are stupid");
-		}
-		//
-
+		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta);
 		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
 
 		cameraDebug.position.set(camera.position);
@@ -156,7 +164,18 @@ public class GameScreen implements Screen, KeyDownObserver {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		rerenderMapObjects(batch, camera);
-		debugRenderer.render(batchDebug, cameraDebug);
+		rendererDebug.render(batchDebug, cameraDebug);
+
+		// Add guideline if we are in the TutorialWorld
+		if (tutorial) {
+			SpriteBatch batchGuideline = new SpriteBatch();
+			batchGuideline.setProjectionMatrix(cameraDebug.combined);
+			guideline.render(batchGuideline, cameraDebug);
+		}
+		// Questtracker UI
+		SpriteBatch batchGuideline = new SpriteBatch();
+		batchGuideline.setProjectionMatrix(cameraDebug.combined);
+		questTrackerRenderer.render(batchGuideline, cameraDebug);
 
 		/* Refresh the experience UI for if information was updated */
 		stage.act(delta);
@@ -231,6 +250,10 @@ public class GameScreen implements Screen, KeyDownObserver {
 			GameManager.get().debugMode = !GameManager.get().debugMode;
 		}
 
+		if (keycode == Input.Keys.F9 & GameManager.get().inTutorial) {
+			tutorial = !tutorial;
+		}
+
 		if (keycode == Input.Keys.F5) {
 			world = new TestWorld();
 			AbstractEntity.resetID();
@@ -239,7 +262,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 			gameManager.setWorld(world);
 
 			// Add first peon to the world
-			world.addEntity(new Peon(0f, 0f, 0.05f));
+			world.addEntity(new Peon(0f, 0f, 0.05f, 50));
 		}
 
 		if (keycode == Input.Keys.F11) { // F11
@@ -267,56 +290,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 			// Load the world to the DB
 			DatabaseManager.loadWorld(null);
 		}
-
-		if (keycode == Input.Keys.F6) { // F3
-			// Save the world to the DB
-			DatabaseManager.saveWorld(world, "env_team_output.json");
-		}
-
-		if (keycode == Input.Keys.F7) { // F4
-			// Load the world to the DB
-			DatabaseManager.loadWorld(world, "resources/env_team_input.json");
-		}
 	}
 
-	public void moveCamera() {
-		//timmeh to fix hack.  // fps is not updated cycle by cycle
-		float normilisedGameSpeed = (60.0f / Gdx.graphics.getFramesPerSecond());
-
-		int goFastSpeed = (int) (5 * normilisedGameSpeed * camera.zoom);
-
-		if (!camera.isPotate()) {
-
-			if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-				goFastSpeed *= goFastSpeed * goFastSpeed;
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-				camera.translate(-goFastSpeed, 0, 0);
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-				camera.translate(goFastSpeed, 0, 0);
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-				camera.translate(0, -goFastSpeed, 0);
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-				camera.translate(0, goFastSpeed, 0);
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.EQUALS)) {
-				camera.zoom *= 1 - 0.01 * normilisedGameSpeed;
-				if (camera.zoom < 0.5) {
-					camera.zoom = 0.5f;
-				}
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.MINUS)) {
-				camera.zoom *= 1 + 0.01 * normilisedGameSpeed;
-			}
-		}
-	}
 }

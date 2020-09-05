@@ -1,17 +1,15 @@
 package deco2800.thomas.entities;
 
-import com.badlogic.gdx.Game;
+import com.google.gson.annotations.Expose;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.NetworkManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.Renderable;
 import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
+import deco2800.thomas.util.WorldUtil;
 
 import java.util.Objects;
-
-import com.google.gson.annotations.Expose;
-import org.w3c.dom.Text;
 
 /**
  * AbstractEntity is an item that can exist in both 3D and 2D worlds.
@@ -25,6 +23,8 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	private String objectName = null;
 
 	static int nextID = 0;
+
+	public boolean save = true;
 
 	public static void resetID() {
 		nextID = 0;
@@ -47,9 +47,11 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 
 	private float rowRenderLength;
 
-
 	@Expose
 	private int entityID = 0;
+
+	/* Faction of entity defaults to none */
+	private EntityFaction faction = EntityFaction.None;
 
 	/**
 	 * Whether an entity should trigger a collision.
@@ -73,6 +75,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 
 	public AbstractEntity() {
 		this.position = new SquareVector();
+		this.bounds = new BoundingBox(this.position, 0, 0);
 		this.colRenderLength = 1f;
 		this.rowRenderLength = 1f;
 		entityID = AbstractEntity.getNextID();
@@ -91,6 +94,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	 */
 	public AbstractEntity(float col, float row, int height, float colRenderLength, float rowRenderLength) {
 		this.position = new SquareVector(col, row);
+		this.bounds = new BoundingBox(this.position, 0, 0);
 		this.height = height;
 		this.colRenderLength = colRenderLength;
 		this.rowRenderLength = rowRenderLength;
@@ -176,17 +180,6 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	}
 
 	/**
-	 * Tests to see if the item collides with another entity in the world.
-	 *
-	 * @param entity the entity to test collision with
-	 * @return true if they collide, false if they do not collide
-	 */
-	public boolean collidesWith(AbstractEntity entity) {
-		//TODO: Implement this.
-		return false;
-	}
-
-	/**
 	 * Gets the bounding box of this entity.
 	 * @return the bounding box of this entity.
 	 */
@@ -195,12 +188,35 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	}
 
 	/**
-	 * Sets the bounding box of this entity.
-	 * @param bounds Bounding box to copy.
+	 * Sets the width and height of the bounding box of this entity
+	 * based off of the current texture.
 	 */
-	public void setBounds(BoundingBox bounds) {
-		// Copy, do not reference.
-		this.bounds = new BoundingBox(bounds);
+	public void setBounds() {
+		TextureManager textureManager =
+				GameManager.getManagerFromInstance(TextureManager.class);
+		float[] dimensions = {
+				// Scale texture into correct world coordinates
+				textureManager.getTexture(texture).getWidth() * WorldUtil.SCALE_X * getColRenderLength(),
+				textureManager.getTexture(texture).getHeight() * WorldUtil.SCALE_Y * getRowRenderLength()
+		};
+		bounds.setWidth(dimensions[0]);
+		bounds.setHeight(dimensions[1]);
+	}
+
+	/**
+	 * Returns the faction this entity belongs to.
+	 * @return EntityFaction of this entity.
+	 */
+	public EntityFaction getFaction() {
+		return faction;
+	}
+
+	/**
+	 * Sets the faction this entity belongs to.
+	 * @param faction EntityFaction for this entity.
+	 */
+	public void setFaction(EntityFaction faction) {
+		this.faction = faction;
 	}
 
 	@Override
@@ -231,6 +247,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	 */
 	public void setTexture(String texture) {
 		this.texture = texture;
+		setBounds();
 	}
 
 

@@ -1,6 +1,6 @@
 package deco2800.thomas.managers;
 
-import deco2800.thomas.entities.Peon;
+import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.observers.KeyTypedObserver;
 
@@ -56,11 +56,11 @@ public class OnScreenMessageManager extends AbstractManager implements KeyTypedO
 				isTyping = false;
 				if (unsentMessage.startsWith("/duck")) { // enable GOD mode
 					for (int i = 0; i < 1000; ++i) {
-						GameManager.get().getWorld().addEntity(new Peon(0f, 0f, 0.05f));
-					}
+						GameManager.get().getWorld().addEntity(new Peon(0f, 0f, 0.05f, 50));
+					} 
 
-				} else if (unsentMessage.startsWith("/1")) { // enable GOD mode
-					GameManager.get().getWorld().addEntity(new Peon(0f, 0f, 0.05f));
+				} else	if (unsentMessage.startsWith("/1")) { // enable GOD mode
+					GameManager.get().getWorld().addEntity(new Peon(0f, 0f, 0.05f, 50));
 				} else if (unsentMessage.startsWith("/resources")) {
 					// Display resources in the console
 					this.addMessage(String.format("Stone: %s", GameManager.getManagerFromInstance(InventoryManager.class).getStone()));

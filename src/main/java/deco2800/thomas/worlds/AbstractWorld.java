@@ -1,10 +1,13 @@
 package deco2800.thomas.worlds;
 
 import deco2800.thomas.entities.*;
+import deco2800.thomas.Tickable;
+import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
-
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -15,11 +18,12 @@ import java.util.stream.*;
  * <p>
  * It provides storage for the WorldEntities and other universal world level items.
  */
-public abstract class AbstractWorld {
+public abstract class AbstractWorld implements Tickable {
 	/**
 	 * Default width of the world; horizontal coordinates of the world will be within `[-DEFAULT_WIDTH, DEFAULT_WIDTH]`
 	 */
 	protected static final int DEFAULT_WIDTH = 25;
+
 
 	/**
 	 * Default height of the world; vertical coordinates of the world will be within `[-DEFAULT_HEIGHT, DEFAULT_HEIGHT]`
@@ -310,6 +314,7 @@ public abstract class AbstractWorld {
 		Collections.sort(e);
 		return e;
 	}
+
     /**
      * Gets an array list of all the entities contained within the given bounds.
      * @param bounds Bounding box to check within.
@@ -318,7 +323,7 @@ public abstract class AbstractWorld {
     public List<AbstractEntity> getEntitiesInBounds(BoundingBox bounds) {
         List<AbstractEntity> entitiesInBounds = new ArrayList<>();
         for (AbstractEntity entity : entities) {
-            if (bounds.boundingBoxOverlaps(entity.getBounds())) {
+            if (bounds.overlaps(entity.getBounds())) {
                 entitiesInBounds.add(entity);
             }
         }
@@ -427,6 +432,29 @@ public abstract class AbstractWorld {
         return playerEntity;
     }
 
+	public AgentEntity getPlayerEntity() {
+		return playerEntity;
+	}
+
+	public void setPlayerEntity(AgentEntity playerEntity) {
+		this.playerEntity = playerEntity;
+	}
+
+	/**
+	 * Get (half of) the width of the world.
+	 * @return the width of the world
+	 */
+	public int getWidth() {
+		return this.width;
+	}
+
+	/**
+	 * Get (half of) the height of the world.
+	 * @return the height of the world
+	 */
+	public int getHeight() {
+		return this.height;
+	}
     public void setPlayerEntity(AgentEntity playerEntity) {
         this.playerEntity = playerEntity;
     }

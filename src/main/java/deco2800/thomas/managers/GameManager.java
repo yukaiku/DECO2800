@@ -50,6 +50,7 @@ public class GameManager {
 
 	public boolean debugMode = true;
 
+	public boolean inTutorial = false;
 	/**
 	 * Whether or not we render info over the tiles.
 	 */
@@ -110,6 +111,11 @@ public class GameManager {
 	 */
 	public void addManager(AbstractManager manager) {
 		managers.add(manager);
+	}
+
+	/** Removes a manager */
+	public void removeManager(AbstractManager manager) {
+		managers.remove(manager);
 	}
 
 	/**

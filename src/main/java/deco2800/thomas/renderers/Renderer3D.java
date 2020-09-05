@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.Agent.Peon;
+import deco2800.thomas.entities.attacks.Projectile;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
@@ -14,14 +17,24 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.attacks.CombatEntity;
+import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.MovementTask;
+import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.Vector2;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * A ~simple~ complex square renderer for DECO2800 games
@@ -178,9 +191,14 @@ public class Renderer3D implements Renderer {
 					renderPeonMovementTiles(batch, camera, entity, entityWorldCoord);
 				}
 				renderAbstractEntity(batch, entity, entityWorldCoord, tex);
+			 }
+
+			/* Draw CombatEntity */
+			if (entity instanceof CombatEntity) {
+				renderAbstractEntity(batch, entity, entityWorldCoord, tex);
 			}
 
-			if (entity instanceof StaticEntity) {
+			if (entity instanceof StaticEntity) {	 
 				StaticEntity staticEntity = ((StaticEntity) entity);
 				Set<SquareVector> childrenPosns = staticEntity.getChildrenPositions();
 
@@ -221,7 +239,12 @@ public class Renderer3D implements Renderer {
 
 		float width = tex.getWidth() * entity.getColRenderLength() * WorldUtil.SCALE_X;
 		float height = tex.getHeight() * entity.getRowRenderLength() * WorldUtil.SCALE_Y;
-		batch.draw(tex, x, y, width, height);
+		if (entity instanceof Projectile) {
+			batch.draw(new TextureRegion(tex), x, y, width / 2, height / 2, width, height, 1,
+					1, ((Projectile) entity).getDirection());
+		} else {
+			batch.draw(tex, x, y, width, height);
+		}
 	}
 
 	private void renderPeonMovementTiles(SpriteBatch batch, OrthographicCamera camera, AbstractEntity entity, float[] entityWorldCord) {

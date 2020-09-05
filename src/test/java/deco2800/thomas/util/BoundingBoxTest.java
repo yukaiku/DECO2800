@@ -42,7 +42,8 @@ public class BoundingBoxTest {
     public void nonOverlappingTest() {
         BoundingBox boxA = new BoundingBox(new SquareVector(0, 0), 10, 10);
         BoundingBox boxB = new BoundingBox(new SquareVector(20, 20), 10, 10);
-        assertFalse(boxA.boundingBoxOverlaps(boxB));
+        assertFalse(boxA.overlaps(boxB));
+        assertFalse(boxB.overlaps(boxA));
     }
 
     /**
@@ -51,7 +52,44 @@ public class BoundingBoxTest {
     @Test
     public void overlappingTest() {
         BoundingBox boxA = new BoundingBox(new SquareVector(0, 0), 30, 30);
-        BoundingBox boxB = new BoundingBox(new SquareVector(20, 20), 10, 10);
-        assertTrue(boxA.boundingBoxOverlaps(boxB));
+        BoundingBox boxB = new BoundingBox(new SquareVector(0, 0), 10, 10);
+        assertTrue(boxA.overlaps(boxB));
+        assertTrue(boxB.overlaps(boxA));
+    }
+
+    /**
+     * Tests the bounds follow a moving origin as expected when the vector
+     * reference is moved.
+     */
+    @Test
+    public void movingBoundsTest() {
+        SquareVector origin = new SquareVector(0, 0);
+        BoundingBox boxA = new BoundingBox(origin, 30, 30);
+        BoundingBox boxB = new BoundingBox(new SquareVector(50, 0), 10, 10);
+
+        // No overlap initially
+        assertFalse(boxA.overlaps(boxB));
+
+        // Move origin so that they overlap
+        origin.setCol(50);
+        assertTrue(boxA.overlaps(boxB));
+    }
+
+    /**
+     * Tests that using the BoundingBox(BoundingBox bounds) constructor
+     * creates a clone of the bounding box.
+     */
+    @Test
+    public void cloningConstructorTest() {
+        SquareVector origin = new SquareVector(0, 0);
+        BoundingBox boxA = new BoundingBox(origin, 30, 30);
+        BoundingBox boxB = new BoundingBox(boxA);
+
+        // These will initially overlap
+        assertTrue(boxA.overlaps(boxB));
+
+        // Move origin so they no longer overlap
+        origin.setCol(50);
+        assertFalse(boxA.overlaps(boxB));
     }
 }

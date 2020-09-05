@@ -1,22 +1,37 @@
 package deco2800.thomas.worlds;
 
+import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.enemies.Dragon;
+import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.managers.CombatManager;
+import deco2800.thomas.managers.EnemyManager;
+import deco2800.thomas.managers.GameManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.Environment.Rock;
+import deco2800.thomas.entities.Environment.Tree;
+import deco2800.thomas.entities.NPC.NonPlayablePeon;
+import deco2800.thomas.managers.NonPlayablePeonManager;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Part;
 import deco2800.thomas.entities.StaticEntity;
-import deco2800.thomas.entities.Tree;
-import deco2800.thomas.entities.PlayerPeon;
-import deco2800.thomas.entities.Rock;
+import deco2800.thomas.entities.Environment.Tree;
+import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.Environment.Rock;
+import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class TestWorld extends AbstractWorld {
@@ -33,6 +48,8 @@ public class TestWorld extends AbstractWorld {
 
 	public TestWorld() {
 		super();
+		this.width = WORLD_WIDTH;
+		this.height = WORLD_HEIGHT;
 	}
 
 	//5 tile building
@@ -89,9 +106,10 @@ public class TestWorld extends AbstractWorld {
 	private void addTree(float col, float row) {
 		Map<SquareVector, String> textures = new HashMap<SquareVector, String>();
 		Tile t = GameManager.get().getWorld().getTile(col, row);
-		Tree tree = new Tree(t, true);
+		Tree tree = new  Tree(t, true);
 		entities.add(tree);
 	}
+
 
 	//this get ran on first game tick so the world tiles exist.
 	public void createBuildings() {
@@ -128,7 +146,24 @@ public class TestWorld extends AbstractWorld {
 		}
 
 		// Create the entities in the game
-		addEntity(new PlayerPeon(10f, 5f, 0.1f));
+		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f, 50));
+		addEntity(this.getPlayerEntity());
+
+		// Provide available enemies to the EnemyManager
+		Orc swampOrc = new Orc(1, 0.05f, 100);
+		Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano_left");
+		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc, volcanoOrc));
+		GameManager.get().addManager(enemyManager);
+
+		// Uncomment the following lines to add a boss. (WARNING: uncommenting these lines will currently break
+		// the SaveLoadTest, may need to modify that test later)
+//		Dragon boss = new Dragon(3, 1, 2000);
+//		enemyManager.setBoss(boss);
+//		enemyManager.spawnBoss(-2, 0);
+
+		// Create a combatManager to create combatEntities on click
+		CombatManager combatManager = new CombatManager(this);
+		GameManager.get().addManager(combatManager);
 	}
 
 	@Override
@@ -148,3 +183,18 @@ public class TestWorld extends AbstractWorld {
 	}
 
 }
+
+/*
+ * print out Neighbours for (Tile tile : tiles) { System.out.println();
+ * System.out.println(tile); for (Entry<Integer, Tile> firend :
+ * tile.getNeighbours().entrySet()) { switch (firend.getKey()) { case
+ * Tile.north: System.out.println("north " +(firend.getValue())); break; case
+ * Tile.north_east: System.out.println("north_east " + (firend.getValue()));
+ * break; case Tile.north_west: System.out.println("north_west " +
+ * (firend.getValue())); break; case Tile.south: System.out.println("south " +
+ * (firend.getValue())); break; case Tile.south_east:
+ * System.out.println("south_east " +(firend.getValue())); break; case
+ * Tile.south_west: System.out.println("south_west " + (firend.getValue()));
+ * break; } } }
+ *
+ */
