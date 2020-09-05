@@ -2,10 +2,10 @@ package deco2800.thomas.entities;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.attacks.Projectile;
-import deco2800.thomas.managers.CombatManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.AbstractTask;
 
+import deco2800.thomas.util.WorldUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -15,12 +15,13 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 /**
  * Tests the Projectile class.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(GameManager.class)
+@PrepareForTest({GameManager.class, WorldUtil.class})
 public class ProjectileTest extends BaseGDXTest {
     /**
      * Tests the constructor creates a valid instance from arguments.
@@ -72,10 +73,9 @@ public class ProjectileTest extends BaseGDXTest {
 
         // Mock the game manager, and a CombatManager
         GameManager gameManager = mock(GameManager.class);
-        CombatManager combatManager = mock(CombatManager.class);
+        mockStatic(WorldUtil.class);
         mockStatic(GameManager.class);
         when(GameManager.get()).thenReturn(gameManager);
-        when(GameManager.get().getManager(CombatManager.class)).thenReturn(combatManager);
 
         // Create projectile to test on, and set tasks
         Projectile projectile = new Projectile(0, 10, 0, 10, 5, EntityFaction.Ally);
@@ -84,6 +84,7 @@ public class ProjectileTest extends BaseGDXTest {
 
         // Call on tick, then verify that the entity was remove from the world
         projectile.onTick(0);
-        verify(combatManager).removeEntity(projectile);
+        verifyStatic(WorldUtil.class);
+        WorldUtil.removeEntity(projectile);
     }
 }
