@@ -102,7 +102,8 @@ public class Dragon extends Boss implements PassiveEnemy {
         if (++tickFollowing > 60) {
             if (super.getTarget() != null) {
                 // Throws a fireball at the player, and attempts to summon a
-                // goblin
+                // goblin, and attempts to initialise movement and combat
+                // tasks
                 summonGoblin();
                 Fireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
                         getTarget().getRow(), 10, 0.2f, 60, EntityFaction.Evil);
@@ -129,14 +130,17 @@ public class Dragon extends Boss implements PassiveEnemy {
     }
 
     /**
-     * Spawns an orb that takes the player to the next environment
-     * around the dragon's location as it dies
+     * Spawns an orb around the dragon's location at death that takes
+     * the player to the next environment
      */
     @Override
     public void death() {
         AbstractWorld world = GameManager.get().getWorld();
-        Tile tile = world.getTile((float) Math.ceil((this.getCol())), (float) Math.ceil((this.getRow())));
+        Tile tile = world.getTile((float) Math.ceil((this.getCol())),
+                (float) Math.ceil((this.getRow())));
         GameManager.getManagerFromInstance(EnemyManager.class).removeBoss();
-        world.setOrbEntity(new Orb(tile, "orb_" + ((random.nextInt(4)) + 1)));
+        //Generate a random orb texture to initialise the dragon's dropped orb
+        world.setOrbEntity(new Orb(tile, "orb_" +
+                ((random.nextInt(4)) + 1)));
     }
 }
