@@ -27,7 +27,8 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
 
     // The health of the player
     private HealthTracker health;
-    private Map<String, String> dialogues = new HashMap<>();
+    private static Map<String, String> dialogues = new HashMap<>();
+
 
     public PlayerPeon(float row, float col, float speed) {
         this(row, col, speed, DEFAULT_HEALTH);
@@ -36,6 +37,9 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
     public PlayerPeon(float row, float col, float speed, int health) {
         super(row, col, speed, health);
         this.setObjectName("playerPeon");
+        this.setTexture("player_right");
+        this.setColRenderLength(1.4f);
+        this.setRowRenderLength(1.8f);
         this.setFaction(EntityFaction.Ally);
         GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
@@ -44,10 +48,11 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
 
     /**
      * Returns a dialogue string depending on the target string
+     *
      * @param target The target string identifier
      */
-    public String getDialogue(String target) {
-        dialogues.put("welcome","Welcome to Decodia the world has been devastated " +
+    public static String getDialogue(String target) {
+        dialogues.put("welcome", "Welcome to Decodia the world has been devastated " +
                 "with the re-emergence of the five pythagoras orbs. In order to save this world, " +
                 "you will need to collect all the orbs and restore balance to the world.");
         dialogues.put("WASD", "To move your character press W for up, S for down, A for left, D for right, " +
@@ -77,8 +82,6 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
                 "vulnerable to water");
         dialogues.put("next", "Congratulations for collecting the orb and completing the quest, you will now proceed on to " +
                 "the next stage.");
-        dialogues.put("next", "Congratulations for collecting the orb and completing the quest, you will now proceed on to " +
-                "the next stage.");
         dialogues.put("roar", "Roar!!!");
         dialogues.put("grr", "GRRRRR");
         dialogues.put("died", "Too bad, you died, would you like to restart from your previous checkpoint or start anew?");
@@ -87,48 +90,41 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
     }
 
     /**
-     *
      * Quest Tracker function that tracks the orbs the user currently has
      *
      * @return orbCount the number of orbs the user currently has
      */
-    public static int questTracker(){
+    public static int questTracker() {
         return orbCount;
     }
 
     /**
-     *
      * Resets the number of orb user has
      * Notes:
      * To be used on when a new game is run or upon death
-     *
      */
-    public static void resetQuest(){
+    public static void resetQuest() {
         orbCount = 0;
     }
 
     /**
-     *
      * Increase the number of orbs the user has
      * Notes:
      * To be used on when player picks up an orb
-     *
      */
-    public static void increaseOrbs(){
-        if(orbCount < 5){
+    public static void increaseOrbs() {
+        if (orbCount < 5) {
             orbCount += 1;
         }
     }
 
     /**
-     *
      * Decrease the number of orbs the user has
      * Notes:
      * To be used on when player picks up an orb
-     *
      */
-    public static void decreaseOrbs(){
-        if(orbCount > 1){
+    public static void decreaseOrbs() {
+        if (orbCount > 1) {
             orbCount -= 1;
         }
     }
@@ -176,25 +172,25 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
                 // Spawn above player
                 System.out.println("Above");
                 origin = new SquareVector(this.getCol(), this.getRow() + 1);
-                this.setCombatTask(new MeleeAttackTask(this, origin, 2,2, 30));
+                this.setCombatTask(new MeleeAttackTask(this, origin, 2, 2, 30));
 
             } else if (angle >= -135 && angle <= -45) {
                 // Spawn to left of player
                 System.out.println("Left");
                 origin = new SquareVector(this.getCol() - 1, this.getRow());
-                this.setCombatTask(new MeleeAttackTask(this, origin, 2,2, 30));
+                this.setCombatTask(new MeleeAttackTask(this, origin, 2, 2, 30));
 
             } else if (angle < -135 || angle > 135) {
                 // Spawn below player
                 System.out.println("Below");
                 origin = new SquareVector(this.getCol(), this.getRow() - 1);
-                this.setCombatTask(new MeleeAttackTask(this, origin, 2,2, 30));
+                this.setCombatTask(new MeleeAttackTask(this, origin, 2, 2, 30));
 
             } else if (angle >= 45 && angle <= 135) {
                 // Spawn right of player
                 System.out.println("Right");
                 origin = new SquareVector(this.getCol() + 1, this.getRow());
-                this.setCombatTask(new MeleeAttackTask(this, origin, 2,2, 30));
+                this.setCombatTask(new MeleeAttackTask(this, origin, 2, 2, 30));
 
             }
         }
@@ -234,9 +230,11 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
                 this.setMovingDirection(MovementTask.Direction.DOWN);
                 break;
             case Input.Keys.A:
+                this.setTexture("player_left");
                 this.setMovingDirection(MovementTask.Direction.LEFT);
                 break;
             case Input.Keys.D:
+                this.setTexture("player_right");
                 this.setMovingDirection(MovementTask.Direction.RIGHT);
                 break;
             default:
@@ -286,5 +284,13 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
     @Override
     public void death() {
         GameManager.get().getWorld().removeEntity(this);
+        GameManager.get().getWorld().disposeEntity(this.getEntityID());
+    }
+
+    @Override
+    public void dispose() {
+        GameManager.getManagerFromInstance(InputManager.class).removeTouchDownListener(this);
+        GameManager.getManagerFromInstance(InputManager.class).removeKeyDownListener(this);
+        GameManager.getManagerFromInstance(InputManager.class).removeKeyUpListener(this);
     }
 }

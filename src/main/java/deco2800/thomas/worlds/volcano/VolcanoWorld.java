@@ -23,6 +23,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Implemented subclass of Abstract world for the Volcano Zone in Polyhedron.
+ * This class generates & manages all objects related to the Volcano environment in the game including
+ * relevant StaticEntities, Tiles & Textures.
+ */
 public class VolcanoWorld extends AbstractWorld {
     private final Logger logger = LoggerFactory.getLogger(VolcanoWorld.class);
     public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/volcano/VolcanoZone.json";
@@ -52,13 +57,11 @@ public class VolcanoWorld extends AbstractWorld {
         this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.15f));
         addEntity(this.getPlayerEntity());
 
-        GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
         Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano");
-        EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(volcanoOrc));
-        GameManager.get().addManager(enemyManager);
-
         Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_volcano");
-        enemyManager.setBoss(boss);
+
+        EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(volcanoOrc), boss);
+        GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(16, 20);
     }
 

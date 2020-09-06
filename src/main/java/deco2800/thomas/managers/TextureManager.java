@@ -48,32 +48,32 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("spacman_blue", new Texture("resources/spacman_blue.png"));
 
 			// enemies
-            textureMap.put("goblin_swamp_left", new Texture("resources/enemies/goblin_swamp_left.png"));
-            textureMap.put("goblin_swamp_right", new Texture("resources/enemies/goblin_swamp_right.png"));
-            textureMap.put("goblin_volcano_left", new Texture("resources/enemies/goblin_volcano_left.png"));
-            textureMap.put("goblin_volcano_right", new Texture("resources/enemies/goblin_volcano_right.png"));
-            textureMap.put("goblin_tundra_left", new Texture("resources/enemies/goblin_tundra_left.png"));
-            textureMap.put("goblin_tundra_right", new Texture("resources/enemies/goblin_tundra_right.png"));
-            textureMap.put("goblin_desert_left", new Texture("resources/enemies/goblin_desert_left.png"));
-            textureMap.put("goblin_desert_right", new Texture("resources/enemies/goblin_desert_right.png"));
-            textureMap.put("orc_swamp_left", new Texture("resources/enemies/orc_swamp_left.png"));
-            textureMap.put("orc_swamp_right", new Texture("resources/enemies/orc_swamp_right.png"));
-            textureMap.put("orc_volcano_left", new Texture("resources/enemies/orc_volcano_left.png"));
-            textureMap.put("orc_volcano_right", new Texture("resources/enemies/orc_volcano_right.png"));
-            textureMap.put("orc_tundra_left", new Texture("resources/enemies/orc_tundra_left.png"));
-            textureMap.put("orc_tundra_right", new Texture("resources/enemies/orc_tundra_right.png"));
-            textureMap.put("orc_desert_left", new Texture("resources/enemies/orc_desert_left.png"));
-            textureMap.put("orc_desert_right", new Texture("resources/enemies/orc_desert_right.png"));
-            textureMap.put("dragon_swamp_left", new Texture("resources/enemies/dragon_swamp_left.png"));
-            textureMap.put("dragon_swamp_right", new Texture("resources/enemies/dragon_swamp_right.png"));
-            textureMap.put("dragon_volcano_left", new Texture("resources/enemies/dragon_volcano_left.png"));
-            textureMap.put("dragon_volcano_right", new Texture("resources/enemies/dragon_volcano_right.png"));
-            textureMap.put("dragon_tundra_left", new Texture("resources/enemies/dragon_tundra_left.png"));
-            textureMap.put("dragon_tundra_right", new Texture("resources/enemies/dragon_tundra_right.png"));
-            textureMap.put("dragon_desert_left", new Texture("resources/enemies/dragon_desert_left.png"));
-            textureMap.put("dragon_desert_right", new Texture("resources/enemies/dragon_desert_right.png"));
-            textureMap.put("dummy", new Texture("resources/enemies/dummy.png"));
-            textureMap.put("elder_dragon", new Texture("resources/enemies/elder_dragon.png"));
+			textureMap.put("goblin_swamp_left", new Texture("resources/enemies/goblin_swamp_left.png"));
+			textureMap.put("goblin_swamp_right", new Texture("resources/enemies/goblin_swamp_right.png"));
+			textureMap.put("goblin_volcano_left", new Texture("resources/enemies/goblin_volcano_left.png"));
+			textureMap.put("goblin_volcano_right", new Texture("resources/enemies/goblin_volcano_right.png"));
+			textureMap.put("goblin_tundra_left", new Texture("resources/enemies/goblin_tundra_left.png"));
+			textureMap.put("goblin_tundra_right", new Texture("resources/enemies/goblin_tundra_right.png"));
+			textureMap.put("goblin_desert_left", new Texture("resources/enemies/goblin_desert_left.png"));
+			textureMap.put("goblin_desert_right", new Texture("resources/enemies/goblin_desert_right.png"));
+			textureMap.put("orc_swamp_left", new Texture("resources/enemies/orc_swamp_left.png"));
+			textureMap.put("orc_swamp_right", new Texture("resources/enemies/orc_swamp_right.png"));
+			textureMap.put("orc_volcano_left", new Texture("resources/enemies/orc_volcano_left.png"));
+			textureMap.put("orc_volcano_right", new Texture("resources/enemies/orc_volcano_right.png"));
+			textureMap.put("orc_tundra_left", new Texture("resources/enemies/orc_tundra_left.png"));
+			textureMap.put("orc_tundra_right", new Texture("resources/enemies/orc_tundra_right.png"));
+			textureMap.put("orc_desert_left", new Texture("resources/enemies/orc_desert_left.png"));
+			textureMap.put("orc_desert_right", new Texture("resources/enemies/orc_desert_right.png"));
+			textureMap.put("dragon_swamp_left", new Texture("resources/enemies/dragon_swamp_left.png"));
+			textureMap.put("dragon_swamp_right", new Texture("resources/enemies/dragon_swamp_right.png"));
+			textureMap.put("dragon_volcano_left", new Texture("resources/enemies/dragon_volcano_left.png"));
+			textureMap.put("dragon_volcano_right", new Texture("resources/enemies/dragon_volcano_right.png"));
+			textureMap.put("dragon_tundra_left", new Texture("resources/enemies/dragon_tundra_left.png"));
+			textureMap.put("dragon_tundra_right", new Texture("resources/enemies/dragon_tundra_right.png"));
+			textureMap.put("dragon_desert_left", new Texture("resources/enemies/dragon_desert_left.png"));
+			textureMap.put("dragon_desert_right", new Texture("resources/enemies/dragon_desert_right.png"));
+			textureMap.put("dummy", new Texture("resources/enemies/dummy.png"));
+			textureMap.put("elder_dragon", new Texture("resources/enemies/elder_dragon.png"));
 
 			textureMap.put("grass_0", new Texture("resources/square.png"));
 			textureMap.put("grass_1", new Texture("resources/square2.png"));
@@ -102,35 +102,39 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("dialog-box", new Texture("resources/tutorial/tutorial-helper-box.png"));
 			textureMap.put("orb", new Texture("resources/orb.png"));
 
-            //health & game over screen
-            textureMap.put("health0", new Texture("resources/healthResources/health-bar-0.png"));
-            textureMap.put("health5", new Texture("resources/healthResources/health-bar-5.png"));
-            textureMap.put("health10", new Texture("resources/healthResources/health-bar-10.png"));
-            textureMap.put("health15", new Texture("resources/healthResources/health-bar-15.png"));
-            textureMap.put("health20", new Texture("resources/healthResources/health-bar-20.png"));
-            textureMap.put("health25", new Texture("resources/healthResources/health-bar-25.png"));
-            textureMap.put("health30", new Texture("resources/healthResources/health-bar-30.png"));
-            textureMap.put("health35", new Texture("resources/healthResources/health-bar-35.png"));
-            textureMap.put("health40", new Texture("resources/healthResources/health-bar-40.png"));
-            textureMap.put("health45", new Texture("resources/healthResources/health-bar-45.png"));
-            textureMap.put("health50", new Texture("resources/healthResources/health-bar-50.png"));
-            textureMap.put("health55", new Texture("resources/healthResources/health-bar-55.png"));
-            textureMap.put("health60", new Texture("resources/healthResources/health-bar-60.png"));
-            textureMap.put("health65", new Texture("resources/healthResources/health-bar-65.png"));
-            textureMap.put("health70", new Texture("resources/healthResources/health-bar-70.png"));
-            textureMap.put("health75", new Texture("resources/healthResources/health-bar-75.png"));
-            textureMap.put("health80", new Texture("resources/healthResources/health-bar-80.png"));
-            textureMap.put("health85", new Texture("resources/healthResources/health-bar-85.png"));
-            textureMap.put("health90", new Texture("resources/healthResources/health-bar-90.png"));
-            textureMap.put("health95", new Texture("resources/healthResources/health-bar-95.png"));
-            textureMap.put("health100", new Texture("resources/healthResources/health-bar-100.png"));
-            textureMap.put("game-over", new Texture("resources/healthResources/game-over.png"));
+			//health & game over screen
+			textureMap.put("health0", new Texture("resources/healthResources/health-bar-0.png"));
+			textureMap.put("health5", new Texture("resources/healthResources/health-bar-5.png"));
+			textureMap.put("health10", new Texture("resources/healthResources/health-bar-10.png"));
+			textureMap.put("health15", new Texture("resources/healthResources/health-bar-15.png"));
+			textureMap.put("health20", new Texture("resources/healthResources/health-bar-20.png"));
+			textureMap.put("health25", new Texture("resources/healthResources/health-bar-25.png"));
+			textureMap.put("health30", new Texture("resources/healthResources/health-bar-30.png"));
+			textureMap.put("health35", new Texture("resources/healthResources/health-bar-35.png"));
+			textureMap.put("health40", new Texture("resources/healthResources/health-bar-40.png"));
+			textureMap.put("health45", new Texture("resources/healthResources/health-bar-45.png"));
+			textureMap.put("health50", new Texture("resources/healthResources/health-bar-50.png"));
+			textureMap.put("health55", new Texture("resources/healthResources/health-bar-55.png"));
+			textureMap.put("health60", new Texture("resources/healthResources/health-bar-60.png"));
+			textureMap.put("health65", new Texture("resources/healthResources/health-bar-65.png"));
+			textureMap.put("health70", new Texture("resources/healthResources/health-bar-70.png"));
+			textureMap.put("health75", new Texture("resources/healthResources/health-bar-75.png"));
+			textureMap.put("health80", new Texture("resources/healthResources/health-bar-80.png"));
+			textureMap.put("health85", new Texture("resources/healthResources/health-bar-85.png"));
+			textureMap.put("health90", new Texture("resources/healthResources/health-bar-90.png"));
+			textureMap.put("health95", new Texture("resources/healthResources/health-bar-95.png"));
+			textureMap.put("health100", new Texture("resources/healthResources/health-bar-100.png"));
+			textureMap.put("game-over", new Texture("resources/healthResources/game-over.png"));
 
-            // Attacks
-            textureMap.put("fireball_left", new Texture("resources/combat/fireball_left.png"));
-            textureMap.put("fireball_right", new Texture("resources/combat/fireball_right.png"));
+			// Attacks
+			textureMap.put("fireball_left", new Texture("resources/combat/fireball_left.png"));
+			textureMap.put("fireball_right", new Texture("resources/combat/fireball_right.png"));
 
-        } catch (Exception e) {
+			// Player
+			textureMap.put("player_left", new Texture("resources/combat/move_left.png"));
+			textureMap.put("player_right", new Texture("resources/combat/move_right.png"));
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		addEnvironmentTextures();

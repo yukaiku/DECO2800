@@ -14,7 +14,7 @@ public class PlayerPeonTest extends BaseGDXTest {
     @Test
     public void testPlayerSet() {
         PlayerPeon p = new PlayerPeon(0, 0, 1, 10);
-        assertThat("", p.getTexture(), is(equalTo("spacman_ded")));
+        assertThat("", p.getTexture(), is(equalTo("player_right")));
     }
 
     @Test
@@ -23,7 +23,7 @@ public class PlayerPeonTest extends BaseGDXTest {
         assertThat("", p.getCol(), is(equalTo(1f)));
         assertThat("", p.getRow(), is(equalTo(1f)));
         assertThat("", p.getSpeed(), is(equalTo(1f)));
-        assertThat("", p.getTexture(), is(equalTo("spacman_ded")));
+        assertThat("", p.getTexture(), is(equalTo("player_right")));
     }
 
     /**
