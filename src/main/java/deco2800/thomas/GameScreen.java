@@ -18,6 +18,8 @@ import deco2800.thomas.renderers.Renderer3D;
 import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
+import deco2800.thomas.worlds.desert.DesertWorld;
+import deco2800.thomas.worlds.tundra.TundraWorld;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,36 +56,11 @@ public class GameScreen implements Screen, KeyDownObserver {
 	long lastGameTick = 0;
 
 	static public enum gameType {
-		LOAD_GAME {
-			@Override
-			public AbstractWorld method() {
-				AbstractWorld world = new LoadGameWorld();
-				DatabaseManager.loadWorld(world);
-				GameManager.get().getManager(NetworkManager.class).startHosting("host");
-				return world;
-			}
-		},
-		CONNECT_TO_SERVER {
-			@Override
-			public AbstractWorld method() {
-				AbstractWorld world = new ServerWorld();
-				GameManager.get().getManager(NetworkManager.class).connectToHost("localhost", "duck1234");
-				return world;
-			}
-		},
 		NEW_GAME {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new TestWorld();
+				AbstractWorld world = new TundraWorld();
 
-				GameManager.get().getManager(NetworkManager.class).startHosting("host");
-				return world;
-			}
-		},
-		ENV_TEAM_GAME {
-			@Override
-			public AbstractWorld method() {
-				AbstractWorld world = new VolcanoWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}

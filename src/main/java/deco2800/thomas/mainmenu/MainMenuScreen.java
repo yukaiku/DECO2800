@@ -38,10 +38,6 @@ public class MainMenuScreen implements Screen {
 		logo.setPosition(1280 / 2 - 225, 720 / 2 + 100);
 		stage.addActor(logo);
 
-		Button envTeamButton = new TextButton("ENV TEAM", skin, "main_menu");
-		envTeamButton.setPosition(10, 250);
-		stage.addActor(envTeamButton);
-
 		Button tutorialBtn = new TextButton("TUTORIAL", skin, "main_menu");
 		tutorialBtn.setPosition(10, 200);
 		stage.addActor(tutorialBtn);
@@ -50,38 +46,10 @@ public class MainMenuScreen implements Screen {
 		newGameBtn.setPosition(10, 150);
 		stage.addActor(newGameBtn);
 
-		Button loadGameButton = new TextButton("LOAD GAME", skin, "main_menu");
-		loadGameButton.setPosition(10, 100);
-		stage.addActor(loadGameButton);
-
-		Button connectToServerButton = new TextButton("CONNECT TO SERVER", skin, "main_menu");
-		connectToServerButton.setPosition(10, 50);
-		stage.addActor(connectToServerButton);
-
 		tutorialBtn.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.TUTORIAL));
-			}
-		});
-		envTeamButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.ENV_TEAM_GAME));
-			}
-		});
-
-		connectToServerButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.CONNECT_TO_SERVER));
-			}
-		});
-
-		loadGameButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.LOAD_GAME));
 			}
 		});
 

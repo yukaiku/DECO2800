@@ -150,14 +150,6 @@ public class DesertWorld extends AbstractWorld {
         if (notGenerated) {
             createStaticEntities();
             notGenerated = false;
-
-            // Set the camera location to its starting position
-            float[] position = WorldUtil.colRowToWorldCords(5f, -20f);
-            GameManager.get().getCamera().position.set(position[0], position[1], 0);
-            GameManager.get().getCamera().update();
-
-            System.out.println(getTiles());
-            System.out.flush();
         }
 
         super.onTick(i);
