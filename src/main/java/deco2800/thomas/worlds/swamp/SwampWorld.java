@@ -45,7 +45,7 @@ public class SwampWorld extends AbstractWorld {
 
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc), boss);
         GameManager.get().addManager(enemyManager);
-        enemyManager.spawnBoss(23, -24);
+        enemyManager.spawnBoss(19, -24);
     }
 
     @Override
