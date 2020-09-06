@@ -229,14 +229,6 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 		return this.rowRenderLength;
 	}
 
-	protected void setColRenderLength(float colRenderLength) {
-		this.colRenderLength = colRenderLength;
-	}
-
-	protected void setRowRenderLength(float rowRenderLength) {
-		this.rowRenderLength = rowRenderLength;
-	}
-
 	/**
 	 * Gives the string for the texture of this entity.
 	 * This does not mean the texture is currently registered.

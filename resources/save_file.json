@@ -1,0 +1,5 @@
+{"entities": [{"objectName":"playerPeon","speed":0.15,"texture":"spacman_ded","entityID":0,"rowPos":5.0,"colPos":10.0},
+{"objectName":"Elder Dragon","speed":0.03,"texture":"dragon_swamp_left","entityID":2,"rowPos":0.0,"colPos":-2.0}
+],"tiles": [{"tileID":2500,"texture":"grass_1_0","obstructed":false,"index":-1,"rowPos":1.0,"colPos":1.0},
+{"tileID":2501,"texture":"grass_1_0","obstructed":false,"index":-1,"rowPos":5.0,"colPos":4.0}
+]}

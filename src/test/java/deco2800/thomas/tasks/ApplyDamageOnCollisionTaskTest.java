@@ -1,11 +1,11 @@
-package deco2800.thomas.tasks.combat;
+package deco2800.thomas.tasks;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.tasks.combat.MeleeAttackTask;
+import deco2800.thomas.tasks.combat.ApplyDamageOnCollisionTask;
 import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
@@ -27,7 +27,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(GameManager.class)
-public class MeleeAttackTaskTest extends BaseGDXTest {
+public class ApplyDamageOnCollisionTaskTest extends BaseGDXTest {
     // Used to verify task execution
     private GameManager gameManager;
 
@@ -44,13 +44,15 @@ public class MeleeAttackTaskTest extends BaseGDXTest {
 
     /**
      * Verifies that the applyDamage method is called when the entities
-     * collide. A passing test is when the reduceHealth is called from the player peon.
+     * collide. A passing test is when the reduceHealth and getDamage methods are called
+     * from the player peon and fireball respectively.
      */
     @Test
     public void applyingDamageOnCollisionTest() {
         // Mock combat entity and agent entity (so that they're on different factions)
         CombatEntity combatEntity = mock(CombatEntity.class);
         when(combatEntity.getFaction()).thenReturn(EntityFaction.Evil);
+        when(combatEntity.getBounds()).thenReturn(new BoundingBox(new SquareVector(0, 0), 10, 10));
         AgentEntity agentEntity = mock(AgentEntity.class);
         when(agentEntity.getFaction()).thenReturn(EntityFaction.Ally);
 
@@ -61,40 +63,12 @@ public class MeleeAttackTaskTest extends BaseGDXTest {
                 .thenReturn(new ArrayList<>(Arrays.asList(combatEntity, agentEntity)));
 
         // Start task
-        MeleeAttackTask task = new MeleeAttackTask(combatEntity, new SquareVector(0, 0), 10, 10, 50);
+        ApplyDamageOnCollisionTask task = new ApplyDamageOnCollisionTask(combatEntity, 1);
         task.onTick(1);
 
-        // Verify reduceHealth is called
+        // Verify getDamage and reduceHealth are called
+        verify(combatEntity).getDamage();
         verify(agentEntity).reduceHealth(anyInt());
-
-        // Verify state change
-        assertTrue(task.isComplete());
-    }
-
-    /**
-     * Verifies that no damage is applied when there is no collision, and that the
-     * task completes after 1 tick.
-     */
-    @Test
-    public void noDamageTest() {
-        // Mock combat entity and agent entity (so that they're on different factions)
-        CombatEntity combatEntity = mock(CombatEntity.class);
-        when(combatEntity.getFaction()).thenReturn(EntityFaction.Evil);
-        AgentEntity agentEntity = mock(AgentEntity.class);
-        when(agentEntity.getFaction()).thenReturn(EntityFaction.Ally);
-
-        // Mock abstract world
-        AbstractWorld abstractWorld = mock(AbstractWorld.class);
-        when(GameManager.get().getWorld()).thenReturn(abstractWorld);
-        when(abstractWorld.getEntitiesInBounds(any(BoundingBox.class)))
-                .thenReturn(new ArrayList<>());
-
-        // Start task
-        MeleeAttackTask task = new MeleeAttackTask(combatEntity, new SquareVector(0, 0), 10, 10, 50);
-        task.onTick(1);
-
-        // Verify reduceHealth is not called
-        verify(agentEntity, never()).reduceHealth(anyInt());
 
         // Verify state change
         assertTrue(task.isComplete());
