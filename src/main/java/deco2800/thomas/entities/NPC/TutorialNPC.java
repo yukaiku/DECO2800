@@ -10,5 +10,13 @@ public class TutorialNPC extends NonPlayablePeon {
     @Override
     public void interact() {
         // tutorial vibes
+        String message = "";
+        message = PlayerPeon.getDialogue("welcome");
+        //Display message
+
+        //PlayerPeon.getDialogue("WASD");
+        //PlayerPeon.getDialogue("attack");
+        //PlayerPeon.getDialogue("orb");
+        //PlayerPeon.getDialogue("congrats");
     }
 }
