@@ -1,5 +1,6 @@
 package deco2800.thomas.entities.enemies;
 
+import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.Agent.Peon;
 
@@ -17,8 +18,7 @@ public abstract class EnemyPeon extends Peon {
     // Enemies are initialised with no target.
     // Aggressive enemies set a target when they detected a target.
     // Passive enemies set a target when being hit.
-    private Peon target;
-
+    private AgentEntity target;
     /**
      * Initialise an abstract Enemy.
      * The position of the enemy is normally set by the spawnSpecialEnemy() in EnemyManager.
@@ -26,7 +26,7 @@ public abstract class EnemyPeon extends Peon {
     public EnemyPeon(String name, String texture, int height, float speed, int health) {
         super(0, 0, speed < 0 ? 0.05f : speed, health);
         this.setObjectName(Objects.requireNonNullElse(name, "EnemyPeon"));
-        this.setTexture(Objects.requireNonNullElse(texture, "orc_swamp_left"));
+        this.setTexture(Objects.requireNonNullElse(texture, "orc_swamp_right"));
         this.setHeight(height <= 0 ? 1 : height);
         this.setFaction(EntityFaction.Evil);
         this.target = null;
@@ -46,19 +46,22 @@ public abstract class EnemyPeon extends Peon {
     }
 
     /**
-     * Returns the Peon this enemy is currently targeting.
+     * Returns the AgentEntity this enemy is currently targeting.
      * @return
      */
-    public Peon getTarget() {
+    public AgentEntity getTarget() {
         return target;
     }
 
     /**
-     * Sets the Peon to be targeted by this enemy.
+     * Sets the  to be targeted by this enemy.
      * @param target
      */
-    public void setTarget(Peon target) {
+    public void setTarget(AgentEntity target) {
         this.target = target;
+    }
+
+    public void attackPlayer() {
     }
 
     /**

@@ -3,10 +3,21 @@ package deco2800.thomas.entities.enemies;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
+import deco2800.thomas.util.EnemyUtil;
+import deco2800.thomas.util.SquareVector;
+import deco2800.thomas.worlds.AbstractWorld;
+import deco2800.thomas.worlds.Tile;
+
+import java.lang.reflect.GenericArrayType;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 /**
  * A class that defines an implementation of a Dragon.
@@ -17,14 +28,30 @@ import deco2800.thomas.tasks.movement.MovementTask;
  */
 public class Dragon extends Boss implements PassiveEnemy {
     private int tickFollowing = 60;
+    // Range at which the dragon will attempt to melee attack the player
+    private int attackRange = 8;
+    Random random;
 
     public Dragon(int height, float speed, int health) {
         super("Elder Dragon", "elder_dragon", height, speed, health);
+        this.random = new Random();
     }
 
+    public Dragon(int height, float speed, int health, String texture) {
+        this(height, speed, health);
+        super.setTextureDirections(new ArrayList<>(Arrays.asList(texture, texture + "_left", texture + "_right")));
+        this.setTexture(texture + "_left");
+    }
+
+    /**
+     * Summons a new Goblin minion of the same environmental type as the dragon
+     * if there is less than 10 goblins spawned
+     */
     public void summonGoblin() {
-        Goblin goblin = new Goblin(1, 0.1f, 30);
-        GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(goblin, this.getCol() + 1, this.getRow() + 2);
+        if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() < 10) {
+            Goblin goblin = new Goblin(1, 0.1f, 20, "goblin" + getTextureDirection(TEXTURE_BASE).substring(6));
+            GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(goblin, this.getCol() + 1, this.getRow() + 2);
+        }
     }
 
     @Override
@@ -36,6 +63,9 @@ public class Dragon extends Boss implements PassiveEnemy {
         hitByTarget();
     }
 
+    /**
+     * Targets the player if the boss's health is reduced
+     */
     public void hitByTarget() {
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
         if (player != null) {
@@ -45,16 +75,41 @@ public class Dragon extends Boss implements PassiveEnemy {
         }
     }
 
+    /**
+     * Sets the appropriate texture based on the direction the dragon
+     * is moving
+     */
+    private void setDragonTexture() {
+        if (getTarget() != null) {
+            if (getTarget().getCol() < this.getCol()) {
+                setTexture(getTextureDirection(TEXTURE_LEFT));
+            } else {
+                setTexture(getTextureDirection(TEXTURE_RIGHT));
+            }
+        }
+    }
+
+    @Override
+    public void attackPlayer() {
+        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange));
+            SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
+            setCombatTask(new MeleeAttackTask(this, origin, 8, 8, 20));
+    }
+
     @Override
     public void onTick(long i) {
         // update target following path every 1 second (60 ticks)
         if (++tickFollowing > 60) {
             if (super.getTarget() != null) {
+                // Throws a fireball at the player, and attempts to summon a
+                // goblin
                 summonGoblin();
                 Fireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
                         getTarget().getRow(), 10, 0.2f, 60, EntityFaction.Evil);
                 setMovementTask(new MovementTask(this, super.getTarget().
                         getPosition()));
+                attackPlayer();
+                setDragonTexture();
             }
             tickFollowing = 0;
         }
@@ -65,10 +120,23 @@ public class Dragon extends Boss implements PassiveEnemy {
                 setMovementTask(null);
             }
         }
+        if (getCombatTask() != null && getCombatTask().isAlive()) {
+            getCombatTask().onTick(i);
+            if (getCombatTask().isComplete()) {
+                setCombatTask(null);
+            }
+        }
     }
 
+    /**
+     * Spawns an orb that takes the player to the next environment
+     * around the dragon's location as it dies
+     */
     @Override
     public void death() {
+        AbstractWorld world = GameManager.get().getWorld();
+        Tile tile = world.getTile((float) Math.ceil((this.getCol())), (float) Math.ceil((this.getRow())));
         GameManager.getManagerFromInstance(EnemyManager.class).removeBoss();
+        world.setOrbEntity(new Orb(tile, "orb_" + ((random.nextInt(4)) + 1)));
     }
 }

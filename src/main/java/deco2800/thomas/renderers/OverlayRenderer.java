@@ -1,9 +1,7 @@
 package deco2800.thomas.renderers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.FPSLogger;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -19,7 +17,6 @@ public class OverlayRenderer implements Renderer {
 	FPSLogger fpsLogger = new FPSLogger();
 
 	long peakRAM = 0;
-
 
 	/**
 	 * Renders onto a batch, given a renderables with entities.
@@ -39,8 +36,8 @@ public class OverlayRenderer implements Renderer {
 //			font.setColor(255, 255, 255, 0.9f);
 		}
 
+		// Debug Info and Chat Message Overlay
 		batch.begin();
-
 
 		if (GameManager.get().debugMode) {
 			renderDebugText(batch, camera);
@@ -104,7 +101,9 @@ public class OverlayRenderer implements Renderer {
 				String.format("Messages Sent: %d", GameManager.get().getManager(NetworkManager.class).getMessagesSent()));
 		debugLine(batch, camera, ++line,
 				String.format("Username: %s", GameManager.get().getManager(NetworkManager.class).getUsername()));
-
+		line++;
+		debugLine(batch, camera, ++line, "== Health ==");
+		debugLine(batch, camera, ++line, String.format("Health: %d", GameManager.get().getWorld().getPlayerEntity().getCurrentHealth()));
 		line++;
 		EnemyManager enemyManager = GameManager.get().getManager(EnemyManager.class);
 		debugLine(batch, camera, ++line, "== Enemies ==");
