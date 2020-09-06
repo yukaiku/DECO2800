@@ -46,6 +46,10 @@ public class MainMenuScreen implements Screen {
 		newGameBtn.setPosition(10, 150);
 		stage.addActor(newGameBtn);
 
+		Button testWorldBtn = new TextButton("TEST WORLD", skin, "main_menu");
+		testWorldBtn.setPosition(10, 100);
+		stage.addActor(testWorldBtn);
+
 		tutorialBtn.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -57,6 +61,13 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.NEW_GAME));
+			}
+		});
+
+		testWorldBtn.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.TEST_WORLD));
 			}
 		});
 	}
