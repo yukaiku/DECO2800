@@ -66,13 +66,11 @@ public class DesertWorld extends AbstractWorld {
         this.setPlayerEntity(new PlayerPeon(8f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
 
-        GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
         Orc desertOrc = new Orc(1, 0.09f, 50, "orc_desert");
-        EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(desertOrc));
-        GameManager.get().addManager(enemyManager);
-
         Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_desert");
-        enemyManager.setBoss(boss);
+
+        EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(desertOrc), boss);
+        GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(21, 6);
     }
 
@@ -150,14 +148,6 @@ public class DesertWorld extends AbstractWorld {
         if (notGenerated) {
             createStaticEntities();
             notGenerated = false;
-
-            // Set the camera location to its starting position
-            float[] position = WorldUtil.colRowToWorldCords(5f, -20f);
-            GameManager.get().getCamera().position.set(position[0], position[1], 0);
-            GameManager.get().getCamera().update();
-
-            System.out.println(getTiles());
-            System.out.flush();
         }
 
         super.onTick(i);

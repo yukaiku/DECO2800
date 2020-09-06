@@ -25,8 +25,14 @@ public abstract class EnemyPeon extends Peon {
      */
     public EnemyPeon(String name, String texture, int height, float speed, int health) {
         super(0, 0, speed < 0 ? 0.05f : speed, health);
-        this.setObjectName(Objects.requireNonNullElse(name, "EnemyPeon"));
-        this.setTexture(Objects.requireNonNullElse(texture, "orc_swamp_right"));
+        if (name == null) {
+            name = "EnemyPeon";
+        }
+        if (texture == null) {
+            texture = "orc_swamp_right";
+        }
+        this.setObjectName(name);
+        this.setTexture(texture);
         this.setHeight(height <= 0 ? 1 : height);
         this.setFaction(EntityFaction.Evil);
         this.target = null;

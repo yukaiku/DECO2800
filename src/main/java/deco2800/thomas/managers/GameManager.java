@@ -261,7 +261,9 @@ public class GameManager {
 	 * it as current world
 	 */
 	public void setNextWorld() {
-		switch(worldOrder.get(currentWorld)) {
+		// removes the previous enemy manager
+		managers.removeIf(manager -> manager instanceof EnemyManager);
+		switch (worldOrder.get(currentWorld)) {
 			case TUNDRA_WORLD:
 				this.setWorld(new TundraWorld());
 				break;

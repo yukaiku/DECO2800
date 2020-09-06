@@ -27,7 +27,8 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
 
     // The health of the player
     private HealthTracker health;
-    private Map<String, String> dialogues = new HashMap<>();
+    private static Map<String, String> dialogues = new HashMap<>();
+
 
     public PlayerPeon(float row, float col, float speed) {
         this(row, col, speed, DEFAULT_HEALTH);
@@ -49,7 +50,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
      * Returns a dialogue string depending on the target string
      * @param target The target string identifier
      */
-    public String getDialogue(String target) {
+    public static String getDialogue(String target) {
         dialogues.put("welcome","Welcome to Decodia the world has been devastated " +
                 "with the re-emergence of the five pythagoras orbs. In order to save this world, " +
                 "you will need to collect all the orbs and restore balance to the world.");
@@ -78,8 +79,6 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         dialogues.put("desert", "Welcome adventure to Desert Zone , to complete this stage, " +
                 "you will have to locate the orb of sand. The monsters here are " +
                 "vulnerable to water");
-        dialogues.put("next", "Congratulations for collecting the orb and completing the quest, you will now proceed on to " +
-                "the next stage.");
         dialogues.put("next", "Congratulations for collecting the orb and completing the quest, you will now proceed on to " +
                 "the next stage.");
         dialogues.put("roar", "Roar!!!");
