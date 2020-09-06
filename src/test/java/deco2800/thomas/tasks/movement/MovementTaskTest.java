@@ -1,4 +1,4 @@
-package deco2800.thomas.tasks;
+package deco2800.thomas.tasks.movement;
 
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.tasks.movement.MovementTask;

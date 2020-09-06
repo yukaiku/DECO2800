@@ -12,6 +12,7 @@ public class TextureManagerTest extends BaseGDXTest {
 
     /**
      * Tests the constructor creates a valid instance of TextureManager.
+     * This test exists to prevent typo's when adding new resources to the TextureManager.
      */
     @Test
     public void testValidConstructor() {
