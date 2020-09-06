@@ -252,7 +252,7 @@ public final class DatabaseManager extends AbstractManager {
 
             for (String s:Arrays.asList("Elder Dragon")) {
                 if (entityObjectName.startsWith(s)){
-                    Dragon create = new Dragon(2, 0.3f, 2000);
+                    Dragon create = new Dragon(2, 0.3f, 2000, "dragon_swamp");
                     return (AbstractEntity) create;
                 }
             }
