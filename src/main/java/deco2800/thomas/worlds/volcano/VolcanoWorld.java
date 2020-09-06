@@ -23,6 +23,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Implemented subclass of Abstract world for the Volcano Zone in Polyhedron.
+ * This class generates & manages all objects related to the Volcano environment in the game including
+ * relevant StaticEntities, Tiles & Textures.
+ */
 public class VolcanoWorld extends AbstractWorld {
     private final Logger logger = LoggerFactory.getLogger(VolcanoWorld.class);
     public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/volcano/VolcanoZone.json";
