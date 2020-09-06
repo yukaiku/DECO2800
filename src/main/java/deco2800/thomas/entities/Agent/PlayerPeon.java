@@ -47,7 +47,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
      * Returns a dialogue string depending on the target string
      * @param target The target string identifier
      */
-    public String getDialogue(String target) {
+    public static String getDialogue(String target) {
         dialogues.put("welcome","Welcome to Decodia the world has been devastated " +
                 "with the re-emergence of the five pythagoras orbs. In order to save this world, " +
                 "you will need to collect all the orbs and restore balance to the world.");
