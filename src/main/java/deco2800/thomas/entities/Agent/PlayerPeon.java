@@ -288,8 +288,21 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         this.setMovingDirection(MovementTask.Direction.NONE);
     }
 
+    /**
+     * Called when the entities health reaches 0.
+     */
     @Override
     public void death() {
-        GameManager.get().getWorld().removeEntity(this);
+        WorldUtil.removeEntity(this);
+    }
+
+    /**
+     * Disposes this entity. This involves dropping listeners in this case.
+     */
+    @Override
+    public void dispose() {
+        GameManager.getManagerFromInstance(InputManager.class).removeTouchDownListener(this);
+        GameManager.getManagerFromInstance(InputManager.class).removeKeyDownListener(this);
+        GameManager.getManagerFromInstance(InputManager.class).removeKeyUpListener(this);
     }
 }
