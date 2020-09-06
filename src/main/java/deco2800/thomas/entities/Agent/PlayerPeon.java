@@ -35,6 +35,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
 
     public PlayerPeon(float row, float col, float speed, int health) {
         super(row, col, speed, health);
+        System.out.print("Another player.\n");
         this.setObjectName("playerPeon");
         this.setTexture("player_right");
         this.setColRenderLength(1.4f);
@@ -290,6 +291,9 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
 
     @Override
     public void death() {
-        GameManager.get().getWorld().removeEntity(this);
+        GameManager.getManagerFromInstance(InputManager.class).removeTouchDownListener(this);
+        GameManager.getManagerFromInstance(InputManager.class).removeKeyDownListener(this);
+        GameManager.getManagerFromInstance(InputManager.class).removeKeyUpListener(this);
+        WorldUtil.removeEntity(this);
     }
 }
