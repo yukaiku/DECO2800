@@ -1,4 +1,4 @@
-package deco2800.thomas.combat.Skills;
+package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.Skill;
@@ -28,8 +28,12 @@ public class FireballSkill implements Skill, Tickable {
     /**
      * Creates a new FireballSkill and binds it to the Entity.
      * @param parent Parent entity of skill.
+     * @throws NullPointerException when parent is null
      */
     public FireballSkill(AbstractEntity parent) {
+        if (parent == null) {
+            throw new NullPointerException();
+        }
         this.entity = parent;
     }
 
