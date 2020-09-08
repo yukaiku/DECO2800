@@ -78,10 +78,10 @@ public class TextureManager extends AbstractManager {
 
             // storyline
 			textureMap.put("stone_floor", new Texture("resources/tutorial/tutorial-tile-design-opt1.png"));
-			textureMap.put("target", new Texture("resources/tutorial/tutorial-decoration-target.png"));
-			textureMap.put("portal", new Texture("resources/tutorial/tutorial-decoration-portal.png"));
-			textureMap.put("stash", new Texture("resources/tutorial/tutorial-decoration-weapon-stash.png"));
-			textureMap.put("barrel", new Texture("resources/tutorial/tutorial-decoration-barrel.png"));
+			textureMap.put("target", new Texture("resources/tutorial/tutorial-target.png"));
+			textureMap.put("portal", new Texture("resources/tutorial/tutorial-portal.png"));
+			textureMap.put("stash", new Texture("resources/tutorial/tutorial-stash.png"));
+			textureMap.put("barrel", new Texture("resources/tutorial/tutorial-barrel.png"));
 			textureMap.put("dialog-box", new Texture("resources/tutorial/tutorial-helper-box.png"));
 			textureMap.put("orb", new Texture("resources/orb.png"));
 
