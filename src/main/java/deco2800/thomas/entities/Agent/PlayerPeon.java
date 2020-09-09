@@ -2,6 +2,9 @@ package deco2800.thomas.entities.Agent;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import deco2800.thomas.combat.Skill;
+import deco2800.thomas.combat.SkillOnCooldownException;
+import deco2800.thomas.combat.skills.FireballSkill;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.managers.GameManager;
@@ -13,12 +16,12 @@ import deco2800.thomas.tasks.combat.FireballAttackTask;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.SquareVector;
-import com.badlogic.gdx.Input;
-import org.objenesis.instantiator.basic.ClassDefinitionUtils;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.AbstractWorld;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserver, KeyUpObserver {
@@ -29,21 +32,35 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
     private HealthTracker health;
     private static Map<String, String> dialogues = new HashMap<>();
 
+    // Wizard skills
+    private List<Skill> wizardSkills;
+    private int activeWizardSkill;
+
+    // Mech skill
+    private Skill mechSkill;
 
     public PlayerPeon(float row, float col, float speed) {
         this(row, col, speed, DEFAULT_HEALTH);
     }
 
     public PlayerPeon(float row, float col, float speed, int health) {
+        // Initialise abstract entity
         super(row, col, speed, health);
         this.setObjectName("playerPeon");
         this.setTexture("player_right");
         this.setColRenderLength(1.4f);
         this.setRowRenderLength(1.8f);
         this.setFaction(EntityFaction.Ally);
+
+        // Subscribe listeners
         GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).addKeyUpListener(this);
+
+        // Initialise skills
+        wizardSkills = new ArrayList<>();
+        wizardSkills.add(new FireballSkill(this));
+        activeWizardSkill = 0;
     }
 
     /**
@@ -158,10 +175,15 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
 
 
         if (button == Input.Buttons.LEFT) {
-            //Set combat task to fireball task
-            AbstractWorld world = GameManager.get().getWorld();
-            this.setCombatTask(new FireballAttackTask(world.getPlayerEntity(), clickedPosition[0], clickedPosition[1],
-                    10, 0.5f, 60));
+            try {
+                //Set combat task to fireball task
+                Skill wizardSkill = wizardSkills.get(activeWizardSkill);
+                if (wizardSkill.getCooldown() <= 0) {
+                    this.setCombatTask(wizardSkill.getNewSkillTask(clickedPosition[0], clickedPosition[1]));
+                }
+            } catch (SkillOnCooldownException e) {
+                // Won't occur because I'm handling it.
+            }
         } else if (button == Input.Buttons.RIGHT) {
             // Set combat task to melee task
             // this.setCombatTask(new meleeTask);
