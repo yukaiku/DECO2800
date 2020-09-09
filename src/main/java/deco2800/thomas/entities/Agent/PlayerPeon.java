@@ -148,9 +148,12 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
 
     @Override
     public void onTick(long i) {
+        // Check death condition
         if (isDead()) {
             death();
         }
+
+        // Update movement task
         if (getMovementTask() != null && getMovementTask().isAlive()) {
             getMovementTask().onTick(i);
 
@@ -159,12 +162,23 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
             }
         }
 
+        // Update combat task
         if (getCombatTask() != null) {
             getCombatTask().onTick(i);
 
             if (getCombatTask().isComplete()) {
                 setCombatTask(null);
             }
+        }
+
+        // Update skills
+        for (Skill s : wizardSkills) {
+            if (s != null) {
+                s.onTick(i);
+            }
+        }
+        if (mechSkill != null) {
+            mechSkill.onTick(i);
         }
     }
 

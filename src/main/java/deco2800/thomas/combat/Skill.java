@@ -1,12 +1,13 @@
 package deco2800.thomas.combat;
 
+import deco2800.thomas.Tickable;
 import deco2800.thomas.tasks.AbstractTask;
 
 /**
  * A skill generates a CombatTask for an entity, and provides encapsulation
  * of the cooldown, and other skill specific traits.
  */
-public interface Skill {
+public interface Skill extends Tickable {
     /**
      * Returns (in ticks) how long is remaining on the cooldown.
      * @return Cooldown remaining.
