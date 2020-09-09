@@ -3,7 +3,7 @@ package deco2800.thomas.entities;
 import com.badlogic.gdx.Input;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.tasks.MovementTask;
+import deco2800.thomas.tasks.movement.MovementTask;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -14,7 +14,7 @@ public class PlayerPeonTest extends BaseGDXTest {
     @Test
     public void testPlayerSet() {
         PlayerPeon p = new PlayerPeon(0, 0, 1, 10);
-        assertThat("", p.getTexture(), is(equalTo("spacman_ded")));
+        assertThat("", p.getTexture(), is(equalTo("player_right")));
     }
 
     @Test
@@ -23,7 +23,7 @@ public class PlayerPeonTest extends BaseGDXTest {
         assertThat("", p.getCol(), is(equalTo(1f)));
         assertThat("", p.getRow(), is(equalTo(1f)));
         assertThat("", p.getSpeed(), is(equalTo(1f)));
-        assertThat("", p.getTexture(), is(equalTo("spacman_ded")));
+        assertThat("", p.getTexture(), is(equalTo("player_right")));
     }
 
     /**
@@ -46,15 +46,15 @@ public class PlayerPeonTest extends BaseGDXTest {
         assertEquals(MovementTask.Direction.LEFT, playerPressA.getMovingDirection());
         assertEquals(MovementTask.Direction.RIGHT, playerPressD.getMovingDirection());
 
-        assertNotNull(playerPressW.getTask());
-        assertNotNull(playerPressS.getTask());
-        assertNotNull(playerPressA.getTask());
-        assertNotNull(playerPressD.getTask());
+        assertNotNull(playerPressW.getMovementTask());
+        assertNotNull(playerPressS.getMovementTask());
+        assertNotNull(playerPressA.getMovementTask());
+        assertNotNull(playerPressD.getMovementTask());
 
-        assertTrue(playerPressW.getTask() instanceof MovementTask);
-        assertTrue(playerPressS.getTask() instanceof MovementTask);
-        assertTrue(playerPressA.getTask() instanceof MovementTask);
-        assertTrue(playerPressD.getTask() instanceof MovementTask);
+        assertTrue(playerPressW.getMovementTask() instanceof MovementTask);
+        assertTrue(playerPressS.getMovementTask() instanceof MovementTask);
+        assertTrue(playerPressA.getMovementTask() instanceof MovementTask);
+        assertTrue(playerPressD.getMovementTask() instanceof MovementTask);
 
         /* When the player release the key*/
         playerPressW.notifyKeyUp(Input.Keys.W);
@@ -77,7 +77,7 @@ public class PlayerPeonTest extends BaseGDXTest {
         playerPeon.notifyKeyDown(Input.Keys.J);
 
         assertEquals(MovementTask.Direction.NONE, playerPeon.getMovingDirection());
-        assertNull(playerPeon.getTask());
+        assertNull(playerPeon.getMovementTask());
     }
 
     /**
@@ -94,7 +94,7 @@ public class PlayerPeonTest extends BaseGDXTest {
         playerPeon.notifyKeyUp(Input.Keys.D);
 
         assertEquals(MovementTask.Direction.DOWN, playerPeon.getMovingDirection());
-        assertNotNull(playerPeon.getTask());
+        assertNotNull(playerPeon.getMovementTask());
 
         playerPeon.notifyKeyUp(Input.Keys.S);
         assertEquals(MovementTask.Direction.NONE, playerPeon.getMovingDirection());

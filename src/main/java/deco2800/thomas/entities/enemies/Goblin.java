@@ -1,11 +1,17 @@
 package deco2800.thomas.entities.enemies;
 
+import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.tasks.MovementTask;
+import deco2800.thomas.tasks.combat.MeleeAttackTask;
+import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
+import deco2800.thomas.util.SquareVector;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A class that defines an implementation of a minion enemy type called a Goblin.
@@ -16,22 +22,43 @@ import deco2800.thomas.util.EnemyUtil;
  */
 public class Goblin extends Minion implements AggressiveEnemy {
     private int tickFollowing = 30;
-    private final int detectRadius = 12;
+    // Range at which the goblin will attempt to melee attack the player
+    private int attackRange = 2;
 
     public Goblin(int height, float speed, int health) {
-        super("Goblin", "goblin_swamp_left", height, speed, health);
+        super("Goblin", "goblin_swamp_right", height, speed, health);
     }
 
     public Goblin(int height, float speed, int health, String texture) {
         this(height, speed, health);
-        this.setTexture(texture);
+        super.setTextureDirections(new ArrayList<>(Arrays.asList(texture, texture + "_left", texture + "_right")));
+        this.setTexture(texture + "_right");
+        detectTarget();
     }
 
+    /**
+     * Locks onto the player and begins to pursue once it has been spawned
+     * by another enemy
+     */
     public void detectTarget() {
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
-        if (player != null && EnemyUtil.playerInRadius(this, player, detectRadius)) {
-            super.setTarget((PlayerPeon) player);
-            setTask(new MovementTask(this, super.getTarget().getPosition()));
+        if (player != null) {
+            super.setTarget(GameManager.get().getWorld().getPlayerEntity());
+            setMovementTask(new MovementTask(this, super.getTarget().getPosition()));
+        }
+    }
+
+    /**
+     * Sets the appropriate texture based on the direction the goblin
+     * is moving
+     */
+    private void setGoblinTexture() {
+        if (getTarget() != null) {
+            if (getTarget().getCol() < this.getCol()) {
+                setTexture(getTextureDirection(TEXTURE_LEFT));
+            } else {
+                setTexture(getTextureDirection(TEXTURE_RIGHT));
+            }
         }
     }
 
@@ -41,23 +68,35 @@ public class Goblin extends Minion implements AggressiveEnemy {
     }
 
     @Override
+    public void attackPlayer() {
+        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange)) {
+            SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
+            setCombatTask(new MeleeAttackTask(this, origin, 1, 1, 5));
+        }
+    }
+
+    @Override
     public void onTick(long i){
         // update target following path every 0.5 second (30 ticks)
         if (++tickFollowing > 30) {
             if (super.getTarget() != null) {
-                setTask(new MovementTask(this, super.getTarget().getPosition()));
+                setMovementTask(new MovementTask(this, super.getTarget().getPosition()));
+                setGoblinTexture();
+                attackPlayer();
             }
             tickFollowing = 0;
         }
-        // detect targets every tick
-        if (super.getTarget() == null) {
-            detectTarget();
-        }
         // execute tasks
-        if (getTask() != null && getTask().isAlive()) {
-            getTask().onTick(i);
-            if (getTask().isComplete()) {
-                setTask(null);
+        if (getMovementTask() != null && getMovementTask().isAlive()) {
+            getMovementTask().onTick(i);
+            if (getMovementTask().isComplete()) {
+                setMovementTask(null);
+            }
+        }
+        if (getCombatTask() != null && getCombatTask().isAlive()) {
+            getCombatTask().onTick(i);
+            if (getCombatTask().isComplete()) {
+                setCombatTask(null);
             }
         }
     }

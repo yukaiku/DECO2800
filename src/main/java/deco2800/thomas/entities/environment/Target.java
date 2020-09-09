@@ -1,0 +1,23 @@
+package deco2800.thomas.entities.environment;
+import deco2800.thomas.Tickable;
+import deco2800.thomas.entities.StaticEntity;
+import deco2800.thomas.worlds.Tile;
+import deco2800.thomas.entities.RenderConstants;
+
+public class Target extends StaticEntity implements Tickable {
+    private static final String ENTITY_ID_STRING = "target";
+
+    public Target() {
+        this.setObjectName(ENTITY_ID_STRING);
+    }
+
+    public Target(Tile tile, boolean obstructed) {
+        super(tile, RenderConstants.TARGET_RENDER, "target", obstructed);
+        this.setObjectName(ENTITY_ID_STRING);
+    }
+
+    @Override
+    public void onTick(long i) {
+
+    }
+}

@@ -18,7 +18,7 @@ public class QuestTrackerRenderer implements Renderer {
 
     @Override
     public void render(SpriteBatch batch, OrthographicCamera camera) {
-        //get quest progress
+        // get quest progress
         int orbCount = PlayerPeon.questTracker();
         //get the width of the orb to adjust the quest tracker text
         Texture img = GameManager.get().getManager(TextureManager.class).getTexture("orb");

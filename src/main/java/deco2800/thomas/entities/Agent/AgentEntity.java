@@ -2,17 +2,26 @@ package deco2800.thomas.entities.Agent;
 
 import com.google.gson.annotations.Expose;
 
-
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.HealthTracker;
-import deco2800.thomas.tasks.MovementTask;
+import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.SquareVector;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 public abstract class AgentEntity extends AbstractEntity {
 	@Expose
 	protected float speed;
 	private MovementTask.Direction movingDirection = MovementTask.Direction.NONE;
 	protected HealthTracker health;
+
+	// collection of textures for different directions
+	private final HashMap<Integer, String> textureDirections = new HashMap<>();
+	protected final int TEXTURE_BASE = 0;  // the texture String without _left or _right
+	protected final int TEXTURE_LEFT = 1;
+	protected final int TEXTURE_RIGHT = 2;
 	
 	public AgentEntity(float col, float row, int renderOrder, float speed, int health) {
 		super(col, row, renderOrder);
@@ -22,6 +31,21 @@ public abstract class AgentEntity extends AbstractEntity {
 
 	public AgentEntity() {
 		super();
+	}
+
+	/** Get the texture string with the given direction */
+	public String getTextureDirection(int direction) {
+		return textureDirections.get(direction);
+	}
+
+	/**
+	 * Store the texture strings with different directions
+	 * @param textures List of textures [base, left, right]. For example: ["orc", "orc_left", "orc_right"]
+	 */
+	public void setTextureDirections(List<String> textures) {
+		for (int i = 0; i < textures.size(); i++) {
+			this.textureDirections.put(i, textures.get(i));
+		}
 	}
 
 	public void moveTowards(SquareVector destination) {

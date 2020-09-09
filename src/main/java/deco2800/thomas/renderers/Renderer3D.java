@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.attacks.Projectile;
 import deco2800.thomas.managers.InputManager;
@@ -21,20 +20,12 @@ import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.AbstractTask;
-import deco2800.thomas.tasks.MovementTask;
-import deco2800.thomas.util.SquareVector;
+import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.Vector2;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 /**
  * A ~simple~ complex square renderer for DECO2800 games
@@ -113,12 +104,15 @@ public class Renderer3D implements Renderer {
 		}
 		float[] tileWorldCord = WorldUtil.colRowToWorldCords(tile.getCol(), tile.getRow());
 
-		if (WorldUtil.areCoordinatesOffScreen(tileWorldCord[0], tileWorldCord[1], camera)) {
+		//This is temporarily commented out as it results in entities not being drawn despite the peon
+		//Being in the area
+
+		/*if (WorldUtil.areCoordinatesOffScreen(tileWorldCord[0], tileWorldCord[1], camera)) {
 			tilesSkipped++;
 			GameManager.get().setTilesRendered(tileMap.size() - tilesSkipped);
 			GameManager.get().setTilesCount(tileMap.size());
 			return;
-		}
+		}*/
 
 		Texture tex = tile.getTexture();
 		batch.draw(tex, tileWorldCord[0], tileWorldCord[1], tex.getWidth() * WorldUtil.SCALE_X,
@@ -174,10 +168,13 @@ public class Renderer3D implements Renderer {
 			Texture tex = textureManager.getTexture(entity.getTexture());
 			float[] entityWorldCoord = WorldUtil.colRowToWorldCords(entity.getCol(), entity.getRow());
 			// If it's offscreen
-			if (WorldUtil.areCoordinatesOffScreen(entityWorldCoord[0], entityWorldCoord[1], camera)) {
+
+			//This is temporarily commented out as it results in entities not being drawn despite the peon
+			//Being in the area
+			/*if (WorldUtil.areCoordinatesOffScreen(entityWorldCoord[0], entityWorldCoord[1], camera)) {
 				entitiesSkipped++;
 				continue;
-			}
+			}*/
 			/* Draw Peon */
 			// Place movement tiles
 			if (entity instanceof Peon) {
@@ -243,7 +240,7 @@ public class Renderer3D implements Renderer {
 
 	private void renderPeonMovementTiles(SpriteBatch batch, OrthographicCamera camera, AbstractEntity entity, float[] entityWorldCord) {
 		Peon actor = (Peon) entity;
-		AbstractTask task = actor.getTask();
+		AbstractTask task = actor.getMovementTask();
 		if (task instanceof MovementTask) {
 			if (((MovementTask) task).getPath() == null) { //related to issue #8
 				return;
@@ -254,10 +251,10 @@ public class Renderer3D implements Renderer {
 				Texture tex = path.get(path.size() - 1) == tile ?
 						textureManager.getTexture(TEXTURE_DESTINATION) : textureManager.getTexture(TEXTURE_PATH);
 				float[] tileWorldCord = WorldUtil.colRowToWorldCords(tile.getCol(), tile.getRow());
-				if (WorldUtil.areCoordinatesOffScreen(tileWorldCord[0], tileWorldCord[1], camera)) {
+				/*if (WorldUtil.areCoordinatesOffScreen(tileWorldCord[0], tileWorldCord[1], camera)) {
 					tilesSkipped++;
 					continue;
-				}
+				}*/
 				batch.draw(tex, tileWorldCord[0],
 						tileWorldCord[1]// + ((tile.getElevation() + 1) * elevationZeroThiccness * WorldUtil.SCALE_Y)
 						, tex.getWidth() * WorldUtil.SCALE_X,

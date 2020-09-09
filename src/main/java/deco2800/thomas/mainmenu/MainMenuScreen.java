@@ -38,6 +38,10 @@ public class MainMenuScreen implements Screen {
 		logo.setPosition(1280 / 2 - 225, 720 / 2 + 100);
 		stage.addActor(logo);
 
+		Button envTeamButton = new TextButton("ENV TEAM", skin, "main_menu");
+		envTeamButton.setPosition(10, 250);
+		stage.addActor(envTeamButton);
+
 		Button tutorialBtn = new TextButton("TUTORIAL", skin, "main_menu");
 		tutorialBtn.setPosition(10, 200);
 		stage.addActor(tutorialBtn);
@@ -46,13 +50,9 @@ public class MainMenuScreen implements Screen {
 		newGameBtn.setPosition(10, 150);
 		stage.addActor(newGameBtn);
 
-		Button loadGameButton = new TextButton("LOAD GAME", skin, "main_menu");
-		loadGameButton.setPosition(10, 100);
-		stage.addActor(loadGameButton);
-
-		Button connectToServerButton = new TextButton("CONNECT TO SERVER", skin, "main_menu");
-		connectToServerButton.setPosition(10, 50);
-		stage.addActor(connectToServerButton);
+		Button testWorldBtn = new TextButton("TEST WORLD", skin, "main_menu");
+		testWorldBtn.setPosition(10, 100);
+		stage.addActor(testWorldBtn);
 
 		tutorialBtn.addListener(new ClickListener() {
 			@Override
@@ -61,24 +61,25 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 
-		connectToServerButton.addListener(new ClickListener() {
+		envTeamButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.CONNECT_TO_SERVER));
+				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.ENV_TEAM_GAME));
 			}
 		});
 
-		loadGameButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.LOAD_GAME));
-			}
-		});
 
 		newGameBtn.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.NEW_GAME));
+			}
+		});
+
+		testWorldBtn.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.TEST_WORLD));
 			}
 		});
 	}

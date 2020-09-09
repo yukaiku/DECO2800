@@ -2,6 +2,8 @@ package deco2800.thomas.entities;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.enemies.Dragon;
+import deco2800.thomas.util.SquareVector;
 import org.junit.Assert;
 import org.junit.Before;
 
@@ -12,11 +14,19 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class EnemyPeonTest extends BaseGDXTest {
+
+    @Test
+    public void testConstructor() {
+        Orc enemy = new Orc(1, 1, 100, "orc_swamp");
+        assertEquals(enemy.getTexture(), "orc_swamp_right");
+        assertEquals(enemy.getHeight(), 1);
+        assertEquals(enemy.getSpeed(), 1f, 0.01);
+    }
+
     @Test
     public void testEnemyTexture() {
         EnemyPeon enemy =  new Orc(1, 1, 100);
-        assertEquals(enemy.getTexture(), "orc_swamp_left");
-
+        assertEquals(enemy.getTexture(), "orc_swamp_right");
     }
 
     @Test
@@ -64,6 +74,31 @@ public class EnemyPeonTest extends BaseGDXTest {
         enemy.setCurrentHealthValue(10);
         enemy.regenerateHealth(40);
         assertEquals(enemy.getCurrentHealth(), 50);
+    }
+
+    @Test
+    public void testDeepCopy() {
+        EnemyPeon enemy =  new Orc(1, 1, 100, "orc_swamp");
+        EnemyPeon enemy2 = enemy.deepCopy();
+        assertEquals(enemy.getHeight(), enemy2.getHeight());
+        assertEquals(enemy.getSpeed(), enemy2.getSpeed(), 0.01);
+        assertEquals(enemy.getMaxHealth(), enemy2.getMaxHealth());
+        assertEquals(enemy.getTexture(), enemy2.getTexture());
+    }
+
+    @Test
+    public void testGetTarget() {
+        EnemyPeon enemy =  new Orc(1, 1, 100, "orc_swamp");
+        PlayerPeon p = new PlayerPeon(1, 1, 1, 50);
+        enemy.setTarget(p);
+        assertEquals(enemy.getTarget(), p);
+    }
+
+    @Test
+    public void testPosition() {
+        EnemyPeon enemy =  new Orc(1, 1, 100, "orc_swamp");
+        enemy.setPosition(10, 10);
+        assertEquals(enemy.getPosition(), new SquareVector(10, 10));
     }
     // Need some formal way of testing that it approaches the player? For now
     // in-game testing has confirmed it
