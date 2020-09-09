@@ -12,12 +12,10 @@ import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
-import deco2800.thomas.tasks.combat.FireballAttackTask;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
-import deco2800.thomas.worlds.AbstractWorld;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -146,6 +144,10 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         }
     }
 
+    /**
+     * Updates the player peon's over time methods, such as tasks and cooldowns.
+     * @param i current game tick.
+     */
     @Override
     public void onTick(long i) {
         // Check death condition
@@ -182,11 +184,17 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         }
     }
 
+    /**
+     * Handles the mouse down event. This triggers combat skills.
+     * @param screenX the x position the mouse was pressed at
+     * @param screenY the y position the mouse was pressed at
+     * @param pointer
+     * @param button  the button which was pressed
+     */
     @Override
     public void notifyTouchDown(int screenX, int screenY, int pointer, int button) {
         float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(), Gdx.input.getY());
         float[] clickedPosition = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
-
 
         if (button == Input.Buttons.LEFT) {
             try {
@@ -232,6 +240,10 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         }
     }
 
+    /**
+     * Handles the key down event.
+     * @param keycode the key being pressed
+     */
     @Override
     public void notifyKeyDown(int keycode) {
         if (keycode == Input.Keys.W || keycode == Input.Keys.S ||
@@ -240,6 +252,10 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         }
     }
 
+    /**
+     * Handles the key up event.
+     * @param keycode the key being released
+     */
     @Override
     public void notifyKeyUp(int keycode) {
         if (keycode == Input.Keys.W || keycode == Input.Keys.S ||
@@ -317,12 +333,19 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         this.setMovingDirection(MovementTask.Direction.NONE);
     }
 
+    /**
+     * Triggered when health goes below zero. Removes entity
+     * from world.
+     */
     @Override
     public void death() {
         GameManager.get().getWorld().removeEntity(this);
         GameManager.get().getWorld().disposeEntity(this.getEntityID());
     }
 
+    /**
+     * Clears up listeners when removed from game world.
+     */
     @Override
     public void dispose() {
         GameManager.getManagerFromInstance(InputManager.class).removeTouchDownListener(this);
