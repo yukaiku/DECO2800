@@ -211,9 +211,6 @@ public final class DatabaseManager extends AbstractManager {
         return false;
     }
 
-
-
-
     private static AbstractEntity resolveEntityToLoad(String entityObjectName) {
         try {
             for (String s:Arrays.asList("rock")){
