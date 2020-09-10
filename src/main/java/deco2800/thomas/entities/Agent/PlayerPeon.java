@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.combat.skills.FireballSkill;
+import deco2800.thomas.combat.skills.MeleeSkill;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.managers.GameManager;
@@ -12,7 +13,6 @@ import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
-import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
@@ -59,6 +59,8 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         wizardSkills = new ArrayList<>();
         wizardSkills.add(new FireballSkill(this));
         activeWizardSkill = 0;
+
+        mechSkill = new MeleeSkill(this);
     }
 
     /**
@@ -205,37 +207,16 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
                 }
             } catch (SkillOnCooldownException e) {
                 // Won't occur because I'm handling it.
+                e.printStackTrace();
             }
         } else if (button == Input.Buttons.RIGHT) {
-            // Set combat task to melee task
-            // this.setCombatTask(new meleeTask);
-            SquareVector origin;
-            double angle = Math.toDegrees(Math.atan2(clickedPosition[0] - this.getCol(), clickedPosition[1] - this.getRow()));
-            System.out.println(angle);
-            if (angle > -45 && angle < 45) {
-                // Spawn above player
-                System.out.println("Above");
-                origin = new SquareVector(this.getCol(), this.getRow() + 1);
-                this.setCombatTask(new MeleeAttackTask(this, origin, 2, 2, 30));
-
-            } else if (angle >= -135 && angle <= -45) {
-                // Spawn to left of player
-                System.out.println("Left");
-                origin = new SquareVector(this.getCol() - 1, this.getRow());
-                this.setCombatTask(new MeleeAttackTask(this, origin, 2, 2, 30));
-
-            } else if (angle < -135 || angle > 135) {
-                // Spawn below player
-                System.out.println("Below");
-                origin = new SquareVector(this.getCol(), this.getRow() - 1);
-                this.setCombatTask(new MeleeAttackTask(this, origin, 2, 2, 30));
-
-            } else if (angle >= 45 && angle <= 135) {
-                // Spawn right of player
-                System.out.println("Right");
-                origin = new SquareVector(this.getCol() + 1, this.getRow());
-                this.setCombatTask(new MeleeAttackTask(this, origin, 2, 2, 30));
-
+            try {
+                if (mechSkill.getCooldown() <= 0) {
+                    this.setCombatTask(mechSkill.getNewSkillTask(clickedPosition[0], clickedPosition[1]));
+                }
+            } catch (SkillOnCooldownException e) {
+                // Won't occur because I'm handling it
+                e.printStackTrace();
             }
         }
     }
