@@ -74,6 +74,14 @@ public class GameManager {
 	private int currentWorld = 0;
 	private ArrayList<WorldType> worldOrder;
 
+	public State state = State.RUN;
+	public static enum State
+	{
+		PAUSE,
+		RUN,
+		RESUME,
+		STOPPED
+	}
 	/**
 	 * Returns an instance of the GM
 	 *
@@ -278,6 +286,10 @@ public class GameManager {
 				break;
 		}
 		currentWorld = (currentWorld + 1) % worldOrder.size();
+	}
+
+	public static void resume() {
+		GameManager.get().state = GameManager.State.RUN;
 	}
 
 	public void setCamera(OrthographicCamera camera) {

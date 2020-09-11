@@ -3,13 +3,16 @@ package deco2800.thomas;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.handlers.KeyboardManager;
+import deco2800.thomas.mainmenu.MainMenuScreen;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.renderers.*;
@@ -39,11 +42,16 @@ public class GameScreen implements Screen, KeyDownObserver {
 	OverlayRenderer rendererDebug = new OverlayRenderer();
 
 	Guideline guideline = new Guideline();
+	PauseModal pauseModal = new PauseModal();
 	QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
+
+	// Buttons in the pause menu
+	Button resumeButton = new TextButton("RESUME", GameManager.get().getSkin(), "main_menu");
+	Button quitButton = new TextButton("QUIT", GameManager.get().getSkin(), "main_menu");
 
 	AbstractWorld world;
 
-	static Skin skin;
+	static Skin skin = new Skin(Gdx.files.internal("resources/uiskin.skin"));
 
 	/**
 	 * Create a camera for panning and zooming.
@@ -60,7 +68,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new TundraWorld();
-
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
@@ -128,15 +135,32 @@ public class GameScreen implements Screen, KeyDownObserver {
 		Gdx.input.setInputProcessor(multiplexer);
 
 		GameManager.get().getManager(KeyboardManager.class).registerForKeyDown(this);
+
+		// Add listener to the buttons in the pause menu
+		resumeButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				GameManager.resume();
+			}
+		});
+		quitButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				GameManager.resume();
+				GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
+
+				MainMenuScreen mainMenuScreen = new MainMenuScreen(game);
+				game.setScreen(mainMenuScreen);
+			}
+		});
+		stage.addActor(resumeButton);
+		stage.addActor(quitButton);
 	}
 
 	/**
-	 * Renderer thread
-	 * Must update all displayed elements using a Renderer
+	 * Render the game normally
 	 */
-	@Override
-	public void render(float delta) {
-
+	public void renderGame(float delta ) {
 		handleRenderables();
 
 		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta);
@@ -169,10 +193,52 @@ public class GameScreen implements Screen, KeyDownObserver {
 		batchGuideline.setProjectionMatrix(cameraDebug.combined);
 		questTrackerRenderer.render(batchGuideline, cameraDebug);
 
+		// Hide the buttons when the game is running
+		resumeButton.setPosition(-100, -100);
+		quitButton.setPosition(-100, -100);
+
 		/* Refresh the experience UI for if information was updated */
 		stage.act(delta);
 		stage.draw();
 		batch.dispose();
+	}
+
+	/**
+	 * Render the game pause menu when the game is paused
+	 */
+	public void renderPauseMenu(float delta) {
+		// Render the pause modal
+		SpriteBatch batchPauseModal = new SpriteBatch();
+		batchPauseModal.setProjectionMatrix(cameraDebug.combined);
+		pauseModal.render(batchPauseModal, cameraDebug);
+
+		// Display the buttons
+		resumeButton.setPosition(1280 / 2 - resumeButton.getWidth() / 2,
+				stage.getViewport().getScreenHeight() / 2);
+		quitButton.setPosition(1280 / 2 - quitButton.getWidth() / 2,
+				stage.getViewport().getScreenHeight() / 2 - 100);
+		stage.act(delta);
+		stage.draw();
+	}
+
+	/**
+	 * Renderer thread
+	 * Must update all displayed elements using a Renderer
+	 */
+	@Override
+	public void render(float delta) {
+
+		switch (GameManager.get().state)
+		{
+			case RUN:
+				renderGame(delta);
+				break;
+			case PAUSE:
+				renderPauseMenu(delta);
+				break;
+			default:
+				break;
+		}
 	}
 
 	private void handleRenderables() {
@@ -238,8 +304,17 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	@Override
 	public void notifyKeyDown(int keycode) {
-		if (keycode == Input.Keys.F12) {
+		if (keycode == Input.Keys.F12 && GameManager.get().state == GameManager.State.RUN) {
 			GameManager.get().debugMode = !GameManager.get().debugMode;
+		}
+
+		if (keycode == Input.Keys.ESCAPE) {
+			System.out.println("yooo");
+			if (GameManager.get().state == GameManager.State.RUN) {
+				GameManager.get().state = GameManager.State.PAUSE;
+			} else if (GameManager.get().state == GameManager.State.PAUSE) {
+				GameManager.resume();
+			}
 		}
 
 		if (keycode == Input.Keys.F9 & GameManager.get().inTutorial) {
