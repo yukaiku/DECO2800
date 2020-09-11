@@ -30,6 +30,7 @@ public class SpeedStatus extends StatusEffect{
      */
     @Override
     public void applyEffect() {
+        setActiveState(true);
         getAffectedEntity().setSpeed(newSpeed);
     }
     /**

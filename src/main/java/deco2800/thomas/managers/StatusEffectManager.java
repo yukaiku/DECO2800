@@ -20,13 +20,16 @@ public class StatusEffectManager extends TickableManager {
     }
 
     /**
-     *
-     * @param i
+     * Checks if there are statuses to be applied on each tick provided a status
+     * isn't already active
+     * @param i Tick count
      */
     public void onTick(long i) {
         if (!this.currentStatusEffects.isEmpty()){
             for (StatusEffect effect : this.currentStatusEffects) {
-                effect.applyEffect();
+                if (!effect.getActive()) {
+                    effect.applyEffect();
+                }
             }
         }
     }

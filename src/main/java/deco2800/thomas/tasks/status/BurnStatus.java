@@ -28,7 +28,7 @@ public class BurnStatus extends StatusEffect {
      */
     @Override
     public void applyEffect() {
-
+        setActiveState(true);
         int health = getAffectedEntity().getHealthTracker().getCurrentHealthValue();
         getAffectedEntity().getHealthTracker().setCurrentHealthValue(health - burnDamage);
     }

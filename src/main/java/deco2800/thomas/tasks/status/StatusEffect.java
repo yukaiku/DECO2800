@@ -28,7 +28,7 @@ public abstract class StatusEffect {
      * set to null on the next tick
      * @param active
      */
-    public void setActive(boolean active){
+    public void setActiveState(boolean active){
         this.active = active;
     }
 
