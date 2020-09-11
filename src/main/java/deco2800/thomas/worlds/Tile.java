@@ -11,6 +11,7 @@ import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.NetworkManager;
 import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
 
 public class Tile {
@@ -27,6 +28,11 @@ public class Tile {
 	public static void resetID() {
 		nextID = 0;
 	}
+
+	/**
+	 * Tile status effect boolean for tile class (Default is false).
+	 */
+	private boolean hasStatusEffect = false;
 
 	/**
 	 * Tile ID
@@ -200,6 +206,10 @@ public class Tile {
 
 	public boolean isObstructed() {
 		return obstructed;
+	}
+
+	public boolean hasStatusEffect() {
+		return this.hasStatusEffect;
 	}
 
 	public void setObstructed(boolean b) {

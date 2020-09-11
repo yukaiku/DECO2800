@@ -1,13 +1,19 @@
 package deco2800.thomas.tasks.movement;
 
+import java.lang.reflect.GenericArrayType;
 import java.util.List;
 
 
+import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PathFindingService;
+import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.tasks.AbstractTask;
+import deco2800.thomas.tasks.status.BurnStatus;
+import deco2800.thomas.tasks.status.SpeedStatus;
+import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
@@ -65,6 +71,7 @@ public class MovementTask extends AbstractTask {
 		}
 		entity.moveTowards(destination);
 		if (entity.getPosition().isCloseEnoughToBeTheSame(destination)) {
+			checkForTileStatus(destination);
 			switch (entity.getMovingDirection()) {
 				case UP:
 					destination.setRow(destination.getRow() + 1f);
@@ -94,6 +101,7 @@ public class MovementTask extends AbstractTask {
 				entity.moveTowards(path.get(0).getCoordinates());
 				// This is a bit of a hack.
 				if (entity.getPosition().isCloseEnoughToBeTheSame(path.get(0).getCoordinates())) {
+					checkForTileStatus(path.get(0).getCoordinates());
 					path.remove(0);
 				}
 			}
@@ -127,5 +135,29 @@ public class MovementTask extends AbstractTask {
 	@Override
 	public boolean isAlive() {
 		return taskAlive;
+	}
+
+	/**
+	 * Checks the next respective tile to be moved to as to whether there is a
+	 * status affect to be applied to the entity stepping on it.
+	 *
+	 * @param position - Square Vector of upcoming position of the entity
+	 */
+	private void checkForTileStatus(SquareVector position) {
+		Tile tile = GameManager.get().getWorld().getTile(position);
+		if (tile.hasStatusEffect()) {
+			switch(tile.getType()) {
+				case "VolcanoBurnTile":
+				GameManager.get().getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 5));
+				break;
+				case "Cactus":
+				GameManager.get().getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 1));
+				break;
+				case "Quicksand":
+				GameManager.get().getManager(StatusEffectManager.class).addStatus(new SpeedStatus(entity, 0.25f));
+				break;
+			}
+		}
+		//Else do nothing, do not apply Status effects to the respective entity
 	}
 }
