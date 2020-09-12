@@ -26,9 +26,9 @@ import java.util.Map;
 public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserver, KeyUpObserver {
     public static int DEFAULT_HEALTH = 50;
 
-    //Orbs tracker
-    private static int orbCount = 0;
-    private static List<Orb> orbs = new ArrayList<Orb>();
+//    //Orbs tracker
+//    private static int orbCount = 0;
+//    private static List<Orb> orbs = new ArrayList<Orb>();
 
     // The health of the player
     private HealthTracker health;
@@ -110,48 +110,48 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         return dialogues.get(target);
     }
 
-    /**
-     * Quest Tracker function that tracks the orbs the user currently has
-     *
-     * @return orbCount the number of orbs the user currently has
-     */
-    public static List<Orb> questTracker() {
-        return orbs;
-    }
-
-    /**
-     * Resets the number of orb user has
-     * Notes:
-     * To be used on when a new game is run or upon death
-     */
-    public static void resetQuest() {
-        orbs.clear();
-        orbCount = 0;
-    }
-
-    /**
-     * Increase the number of orbs the user has
-     * Notes:
-     * To be used on when player picks up an orb
-     */
-    public static <Orb> void increaseOrbs(deco2800.thomas.entities.Orb orb) {
-        if (orbCount < 5) {
-            orbCount += 1;
-            orbs.add(orb);
-        }
-    }
-
-    /**
-     * Decrease the number of orbs the user has
-     * Notes:
-     * To be used on when player picks up an orb
-     */
-    public static void decreaseOrbs() {
-        if (orbCount > 1) {
-            orbCount -= 1;
-            orbs.remove(orbCount);
-        }
-    }
+//    /**
+//     * Quest Tracker function that tracks the orbs the user currently has
+//     *
+//     * @return orbCount the number of orbs the user currently has
+//     */
+//    public static List<Orb> questTracker() {
+//        return orbs;
+//    }
+//
+//    /**
+//     * Resets the number of orb user has
+//     * Notes:
+//     * To be used on when a new game is run or upon death
+//     */
+//    public static void resetQuest() {
+//        orbs.clear();
+//        orbCount = 0;
+//    }
+//
+//    /**
+//     * Increase the number of orbs the user has
+//     * Notes:
+//     * To be used on when player picks up an orb
+//     */
+//    public static <Orb> void increaseOrbs(deco2800.thomas.entities.Orb orb) {
+//        if (orbCount < 5) {
+//            orbCount += 1;
+//            orbs.add(orb);
+//        }
+//    }
+//
+//    /**
+//     * Decrease the number of orbs the user has
+//     * Notes:
+//     * To be used on when player picks up an orb
+//     */
+//    public static void decreaseOrbs() {
+//        if (orbCount > 1) {
+//            orbCount -= 1;
+//            orbs.remove(orbCount);
+//        }
+//    }
 
     /**
      * Updates the player peon's over time methods, such as tasks and cooldowns.
