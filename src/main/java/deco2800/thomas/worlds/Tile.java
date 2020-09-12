@@ -30,11 +30,6 @@ public class Tile {
 	}
 
 	/**
-	 * Tile status effect boolean for tile class (Default is false).
-	 */
-	private boolean hasStatusEffect = false;
-
-	/**
 	 * Tile ID
 	 */
 	@Expose
@@ -209,7 +204,7 @@ public class Tile {
 	}
 
 	public boolean hasStatusEffect() {
-		return this.hasStatusEffect;
+		return false;
 	}
 
 	public void setObstructed(boolean b) {

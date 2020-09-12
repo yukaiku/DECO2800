@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class StatusEffectManager extends TickableManager {
     private ArrayList<StatusEffect> currentStatusEffects;
 
-    public StatusEffectManager(){
-        this.currentStatusEffects = new ArrayList<>();
+    public StatusEffectManager() {
+        currentStatusEffects = new ArrayList<>();
     }
 
     /**
@@ -25,12 +25,10 @@ public class StatusEffectManager extends TickableManager {
      * @param i Tick count
      */
     public void onTick(long i) {
-        if (!this.currentStatusEffects.isEmpty()){
-            for (StatusEffect effect : this.currentStatusEffects) {
+        for (StatusEffect effect : currentStatusEffects) {
                 if (!effect.getActive()) {
                     effect.applyEffect();
                 }
             }
         }
-    }
 }

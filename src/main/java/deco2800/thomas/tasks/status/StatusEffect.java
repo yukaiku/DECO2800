@@ -8,11 +8,11 @@ import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.worlds.Tile;
 
 public abstract class StatusEffect {
-    private boolean active = true;
+    private boolean active = false;
     private AgentEntity affectedEntity;
 
     public StatusEffect(AgentEntity entity) {
-        GameManager.get().getManagerFromInstance(StatusEffectManager.class).addStatus(this);
+        affectedEntity = entity;
     }
 
     /** Returns the state of the status
@@ -43,16 +43,5 @@ public abstract class StatusEffect {
     /**
      * Abstract method to be formally implemented via subclass of StatusEffect.
      */
-    public void applyEffect() {
-
-    }
-
-    /**
-     * Abstract method to be formally implemented via subclass of StatusEffect.
-     */
-    public void removeEffect() {
-
-    }
-
-
+    public abstract void applyEffect();
 }

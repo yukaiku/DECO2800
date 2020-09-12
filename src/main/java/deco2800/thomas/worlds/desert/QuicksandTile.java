@@ -44,4 +44,9 @@ public class QuicksandTile extends Tile {
     public String getType() {
         return "Quicksand";
     }
+
+    @Override
+    public boolean hasStatusEffect() {
+        return true;
+    }
 }

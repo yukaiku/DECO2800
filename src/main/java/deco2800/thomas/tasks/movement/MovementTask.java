@@ -32,7 +32,7 @@ public class MovementTask extends AbstractTask {
 
 	private boolean computingPath = false;
 	private boolean taskAlive = true;
-
+	private GameManager gameManager = null;
 	AgentEntity entity;
 	SquareVector destination;
 
@@ -48,6 +48,8 @@ public class MovementTask extends AbstractTask {
 
 	@Override
 	public void onTick(long tick) {
+		if (gameManager == null) gameManager = GameManager.get();
+
 		if (entity instanceof PlayerPeon) {
 			this.normalMovement();
 		} else {
@@ -111,7 +113,7 @@ public class MovementTask extends AbstractTask {
 		} else {
 			// Ask for a path.
 			computingPath = true;
-			GameManager.get().getManager(PathFindingService.class).addPath(this);
+			gameManager.getManager(PathFindingService.class).addPath(this);
 		}
 	}
 
@@ -144,20 +146,22 @@ public class MovementTask extends AbstractTask {
 	 * @param position - Square Vector of upcoming position of the entity
 	 */
 	private void checkForTileStatus(SquareVector position) {
-		Tile tile = GameManager.get().getWorld().getTile(position);
-		if (tile.hasStatusEffect()) {
+		Tile tile = gameManager.getWorld().getTile(position);
+		if (tile != null && tile.hasStatusEffect()) {
 			switch(tile.getType()) {
-				case "VolcanoBurnTile":
-				GameManager.get().getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 5));
+				case "BurnTile":
+					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 5));
 				break;
+
 				case "Cactus":
-				GameManager.get().getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 1));
+					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 1));
 				break;
+
 				case "Quicksand":
-				GameManager.get().getManager(StatusEffectManager.class).addStatus(new SpeedStatus(entity, 0.25f));
+					gameManager.getManager(StatusEffectManager.class).addStatus(new SpeedStatus(entity, 0.25f));
 				break;
 			}
 		}
-		//Else do nothing, do not apply Status effects to the respective entity
+		// else do nothing, do not apply Status effects to the respective entity
 	}
 }

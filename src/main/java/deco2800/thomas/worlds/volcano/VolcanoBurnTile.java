@@ -47,4 +47,10 @@ public class VolcanoBurnTile extends Tile {
         return "BurnTile";
     }
 
+
+    @Override
+    public boolean hasStatusEffect() {
+        return true;
+    }
+
 }

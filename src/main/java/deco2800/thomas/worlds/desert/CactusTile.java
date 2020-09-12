@@ -44,4 +44,9 @@ public class CactusTile extends Tile {
     public String getType() {
         return "Cactus";
     }
+
+    @Override
+    public boolean hasStatusEffect() {
+        return true;
+    }
 }

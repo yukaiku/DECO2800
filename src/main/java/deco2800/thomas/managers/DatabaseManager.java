@@ -456,7 +456,7 @@ public final class DatabaseManager extends AbstractManager {
         if (saveLocationAndFilename.equals("resources/environment/desert/desert_map.json")) {
             newTiles = setDesertTiles(newTiles);
         } else if (saveLocationAndFilename.equals("resources/environment/volcano/VolcanoZone.json")) {
-            checkVolcanoWorld(newTiles);
+            newTiles = checkVolcanoWorld(newTiles);
         }
 
         world.setTiles(newTiles);
@@ -563,27 +563,27 @@ public final class DatabaseManager extends AbstractManager {
 	 * Modifies the world so burning tiles can be implemented for health
 	 * -reduction functionality.
 	 *
-	 * @param newTiles A CopyOnWriteArrayList containing the current tile list
+	 * @param oldTiles A CopyOnWriteArrayList containing the current tile list
 	 *                 loaded from a local JSON file that is to be modified
 	 *                 for the volcano zone to contain burning tiles.
+     *
+     * @return The modified tile list, with burn tiles added.
 	 */
-	static private void checkVolcanoWorld(CopyOnWriteArrayList<Tile> newTiles) {
-		if (GameManager.get().getWorld() instanceof VolcanoWorld) {
-			for (Tile t : newTiles) {
-				String tileTexture = t.getTextureName();
-				int tileNumber = Integer.parseInt(tileTexture.split("_")[1]);
-				if (tileNumber > 4) {
-					int index = newTiles.indexOf(t);
-					float row = t.getRow();
-					float col = t.getCol();
-					t = new VolcanoBurnTile(tileTexture, col, row, 5);
-					newTiles.add(t);
-				} else {
-					newTiles.add(t);
-				}
-			}
-		}
-	}
+	static private CopyOnWriteArrayList<Tile> checkVolcanoWorld(CopyOnWriteArrayList<Tile> oldTiles) {
+        CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
+        int i = 0;
+
+        for (Tile tile : oldTiles) {
+            if (Integer.parseInt(tile.getTextureName().split("_")[1]) > 4) {
+                newTiles.add(new VolcanoBurnTile(tile.getTextureName(), tile.getCol(), tile.getRow(), 5));
+            } else {
+                newTiles.add(tile);
+            }
+            newTiles.get(i).setTileID(i++);
+        }
+
+        return newTiles;
+    }
 
 	/**
 	 * Converts the required Tiles from a Desert World into Cactus or Quicksand Tiles.
@@ -595,6 +595,7 @@ public final class DatabaseManager extends AbstractManager {
 		CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
 		Random rand = new Random();
 		int randIndex;
+        int i = 0;
 
 		for (Tile tile : oldTiles) {
 			switch (tile.getTextureName()) {
@@ -617,6 +618,7 @@ public final class DatabaseManager extends AbstractManager {
 					newTiles.add(tile);
 					break;
 			}
+            newTiles.get(i).setTileID(i++);
 		}
 
 		return newTiles;

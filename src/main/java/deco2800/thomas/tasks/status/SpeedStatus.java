@@ -2,18 +2,17 @@ package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.entities.Agent.AgentEntity;
 
-public class SpeedStatus extends StatusEffect{
-    private float originalSpeed;
-    private float newSpeed;
-    private float defaultMultiplier = 0.5f;
+public class SpeedStatus extends StatusEffect {
+    private final float newSpeed;
+    private final float multiplier;
 
     /**
      * Default Constructor for the Speed Status effect (Multiplies entities speed by )
      */
     public SpeedStatus(AgentEntity entity) {
         super(entity);
-        originalSpeed = getAffectedEntity().getSpeed();
-        this.newSpeed = originalSpeed * defaultMultiplier;
+        multiplier = 0.5f;
+        this.newSpeed = getAffectedEntity().getSpeed() * multiplier;
     }
 
     /**
@@ -21,8 +20,8 @@ public class SpeedStatus extends StatusEffect{
      */
     public SpeedStatus(AgentEntity entity, float SpeedMultiplier) {
         super(entity);
-        originalSpeed = getAffectedEntity().getSpeed();
-        this.newSpeed = originalSpeed * SpeedMultiplier;
+        this.multiplier = SpeedMultiplier;
+        this.newSpeed = getAffectedEntity().getSpeed() * multiplier;
     }
 
     /**
@@ -33,12 +32,12 @@ public class SpeedStatus extends StatusEffect{
         setActiveState(true);
         getAffectedEntity().setSpeed(newSpeed);
     }
+
     /**
      * Remove Speed status
      */
-    @Override
     public void removeEffect() {
-        getAffectedEntity().setSpeed(originalSpeed);
+        getAffectedEntity().setSpeed(getAffectedEntity().getSpeed() / multiplier);
     }
 
 }
