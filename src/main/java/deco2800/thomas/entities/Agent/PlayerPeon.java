@@ -8,6 +8,7 @@ import deco2800.thomas.combat.skills.FireballSkill;
 import deco2800.thomas.combat.skills.MeleeSkill;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.HealthTracker;
+import deco2800.thomas.entities.Orb;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.observers.KeyDownObserver;
@@ -24,7 +25,10 @@ import java.util.Map;
 
 public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserver, KeyUpObserver {
     public static int DEFAULT_HEALTH = 50;
+
+    //Orbs tracker
     private static int orbCount = 0;
+    private static List<Orb> orbs = new ArrayList<Orb>();
 
     // The health of the player
     private HealthTracker health;
@@ -111,8 +115,8 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
      *
      * @return orbCount the number of orbs the user currently has
      */
-    public static int questTracker() {
-        return orbCount;
+    public static List<Orb> questTracker() {
+        return orbs;
     }
 
     /**
@@ -121,6 +125,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
      * To be used on when a new game is run or upon death
      */
     public static void resetQuest() {
+        orbs.clear();
         orbCount = 0;
     }
 
@@ -129,9 +134,10 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
      * Notes:
      * To be used on when player picks up an orb
      */
-    public static void increaseOrbs() {
+    public static <Orb> void increaseOrbs(deco2800.thomas.entities.Orb orb) {
         if (orbCount < 5) {
             orbCount += 1;
+            orbs.add(orb);
         }
     }
 
@@ -143,6 +149,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
     public static void decreaseOrbs() {
         if (orbCount > 1) {
             orbCount -= 1;
+            orbs.remove(orbCount);
         }
     }
 
