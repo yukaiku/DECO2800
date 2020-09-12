@@ -150,11 +150,11 @@ public class MovementTask extends AbstractTask {
 		if (tile != null && tile.hasStatusEffect()) {
 			switch(tile.getType()) {
 				case "BurnTile":
-					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 5));
+					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 5, 5));
 				break;
 
 				case "Cactus":
-					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 1));
+					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 1, 1));
 				break;
 
 				case "Quicksand":

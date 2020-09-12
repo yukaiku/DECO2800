@@ -1,14 +1,9 @@
 package deco2800.thomas.tasks.status;
 
-import deco2800.thomas.Tickable;
-import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.StatusEffectManager;
-import deco2800.thomas.worlds.Tile;
 
 public abstract class StatusEffect {
-    private boolean active = false;
+    private boolean active = true;
     private AgentEntity affectedEntity;
 
     public StatusEffect(AgentEntity entity) {

@@ -26,7 +26,7 @@ public class StatusEffectManager extends TickableManager {
      */
     public void onTick(long i) {
         for (StatusEffect effect : currentStatusEffects) {
-                if (!effect.getActive()) {
+                if (effect.getActive()) {
                     effect.applyEffect();
                 }
             }
