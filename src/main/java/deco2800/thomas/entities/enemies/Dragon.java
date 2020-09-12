@@ -31,14 +31,16 @@ public class Dragon extends Boss implements PassiveEnemy {
     // Range at which the dragon will attempt to melee attack the player
     private int attackRange = 8;
     Random random;
+    int orbNumber;
 
-    public Dragon(int height, float speed, int health) {
+    public Dragon(int height, float speed, int health, int orb) {
         super("Elder Dragon", "elder_dragon", height, speed, health);
         this.random = new Random();
+        orbNumber = orb;
     }
 
-    public Dragon(int height, float speed, int health, String texture) {
-        this(height, speed, health);
+    public Dragon(int height, float speed, int health, String texture, int orb) {
+        this(height, speed, health,orb);
         super.setTextureDirections(new ArrayList<>(Arrays.asList(texture, texture + "_left", texture + "_right")));
         this.setTexture(texture + "_left");
     }
@@ -139,8 +141,9 @@ public class Dragon extends Boss implements PassiveEnemy {
         Tile tile = world.getTile((float) Math.ceil((this.getCol())),
                 (float) Math.ceil((this.getRow())));
         GameManager.getManagerFromInstance(EnemyManager.class).removeBoss();
+        world.setOrbEntity(new Orb(tile, "orb_" + orbNumber));
         //Generate a random orb texture to initialise the dragon's dropped orb
-        world.setOrbEntity(new Orb(tile, "orb_" +
-                ((random.nextInt(4)) + 1)));
+//        world.setOrbEntity(new Orb(tile, "orb_" +
+//                ((random.nextInt(4)) + 1)));
     }
 }
