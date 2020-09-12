@@ -5,6 +5,13 @@ import deco2800.thomas.entities.Orb;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A QuestTracker class that extends PlayerPeon
+ * Contains functions for tracking the quest progress from increasing to decreasing and resetting status
+ *
+ * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/quest-tracker-counter
+ */
+
 public class QuestTracker extends PlayerPeon {
 
     //Orbs tracker
