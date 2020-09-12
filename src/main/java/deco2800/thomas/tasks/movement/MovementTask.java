@@ -1,10 +1,8 @@
 package deco2800.thomas.tasks.movement;
 
-import java.lang.reflect.GenericArrayType;
 import java.util.List;
 
 
-import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
@@ -12,8 +10,7 @@ import deco2800.thomas.managers.PathFindingService;
 import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.status.BurnStatus;
-import deco2800.thomas.tasks.status.SpeedStatus;
-import deco2800.thomas.tasks.status.StatusEffect;
+import deco2800.thomas.tasks.status.QuicksandSpeedStatus;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
@@ -35,6 +32,7 @@ public class MovementTask extends AbstractTask {
 	private GameManager gameManager = null;
 	AgentEntity entity;
 	SquareVector destination;
+	SquareVector currentPos;
 
 	private List<Tile> path;
 
@@ -44,6 +42,8 @@ public class MovementTask extends AbstractTask {
 		this.entity = entity;
 		this.destination = destination;
 		this.complete = false;    //path == null || path.isEmpty();
+		this.currentPos = new SquareVector();
+		setCurrentPos();
 	}
 
 	@Override
@@ -139,6 +139,11 @@ public class MovementTask extends AbstractTask {
 		return taskAlive;
 	}
 
+	private void setCurrentPos() {
+		currentPos.setCol(entity.getPosition().getCol());
+		currentPos.setRow(entity.getPosition().getRow());
+	}
+
 	/**
 	 * Checks the next respective tile to be moved to as to whether there is a
 	 * status affect to be applied to the entity stepping on it.
@@ -146,6 +151,8 @@ public class MovementTask extends AbstractTask {
 	 * @param position - Square Vector of upcoming position of the entity
 	 */
 	private void checkForTileStatus(SquareVector position) {
+		if (currentPos.equals(entity.getPosition())) return;
+		setCurrentPos();
 		Tile tile = gameManager.getWorld().getTile(position);
 		if (tile != null && tile.hasStatusEffect()) {
 			switch(tile.getType()) {
@@ -158,7 +165,7 @@ public class MovementTask extends AbstractTask {
 				break;
 
 				case "Quicksand":
-					gameManager.getManager(StatusEffectManager.class).addStatus(new SpeedStatus(entity, 0.25f));
+					gameManager.getManager(StatusEffectManager.class).addStatus(new QuicksandSpeedStatus(entity, 0.25f, position));
 				break;
 			}
 		}

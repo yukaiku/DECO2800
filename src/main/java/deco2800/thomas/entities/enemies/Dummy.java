@@ -3,6 +3,7 @@ package deco2800.thomas.entities.enemies;
 import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.StatusEffectManager;
 
 /**
  * A dummy enemy has limited movement and will apply zero or minor damage to the players.
@@ -21,6 +22,7 @@ public class Dummy extends Monster implements PassiveEnemy {
 
     @Override
     public void death() {
+        GameManager.getManagerFromInstance(StatusEffectManager.class).removeEffectsOnEntity(this);
         GameManager.getManagerFromInstance(EnemyManager.class).removeSpecialEnemy(this);
     }
 

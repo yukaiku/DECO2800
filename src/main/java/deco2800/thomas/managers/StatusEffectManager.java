@@ -1,5 +1,6 @@
 package deco2800.thomas.managers;
 
+import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.tasks.status.StatusEffect;
 
 import java.util.ArrayList;
@@ -19,16 +20,24 @@ public class StatusEffectManager extends TickableManager {
         currentStatusEffects.add(status);
     }
 
+    public void removeEffectsOnEntity(AbstractEntity entity) {
+        currentStatusEffects.removeIf(effect -> effect.getAffectedEntity().equals(entity));
+    }
+
     /**
      * Checks if there are statuses to be applied on each tick provided a status
      * isn't already active
      * @param i Tick count
      */
     public void onTick(long i) {
+        // TODO fix the bug for when an effect ends
         for (StatusEffect effect : currentStatusEffects) {
-                if (effect.getActive()) {
-                    effect.applyEffect();
-                }
+            if (effect.getActive()) {
+                effect.applyEffect();
+            } else {
+                effect.removeEffect();
+                currentStatusEffects.remove(effect);
             }
         }
+    }
 }

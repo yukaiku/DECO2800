@@ -1,27 +1,22 @@
 package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.util.SquareVector;
 
-public class SpeedStatus extends StatusEffect {
+public class QuicksandSpeedStatus extends StatusEffect {
     private final float newSpeed;
     private final float multiplier;
-
-    /**
-     * Default Constructor for the Speed Status effect (Multiplies entities speed by )
-     */
-    public SpeedStatus(AgentEntity entity) {
-        super(entity);
-        multiplier = 0.5f;
-        this.newSpeed = getAffectedEntity().getSpeed() * multiplier;
-    }
+    private boolean applied = false;
+    private SquareVector position;
 
     /**
      * Customer Constructor for the Speed Status effect (Deals specified damage)
      */
-    public SpeedStatus(AgentEntity entity, float SpeedMultiplier) {
+    public QuicksandSpeedStatus(AgentEntity entity, float SpeedMultiplier, SquareVector position) {
         super(entity);
         this.multiplier = SpeedMultiplier;
         this.newSpeed = getAffectedEntity().getSpeed() * multiplier;
+        this.position = position;
     }
 
     /**
@@ -29,13 +24,17 @@ public class SpeedStatus extends StatusEffect {
      */
     @Override
     public void applyEffect() {
-        setActiveState(true);
-        getAffectedEntity().setSpeed(newSpeed);
+        if (!applied) {
+            getAffectedEntity().setSpeed(newSpeed);
+        } else if (!getAffectedEntity().getPosition().equals(position)) {
+            setActiveState(false);
+        }
     }
 
     /**
      * Remove Speed status
      */
+    @Override
     public void removeEffect() {
         getAffectedEntity().setSpeed(getAffectedEntity().getSpeed() / multiplier);
     }

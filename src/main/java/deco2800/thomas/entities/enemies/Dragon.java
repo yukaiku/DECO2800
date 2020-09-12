@@ -7,6 +7,7 @@ import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
@@ -135,6 +136,7 @@ public class Dragon extends Boss implements PassiveEnemy {
      */
     @Override
     public void death() {
+        GameManager.getManagerFromInstance(StatusEffectManager.class).removeEffectsOnEntity(this);
         AbstractWorld world = GameManager.get().getWorld();
         Tile tile = world.getTile((float) Math.ceil((this.getCol())),
                 (float) Math.ceil((this.getRow())));
