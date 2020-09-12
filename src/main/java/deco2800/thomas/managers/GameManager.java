@@ -75,12 +75,12 @@ public class GameManager {
 	private ArrayList<WorldType> worldOrder;
 
 	public State state = State.RUN;
-	public static enum State
+	public enum State
 	{
 		PAUSE,
 		RUN,
-		RESUME,
-		STOPPED
+		GAMEOVER,
+		VICTORY
 	}
 	/**
 	 * Returns an instance of the GM
@@ -290,6 +290,18 @@ public class GameManager {
 
 	public static void resume() {
 		GameManager.get().state = GameManager.State.RUN;
+	}
+
+	public static void pause() {
+		GameManager.get().state = State.PAUSE;
+	}
+
+	public static void victory() {
+		GameManager.get().state = State.VICTORY;
+	}
+
+	public static void gameOver() {
+		GameManager.get().state = State.GAMEOVER;
 	}
 
 	public void setCamera(OrthographicCamera camera) {
