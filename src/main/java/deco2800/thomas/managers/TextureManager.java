@@ -103,7 +103,22 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("dialog-box", new Texture("resources/tutorial/guideline.png"));
 			textureMap.put("orb", new Texture("resources/orb.png"));
 			textureMap.put("victory", new Texture("resources/tutorial/victory-screen.png"));
+			textureMap.put("defeat", new Texture("resources/tutorial/defeat-screen.png"));
 			textureMap.put("pause", new Texture("resources/tutorial/pause-menu-beta.png"));
+
+			// npcs
+			textureMap.put("tutorial_npc", new Texture("resources/npcs/tutorial_npc.png"));
+			textureMap.put("desert_npc1", new Texture("resources/npcs/npc1_desert.png"));
+			textureMap.put("desert_npc2", new Texture("resources/npcs/npc2_desert.png"));
+			textureMap.put("tundra_npc1", new Texture("resources/npcs/npc1_tundra.png"));
+			textureMap.put("tundra_npc2", new Texture("resources/npcs/npc2_tundra.png"));
+			textureMap.put("swamp_npc1", new Texture("resources/npcs/npc1_swamp.png"));
+			textureMap.put("swamp_npc2", new Texture("resources/npcs/npc2_swamp.png"));
+			textureMap.put("volcano_npc1", new Texture("resources/npcs/npc1_volcano.png"));
+			textureMap.put("volcano_npc2", new Texture("resources/npcs/npc2_volcano.png"));
+			textureMap.put("merchant_npc1", new Texture("resources/npcs/npc3.png"));
+			textureMap.put("merchant_npc2", new Texture("resources/npcs/npc4.png"));
+			textureMap.put("merchant_npc3", new Texture("resources/npcs/npc5.png"));
 
 			//health & game over screen
 			textureMap.put("health0", new Texture("resources/healthResources/health-bar-0.png"));

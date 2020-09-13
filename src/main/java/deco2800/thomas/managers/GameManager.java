@@ -77,7 +77,7 @@ public class GameManager {
 	public State state = State.RUN;
 	public enum State
 	{
-		PAUSE,
+		PAUSED,
 		RUN,
 		GAMEOVER,
 		VICTORY
@@ -293,7 +293,7 @@ public class GameManager {
 	}
 
 	public static void pause() {
-		GameManager.get().state = State.PAUSE;
+		GameManager.get().state = State.PAUSED;
 	}
 
 	public static void victory() {

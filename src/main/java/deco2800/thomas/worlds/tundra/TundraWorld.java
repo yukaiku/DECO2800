@@ -39,7 +39,7 @@ public class TundraWorld extends AbstractWorld {
 
 		// Provide available enemies to the EnemyManager
 		Orc tundraOrc = new Orc(1, 0.05f, 100, "orc_tundra");
-		Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_tundra");
+		Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_tundra", 3);
 
 		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(tundraOrc), boss);
 		GameManager.get().addManager(enemyManager);

@@ -11,8 +11,8 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.Peon;
+import deco2800.thomas.entities.Agent.QuestTracker;
 import deco2800.thomas.handlers.KeyboardManager;
-import deco2800.thomas.mainmenu.MainMenuScreen;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.renderers.*;
@@ -42,10 +42,15 @@ public class GameScreen implements Screen, KeyDownObserver {
 	Renderer3D renderer = new Renderer3D();
 	OverlayRenderer rendererDebug = new OverlayRenderer();
 
-	Guideline guideline = new Guideline();
+	//spriteBatch for renderers
+	SpriteBatch spriteBatch = new SpriteBatch();
+	//Quest Tracker UI
 	PauseModal pauseModal = new PauseModal();
 	Result result = new Result();
 	QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
+	//Tutorial Guideline UI
+	Guideline guideline = new Guideline();
+
 
 	// Buttons in the pause menu
 	Button resumeButton = new TextButton("RESUME", GameManager.get().getSkin(), "in_game");
@@ -151,6 +156,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 			public void clicked(InputEvent event, float x, float y) {
 				// Resume the game before quit to home screen
 				GameManager.resume();
+				// Reset quest tracker
+				QuestTracker.resetQuest();
 				// Remove enemies
 				GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
 				// Dispose the screen
@@ -159,6 +166,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 				game.setMainMenuScreen();
 			}
 		});
+
 		stage.addActor(resumeButton);
 		stage.addActor(quitButton);
 	}
@@ -189,15 +197,16 @@ public class GameScreen implements Screen, KeyDownObserver {
 		rendererDebug.render(batchDebug, cameraDebug);
 
 		// Add guideline if we are in the TutorialWorld
-		if (tutorial) {
-			SpriteBatch batchGuideline = new SpriteBatch();
-			batchGuideline.setProjectionMatrix(cameraDebug.combined);
-			guideline.render(batchGuideline, cameraDebug);
+//		if (tutorial) {
+//			SpriteBatch batchGuideline = new SpriteBatch();
+//			batchGuideline.setProjectionMatrix(cameraDebug.combined);
+//			guideline.render(batchGuideline, cameraDebug);
+//		}
+		spriteBatch.setProjectionMatrix(cameraDebug.combined);
+		if(tutorial){
+			guideline.render(spriteBatch,cameraDebug);
 		}
-		// Questtracker UI
-		SpriteBatch batchGuideline = new SpriteBatch();
-		batchGuideline.setProjectionMatrix(cameraDebug.combined);
-		questTrackerRenderer.render(batchGuideline, cameraDebug);
+		questTrackerRenderer.render(spriteBatch, cameraDebug);
 
 		// Hide the buttons when the game is running
 		resumeButton.setPosition(-100, -100);
@@ -249,13 +258,12 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	@Override
 	public void render(float delta) {
-
 		switch (GameManager.get().state)
 		{
 			case RUN:
 				renderGame(delta);
 				break;
-			case PAUSE:
+			case PAUSED:
 				renderPauseMenu(delta);
 				break;
 			case GAMEOVER:
@@ -335,10 +343,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 		}
 
 		if (keycode == Input.Keys.ESCAPE) {
-			System.out.println("yooo");
 			if (GameManager.get().state == GameManager.State.RUN) {
 				GameManager.pause();
-			} else if (GameManager.get().state == GameManager.State.PAUSE) {
+			} else if (GameManager.get().state == GameManager.State.PAUSED) {
 				GameManager.resume();
 			}
 		}

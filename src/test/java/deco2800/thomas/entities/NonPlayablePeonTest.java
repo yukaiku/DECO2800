@@ -25,13 +25,13 @@ public class NonPlayablePeonTest extends BaseGDXTest {
 		// check that it spawns.
 	// check name is correct 
 	// check ends up in the same place. 
-		NonPlayablePeon basicNPC= new NonPlayablePeon("NPC1",position1);
+		NonPlayablePeon basicNPC= new NonPlayablePeon("NPC1",position1, "tutorial_npc");
 		Assert.assertEquals(basicNPC.position, position1);
 	}
 	
 	@Test 
 	public void checkName(){
-		NonPlayablePeon basicNpc = new NonPlayablePeon("NPC1", position2);
+		NonPlayablePeon basicNpc = new NonPlayablePeon("NPC1", position2, "tutorial_npc");
 		Assert.assertEquals(basicNpc.getName(), "NPC1");
 	}
 	
@@ -44,10 +44,10 @@ public class NonPlayablePeonTest extends BaseGDXTest {
 		A.setRow(3);
 		// probably not important 
 		SquareVector position2 = new SquareVector(2,3);
-		NonPlayablePeon basicNpc = new NonPlayablePeon("NPC1", position2);
+		NonPlayablePeon basicNpc = new NonPlayablePeon("NPC1", position2, "tutorial_npc");
 		List<NonPlayablePeon> npnSpawns = new ArrayList<>();
 		npnSpawns.add(basicNpc);
-		npnSpawns.add(new NonPlayablePeon("Fred", current_player.getPosition()));
+		npnSpawns.add(new NonPlayablePeon("Fred", current_player.getPosition(),"tutorial_npc"));
 		current_player.setPosition(2,3,1);
 		
 		// after world has been added to game manager.
@@ -59,7 +59,7 @@ public class NonPlayablePeonTest extends BaseGDXTest {
 	@Test 
 	public void checkInteraction(){
 		SquareVector position2 = new SquareVector(2,3);
-		NonPlayablePeon basicNpc = new NonPlayablePeon("NPC1", position2);
+		NonPlayablePeon basicNpc = new NonPlayablePeon("NPC1", position2, "tutorial_npc");
 		
 		//basicNpc.notifyTouchDown(2,3,1,);
 		

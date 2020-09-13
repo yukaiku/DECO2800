@@ -18,7 +18,7 @@ public class Result implements Renderer{
         batch.begin();
         Texture img;
         if (GameManager.get().state == GameManager.State.GAMEOVER) {
-            img = GameManager.get().getManager(TextureManager.class).getTexture("victory");
+            img = GameManager.get().getManager(TextureManager.class).getTexture("defeat");
         } else {
             img = GameManager.get().getManager(TextureManager.class).getTexture("victory");
         }
