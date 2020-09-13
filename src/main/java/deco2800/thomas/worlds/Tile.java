@@ -21,8 +21,10 @@ public class Tile {
 	 */
 	private static int nextID = 0;
 
+	// The type of this Tile
 	private String type = "Tile";
 
+	// Whether this tile has an associated StatusEffect
 	private boolean statusEffect = false;
 
 	private static int getNextID() {
@@ -91,6 +93,11 @@ public class Tile {
 		return type;
 	}
 
+	/**
+	 * Sets the type of this Tile
+	 *
+	 * @param type The new type of this Tile
+	 */
 	public void setType(String type) {
 		this.type = type;
 	}
@@ -211,10 +218,20 @@ public class Tile {
 		return obstructed;
 	}
 
+	/**
+	 * Returns whether this Tile has an associated StatusEffect.
+	 *
+	 * @return Whether this Tile has an associated StatusEffect.
+	 */
 	public boolean hasStatusEffect() {
 		return statusEffect;
 	}
 
+	/**
+	 * Sets whether this Tile has an associated StatusEffect.
+	 *
+	 * @param statusEffect The associated StatusEffect.
+	 */
 	public void setStatusEffect(boolean statusEffect) {
 		this.statusEffect = statusEffect;
 	}

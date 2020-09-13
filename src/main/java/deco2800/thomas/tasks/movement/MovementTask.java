@@ -31,9 +31,9 @@ public class MovementTask extends AbstractTask {
 	private boolean computingPath = false;
 	private boolean taskAlive = true;
 	private GameManager gameManager = null;
-	AgentEntity entity;
-	SquareVector destination;
-	SquareVector currentPos;
+	public AgentEntity entity;
+	public SquareVector destination;
+	private final SquareVector currentPos;
 
 	private List<Tile> path;
 
@@ -73,9 +73,12 @@ public class MovementTask extends AbstractTask {
 			return;
 		}
 		entity.moveTowards(destination);
+
+		// if we have moved to the new tile, check for statuses
 		if (entity.getPosition().tileEquals(destination)) {
 			checkForTileStatus(destination);
 		}
+
 		if (entity.getPosition().isCloseEnoughToBeTheSame(destination)) {
 			switch (entity.getMovingDirection()) {
 				case UP:
@@ -142,37 +145,45 @@ public class MovementTask extends AbstractTask {
 		return taskAlive;
 	}
 
+	/**
+	 * Sets the current position of this movement task to the entity's current position.
+	 */
 	private void setCurrentPos() {
 		currentPos.setCol(entity.getPosition().getCol());
 		currentPos.setRow(entity.getPosition().getRow());
 	}
 
 	/**
-	 * Checks the next respective tile to be moved to as to whether there is a
-	 * status affect to be applied to the entity stepping on it.
+	 * Checks if the tile at a position has an associated status effect.
+	 * If it does, a new status effect is added to the StatusEffectManager for the entity.
 	 *
-	 * @param position - Square Vector of upcoming position of the entity
+	 * @param position - Square Vector of upcoming position of the entity.
 	 */
 	private void checkForTileStatus(SquareVector position) {
+		// we don't want to duplicate effects from the same tile
 		if (currentPos.tileEquals(entity.getPosition())) return;
 		setCurrentPos();
+
+		// check if the tile has an effect, apply the effect if so
 		Tile tile = gameManager.getWorld().getTile(position);
 		if (tile != null && tile.hasStatusEffect()) {
 			switch(tile.getType()) {
+				// burn tiles damage over time
 				case "BurnTile":
 					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 5, 5));
 				break;
 
+				// quicksand damages over time and slows
 				case "Quicksand":
 					gameManager.getManager(StatusEffectManager.class).addStatus(new QuicksandSpeedStatus(entity, 0.25f, position));
 					gameManager.getManager(StatusEffectManager.class).addStatus(new QuicksandBurnStatus(entity, 5, 100, position));
 				break;
 
+				// neighbours of cactus plants damage once when the player first arrives
 				case "CactusNeighbour":
 					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 10, 1));
 				break;
 			}
 		}
-		// else do nothing, do not apply Status effects to the respective entity
 	}
 }

@@ -6,28 +6,43 @@ import deco2800.thomas.tasks.status.StatusEffect;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * A manager class for all status effects on entities.
+ * Stores and applies/removes effects every tick of the game.
+ */
 public class StatusEffectManager extends TickableManager {
-    private CopyOnWriteArrayList<StatusEffect> currentStatusEffects;
 
+    // A list for storing all status effects
+    private final CopyOnWriteArrayList<StatusEffect> currentStatusEffects;
+
+    /**
+     * Creates a StatusEffectManager instance which stores a list of all current status effects.
+     */
     public StatusEffectManager() {
         currentStatusEffects = new CopyOnWriteArrayList<>();
     }
 
     /**
+     * Adds a new status effect to the manager.
      *
-     * @param status An implemented instance of the Abstract Status Effect class
+     * @param status An implemented instance of the abstract StatusEffect class.
      */
     public <T extends StatusEffect> void addStatus(T status) {
         currentStatusEffects.add(status);
     }
 
+    /**
+     * Removes all status effects from an entity.
+     *
+     * @param entity The entity having its effects removed.
+     */
     public void removeEffectsOnEntity(AbstractEntity entity) {
         currentStatusEffects.removeIf(effect -> effect.getAffectedEntity().equals(entity));
     }
 
     /**
-     * Checks if there are statuses to be applied on each tick provided a status
-     * isn't already active
+     * Applies any active statuses, and removes any inactive statuses.
+     *
      * @param i Tick count
      */
     public void onTick(long i) {
