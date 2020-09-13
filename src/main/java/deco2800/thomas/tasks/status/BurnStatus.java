@@ -49,6 +49,9 @@ public class BurnStatus extends StatusEffect {
         if (!ticksReady()) return;
         int health = getAffectedEntity().getHealthTracker().getCurrentHealthValue();
         getAffectedEntity().getHealthTracker().setCurrentHealthValue(health - burnDamage);
-        if (ticks == 0) setActiveState(false);
+
+        if (ticks == 0) {
+            setActiveState(false);
+        }
     }
 }

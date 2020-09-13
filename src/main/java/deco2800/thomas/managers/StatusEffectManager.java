@@ -4,12 +4,13 @@ import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.tasks.status.StatusEffect;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class StatusEffectManager extends TickableManager {
-    private ArrayList<StatusEffect> currentStatusEffects;
+    private CopyOnWriteArrayList<StatusEffect> currentStatusEffects;
 
     public StatusEffectManager() {
-        currentStatusEffects = new ArrayList<>();
+        currentStatusEffects = new CopyOnWriteArrayList<>();
     }
 
     /**
@@ -30,7 +31,6 @@ public class StatusEffectManager extends TickableManager {
      * @param i Tick count
      */
     public void onTick(long i) {
-        // TODO fix the bug for when an effect ends
         for (StatusEffect effect : currentStatusEffects) {
             if (effect.getActive()) {
                 effect.applyEffect();

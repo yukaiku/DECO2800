@@ -71,7 +71,6 @@ public class Orc extends Monster implements AggressiveEnemy {
 
     @Override
     public void death() {
-        GameManager.getManagerFromInstance(StatusEffectManager.class).removeEffectsOnEntity(this);
         GameManager.getManagerFromInstance(EnemyManager.class).
                 removeWildEnemy(this);
     }

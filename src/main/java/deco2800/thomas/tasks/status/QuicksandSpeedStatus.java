@@ -26,7 +26,10 @@ public class QuicksandSpeedStatus extends StatusEffect {
     public void applyEffect() {
         if (!applied) {
             getAffectedEntity().setSpeed(newSpeed);
-        } else if (!getAffectedEntity().getPosition().equals(position)) {
+            applied = true;
+
+        }
+        if (!getAffectedEntity().getPosition().equals(position)) {
             setActiveState(false);
         }
     }
