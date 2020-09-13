@@ -29,7 +29,8 @@ public class QuicksandSpeedStatus extends StatusEffect {
             applied = true;
 
         }
-        if (!getAffectedEntity().getPosition().equals(position)) {
+        if (!getAffectedEntity().getPosition().tileEquals(position)) {
+            removeEffect();
             setActiveState(false);
         }
     }
@@ -37,7 +38,6 @@ public class QuicksandSpeedStatus extends StatusEffect {
     /**
      * Remove Speed status
      */
-    @Override
     public void removeEffect() {
         getAffectedEntity().setSpeed(getAffectedEntity().getSpeed() / multiplier);
     }

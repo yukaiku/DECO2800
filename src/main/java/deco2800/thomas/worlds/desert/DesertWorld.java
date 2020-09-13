@@ -63,7 +63,7 @@ public class DesertWorld extends AbstractWorld {
     @Override
     protected void generateTiles() {
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
-        this.setPlayerEntity(new PlayerPeon(8f, 5f, 0.15f));
+        this.setPlayerEntity(new PlayerPeon(6f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
 
         GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
@@ -102,6 +102,12 @@ public class DesertWorld extends AbstractWorld {
                         // get a random cactus texture
                         randIndex = rand.nextInt(4);
                         entities.add(new DesertCactus(tile, String.format("desertCactus%d", randIndex + 1)));
+
+                        // set neighbours to damage player
+                        for (Tile t : tile.getNeighbours().values()) {
+                            t.setType("CactusNeighbour");
+                            t.setStatusEffect(true);
+                        }
                     } else {
                         // get a random dead tree texture
                         randIndex = rand.nextInt(2);

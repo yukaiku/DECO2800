@@ -1,11 +1,14 @@
 package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.HealthTracker;
 
 public class BurnStatus extends StatusEffect {
     private final int burnDamage;
     private long timeLastTick;
     private int ticks;
+    private boolean applied = false;
+    private final HealthTracker healthTracker;
 
     /**
      * Default Constructor for the Burn Status effect (Deals 5 damage)
@@ -15,6 +18,7 @@ public class BurnStatus extends StatusEffect {
         timeLastTick = System.nanoTime();
         burnDamage = 1;
         ticks = 1;
+        healthTracker = getAffectedEntity().getHealthTracker();
     }
 
     /**
@@ -25,9 +29,14 @@ public class BurnStatus extends StatusEffect {
         this.burnDamage = burnDamage;
         timeLastTick = System.nanoTime();
         this.ticks = ticks;
+        healthTracker = getAffectedEntity().getHealthTracker();
     }
 
     public boolean ticksReady() {
+        if (!applied) {
+            applied = true;
+            return true;
+        }
         long newTime = System.nanoTime();
         boolean ret;
         if (newTime - timeLastTick >= 1000000000) {
@@ -47,8 +56,9 @@ public class BurnStatus extends StatusEffect {
     @Override
     public void applyEffect() {
         if (!ticksReady()) return;
-        int health = getAffectedEntity().getHealthTracker().getCurrentHealthValue();
-        getAffectedEntity().getHealthTracker().setCurrentHealthValue(health - burnDamage);
+
+        int health = healthTracker.getCurrentHealthValue();
+        healthTracker.setCurrentHealthValue(health - burnDamage);
 
         if (ticks == 0) {
             setActiveState(false);

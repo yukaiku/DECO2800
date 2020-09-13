@@ -39,6 +39,4 @@ public abstract class StatusEffect {
      * Abstract method to be formally implemented via subclass of StatusEffect.
      */
     public abstract void applyEffect();
-
-    public void removeEffect() {}
 }

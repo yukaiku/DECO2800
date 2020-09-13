@@ -21,6 +21,10 @@ public class Tile {
 	 */
 	private static int nextID = 0;
 
+	private String type = "Tile";
+
+	private boolean statusEffect = false;
+
 	private static int getNextID() {
 		return nextID++;
 	}
@@ -84,7 +88,11 @@ public class Tile {
 	 * @return The type of this Tile.
 	 */
 	public String getType() {
-		return "Tile";
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public float getCol() {
@@ -204,7 +212,11 @@ public class Tile {
 	}
 
 	public boolean hasStatusEffect() {
-		return false;
+		return statusEffect;
+	}
+
+	public void setStatusEffect(boolean statusEffect) {
+		this.statusEffect = statusEffect;
 	}
 
 	public void setObstructed(boolean b) {

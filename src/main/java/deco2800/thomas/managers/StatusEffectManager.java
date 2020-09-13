@@ -32,11 +32,10 @@ public class StatusEffectManager extends TickableManager {
      */
     public void onTick(long i) {
         for (StatusEffect effect : currentStatusEffects) {
-            if (effect.getActive()) {
-                effect.applyEffect();
-            } else {
-                effect.removeEffect();
+            if (!effect.getActive() || effect.getAffectedEntity() == null) {
                 currentStatusEffects.remove(effect);
+            } else {
+                effect.applyEffect();
             }
         }
     }

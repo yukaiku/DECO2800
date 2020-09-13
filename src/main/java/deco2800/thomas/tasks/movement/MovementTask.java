@@ -10,6 +10,7 @@ import deco2800.thomas.managers.PathFindingService;
 import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.status.BurnStatus;
+import deco2800.thomas.tasks.status.QuicksandBurnStatus;
 import deco2800.thomas.tasks.status.QuicksandSpeedStatus;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
@@ -72,8 +73,10 @@ public class MovementTask extends AbstractTask {
 			return;
 		}
 		entity.moveTowards(destination);
-		if (entity.getPosition().isCloseEnoughToBeTheSame(destination)) {
+		if (entity.getPosition().tileEquals(destination)) {
 			checkForTileStatus(destination);
+		}
+		if (entity.getPosition().isCloseEnoughToBeTheSame(destination)) {
 			switch (entity.getMovingDirection()) {
 				case UP:
 					destination.setRow(destination.getRow() + 1f);
@@ -151,7 +154,7 @@ public class MovementTask extends AbstractTask {
 	 * @param position - Square Vector of upcoming position of the entity
 	 */
 	private void checkForTileStatus(SquareVector position) {
-		if (currentPos.equals(entity.getPosition())) return;
+		if (currentPos.tileEquals(entity.getPosition())) return;
 		setCurrentPos();
 		Tile tile = gameManager.getWorld().getTile(position);
 		if (tile != null && tile.hasStatusEffect()) {
@@ -160,12 +163,13 @@ public class MovementTask extends AbstractTask {
 					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 5, 5));
 				break;
 
-				case "Cactus":
-					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 1, 1));
-				break;
-
 				case "Quicksand":
 					gameManager.getManager(StatusEffectManager.class).addStatus(new QuicksandSpeedStatus(entity, 0.25f, position));
+					gameManager.getManager(StatusEffectManager.class).addStatus(new QuicksandBurnStatus(entity, 5, 100, position));
+				break;
+
+				case "CactusNeighbour":
+					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 10, 1));
 				break;
 			}
 		}
