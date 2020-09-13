@@ -18,6 +18,7 @@ public class NonPlayablePeon extends Peon implements Interactable {
     protected PlayerPeon player;
     protected String name;
     private boolean hasFinishedSetup;
+    protected SquareVector positionCheck;
 
     public NonPlayablePeon(String name, SquareVector position, String texture) {
         super();
@@ -65,7 +66,7 @@ public class NonPlayablePeon extends Peon implements Interactable {
 
     @Override
     public void interact() {
-        // Overwrite me :)
+
         
     }
 
@@ -88,8 +89,46 @@ public class NonPlayablePeon extends Peon implements Interactable {
                              clickedPosition[1] == this.getRow() - 1 ||
                              clickedPosition[1] == this.getRow() + 1;
         if (isCloseCol && isCloseRow) {
-            System.out.println("Interacting!");
-            interact();
+            if ((this.getPosition().getCol()+1== this.player.getPosition().getCol())
+                    && (this.getPosition().getRow() == this.player.getPosition().getRow())) {
+                System.out.println("Interacting!");
+                interact();
+            }
+            if ((this.getPosition().getCol()-1 == this.player.getPosition().getCol())
+                    && (this.getPosition().getRow() == this.player.getPosition().getRow())) {
+                System.out.println("Interacting!");
+                interact();
+            }
+            if ((this.getPosition().getCol()+1 == this.player.getPosition().getCol())
+                    && (this.getPosition().getRow()-1 == this.player.getPosition().getRow())) {
+                System.out.println("Interacting!");
+                interact();
+            }
+            if ((this.getPosition().getCol()+1 == this.player.getPosition().getCol())
+                    && (this.getPosition().getRow()+1 == this.player.getPosition().getRow())) {
+                System.out.println("Interacting!");
+                interact();
+            }
+            if ((this.getPosition().getCol()-1 == this.player.getPosition().getCol())
+                    && (this.getPosition().getRow()+1 == this.player.getPosition().getRow())) {
+                System.out.println("Interacting!");
+                interact();
+            }
+            if ((this.getPosition().getCol()-1 == this.player.getPosition().getCol())
+                    && (this.getPosition().getRow()-1 == this.player.getPosition().getRow())) {
+                System.out.println("Interacting!");
+                interact();
+            }
+            if ((this.getPosition().getCol() == this.player.getPosition().getCol())
+                    && (this.getPosition().getRow()-1 == this.player.getPosition().getRow())) {
+                System.out.println("Interacting!");
+                interact();
+            }
+            if ((this.getPosition().getCol() == this.player.getPosition().getCol())
+                    && (this.getPosition().getRow()+1 == this.player.getPosition().getRow())) {
+                System.out.println("Interacting!");
+                interact();
+            }
         }
     }
 }
