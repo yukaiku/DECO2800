@@ -2,16 +2,23 @@ package deco2800.thomas.worlds.desert;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.NPC.MerchantNPC;
+import deco2800.thomas.entities.NPC.NonPlayablePeon;
+import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.desert.*;
+import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.managers.*;
+import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -45,6 +52,14 @@ public class DesertWorld extends AbstractWorld {
     public DesertWorld(int width, int height) {
         super(width, height);
         generateTiles();
+
+        //Creates Desert NPCs
+        List<NonPlayablePeon> npnSpawns = new ArrayList<>();
+        List<Item> swampMerchantShop = new ArrayList<>();
+        npnSpawns.add(new TutorialNPC("DesertQuestNPC", new SquareVector(-23, 17),"desert_npc1"));
+        npnSpawns.add(new MerchantNPC("DesertMerchantNPC", new SquareVector(-23, 20),"desert_npc2",swampMerchantShop));
+        NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
+        GameManager.get().addManager(npcManager);
     }
 
     /**

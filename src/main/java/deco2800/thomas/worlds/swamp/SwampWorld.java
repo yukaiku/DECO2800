@@ -2,6 +2,9 @@ package deco2800.thomas.worlds.swamp;
 
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.NPC.MerchantNPC;
+import deco2800.thomas.entities.NPC.NonPlayablePeon;
+import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.entities.SwampDeadTree;
 import deco2800.thomas.entities.SwampFallenTree;
 import deco2800.thomas.entities.SwampPond;
@@ -9,8 +12,11 @@ import deco2800.thomas.entities.SwampTreeLog;
 import deco2800.thomas.entities.SwampTreeStub;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
+import deco2800.thomas.managers.NonPlayablePeonManager;
+import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.TestWorld;
 import org.slf4j.Logger;
@@ -18,7 +24,9 @@ import org.slf4j.LoggerFactory;
 
 import deco2800.thomas.managers.GameManager;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class SwampWorld extends AbstractWorld {
@@ -46,6 +54,14 @@ public class SwampWorld extends AbstractWorld {
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc), boss);
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(19, -24);
+
+        //Creates swamp NPCs
+        List<NonPlayablePeon> npnSpawns = new ArrayList<>();
+        List<Item> swampMerchantShop = new ArrayList<>();
+        npnSpawns.add(new TutorialNPC("SwampQuestNPC", new SquareVector(-21, 5),"swamp_npc1"));
+        npnSpawns.add(new MerchantNPC("SwampMerchantNPC", new SquareVector(-22, 9),"merchant_npc3",swampMerchantShop));
+        NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
+        GameManager.get().addManager(npcManager);
     }
 
     @Override

@@ -2,15 +2,21 @@ package deco2800.thomas.worlds.tundra;
 
 import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.NPC.MerchantNPC;
+import deco2800.thomas.entities.NPC.NonPlayablePeon;
+import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.tundra.TundraCampfire;
 import deco2800.thomas.entities.environment.tundra.TundraRock;
 import deco2800.thomas.entities.environment.tundra.TundraTreeLog;
+import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.NonPlayablePeonManager;
+import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import org.slf4j.Logger;
@@ -44,6 +50,14 @@ public class TundraWorld extends AbstractWorld {
 		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(tundraOrc), boss);
 		GameManager.get().addManager(enemyManager);
 		enemyManager.spawnBoss(0, 0);
+
+		//Creates Tundra NPCs
+		List<NonPlayablePeon> npnSpawns = new ArrayList<>();
+		List<Item> swampMerchantShop = new ArrayList<>();
+		npnSpawns.add(new TutorialNPC("TundraQuestNPC", new SquareVector(-8, -24),"tundra_npc1"));
+		npnSpawns.add(new MerchantNPC("TundraMerchantNPC", new SquareVector(-22, 9),"merchant_npc2",swampMerchantShop));
+		NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
+		GameManager.get().addManager(npcManager);
 	}
 
 	private void generateStaticEntities() {

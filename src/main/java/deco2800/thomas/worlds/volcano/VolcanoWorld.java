@@ -3,15 +3,20 @@ package deco2800.thomas.worlds.volcano;
 import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.NPC.MerchantNPC;
+import deco2800.thomas.entities.NPC.NonPlayablePeon;
+import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.entities.VolcanoDragonSkull;
 import deco2800.thomas.entities.VolcanoGraveYard;
 import deco2800.thomas.entities.VolcanoRuins;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.volcano.VolcanoBurningTree;
+import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.NonPlayablePeonManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
@@ -63,6 +68,14 @@ public class VolcanoWorld extends AbstractWorld {
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(volcanoOrc), boss);
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(16, 20);
+
+        //Create Volcano NPCs
+        List<NonPlayablePeon> npnSpawns = new ArrayList<>();
+        List<Item> swampMerchantShop = new ArrayList<>();
+        npnSpawns.add(new TutorialNPC("VolcanoQuestNPC", new SquareVector(-21, 22),"volcano_npc2"));
+        npnSpawns.add(new MerchantNPC("VolcanoMerchantNPC", new SquareVector(-24, -13),"merchant_npc1",swampMerchantShop));
+        NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
+        GameManager.get().addManager(npcManager);
     }
 
 
