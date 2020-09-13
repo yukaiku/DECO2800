@@ -51,6 +51,8 @@ public class GameManager {
 	public boolean debugMode = true;
 
 	public boolean inTutorial = false;
+
+	public boolean movedToNextWorld;
 	/**
 	 * Whether or not we render info over the tiles.
 	 */
@@ -278,6 +280,7 @@ public class GameManager {
 				break;
 		}
 		currentWorld = (currentWorld + 1) % worldOrder.size();
+		movedToNextWorld = true;
 	}
 
 	public void setCamera(OrthographicCamera camera) {

@@ -20,6 +20,7 @@ import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
 import deco2800.thomas.worlds.desert.DesertWorld;
+import deco2800.thomas.worlds.swamp.SwampWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
@@ -39,7 +40,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	Renderer3D renderer = new Renderer3D();
 	OverlayRenderer rendererDebug = new OverlayRenderer();
 
-	EventRenderer rendererEvent = new EventRenderer(true);
+	EventRenderer rendererEvent;
 
 	Guideline guideline = new Guideline();
 	QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
@@ -111,6 +112,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 		}
 		/* Create an example world for the engine */
 		this.game = game;
+
+		rendererEvent = new EventRenderer(true);
 
 		// Initialize camera
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
