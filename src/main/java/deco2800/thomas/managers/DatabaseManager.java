@@ -217,15 +217,15 @@ public final class DatabaseManager extends AbstractManager {
 
 	private static AbstractEntity resolveEntityToLoad(String entityObjectName) {
 		try {
-            for (String s:Arrays.asList("rock")){
-                if (entityObjectName.startsWith(s)){
+            for (String s : Arrays.asList("rock")){
+                if (entityObjectName.startsWith(s)) {
                     Rock create = new Rock();
                     create.setObjectName(entityObjectName);
                     return (AbstractEntity) create;
                 }
             }
 
-            for (String s:Arrays.asList("staticEntityID")){
+            for (String s : Arrays.asList("staticEntityID")){
                 if (entityObjectName.startsWith(s)){
                     StaticEntity create = new StaticEntity();
                     create.setObjectName(entityObjectName);
@@ -233,7 +233,7 @@ public final class DatabaseManager extends AbstractManager {
                 }
             }
 
-            for (String s:Arrays.asList("playerPeon")){
+            for (String s : Arrays.asList("playerPeon")){
                 if (entityObjectName.startsWith(s)){
                      PlayerPeon create = new PlayerPeon(1,1,1, 1);
                      create.setObjectName(entityObjectName);
@@ -241,7 +241,7 @@ public final class DatabaseManager extends AbstractManager {
                 }
             }
 
-            for (String s:Arrays.asList("combat")) {
+            for (String s : Arrays.asList("combat")) {
                 if (entityObjectName.startsWith(s)){
                     SquareVector destination = new SquareVector(0,0);
                     Fireball create = new Fireball(1, 5, 1, 1, EntityFaction.Ally);
@@ -249,7 +249,7 @@ public final class DatabaseManager extends AbstractManager {
                 }
             }
 
-            for (String s:Arrays.asList("Elder Dragon")) {
+            for (String s : Arrays.asList("Elder Dragon")) {
                 if (entityObjectName.startsWith(s)){
                     Dragon create = new Dragon(2, 0.3f, 2000, "dragon_swamp");
                     return (AbstractEntity) create;
@@ -369,8 +369,7 @@ public final class DatabaseManager extends AbstractManager {
         }
     }
 
-    private static void descendThroughSaveFile(JsonReader reader,
-                                               Map<Integer, AbstractEntity> newEntities,
+    private static void descendThroughSaveFile(JsonReader reader, Map<Integer, AbstractEntity> newEntities,
                                                CopyOnWriteArrayList<Tile> newTiles) {
         try {
             reader.beginObject();
@@ -386,6 +385,7 @@ public final class DatabaseManager extends AbstractManager {
             logger.error("Somehow loaded the JSON file, but it's somewhat corrupted", e);
         }
     }
+
     private static void readEntities(JsonReader reader, Map<Integer, AbstractEntity> newEntities,
                                      CopyOnWriteArrayList<Tile> newTiles) throws IOException {
         while (reader.hasNext()) {

@@ -2,6 +2,7 @@ package deco2800.thomas;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -38,6 +39,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 	Renderer3D renderer = new Renderer3D();
 	OverlayRenderer rendererDebug = new OverlayRenderer();
 
+	EventRenderer rendererEvent = new EventRenderer(true);
+
 	Guideline guideline = new Guideline();
 	QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
 
@@ -49,7 +52,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * Create a camera for panning and zooming.
 	 * Camera must be updated every render cycle.
 	 */
-	OrthographicCamera camera, cameraDebug;
+	OrthographicCamera camera, cameraDebug, cameraEvent;
 
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
 
@@ -112,6 +115,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		// Initialize camera
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cameraDebug = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cameraEvent = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		/* Add the window to the stage */
 		GameManager.get().setSkin(skin);
@@ -142,8 +146,14 @@ public class GameScreen implements Screen, KeyDownObserver {
 		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta);
 		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
 
+		cameraEvent.position.set(camera.position);
+		cameraEvent.update();
+
 		cameraDebug.position.set(camera.position);
 		cameraDebug.update();
+
+		SpriteBatch batchEvent = new SpriteBatch();
+		batchEvent.setProjectionMatrix(cameraEvent.combined);
 
 		SpriteBatch batchDebug = new SpriteBatch();
 		batchDebug.setProjectionMatrix(cameraDebug.combined);
@@ -157,6 +167,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		rerenderMapObjects(batch, camera);
 		rendererDebug.render(batchDebug, cameraDebug);
+		rendererEvent.render(batchEvent, cameraEvent);
 
 		// Add guideline if we are in the TutorialWorld
 		if (tutorial) {
@@ -281,6 +292,10 @@ public class GameScreen implements Screen, KeyDownObserver {
 		if (keycode == Input.Keys.F4) { // F4
 			// Load the world to the DB
 			DatabaseManager.loadWorld(null);
+		}
+
+		if (keycode == Input.Keys.F6) {
+			DatabaseManager.saveWorld(GameManager.get().getWorld(), "save_world.json");
 		}
 	}
 
