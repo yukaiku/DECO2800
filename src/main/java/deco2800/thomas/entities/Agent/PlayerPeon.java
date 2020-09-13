@@ -148,6 +148,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
 
     /**
      * Updates the player peon's over time methods, such as tasks and cooldowns.
+     *
      * @param i current game tick.
      */
     @Override
@@ -188,6 +189,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
 
     /**
      * Handles the mouse down event. This triggers combat skills.
+     *
      * @param screenX the x position the mouse was pressed at
      * @param screenY the y position the mouse was pressed at
      * @param pointer
@@ -223,6 +225,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
 
     /**
      * Handles the key down event.
+     *
      * @param keycode the key being pressed
      */
     @Override
@@ -230,11 +233,15 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         if (keycode == Input.Keys.W || keycode == Input.Keys.S ||
                 keycode == Input.Keys.A || keycode == Input.Keys.D) {
             this.startMovementTask(keycode);
+        } else if (keycode == Input.Keys.NUM_1 || keycode == Input.Keys.NUM_2 ||
+                keycode == Input.Keys.NUM_3 || keycode == Input.Keys.NUM_4) {
+            this.swapSkill(keycode);
         }
     }
 
     /**
      * Handles the key up event.
+     *
      * @param keycode the key being released
      */
     @Override
@@ -312,6 +319,28 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
                 return;
         }
         this.setMovingDirection(MovementTask.Direction.NONE);
+    }
+
+    /**
+     * Check if there is a skill mapped with the keycode. If
+     * there is a key mapped then swap the active skill into
+     * that one.
+     *
+     * @param keycode the keycode of the skill we would like to swap
+     */
+    private void swapSkill(int keycode) {
+        int targetSkill = keycode - Input.Keys.NUM_1;
+        if (targetSkill < this.getWizardSkills().size()) {
+            this.activeWizardSkill = targetSkill;
+        }
+    }
+
+    public List<Skill> getWizardSkills() {
+        return this.wizardSkills;
+    }
+
+    public int getActiveWizardSkill() {
+        return this.activeWizardSkill;
     }
 
     /**
