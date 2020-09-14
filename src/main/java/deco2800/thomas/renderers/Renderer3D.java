@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.entities.Agent.Peon;
+import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.attacks.Projectile;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.util.SquareVector;
@@ -233,6 +235,11 @@ public class Renderer3D implements Renderer {
 		if (entity instanceof Projectile) {
 			batch.draw(new TextureRegion(tex), x, y, width / 2, height / 2, width, height, 1,
 					1, ((Projectile) entity).getDirection());
+
+		} else if (entity instanceof Animatable) {
+			// render animation frames
+			batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width, height);
+
 		} else {
 			batch.draw(tex, x, y, width, height);
 		}
