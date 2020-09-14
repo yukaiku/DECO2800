@@ -94,13 +94,16 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("projectile", new Texture("resources/rocks.png"));
 
 			// storyline
-			textureMap.put("stone_floor", new Texture("resources/tutorial/tutorial-tile-design-opt1.png"));
-			textureMap.put("target", new Texture("resources/tutorial/tutorial-decoration-target.png"));
-			textureMap.put("portal", new Texture("resources/tutorial/tutorial-decoration-portal.png"));
-			textureMap.put("stash", new Texture("resources/tutorial/tutorial-decoration-weapon-stash.png"));
-			textureMap.put("barrel", new Texture("resources/tutorial/tutorial-decoration-barrel.png"));
-			textureMap.put("dialog-box", new Texture("resources/tutorial/tutorial-helper-box.png"));
+			textureMap.put("stone_floor", new Texture("resources/tutorial/tutorial-tile-design.png"));
+			textureMap.put("target", new Texture("resources/tutorial/tutorial-target.png"));
+			textureMap.put("portal", new Texture("resources/tutorial/tutorial-portal.png"));
+			textureMap.put("stash", new Texture("resources/tutorial/tutorial-stash.png"));
+			textureMap.put("barrel", new Texture("resources/tutorial/tutorial-barrel.png"));
+			textureMap.put("chest", new Texture("resources/tutorial/tutorial-chest.png"));
+			textureMap.put("dialog-box", new Texture("resources/tutorial/guideline.png"));
 			textureMap.put("orb", new Texture("resources/orb.png"));
+			textureMap.put("victory", new Texture("resources/tutorial/victory-screen.png"));
+			textureMap.put("pause", new Texture("resources/tutorial/pause-menu-beta.png"));
 
 			// npcs
 			textureMap.put("tutorial_npc", new Texture("resources/npcs/tutorial_npc.png"));
