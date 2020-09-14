@@ -294,6 +294,11 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 		return position;
 	}
 
+
+	public SquareVector getRoundPosition() {
+		return new SquareVector(Math.round(getCol()), Math.round(getRow()));
+	}
+
 	public abstract void onTick(long i);
 
 	/**

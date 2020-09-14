@@ -11,6 +11,7 @@ import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.NetworkManager;
 import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
 
 public class Tile {
@@ -19,6 +20,12 @@ public class Tile {
 	 * Managing ID of tiles
 	 */
 	private static int nextID = 0;
+
+	// The type of this Tile
+	private String type = "Tile";
+
+	// Whether this tile has an associated StatusEffect
+	private boolean statusEffect = false;
 
 	private static int getNextID() {
 		return nextID++;
@@ -83,7 +90,16 @@ public class Tile {
 	 * @return The type of this Tile.
 	 */
 	public String getType() {
-		return "Tile";
+		return type;
+	}
+
+	/**
+	 * Sets the type of this Tile
+	 *
+	 * @param type The new type of this Tile
+	 */
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public float getCol() {
@@ -200,6 +216,24 @@ public class Tile {
 
 	public boolean isObstructed() {
 		return obstructed;
+	}
+
+	/**
+	 * Returns whether this Tile has an associated StatusEffect.
+	 *
+	 * @return Whether this Tile has an associated StatusEffect.
+	 */
+	public boolean hasStatusEffect() {
+		return statusEffect;
+	}
+
+	/**
+	 * Sets whether this Tile has an associated StatusEffect.
+	 *
+	 * @param statusEffect The associated StatusEffect.
+	 */
+	public void setStatusEffect(boolean statusEffect) {
+		this.statusEffect = statusEffect;
 	}
 
 	public void setObstructed(boolean b) {

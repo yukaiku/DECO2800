@@ -113,9 +113,6 @@ public class SquareVector {
 		double xShift = Math.cos(angle) * distance;
 		double yShift = Math.sin(angle) * distance;
 
-		//System.out.println(String.format("    dCol: %.2f, dRow: %.2f, angle: %.2f, colShift: %.2f, rowShift: %.2f", deltaCol, deltaRow, angle, xShift, yShift));
-
-
 		this.col += xShift;
 		this.row += yShift;
 	}
@@ -141,6 +138,34 @@ public class SquareVector {
 		}
 		SquareVector vector = (SquareVector) obj;
 		return isCloseEnoughToBeTheSame(vector);
+	}
+
+	public boolean tileEquals(Object obj) {
+		if (!(obj instanceof SquareVector)) {
+			return false;
+		}
+		boolean colTrue, rowTrue;
+		SquareVector vector = (SquareVector) obj;
+		float roundCol = Math.round(getCol());
+		float roundRow = Math.round(getRow());
+		float roundVecCol = Math.round(vector.getCol());
+		float roundVecRow = Math.round(vector.getRow());
+
+
+
+		if (roundCol <= getCol()) {
+			colTrue = roundCol == roundVecCol || roundCol == Math.round(vector.getCol() - 0.5);
+		} else {
+			colTrue = roundCol == roundVecCol || roundCol == Math.round(vector.getCol() + 0.5);
+		}
+
+		if (roundRow <= getRow()) {
+			rowTrue = roundRow == roundVecRow || roundRow == Math.round(vector.getRow() - 0.5);
+		} else {
+			rowTrue = roundRow == roundVecRow || roundRow == Math.round(vector.getRow() + 0.5);
+		}
+
+		return rowTrue && colTrue;
 	}
 
 	@Override
