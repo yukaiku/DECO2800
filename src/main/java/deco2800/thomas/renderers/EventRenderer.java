@@ -23,8 +23,8 @@ public class EventRenderer implements Renderer {
     private static final int TUNDRA_EVENT_ACTIVE = 120;
     private static final int TUNDRA_EVENT_INACTIVE = 30;
 
-    private static final int DESERT_EVENT_ACTIVE = 20;
-    private static final int DESERT_EVENT_INACTIVE = 10;
+    private static final int DESERT_EVENT_ACTIVE = 120;
+    private static final int DESERT_EVENT_INACTIVE = 60;
 
     private static final int VOLCANO_EVENT_ACTIVE = 20;
     private static final int VOLCANO_EVENT_INACTIVE = 10;
@@ -54,7 +54,6 @@ public class EventRenderer implements Renderer {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Counter: " + counter);
                 if (counter == eventDuration) {
                     setAllowRendering(!getAllowRendering());
                     eventDuration = getEventDuration();
@@ -103,8 +102,8 @@ public class EventRenderer implements Renderer {
             filePath = "rain/blue-rain.p";
             textureDir = "rain";
         } else if (currentWorld instanceof DesertWorld) {
-            filePath = "rain/blue-rain.p";
-            textureDir = "rain";
+            filePath = "sandstorm/sandstorm.p";
+            textureDir = "sandstorm";
         } else {
             filePath = "rain/blue-rain.p";
             textureDir = "rain";
