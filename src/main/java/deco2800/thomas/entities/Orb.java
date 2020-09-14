@@ -17,12 +17,13 @@ public class Orb extends StaticEntity implements Tickable {
     public Orb(float col, float row, String texture, int renderOrder, List<Part> parts) {
         super(col, row, renderOrder, parts);
         LOG.info("Making a orb at {}, {}", col, row);
-        this.setTexture(texture);
     }
 
     public Orb(Tile t, String texture) {
         super(t, RenderConstants.ORB, texture, false);
+        this.setTexture(texture);
     }
+
 
     @Override
     public boolean equals(Object other) {
