@@ -103,6 +103,7 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("dialog-box", new Texture("resources/tutorial/guideline.png"));
 			textureMap.put("orb", new Texture("resources/orb.png"));
 			textureMap.put("victory", new Texture("resources/tutorial/victory-screen.png"));
+			textureMap.put("defeat", new Texture("resources/tutorial/defeat-screen.png"));
 			textureMap.put("pause", new Texture("resources/tutorial/pause-menu-beta.png"));
 
 			// npcs

@@ -330,6 +330,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         GameManager.get().getWorld().removeEntity(this);
         GameManager.get().getWorld().disposeEntity(this.getEntityID());
         QuestTracker.resetQuest();
+        GameManager.gameOver();
     }
 
     /**
