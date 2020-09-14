@@ -4,8 +4,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
 
-import deco2800.thomas.tasks.MovementTask;
-import deco2800.thomas.tasks.PathFindingServiceThread;
+import deco2800.thomas.tasks.movement.MovementTask;
+import deco2800.thomas.tasks.movement.PathFindingServiceThread;
 
 public class PathFindingService extends TickableManager {
 
@@ -33,6 +33,6 @@ public class PathFindingService extends TickableManager {
 	@Override
 	public void onTick(long i) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

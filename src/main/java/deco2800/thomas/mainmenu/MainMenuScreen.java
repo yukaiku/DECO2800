@@ -14,116 +14,130 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 
 public class MainMenuScreen implements Screen {
-    final ThomasGame game;
-    private Stage stage;
-    private Skin skin;
+	final ThomasGame game;
+	private Stage stage;
+	private Skin skin;
 
-    /**
-     * Constructor of the MainMenuScreen.
-     * @param game the game to run
-     */
-    public MainMenuScreen(final ThomasGame game) {
-        this.game = game;
+	/**
+	 * Constructor of the MainMenuScreen.
+	 *
+	 * @param game the game to run
+	 */
+	public MainMenuScreen(final ThomasGame game) {
+		this.game = game;
 
-        stage = new Stage(new ExtendViewport(1280, 720), game.batch);
-        skin = GameManager.get().getSkin();
+		stage = new Stage(new ExtendViewport(1280, 720), game.batch);
+		skin = GameManager.get().getSkin();
 
-        Image background = new Image(GameManager.get().getManager(TextureManager.class).getTexture("background"));
-        background.setFillParent(true);
-        stage.addActor(background);
+		Image background = new Image(GameManager.get().getManager(TextureManager.class).getTexture("background"));
+		background.setFillParent(true);
+		stage.addActor(background);
 
-        Label logo = new Label("Polyhedron", skin);
-        logo.setFontScale(5.0f);
-        logo.setPosition(1280/2 - 225, 720/2 + 100);
-        stage.addActor(logo);
+		Label logo = new Label("Polyhedron", skin);
+		logo.setFontScale(5.0f);
+		logo.setPosition(1280 / 2 - 225, 720 / 2 + 100);
+		stage.addActor(logo);
 
-        Button newGameBtn = new TextButton("SINGLE PLAYER", skin, "main_menu");
-        newGameBtn.setPosition(10, 150);
-        stage.addActor(newGameBtn);
+		Button envTeamButton = new TextButton("ENV TEAM", skin, "main_menu");
+		envTeamButton.setPosition(10, 250);
+		stage.addActor(envTeamButton);
 
-        Button loadGameButton = new TextButton("LOAD GAME", skin, "main_menu");
-        loadGameButton.setPosition(10, 100);
-        stage.addActor(loadGameButton);
+		Button tutorialBtn = new TextButton("TUTORIAL", skin, "main_menu");
+		tutorialBtn.setPosition(10, 200);
+		stage.addActor(tutorialBtn);
 
-        Button connectToServerButton = new TextButton("CONNECT TO SERVER", skin, "main_menu");
-        connectToServerButton.setPosition(10, 50);
-        stage.addActor(connectToServerButton);
+		Button newGameBtn = new TextButton("SINGLE PLAYER", skin, "main_menu");
+		newGameBtn.setPosition(10, 150);
+		stage.addActor(newGameBtn);
+
+		Button testWorldBtn = new TextButton("TEST WORLD", skin, "main_menu");
+		testWorldBtn.setPosition(10, 100);
+		stage.addActor(testWorldBtn);
+
+		tutorialBtn.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.TUTORIAL));
+			}
+		});
+
+		envTeamButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.ENV_TEAM_GAME));
+			}
+		});
 
 
-        connectToServerButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameScreen(new ThomasGame(),GameScreen.gameType.CONNECT_TO_SERVER));
-            }
-        });
+		newGameBtn.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.NEW_GAME));
+			}
+		});
 
-        loadGameButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.LOAD_GAME));
-            }
-        });
+		testWorldBtn.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.TEST_WORLD));
+			}
+		});
+	}
 
-        newGameBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.NEW_GAME));
-            }
-        });
-    }
-    
-   /**
-     * Begins things that need to begin when shown.
-     */
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
-    }
+	/**
+	 * Begins things that need to begin when shown.
+	 */
+	public void show() {
+		Gdx.input.setInputProcessor(stage);
+	}
 
-    /**
-     * Pauses the screen.
-     */
-    public void pause() {
-        //do nothing
-    }
+	/**
+	 * Pauses the screen.
+	 */
+	public void pause() {
+		//do nothing
+	}
 
-    /**
-     * Resumes the screen.
-     */
-    public void resume() {
-        //do nothing
-    }
+	/**
+	 * Resumes the screen.
+	 */
+	public void resume() {
+		//do nothing
+	}
 
-    /**
-     * Hides the screen.
-     */
-    public void hide() {
-        //do nothing
-    }
+	/**
+	 * Hides the screen.
+	 */
+	public void hide() {
+		//do nothing
+	}
 
-    /**
-     * Resizes the main menu stage to a new width and height.
-     * @param width the new width for the menu stage
-     * @param height the new width for the menu stage
-     */
-    public void resize (int width, int height) {
-        stage.getViewport().update(width, height, true);
-    }
+	/**
+	 * Resizes the main menu stage to a new width and height.
+	 *
+	 * @param width  the new width for the menu stage
+	 * @param height the new width for the menu stage
+	 */
+	public void resize(int width, int height) {
+		stage.getViewport().update(width, height, true);
+	}
 
-    /**
-     * Renders the menu.
-     * @param delta
-     */
-    public void render (float delta) {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	/**
+	 * Renders the menu.
+	 *
+	 * @param delta
+	 */
+	public void render(float delta) {
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        stage.act(delta);
-        stage.draw();
-    }
+		stage.act(delta);
+		stage.draw();
+	}
 
-    /**
-     * Disposes of the stage that the menu is on.
-     */
-    public void dispose() {
-        stage.dispose();
-    }
+	/**
+	 * Disposes of the stage that the menu is on.
+	 */
+	public void dispose() {
+		stage.dispose();
+	}
 }

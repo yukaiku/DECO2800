@@ -1,19 +1,19 @@
 package deco2800.thomas.managers;
 
+import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.tasks.AbstractTask;
+import deco2800.thomas.tasks.movement.MovementTask;
+import deco2800.thomas.worlds.AbstractWorld;
+import deco2800.thomas.worlds.Tile;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.tasks.AbstractTask;
-import deco2800.thomas.tasks.MovementTask;
-import deco2800.thomas.worlds.AbstractWorld;
-import deco2800.thomas.worlds.Tile;
-
 public class TaskPool extends AbstractManager {
 
 	private List<AbstractTask> taskPool;
-	private AbstractWorld world;
+ 	private AbstractWorld world;
 	private Random random;
 
 	public TaskPool() {
@@ -21,10 +21,10 @@ public class TaskPool extends AbstractManager {
 		world = GameManager.get().getWorld();
 		random = new Random();
 	}
-	
+
 	public AbstractTask getTask(AgentEntity entity) {
 		if (taskPool.isEmpty()) {
-			List<Tile> tiles = world.getTileMap();
+			List<Tile> tiles = world.getTiles();
 			if (tiles.size() == 0) {
 				// There are no tiles
 				return null;

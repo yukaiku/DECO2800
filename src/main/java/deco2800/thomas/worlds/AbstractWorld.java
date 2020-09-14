@@ -1,227 +1,421 @@
 package deco2800.thomas.worlds;
 
+import deco2800.thomas.entities.*;
+import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.*;
 
 /**
  * AbstractWorld is the Game AbstractWorld
- *
+ * <p>
  * It provides storage for the WorldEntities and other universal world level items.
  */
-public abstract class AbstractWorld {
-
-    protected List<AbstractEntity> entities = new CopyOnWriteArrayList<>();
-
-    protected int width;
-    protected int length;
-
-    protected CopyOnWriteArrayList<Tile> tiles;
-
-    protected List<AbstractEntity> entitiesToDelete = new CopyOnWriteArrayList<>();
-    protected List<Tile> tilesToDelete = new CopyOnWriteArrayList<>();
-
-    protected AbstractWorld() {
-    	tiles = new CopyOnWriteArrayList<Tile>();
-
-    	generateWorld();
-    	generateNeighbours();
-    	generateTileIndices();
-    }
-    
-    
-    protected abstract void generateWorld();
+public abstract class AbstractWorld implements Tickable {
+	/**
+	 * Default width of the world; horizontal coordinates of the world will be within `[-DEFAULT_WIDTH, DEFAULT_WIDTH]`
+	 */
+	protected static final int DEFAULT_WIDTH = 25;
 
 
-    /** Generates neighbours for tiles on a world; assigns the sides needed. */
-    public void generateNeighbours() {
-    // Multiply coords by 2 to remove floats.
-    	Map<Integer, Map<Integer, Tile>> tileMap = new HashMap<Integer, Map<Integer, Tile>>();
-		Map<Integer, Tile> columnMap;
-		for(Tile tile : tiles) {
-			columnMap = tileMap.getOrDefault((int)tile.getCol(), new HashMap<Integer, Tile>());
-			columnMap.put((int) (tile.getRow()), tile);
-			tileMap.put((int) (tile.getCol()), columnMap);
+	/**
+	 * Default height of the world; vertical coordinates of the world will be within `[-DEFAULT_HEIGHT, DEFAULT_HEIGHT]`
+	 */
+	protected static final int DEFAULT_HEIGHT = 25;
+
+    protected AgentEntity playerEntity;
+
+	/**
+	 * The static entity which is the Orb. All maps
+	 * have only one Orb entity
+	 */
+	private Orb orbEntity;
+
+	/**
+	 * Width of the world; horizontal coordinates of the world will be within `[-width, width]`
+	 */
+	protected int width;
+
+	/**
+	 * Height of the world; vertical coordinates of the world will be within `[-height, height]`
+	 */
+	protected int height;
+
+	/**
+	 * Entities inside the world
+	 */
+	protected List<AbstractEntity> entities;
+
+	/**
+	 * List of tiles of the world
+	 */
+	protected CopyOnWriteArrayList<Tile> tiles;
+
+	/**
+	 * A map that is used to retrieve tiles from horizontal and vertical coordinates
+	 */
+	protected TileMap tileMap;
+
+	/**
+	 * A queue of entities to be removed in onTick
+	 */
+	protected List<AbstractEntity> entitiesToRemove;
+
+	/**
+	 * A queue of tiles to be removed in onTick
+	 */
+	protected List<Tile> tilesToRemove;
+
+	/**
+	 * Constructor that creates a world with default width and height
+	 */
+	protected AbstractWorld() {
+		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	}
+
+	/**
+	 * Constructor that creates a world with given width and height
+	 *
+	 * @param width  width of the world; horizontal coordinates of the world will be within `[-width, width]`
+	 * @param height eight of the world; vertical coordinates of the world will be within `[-height, height]`
+	 */
+	protected AbstractWorld(int width, int height) {
+		this.width = width;
+		this.height = height;
+		this.tiles = new CopyOnWriteArrayList<>();
+		this.entities = new CopyOnWriteArrayList<>();
+		this.entitiesToRemove = new CopyOnWriteArrayList<>();
+		this.tilesToRemove = new CopyOnWriteArrayList<>();
+		generateTiles();
+		generateTileMap();
+		assignTileNeighbours();
+		generateTileIndices();
+	}
+
+	/**
+	 * Returns the type of this world.
+	 *
+	 * @return The type of this world.
+	 */
+	public String getType() {
+		return "World";
+	}
+
+	/**
+	 * Generates the tiles for the world
+	 */
+	protected abstract void generateTiles();
+
+	/**
+	 * Set the orbEntity and add it to the entities list
+	 * @param orb
+	 */
+	public void setOrbEntity(Orb orb) {
+		this.orbEntity = orb;
+		this.entities.add(orb);
+	}
+
+	/**
+	 * Check if the player's position is same as the orb's position
+	 */
+	protected void checkObtainedOrb() {
+		if (orbEntity != null) {
+			if (playerEntity.getPosition().equals(orbEntity.getPosition())) {
+				this.removeEntity(playerEntity);
+				GameManager.get().setNextWorld();
+			}
 		}
-		
-		for(Tile tile : tiles) {
-			int col = (int) (tile.getCol());
-			int row = (int) (tile.getRow());
-			//System.out.println("tile coords were: " + col + " " + row);
-			
-			// West
-			if(tileMap.containsKey(col - 1)) {
-			    //System.out.println("added west");
-                //System.out.println("West was " + tileMap.get(col - 1).get(row));
-			    tile.addNeighbour(Tile.WEST, tileMap.get(col - 1).get(row));
-			}
-			
-			// Central
-			if(tileMap.containsKey(col)) {
-				// North
-				if (tileMap.get(col).containsKey(row + 1)) {
-                    //System.out.println("North was " + tileMap.get(col).get(row + 1));
-					tile.addNeighbour(Tile.NORTH, tileMap.get(col).get(row + 1));
-				}
-				
-				// South
-				if (tileMap.get(col).containsKey(row - 1)) {
-                    //System.out.println("South was " + tileMap.get(col).get(row - 1));
-					tile.addNeighbour(Tile.SOUTH,tileMap.get(col).get(row - 1));
-				}
-			}
-			
-			// East
-			if(tileMap.containsKey(col + 1)) {
-				// East
-                //System.out.println("East was " + tileMap.get(col + 1).get(row));
-                tile.addNeighbour(Tile.EAST,tileMap.get(col + 1).get(row));
+	}
 
+	/**
+	 * Generates a tileMap from the list of tiles
+	 */
+	public void generateTileMap() {
+		this.tileMap = new TileMap(width, height, tiles);
+	}
+
+	/**
+	 * Assigns neighbours for the tiles. Each tile has at most 4 neighbours: NORTH, SOUTH, EAST, WEST
+	 */
+	public void assignTileNeighbours() {
+		for (Tile tile : this.tiles) {
+			int col = (int) tile.getCol();
+			int row = (int) tile.getRow();
+
+			if (this.tileMap.existsTile(col, row + 1)) {
+				Tile northNeighbour = this.tileMap.getTile(col, row + 1);
+				tile.addNeighbour(Tile.NORTH, northNeighbour);
+			}
+
+			if (this.tileMap.existsTile(col, row - 1)) {
+				Tile southNeighbour = this.tileMap.getTile(col, row - 1);
+				tile.addNeighbour(Tile.SOUTH, southNeighbour);
+			}
+
+			if (this.tileMap.existsTile(col + 1, row)) {
+				Tile eastNeighbour = this.tileMap.getTile(col + 1, row);
+				tile.addNeighbour(Tile.EAST, eastNeighbour);
+			}
+
+			if (this.tileMap.existsTile(col - 1, row)) {
+				Tile westNeighbour = this.tileMap.getTile(col - 1, row);
+				tile.addNeighbour(Tile.WEST, westNeighbour);
 			}
 		}
-    }
-    
-    private void generateTileIndices() {
-    	for(Tile tile : tiles) {
-    		tile.calculateIndex();
-    	}
-    }
-    
-    /**
-     * Returns a list of entities in this world.
-     * @return All Entities in the world
-     */
-    public List<AbstractEntity> getEntities() {
-        return new CopyOnWriteArrayList<>(this.entities);
-    }
-    
-    /**
-     *  Returns a list of entities in this world, ordered by their render level .
-     *  @return all entities in the world 
-     */
-    public List<AbstractEntity> getSortedEntities(){
+	}
+
+	/**
+	 * TODO Find out what this method does, reconsider it, and write doc comment for it
+	 */
+	protected void generateTileIndices() {
+		for (Tile tile : tiles) {
+			tile.calculateIndex();
+		}
+	}
+
+	/**
+	 * Gets the list of tiles of the world
+	 *
+	 * @return list of tiles
+	 */
+	public List<Tile> getTiles() {
+		return tiles;
+	}
+
+	/**
+	 * Gets a tile given coordinates `col` and `row`
+	 *
+	 * @param col horizontal coordinate
+	 * @param row vertical coordinate
+	 * @return the tile with the given coordinates
+	 */
+	public Tile getTile(float col, float row) {
+		return getTile(new SquareVector(col, row));
+	}
+
+	/**
+	 * Gets a tile given coordinates as a SquareVector
+	 *
+	 * @param position
+	 * @return the tile with the given coordinates
+	 */
+	public Tile getTile(SquareVector position) {
+		for (Tile tile : tiles) {
+			if (tile.getCoordinates().equals(position)) {
+				return tile;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Gets a tile by tileID. tileID are assigned when a tile is created. All tiles have distinct tileIDs.
+	 *
+	 * @param tileID
+	 * @return the tile with the given tileID
+	 */
+	public Tile getTile(int tileID) {
+		for (Tile tile : tiles) {
+			if (tile.getTileID() == tileID) {
+				return tile;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Assigns tiles to the world. If the world has already had a list of tile, replace it with the new list
+	 *
+	 * @param tiles new list of tiles
+	 */
+	public void setTiles(CopyOnWriteArrayList<Tile> tiles) {
+		if (tiles != null) {
+			queueTilesForRemove(this.tiles);
+		}
+		this.tiles = tiles;
+		generateTileMap();
+		assignTileNeighbours();
+	}
+
+	/**
+	 * @deprecated tileMap and neighbours need to be updated
+	 */
+	@Deprecated
+	public void updateTile(Tile tile) {
+		for (Tile t : this.tiles) {
+			if (t.getTileID() == tile.getTileID()) {
+				if (!t.equals(tile)) {
+					this.tiles.remove(t);
+					this.tiles.add(tile);
+				}
+				return;
+			}
+		}
+		this.tiles.add(tile);
+	}
+
+	/**
+	 * Dispose a tile by tileID
+	 *
+	 * @param tileID
+	 */
+	public void disposeTile(int tileID) {
+		Tile tile = GameManager.get().getWorld().getTile(tileID);
+		if (tile != null) {
+			tile.dispose();
+		}
+	}
+
+	/**
+	 * Queues tiles to be removed later. Remember to dispose any related resources first.
+	 *
+	 * @param tiles
+	 */
+	public void queueTilesForRemove(List<Tile> tiles) {
+		tilesToRemove.addAll(tiles);
+	}
+
+	/**
+	 * Returns a list of entities in this world.
+	 *
+	 * @return all entities in the world
+	 */
+	public List<AbstractEntity> getEntities() {
+		return new CopyOnWriteArrayList<>(this.entities);
+	}
+
+	/**
+	 * Returns a list of entities in this world, ordered by their render level.
+	 *
+	 * @return all entities in the world
+	 */
+	public List<AbstractEntity> getSortedEntities() {
 		List<AbstractEntity> e = new CopyOnWriteArrayList<>(this.entities);
-    	Collections.sort(e);
+		Collections.sort(e);
 		return e;
-    }
+	}
 
+	/**
+	 * Returns a list of entities in this world, ordered by their render level.
+	 *
+	 * @return all entities in the world
+	 */
+	public List<AgentEntity> getSortedAgentEntities() {
+		List<AgentEntity> e = this.entities
+				.stream()
+				.filter(p -> p instanceof AgentEntity)
+				.map(p -> (AgentEntity) p)
+				.collect(Collectors.toList());
 
-    /**
-     *  Returns a list of entities in this world, ordered by their render level.
-     *  @return all entities in the world 
-     */
-    public List<AgentEntity> getSortedAgentEntities(){
-        List<AgentEntity> e = this.entities
-            .stream()
-            .filter(p -> p instanceof AgentEntity)
-            .map(p -> (AgentEntity) p)
-            .collect(Collectors.toList());
-
-    	Collections.sort(e);
+		Collections.sort(e);
 		return e;
-    }
-
-
+	}
 
     /**
-     * Adds an entity to the world.
-     * @param entity the entity to add
+     * Gets an array list of all the entities contained within the given bounds.
+     * @param bounds Bounding box to check within.
+     * @return ArrayList of all entities within bounds.
      */
-    public void addEntity(AbstractEntity entity) {
-        entities.add(entity);
+    public List<AbstractEntity> getEntitiesInBounds(BoundingBox bounds) {
+        List<AbstractEntity> entitiesInBounds = new ArrayList<>();
+        for (AbstractEntity entity : entities) {
+            if (bounds.overlaps(entity.getBounds())) {
+                entitiesInBounds.add(entity);
+            }
+        }
+
+        return entitiesInBounds;
     }
 
-    /**
-     * Removes an entity from the world.
-     * @param entity the entity to remove
-     */
-    public void removeEntity(AbstractEntity entity) {
-        entities.remove(entity);
-    }
+	/**
+	 * Adds an entity to the world.
+	 *
+	 * @param entity the entity to add
+	 */
+	public void addEntity(AbstractEntity entity) {
+		entities.add(entity);
+	}
 
+	/**
+	 * Removes an entity from the entity list of the world
+	 *
+	 * @param entity the entity to remove
+	 */
+	public void removeEntity(AbstractEntity entity) {
+		entities.remove(entity);
+	}
+
+	/**
+	 * TODO Find out what this method does, reconsider it, and write doc comment for it
+	 */
 	public void setEntities(List<AbstractEntity> entities) {
 		this.entities = entities;
 	}
 
-    public List<Tile> getTileMap() {
-        return tiles;
-    }
-    
-    
-    public Tile getTile(float col, float row) {
-    	return getTile(new SquareVector(col,row));
-    }
-    
-    public Tile getTile(SquareVector position) {
-        for (Tile t : tiles) {
-        	if (t.getCoordinates().equals(position)) {
-        		return t;
+	/**
+	 * TODO Reconsider this method and write doc comment for it
+	 */
+	public void updateEntity(AbstractEntity entity) {
+		for (AbstractEntity e : this.entities) {
+			if (e.getEntityID() == entity.getEntityID()) {
+				this.entities.remove(e);
+				this.entities.add(entity);
+				return;
 			}
 		}
-		return null;
-    }
-    
-    public Tile getTile(int index) {
-        for (Tile t : tiles) {
-        	if (t.getTileID() == index) {
-        		return t;
+		this.entities.add(entity);
+
+		// Since MultiEntities need to be attached to the tiles they live on, setup that connection.
+		if (entity instanceof StaticEntity) {
+			((StaticEntity) entity).setup();
+		}
+	}
+
+	/**
+	 * Disposes an entity by entityID
+	 *
+	 * @param entityID entityID of the entity to be disposed
+	 */
+	public void disposeEntity(int entityID) {
+		for (AbstractEntity entity : this.getEntities()) {
+			if (entity.getEntityID() == entityID) {
+				entity.dispose();
 			}
 		}
-		return null;
-    }
+	}
+
+	/**
+	 * Queues entities to be removed later. Remember to dispose any related resources first.
+	 *
+	 * @param entities entities that are queued to be removed
+	 */
+	public void queueEntitiesForRemove(List<AbstractEntity> entities) {
+		entitiesToRemove.addAll(entities);
+	}
+
+	public void onTick(long i) {
+		if (!GameManager.get().inTutorial) {
+			this.checkObtainedOrb();
+		}
+
+		for (AbstractEntity entity : entitiesToRemove) {
+			entities.remove(entity);
+		}
+
+		for (Tile tile : tilesToRemove) {
+			tiles.remove(tile);
+		}
+	}
 
     public void setTileMap(CopyOnWriteArrayList<Tile> tileMap) {
         this.tiles = tileMap;
-    }
-    
-    //TODO ADDRESS THIS..?
-    public void updateTile(Tile tile) {
-        for (Tile t : this.tiles) {
-            if (t.getTileID() == tile.getTileID()) {
-                if (!t.equals(tile)) {
-                    this.tiles.remove(t);
-                    this.tiles.add(tile);
-                }
-                return;
-            }
-        }
-        this.tiles.add(tile);
-    }
-
-    //TODO ADDRESS THIS..?
-    public void updateEntity(AbstractEntity entity) {
-        for (AbstractEntity e : this.entities) {
-            if (e.getEntityID() == entity.getEntityID()) {
-                this.entities.remove(e);
-                this.entities.add(entity);
-                return;
-            }
-        }
-        this.entities.add(entity);
-
-        // Since MultiEntities need to be attached to the tiles they live on, setup that connection.
-        if (entity instanceof StaticEntity) {
-            ((StaticEntity) entity).setup();
-        }
-    }
-
-    public void onTick(long i) {
-        for (AbstractEntity e : entitiesToDelete) {
-            entities.remove(e);
-        }
-
-        for (Tile t : tilesToDelete) {
-            tiles.remove(t);
-        }
     }
 
     public void deleteTile(int tileid) {
@@ -239,11 +433,27 @@ public abstract class AbstractWorld {
         }
     }
 
-    public void queueEntitiesForDelete(List<AbstractEntity> entities) {
-        entitiesToDelete.addAll(entities);
+    public AgentEntity getPlayerEntity() {
+        return playerEntity;
     }
 
-    public void queueTilesForDelete(List<Tile> tiles) {
-        tilesToDelete.addAll(tiles);
-    }
+	public void setPlayerEntity(AgentEntity playerEntity) {
+		this.playerEntity = playerEntity;
+	}
+
+	/**
+	 * Get (half of) the width of the world.
+	 * @return the width of the world
+	 */
+	public int getWidth() {
+		return this.width;
+	}
+
+	/**
+	 * Get (half of) the height of the world.
+	 * @return the height of the world
+	 */
+	public int getHeight() {
+		return this.height;
+	}
 }

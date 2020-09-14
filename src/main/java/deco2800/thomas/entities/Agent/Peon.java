@@ -1,13 +1,14 @@
 package deco2800.thomas.entities.Agent;
 
 import deco2800.thomas.Tickable;
+import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TaskPool;
 import deco2800.thomas.tasks.AbstractTask;
-import deco2800.thomas.entities.RenderConstants;
 
 public class Peon extends AgentEntity implements Tickable {
-	private transient AbstractTask task;
+	private transient AbstractTask movementTask;
+	private transient AbstractTask combatTask;
 
 	public Peon() {
 		super();
@@ -21,28 +22,49 @@ public class Peon extends AgentEntity implements Tickable {
 	/**
 	 * Peon constructor
      */
-	public Peon(float row, float col, float speed) {
-		super(row, col, RenderConstants.PEON_RENDER, speed);
+	public Peon(float row, float col, float speed, int health) {
+		super(row, col, RenderConstants.PEON_RENDER, speed, health);
 		this.setTexture("spacman_ded");
 	}
 
 	@Override
 	public void onTick(long i) {
-		if(task != null && task.isAlive()) {
-			if(task.isComplete()) {
-				this.task = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
+		if (movementTask != null && movementTask.isAlive()) {
+			if (movementTask.isComplete()) {
+				this.movementTask = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
 			}
-			task.onTick(i);
+			movementTask.onTick(i);
+			System.out.println("Doing movement");
 		} else {
-			task = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
+			movementTask = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
+		}
+
+		// Update combat task
+		if (combatTask != null) {
+
+			if (combatTask.isComplete()) {
+				combatTask = null;
+			}
+			System.out.println("Doing");
+			combatTask.onTick(i);
+		} else {
+			System.out.println("No taska");
 		}
 	}
 
-	protected void setTask(AbstractTask task) {
-		this.task = task;
+	protected void setMovementTask(AbstractTask movementTask) {
+		this.movementTask = movementTask;
 	}
-	
-	public AbstractTask getTask() {
-		return task;
+
+	public AbstractTask getMovementTask() {
+		return movementTask;
+	}
+
+	public AbstractTask getCombatTask() {
+		return combatTask;
+	}
+
+	public void setCombatTask(AbstractTask combatTask) {
+		this.combatTask = combatTask;
 	}
 }

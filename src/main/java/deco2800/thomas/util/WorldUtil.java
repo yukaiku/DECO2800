@@ -6,6 +6,8 @@ import java.util.Set;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.worlds.Tile;
@@ -17,24 +19,26 @@ import deco2800.thomas.worlds.Tile;
 public class WorldUtil {
 
 	private static final float SCALE = 0.3f; // Scales the assets to reasonable sizes
-	
+
 	private static final boolean ISO_MODE = false;
-	
+
 	public static final float SCALE_X = SCALE;
-	public static final float SCALE_Y = SCALE * (ISO_MODE ? 5/8f : 1f);
-	
-    //base sizes for calculating grid placement.
+	public static final float SCALE_Y = SCALE * (ISO_MODE ? 5 / 8f : 1f);
+
+	//base sizes for calculating grid placement.
 	public static final float TILE_WIDTH = TextureManager.TILE_WIDTH * SCALE_X;
 	public static final float TILE_HEIGHT = TextureManager.TILE_HEIGHT * SCALE_Y;
-	
-	private WorldUtil() {}
+
+	private WorldUtil() {
+	}
 
 	/**
-     * Converts screen coordinates to world coordinates.
-     * @param x the x coordinate on the screen
-     * @param y the y coordinate on the screen
-     * @return a float array of the world coordinates
-     */
+	 * Converts screen coordinates to world coordinates.
+	 *
+	 * @param x the x coordinate on the screen
+	 * @param y the y coordinate on the screen
+	 * @return a float array of the world coordinates
+	 */
 	public static float[] screenToWorldCoordinates(float x, float y) {
 		Vector3 result = GameManager.get().getCamera().unproject(new Vector3(x, y, 0));
 
@@ -44,7 +48,7 @@ public class WorldUtil {
 	public static float[] worldCoordinatesToColRow(float x, float y) {
 		float row;
 		float col;
-		float actualRow; 
+		float actualRow;
 		x -= TILE_WIDTH / 2;
 		y -= TILE_HEIGHT / 2;
 		col = Math.round(x / (TILE_WIDTH * 0.75f));
@@ -55,6 +59,7 @@ public class WorldUtil {
 
 	/**
 	 * Same function as above, but returns a primitive type. Much faster for rendering.
+	 *
 	 * @param col coordinate column
 	 * @param row coordinate row
 	 * @return a float array containing the world coordinates
@@ -65,17 +70,27 @@ public class WorldUtil {
 
 		return new float[]{squareX, squareY};
 	}
-    
-    public static boolean validColRow(SquareVector pos) {
-    	if (pos.getCol() % 1 !=0 ) {
-			 return false;
+
+	public static boolean validColRow(SquareVector pos) {
+		if (pos.getCol() % 1 != 0) {
+			return false;
 		}
 
 		return (pos.getRow()) % 1 == 0;
 	}
 
 	/**
+	 * Removes an Entity from the Game World.
+	 * @param entity Entity to remove.
+	 */
+	public static void removeEntity(AbstractEntity entity) {
+		GameManager.get().getWorld().removeEntity(entity);
+		GameManager.get().getWorld().disposeEntity(entity.getEntityID());
+	}
+
+	/**
 	 * Determines if the position is safe to walk on or place machines on.
+	 *
 	 * @param col the x coordinate of a position
 	 * @param row the y coordinate of a position
 	 * @return A boolean stating if the position is safe to walk on.
@@ -86,35 +101,36 @@ public class WorldUtil {
 
 		return !GameManager.get().getWorld().getTile(col, row).isObstructed();
 	}
-    
-  	public static boolean areCoordinatesOffScreen(float squareX, float squareY, OrthographicCamera camera) {
-		float bufferWidth = 1.1f;
-  		return squareX < (camera.position.x - camera.viewportWidth * camera.zoom / 2 - 2 * TILE_WIDTH * camera.zoom * bufferWidth)
-  				|| squareX > (camera.position.x + camera.viewportWidth * camera.zoom / 2 + TILE_WIDTH * camera.zoom * bufferWidth + 50)
-  				|| squareY < (camera.position.y - camera.viewportHeight * camera.zoom / 2 - 4 * TILE_HEIGHT * camera.zoom * bufferWidth)
-  				|| squareY > (camera.position.y + camera.viewportHeight * camera.zoom / 2 + TILE_HEIGHT * camera.zoom * bufferWidth - 50);
-  	}
 
-    /**
-     * Attempts to find the closest Walkable tile to a location.
-     * NO LOGGING BECAUSE OF HORRENDOUS SPAM
-     * @param startLocation the location of a tile to start the search
-     * @return a location of a walkable tile or null if none where found
-     */
-    public static SquareVector closestWalkable(SquareVector startLocation) {
+	public static boolean areCoordinatesOffScreen(float squareX, float squareY, OrthographicCamera camera) {
+		float bufferWidth = 1.1f;
+		return squareX < (camera.position.x - camera.viewportWidth * camera.zoom / 2 - 2 * TILE_WIDTH * camera.zoom * bufferWidth)
+				|| squareX > (camera.position.x + camera.viewportWidth * camera.zoom / 2 + TILE_WIDTH * camera.zoom * bufferWidth + 50)
+				|| squareY < (camera.position.y - camera.viewportHeight * camera.zoom / 2 - 4 * TILE_HEIGHT * camera.zoom * bufferWidth)
+				|| squareY > (camera.position.y + camera.viewportHeight * camera.zoom / 2 + TILE_HEIGHT * camera.zoom * bufferWidth - 50);
+	}
+
+	/**
+	 * Attempts to find the closest Walkable tile to a location.
+	 * NO LOGGING BECAUSE OF HORRENDOUS SPAM
+	 *
+	 * @param startLocation the location of a tile to start the search
+	 * @return a location of a walkable tile or null if none where found
+	 */
+	public static SquareVector closestWalkable(SquareVector startLocation) {
 		LinkedList<SquareVector> queue = new LinkedList<>();
 		// A set of all the tiles that have been added to the queue
-        // Used to verify no duplicates are added for infinite loops
+		// Used to verify no duplicates are added for infinite loops
 		Set<SquareVector> closedSet = new HashSet<>();
 		queue.add(startLocation);
 		while (!queue.isEmpty()) {
-		    // Make the first in queue the default start
+			// Make the first in queue the default start
 			SquareVector nextLocation = queue.get(0);
 
 			// Attempt to get the closest to the start location out of the queue
-			for (SquareVector neighbour: queue) {
+			for (SquareVector neighbour : queue) {
 				// Improve this as it has some funky outcomes
-				if(Math.abs(neighbour.distance(startLocation.getCol(), startLocation.getRow())) < Math.abs(nextLocation.distance(startLocation.getCol(), startLocation.getRow()))) {
+				if (Math.abs(neighbour.distance(startLocation.getCol(), startLocation.getRow())) < Math.abs(nextLocation.distance(startLocation.getCol(), startLocation.getRow()))) {
 					nextLocation = neighbour;
 				}
 			}

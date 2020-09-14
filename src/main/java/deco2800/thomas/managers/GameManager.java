@@ -1,18 +1,25 @@
 package deco2800.thomas.managers;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 //import deco2800.thomas.managers.Manager;
 
-import deco2800.thomas.renderers.PotateCamera;
 import deco2800.thomas.worlds.AbstractWorld;
 
+import deco2800.thomas.worlds.desert.DesertWorld;
+import deco2800.thomas.worlds.swamp.SwampWorld;
+import deco2800.thomas.worlds.TestWorld;
+import deco2800.thomas.worlds.tundra.TundraWorld;
+import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 
 public class GameManager {
@@ -30,26 +37,26 @@ public class GameManager {
 	private AbstractWorld gameWorld;
 
 	// The camera being used by the Game Screen to project the game world.
-	private PotateCamera camera;
+	private OrthographicCamera camera;
 
 	// The stage the game world is being rendered on to.
 	private Stage stage;
 
 	// The UI skin being used by the game for libGDX elements.
 	private Skin skin;
-	
 
 
 	public float fps = 0;
 
 	public boolean debugMode = true;
 
+	public boolean inTutorial = false;
 	/**
 	 * Whether or not we render info over the tiles.
 	 */
 	// Whether or not we render the movement path for Players.
 	public boolean showCoords = false;
-	
+
 	// The game screen for a game that's currently running.
 	public boolean showPath = false;
 
@@ -57,6 +64,15 @@ public class GameManager {
 	 * Whether or not we render info over the entities
 	 */
 	public boolean showCoordsEntity = false;
+
+	private static enum WorldType {
+		SWAMP_WORLD,
+		TUNDRA_WORLD,
+		VOLCANO_WORLD,
+		DESERT_WORLD
+	}
+	private int currentWorld = 0;
+	private ArrayList<WorldType> worldOrder;
 
 	/**
 	 * Returns an instance of the GM
@@ -74,7 +90,8 @@ public class GameManager {
 	 * Private constructor to enforce use of get()
 	 */
 	private GameManager() {
-
+		worldOrder = new ArrayList<>(EnumSet.allOf(WorldType.class));
+		Collections.shuffle(worldOrder);
 	}
 
 	/**
@@ -94,6 +111,11 @@ public class GameManager {
 	 */
 	public void addManager(AbstractManager manager) {
 		managers.add(manager);
+	}
+
+	/** Removes a manager */
+	public void removeManager(AbstractManager manager) {
+		managers.remove(manager);
 	}
 
 	/**
@@ -139,66 +161,83 @@ public class GameManager {
 		return get().getManager(type);
 	}
 
-	
+
 	/* ------------------------------------------------------------------------
 	 * 				GETTERS AND SETTERS BELOW THIS COMMENT.
 	 * ------------------------------------------------------------------------ */
 
-	/**Get entities rendered count
+	/**
+	 * Get entities rendered count
+	 *
 	 * @return entities rendered count
 	 */
 	public int getEntitiesRendered() {
 		return this.entitiesRendered;
 	}
 
-	/** Set entities rendered to new amount
+	/**
+	 * Set entities rendered to new amount
+	 *
 	 * @param entitiesRendered the new amount
 	 */
 	public void setEntitiesRendered(int entitiesRendered) {
 		this.entitiesRendered = entitiesRendered;
 	}
-	/**Get number of entities
+
+	/**
+	 * Get number of entities
+	 *
 	 * @return entities count
 	 */
 	public int getEntitiesCount() {
 		return this.entitiesCount;
 	}
 
-	/** Set entities count to new amount
+	/**
+	 * Set entities count to new amount
+	 *
 	 * @param entitiesCount the new amount
 	 */
 	public void setEntitiesCount(int entitiesCount) {
 		this.entitiesCount = entitiesCount;
 	}
 
-	/**Get tiles rendered count
+	/**
+	 * Get tiles rendered count
+	 *
 	 * @return tiles rendered count
 	 */
 	public int getTilesRendered() {
 		return this.tilesRendered;
 	}
 
-	/** Set tiles rendered to new amount
+	/**
+	 * Set tiles rendered to new amount
+	 *
 	 * @param tilesRendered the new amount
 	 */
 	public void setTilesRendered(int tilesRendered) {
 		this.tilesRendered = tilesRendered;
 	}
 
-	/**Get number of tiles
+	/**
+	 * Get number of tiles
+	 *
 	 * @return tiles count
 	 */
 	public int getTilesCount() {
 		return this.tilesCount;
 	}
 
-	/** Set tiles count to new amount
+	/**
+	 * Set tiles count to new amount
+	 *
 	 * @param tilesCount the new amount
 	 */
 	public void setTilesCount(int tilesCount) {
 		this.tilesCount = tilesCount;
 	}
-	
+
 	/**
 	 * Sets the current game world
 	 *
@@ -217,8 +256,31 @@ public class GameManager {
 		return gameWorld;
 	}
 
+	/**
+	 * Teleport the player to the next world by setting
+	 * it as current world
+	 */
+	public void setNextWorld() {
+		// removes the previous enemy manager
+		managers.removeIf(manager -> manager instanceof EnemyManager);
+		switch (worldOrder.get(currentWorld)) {
+			case TUNDRA_WORLD:
+				this.setWorld(new TundraWorld());
+				break;
+			case SWAMP_WORLD:
+				this.setWorld(new SwampWorld());
+				break;
+			case DESERT_WORLD:
+				this.setWorld(new DesertWorld());
+				break;
+			case VOLCANO_WORLD:
+				this.setWorld(new VolcanoWorld());
+				break;
+		}
+		currentWorld = (currentWorld + 1) % worldOrder.size();
+	}
 
-	public void setCamera(PotateCamera camera) {
+	public void setCamera(OrthographicCamera camera) {
 		this.camera = camera;
 	}
 
@@ -250,7 +312,7 @@ public class GameManager {
 		this.skin = skin;
 	}
 
-	public PotateCamera getCamera() {
+	public OrthographicCamera getCamera() {
 		return camera;
 	}
 
@@ -267,7 +329,6 @@ public class GameManager {
 		}
 		gameWorld.onTick(0);
 	}
-	
-	
+
 
 }
