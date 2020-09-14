@@ -1,6 +1,7 @@
 package deco2800.thomas.entities.Agent;
 
 import deco2800.thomas.entities.Orb;
+import deco2800.thomas.managers.GameManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,9 @@ public class QuestTracker extends PlayerPeon {
         if (orbCount < 5) {
             orbCount += 1;
             orbs.add(orb);
+        }
+        if(orbCount == 4){
+            GameManager.get().state = GameManager.State.VICTORY;
         }
     }
 
