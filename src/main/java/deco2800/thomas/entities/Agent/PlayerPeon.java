@@ -17,6 +17,7 @@ import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
+import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
@@ -29,13 +30,14 @@ import java.util.Map;
 public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, KeyDownObserver, KeyUpObserver {
     // Animation Testing
     public enum State {
-        STANDING, WALKING, MELEE_ATTACK
+        STANDING, WALKING, MELEE_ATTACK, RANGE_ATTACK
     }
     public State currentState;
     public State previousState;
     private MovementTask.Direction facingDirection;
     private final Animation<TextureRegion> playerStand;
     private final Animation<TextureRegion> playerMeleeAttack;
+    private final Animation<TextureRegion> playerRangeAttack;
     private float stateTimer;
     private int duration = 0;
 
@@ -88,6 +90,8 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         stateTimer = 0;
         playerMeleeAttack = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_melee"));
+        playerRangeAttack = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_range"));
         playerStand = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_stand"));
     }
@@ -206,9 +210,12 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         // Update combat task
         if (getCombatTask() != null) {
             getCombatTask().onTick(i);
-
+            if (getCombatTask() instanceof MeleeAttackTask) {
+                currentState = State.MELEE_ATTACK;
+            } else {
+                currentState = State.RANGE_ATTACK;
+            }
             // Due to the combat task is currently executed instantly, will set a cool down here
-            currentState = State.MELEE_ATTACK;
             duration = 9;
 
             if (getCombatTask().isComplete()) {
@@ -236,6 +243,9 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         TextureRegion region;
         // Get the animation frame based on the current state
         switch (currentState) {
+            case RANGE_ATTACK:
+                region = playerRangeAttack.getKeyFrame(stateTimer);
+                break;
             case MELEE_ATTACK:
                 region = playerMeleeAttack.getKeyFrame(stateTimer);
                 break;

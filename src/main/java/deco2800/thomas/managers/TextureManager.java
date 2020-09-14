@@ -298,6 +298,11 @@ public class TextureManager extends AbstractManager {
 			playerMelee.add(new TextureRegion(new Texture("resources/combat/melee_right2.png"), 0, 0, 350, 400));
 			playerMelee.add(new TextureRegion(new Texture("resources/combat/melee_right3.png"), 0, 0, 350, 400));
 			animationFrames.put("player_melee", playerMelee);
+
+			// player range attacks
+			Array<TextureRegion> playerRange = new Array<>();
+			playerRange.add(new TextureRegion(new Texture("resources/combat/range_right1.png"), 0, 0, 350, 400));
+			animationFrames.put("player_range", playerRange);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
