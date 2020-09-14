@@ -11,6 +11,9 @@ import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.entities.enemies.Dummy;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.*;
+import deco2800.thomas.entities.items.HealthPotion;
+import deco2800.thomas.entities.items.Item;
+import deco2800.thomas.entities.items.TestItem;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.NonPlayablePeonManager;
 
@@ -93,6 +96,12 @@ public class TutorialWorld extends AbstractWorld{
         // Add portal
         t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW);
         entities.add(new Portal(t, false));
+
+        //for (int i = 0; i < 4; i++) {
+            Tile potion = GameManager.get().getWorld().getTile(1,0);
+            entities.add(new HealthPotion(potion, false));
+        //}
+
     }
 
     @Override
