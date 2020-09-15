@@ -118,9 +118,7 @@ public class TutorialWorld extends AbstractWorld{
             GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
 
             // Set new world
-            GameManager gameManager = GameManager.get();
-            gameManager.setWorld(GameScreen.gameType.NEW_GAME.method());
-
+            GameManager.get().setNextWorld();
         }
     }
 }
