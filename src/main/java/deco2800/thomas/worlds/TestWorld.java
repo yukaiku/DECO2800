@@ -142,7 +142,7 @@ public class TestWorld extends AbstractWorld {
 
 		// Provide available enemies to the EnemyManager
 		Orc swampOrc = new Orc(1, 0.05f, 100, "orc_swamp");
-		Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_swamp");
+		Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_swamp", 1);
 
 		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc), boss);
 		GameManager.get().addManager(enemyManager);

@@ -38,8 +38,13 @@ public class GameScreen implements Screen, KeyDownObserver {
 	Renderer3D renderer = new Renderer3D();
 	OverlayRenderer rendererDebug = new OverlayRenderer();
 
-	Guideline guideline = new Guideline();
+	//spriteBatch for renderers
+	SpriteBatch spriteBatch = new SpriteBatch();
+	//Quest Tracker UI
 	QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
+	//Tutorial Guideline UI
+	Guideline guideline = new Guideline();
+
 
 	AbstractWorld world;
 
@@ -159,15 +164,16 @@ public class GameScreen implements Screen, KeyDownObserver {
 		rendererDebug.render(batchDebug, cameraDebug);
 
 		// Add guideline if we are in the TutorialWorld
-		if (tutorial) {
-			SpriteBatch batchGuideline = new SpriteBatch();
-			batchGuideline.setProjectionMatrix(cameraDebug.combined);
-			guideline.render(batchGuideline, cameraDebug);
+//		if (tutorial) {
+//			SpriteBatch batchGuideline = new SpriteBatch();
+//			batchGuideline.setProjectionMatrix(cameraDebug.combined);
+//			guideline.render(batchGuideline, cameraDebug);
+//		}
+		spriteBatch.setProjectionMatrix(cameraDebug.combined);
+		if(tutorial){
+			guideline.render(spriteBatch,cameraDebug);
 		}
-		// Questtracker UI
-		SpriteBatch batchGuideline = new SpriteBatch();
-		batchGuideline.setProjectionMatrix(cameraDebug.combined);
-		questTrackerRenderer.render(batchGuideline, cameraDebug);
+		questTrackerRenderer.render(spriteBatch, cameraDebug);
 
 		/* Refresh the experience UI for if information was updated */
 		stage.act(delta);

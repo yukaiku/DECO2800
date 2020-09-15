@@ -69,7 +69,7 @@ public class DesertWorld extends AbstractWorld {
 
         GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
         Orc desertOrc = new Orc(1, 0.09f, 50, "orc_desert");
-        Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_desert");
+        Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_desert", 4);
 
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(desertOrc), boss);
         GameManager.get().addManager(enemyManager);

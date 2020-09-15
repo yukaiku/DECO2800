@@ -58,7 +58,7 @@ public class VolcanoWorld extends AbstractWorld {
         addEntity(this.getPlayerEntity());
 
         Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano");
-        Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_volcano");
+        Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_volcano", 1);
 
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(volcanoOrc), boss);
         GameManager.get().addManager(enemyManager);
