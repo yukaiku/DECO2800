@@ -49,6 +49,11 @@ public class SwampWorld extends AbstractWorld {
     }
 
     @Override
+    public String getType() {
+        return "Swamp";
+    }
+
+    @Override
     protected void generateTiles() {
     }
 
