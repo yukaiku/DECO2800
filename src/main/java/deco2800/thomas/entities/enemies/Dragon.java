@@ -35,7 +35,7 @@ public class Dragon extends Boss implements PassiveEnemy {
     int orbNumber;
 
     public Dragon(int height, float speed, int health, int orb) {
-        super("Elder Dragon", "elder_dragon", height, speed, health);
+        super("Elder Dragon", "elder_dragon", height, speed, 1);
         orbNumber = orb;
     }
 
