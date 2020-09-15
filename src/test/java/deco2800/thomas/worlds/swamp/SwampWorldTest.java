@@ -1,8 +1,12 @@
 package deco2800.thomas.worlds.swamp;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
+import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.managers.*;
+import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.desert.DesertWorld;
 import org.junit.Assert;
@@ -20,7 +24,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(GameManager.class)
-public class SwampWorldTest {
+public class SwampWorldTest extends BaseGDXTest {
 
     private SwampWorld spyWorld;
 
@@ -46,6 +50,11 @@ public class SwampWorldTest {
         // sets up some functions for a mock Texture and its manager
         Texture texture = mock(Texture.class);
         when(textureManager.getTexture(anyString())).thenReturn(texture);
+
+        Array<TextureRegion> playerStand = new Array<>();
+        playerStand.add(new TextureRegion(new Texture("resources/combat/move_right.png"), 262, 256));
+
+        when(textureManager.getAnimationFrames(anyString())).thenReturn(playerStand);
         when(texture.getWidth()).thenReturn(1);
         when(texture.getHeight()).thenReturn(1);
 
@@ -110,8 +119,32 @@ public class SwampWorldTest {
 
     @Test
     public void createPondTest() {
-        ArrayList<AbstractEntity> pondLocations = new ArrayList<>();
+        SquareVector pos;
+        ArrayList<SquareVector> pondLocations = new ArrayList<>();
+        boolean allTiles = true;
+
+
         spyWorld.createPond();
 
+        pondLocations.add(new SquareVector(20, -19));
+        pondLocations.add(new SquareVector(21, -19));
+        pondLocations.add(new SquareVector(16, -24));
+        pondLocations.add(new SquareVector(17, -25));
+        pondLocations.add(new SquareVector(16, -25));
+        pondLocations.add(new SquareVector(19, -23));
+        pondLocations.add(new SquareVector(19, -24));
+        pondLocations.add(new SquareVector(21, 14));
+
+        for (AbstractEntity entity : spyWorld.getEntities()) {
+            if (entity.getObjectName().equals("SwampPond")) {
+                pos = entity.getPosition();
+                if (!pondLocations.contains(pos)) {
+                    allTiles = false;
+                    break;
+                }
+            }
+        }
+
+        Assert.assertTrue(allTiles);
     }
 }
