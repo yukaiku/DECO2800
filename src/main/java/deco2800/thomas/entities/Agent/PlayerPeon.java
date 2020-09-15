@@ -73,9 +73,12 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
      * @param target The target string identifier
      */
     public static String getDialogue(String target) {
-        dialogues.put("plot", "Greetings my students, you must save the world of Decodia by defeating the dragons and " +
-                "collecting the orbs they have stolen. You will have to use your combined powers of steel and magic to " +
-                "prevail against the looming terrors.");
+        dialogues.put("plot", "Greetings my students, you both must save the world of Decodia " +
+                "by defeating the elder " +
+                "dragons and collecting the orbs they have stolen. These orbs contain the " +
+                "great power of the elements " +
+                "and without them the world is out of balance. You will have to use your combined powers of " +
+                "steel and magic to prevail against the looming terrors.");
 
         dialogues.put("WASD", "To move your character press W for up, S for down, A for left, D for right, " +
                 "please move to the " +
@@ -121,13 +124,25 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
                 "you will have to locate the orb of sand. The monsters here are " +
                 "vulnerable to water");
 
-        dialogues.put("next", "Congratulations for collecting the orb and completing this zone, " +
-                "you will now proceed on " +
-                "to the next stage.");
+        dialogues.put("swampy", "You have slain Siendiadut the swamp dragon and gained the element of " +
+                "earth, use it to crush your foes.");
+
+        dialogues.put("volcy", "You have slain Chusulth the volcano dragon and gained the element of " +
+                "fire, use it to burn your foes.");
+
+        dialogues.put("tundy", "You have slain Diokiedes the tundra dragon and gained the element of water, " +
+                "use it to drown your foes.");
+
+        dialogues.put("desy", "You have slain Doavnaen the desert dragon and gained the element of air, " +
+                "use it to blow down your foes.");
 
         dialogues.put("roar", "Roar!!!");
 
         dialogues.put("grr", "GRRRRR");
+
+        dialogues.put("orc", "WAAAAR");
+
+        dialogues.put("gob", "Shinies");
 
         dialogues.put("died", "Too bad, you died, would you like to restart from " +
                 "your previous checkpoint or start anew?");
