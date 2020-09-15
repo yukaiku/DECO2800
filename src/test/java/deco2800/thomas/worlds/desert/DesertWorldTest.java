@@ -76,9 +76,6 @@ public class DesertWorldTest {
         int i = 0;
         for (Tile tile : world.getTiles()) {
             if (tile.getTileID() != i++) {
-                System.out.print(i);
-                System.out.print(" ");
-                System.out.println(tile.getTileID());
                 allTiles = false;
                 break;
             }
@@ -86,6 +83,5 @@ public class DesertWorldTest {
 
         Assert.assertTrue(allTiles);
     }
-
 
 }
