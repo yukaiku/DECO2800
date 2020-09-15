@@ -140,25 +140,34 @@ public class SquareVector {
 		return isCloseEnoughToBeTheSame(vector);
 	}
 
+	/**
+	 * Returns whether a given SquareVector is set on the same Tile
+	 * as this SquareVector.
+	 *
+	 * @param obj The other SquareVector.
+	 * @return Whether this SquareVector and obj share a Tile.
+	 */
 	public boolean tileEquals(Object obj) {
 		if (!(obj instanceof SquareVector)) {
 			return false;
 		}
 		boolean colTrue, rowTrue;
 		SquareVector vector = (SquareVector) obj;
+
+		// round all positions to make comparisons possible
 		float roundCol = Math.round(getCol());
 		float roundRow = Math.round(getRow());
 		float roundVecCol = Math.round(vector.getCol());
 		float roundVecRow = Math.round(vector.getRow());
 
-
-
+		// check if the columns originate from the same Tile
 		if (roundCol <= getCol()) {
 			colTrue = roundCol == roundVecCol || roundCol == Math.round(vector.getCol() - 0.5);
 		} else {
 			colTrue = roundCol == roundVecCol || roundCol == Math.round(vector.getCol() + 0.5);
 		}
 
+		// check if the rows originate from the same Tile
 		if (roundRow <= getRow()) {
 			rowTrue = roundRow == roundVecRow || roundRow == Math.round(vector.getRow() - 0.5);
 		} else {

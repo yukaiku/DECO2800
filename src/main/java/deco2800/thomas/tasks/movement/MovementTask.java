@@ -11,7 +11,7 @@ import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.status.BurnStatus;
 import deco2800.thomas.tasks.status.QuicksandBurnStatus;
-import deco2800.thomas.tasks.status.QuicksandSpeedStatus;
+import deco2800.thomas.tasks.status.SpeedStatus;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
@@ -175,7 +175,7 @@ public class MovementTask extends AbstractTask {
 
 				// quicksand damages over time and slows
 				case "Quicksand":
-					gameManager.getManager(StatusEffectManager.class).addStatus(new QuicksandSpeedStatus(entity, 0.25f, position));
+					gameManager.getManager(StatusEffectManager.class).addStatus(new SpeedStatus(entity, 0.25f, 3));
 					gameManager.getManager(StatusEffectManager.class).addStatus(new QuicksandBurnStatus(entity, 5, 100, position));
 				break;
 
@@ -183,6 +183,17 @@ public class MovementTask extends AbstractTask {
 				case "CactusNeighbour":
 					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 10, 1));
 				break;
+
+				// ice tiles speed up the player temporarily
+				case "TundraIceTile":
+				gameManager.getManager(StatusEffectManager.class).addStatus(new SpeedStatus(entity, 1.1f, 1));
+				break;
+
+				// neighbours of tundra fire entities inflict damage over time
+				case "TundraFireTile":
+				gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 5, 2));
+				break;
+
 			}
 		}
 	}

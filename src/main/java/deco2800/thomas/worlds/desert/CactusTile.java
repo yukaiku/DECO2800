@@ -47,6 +47,7 @@ public class CactusTile extends Tile {
 
     @Override
     public boolean hasStatusEffect() {
-        return true;
+        // the cactus does not damage players - its neighbours do
+        return false;
     }
 }

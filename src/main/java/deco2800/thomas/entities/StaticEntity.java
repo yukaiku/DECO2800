@@ -46,6 +46,7 @@ public class StaticEntity extends AbstractEntity {
 		}
 		tile.setParent(this);
 		tile.setObstructed(obstructed);
+		this.texture = texture;
 	}
 
 	public StaticEntity(float col, float row, int renderOrder, List<Part> entityParts) {

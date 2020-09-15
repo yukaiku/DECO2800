@@ -21,7 +21,7 @@ public class BurnStatus extends StatusEffect {
     private boolean applied = false;
 
     // the health tracker of the entity this effect applies to
-    private final HealthTracker healthTracker;
+    private HealthTracker healthTracker;
 
     /**
      * Creates a new BurnStatus with default damage and ticks (1 dmg, 1 tick).
@@ -48,7 +48,10 @@ public class BurnStatus extends StatusEffect {
         this.burnDamage = burnDamage;
         timeLastTick = System.nanoTime();
         this.ticks = ticks;
-        healthTracker = getAffectedEntity().getHealthTracker();
+
+        if (entity != null) {
+            healthTracker = getAffectedEntity().getHealthTracker();
+        }
     }
 
     /**

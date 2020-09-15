@@ -1,7 +1,5 @@
 package deco2800.thomas.worlds.volcano;
 
-import deco2800.thomas.tasks.status.BurnStatus;
-import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.worlds.Tile;
 
 /**
