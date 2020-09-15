@@ -34,7 +34,6 @@ public class DesertWorld extends AbstractWorld {
      */
     public DesertWorld() {
         super(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        generateTiles();
     }
 
     /**
@@ -45,7 +44,6 @@ public class DesertWorld extends AbstractWorld {
      */
     public DesertWorld(int width, int height) {
         super(width, height);
-        generateTiles();
     }
 
     /**

@@ -62,6 +62,8 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         activeWizardSkill = 0;
 
         mechSkill = new MeleeSkill(this);
+        System.out.printf("Player spawn.\n");
+
     }
 
     /**
