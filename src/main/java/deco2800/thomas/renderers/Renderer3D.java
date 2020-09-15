@@ -247,7 +247,6 @@ public class Renderer3D implements Renderer {
 				batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width, height);
 			}
 		} else {
-			// will remove if statement after enemies became animatable
 			if (entity instanceof Peon && ((Peon) entity).isAttacked()) {
 				batch.setColor(Color.RED);
 				batch.draw(tex, x, y, width, height);
