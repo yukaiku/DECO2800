@@ -10,11 +10,11 @@ import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
-import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.tasks.movement.MovementTask;
+import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
@@ -189,6 +189,15 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         }
         if (mechSkill != null) {
             mechSkill.onTick(i);
+        }
+
+        // Check current effects to be applied or removed
+        for (StatusEffect effect : getEffects()) {
+            if (!effect.getActive() || effect.getAffectedEntity() == null) {
+                removeEffect(effect);
+            } else {
+                effect.applyEffect();
+            }
         }
     }
 
