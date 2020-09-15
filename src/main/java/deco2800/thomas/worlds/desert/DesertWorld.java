@@ -81,8 +81,6 @@ public class DesertWorld extends AbstractWorld {
      * This includes sand dunes, cactus plants, dead trees and quicksand.
      */
     public void createStaticEntities() {
-        int tileCount = GameManager.get().getWorld().getTiles().size();
-        TextureManager tex = new TextureManager();
         Random rand = new Random();
         int randIndex;
 

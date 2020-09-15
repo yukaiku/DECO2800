@@ -9,6 +9,7 @@ import deco2800.thomas.worlds.Tile;
  * @author Arthur Mitchell (Gitlab: @ArthurM99115)
  */
 public class VolcanoBurnTile extends Tile {
+
     //Damage to be dealt to entities.
     private float burnDamage;
 
@@ -22,6 +23,8 @@ public class VolcanoBurnTile extends Tile {
     public VolcanoBurnTile(String texture, float col, float row, float damage) {
         super(texture, col, row);
         this.burnDamage = damage;
+        this.setType("BurnTile");
+        this.setStatusEffect(true);
     }
 
     /**
@@ -39,16 +42,4 @@ public class VolcanoBurnTile extends Tile {
     public void setTileDamage(float damage) {
         this.burnDamage = damage;
     }
-
-    @Override
-    public String getType() {
-        return "BurnTile";
-    }
-
-
-    @Override
-    public boolean hasStatusEffect() {
-        return true;
-    }
-
 }
