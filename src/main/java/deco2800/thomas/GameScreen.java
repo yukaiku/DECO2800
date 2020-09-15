@@ -70,7 +70,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 				return world;
 			}
 		},
-		TUTORIAL{
+		TUTORIAL {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new TutorialWorld();
@@ -78,7 +78,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 				return world;
 			}
 		},
-		TEST_WORLD{
+		TEST_WORLD {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new TestWorld();

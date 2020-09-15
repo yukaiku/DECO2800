@@ -8,9 +8,9 @@ import deco2800.thomas.combat.skills.FireballSkill;
 import deco2800.thomas.combat.skills.MeleeSkill;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.HealthTracker;
-import deco2800.thomas.entities.Orb;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
+import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
@@ -25,10 +25,7 @@ import java.util.Map;
 
 public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserver, KeyUpObserver {
     public static int DEFAULT_HEALTH = 50;
-
-//    //Orbs tracker
-//    private static int orbCount = 0;
-//    private static List<Orb> orbs = new ArrayList<Orb>();
+    private static int orbCount = 0;
 
     // The health of the player
     private HealthTracker health;
@@ -152,6 +149,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
 //            orbs.remove(orbCount);
 //        }
 //    }
+
 
     /**
      * Updates the player peon's over time methods, such as tasks and cooldowns.
@@ -358,7 +356,6 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
     public void death() {
         GameManager.get().getWorld().removeEntity(this);
         GameManager.get().getWorld().disposeEntity(this.getEntityID());
-        QuestTracker.resetQuest();
     }
 
     /**

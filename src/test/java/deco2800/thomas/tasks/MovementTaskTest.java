@@ -1,9 +1,13 @@
 package deco2800.thomas.tasks;
 
+import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
+import deco2800.thomas.worlds.AbstractWorld;
+import deco2800.thomas.worlds.Tile;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +22,7 @@ import static org.junit.Assert.*;
  * Test for MovementTask class
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(WorldUtil.class)
+@PrepareForTest({WorldUtil.class, GameManager.class})
 public class MovementTaskTest {
     private MovementTask spyMovementTask;
     private PlayerPeon playerPeon;
@@ -31,6 +35,14 @@ public class MovementTaskTest {
     public void setUp() {
         playerPeon = mock(PlayerPeon.class);
         SquareVector originPosition = mock(SquareVector.class);
+
+        // Set up a mock GameManager so that Tiles can be returned
+        GameManager gameManager = mock(GameManager.class);
+        AbstractWorld world = mock(AbstractWorld.class);
+        PowerMockito.mockStatic(GameManager.class);
+        when(GameManager.get()).thenReturn(gameManager);
+        when(gameManager.getWorld()).thenReturn(world);
+        when(world.getTile(anyInt())).thenReturn(null);
 
         when(playerPeon.getPosition()).thenReturn(originPosition);
         when(originPosition.isCloseEnoughToBeTheSame(any(SquareVector.class))).thenReturn(true);
