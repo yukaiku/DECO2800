@@ -1,35 +1,34 @@
 package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.util.SquareVector;
 
 public class SpeedStatus extends StatusEffect {
-    private final float newSpeed;
+
     private final float multiplier;
     private boolean applied = false;
-    private SquareVector position;
+    private final int ticks;
+    private final long startTime;
 
-    /**
-     * Customer Constructor for the Speed Status effect (Deals specified damage)
-     */
-    public SpeedStatus(AgentEntity entity, float SpeedMultiplier, SquareVector position) {
+    public SpeedStatus(AgentEntity entity, float speedMultiplier, int ticks) {
         super(entity);
-        this.multiplier = SpeedMultiplier;
-        this.newSpeed = getAffectedEntity().getSpeed() * multiplier;
-        this.position = position;
+        this.multiplier = speedMultiplier;
+        this.ticks = ticks;
+        this.startTime = System.nanoTime();
     }
 
     /**
-     * Apply Speed status
+     * Abstract method to be formally implemented via subclass of StatusEffect.
      */
     @Override
     public void applyEffect() {
+        long secondsConversion = 1000000000;
+        long currentTime = System.nanoTime();
         if (!applied) {
-            getAffectedEntity().setSpeed(newSpeed);
+            getAffectedEntity().setSpeed(getAffectedEntity().getSpeed() * multiplier);
             applied = true;
-
         }
-        if (!getAffectedEntity().getPosition().tileEquals(position)) {
+
+        if ((currentTime - startTime) > ticks * secondsConversion) {
             removeEffect();
             setActiveState(false);
         }
@@ -41,5 +40,4 @@ public class SpeedStatus extends StatusEffect {
     public void removeEffect() {
         getAffectedEntity().setSpeed(getAffectedEntity().getSpeed() / multiplier);
     }
-
 }

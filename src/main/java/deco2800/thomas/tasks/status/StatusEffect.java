@@ -2,41 +2,56 @@ package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.entities.Agent.AgentEntity;
 
+/**
+ * An abstract class for a status effect, which can be generalised to apply
+ * effects such as damage over time, healing or slowing.
+ */
 public abstract class StatusEffect {
-    private boolean active = true;
-    private AgentEntity affectedEntity;
 
+    // whether the effect is active, always true upon instantiation
+    private boolean active = true;
+
+    // the entity that this effect is applied to
+    private final AgentEntity affectedEntity;
+
+    /**
+     * Creates a new StatusEffect on a designated entity.
+     *
+     * @param entity The designated entity.
+     */
     public StatusEffect(AgentEntity entity) {
         affectedEntity = entity;
     }
 
     /** Returns the state of the status
      *
-     * @return boolean - whether status is active
+     * @return Whether status is active.
      */
     public boolean getActive() {
         return this.active;
     }
 
     /**
-     * Sets the state of the status, once set inactive, the instance is usually
-     * set to null on the next tick
-     * @param active
+     * Sets the state of the status. Once set to inactive, this instance is removed
+     * from the StatusEffectManager on the next tick.
+     *
+     * @param active The new desired active state of this effect.
      */
     public void setActiveState(boolean active){
         this.active = active;
     }
 
     /**
-     * Returns the current entity tied to this instance of status effect.
-     * @return
+     * Returns the entity tied to this status effect instance.
+     *
+     * @return The entity being affected by this status.
      */
     public AgentEntity getAffectedEntity() {
         return this.affectedEntity;
     }
 
     /**
-     * Abstract method to be formally implemented via subclass of StatusEffect.
+     * Applies the effect of this StatusEffect.
      */
     public abstract void applyEffect();
 }
