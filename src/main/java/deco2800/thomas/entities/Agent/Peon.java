@@ -23,7 +23,7 @@ public class Peon extends AgentEntity implements Tickable {
 		this.setHeight(1);
 		this.speed = 0.05f;
 		this.save = true;
-		this.effects = new ArrayList<>();
+		this.effects = new ArrayList<StatusEffect>();
 	}
 
 	/**

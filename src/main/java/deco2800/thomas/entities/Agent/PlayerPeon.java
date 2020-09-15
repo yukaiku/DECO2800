@@ -193,11 +193,14 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         }
 
         // Check current effects to be applied or removed
-        for (StatusEffect effect : getEffects()) {
-            if (!effect.getActive() || effect.getAffectedEntity() == null) {
-                removeEffect(effect);
-            } else {
-                effect.applyEffect();
+        System.out.println(getEffects());
+        if (getEffects() != null) {
+            for (StatusEffect effect : getEffects()) {
+                if (!effect.getActive() || effect.getAffectedEntity() == null) {
+                    removeEffect(effect);
+                } else {
+                    effect.applyEffect();
+                }
             }
         }
     }
