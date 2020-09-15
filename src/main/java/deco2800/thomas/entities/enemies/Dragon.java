@@ -34,13 +34,13 @@ public class Dragon extends Boss implements PassiveEnemy {
     //the orb number for orb texture
     int orbNumber;
 
-    public Dragon(int height, float speed, int health, int orb) {
-        super("Elder Dragon", "elder_dragon", height, speed, 1);
+    public Dragon(String name, int height, float speed, int health, int orb) {
+        super(name, "elder_dragon", height, speed, health);
         orbNumber = orb;
     }
 
-    public Dragon(int height, float speed, int health, String texture, int orb) {
-        this(height, speed, health,orb);
+    public Dragon(String name, int height, float speed, int health, String texture, int orb) {
+        this(name, height, speed, health, orb);
         super.setTextureDirections(new ArrayList<>(Arrays.asList(texture, texture + "_left", texture + "_right")));
         this.setTexture(texture + "_left");
     }
