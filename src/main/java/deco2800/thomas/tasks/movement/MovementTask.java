@@ -12,7 +12,6 @@ import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.status.BurnStatus;
 import deco2800.thomas.tasks.status.QuicksandBurnStatus;
 import deco2800.thomas.tasks.status.SpeedStatus;
-import deco2800.thomas.tasks.status.SpeedStatus;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;

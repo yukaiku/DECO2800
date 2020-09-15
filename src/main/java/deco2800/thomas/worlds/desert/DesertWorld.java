@@ -33,7 +33,8 @@ public class DesertWorld extends AbstractWorld {
      * Constructor that creates a world with default width and height.
      */
     public DesertWorld() {
-        this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        super(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        generateTiles();
     }
 
     /**

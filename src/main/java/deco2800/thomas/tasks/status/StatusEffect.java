@@ -21,6 +21,9 @@ public abstract class StatusEffect {
      */
     public StatusEffect(AgentEntity entity) {
         affectedEntity = entity;
+        if (entity == null) {
+            active = false;
+        }
     }
 
     /** Returns the state of the status
