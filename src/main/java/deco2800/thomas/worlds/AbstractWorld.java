@@ -4,6 +4,8 @@ import deco2800.thomas.entities.*;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.Agent.QuestTracker;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.BoundingBox;
@@ -124,11 +126,14 @@ public abstract class AbstractWorld implements Tickable {
 
 	/**
 	 * Check if the player's position is same as the orb's position
+	 * Removes orb, add to tracker and jump to next world
 	 */
 	protected void checkObtainedOrb() {
 		if (orbEntity != null) {
 			if (playerEntity.getPosition().equals(orbEntity.getPosition())) {
+				QuestTracker.increaseOrbs(orbEntity);
 				this.removeEntity(playerEntity);
+				this.removeEntity(orbEntity);
 				GameManager.get().setNextWorld();
 			}
 		}
