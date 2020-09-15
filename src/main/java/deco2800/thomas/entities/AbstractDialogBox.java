@@ -9,6 +9,8 @@ public class AbstractDialogBox {
 	String description;
 	String price;
 	Item item; 
+	Window box;
+	boolean show; 
 	
 	public AbstractDialogBox (Item item, String name, String description,
 			String price) {
@@ -16,13 +18,23 @@ public class AbstractDialogBox {
 		this.description = description;
 		this.price = price;
 		this.item = item;
+		this.box = new Window("Item", GameManager.get().getSkin());
+		show = false;
 		// all the information to add into the window.
 		// item object also added to access image etc. 
 		
 	}
 	
-	public String getDialog(){
+	public String getName() {
 		return name;
 	}
 	
+	// returns if you can see the dialog box or not. 
+	public boolean getVisible(){
+		return show; 
+	}
+	
+	public Window getBox() {
+		return box; 
+	}
 }
