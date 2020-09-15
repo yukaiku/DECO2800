@@ -57,11 +57,13 @@ public class Dragon extends Boss implements PassiveEnemy {
 
     @Override
     public void reduceHealth(int damage) {
-        this.getHealthTracker().reduceHealth(damage);
+        hitByTarget();
+        health.reduceHealth(damage);
         if (isDead()) {
             death();
         }
-        hitByTarget();
+        isAttacked = true;
+        isAttackedCoolDown = 10;
     }
 
     /**
@@ -127,6 +129,11 @@ public class Dragon extends Boss implements PassiveEnemy {
             if (getCombatTask().isComplete()) {
                 setCombatTask(null);
             }
+        }
+
+        // isAttacked animation
+        if (isAttacked && --isAttackedCoolDown < 0) {
+            isAttacked = false;
         }
     }
 

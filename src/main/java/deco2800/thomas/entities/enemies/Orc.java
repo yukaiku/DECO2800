@@ -127,6 +127,11 @@ public class Orc extends Monster implements AggressiveEnemy {
                 setCombatTask(null);
             }
         }
+
+        // isAttacked animation
+        if (isAttacked && --isAttackedCoolDown < 0) {
+            isAttacked = false;
+        }
     }
 
     @Override

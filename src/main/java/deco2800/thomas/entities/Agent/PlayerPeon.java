@@ -232,6 +232,11 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         if (mechSkill != null) {
             mechSkill.onTick(i);
         }
+
+        // isAttacked animation
+        if (isAttacked && --isAttackedCoolDown < 0) {
+            isAttacked = false;
+        }
     }
 
     /**
