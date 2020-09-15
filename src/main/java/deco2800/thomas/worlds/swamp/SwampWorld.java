@@ -12,13 +12,16 @@ import deco2800.thomas.entities.SwampTreeLog;
 import deco2800.thomas.entities.SwampTreeStub;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
+import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.NonPlayablePeonManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.TestWorld;
+import deco2800.thomas.worlds.Tile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +45,7 @@ public class SwampWorld extends AbstractWorld {
         this.generateTileMap();
         this.generateTileIndices();
         this.generateStaticEntities();
+        this.generateItemEntities();
 
         // Create the player entity
         this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
@@ -175,6 +179,31 @@ public class SwampWorld extends AbstractWorld {
         this.createTreeStub();
         this.createFallenTree();
         this.createTreeLog();
+    }
+
+    /**
+     * Generates items for swamp region, all positions of item are randomized
+     * every time player loads into swamp zone.
+     *
+     * Items: Health potions, Iron shields etc.
+     */
+    private void generateItemEntities(){
+        final int NUM_POTIONS = 6;
+        final int NUM_SHIELDS = 4;
+
+        for (int i = 0; i < NUM_POTIONS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            HealthPotion potion = new HealthPotion(tile,false);
+            entities.add(potion);
+        }
+
+        for (int i = 0; i < NUM_SHIELDS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            Shield shield = new Shield(tile, false);
+            entities.add(shield);
+        }
     }
 
     @Override

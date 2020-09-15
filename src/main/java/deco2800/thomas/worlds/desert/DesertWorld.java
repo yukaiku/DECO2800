@@ -9,7 +9,9 @@ import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.desert.*;
+import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
+import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
@@ -60,6 +62,8 @@ public class DesertWorld extends AbstractWorld {
         npnSpawns.add(new MerchantNPC("DesertMerchantNPC", new SquareVector(-23, 20),"desert_npc2",swampMerchantShop));
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
         GameManager.get().addManager(npcManager);
+
+        generateItemEntities();
     }
 
     /**
@@ -148,6 +152,31 @@ public class DesertWorld extends AbstractWorld {
                     tile.setObstructed(true);
                     break;
             }
+        }
+    }
+
+    /**
+     * Generates items for desert region, all positions of item are randomized
+     * every time player loads into desert zone.
+     *
+     * Items: Health potions, Iron shields etc.
+     */
+    private void generateItemEntities(){
+        final int NUM_POTIONS = 6;
+        final int NUM_SHIELDS = 4;
+
+        for (int i = 0; i < NUM_POTIONS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            HealthPotion potion = new HealthPotion(tile,false);
+            entities.add(potion);
+        }
+
+        for (int i = 0; i < NUM_SHIELDS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            Shield shield = new Shield(tile, false);
+            entities.add(shield);
         }
     }
 

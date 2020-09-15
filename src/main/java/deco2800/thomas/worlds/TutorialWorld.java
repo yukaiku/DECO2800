@@ -2,6 +2,7 @@ package deco2800.thomas.worlds;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import deco2800.thomas.GameScreen;
 import deco2800.thomas.entities.Agent.AgentEntity;
@@ -13,6 +14,7 @@ import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.*;
 import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
+import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.entities.items.TestItem;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.NonPlayablePeonManager;
@@ -20,6 +22,9 @@ import deco2800.thomas.managers.NonPlayablePeonManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.managers.GameManager;
+import org.lwjgl.Sys;
+
+import java.util.Random;
 
 public class TutorialWorld extends AbstractWorld{
 
@@ -97,11 +102,15 @@ public class TutorialWorld extends AbstractWorld{
         t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW);
         entities.add(new Portal(t, false));
 
-        //for (int i = 0; i < 4; i++) {
-            Tile potion = GameManager.get().getWorld().getTile(1,0);
-            entities.add(new HealthPotion(potion, false));
-        //}
+        Tile potion;
+        potion = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
+                Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
+        entities.add(new HealthPotion(potion, false));
 
+        Tile shield;
+        shield = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
+                Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
+        entities.add(new Shield(shield, false));
     }
 
     @Override

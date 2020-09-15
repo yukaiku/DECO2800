@@ -11,7 +11,9 @@ import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.tundra.TundraCampfire;
 import deco2800.thomas.entities.environment.tundra.TundraRock;
 import deco2800.thomas.entities.environment.tundra.TundraTreeLog;
+import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
+import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -40,6 +42,7 @@ public class TundraWorld extends AbstractWorld {
 	public TundraWorld(int width, int height) {
 		DatabaseManager.loadWorld(this, MAP_FILE);
 		generateStaticEntities();
+		generateItemEntities();
 		this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.15f));
 		addEntity(this.getPlayerEntity());
 
@@ -97,6 +100,32 @@ public class TundraWorld extends AbstractWorld {
 			}
 		}
 	}
+
+	/**
+	 * Generates items for tundra region, all positions of item are randomized
+	 * every time player loads into tundra zone.
+	 *
+	 * Items: Health potions, Iron shields etc.
+	 */
+	private void generateItemEntities(){
+		final int NUM_POTIONS = 6;
+		final int NUM_SHIELDS = 4;
+
+		for (int i = 0; i < NUM_POTIONS; i++) {
+			Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+					Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+			HealthPotion potion = new HealthPotion(tile,false);
+			entities.add(potion);
+		}
+
+		for (int i = 0; i < NUM_SHIELDS; i++) {
+			Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+					Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+			Shield shield = new Shield(tile, false);
+			entities.add(shield);
+		}
+	}
+
 
 	private void addCampfire(float col, float row) {
 		Tile tile = getTile(col, row);

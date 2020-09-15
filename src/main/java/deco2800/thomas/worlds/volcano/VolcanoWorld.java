@@ -12,7 +12,9 @@ import deco2800.thomas.entities.VolcanoRuins;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.volcano.VolcanoBurningTree;
+import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
+import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -61,6 +63,7 @@ public class VolcanoWorld extends AbstractWorld {
         //Add player to game
         this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.15f));
         addEntity(this.getPlayerEntity());
+        generateItemEntities();
 
         Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano");
         Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_volcano", 1);
@@ -126,6 +129,31 @@ public class VolcanoWorld extends AbstractWorld {
         //For objects that are added randomly & require more specific addition
         //entities, they're methodology will folllow add()
         addRandoms();
+    }
+
+    /**
+     * Generates items for volcano region, all positions of item are randomized
+     * every time player loads into volcano zone.
+     *
+     * Items: Health potions, Iron shields etc.
+     */
+    private void generateItemEntities(){
+        final int NUM_POTIONS = 6;
+        final int NUM_SHIELDS = 4;
+
+        for (int i = 0; i < NUM_POTIONS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            HealthPotion potion = new HealthPotion(tile,false);
+            entities.add(potion);
+        }
+
+        for (int i = 0; i < NUM_SHIELDS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            Shield shield = new Shield(tile, false);
+            entities.add(shield);
+        }
     }
 
     /**
