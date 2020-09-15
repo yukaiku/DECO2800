@@ -100,6 +100,11 @@ public class Goblin extends Minion implements AggressiveEnemy {
                 setCombatTask(null);
             }
         }
+
+        // isAttacked animation
+        if (isAttacked && --isAttackedCoolDown < 0) {
+            isAttacked = false;
+        }
     }
 
     @Override

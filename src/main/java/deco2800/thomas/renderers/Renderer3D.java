@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.Animatable;
@@ -237,10 +238,23 @@ public class Renderer3D implements Renderer {
 			batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width / 2,
 					height / 2, width, height, 2, 2, ((Projectile) entity).getDirection());
 		} else if (entity instanceof Animatable) {
-			// render animation frames
 			batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width, height);
+			if (entity instanceof Peon && ((Peon) entity).isAttacked()) {
+				batch.setColor(102, 0, 0, 1);
+				batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width, height);
+				batch.setColor(Color.WHITE);
+			} else {
+				batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width, height);
+			}
 		} else {
-			batch.draw(tex, x, y, width, height);
+			// will remove if statement after enemies became animatable
+			if (entity instanceof Peon && ((Peon) entity).isAttacked()) {
+				batch.setColor(Color.RED);
+				batch.draw(tex, x, y, width, height);
+				batch.setColor(Color.WHITE);
+			} else {
+				batch.draw(tex, x, y, width, height);
+			}
 		}
 	}
 

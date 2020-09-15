@@ -35,7 +35,7 @@ public class Dragon extends Boss implements PassiveEnemy {
     int orbNumber;
 
     public Dragon(int height, float speed, int health, int orb) {
-        super("Elder Dragon", "elder_dragon", height, speed, health);
+        super("Elder Dragon", "elder_dragon", height, speed, 1);
         orbNumber = orb;
     }
 
@@ -58,11 +58,13 @@ public class Dragon extends Boss implements PassiveEnemy {
 
     @Override
     public void reduceHealth(int damage) {
-        this.getHealthTracker().reduceHealth(damage);
+        hitByTarget();
+        health.reduceHealth(damage);
         if (isDead()) {
             death();
         }
-        hitByTarget();
+        isAttacked = true;
+        isAttackedCoolDown = 10;
     }
 
     /**
@@ -128,6 +130,11 @@ public class Dragon extends Boss implements PassiveEnemy {
             if (getCombatTask().isComplete()) {
                 setCombatTask(null);
             }
+        }
+
+        // isAttacked animation
+        if (isAttacked && --isAttackedCoolDown < 0) {
+            isAttacked = false;
         }
     }
 

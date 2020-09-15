@@ -99,4 +99,12 @@ public class PlayerPeonTest extends BaseGDXTest {
         playerPeon.notifyKeyUp(Input.Keys.S);
         assertEquals(MovementTask.Direction.NONE, playerPeon.getMovingDirection());
     }
+
+    /**
+     * Test getting dialogue through PlayerPeon class works
+     */
+    @Test
+    public void testGetDialogue() {
+        assertEquals(PlayerPeon.getDialogue("roar"), "Roar!!!");
+    }
 }
