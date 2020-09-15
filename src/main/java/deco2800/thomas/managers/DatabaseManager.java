@@ -17,6 +17,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import deco2800.thomas.worlds.desert.CactusTile;
 import deco2800.thomas.worlds.desert.QuicksandTile;
+import deco2800.thomas.worlds.tundra.TundraWorldIceTile;
 import deco2800.thomas.worlds.volcano.VolcanoBurnTile;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
@@ -456,7 +457,9 @@ public final class DatabaseManager extends AbstractManager {
         if (saveLocationAndFilename.equals("resources/environment/desert/desert_map.json")) {
             newTiles = setDesertTiles(newTiles);
         } else if (saveLocationAndFilename.equals("resources/environment/volcano/VolcanoZone.json")) {
-            newTiles = checkVolcanoWorld(newTiles);
+            newTiles = setVolcanoTiles(newTiles);
+        } else if (saveLocationAndFilename.equals("resources/environment/tundra/tundra-map.json")) {
+            newTiles = setTundaTiles(newTiles);
         }
 
         world.setTiles(newTiles);
@@ -560,16 +563,16 @@ public final class DatabaseManager extends AbstractManager {
     }
 
 	/**
-	 * Modifies the world so burning tiles can be implemented for health
-	 * -reduction functionality.
-	 *
-	 * @param oldTiles A CopyOnWriteArrayList containing the current tile list
-	 *                 loaded from a local JSON file that is to be modified
-	 *                 for the volcano zone to contain burning tiles.
+     * Modifies the world so burning tiles can be implemented for health
+     * -reduction functionality.
+     *
+     * @param oldTiles A CopyOnWriteArrayList containing the current tile list
+     *                 loaded from a local JSON file that is to be modified
+     *                 for the volcano zone to contain burning tiles.
      *
      * @return The modified tile list, with burn tiles added.
-	 */
-	static private CopyOnWriteArrayList<Tile> checkVolcanoWorld(CopyOnWriteArrayList<Tile> oldTiles) {
+     */
+    static private CopyOnWriteArrayList<Tile> setVolcanoTiles(CopyOnWriteArrayList<Tile> oldTiles) {
         CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
         int i = 0;
 
@@ -582,6 +585,29 @@ public final class DatabaseManager extends AbstractManager {
             newTiles.get(i).setTileID(i++);
         }
 
+        return newTiles;
+    }
+
+    /**
+     * Modifies the world so slippery/ice-like tiles can be implemented
+     *
+     * @param oldTiles A CopyOnWriteArrayList containing the current tile list
+     *                 loaded from a local JSON file that is to be modified
+     *                 for the Tundra zone to contain slippery ice tiles.
+     *
+     * @return The modified tile list, with custom tundra tiles added.
+     */
+    static private CopyOnWriteArrayList<Tile> setTundaTiles(CopyOnWriteArrayList<Tile> oldTiles) {
+        CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
+        int i = 0;
+        for (Tile tile : oldTiles) {
+            if (Integer.parseInt(tile.getTextureName().split("-")[2]) < 3 ) {
+                newTiles.add(new TundraWorldIceTile(tile.getTextureName(), tile.getCol(), tile.getRow()));
+            } else {
+                newTiles.add(tile);
+            }
+            newTiles.get(i).setTileID(i++);
+        }
         return newTiles;
     }
 

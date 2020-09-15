@@ -3,7 +3,7 @@ package deco2800.thomas.tasks.status;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.util.SquareVector;
 
-public class QuicksandSpeedStatus extends StatusEffect {
+public class SpeedStatus extends StatusEffect {
     private final float newSpeed;
     private final float multiplier;
     private boolean applied = false;
@@ -12,7 +12,7 @@ public class QuicksandSpeedStatus extends StatusEffect {
     /**
      * Customer Constructor for the Speed Status effect (Deals specified damage)
      */
-    public QuicksandSpeedStatus(AgentEntity entity, float SpeedMultiplier, SquareVector position) {
+    public SpeedStatus(AgentEntity entity, float SpeedMultiplier, SquareVector position) {
         super(entity);
         this.multiplier = SpeedMultiplier;
         this.newSpeed = getAffectedEntity().getSpeed() * multiplier;

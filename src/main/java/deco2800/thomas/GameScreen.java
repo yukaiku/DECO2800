@@ -59,7 +59,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		NEW_GAME {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new DesertWorld();
+				AbstractWorld world = new TundraWorld();
 
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
