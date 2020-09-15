@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
+import deco2800.thomas.combat.skills.FireBombSkill;
 import deco2800.thomas.combat.skills.FireballSkill;
 import deco2800.thomas.combat.skills.MeleeSkill;
 import deco2800.thomas.combat.skills.SwordSwipe;
@@ -62,7 +63,7 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         wizardSkills.add(new FireballSkill(this));
         activeWizardSkill = 0;
 
-        mechSkill = new SwordSwipe(this);
+        mechSkill = new FireBombSkill(this);
     }
 
     /**

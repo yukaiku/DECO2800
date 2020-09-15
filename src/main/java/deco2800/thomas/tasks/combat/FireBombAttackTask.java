@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Spawns an explosion around the entity into the game world.
  */
-public class ExplosionTask extends AbstractTask {
+public class FireBombAttackTask extends AbstractTask {
     /* Lifetime of the effect */
     private long lifetime;
     /* Tick period of effect */
@@ -33,7 +33,7 @@ public class ExplosionTask extends AbstractTask {
      * @param lifetime Duration in ticks of damage over time effect
      * @param tickPeriod Period in ticks in between damage ticks
      */
-    public ExplosionTask(AbstractEntity entity, int damage, int lifetime, int tickPeriod) {
+    public FireBombAttackTask(AbstractEntity entity, int damage, int lifetime, int tickPeriod) {
         super(entity);
         this.damage = damage;
         this.lifetime = lifetime;
@@ -47,7 +47,7 @@ public class ExplosionTask extends AbstractTask {
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
                 Explosion explosion = new Explosion(entity.getCol() + x, entity.getRow() + y,
-                        damage, entity.getFaction());
+                        damage / 2, entity.getFaction()); // Tick damage less than initial hit
                 explosion.setCombatTask(new ApplyDamageOverTimeTask(explosion, lifetime, tickPeriod));
                 GameManager.get().getWorld().addEntity(explosion);
             }
