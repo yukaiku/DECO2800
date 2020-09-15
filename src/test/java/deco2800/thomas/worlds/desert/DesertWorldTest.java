@@ -361,5 +361,12 @@ public class DesertWorldTest {
         }
     }
 
+    /**
+     * Tests that the player entity is spawned in the world.
+     */
+    @Test
+    public void playerSpawned() {
+        Assert.assertNotNull(spyWorld.getPlayerEntity());
+    }
 }
 
