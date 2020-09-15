@@ -2,18 +2,22 @@ package deco2800.thomas.entities.Agent;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.combat.skills.FireballSkill;
 import deco2800.thomas.combat.skills.MeleeSkill;
+import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.HealthTracker;
-import deco2800.thomas.entities.Orb;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
+import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
@@ -23,8 +27,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserver, KeyUpObserver {
-    public static int DEFAULT_HEALTH = 50;
+public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, KeyDownObserver, KeyUpObserver {
+    // Animation Testing
+    public enum State {
+        STANDING, WALKING, MELEE_ATTACK, RANGE_ATTACK
+    }
+    public State currentState;
+    public State previousState;
+    private MovementTask.Direction facingDirection;
+    private final Animation<TextureRegion> playerStand;
+    private final Animation<TextureRegion> playerMeleeAttack;
+    private final Animation<TextureRegion> playerRangeAttack;
+    private float stateTimer;
+    private int duration = 0;
+
+    public static int DEFAULT_HEALTH = 500;
 
 //    //Orbs tracker
 //    private static int orbCount = 0;
@@ -65,6 +82,18 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         activeWizardSkill = 0;
 
         mechSkill = new MeleeSkill(this);
+
+        // Animation Testing
+        facingDirection = MovementTask.Direction.RIGHT;
+        currentState = State.STANDING;
+        previousState = State.STANDING;
+        stateTimer = 0;
+        playerMeleeAttack = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_melee"));
+        playerRangeAttack = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_range"));
+        playerStand = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_stand"));
     }
 
     /**
@@ -216,9 +245,21 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
             }
         }
 
+        if (--duration < 0) {
+            duration = 0;
+            currentState = State.STANDING;
+        }
+
         // Update combat task
         if (getCombatTask() != null) {
             getCombatTask().onTick(i);
+            if (getCombatTask() instanceof MeleeAttackTask) {
+                currentState = State.MELEE_ATTACK;
+            } else {
+                currentState = State.RANGE_ATTACK;
+            }
+            // Due to the combat task is currently executed instantly, will set a cool down here
+            duration = 9;
 
             if (getCombatTask().isComplete()) {
                 setCombatTask(null);
@@ -234,6 +275,45 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         if (mechSkill != null) {
             mechSkill.onTick(i);
         }
+
+        // isAttacked animation
+        if (isAttacked && --isAttackedCoolDown < 0) {
+            isAttacked = false;
+        }
+    }
+
+    /**
+     * Get the texture region of current animation keyframe (this will be called in Renderer3D.java).
+     * @param delta the interval of the ticks
+     * @return the current texture region in animation
+     */
+    public TextureRegion getFrame(float delta) {
+        TextureRegion region;
+        // Get the animation frame based on the current state
+        switch (currentState) {
+            case RANGE_ATTACK:
+                region = playerRangeAttack.getKeyFrame(stateTimer);
+                break;
+            case MELEE_ATTACK:
+                region = playerMeleeAttack.getKeyFrame(stateTimer);
+                break;
+            case STANDING:
+            default:
+                region = playerStand.getKeyFrame(stateTimer);
+        }
+        // Render the correct direction of the texture
+        if ((getMovingDirection() == MovementTask.Direction.LEFT ||
+                facingDirection == MovementTask.Direction.LEFT) && !region.isFlipX()) {
+            region.flip(true, false);
+            facingDirection = MovementTask.Direction.LEFT;
+        } else if ((getMovingDirection() == MovementTask.Direction.RIGHT ||
+                facingDirection == MovementTask.Direction.RIGHT) && region.isFlipX()) {
+            region.flip(true, false);
+            facingDirection = MovementTask.Direction.RIGHT;
+        }
+        stateTimer = currentState == previousState ? stateTimer + delta : 0;
+        previousState = currentState;
+        return region;
     }
 
     /**
@@ -268,6 +348,13 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
                 // Won't occur because I'm handling it
                 e.printStackTrace();
             }
+        }
+
+        // set the facing direction when attacking
+        if (clickedPosition[0] < this.getCol()) {
+            facingDirection = MovementTask.Direction.LEFT;
+        } else {
+            facingDirection = MovementTask.Direction.RIGHT;
         }
     }
 
@@ -313,11 +400,9 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
                 this.setMovingDirection(MovementTask.Direction.DOWN);
                 break;
             case Input.Keys.A:
-                this.setTexture("player_left");
                 this.setMovingDirection(MovementTask.Direction.LEFT);
                 break;
             case Input.Keys.D:
-                this.setTexture("player_right");
                 this.setMovingDirection(MovementTask.Direction.RIGHT);
                 break;
             default:

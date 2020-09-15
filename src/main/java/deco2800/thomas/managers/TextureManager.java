@@ -1,6 +1,8 @@
 package deco2800.thomas.managers;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +17,7 @@ import java.util.Map;
  * from the list and then read from disk when needed again using some type
  * of reference counting
  *
- * @author Tim Hadwen
+ * @author Tim Hadwen and studio 2
  */
 public class TextureManager extends AbstractManager {
 
@@ -35,6 +37,9 @@ public class TextureManager extends AbstractManager {
 	 * A HashMap of all textures with string keys
 	 */
 	private Map<String, Texture> textureMap = new HashMap<>();
+
+	// a hashmap storing all animation frames
+	private final Map<String, Array<TextureRegion>> animationFrames = new HashMap<>();
 
 	/**
 	 * Constructor
@@ -165,6 +170,7 @@ public class TextureManager extends AbstractManager {
 			e.printStackTrace();
 		}
 		addEnvironmentTextures();
+		addAnimationFrames();
 	}
 
 	private void addEnvironmentTextures() {
@@ -286,6 +292,37 @@ public class TextureManager extends AbstractManager {
 		// Attacks
 		textureMap.put("fireball_right", new Texture("resources/combat/fireball_right.png"));
 		textureMap.put("fireball_left", new Texture("resources/combat/fireball_left.png"));
+	}
+
+	private void addAnimationFrames() {
+		try {
+			// Note: The initial facing direction should be RIGHT. The flipped version is not needed.
+			// player standing
+			Array<TextureRegion> playerStand = new Array<>();
+			playerStand.add(new TextureRegion(new Texture("resources/combat/move_right.png"), 262, 256));
+			animationFrames.put("player_stand", playerStand);
+
+			// player melee attacks
+			Array<TextureRegion> playerMelee = new Array<>();
+			playerMelee.add(new TextureRegion(new Texture("resources/combat/melee_right1.png"), 0, 0, 350, 400));
+			playerMelee.add(new TextureRegion(new Texture("resources/combat/melee_right2.png"), 0, 0, 350, 400));
+			playerMelee.add(new TextureRegion(new Texture("resources/combat/melee_right3.png"), 0, 0, 350, 400));
+			animationFrames.put("player_melee", playerMelee);
+
+			// player range attacks
+			Array<TextureRegion> playerRange = new Array<>();
+			playerRange.add(new TextureRegion(new Texture("resources/combat/range_right1.png"), 0, 0, 350, 400));
+			animationFrames.put("player_range", playerRange);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public Array<TextureRegion> getAnimationFrames(String id) {
+		if (animationFrames.containsKey(id)) {
+			return animationFrames.get(id);
+		}
+		return null;
 	}
 
 	/**

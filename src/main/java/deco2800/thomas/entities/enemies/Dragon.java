@@ -7,6 +7,7 @@ import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
@@ -34,7 +35,7 @@ public class Dragon extends Boss implements PassiveEnemy {
     int orbNumber;
 
     public Dragon(int height, float speed, int health, int orb) {
-        super("Elder Dragon", "elder_dragon", height, speed, health);
+        super("Elder Dragon", "elder_dragon", height, speed, 1);
         orbNumber = orb;
     }
 
@@ -57,11 +58,13 @@ public class Dragon extends Boss implements PassiveEnemy {
 
     @Override
     public void reduceHealth(int damage) {
-        this.getHealthTracker().reduceHealth(damage);
+        hitByTarget();
+        health.reduceHealth(damage);
         if (isDead()) {
             death();
         }
-        hitByTarget();
+        isAttacked = true;
+        isAttackedCoolDown = 10;
     }
 
     /**
@@ -127,6 +130,11 @@ public class Dragon extends Boss implements PassiveEnemy {
             if (getCombatTask().isComplete()) {
                 setCombatTask(null);
             }
+        }
+
+        // isAttacked animation
+        if (isAttacked && --isAttackedCoolDown < 0) {
+            isAttacked = false;
         }
     }
 

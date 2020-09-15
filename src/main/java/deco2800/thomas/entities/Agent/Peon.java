@@ -10,6 +10,9 @@ public class Peon extends AgentEntity implements Tickable {
 	private transient AbstractTask movementTask;
 	private transient AbstractTask combatTask;
 
+	protected boolean isAttacked = false;
+	protected int isAttackedCoolDown = 0;
+
 	public Peon() {
 		super();
 		this.setTexture("spacman_ded");
@@ -34,7 +37,6 @@ public class Peon extends AgentEntity implements Tickable {
 				this.movementTask = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
 			}
 			movementTask.onTick(i);
-//			System.out.println("Doing movement");
 		} else {
 			movementTask = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
 		}
@@ -45,11 +47,25 @@ public class Peon extends AgentEntity implements Tickable {
 			if (combatTask.isComplete()) {
 				combatTask = null;
 			}
-//			System.out.println("Doing");
 			combatTask.onTick(i);
 		} else {
-//			System.out.println("No taska");
 		}
+
+		// isAttacked animation
+		if (isAttacked && --isAttackedCoolDown < 0) {
+			isAttacked = false;
+		}
+	}
+
+	@Override
+	public void reduceHealth(int damage) {
+		health.reduceHealth(damage);
+		isAttacked = true;
+		isAttackedCoolDown = 5;
+	}
+
+	public boolean isAttacked() {
+		return this.isAttacked;
 	}
 
 	protected void setMovementTask(AbstractTask movementTask) {

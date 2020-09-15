@@ -21,6 +21,7 @@ import deco2800.thomas.renderers.Renderer3D;
 import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
+import deco2800.thomas.worlds.desert.DesertWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
@@ -74,12 +75,12 @@ public class GameScreen implements Screen, KeyDownObserver {
 		NEW_GAME {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new TundraWorld();
+				AbstractWorld world = new DesertWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
 		},
-		TUTORIAL{
+		TUTORIAL {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new TutorialWorld();
@@ -87,7 +88,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 				return world;
 			}
 		},
-		TEST_WORLD{
+		TEST_WORLD {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new TestWorld();
