@@ -30,8 +30,8 @@ public class Item extends StaticEntity {
         return this.goldValue;
     }
 
-    public static int randomItemPositionGenerator (int min, int max){
-        return new Random().nextInt((max/2) - (min/2)) - min;
+    public static int randomItemPositionGenerator (int max){
+        return new Random().nextInt(2*max - 0) - max;
     }
 
     @Override
