@@ -12,7 +12,6 @@ import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.attacks.Projectile;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.util.SquareVector;
-import javafx.animation.AnimationTimer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -248,7 +247,7 @@ public class Renderer3D implements Renderer {
 			}
 		} else {
 			if (entity instanceof Peon && ((Peon) entity).isAttacked()) {
-				batch.setColor(Color.RED);
+				batch.setColor(102, 0, 0, 1);
 				batch.draw(tex, x, y, width, height);
 				batch.setColor(Color.WHITE);
 			} else {
