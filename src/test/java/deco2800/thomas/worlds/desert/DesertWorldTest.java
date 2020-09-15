@@ -155,16 +155,50 @@ public class DesertWorldTest {
         spyWorld.onTick(anyLong());
         boolean allTiles = true;
         ArrayList<SquareVector> entityPos = new ArrayList<>();
+        SquareVector pos;
 
+        // find all positions of cactus entities
         for (AbstractEntity entity : spyWorld.getEntities()) {
             if (entity.getObjectName().equals("DesertCactus")) {
                 entityPos.add(entity.getPosition());
             }
         }
 
+        // check that tiles with Cactus type are in the cactus entity list
         for (Tile tile : spyWorld.getTiles()) {
             if (tile.getType().equals("Cactus")) {
-                SquareVector pos = tile.getCoordinates();
+                pos = tile.getCoordinates();
+                if (!entityPos.contains(pos)) {
+                    allTiles = false;
+                    break;
+                }
+            }
+        }
+
+        Assert.assertTrue(allTiles);
+    }
+
+    /**
+     * Tests that all tiles with the desert_3 texture have an associated
+     * cactus or dead tree static entity.
+     */
+    @Test
+    public void cactusOrDeadTree() {
+        spyWorld.onTick(anyLong());
+        boolean allTiles = true;
+        ArrayList<SquareVector> entityPos = new ArrayList<>();
+        SquareVector pos;
+
+        // find all positions 
+        for (AbstractEntity entity : spyWorld.getEntities()) {
+            if (entity.getObjectName().equals("DesertCactus") || entity.getObjectName().equals("DesertDeadTree")) {
+                entityPos.add(entity.getPosition());
+            }
+        }
+
+        for (Tile tile : spyWorld.getTiles()) {
+            if (tile.getTextureName().equals("desert_3")) {
+                pos = tile.getCoordinates();
                 if (!entityPos.contains(pos)) {
                     allTiles = false;
                     break;
@@ -201,6 +235,7 @@ public class DesertWorldTest {
         spyWorld.onTick(anyLong());
         boolean allTiles = true;
         ArrayList<SquareVector> entityPos = new ArrayList<>();
+        SquareVector pos;
 
         for (AbstractEntity entity : spyWorld.getEntities()) {
             if (entity.getObjectName().equals("DesertQuicksand")) {
@@ -210,7 +245,7 @@ public class DesertWorldTest {
 
         for (Tile tile : spyWorld.getTiles()) {
             if (tile.getType().equals("Quicksand")) {
-                SquareVector pos = tile.getCoordinates();
+                pos = tile.getCoordinates();
                 if (!entityPos.contains(pos)) {
                     allTiles = false;
                     break;
@@ -221,6 +256,9 @@ public class DesertWorldTest {
         Assert.assertTrue(allTiles);
     }
 
+    /**
+     * Tests that all tiles on the map with blue (water) textures are obstructed.
+     */
     @Test
     public void waterObstructed() {
         String texName;
@@ -239,4 +277,89 @@ public class DesertWorldTest {
 
         Assert.assertTrue(allTiles);
     }
+
+    /**
+     * Tests that all tiles on the map sand dune textures are obstructed.
+     */
+    @Test
+    public void dunesObstructed() {
+        String texName;
+        spyWorld.onTick(anyLong());
+        boolean allTiles = true;
+
+        for (Tile tile : spyWorld.getTiles()) {
+            texName = tile.getTextureName();
+            if (texName.equals("desert_5") || texName.equals("desert_6")) {
+                if (!tile.isObstructed()) {
+                    allTiles = false;
+                    break;
+                }
+            }
+        }
+
+        Assert.assertTrue(allTiles);
+    }
+
+
+    /**
+     * Tests that all tiles with desert_5 or desert_6 textures have an
+     * associated sand dune entity.
+     */
+    @Test
+    public void sandDunesPlaced() {
+        spyWorld.onTick(anyLong());
+        boolean allTiles = true;
+        ArrayList<SquareVector> entityPos = new ArrayList<>();
+        SquareVector pos;
+
+        for (AbstractEntity entity : spyWorld.getEntities()) {
+            if (entity.getObjectName().equals("DesertSandDune")) {
+                entityPos.add(entity.getPosition());
+            }
+        }
+
+        for (Tile tile : spyWorld.getTiles()) {
+            if (tile.getTextureName().equals("desert_5") || tile.getTextureName().equals("desert_6")) {
+                pos = tile.getCoordinates();
+                if (!entityPos.contains(pos)) {
+                    allTiles = false;
+                    break;
+                }
+            }
+        }
+
+        Assert.assertTrue(allTiles);
+    }
+
+    /**
+     * Tests that all oasis tree entities are places on tile with
+     * textures: oasis_1, oasis_2 or oasis_3.
+     */
+    @Test
+    public void oasisTreesPlaced() {
+        spyWorld.onTick(anyLong());
+        boolean allTiles = true;
+        ArrayList<SquareVector> tilePos = new ArrayList<>();
+        SquareVector pos;
+
+        for (Tile tile : spyWorld.getTiles()) {
+            if (tile.getTextureName().equals("oasis_1") || tile.getTextureName().equals("oasis_2")
+                    || tile.getTextureName().equals("oasis_3")) {
+
+                tilePos.add(tile.getCoordinates());
+            }
+        }
+
+        for (AbstractEntity entity : spyWorld.getEntities()) {
+            if (entity.getObjectName().equals("OasisTree")) {
+                pos = entity.getPosition();
+                if (!tilePos.contains(pos)) {
+                    allTiles = false;
+                    break;
+                }
+            }
+        }
+    }
+
 }
+
