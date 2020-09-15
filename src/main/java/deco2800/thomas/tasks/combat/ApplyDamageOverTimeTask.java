@@ -99,7 +99,6 @@ public class ApplyDamageOverTimeTask extends AbstractTask {
             AgentEntity agentEntity = (AgentEntity) e;
 
             agentEntity.reduceHealth(((CombatEntity) entity).getDamage());
-            this.taskComplete = true;
             if (agentEntity.isDead()) {
                 agentEntity.death();
             }
