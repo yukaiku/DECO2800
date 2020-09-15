@@ -16,6 +16,7 @@ public class CactusTile extends Tile {
      */
     public CactusTile(String texture) {
         super(texture);
+        this.setType("Cactus");
     }
 
     /**
@@ -27,21 +28,13 @@ public class CactusTile extends Tile {
      */
     public CactusTile(String texture, float col, float row) {
         super(texture, col, row);
+        this.setType("Cactus");
     }
 
     /**
      * Creates a CactusTile without any designated params.
      */
     public CactusTile() {
-    }
-
-    /**
-     * Returns the type of this Tile.
-     *
-     * @return The type of this Tile.
-     */
-    @Override
-    public String getType() {
-        return "Cactus";
+        this.setType("Cactus");
     }
 }

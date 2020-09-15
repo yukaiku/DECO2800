@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, KeyDownObserver, KeyUpObserver {
-    // Animation Testing states
+    // Animation Testing
     public enum State {
         STANDING, WALKING, MELEE_ATTACK, RANGE_ATTACK
     }
