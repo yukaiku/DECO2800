@@ -240,7 +240,7 @@ public class Renderer3D implements Renderer {
 		} else if (entity instanceof Animatable) {
 			// render animation frames
 			if (entity instanceof Peon && ((Peon) entity).isAttacked()) {
-				batch.setColor(Color.RED);
+				batch.setColor(102, 0, 0, 1);
 				batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width, height);
 				batch.setColor(Color.WHITE);
 			} else {

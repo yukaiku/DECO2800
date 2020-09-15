@@ -259,10 +259,12 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
                 region = playerStand.getKeyFrame(stateTimer);
         }
         // Render the correct direction of the texture
-        if ((getMovingDirection() == MovementTask.Direction.LEFT || facingDirection == MovementTask.Direction.LEFT) && !region.isFlipX()) {
+        if ((getMovingDirection() == MovementTask.Direction.LEFT ||
+                facingDirection == MovementTask.Direction.LEFT) && !region.isFlipX()) {
             region.flip(true, false);
             facingDirection = MovementTask.Direction.LEFT;
-        } else if ((getMovingDirection() == MovementTask.Direction.RIGHT || facingDirection == MovementTask.Direction.RIGHT) && region.isFlipX()) {
+        } else if ((getMovingDirection() == MovementTask.Direction.RIGHT ||
+                facingDirection == MovementTask.Direction.RIGHT) && region.isFlipX()) {
             region.flip(true, false);
             facingDirection = MovementTask.Direction.RIGHT;
         }
