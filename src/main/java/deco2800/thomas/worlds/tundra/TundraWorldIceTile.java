@@ -17,11 +17,7 @@ public class TundraWorldIceTile extends Tile {
      */
     public TundraWorldIceTile(String texture, float col, float row) {
         super(texture, col, row);
-    }
-
-    @Override
-    public String getType() {
-        return "TundraIceTile";
+        this.setType("TundraIceTile");
     }
 
     @Override

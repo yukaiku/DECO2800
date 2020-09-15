@@ -459,7 +459,7 @@ public final class DatabaseManager extends AbstractManager {
         } else if (saveLocationAndFilename.equals("resources/environment/volcano/VolcanoZone.json")) {
             newTiles = setVolcanoTiles(newTiles);
         } else if (saveLocationAndFilename.equals("resources/environment/tundra/tundra-map.json")) {
-            newTiles = setTundaTiles(newTiles);
+            newTiles = setTundraTiles(newTiles);
         }
 
         world.setTiles(newTiles);
@@ -597,7 +597,7 @@ public final class DatabaseManager extends AbstractManager {
      *
      * @return The modified tile list, with custom tundra tiles added.
      */
-    static private CopyOnWriteArrayList<Tile> setTundaTiles(CopyOnWriteArrayList<Tile> oldTiles) {
+    static private CopyOnWriteArrayList<Tile> setTundraTiles(CopyOnWriteArrayList<Tile> oldTiles) {
         CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
         int i = 0;
         for (Tile tile : oldTiles) {

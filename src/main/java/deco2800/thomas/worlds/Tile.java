@@ -206,6 +206,11 @@ public class Tile {
 		return tileID;
 	}
 
+	/**
+	 * Sets the Tile ID of this Tile.
+	 *
+	 * @param tileID The new Tile ID.
+	 */
 	public void setTileID(int tileID) {
 		this.tileID = tileID;
 	}

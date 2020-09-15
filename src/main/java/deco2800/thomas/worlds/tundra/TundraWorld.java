@@ -15,6 +15,7 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
+import org.lwjgl.Sys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,11 +87,12 @@ public class TundraWorld extends AbstractWorld {
 		}
 
 		for (AbstractEntity entity: entities) {
-			if (entity.getTexture() == "tundra-campfire") {
+			if (entity.getTexture().equals("tundra-campfire")) {
 				SquareVector vector = entity.getPosition();
 				Tile tile = getTile(vector);
 				for (Tile neighbouringTile : tile.getNeighbours().values()) {
 					neighbouringTile.setType("TundraFireTile");
+					neighbouringTile.setStatusEffect(true);
 				}
 			}
 		}

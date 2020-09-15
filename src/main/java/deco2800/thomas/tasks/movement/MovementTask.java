@@ -183,9 +183,13 @@ public class MovementTask extends AbstractTask {
 				case "CactusNeighbour":
 					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 10, 1));
 				break;
+
+				// ice tiles speed up the player temporarily
 				case "TundraIceTile":
-				gameManager.getManager(StatusEffectManager.class).addStatus(new SpeedStatus(entity, 1.5f, 1));
+				gameManager.getManager(StatusEffectManager.class).addStatus(new SpeedStatus(entity, 1.1f, 1));
 				break;
+
+				// neighbours of tundra fire entities inflict damage over time
 				case "TundraFireTile":
 				gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 5, 2));
 				break;
