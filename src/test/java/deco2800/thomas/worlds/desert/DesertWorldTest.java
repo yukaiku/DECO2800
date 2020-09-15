@@ -1,6 +1,9 @@
 package deco2800.thomas.worlds.desert;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
+import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
@@ -20,7 +23,7 @@ import static org.junit.Assert.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(GameManager.class)
-public class DesertWorldTest {
+public class DesertWorldTest extends BaseGDXTest {
 
     private DesertWorld spyWorld;
 
@@ -46,6 +49,11 @@ public class DesertWorldTest {
         // sets up some functions for a mock Texture and its manager
         Texture texture = mock(Texture.class);
         when(textureManager.getTexture(anyString())).thenReturn(texture);
+
+        Array<TextureRegion> playerStand = new Array<>();
+        playerStand.add(new TextureRegion(new Texture("resources/combat/move_right.png"), 262, 256));
+
+        when(textureManager.getAnimationFrames(anyString())).thenReturn(playerStand);
         when(texture.getWidth()).thenReturn(1);
         when(texture.getHeight()).thenReturn(1);
 
