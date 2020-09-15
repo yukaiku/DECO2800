@@ -49,12 +49,13 @@ public class MovementTask extends AbstractTask {
 
 	@Override
 	public void onTick(long tick) {
-		if (gameManager == null) gameManager = GameManager.get();
-
-		if (entity instanceof PlayerPeon) {
-			this.normalMovement();
-		} else {
-			this.autoMovement();
+		if (!complete) {
+			if (gameManager == null) gameManager = GameManager.get();
+			if (entity instanceof PlayerPeon) {
+				this.normalMovement();
+			} else {
+				this.autoMovement();
+			}
 		}
 	}
 
@@ -153,6 +154,13 @@ public class MovementTask extends AbstractTask {
 		currentPos.setRow(entity.getPosition().getRow());
 	}
 
+	/**
+	 * End the current task
+	 */
+	@Override
+	public void stopTask() {
+		complete = true;
+	}
 	/**
 	 * Checks if the tile at a position has an associated status effect.
 	 * If it does, a new status effect is added to the StatusEffectManager for the entity.

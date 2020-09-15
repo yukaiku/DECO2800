@@ -63,19 +63,21 @@ public class ApplyDamageOnCollisionTask extends AbstractTask {
      */
     @Override
     public void onTick(long tick) {
-        List<AbstractEntity> collidingEntities = world.getEntitiesInBounds(entity.getBounds());
-        if (collidingEntities.size() > 1) { // Own bounding box should always be present
-            for (AbstractEntity e : collidingEntities) {
-                EntityFaction faction = e.getFaction();
-                if (faction != EntityFaction.None && faction != entity.getFaction()) {
-                    applyDamage(e);
+        if (!taskComplete) {
+            List<AbstractEntity> collidingEntities = world.getEntitiesInBounds(entity.getBounds());
+            if (collidingEntities.size() > 1) { // Own bounding box should always be present
+                for (AbstractEntity e : collidingEntities) {
+                    EntityFaction faction = e.getFaction();
+                    if (faction != EntityFaction.None && faction != entity.getFaction()) {
+                        applyDamage(e);
+                    }
                 }
             }
-        }
 
-        // Check if lifetime has expired
-        if (++currentLifetime >= lifetime) {
-            taskComplete = true;
+            // Check if lifetime has expired
+            if (++currentLifetime >= lifetime) {
+                taskComplete = true;
+            }
         }
     }
 
@@ -93,5 +95,13 @@ public class ApplyDamageOnCollisionTask extends AbstractTask {
                 agentEntity.death();
             }
         }
+    }
+
+    /**
+     * End the current task
+     */
+    @Override
+    public void stopTask() {
+        taskComplete = true;
     }
 }

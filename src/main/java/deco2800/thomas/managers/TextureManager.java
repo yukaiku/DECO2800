@@ -294,8 +294,8 @@ public class TextureManager extends AbstractManager {
 		try {
 			// Note: The initial facing direction should be RIGHT. The flipped version is not needed.
 			// player standing
-			Array<TextureRegion> playerStand = new Array<>();
-			playerStand.add(new TextureRegion(new Texture("resources/combat/move_right.png"), 262, 256));
+				Array<TextureRegion> playerStand = new Array<>();
+				playerStand.add(new TextureRegion(new Texture("resources/combat/move_right.png")));
 			animationFrames.put("player_stand", playerStand);
 
 			// player melee attacks
@@ -309,6 +309,23 @@ public class TextureManager extends AbstractManager {
 			Array<TextureRegion> playerRange = new Array<>();
 			playerRange.add(new TextureRegion(new Texture("resources/combat/range_right1.png"), 0, 0, 350, 400));
 			animationFrames.put("player_range", playerRange);
+
+			Array<TextureRegion> fireballExplosion = new Array<>();
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball1.png")));
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball2.png")));
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball3.png")));
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball4.png")));
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball5.png")));
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball6.png")));
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball7.png")));
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball8.png")));
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball9.png")));
+
+			animationFrames.put("fireballExplosion", fireballExplosion);
+
+			Array<TextureRegion> fireballDefault = new Array<>();
+			fireballDefault.add(new TextureRegion(new Texture("resources/combat/fireball_right.png")));
+			animationFrames.put("fireballDefault", fireballDefault);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
