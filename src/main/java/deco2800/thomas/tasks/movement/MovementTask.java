@@ -176,7 +176,7 @@ public class MovementTask extends AbstractTask {
 
 				// quicksand damages over time and slows
 				case "Quicksand":
-					gameManager.getManager(StatusEffectManager.class).addStatus(new SpeedStatus(entity, 0.25f, position));
+					gameManager.getManager(StatusEffectManager.class).addStatus(new SpeedStatus(entity, 0.25f, 3));
 					gameManager.getManager(StatusEffectManager.class).addStatus(new QuicksandBurnStatus(entity, 5, 100, position));
 				break;
 
@@ -185,7 +185,7 @@ public class MovementTask extends AbstractTask {
 					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 10, 1));
 				break;
 				case "TundraIceTile":
-				gameManager.getManager(StatusEffectManager.class).addStatus(new SpeedStatus(entity, 1.5f, position));
+				gameManager.getManager(StatusEffectManager.class).addStatus(new SpeedStatus(entity, 1.5f, 1));
 				break;
 				case "TundraFireTile":
 				gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 5, 2));
