@@ -1,6 +1,10 @@
-package deco2800.thomas.entities;
+package deco2800.thomas.entities.Environment.volcano;
 
+import deco2800.thomas.entities.StaticEntity;
+import deco2800.thomas.entities.RenderConstants;
+import deco2800.thomas.entities.Part;
 import deco2800.thomas.worlds.Tile;
+
 
 import java.util.List;
 

@@ -3,12 +3,13 @@ package deco2800.thomas.worlds.volcano;
 import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.VolcanoDragonSkull;
-import deco2800.thomas.entities.VolcanoGraveYard;
-import deco2800.thomas.entities.VolcanoRuins;
+import deco2800.thomas.entities.Environment.volcano.VolcanoLavaPool;
+import deco2800.thomas.entities.Environment.volcano.VolcanoGraveYard;
+import deco2800.thomas.entities.Environment.volcano.VolcanoDragonSkull;
+import deco2800.thomas.entities.Environment.volcano.VolcanoRuins;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
-import deco2800.thomas.entities.environment.volcano.VolcanoBurningTree;
+import deco2800.thomas.entities.Environment.volcano.VolcanoBurningTree;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -106,6 +107,7 @@ public class VolcanoWorld extends AbstractWorld {
         entities.add(createGraveYard(7, -15));
         entities.add(createRuins(-25, -5));
         entities.add(createDragonSkull(-23, 23));
+        entities.add(createLavaPool(-0, 0)); //Left Lava Pool
         //For objects that are added randomly & require more specific addition
         //entities, they're methodology will folllow add()
         addRandoms();
@@ -301,6 +303,17 @@ public class VolcanoWorld extends AbstractWorld {
         VolcanoGraveYard graveYard = new VolcanoGraveYard(col, row, parts);
 
         return graveYard;
+    }
+
+    public VolcanoLavaPool createLavaPool(float col, float row) {
+        List<Part> parts = new ArrayList<Part>();
+        //Top left
+        parts.add(new Part(new SquareVector(1, 0), "fenceE-W", false));
+        parts.add(new Part(new SquareVector(2, 0), "fenceE-W", false));
+        parts.add(new Part(new SquareVector(3,  0), "fenceE-W", false));
+        //Corner
+        VolcanoLavaPool lavaPool = new VolcanoLavaPool(col, row, parts);
+        return lavaPool;
     }
 
     /**
