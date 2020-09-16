@@ -28,7 +28,7 @@ public class EnemyManagerTest extends BaseGDXTest {
         EnemyManager em2 = new EnemyManager(world, 10, new ArrayList<>());
         assertEquals(em2.getWildEnemyCap(), 10);
         assertEquals(em2.getWildEnemiesAlive(), new ArrayList<>());
-        Dragon boss = new Dragon(1, 1, 1,1);
+        Dragon boss = new Dragon("Elder Dragon", 1, 1, 1,1);
         EnemyManager em3 = new EnemyManager(world, 10, new ArrayList<>(), boss);
         assertSame(em3.getBoss(), boss);
     }
@@ -57,7 +57,7 @@ public class EnemyManagerTest extends BaseGDXTest {
     @Test
     public void testBoss() {
         EnemyManager em = new EnemyManager(world, 10, new ArrayList<>());
-        Dragon boss = new Dragon(1, 1, 1, 1);
+        Dragon boss = new Dragon("Elder Dragon", 1, 1, 1, 1);
         em.setBoss(boss);
         assertSame(em.getBoss(), boss);
         em.spawnBoss(0, 0);

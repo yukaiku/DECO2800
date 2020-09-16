@@ -57,29 +57,28 @@ public class MainMenuScreen implements Screen {
 		tutorialBtn.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.TUTORIAL));
+				game.setScreen(new GameScreen(game, GameScreen.gameType.TUTORIAL));
 			}
 		});
 
 		envTeamButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.ENV_TEAM_GAME));
+				game.setScreen(new GameScreen(game, GameScreen.gameType.ENV_TEAM_GAME));
 			}
 		});
-
 
 		newGameBtn.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.NEW_GAME));
+				game.setScreen(new GameScreen(game, GameScreen.gameType.NEW_GAME));
 			}
 		});
 
 		testWorldBtn.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(new ThomasGame(), GameScreen.gameType.TEST_WORLD));
+				game.setScreen(new GameScreen(game, GameScreen.gameType.TEST_WORLD));
 			}
 		});
 	}
