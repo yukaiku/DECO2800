@@ -36,10 +36,8 @@ public class TundraWorld extends AbstractWorld {
 	}
 
 	public TundraWorld(int width, int height) {
-//		DatabaseManager.loadWorld(this, MAP_FILE);
-//		generateStaticEntities();
-
-		DatabaseManager.loadWorldFromJsonFile(this, MAP_FILE);
+		DatabaseManager.loadWorld(this, MAP_FILE_TILES_ONLY);
+		generateStaticEntities();
 
 		// PlayerPeon
 		this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.15f));
