@@ -41,7 +41,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
     private float stateTimer;
     private int duration = 0;
 
-    public static int DEFAULT_HEALTH = 500;
+    public static int DEFAULT_HEALTH = 50;
 
 //    //Orbs tracker
 //    private static int orbCount = 0;
