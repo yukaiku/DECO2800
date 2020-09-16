@@ -80,7 +80,8 @@ public class GameManager {
 		PAUSED,
 		RUN,
 		GAMEOVER,
-		VICTORY
+		VICTORY,
+		TRANSITION
 	}
 	/**
 	 * Returns an instance of the GM
@@ -286,6 +287,7 @@ public class GameManager {
 				break;
 		}
 		currentWorld = (currentWorld + 1) % worldOrder.size();
+		GameManager.get().state = State.TRANSITION;
 	}
 
 	public static void resume() {

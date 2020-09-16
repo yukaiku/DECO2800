@@ -48,6 +48,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	//Quest Tracker UI
 	PauseModal pauseModal = new PauseModal();
 	Result result = new Result();
+	TransitionScreen transitionScreen = new TransitionScreen();
 	QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
 	//Tutorial Guideline UI
 	Guideline guideline = new Guideline();
@@ -56,7 +57,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	// Buttons in the pause menu
 	Button resumeButton = new TextButton("RESUME", GameManager.get().getSkin(), "in_game");
 	Button quitButton = new TextButton("RETURN TO MAIN MENU", GameManager.get().getSkin(), "in_game");
-
+	Button enterButton = new TextButton("ENTER THE ZONE", GameManager.get().getSkin(), "in_game");
 	AbstractWorld world;
 
 	static Skin skin = new Skin(Gdx.files.internal("resources/uiskin.skin"));
@@ -167,9 +168,16 @@ public class GameScreen implements Screen, KeyDownObserver {
 				game.setMainMenuScreen();
 			}
 		});
+		enterButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				GameManager.resume();
+			}
+		});
 
 		stage.addActor(resumeButton);
 		stage.addActor(quitButton);
+		stage.addActor(enterButton);
 	}
 
 	/**
@@ -204,14 +212,15 @@ public class GameScreen implements Screen, KeyDownObserver {
 //			guideline.render(batchGuideline, cameraDebug);
 //		}
 		spriteBatch.setProjectionMatrix(cameraDebug.combined);
+		questTrackerRenderer.render(spriteBatch, cameraDebug);
 		if(tutorial){
 			guideline.render(spriteBatch,cameraDebug);
 		}
-		questTrackerRenderer.render(spriteBatch, cameraDebug);
 
 		// Hide the buttons when the game is running
 		resumeButton.setPosition(-100, -100);
 		quitButton.setPosition(-100, -100);
+		enterButton.setPosition(-100, -100);
 
 		/* Refresh the experience UI for if information was updated */
 		stage.act(delta);
@@ -224,9 +233,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	public void renderPauseMenu(float delta) {
 		// Render the pause modal
-		SpriteBatch batchPauseModal = new SpriteBatch();
-		batchPauseModal.setProjectionMatrix(cameraDebug.combined);
-		pauseModal.render(batchPauseModal, cameraDebug);
+		spriteBatch.setProjectionMatrix(cameraDebug.combined);
+		pauseModal.render(spriteBatch, cameraDebug);
 
 		// Display the buttons
 		resumeButton.setPosition(width / 2 - resumeButton.getWidth() / 2,
@@ -242,13 +250,23 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	public void renderGameResult(float delta) {
 		// Render the pause modal
-		SpriteBatch batchResult = new SpriteBatch();
-		batchResult.setProjectionMatrix(cameraDebug.combined);
-		result.render(batchResult, cameraDebug);
+		spriteBatch.setProjectionMatrix(cameraDebug.combined);
+		result.render(spriteBatch, cameraDebug);
 
 		// Display the buttons
 		quitButton.setPosition(width / 2 - quitButton.getWidth() / 2,
 				height / 2 - 350);
+		stage.act(delta);
+		stage.draw();
+	}
+
+	public void renderTransitionScreen(float delta) {
+		// Render the transition screen
+		spriteBatch.setProjectionMatrix(cameraDebug.combined);
+		transitionScreen.render(spriteBatch, cameraDebug);
+
+		// Display the button
+		enterButton.setPosition(width / 2 - enterButton.getWidth() / 2, 150);
 		stage.act(delta);
 		stage.draw();
 	}
@@ -261,6 +279,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void render(float delta) {
 		switch (GameManager.get().state)
 		{
+			case TRANSITION:
+				renderTransitionScreen(delta);
+				break;
 			case RUN:
 				renderGame(delta);
 				break;
