@@ -33,7 +33,7 @@ public class DesertWorld extends AbstractWorld {
      * Constructor that creates a world with default width and height.
      */
     public DesertWorld() {
-        this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        super(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
     /**
@@ -44,7 +44,6 @@ public class DesertWorld extends AbstractWorld {
      */
     public DesertWorld(int width, int height) {
         super(width, height);
-        generateTiles();
     }
 
     /**
@@ -63,12 +62,11 @@ public class DesertWorld extends AbstractWorld {
     @Override
     protected void generateTiles() {
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
-        this.setPlayerEntity(new PlayerPeon(8f, 5f, 0.15f));
+        this.setPlayerEntity(new PlayerPeon(6f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
 
-        GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
         Orc desertOrc = new Orc(1, 0.09f, 50, "orc_desert");
-        Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_desert");
+        Dragon boss = new Dragon("Chuzzinoath", 3, 0.03f, 850, "dragon_desert", 4);
 
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(desertOrc), boss);
         GameManager.get().addManager(enemyManager);
@@ -80,8 +78,6 @@ public class DesertWorld extends AbstractWorld {
      * This includes sand dunes, cactus plants, dead trees and quicksand.
      */
     public void createStaticEntities() {
-        int tileCount = GameManager.get().getWorld().getTiles().size();
-        TextureManager tex = new TextureManager();
         Random rand = new Random();
         int randIndex;
 
@@ -102,6 +98,12 @@ public class DesertWorld extends AbstractWorld {
                         // get a random cactus texture
                         randIndex = rand.nextInt(4);
                         entities.add(new DesertCactus(tile, String.format("desertCactus%d", randIndex + 1)));
+
+                        // set neighbours to damage player
+                        for (Tile t : tile.getNeighbours().values()) {
+                            t.setType("CactusNeighbour");
+                            t.setStatusEffect(true);
+                        }
                     } else {
                         // get a random dead tree texture
                         randIndex = rand.nextInt(2);

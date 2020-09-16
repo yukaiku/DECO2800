@@ -1,14 +1,5 @@
 {
-    "entities": [
-        {
-            "objectName": "playerPeon",
-            "speed": 0.1,
-            "texture": "spacman_ded",
-            "entityID": 0,
-            "rowPos": 0.0,
-            "colPos": 0.0
-        }
-    ],
+    "entities": [],
     "tiles": [
         {
             "tileID": 0,

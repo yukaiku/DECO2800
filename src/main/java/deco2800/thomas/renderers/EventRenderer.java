@@ -42,6 +42,10 @@ public class EventRenderer implements Renderer {
     private boolean originalAllowRendering;
 
     public EventRenderer(boolean allowRendering) {
+        /*
+        If allowRendering == true, the Zone Event occurs immediately when player enters the Zone.
+        Otherwise, the Event starts after its respective inactive duration (set as constants above).
+         */
         this.allowRendering = allowRendering;
         this.originalAllowRendering = allowRendering;
 
@@ -51,6 +55,12 @@ public class EventRenderer implements Renderer {
         loadParticleFile();
         particleEffect.start();
 
+        /*
+        Make use of Timer and TimerTask objects to count the duration during which
+        an Event is active/inactive.
+        The run function below is called once every 1 sec, incrementing counter until the activity of the
+        Event needs to be switched from active to inactive and vice versa.
+         */
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -73,6 +83,14 @@ public class EventRenderer implements Renderer {
         this.allowRendering = allowRendering;
     }
 
+    /**
+     * Get the amount of time (in secs) for a Zone Event to be active or inactive
+     * based on allowRendering (if the Event is allowed to render) and the Zone Type
+     *
+     * @return One of constants: SWAMP_EVENT_ACTIVE, SWAMP_EVENT_INACTIVE, TUNDRA_EVENT_ACTIVE,
+     * TUNDRA_EVENT_INACTIVE, DESERT_EVENT_ACTIVE, DESERT_EVENT_INACTIVE, VOLCANO_EVENT_ACTIVE,
+     * VOLCANO_EVENT_INACTIVE, TEST_EVENT_ACTIVE, TEST_EVENT_INACTIVE
+     */
     private int getEventDuration() {
         AbstractWorld currentWorld = GameManager.get().getWorld();
         if (currentWorld instanceof SwampWorld) {
@@ -88,6 +106,9 @@ public class EventRenderer implements Renderer {
         }
     }
 
+    /**
+     * Load the correct Particle Effect file and texture(s) based on Zone Type
+     */
     private void loadParticleFile() {
         String filePath = null;
         String textureDir = null;
@@ -116,6 +137,13 @@ public class EventRenderer implements Renderer {
         }
     }
 
+    /**
+     * Called when the Player moves to the next Zone:
+     * - Reset allowRendering back to its original value when the object was first initialized
+     * and counter back to 0.
+     * - Get new according eventDuration for the current new Zone.
+     * - Load new according files for the current new Zone.
+     */
     private void resetEventForNewWorld() {
         allowRendering = originalAllowRendering;
         counter = 0;
@@ -125,6 +153,7 @@ public class EventRenderer implements Renderer {
 
     @Override
     public void render(SpriteBatch batch, OrthographicCamera camera) {
+        // movedToNextWorld is a Boolean in GameManager, set to true whenever a World/Zone is set
         if (GameManager.get().movedToNextWorld) {
             resetEventForNewWorld();
             GameManager.get().movedToNextWorld = false;

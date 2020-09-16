@@ -19,12 +19,12 @@ public class NonPlayablePeon extends Peon implements Interactable {
     protected String name;
     private boolean hasFinishedSetup;
 
-    public NonPlayablePeon(String name, SquareVector position) {
+    public NonPlayablePeon(String name, SquareVector position, String texture) {
         super();
         this.setPosition(position.getCol(), position.getRow(), 1);
         this.name = name;
         this.save = false; // Don't save NPC's as they're loaded automatically.
-        this.setTexture("basic_npc");
+        this.setTexture(texture);
         setup();
     }
 

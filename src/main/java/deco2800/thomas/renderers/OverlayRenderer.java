@@ -92,18 +92,21 @@ public class OverlayRenderer implements Renderer {
 		debugLine(batch, camera, ++line, GameManager.get().getManager(PathFindingService.class).toString());
 
 		line++;
-		debugLine(batch, camera, ++line, "== Networking ==");
-		debugLine(batch, camera, ++line,
-				String.format("ID: %d", GameManager.get().getManager(NetworkManager.class).getID()));
-		debugLine(batch, camera, ++line, String.format("Messages Received: %d",
-				GameManager.get().getManager(NetworkManager.class).getMessagesReceived()));
-		debugLine(batch, camera, ++line,
-				String.format("Messages Sent: %d", GameManager.get().getManager(NetworkManager.class).getMessagesSent()));
-		debugLine(batch, camera, ++line,
-				String.format("Username: %s", GameManager.get().getManager(NetworkManager.class).getUsername()));
+//		debugLine(batch, camera, ++line, "== Networking ==");
+//		debugLine(batch, camera, ++line,
+//				String.format("ID: %d", GameManager.get().getManager(NetworkManager.class).getID()));
+//		debugLine(batch, camera, ++line, String.format("Messages Received: %d",
+//				GameManager.get().getManager(NetworkManager.class).getMessagesReceived()));
+//		debugLine(batch, camera, ++line,
+//				String.format("Messages Sent: %d", GameManager.get().getManager(NetworkManager.class).getMessagesSent()));
+//		debugLine(batch, camera, ++line,
+//				String.format("Username: %s", GameManager.get().getManager(NetworkManager.class).getUsername()));
 		line++;
 		debugLine(batch, camera, ++line, "== Health ==");
 		debugLine(batch, camera, ++line, String.format("Health: %d", GameManager.get().getWorld().getPlayerEntity().getCurrentHealth()));
+		line++;
+		debugLine(batch, camera, ++line, "== Speed ==");
+		debugLine(batch, camera, ++line, String.format("Speed: %f", GameManager.get().getWorld().getPlayerEntity().getSpeed()));
 		line++;
 		EnemyManager enemyManager = GameManager.get().getManager(EnemyManager.class);
 		debugLine(batch, camera, ++line, "== Enemies ==");

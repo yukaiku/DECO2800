@@ -52,6 +52,7 @@ public class GameManager {
 
 	public boolean inTutorial = false;
 
+	// Whether or not the player has moved to the next Zone
 	public boolean movedToNextWorld;
 	/**
 	 * Whether or not we render info over the tiles.
@@ -76,6 +77,14 @@ public class GameManager {
 	private int currentWorld = 0;
 	private ArrayList<WorldType> worldOrder;
 
+	public State state = State.RUN;
+	public enum State
+	{
+		PAUSED,
+		RUN,
+		GAMEOVER,
+		VICTORY
+	}
 	/**
 	 * Returns an instance of the GM
 	 *
@@ -281,6 +290,22 @@ public class GameManager {
 		}
 		currentWorld = (currentWorld + 1) % worldOrder.size();
 		movedToNextWorld = true;
+	}
+
+	public static void resume() {
+		GameManager.get().state = GameManager.State.RUN;
+	}
+
+	public static void pause() {
+		GameManager.get().state = State.PAUSED;
+	}
+
+	public static void victory() {
+		GameManager.get().state = State.VICTORY;
+	}
+
+	public static void gameOver() {
+		GameManager.get().state = State.GAMEOVER;
 	}
 
 	public void setCamera(OrthographicCamera camera) {
