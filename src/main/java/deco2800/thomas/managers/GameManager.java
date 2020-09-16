@@ -51,6 +51,9 @@ public class GameManager {
 	public boolean debugMode = true;
 
 	public boolean inTutorial = false;
+
+	// Whether or not the player has moved to the next Zone
+	public boolean movedToNextWorld;
 	/**
 	 * Whether or not we render info over the tiles.
 	 */
@@ -286,6 +289,7 @@ public class GameManager {
 				break;
 		}
 		currentWorld = (currentWorld + 1) % worldOrder.size();
+		movedToNextWorld = true;
 	}
 
 	public static void resume() {
