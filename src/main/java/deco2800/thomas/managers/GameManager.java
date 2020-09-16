@@ -10,7 +10,6 @@ import deco2800.thomas.worlds.AbstractWorld;
 
 import deco2800.thomas.worlds.desert.DesertWorld;
 import deco2800.thomas.worlds.swamp.SwampWorld;
-import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
@@ -51,6 +50,9 @@ public class GameManager {
 	public boolean debugMode = true;
 
 	public boolean inTutorial = false;
+
+	// Whether or not the player has moved to the next Zone
+	public boolean movedToNextWorld;
 	/**
 	 * Whether or not we render info over the tiles.
 	 */
@@ -286,6 +288,7 @@ public class GameManager {
 				break;
 		}
 		currentWorld = (currentWorld + 1) % worldOrder.size();
+		movedToNextWorld = true;
 	}
 
 	public static void resume() {

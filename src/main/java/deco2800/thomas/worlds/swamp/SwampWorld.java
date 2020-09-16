@@ -49,6 +49,11 @@ public class SwampWorld extends AbstractWorld {
     }
 
     @Override
+    public String getType() {
+        return "Swamp";
+    }
+
+    @Override
     protected void generateTiles() {
     }
 
@@ -148,7 +153,7 @@ public class SwampWorld extends AbstractWorld {
         entities.add(new SwampFallenTree((this.getTile(-4, -23)), true));
         entities.add(new SwampFallenTree((this.getTile(-2, -23)), true));
 
-        // North Forst
+        // North Forest
         entities.add(new SwampFallenTree((this.getTile(24, 14)), true));
         entities.add(new SwampFallenTree((this.getTile(23, 13)), true));
     }

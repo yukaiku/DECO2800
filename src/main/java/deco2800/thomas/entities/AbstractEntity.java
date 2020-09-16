@@ -37,6 +37,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	@Expose
 	protected String texture = "error_box";
 
+	@Expose
 	protected SquareVector position;
 
 	protected BoundingBox bounds;

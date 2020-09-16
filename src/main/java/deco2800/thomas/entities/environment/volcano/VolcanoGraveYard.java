@@ -4,7 +4,7 @@ import deco2800.thomas.worlds.Tile;
 
 import java.util.List;
 
-public class VolcanoGraveYard extends StaticEntity{
+public class VolcanoGraveYard extends StaticEntity {
     private static final String ENTITY_ID_STRING = "VolcanoGraveYard";
 
     public VolcanoGraveYard() {

@@ -6,11 +6,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
+import deco2800.thomas.combat.skills.FireBombSkill;
 import deco2800.thomas.combat.skills.FireballSkill;
-import deco2800.thomas.combat.skills.MeleeSkill;
+import deco2800.thomas.combat.skills.ScorpionStingSkill;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.managers.TextureManager;
@@ -19,6 +19,7 @@ import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
+import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
@@ -41,15 +42,10 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
     private float stateTimer;
     private int duration = 0;
 
-    public static int DEFAULT_HEALTH = 500;
+    public static int DEFAULT_HEALTH = 50;
 
-//    //Orbs tracker
-//    private static int orbCount = 0;
-//    private static List<Orb> orbs = new ArrayList<Orb>();
-
-    // The health of the player
-    private HealthTracker health;
-    private static Map<String, String> dialogues = new HashMap<>();
+    // Player dialogue
+    private static final Map<String, String> dialogues = new HashMap<>();
 
     // Wizard skills
     private List<Skill> wizardSkills;
@@ -79,9 +75,9 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         // Initialise skills
         wizardSkills = new ArrayList<>();
         wizardSkills.add(new FireballSkill(this));
+        wizardSkills.add(new ScorpionStingSkill(this));
         activeWizardSkill = 0;
-
-        mechSkill = new MeleeSkill(this);
+        mechSkill = new FireBombSkill(this);
 
         // Animation Testing
         facingDirection = MovementTask.Direction.RIGHT;
@@ -182,51 +178,9 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         return dialogues.get(target);
     }
 
-//    /**
-//     * Quest Tracker function that tracks the orbs the user currently has
-//     *
-//     * @return orbCount the number of orbs the user currently has
-//     */
-//    public static List<Orb> questTracker() {
-//        return orbs;
-//    }
-//
-//    /**
-//     * Resets the number of orb user has
-//     * Notes:
-//     * To be used on when a new game is run or upon death
-//     */
-//    public static void resetQuest() {
-//        orbs.clear();
-//        orbCount = 0;
-//    }
-//
-//    /**
-//     * Increase the number of orbs the user has
-//     * Notes:
-//     * To be used on when player picks up an orb
-//     */
-//    public static <Orb> void increaseOrbs(deco2800.thomas.entities.Orb orb) {
-//        if (orbCount < 5) {
-//            orbCount += 1;
-//            orbs.add(orb);
-//        }
-//    }
-//
-//    /**
-//     * Decrease the number of orbs the user has
-//     * Notes:
-//     * To be used on when player picks up an orb
-//     */
-//    public static void decreaseOrbs() {
-//        if (orbCount > 1) {
-//            orbCount -= 1;
-//            orbs.remove(orbCount);
-//        }
-//    }
-
     /**
      * Updates the player peon's over time methods, such as tasks and cooldowns.
+     *
      * @param i current game tick.
      */
     @Override
@@ -276,6 +230,17 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
             mechSkill.onTick(i);
         }
 
+        // Check current effects to be applied or removed
+        if (getEffects() != null) {
+            for (StatusEffect effect : getEffects()) {
+                if (!effect.getActive() || effect.getAffectedEntity() == null) {
+                    removeEffect(effect);
+                } else {
+                    effect.applyEffect();
+                }
+            }
+        }
+
         // isAttacked animation
         if (isAttacked && --isAttackedCoolDown < 0) {
             isAttacked = false;
@@ -318,6 +283,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
 
     /**
      * Handles the mouse down event. This triggers combat skills.
+     *
      * @param screenX the x position the mouse was pressed at
      * @param screenY the y position the mouse was pressed at
      * @param pointer
@@ -360,6 +326,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
 
     /**
      * Handles the key down event.
+     *
      * @param keycode the key being pressed
      */
     @Override
@@ -367,11 +334,15 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         if (keycode == Input.Keys.W || keycode == Input.Keys.S ||
                 keycode == Input.Keys.A || keycode == Input.Keys.D) {
             this.startMovementTask(keycode);
+        } else if (keycode == Input.Keys.NUM_1 || keycode == Input.Keys.NUM_2 ||
+                keycode == Input.Keys.NUM_3 || keycode == Input.Keys.NUM_4) {
+            this.swapSkill(keycode);
         }
     }
 
     /**
      * Handles the key up event.
+     *
      * @param keycode the key being released
      */
     @Override
@@ -447,6 +418,28 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
                 return;
         }
         this.setMovingDirection(MovementTask.Direction.NONE);
+    }
+
+    /**
+     * Check if there is a skill mapped with the keycode. If
+     * there is a key mapped then swap the active skill into
+     * that one.
+     *
+     * @param keycode the keycode of the skill we would like to swap
+     */
+    private void swapSkill(int keycode) {
+        int targetSkill = keycode - Input.Keys.NUM_1;
+        if (targetSkill < this.getWizardSkills().size()) {
+            this.activeWizardSkill = targetSkill;
+        }
+    }
+
+    public List<Skill> getWizardSkills() {
+        return this.wizardSkills;
+    }
+
+    public int getActiveWizardSkill() {
+        return this.activeWizardSkill;
     }
 
     /**

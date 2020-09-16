@@ -9,13 +9,16 @@ public class SwampTreeLog extends StaticEntity {
 
     public SwampTreeLog() {
         super();
+        this.setObjectName(ENTITY_ID_STRING);
     }
 
     public SwampTreeLog(Tile tile, boolean obstructed) {
         super(tile, RenderConstants.SWAMP_TREE_LOG, "swamp_tree_log", obstructed);
+        this.setObjectName(ENTITY_ID_STRING);
     }
 
     public SwampTreeLog(float col, float row, int renderOrder, List<Part> entityParts) {
         super(col, row, RenderConstants.SWAMP_TREE_LOG, entityParts);
+        this.setObjectName(ENTITY_ID_STRING);
     }
 }
