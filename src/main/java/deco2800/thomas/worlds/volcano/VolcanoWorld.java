@@ -268,12 +268,12 @@ public class VolcanoWorld extends AbstractWorld {
         //Bottom right corner
         parts.add(new Part(new SquareVector(13, -7), "fenceN-W", true));
 
-        //Verticle sides Left
+        //Vertical sides Left
         parts.add(new Part(new SquareVector(0, -6), "fenceN-S", true));
         parts.add(new Part(new SquareVector(0, -5), "fenceN-S", true));
         parts.add(new Part(new SquareVector(0,  -2), "fenceN-S", true));
         parts.add(new Part(new SquareVector(0, -1), "fenceN-S", true));
-        //Verticle sides Right
+        //Vertical sides Right
         parts.add(new Part(new SquareVector(13, -6), "fenceN-S", true));
         parts.add(new Part(new SquareVector(13, -5), "fenceN-S", true));
         parts.add(new Part(new SquareVector(13,  -2), "fenceN-S", true));

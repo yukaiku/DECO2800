@@ -4,9 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
-import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Part;
+import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.VolcanoDragonSkull;
 import deco2800.thomas.entities.VolcanoGraveYard;
+import deco2800.thomas.entities.VolcanoRuins;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.Tile;
@@ -133,9 +134,12 @@ public class VolcanoWorldTest extends BaseGDXTest {
         Assert.assertNotNull(spyWorld.getPlayerEntity());
     }
 
+    /**
+     * Tests that all fenceE-W parts are correctly added to the new entity
+     * when createGraveYard() is called.
+     */
     @Test
     public void createGraveYardFenceEW() {
-        SquareVector pos;
         ArrayList<SquareVector> fenceLocations = new ArrayList<>();
         boolean allTiles = true;
         int size = 0;
@@ -175,15 +179,407 @@ public class VolcanoWorldTest extends BaseGDXTest {
         Assert.assertTrue(allTiles);
     }
 
+    /**
+     * Tests that all fenceE-W, S-W, N-W and N-E parts are correctly added to the new entity
+     * when createGraveYard() is called.
+     */
     @Test
-    public void createRuinsTest() {
+    public void createGraveYardFenceCorners() {
+        ArrayList<SquareVector> fenceLocations = new ArrayList<>();
+        boolean allTiles = true;
+        String name;
+        int size = 0;
 
+        float row = 0;
+        float col = 0;
+
+        VolcanoGraveYard graveYard = spyWorld.createGraveYard(col, row);
+
+        // these are the positions selected in the method
+        fenceLocations.add(new SquareVector(0, 0));
+        fenceLocations.add(new SquareVector(13, 0));
+        fenceLocations.add(new SquareVector(0, -7));
+        fenceLocations.add(new SquareVector(13, -7));
+
+        for (SquareVector vec : graveYard.children.keySet()) {
+            name = graveYard.children.get(vec);
+            if (name.equals("fenceS-E") || name.equals("fenceS-W")
+                    || name.equals("fenceN-W") || name.equals("fenceN-E")) {
+                size++;
+                if (!fenceLocations.contains(vec)) {
+                    allTiles = false;
+                    break;
+                }
+            }
+        }
+
+        Assert.assertEquals(fenceLocations.size(), size);
+        Assert.assertTrue(allTiles);
     }
 
+    /**
+     * Tests that all fenceN-S parts are correctly added to the new entity
+     * when createGraveYard() is called.
+     */
+    @Test
+    public void createGraveYardFenceNS() {
+        ArrayList<SquareVector> fenceLocations = new ArrayList<>();
+        boolean allTiles = true;
+        int size = 0;
+
+        float row = 0;
+        float col = 0;
+
+        VolcanoGraveYard graveYard = spyWorld.createGraveYard(col, row);
+
+        // these are the positions selected in the method
+        fenceLocations.add(new SquareVector(0, -6));
+        fenceLocations.add(new SquareVector(0, -5));
+        fenceLocations.add(new SquareVector(0,  -2));
+        fenceLocations.add(new SquareVector(0, -1));
+        fenceLocations.add(new SquareVector(13, -6));
+        fenceLocations.add(new SquareVector(13, -5));
+        fenceLocations.add(new SquareVector(13,  -2));
+        fenceLocations.add(new SquareVector(13, -1));
+
+        for (SquareVector vec : graveYard.children.keySet()) {
+            if (graveYard.children.get(vec).equals("fenceN-S")) {
+                size++;
+                if (!fenceLocations.contains(vec)) {
+                    allTiles = false;
+                    break;
+                }
+            }
+        }
+
+        Assert.assertEquals(fenceLocations.size(), size);
+        Assert.assertTrue(allTiles);
+    }
+
+    /**
+     * Tests that all tree parts are correctly added to the new entity
+     * when createGraveYard() is called.
+     */
+    @Test
+    public void createGraveYardTrees() {
+        ArrayList<SquareVector> treeLocations = new ArrayList<>();
+        boolean allTiles = true;
+        int size = 0;
+
+        float row = 0;
+        float col = 0;
+
+        VolcanoGraveYard graveYard = spyWorld.createGraveYard(col, row);
+
+        // these are the positions selected in the method
+        treeLocations.add(new SquareVector(1, -1));
+        treeLocations.add(new SquareVector(12, -1));
+        treeLocations.add(new SquareVector(1,  -6));
+        treeLocations.add(new SquareVector(12, -6));
+
+        for (SquareVector vec : graveYard.children.keySet()) {
+            if (graveYard.children.get(vec).equals("tree")) {
+                size++;
+                if (!treeLocations.contains(vec)) {
+                    allTiles = false;
+                    break;
+                }
+            }
+        }
+
+        Assert.assertEquals(treeLocations.size(), size);
+        Assert.assertTrue(allTiles);
+    }
+
+    /**
+     * Tests that all bones parts are correctly added to the new entity
+     * when createGraveYard() is called.
+     */
+    @Test
+    public void createGraveYardBones() {
+        ArrayList<SquareVector> bonesLocations = new ArrayList<>();
+        boolean allTiles = true;
+        int size = 0;
+
+        float row = 0;
+        float col = 0;
+
+        VolcanoGraveYard graveYard = spyWorld.createGraveYard(col, row);
+
+        // these are the positions selected in the method
+        bonesLocations.add(new SquareVector(1, -2));
+        bonesLocations.add(new SquareVector(2, -1));
+        bonesLocations.add(new SquareVector(11,  -1));
+        bonesLocations.add(new SquareVector(12, -2));
+        bonesLocations.add(new SquareVector(1, -5));
+        bonesLocations.add(new SquareVector(2, -6));
+        bonesLocations.add(new SquareVector(11,  -6));
+        bonesLocations.add(new SquareVector(12, -5));
+
+        for (SquareVector vec : graveYard.children.keySet()) {
+            if (graveYard.children.get(vec).equals("Bones")) {
+                size++;
+                if (!bonesLocations.contains(vec)) {
+                    allTiles = false;
+                    break;
+                }
+            }
+        }
+
+        Assert.assertEquals(bonesLocations.size(), size);
+        Assert.assertTrue(allTiles);
+    }
+
+    /**
+     * Tests that all ruins parts are correctly added to the new entity
+     * when createGraveYard() is called.
+     */
+    @Test
+    public void createGraveYardRuins() {
+        ArrayList<SquareVector> ruinsLocations = new ArrayList<>();
+        boolean allTiles = true;
+        int size = 0;
+
+        float row = 0;
+        float col = 0;
+
+        VolcanoGraveYard graveYard = spyWorld.createGraveYard(col, row);
+
+        // these are the positions selected in the method
+        ruinsLocations.add(new SquareVector(5, -2));
+        ruinsLocations.add(new SquareVector(8, -2));
+        ruinsLocations.add(new SquareVector(5,  -5));
+        ruinsLocations.add(new SquareVector(8, -5));
+
+        for (SquareVector vec : graveYard.children.keySet()) {
+            if (graveYard.children.get(vec).equals("Ruins_4")) {
+                size++;
+                if (!ruinsLocations.contains(vec)) {
+                    allTiles = false;
+                    break;
+                }
+            }
+        }
+
+        Assert.assertEquals(ruinsLocations.size(), size);
+        Assert.assertTrue(allTiles);
+    }
+
+    /**
+     * Tests that all ruins_2 parts are correctly added to the new entity
+     * when createRuins() is called.
+     */
+    @Test
+    public void createRuins2() {
+        ArrayList<SquareVector> ruinsLocations = new ArrayList<>();
+        boolean allTiles = true;
+        int size = 0;
+
+        float row = 0;
+        float col = 0;
+
+        VolcanoRuins ruins = spyWorld.createRuins(col, row);
+
+        // these are the positions selected in the method
+        for (int i = 1; i < 16; i++) {
+            ruinsLocations.add(new SquareVector(0, -i));
+        }
+        ruinsLocations.add(new SquareVector(2, 0));
+        ruinsLocations.add(new SquareVector(3, 0));
+        ruinsLocations.add(new SquareVector(4, 0));
+        ruinsLocations.add(new SquareVector(5, 0));
+        ruinsLocations.add(new SquareVector(6, 0));
+        ruinsLocations.add(new SquareVector(1, -15));
+        ruinsLocations.add(new SquareVector(2, -15));
+        ruinsLocations.add(new SquareVector(3, -15));
+        ruinsLocations.add(new SquareVector(4, -15));
+
+        for (SquareVector vec : ruins.children.keySet()) {
+            if (ruins.children.get(vec).equals("Ruins_2")) {
+                size++;
+                if (!ruinsLocations.contains(vec)) {
+                    allTiles = false;
+                    break;
+                }
+            }
+        }
+
+        Assert.assertEquals(ruinsLocations.size(), size);
+        Assert.assertTrue(allTiles);
+    }
+
+    /**
+     * Tests that all ruins_5 parts are correctly added to the new entity
+     * when createRuins() is called.
+     */
+    @Test
+    public void createRuins5() {
+        ArrayList<SquareVector> ruinsLocations = new ArrayList<>();
+        boolean allTiles = true;
+        int size = 0;
+
+        float row = 0;
+        float col = 0;
+
+        VolcanoRuins ruins = spyWorld.createRuins(col, row);
+
+        // these are the positions selected in the method
+        ruinsLocations.add(new SquareVector(7, -1));
+        ruinsLocations.add(new SquareVector(7, -2));
+        ruinsLocations.add(new SquareVector(7, -5));
+        ruinsLocations.add(new SquareVector(7, -6));
+        ruinsLocations.add(new SquareVector(7, -10));
+        ruinsLocations.add(new SquareVector(7, -11));
+        ruinsLocations.add(new SquareVector(7, -12));
+        ruinsLocations.add(new SquareVector(7, -15));
+        ruinsLocations.add(new SquareVector(3, -3));
+        ruinsLocations.add(new SquareVector(4, -4));
+        ruinsLocations.add(new SquareVector(4, -11));
+        ruinsLocations.add(new SquareVector(3, -12));
+
+        for (SquareVector vec : ruins.children.keySet()) {
+            if (ruins.children.get(vec).equals("Ruins_5")) {
+                size++;
+                if (!ruinsLocations.contains(vec)) {
+                    allTiles = false;
+                    break;
+                }
+            }
+        }
+
+        Assert.assertEquals(ruinsLocations.size(), size);
+        Assert.assertTrue(allTiles);
+    }
+
+    /**
+     * Tests that all ruins_4 parts are correctly added to the new entity
+     * when createRuins() is called.
+     */
+    @Test
+    public void createRuins4() {
+        ArrayList<SquareVector> ruinsLocations = new ArrayList<>();
+        boolean allTiles = true;
+        int size = 0;
+
+        float row = 0;
+        float col = 0;
+
+        VolcanoRuins ruins = spyWorld.createRuins(col, row);
+
+        // these are the positions selected in the method
+        ruinsLocations.add(new SquareVector(9, -5));
+        ruinsLocations.add(new SquareVector(9, -6));
+        ruinsLocations.add(new SquareVector(10, -6));
+        ruinsLocations.add(new SquareVector(9, -9));
+        ruinsLocations.add(new SquareVector(9, -10));
+        ruinsLocations.add(new SquareVector(10, -9));
+
+        for (SquareVector vec : ruins.children.keySet()) {
+            if (ruins.children.get(vec).equals("Ruins_4")) {
+                size++;
+                if (!ruinsLocations.contains(vec)) {
+                    allTiles = false;
+                    break;
+                }
+            }
+        }
+
+        Assert.assertEquals(ruinsLocations.size(), size);
+        Assert.assertTrue(allTiles);
+    }
+
+    /**
+     * Tests that all bones parts are correctly added to the new entity
+     * when createRuins() is called.
+     */
+    @Test
+    public void createRuinsBones() {
+        ArrayList<SquareVector> bonesLocations = new ArrayList<>();
+        boolean allTiles = true;
+        int size = 0;
+
+        float row = 0;
+        float col = 0;
+
+        VolcanoRuins ruins = spyWorld.createRuins(col, row);
+
+        // these are the positions selected in the method
+        bonesLocations.add(new SquareVector(4, -3));
+        bonesLocations.add(new SquareVector(3, -4));
+        bonesLocations.add(new SquareVector(3, -11));
+        bonesLocations.add(new SquareVector(4, -12));
+
+        for (SquareVector vec : ruins.children.keySet()) {
+            if (ruins.children.get(vec).equals("Bones")) {
+                size++;
+                if (!bonesLocations.contains(vec)) {
+                    allTiles = false;
+                    break;
+                }
+            }
+        }
+
+        Assert.assertEquals(bonesLocations.size(), size);
+        Assert.assertTrue(allTiles);
+    }
+
+    /**
+     * Tests that the dragon skull is correctly created when
+     * createDragonSkull() is called.
+     */
     @Test
     public void createDragonSkullTest() {
+        ArrayList<SquareVector> skullLocations = new ArrayList<>();
+        boolean allTiles = true;
+        int size = 0;
 
+        float row = 0;
+        float col = 0;
+
+        VolcanoDragonSkull skull = spyWorld.createDragonSkull(col, row);
+
+        // this is the position selected in the method
+        skullLocations.add(new SquareVector(0, 0));
+
+        for (SquareVector vec : skull.children.keySet()) {
+            if (skull.children.get(vec).equals("DragonSkull")) {
+                size++;
+                if (!skullLocations.contains(vec)) {
+                    allTiles = false;
+                    break;
+                }
+            }
+        }
+
+        Assert.assertEquals(skullLocations.size(), size);
+        Assert.assertTrue(allTiles);
     }
 
+    /**
+     * Tests that 20 entities are added when addRandoms() is called.
+     */
+    @Test
+    public void addRandomsTest() {
+        for (AbstractEntity entity : spyWorld.getEntities()) {
+            spyWorld.removeEntity(entity);
+        }
 
+        spyWorld.addRandoms();
+
+        Assert.assertEquals(20, spyWorld.getEntities().size());
+    }
+
+    /**
+     * Tests that 23 total entities are added when createStaticEntities() is called.
+     */
+    @Test
+    public void createStaticEntitiesTest() {
+        for (AbstractEntity entity : spyWorld.getEntities()) {
+            spyWorld.removeEntity(entity);
+        }
+
+        spyWorld.createStaticEntities();
+
+        Assert.assertEquals(23, spyWorld.getEntities().size());
+    }
 }
