@@ -49,6 +49,11 @@ public class TundraWorld extends AbstractWorld {
 		enemyManager.spawnBoss(0, 0);
 	}
 
+	@Override
+	public String getType(){
+		return "Tundra";
+	}
+
 	private void generateStaticEntities() {
 		final int NUM_CAMPFIRES = 20;
 		final int NUM_TREE_LOGS = 60;
