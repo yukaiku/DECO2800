@@ -99,7 +99,6 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("projectile", new Texture("resources/rocks.png"));
 
 			// storyline
-			/*textureMap.put("stone_floor", new Texture("resources/tutorial/tile/tutorial-tile-design.png"));*/
 			textureMap.put("stone-1", new Texture("resources/tutorial/tile/tile1.png"));
 			textureMap.put("stone-2", new Texture("resources/tutorial/tile/tile2.png"));
 			textureMap.put("stone-3", new Texture("resources/tutorial/tile/tile3.png"));
@@ -113,6 +112,11 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("victory", new Texture("resources/tutorial/victory-screen.png"));
 			textureMap.put("defeat", new Texture("resources/tutorial/defeat-screen.png"));
 			textureMap.put("pause", new Texture("resources/tutorial/pause-menu.png"));
+			textureMap.put("trs-desert", new Texture("resources/tutorial/transition/transition-desert.png"));
+			textureMap.put("trs-swamp", new Texture("resources/tutorial/transition/transition-swamp.png"));
+			textureMap.put("trs-tundra", new Texture("resources/tutorial/transition/transition-tundra.png"));
+			textureMap.put("trs-volcano", new Texture("resources/tutorial/transition/transition-volcano.png"));
+
 
 			// npcs
 			textureMap.put("tutorial_npc", new Texture("resources/npcs/tutorial_npc.png"));
