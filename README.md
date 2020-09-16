@@ -22,5 +22,7 @@
 
 `Ctrl` + `K` - Kill all wild and special enemies (excludes boss)
 
+`Ctrl` + `L` - Kill the boss
+
 ### Chat Commands
 `/duck` - Spawns 1000 peons

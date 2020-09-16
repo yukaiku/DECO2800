@@ -2,6 +2,7 @@ package deco2800.thomas;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -22,6 +23,7 @@ import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
 import deco2800.thomas.worlds.desert.DesertWorld;
+import deco2800.thomas.worlds.swamp.SwampWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
@@ -42,6 +44,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public static boolean tutorial = false;
 	Renderer3D renderer = new Renderer3D();
 	OverlayRenderer rendererDebug = new OverlayRenderer();
+
+	//Renderer Object to render Zone Events
+	EventRenderer rendererEvent;
 
 	//spriteBatch for renderers
 	SpriteBatch spriteBatch = new SpriteBatch();
@@ -66,7 +71,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * Create a camera for panning and zooming.
 	 * Camera must be updated every render cycle.
 	 */
-	OrthographicCamera camera, cameraDebug;
+	OrthographicCamera camera, cameraDebug, cameraEvent;
 
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
 
@@ -115,6 +120,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 			GameManager.get().inTutorial = true;
 			tutorial = true;
 			GameManager.get().setWorld(startType.method());
+		} else if (startType == gameType.ENV_TEAM_GAME) {
+			GameManager.get().setWorld(startType.method());
 		} else if (startType == gameType.NEW_GAME) {
 			GameManager.get().setWorld(startType.method());
 		} else if (startType == gameType.TEST_WORLD) {
@@ -125,9 +132,13 @@ public class GameScreen implements Screen, KeyDownObserver {
 		/* Create an example world for the engine */
 		this.game = game;
 
+		// Must initialize rendererEvent here so that gameWorld in GameManager is also initialized
+		rendererEvent = new EventRenderer(true);
+
 		// Initialize camera
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cameraDebug = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cameraEvent = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		/* Add the window to the stage */
 		GameManager.get().setSkin(skin);
@@ -189,8 +200,14 @@ public class GameScreen implements Screen, KeyDownObserver {
 		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta);
 		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
 
+		cameraEvent.position.set(camera.position);
+		cameraEvent.update();
+
 		cameraDebug.position.set(camera.position);
 		cameraDebug.update();
+
+		SpriteBatch batchEvent = new SpriteBatch();
+		batchEvent.setProjectionMatrix(cameraEvent.combined);
 
 		SpriteBatch batchDebug = new SpriteBatch();
 		batchDebug.setProjectionMatrix(cameraDebug.combined);
@@ -204,15 +221,13 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		rerenderMapObjects(batch, camera);
 		rendererDebug.render(batchDebug, cameraDebug);
+		rendererEvent.render(batchEvent, cameraEvent);
 
-		// Add guideline if we are in the TutorialWorld
-//		if (tutorial) {
-//			SpriteBatch batchGuideline = new SpriteBatch();
-//			batchGuideline.setProjectionMatrix(cameraDebug.combined);
-//			guideline.render(batchGuideline, cameraDebug);
-//		}
+
 		spriteBatch.setProjectionMatrix(cameraDebug.combined);
+		//Add questTracker UI
 		questTrackerRenderer.render(spriteBatch, cameraDebug);
+		//Add tutorial guideline if we are in the tutorial world
 		if(tutorial){
 			guideline.render(spriteBatch,cameraDebug);
 		}
@@ -411,6 +426,10 @@ public class GameScreen implements Screen, KeyDownObserver {
 		if (keycode == Input.Keys.F4) { // F4
 			// Load the world to the DB
 			DatabaseManager.loadWorld(null);
+		}
+
+		if (keycode == Input.Keys.F6) {
+			DatabaseManager.saveWorldToJsonFile(GameManager.get().getWorld(), "resources/_save_.json");
 		}
 	}
 

@@ -58,13 +58,17 @@ public class VolcanoWorld extends AbstractWorld {
         addEntity(this.getPlayerEntity());
 
         Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano");
-        Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_volcano", 1);
+        Dragon boss = new Dragon("Deilaenth", 3, 0.03f, 750, "dragon_volcano", 1);
 
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(volcanoOrc), boss);
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(16, 20);
     }
 
+    @Override
+    public String getType() {
+        return "Volcano";
+    }
 
     /**
      * Generates the tiles for the world
@@ -107,7 +111,7 @@ public class VolcanoWorld extends AbstractWorld {
         entities.add(createRuins(-25, -5));
         entities.add(createDragonSkull(-23, 23));
         //For objects that are added randomly & require more specific addition
-        //entities, they're methodology will folllow add()
+        //entities, their methodology will follow add()
         addRandoms();
     }
 
@@ -264,12 +268,12 @@ public class VolcanoWorld extends AbstractWorld {
         //Bottom right corner
         parts.add(new Part(new SquareVector(13, -7), "fenceN-W", true));
 
-        //Verticle sides Left
+        //Vertical sides Left
         parts.add(new Part(new SquareVector(0, -6), "fenceN-S", true));
         parts.add(new Part(new SquareVector(0, -5), "fenceN-S", true));
         parts.add(new Part(new SquareVector(0,  -2), "fenceN-S", true));
         parts.add(new Part(new SquareVector(0, -1), "fenceN-S", true));
-        //Verticle sides Right
+        //Vertical sides Right
         parts.add(new Part(new SquareVector(13, -6), "fenceN-S", true));
         parts.add(new Part(new SquareVector(13, -5), "fenceN-S", true));
         parts.add(new Part(new SquareVector(13,  -2), "fenceN-S", true));

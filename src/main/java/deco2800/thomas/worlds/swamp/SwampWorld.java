@@ -41,11 +41,16 @@ public class SwampWorld extends AbstractWorld {
 
         // Provide available enemies to the EnemyManager
         Orc swampOrc = new Orc(1, 0.09f, 50, "orc_swamp");
-        Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_swamp", 2);
+        Dragon boss = new Dragon("Viondria", 3, 0.03f, 1050, "dragon_swamp", 2);
 
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc), boss);
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(19, -24);
+    }
+
+    @Override
+    public String getType() {
+        return "Swamp";
     }
 
     @Override
@@ -148,7 +153,7 @@ public class SwampWorld extends AbstractWorld {
         entities.add(new SwampFallenTree((this.getTile(-4, -23)), true));
         entities.add(new SwampFallenTree((this.getTile(-2, -23)), true));
 
-        // North Forst
+        // North Forest
         entities.add(new SwampFallenTree((this.getTile(24, 14)), true));
         entities.add(new SwampFallenTree((this.getTile(23, 13)), true));
     }
