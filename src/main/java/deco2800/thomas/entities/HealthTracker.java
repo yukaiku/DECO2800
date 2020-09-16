@@ -1,5 +1,7 @@
 package deco2800.thomas.entities;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Contains the current and maximum health value for a given character
  * (player, enemy or NPC) as well as methods for tracking and controlling the
@@ -10,10 +12,13 @@ package deco2800.thomas.entities;
 public class HealthTracker {
     // Class Fields
     /** Represents the maximum health value of a character **/
+    @Expose
     private int maxHealthValue;
     /** Represents the current health value of a character  **/
+    @Expose
     private int currentHealthValue;
     /** Represents whether or not the entity has reached 0 health  **/
+    @Expose
     private boolean isDead;
 
     public HealthTracker(int maxHealthValue) {

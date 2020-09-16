@@ -15,6 +15,8 @@ public abstract class AgentEntity extends AbstractEntity {
 	@Expose
 	protected float speed;
 	private MovementTask.Direction movingDirection = MovementTask.Direction.NONE;
+
+	@Expose
 	protected HealthTracker health;
 
 	// collection of textures for different directions

@@ -120,6 +120,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 			GameManager.get().inTutorial = true;
 			tutorial = true;
 			GameManager.get().setWorld(startType.method());
+		} else if (startType == gameType.ENV_TEAM_GAME) {
+			GameManager.get().setWorld(startType.method());
 		} else if (startType == gameType.NEW_GAME) {
 			GameManager.get().setWorld(startType.method());
 		} else if (startType == gameType.TEST_WORLD) {
@@ -407,8 +409,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		}
 
 		if (keycode == Input.Keys.F6) {
-			DatabaseManager.saveWorld(GameManager.get().getWorld(), "save_world.json");
+			DatabaseManager.saveWorldToJsonFile(GameManager.get().getWorld(), "resources/_save_.json");
 		}
 	}
-
 }
