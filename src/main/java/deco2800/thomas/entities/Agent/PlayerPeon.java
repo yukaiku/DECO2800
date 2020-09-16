@@ -22,11 +22,9 @@ import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
+import javafx.scene.effect.Effect;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, KeyDownObserver, KeyUpObserver {
     // Animation Testing
@@ -231,10 +229,12 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         }
 
         // Check current effects to be applied or removed
-        if (getEffects() != null) {
+        if (!getEffects().isEmpty()) {
             for (StatusEffect effect : getEffects()) {
-                if (!effect.getActive() || effect.getAffectedEntity() == null) {
-                    removeEffect(effect);
+                if (effect.getAffectedEntity() == null) {
+                    if (!effect.getActive()) {
+                        removeEffect(effect);
+                    }
                 } else {
                     effect.applyEffect();
                 }

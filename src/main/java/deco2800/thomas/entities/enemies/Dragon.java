@@ -33,6 +33,8 @@ public class Dragon extends Boss implements PassiveEnemy {
     private int attackRange = 8;
     //the orb number for orb texture
     int orbNumber;
+    //
+    Random random = new Random();
 
     public Dragon(String name, int height, float speed, int health, int orb) {
         super(name, "elder_dragon", height, speed, health);
@@ -100,17 +102,21 @@ public class Dragon extends Boss implements PassiveEnemy {
             setCombatTask(new MeleeAttackTask(this, origin, 8, 8, 20));
     }
 
+    public void summonRangedAttack() {
+        Fireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
+                getTarget().getRow(), 10, 0.2f, 60, EntityFaction.Evil);
+    }
+
     @Override
     public void onTick(long i) {
         // update target following path every 1 second (60 ticks)
-        if (++tickFollowing > 60) {
+        if (++tickFollowing + random.nextInt(9) > 80) {
             if (super.getTarget() != null) {
                 // Throws a fireball at the player, and attempts to summon a
                 // goblin, and attempts to initialise movement and combat
                 // tasks
                 summonGoblin();
-                Fireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
-                        getTarget().getRow(), 10, 0.2f, 60, EntityFaction.Evil);
+                summonRangedAttack();
                 setMovementTask(new MovementTask(this, super.getTarget().
                         getPosition()));
                 attackPlayer();

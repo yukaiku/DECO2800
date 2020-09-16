@@ -83,7 +83,7 @@ public class FireBombAttackTaskTest extends BaseGDXTest {
     @Test
     public void initialAttackDamageTest() {
         // Start task
-        FireBombAttackTask task = new FireBombAttackTask(combatEntity, 10, 1, 0);
+        FireBombAttackTask task = new FireBombAttackTask(combatEntity, 10, 1, 0, 1, 1);
         task.onTick(1);
 
         // Verify reduceHealth is called
@@ -95,7 +95,7 @@ public class FireBombAttackTaskTest extends BaseGDXTest {
      */
     public void taskCompleteTest() {
         // Start task
-        FireBombAttackTask task = new FireBombAttackTask(combatEntity, 10, 1, 0);
+        FireBombAttackTask task = new FireBombAttackTask(combatEntity, 10, 1, 0, 1, 1);
         task.onTick(1);
 
         assertTrue(task.isComplete());
@@ -107,7 +107,7 @@ public class FireBombAttackTaskTest extends BaseGDXTest {
     @Test
     public void explosionSpawnTest() {
         // Start task
-        FireBombAttackTask task = new FireBombAttackTask(combatEntity, 10, 1, 0);
+        FireBombAttackTask task = new FireBombAttackTask(combatEntity, 10, 1, 0, 3, 3);
         task.onTick(1);
 
         verify(abstractWorld, times(9)).addEntity(any(Explosion.class));

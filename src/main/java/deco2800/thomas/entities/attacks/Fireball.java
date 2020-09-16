@@ -22,14 +22,18 @@ import deco2800.thomas.util.WorldUtil;
  */
 public class Fireball extends Projectile implements Animatable, Tickable{
 
+    /* Enum containing the possible states of this class*/
     public enum State {
         DEFAULT, EXPLODING
     }
+    /* The current state of this entity*/
     public Fireball.State currentState;
+    /* Animation for when this entity is exploding */
     private final Animation<TextureRegion> explosion;
+    /* Default animation */
     private final Animation<TextureRegion> defaultState;
-    private float stateTimer = 0;
-    private int duration = 0;
+    /* The current timer on this class */
+    protected float stateTimer = 0;
     /**
      * Default constructor, sets texture and object name.
      */
@@ -103,6 +107,7 @@ public class Fireball extends Projectile implements Animatable, Tickable{
             if (combatTask.isComplete()) {
                 currentState = State.EXPLODING;
                 movementTask.stopTask();
+                combatTask.stopTask();
             }
             combatTask.onTick(i);
         }

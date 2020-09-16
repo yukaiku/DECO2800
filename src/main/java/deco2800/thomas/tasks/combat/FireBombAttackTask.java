@@ -24,6 +24,10 @@ public class FireBombAttackTask extends AbstractTask {
     private int damage;
     /* Task status */
     private boolean complete = false;
+    /* Explosion height */
+    private int height;
+    /* Explosion width */
+    private int width;
 
     /**
      * Creates an instance of the ExplosionTask which executes the FireBomb attack and spawns
@@ -33,19 +37,21 @@ public class FireBombAttackTask extends AbstractTask {
      * @param lifetime Duration in ticks of damage over time effect
      * @param tickPeriod Period in ticks in between damage ticks
      */
-    public FireBombAttackTask(AbstractEntity entity, int damage, int lifetime, int tickPeriod) {
+    public FireBombAttackTask(AbstractEntity entity, int damage, int lifetime, int tickPeriod, int height, int width) {
         super(entity);
         this.damage = damage;
         this.lifetime = lifetime;
         this.tickPeriod = tickPeriod;
+        this.height = height;
+        this.width = width;
     }
 
     /**
      * Spawns explosion entities into the game world.
      */
     private void spawn() {
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) {
+        for (int x = -1; x < width - 1; x++) {
+            for (int y = -1; y < height - 1; y++) {
                 Explosion explosion = new Explosion(entity.getCol() + x, entity.getRow() + y,
                         damage / 2, entity.getFaction()); // Tick damage less than initial hit
                 explosion.setCombatTask(new ApplyDamageOverTimeTask(explosion, lifetime, tickPeriod));
