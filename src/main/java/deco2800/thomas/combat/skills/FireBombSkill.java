@@ -5,17 +5,21 @@ import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.tasks.AbstractTask;
-import deco2800.thomas.tasks.combat.MeleeAttackTask;
-import deco2800.thomas.util.SquareVector;
+import deco2800.thomas.tasks.combat.FireBombAttackTask;
+import deco2800.thomas.tasks.combat.FireballAttackTask;
 
 /**
- * Swings a sword that deals damage when it hits a target.
+ * Launches a fireball that deals damage when it hits a target.
  */
-public class MeleeSkill implements Skill, Tickable {
+public class FireBombSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private final int MAX_COOLDOWN = 10;
-    /* Damage to apply from attack */
-    private final int DAMAGE = 10;
+    private final int MAX_COOLDOWN = 30 * 1; // TODO Fix magic number
+    /* Damage to apply from explosion */
+    private final int DAMAGE = 20;
+    /* Lifetime of explosion */
+    private final int LIFETIME = 60;
+    /* Tick period of explosion */
+    private final int TICK_PERIOD = 20;
 
     /* Cooldown tracker */
     private int cooldown = 0;
@@ -23,11 +27,11 @@ public class MeleeSkill implements Skill, Tickable {
     private AbstractEntity entity;
 
     /**
-     * Creates a new MeleeSkill and binds it to the Entity.
+     * Creates a new FireBombSkill and binds it to the Entity.
      * @param parent Parent entity of skill.
      * @throws NullPointerException when parent is null
      */
-    public MeleeSkill(AbstractEntity parent) {
+    public FireBombSkill(AbstractEntity parent) {
         if (parent == null) {
             throw new NullPointerException();
         }
@@ -79,42 +83,15 @@ public class MeleeSkill implements Skill, Tickable {
     /**
      * Creates and returns a new skill task for this skill that is executed by the
      * entity executing the skill.
-     * @param targetX X position of target in ColRow coordinates
-     * @param targetY Y position of target in ColRow coordinates
+     * @param targetX Not used for this skill
+     * @param targetY Not used for this skill
      * @return New AbstractTask to execute.
      * @throws SkillOnCooldownException when cooldown > 0
      */
     @Override
     public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
         if (cooldown <= 0) {
-            AbstractTask task;
-            SquareVector origin;
-            double angle = Math.toDegrees(Math.atan2(targetX - entity.getCol(), targetY - entity.getRow()));
-            if (angle > -45 && angle < 45) {
-                // Spawn above entity
-                origin = new SquareVector(entity.getCol(), entity.getRow() + 1);
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
-
-            } else if (angle >= -135 && angle <= -45) {
-                // Spawn to left of player
-                origin = new SquareVector(entity.getCol() - 1, entity.getRow());
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
-
-            } else if (angle < -135 || angle > 135) {
-                // Spawn below player
-                origin = new SquareVector(entity.getCol(), entity.getRow() - 1);
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
-
-            } else if (angle >= 45 && angle <= 135) {
-                // Spawn right of player
-                origin = new SquareVector(entity.getCol() + 1, entity.getRow());
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
-            } else {
-                // This code is unreachable, but required to stop
-                // warnings.
-                System.out.println("Unreachable code was reached! (MeleeSkill)");
-                task = null;
-            }
+            AbstractTask task = new FireBombAttackTask(entity, DAMAGE, LIFETIME, TICK_PERIOD);
             cooldown = MAX_COOLDOWN;
             return task;
         } else {

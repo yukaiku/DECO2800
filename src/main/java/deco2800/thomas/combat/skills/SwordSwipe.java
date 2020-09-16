@@ -9,13 +9,14 @@ import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.util.SquareVector;
 
 /**
- * Swings a sword that deals damage when it hits a target.
+ * Base Ultimate skill for the Mech. ~180 degree frontal sword swipe, that
+ * applies small knockback to enemies.
  */
-public class MeleeSkill implements Skill, Tickable {
+public class SwordSwipe implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private final int MAX_COOLDOWN = 10;
-    /* Damage to apply from attack */
-    private final int DAMAGE = 10;
+    private final int MAX_COOLDOWN = 10 * 50; // 50 is a magic number ):
+    /* Damage to apply from sword swipe */
+    private final int DAMAGE = 20;
 
     /* Cooldown tracker */
     private int cooldown = 0;
@@ -23,11 +24,11 @@ public class MeleeSkill implements Skill, Tickable {
     private AbstractEntity entity;
 
     /**
-     * Creates a new MeleeSkill and binds it to the Entity.
+     * Creates a new SwordSwipe and binds it to the Entity.
      * @param parent Parent entity of skill.
      * @throws NullPointerException when parent is null
      */
-    public MeleeSkill(AbstractEntity parent) {
+    public SwordSwipe(AbstractEntity parent) {
         if (parent == null) {
             throw new NullPointerException();
         }
@@ -92,27 +93,27 @@ public class MeleeSkill implements Skill, Tickable {
             double angle = Math.toDegrees(Math.atan2(targetX - entity.getCol(), targetY - entity.getRow()));
             if (angle > -45 && angle < 45) {
                 // Spawn above entity
-                origin = new SquareVector(entity.getCol(), entity.getRow() + 1);
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
+                origin = new SquareVector(entity.getCol() - 1, entity.getRow() + 1);
+                task = new MeleeAttackTask(entity, origin, 3, 2, DAMAGE);
 
             } else if (angle >= -135 && angle <= -45) {
                 // Spawn to left of player
-                origin = new SquareVector(entity.getCol() - 1, entity.getRow());
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
+                origin = new SquareVector(entity.getCol() - 2, entity.getRow() + 1);
+                task = new MeleeAttackTask(entity, origin, 2, 3, DAMAGE);
 
             } else if (angle < -135 || angle > 135) {
                 // Spawn below player
-                origin = new SquareVector(entity.getCol(), entity.getRow() - 1);
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
+                origin = new SquareVector(entity.getCol() - 1, entity.getRow());
+                task = new MeleeAttackTask(entity, origin, 3, 2, DAMAGE);
 
             } else if (angle >= 45 && angle <= 135) {
                 // Spawn right of player
-                origin = new SquareVector(entity.getCol() + 1, entity.getRow());
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
+                origin = new SquareVector(entity.getCol() + 1, entity.getRow() + 1);
+                task = new MeleeAttackTask(entity, origin, 2, 3, DAMAGE);
             } else {
                 // This code is unreachable, but required to stop
                 // warnings.
-                System.out.println("Unreachable code was reached! (MeleeSkill)");
+                System.out.println("Unreachable code was reached! (SwordSwipe)");
                 task = null;
             }
             cooldown = MAX_COOLDOWN;

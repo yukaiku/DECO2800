@@ -5,17 +5,21 @@ import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.tasks.AbstractTask;
-import deco2800.thomas.tasks.combat.MeleeAttackTask;
-import deco2800.thomas.util.SquareVector;
+import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
 
 /**
- * Swings a sword that deals damage when it hits a target.
+ * Launches a sting projectile that deals damage when it hits a target, and
+ * then applies damage over time.
  */
-public class MeleeSkill implements Skill, Tickable {
+public class ScorpionStingSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
     private final int MAX_COOLDOWN = 10;
-    /* Damage to apply from attack */
-    private final int DAMAGE = 10;
+    /* Damage to apply from sting */
+    private final int DAMAGE = 8;
+    /* Speed of projectile */
+    private final float SPEED = 0.5f;
+    /* Lifetime of projectile */
+    private final int LIFETIME = 60;
 
     /* Cooldown tracker */
     private int cooldown = 0;
@@ -23,11 +27,11 @@ public class MeleeSkill implements Skill, Tickable {
     private AbstractEntity entity;
 
     /**
-     * Creates a new MeleeSkill and binds it to the Entity.
+     * Creates a new ScorpionStingSkill and binds it to the Entity.
      * @param parent Parent entity of skill.
      * @throws NullPointerException when parent is null
      */
-    public MeleeSkill(AbstractEntity parent) {
+    public ScorpionStingSkill(AbstractEntity parent) {
         if (parent == null) {
             throw new NullPointerException();
         }
@@ -87,34 +91,7 @@ public class MeleeSkill implements Skill, Tickable {
     @Override
     public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
         if (cooldown <= 0) {
-            AbstractTask task;
-            SquareVector origin;
-            double angle = Math.toDegrees(Math.atan2(targetX - entity.getCol(), targetY - entity.getRow()));
-            if (angle > -45 && angle < 45) {
-                // Spawn above entity
-                origin = new SquareVector(entity.getCol(), entity.getRow() + 1);
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
-
-            } else if (angle >= -135 && angle <= -45) {
-                // Spawn to left of player
-                origin = new SquareVector(entity.getCol() - 1, entity.getRow());
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
-
-            } else if (angle < -135 || angle > 135) {
-                // Spawn below player
-                origin = new SquareVector(entity.getCol(), entity.getRow() - 1);
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
-
-            } else if (angle >= 45 && angle <= 135) {
-                // Spawn right of player
-                origin = new SquareVector(entity.getCol() + 1, entity.getRow());
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
-            } else {
-                // This code is unreachable, but required to stop
-                // warnings.
-                System.out.println("Unreachable code was reached! (MeleeSkill)");
-                task = null;
-            }
+            AbstractTask task = new ScorpionStingAttackTask(entity, targetX, targetY, DAMAGE, SPEED, LIFETIME);
             cooldown = MAX_COOLDOWN;
             return task;
         } else {
