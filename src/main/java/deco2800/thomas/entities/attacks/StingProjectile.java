@@ -2,6 +2,7 @@ package deco2800.thomas.entities.attacks;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Disposable;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.Animatable;
@@ -11,6 +12,7 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.status.BurnStatus;
 import deco2800.thomas.util.WorldUtil;
+import org.lwjgl.Sys;
 
 import java.util.List;
 
@@ -65,6 +67,7 @@ public class StingProjectile extends Projectile implements Animatable {
         // Update combat task
         if (combatTask != null) {
             if (combatTask.isComplete()) {
+                applyPoison();
                 WorldUtil.removeEntity(this);
             } else {
                 combatTask.onTick(i);
@@ -74,18 +77,18 @@ public class StingProjectile extends Projectile implements Animatable {
         }
     }
 
-    /** When this entity is destroyed, it should attempt to apply a
-     * damage over time effect to any enemy entities within its bounds.
+    /**
+     * Called when the projectile hits an enemy. Applies a damage over time
+     * effect to the enemy.
      */
-    @Override
-    public void dispose() {
+    private void applyPoison() {
         List<AbstractEntity> collisionEntities = GameManager.get().getWorld().getEntitiesInBounds(this.getBounds());
-        if (collisionEntities.size() > 0) {
-            for (AbstractEntity entity : collisionEntities) {
-                EntityFaction faction = entity.getFaction();
-                if (faction != EntityFaction.None && faction != this.getFaction()) {
-                    if (entity instanceof Peon) {
-                        Peon peon = (Peon)entity;
+        if (collisionEntities.size() > 1) {
+            for (AbstractEntity e : collisionEntities) {
+                if (e instanceof Peon) {
+                    Peon peon = (Peon)e;
+                    EntityFaction faction = peon.getFaction();
+                    if (faction != EntityFaction.None && faction != this.getFaction()) {
                         peon.addEffect(new BurnStatus(peon));
                     }
                 }

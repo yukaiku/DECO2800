@@ -9,10 +9,8 @@ import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.combat.skills.FireBombSkill;
 import deco2800.thomas.combat.skills.FireballSkill;
 import deco2800.thomas.combat.skills.ScorpionStingSkill;
-import deco2800.thomas.combat.skills.SwordSwipe;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.managers.TextureManager;
@@ -50,9 +48,8 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
 //    private static int orbCount = 0;
 //    private static List<Orb> orbs = new ArrayList<Orb>();
 
-    // The health of the player
-    private HealthTracker health;
-    private static Map<String, String> dialogues = new HashMap<>();
+    // Player dialogue
+    private static final Map<String, String> dialogues = new HashMap<>();
 
     // Wizard skills
     private List<Skill> wizardSkills;
@@ -281,7 +278,6 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         }
 
         // Check current effects to be applied or removed
-        System.out.println(getEffects());
         if (getEffects() != null) {
             for (StatusEffect effect : getEffects()) {
                 if (!effect.getActive() || effect.getAffectedEntity() == null) {

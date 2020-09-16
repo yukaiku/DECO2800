@@ -35,6 +35,7 @@ public class Peon extends AgentEntity implements Tickable {
 	public Peon(float row, float col, float speed, int health) {
 		super(row, col, RenderConstants.PEON_RENDER, speed, health);
 		this.setTexture("spacman_ded");
+		this.effects = new ArrayList<StatusEffect>();
 	}
 
 	@Override
