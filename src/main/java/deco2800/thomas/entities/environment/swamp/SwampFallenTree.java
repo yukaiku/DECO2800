@@ -9,13 +9,16 @@ public class SwampFallenTree extends StaticEntity {
 
     public SwampFallenTree() {
         super();
+        this.setObjectName(ENTITY_ID_STRING);
     }
 
     public SwampFallenTree(Tile tile, boolean obstructed) {
         super(tile, RenderConstants.SWAMP_FALLEN_TREE, "swamp_fallen_tree", obstructed);
+        this.setObjectName(ENTITY_ID_STRING);
     }
 
     public SwampFallenTree(float col, float row, List<Part> entityParts) {
         super(col, row, RenderConstants.SWAMP_FALLEN_TREE, entityParts);
+        this.setObjectName(ENTITY_ID_STRING);
     }
 }

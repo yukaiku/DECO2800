@@ -21,12 +21,24 @@ import java.util.ArrayList;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
+/**
+ * Tests the DesertWorld class and its methods.
+ *
+ * NOTE: If tests are failing here during future sprints, it is likely
+ * that new managers or features have been added and must now be mocked in the
+ * setUp() method below.
+ */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(GameManager.class)
 public class DesertWorldTest extends BaseGDXTest {
 
+    // the DesertWorld instance being tested
     private DesertWorld spyWorld;
 
+    /**
+     * Sets up all tests. All managers and features not specifically related
+     * to the DesertWorld and its entities MUST be mocked here.
+     */
     @Before
     public void setUp() throws Exception {
         // set up mocks of all managers used during a world's creation
@@ -49,10 +61,8 @@ public class DesertWorldTest extends BaseGDXTest {
         // sets up some functions for a mock Texture and its manager
         Texture texture = mock(Texture.class);
         when(textureManager.getTexture(anyString())).thenReturn(texture);
-
         Array<TextureRegion> playerStand = new Array<>();
         playerStand.add(new TextureRegion(new Texture("resources/combat/move_right.png"), 262, 256));
-
         when(textureManager.getAnimationFrames(anyString())).thenReturn(playerStand);
         when(texture.getWidth()).thenReturn(1);
         when(texture.getHeight()).thenReturn(1);

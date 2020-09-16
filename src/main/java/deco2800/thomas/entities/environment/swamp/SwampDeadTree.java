@@ -9,13 +9,16 @@ public class SwampDeadTree extends StaticEntity {
 
     public SwampDeadTree() {
         super();
+        this.setObjectName(ENTITY_ID_STRING);
     }
 
     public SwampDeadTree(Tile tile, boolean obstructed) {
         super(tile, RenderConstants.SWAMP_DEAD_TREE, "swamp_dead_tree", obstructed);
+        this.setObjectName(ENTITY_ID_STRING);
     }
 
     public SwampDeadTree(float col, float row, List<Part> entityParts) {
         super(col, row, RenderConstants.SWAMP_DEAD_TREE, entityParts);
+        this.setObjectName(ENTITY_ID_STRING);
     }
 }
