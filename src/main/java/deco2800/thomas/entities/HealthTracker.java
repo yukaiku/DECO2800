@@ -115,5 +115,14 @@ public class HealthTracker {
         this.isDead = (currentHealthValue == 0);
         return isDead;
     }
+
+
+    /**
+     * Automatically recharges the health for the player with 1 health point
+     * per 2 seconds.
+     */
+    public void recharge () {
+
+    }
 }
 
