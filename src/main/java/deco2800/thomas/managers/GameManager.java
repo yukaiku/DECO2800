@@ -10,7 +10,6 @@ import deco2800.thomas.worlds.AbstractWorld;
 
 import deco2800.thomas.worlds.desert.DesertWorld;
 import deco2800.thomas.worlds.swamp.SwampWorld;
-import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;

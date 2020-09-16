@@ -1,7 +1,11 @@
 package deco2800.thomas.util;
 
+import com.google.gson.annotations.Expose;
+
 public class SquareVector {
+	@Expose
 	private float col; // col corresponds to the X coordinate
+	@Expose
 	private float row; // row corresponds to the Y coordinate
 
 	/**
