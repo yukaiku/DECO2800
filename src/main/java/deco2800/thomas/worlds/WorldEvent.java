@@ -1,26 +1,19 @@
 package deco2800.thomas.worlds;
 
 public abstract class WorldEvent {
-    private boolean triggered;
-    private long duration = 30000;
-    private long lastTimeTicked;
+    private boolean active;
     private AbstractWorld world;
 
     public WorldEvent(AbstractWorld world) {
         this.world = world;
     }
 
-    public WorldEvent(AbstractWorld world, long duration) {
-        this.duration = duration;
-        this.world = world;
+    public void setActive(boolean activeState) {
+        active = activeState;
     }
 
-    public void setTriggered(boolean triggeredState) {
-        triggered = triggeredState;
-    }
-
-    public boolean getTriggered() {
-        return triggered;
+    public boolean getActive() {
+        return active;
     }
 
     public AbstractWorld getWorld(){

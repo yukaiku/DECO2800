@@ -5,7 +5,7 @@ import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
-import deco2800.thomas.entities.environment.desert.*;
+import deco2800.thomas.entities.Environment.desert.*;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.AbstractWorld;

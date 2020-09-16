@@ -3,13 +3,9 @@ package deco2800.thomas.worlds.volcano;
 import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.Environment.volcano.VolcanoLavaPool;
-import deco2800.thomas.entities.Environment.volcano.VolcanoGraveYard;
-import deco2800.thomas.entities.Environment.volcano.VolcanoDragonSkull;
-import deco2800.thomas.entities.Environment.volcano.VolcanoRuins;
+import deco2800.thomas.entities.Environment.volcano.*;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
-import deco2800.thomas.entities.Environment.volcano.VolcanoBurningTree;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -64,6 +60,9 @@ public class VolcanoWorld extends AbstractWorld {
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(volcanoOrc), boss);
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(16, 20);
+
+        //Add local Event to this world
+        this.setWorldEvent(new VolcanoEvent(this));
     }
 
 
@@ -107,7 +106,9 @@ public class VolcanoWorld extends AbstractWorld {
         entities.add(createGraveYard(7, -15));
         entities.add(createRuins(-25, -5));
         entities.add(createDragonSkull(-23, 23));
-        entities.add(createLavaPool(-0, 0)); //Left Lava Pool
+        entities.add(createLavaPool(-12, -20)); //Left Lava Pool
+        entities.add(createLavaPool(5, -10)); //Middle Lava Pool
+        entities.add(createLavaPool(19, -7)); //Right Lava Pool
         //For objects that are added randomly & require more specific addition
         //entities, they're methodology will folllow add()
         addRandoms();
@@ -307,21 +308,70 @@ public class VolcanoWorld extends AbstractWorld {
 
     public VolcanoLavaPool createLavaPool(float col, float row) {
         List<Part> parts = new ArrayList<Part>();
-        //Top left
-        parts.add(new Part(new SquareVector(1, 0), "fenceE-W", false));
-        parts.add(new Part(new SquareVector(2, 0), "fenceE-W", false));
-        parts.add(new Part(new SquareVector(3,  0), "fenceE-W", false));
-        //Corner
+
+        //Second layer of edges
+        parts.add(new Part(new SquareVector(-3, 0), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-2, 1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-1, 2), "LavaPool", false));
+        parts.add(new Part(new SquareVector(0, 3), "LavaPool", false));
+
+        parts.add(new Part(new SquareVector(1, 3), "LavaPool", false));
+        parts.add(new Part(new SquareVector(2, 2), "LavaPool", false));
+        parts.add(new Part(new SquareVector(3, 1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(4, 0), "LavaPool", false));
+
+        parts.add(new Part(new SquareVector(4, -1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(3, -2), "LavaPool", false));
+        parts.add(new Part(new SquareVector(2, -3), "LavaPool", false));
+        parts.add(new Part(new SquareVector(1, -4), "LavaPool", false));
+
+        parts.add(new Part(new SquareVector(0, -4), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-1, -3), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-2, -2), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-3, -1), "LavaPool", false));
+
+        //First layer of edges going clock wise
+        parts.add(new Part(new SquareVector(-2, 0), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-1, 1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(0, 2), "LavaPool", false));
+        parts.add(new Part(new SquareVector(1, 2), "LavaPool", false));
+
+        parts.add(new Part(new SquareVector(2, 1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(3, 0), "LavaPool", false));
+        parts.add(new Part(new SquareVector(3, -1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(2, -2), "LavaPool", false));
+
+        parts.add(new Part(new SquareVector(1, -3), "LavaPool", false));
+        parts.add(new Part(new SquareVector(0, -3), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-1, -2), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-2, -1), "LavaPool", false));
+
+        //Inner parts
+        parts.add(new Part(new SquareVector(0, 0), "LavaPool", false));
+        parts.add(new Part(new SquareVector(1, -1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(1, 0), "LavaPool", false));
+        parts.add(new Part(new SquareVector(0, -1), "LavaPool", false));
+
+        parts.add(new Part(new SquareVector(-1, 0), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-1, -1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(0, -2), "LavaPool", false));
+        parts.add(new Part(new SquareVector(1, -2), "LavaPool", false));
+
+        //Outer parts
+        parts.add(new Part(new SquareVector(0, 1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(1, 1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(2, 0), "LavaPool", false));
+        parts.add(new Part(new SquareVector(2, -1), "LavaPool", false));
+
         VolcanoLavaPool lavaPool = new VolcanoLavaPool(col, row, parts);
+
+        //REMOVE THIS ONCE MAP SIZE IS INCREASE TO 50 x 50 IN LATER SPRINTS,
+        // AND SETUP LAVA POOLS ACCORDINGLY
+        for (SquareVector coord : lavaPool.getChildrenPositions()) {
+            getTile(coord).setTexture("Volcano_1");
+        }
+
+        System.out.println(lavaPool.getChildrenPositions().toString());
         return lavaPool;
-    }
-
-    /**
-     * Volcano EventHandler method that will be called on in future builds
-     * once a condition in gameticks passes.
-     *
-     */
-    public void volcanoEvent () {
-
     }
 }

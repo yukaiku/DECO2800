@@ -1,4 +1,4 @@
-package deco2800.thomas.entities.environment.desert;
+package deco2800.thomas.entities.Environment.desert;
 
 import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.entities.StaticEntity;
