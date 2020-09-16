@@ -1,10 +1,16 @@
 package deco2800.thomas.tasks.combat;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.CombatEntity;
+import deco2800.thomas.entities.attacks.Explosion;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.ApplyDamageOnCollisionTask;
 import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
@@ -24,11 +30,11 @@ import static org.junit.Assert.*;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 /**
- * Test for ApplyDamageOverTimeTask class
+ * Tests for FireBombAttackTaskTest class
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(GameManager.class)
-public class ApplyDamageOverTimeTaskTest extends BaseGDXTest {
+public class FireBombAttackTaskTest extends BaseGDXTest {
     // Used to verify task execution
     private GameManager gameManager;
     private AbstractWorld abstractWorld;
@@ -45,6 +51,17 @@ public class ApplyDamageOverTimeTaskTest extends BaseGDXTest {
         mockStatic(GameManager.class);
         when(GameManager.get()).thenReturn(gameManager);
 
+        // Mock texture manager
+        TextureManager textureManager = mock(TextureManager.class);
+        Texture testTexture = mock(Texture.class);
+        Array<TextureRegion> playerStand = new Array<>();
+        playerStand.add(new TextureRegion(new Texture("resources/combat/move_right.png"), 262, 256));
+        when(textureManager.getAnimationFrames(anyString())).thenReturn(playerStand);
+        when(testTexture.getWidth()).thenReturn(10);
+        when(testTexture.getHeight()).thenReturn(10);
+        when(textureManager.getTexture(anyString())).thenReturn(testTexture);
+        when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
+
         // Mock combat entity and agent entity (so that they're on different factions)
         combatEntity = mock(CombatEntity.class);
         when(combatEntity.getFaction()).thenReturn(EntityFaction.Evil);
@@ -60,65 +77,39 @@ public class ApplyDamageOverTimeTaskTest extends BaseGDXTest {
     }
 
     /**
-     * Verifies that the applyDamage method is called when the entities
-     * collide. A passing test is when the reduceHealth and getDamage methods are called
-     * from the player peon and fireball respectively.
+     * Verifies that the applyDamage method is called when the initial attack
+     * occurs.
      */
     @Test
-    public void applyingDamageOnCollisionTest() {
+    public void initialAttackDamageTest() {
         // Start task
-        ApplyDamageOverTimeTask task = new ApplyDamageOverTimeTask(combatEntity, 1, 0);
+        FireBombAttackTask task = new FireBombAttackTask(combatEntity, 10, 1, 0);
         task.onTick(1);
 
-        // Verify getDamage and reduceHealth are called
-        verify(combatEntity).getDamage();
+        // Verify reduceHealth is called
         verify(agentEntity).reduceHealth(anyInt());
     }
 
     /**
-     * Ensures that multiple ticks of damage are applied over the lifetime of the
-     * task.
+     * Verifies the task completes after 1 tick.
      */
-    @Test
-    public void applyingMultipleTicksOverLifetimeTest() {
+    public void taskCompleteTest() {
         // Start task
-        ApplyDamageOverTimeTask task = new ApplyDamageOverTimeTask(combatEntity, 5, 0);
-        for (int i = 0; i < 5; i++) {
-            task.onTick(i);
-        }
-
-        // Verify getDamage and reduceHealth are called each time
-        verify(combatEntity, times(5)).getDamage();
-        verify(agentEntity, times(5)).reduceHealth(anyInt());
-    }
-
-    /**
-     * Ensures that ticks follow period.
-     */
-    @Test
-    public void tickPeriodTest() {
-        // Start task
-        ApplyDamageOverTimeTask task = new ApplyDamageOverTimeTask(combatEntity, 5, 3);
-        for (int i = 0; i < 5; i++) {
-            task.onTick(i);
-        }
-
-        // Verify getDamage and reduceHealth are called only twice
-        verify(combatEntity, times(2)).getDamage();
-        verify(agentEntity, times(2)).reduceHealth(anyInt());
-    }
-
-    /**
-     * Tests that the task completes after lifetime is reached.
-     */
-    @Test
-    public void taskLifetimeTest() {
-        // Start task
-        ApplyDamageOverTimeTask task = new ApplyDamageOverTimeTask(combatEntity, 5, 3);
-        for (int i = 0; i < 5; i++) {
-            task.onTick(i);
-        }
+        FireBombAttackTask task = new FireBombAttackTask(combatEntity, 10, 1, 0);
+        task.onTick(1);
 
         assertTrue(task.isComplete());
+    }
+
+    /**
+     * Verifies that the explosion entities are spawned after the initial attack.
+     */
+    @Test
+    public void explosionSpawnTest() {
+        // Start task
+        FireBombAttackTask task = new FireBombAttackTask(combatEntity, 10, 1, 0);
+        task.onTick(1);
+
+        verify(abstractWorld, times(9)).addEntity(any(Explosion.class));
     }
 }

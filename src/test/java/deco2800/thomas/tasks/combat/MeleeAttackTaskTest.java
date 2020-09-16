@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 /**
- * Test for ApplyDamageOnCollisionTaskTest class
+ * Test for MeleeAttackTaskTest class
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(GameManager.class)
