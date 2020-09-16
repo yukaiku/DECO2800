@@ -2,13 +2,17 @@ package deco2800.thomas;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.Peon;
+import deco2800.thomas.entities.Agent.QuestTracker;
 import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
@@ -19,12 +23,15 @@ import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
 import deco2800.thomas.worlds.desert.DesertWorld;
+import deco2800.thomas.worlds.swamp.SwampWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class GameScreen implements Screen, KeyDownObserver {
+	static float width = 1280;
+	static float height = 1000;
 	private final Logger LOG = LoggerFactory.getLogger(GameScreen.class);
 	@SuppressWarnings("unused")
 	private final ThomasGame game;
@@ -38,23 +45,33 @@ public class GameScreen implements Screen, KeyDownObserver {
 	Renderer3D renderer = new Renderer3D();
 	OverlayRenderer rendererDebug = new OverlayRenderer();
 
+	//Renderer Object to render Zone Events
+	EventRenderer rendererEvent;
+
 	//spriteBatch for renderers
 	SpriteBatch spriteBatch = new SpriteBatch();
 	//Quest Tracker UI
+	PauseModal pauseModal = new PauseModal();
+	Result result = new Result();
+
 	QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
 	//Tutorial Guideline UI
 	Guideline guideline = new Guideline();
 
 
+	// Buttons in the pause menu
+	Button resumeButton = new TextButton("RESUME", GameManager.get().getSkin(), "in_game");
+	Button quitButton = new TextButton("RETURN TO MAIN MENU", GameManager.get().getSkin(), "in_game");
+
 	AbstractWorld world;
 
-	static Skin skin;
+	static Skin skin = new Skin(Gdx.files.internal("resources/uiskin.skin"));
 
 	/**
 	 * Create a camera for panning and zooming.
 	 * Camera must be updated every render cycle.
 	 */
-	OrthographicCamera camera, cameraDebug;
+	OrthographicCamera camera, cameraDebug, cameraEvent;
 
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
 
@@ -65,7 +82,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new DesertWorld();
-
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
@@ -114,9 +130,13 @@ public class GameScreen implements Screen, KeyDownObserver {
 		/* Create an example world for the engine */
 		this.game = game;
 
+		// Must initialize rendererEvent here so that gameWorld in GameManager is also initialized
+		rendererEvent = new EventRenderer(true);
+
 		// Initialize camera
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cameraDebug = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cameraEvent = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		/* Add the window to the stage */
 		GameManager.get().setSkin(skin);
@@ -132,23 +152,53 @@ public class GameScreen implements Screen, KeyDownObserver {
 		multiplexer.addProcessor(GameManager.get().getManager(InputManager.class));
 		Gdx.input.setInputProcessor(multiplexer);
 
-		GameManager.get().getManager(KeyboardManager.class).registerForKeyDown(this);
+		GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
+//		GameManager.get().getManager(KeyboardManager.class).registerForKeyDown(this);
+
+		// Add listener to the buttons in the pause menu
+		resumeButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				GameManager.resume();
+			}
+		});
+		quitButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				// Resume the game before quit to home screen
+				GameManager.resume();
+				// Reset quest tracker
+				QuestTracker.resetQuest();
+				// Remove enemies
+				GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
+				// Dispose the screen
+				dispose();
+				// Set main menu screen
+				game.setMainMenuScreen();
+			}
+		});
+
+		stage.addActor(resumeButton);
+		stage.addActor(quitButton);
 	}
 
 	/**
-	 * Renderer thread
-	 * Must update all displayed elements using a Renderer
+	 * Render the game normally
 	 */
-	@Override
-	public void render(float delta) {
-
+	public void renderGame(float delta ) {
 		handleRenderables();
 
 		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta);
 		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
 
+		cameraEvent.position.set(camera.position);
+		cameraEvent.update();
+
 		cameraDebug.position.set(camera.position);
 		cameraDebug.update();
+
+		SpriteBatch batchEvent = new SpriteBatch();
+		batchEvent.setProjectionMatrix(cameraEvent.combined);
 
 		SpriteBatch batchDebug = new SpriteBatch();
 		batchDebug.setProjectionMatrix(cameraDebug.combined);
@@ -162,23 +212,81 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		rerenderMapObjects(batch, camera);
 		rendererDebug.render(batchDebug, cameraDebug);
+		rendererEvent.render(batchEvent, cameraEvent);
 
-		// Add guideline if we are in the TutorialWorld
-//		if (tutorial) {
-//			SpriteBatch batchGuideline = new SpriteBatch();
-//			batchGuideline.setProjectionMatrix(cameraDebug.combined);
-//			guideline.render(batchGuideline, cameraDebug);
-//		}
+
 		spriteBatch.setProjectionMatrix(cameraDebug.combined);
+		//Add tutorial guideline if we are in the tutorial world
 		if(tutorial){
 			guideline.render(spriteBatch,cameraDebug);
 		}
+		//Add questTracker UI
 		questTrackerRenderer.render(spriteBatch, cameraDebug);
+
+		// Hide the buttons when the game is running
+		resumeButton.setPosition(-100, -100);
+		quitButton.setPosition(-100, -100);
 
 		/* Refresh the experience UI for if information was updated */
 		stage.act(delta);
 		stage.draw();
 		batch.dispose();
+	}
+
+	/**
+	 * Render the game pause menu when the game is paused
+	 */
+	public void renderPauseMenu(float delta) {
+		// Render the pause modal
+		SpriteBatch batchPauseModal = new SpriteBatch();
+		batchPauseModal.setProjectionMatrix(cameraDebug.combined);
+		pauseModal.render(batchPauseModal, cameraDebug);
+
+		// Display the buttons
+		resumeButton.setPosition(width / 2 - resumeButton.getWidth() / 2,
+				height / 2);
+		quitButton.setPosition(width / 2 - quitButton.getWidth() / 2,
+				height / 2 - 100);
+		stage.act(delta);
+		stage.draw();
+	}
+
+	/**
+	 * Render the result of the game ('Victory' or 'Game Over')
+	 */
+	public void renderGameResult(float delta) {
+		// Render the pause modal
+		SpriteBatch batchResult = new SpriteBatch();
+		batchResult.setProjectionMatrix(cameraDebug.combined);
+		result.render(batchResult, cameraDebug);
+
+		// Display the buttons
+		quitButton.setPosition(width / 2 - quitButton.getWidth() / 2,
+				height / 2 - 350);
+		stage.act(delta);
+		stage.draw();
+	}
+
+	/**
+	 * Renderer thread
+	 * Must update all displayed elements using a Renderer
+	 */
+	@Override
+	public void render(float delta) {
+		switch (GameManager.get().state)
+		{
+			case RUN:
+				renderGame(delta);
+				break;
+			case PAUSED:
+				renderPauseMenu(delta);
+				break;
+			case GAMEOVER:
+			case VICTORY:
+				renderGameResult(delta);
+			default:
+				break;
+		}
 	}
 
 	private void handleRenderables() {
@@ -238,14 +346,23 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	@Override
 	public void dispose() {
-		// Don't need this at the moment
-		System.exit(0);
+		GameManager.getManagerFromInstance(InputManager.class).removeKeyDownListener(this);
+		stage.dispose();
+//		System.exit(0);
 	}
 
 	@Override
 	public void notifyKeyDown(int keycode) {
-		if (keycode == Input.Keys.F12) {
+		if (keycode == Input.Keys.F12 && GameManager.get().state == GameManager.State.RUN) {
 			GameManager.get().debugMode = !GameManager.get().debugMode;
+		}
+
+		if (keycode == Input.Keys.ESCAPE) {
+			if (GameManager.get().state == GameManager.State.RUN) {
+				GameManager.pause();
+			} else if (GameManager.get().state == GameManager.State.PAUSED) {
+				GameManager.resume();
+			}
 		}
 
 		if (keycode == Input.Keys.F9 & GameManager.get().inTutorial) {
@@ -287,6 +404,10 @@ public class GameScreen implements Screen, KeyDownObserver {
 		if (keycode == Input.Keys.F4) { // F4
 			// Load the world to the DB
 			DatabaseManager.loadWorld(null);
+		}
+
+		if (keycode == Input.Keys.F6) {
+			DatabaseManager.saveWorld(GameManager.get().getWorld(), "save_world.json");
 		}
 	}
 

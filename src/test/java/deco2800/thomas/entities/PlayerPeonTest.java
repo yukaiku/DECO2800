@@ -102,6 +102,7 @@ public class PlayerPeonTest extends BaseGDXTest {
     }
 
     /**
+<<<<<<< HEAD
      * Test when added 2 new skills into skill list and press button num2. The
      * active skill should be the new one with index 1
      */
@@ -125,5 +126,13 @@ public class PlayerPeonTest extends BaseGDXTest {
         playerPeon.notifyKeyDown(Input.Keys.NUM_3);
 
         assertEquals(0, playerPeon.getActiveWizardSkill());
+    }
+
+    /**
+     * Test getting dialogue through PlayerPeon class works
+     */
+    @Test
+    public void testGetDialogue() {
+        assertEquals(PlayerPeon.getDialogue("roar"), "Roar!!!");
     }
 }

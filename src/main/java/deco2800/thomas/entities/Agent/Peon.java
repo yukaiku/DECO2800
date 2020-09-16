@@ -16,6 +16,9 @@ public class Peon extends AgentEntity implements Tickable {
 	private float armour;
 	private float damage;
 
+	protected boolean isAttacked = false;
+	protected int isAttackedCoolDown = 0;
+
 	public Peon() {
 		super();
 		this.setTexture("spacman_ded");
@@ -54,6 +57,22 @@ public class Peon extends AgentEntity implements Tickable {
 			combatTask.onTick(i);
 		} else {
 		}
+
+		// isAttacked animation
+		if (isAttacked && --isAttackedCoolDown < 0) {
+			isAttacked = false;
+		}
+	}
+
+	@Override
+	public void reduceHealth(int damage) {
+		health.reduceHealth(damage);
+		isAttacked = true;
+		isAttackedCoolDown = 5;
+	}
+
+	public boolean isAttacked() {
+		return this.isAttacked;
 	}
 
 	protected void setMovementTask(AbstractTask movementTask) {
