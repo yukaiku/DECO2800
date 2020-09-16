@@ -8,6 +8,7 @@ import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.combat.skills.FireBombSkill;
 import deco2800.thomas.combat.skills.FireballSkill;
+import deco2800.thomas.combat.skills.ScorpionStingSkill;
 import deco2800.thomas.combat.skills.SwordSwipe;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
@@ -81,6 +82,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         // Initialise skills
         wizardSkills = new ArrayList<>();
         wizardSkills.add(new FireballSkill(this));
+        wizardSkills.add(new ScorpionStingSkill(this));
         activeWizardSkill = 0;
         mechSkill = new FireBombSkill(this);
 
