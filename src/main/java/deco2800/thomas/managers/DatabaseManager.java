@@ -664,6 +664,9 @@ public final class DatabaseManager extends AbstractManager {
 
     /**
      * Save a world to a JSON file
+     * Refer to this page of the wiki for more details:
+     * https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/Save/Load-Zone-Entities-and-Tiles
+     *
      * @param world the world
      * @param filepath the path to the JSON file
      */
@@ -745,6 +748,9 @@ public final class DatabaseManager extends AbstractManager {
 
     /**
      * Load a world from a JSON file
+     * Refer to this page of the wiki for more details:
+     * https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/Save/Load-Zone-Entities-and-Tiles
+     *
      * @param world the world
      * @param filepath path to the JSON file
      */

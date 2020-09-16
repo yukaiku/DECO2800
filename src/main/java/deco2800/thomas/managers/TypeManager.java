@@ -17,8 +17,6 @@ import java.util.Map;
  * This class manages Entity types and Tile types for the
  * loadWorldFromJsonFile and the saveWorldToJsonFile methods of
  * the DatabaseManager class
- *
- * @author @nathan-nguyen (Slack: Nathan Nguyen)
  */
 public class TypeManager extends AbstractManager {
 	/**
