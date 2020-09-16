@@ -71,6 +71,7 @@ public class ApplyDamageOverTimeTask extends AbstractTask {
     @Override
     public void onTick(long tick) {
         if (--this.tick <= 0) {
+            this.tick = this.tickPeriod;
             List<AbstractEntity> collidingEntities = world.getEntitiesInBounds(entity.getBounds());
             if (collidingEntities.size() > 1) { // Own bounding box should always be present
                 for (AbstractEntity e : collidingEntities) {
@@ -80,8 +81,6 @@ public class ApplyDamageOverTimeTask extends AbstractTask {
                     }
                 }
             }
-        } else {
-            this.tick = this.tickPeriod;
         }
 
         // Check if lifetime has expired
