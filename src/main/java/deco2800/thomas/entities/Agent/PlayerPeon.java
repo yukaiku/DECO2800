@@ -22,7 +22,6 @@ import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
-import javafx.scene.effect.Effect;
 
 import java.util.*;
 
