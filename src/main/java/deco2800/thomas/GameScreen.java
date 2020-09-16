@@ -197,16 +197,13 @@ public class GameScreen implements Screen, KeyDownObserver {
 		rerenderMapObjects(batch, camera);
 		rendererDebug.render(batchDebug, cameraDebug);
 
-		// Add guideline if we are in the TutorialWorld
-//		if (tutorial) {
-//			SpriteBatch batchGuideline = new SpriteBatch();
-//			batchGuideline.setProjectionMatrix(cameraDebug.combined);
-//			guideline.render(batchGuideline, cameraDebug);
-//		}
+
 		spriteBatch.setProjectionMatrix(cameraDebug.combined);
+		//Add tutorial guideline if we are in the tutorial world
 		if(tutorial){
 			guideline.render(spriteBatch,cameraDebug);
 		}
+		//Add questTracker UI
 		questTrackerRenderer.render(spriteBatch, cameraDebug);
 
 		// Hide the buttons when the game is running
