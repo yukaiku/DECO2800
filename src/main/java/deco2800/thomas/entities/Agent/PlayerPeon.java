@@ -2,21 +2,25 @@ package deco2800.thomas.entities.Agent;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.combat.skills.FireBombSkill;
 import deco2800.thomas.combat.skills.FireballSkill;
-import deco2800.thomas.combat.skills.MeleeSkill;
 import deco2800.thomas.combat.skills.SwordSwipe;
+import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
-import deco2800.thomas.managers.StatusEffectManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
+import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
+import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
@@ -25,9 +29,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserver, KeyUpObserver {
-    public static int DEFAULT_HEALTH = 50;
-    private static int orbCount = 0;
+public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, KeyDownObserver, KeyUpObserver {
+    // Animation Testing
+    public enum State {
+        STANDING, WALKING, MELEE_ATTACK, RANGE_ATTACK
+    }
+    public State currentState;
+    public State previousState;
+    private MovementTask.Direction facingDirection;
+    private final Animation<TextureRegion> playerStand;
+    private final Animation<TextureRegion> playerMeleeAttack;
+    private final Animation<TextureRegion> playerRangeAttack;
+    private float stateTimer;
+    private int duration = 0;
+
+    public static int DEFAULT_HEALTH = 500;
+
+//    //Orbs tracker
+//    private static int orbCount = 0;
+//    private static List<Orb> orbs = new ArrayList<Orb>();
 
     // The health of the player
     private HealthTracker health;
@@ -62,8 +82,19 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         wizardSkills = new ArrayList<>();
         wizardSkills.add(new FireballSkill(this));
         activeWizardSkill = 0;
-
         mechSkill = new FireBombSkill(this);
+
+        // Animation Testing
+        facingDirection = MovementTask.Direction.RIGHT;
+        currentState = State.STANDING;
+        previousState = State.STANDING;
+        stateTimer = 0;
+        playerMeleeAttack = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_melee"));
+        playerRangeAttack = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_range"));
+        playerStand = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_stand"));
     }
 
     /**
@@ -72,40 +103,83 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
      * @param target The target string identifier
      */
     public static String getDialogue(String target) {
-        dialogues.put("welcome", "Welcome to Decodia the world has been devastated " +
-                "with the re-emergence of the five pythagoras orbs. In order to save this world, " +
-                "you will need to collect all the orbs and restore balance to the world.");
+        dialogues.put("plot", "Greetings my students, you both must save the world of Decodia " +
+                "by defeating the elder " +
+                "dragons and collecting the orbs they have stolen. These orbs contain the " +
+                "great power of the elements " +
+                "and without them the world is out of balance. You will have to use your combined powers of " +
+                "steel and magic to prevail against the looming terrors.");
+
         dialogues.put("WASD", "To move your character press W for up, S for down, A for left, D for right, " +
                 "please move to the " +
                 "checkpoint marked with a flag to proceed.");
+
         dialogues.put("attack", "An enemy is in front of you, get closer and click M1 to kill the monster");
+
         dialogues.put("orb", "There is an orb in front of you, pick it up by interacting with it.");
-        dialogues.put("congrats", "Congratulations on completing the tutorial, would you like to move to the next stage or redo " +
+
+        dialogues.put("congrats", "Congratulations on completing the tutorial, " +
+                "would you like to move to the next stage or redo " +
                 "the tutorial?");
+
+        dialogues.put("welcome", "Welcome to Decodia the world has been devastated " +
+                "with the re-emergence of the five pythagoras orbs. In order to save this world, " +
+                "you will need to collect all the orbs and restore balance to the world.");
+
         dialogues.put("fire", "I am a Pyromancer,, pick me and I'll burn all that stands before you to ashes.");
+
         dialogues.put("water", "I am a Hydromancer , pick me and I'll drown all our enemies.");
+
         dialogues.put("air", "I am a Anemancer, pick me and I'll unleash a hurricane on our foes.");
+
         dialogues.put("earth", "I am a Geomancer, pick me and I'll crush all monsters with mother earth.");
+
         dialogues.put("shield", "I am the shield knight, nothing shall get past my shield.");
+
         dialogues.put("sword", "I am the sword knight, i will make quick work of your enemies.");
+
         dialogues.put("swamp", "Welcome adventure to Swamp Zone , to complete this stage, " +
                 "you will have to locate the orb of muck. The monsters here are " +
                 "vulnerable to air");
+
         dialogues.put("volcano", "Welcome adventure to Volcano Zone , to complete this stage, " +
                 "you will have to locate the orb of lava. The monsters here are " +
                 "vulnerable to earth");
+
         dialogues.put("tundra", "Welcome adventure to Tundra Zone , to complete this stage, " +
                 "you will have to locate the orb of ice. The monsters here are " +
                 "vulnerable to fire");
+
         dialogues.put("desert", "Welcome adventure to Desert Zone , to complete this stage, " +
                 "you will have to locate the orb of sand. The monsters here are " +
                 "vulnerable to water");
-        dialogues.put("next", "Congratulations for collecting the orb and completing the quest, you will now proceed on to " +
-                "the next stage.");
+
+        dialogues.put("swampy", "You have slain Siendiadut the swamp dragon and gained the element of " +
+                "earth, use it to crush your foes.");
+
+        dialogues.put("volcy", "You have slain Chusulth the volcano dragon and gained the element of " +
+                "fire, use it to burn your foes.");
+
+        dialogues.put("tundy", "You have slain Diokiedes the tundra dragon and gained the element of water, " +
+                "use it to drown your foes.");
+
+        dialogues.put("desy", "You have slain Doavnaen the desert dragon and gained the element of air, " +
+                "use it to blow down your foes.");
+
         dialogues.put("roar", "Roar!!!");
+
         dialogues.put("grr", "GRRRRR");
-        dialogues.put("died", "Too bad, you died, would you like to restart from your previous checkpoint or start anew?");
-        dialogues.put("finish", "Congratulations hero, you have collected all the orbs and restored peace to the world.");
+
+        dialogues.put("orc", "WAAAAR");
+
+        dialogues.put("gob", "Shinies");
+
+        dialogues.put("died", "Too bad, you died, would you like to restart from " +
+                "your previous checkpoint or start anew?");
+
+        dialogues.put("finish", "Congratulations hero, you have collected all the " +
+                "orbs and restored peace to the world.");
+
         return dialogues.get(target);
     }
 
@@ -152,7 +226,6 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
 //        }
 //    }
 
-
     /**
      * Updates the player peon's over time methods, such as tasks and cooldowns.
      *
@@ -174,9 +247,21 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
             }
         }
 
+        if (--duration < 0) {
+            duration = 0;
+            currentState = State.STANDING;
+        }
+
         // Update combat task
         if (getCombatTask() != null) {
             getCombatTask().onTick(i);
+            if (getCombatTask() instanceof MeleeAttackTask) {
+                currentState = State.MELEE_ATTACK;
+            } else {
+                currentState = State.RANGE_ATTACK;
+            }
+            // Due to the combat task is currently executed instantly, will set a cool down here
+            duration = 9;
 
             if (getCombatTask().isComplete()) {
                 setCombatTask(null);
@@ -192,6 +277,57 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
         if (mechSkill != null) {
             mechSkill.onTick(i);
         }
+
+        // Check current effects to be applied or removed
+        System.out.println(getEffects());
+        if (getEffects() != null) {
+            for (StatusEffect effect : getEffects()) {
+                if (!effect.getActive() || effect.getAffectedEntity() == null) {
+                    removeEffect(effect);
+                } else {
+                    effect.applyEffect();
+                }
+            }
+        }
+
+        // isAttacked animation
+        if (isAttacked && --isAttackedCoolDown < 0) {
+            isAttacked = false;
+        }
+    }
+
+    /**
+     * Get the texture region of current animation keyframe (this will be called in Renderer3D.java).
+     * @param delta the interval of the ticks
+     * @return the current texture region in animation
+     */
+    public TextureRegion getFrame(float delta) {
+        TextureRegion region;
+        // Get the animation frame based on the current state
+        switch (currentState) {
+            case RANGE_ATTACK:
+                region = playerRangeAttack.getKeyFrame(stateTimer);
+                break;
+            case MELEE_ATTACK:
+                region = playerMeleeAttack.getKeyFrame(stateTimer);
+                break;
+            case STANDING:
+            default:
+                region = playerStand.getKeyFrame(stateTimer);
+        }
+        // Render the correct direction of the texture
+        if ((getMovingDirection() == MovementTask.Direction.LEFT ||
+                facingDirection == MovementTask.Direction.LEFT) && !region.isFlipX()) {
+            region.flip(true, false);
+            facingDirection = MovementTask.Direction.LEFT;
+        } else if ((getMovingDirection() == MovementTask.Direction.RIGHT ||
+                facingDirection == MovementTask.Direction.RIGHT) && region.isFlipX()) {
+            region.flip(true, false);
+            facingDirection = MovementTask.Direction.RIGHT;
+        }
+        stateTimer = currentState == previousState ? stateTimer + delta : 0;
+        previousState = currentState;
+        return region;
     }
 
     /**
@@ -227,6 +363,13 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
                 // Won't occur because I'm handling it
                 e.printStackTrace();
             }
+        }
+
+        // set the facing direction when attacking
+        if (clickedPosition[0] < this.getCol()) {
+            facingDirection = MovementTask.Direction.LEFT;
+        } else {
+            facingDirection = MovementTask.Direction.RIGHT;
         }
     }
 
@@ -277,11 +420,9 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
                 this.setMovingDirection(MovementTask.Direction.DOWN);
                 break;
             case Input.Keys.A:
-                this.setTexture("player_left");
                 this.setMovingDirection(MovementTask.Direction.LEFT);
                 break;
             case Input.Keys.D:
-                this.setTexture("player_right");
                 this.setMovingDirection(MovementTask.Direction.RIGHT);
                 break;
             default:
@@ -358,6 +499,8 @@ public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserv
     public void death() {
         GameManager.get().getWorld().removeEntity(this);
         GameManager.get().getWorld().disposeEntity(this.getEntityID());
+        QuestTracker.resetQuest();
+        GameManager.gameOver();
     }
 
     /**

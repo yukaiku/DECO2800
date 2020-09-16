@@ -34,7 +34,6 @@ public class DesertWorld extends AbstractWorld {
      */
     public DesertWorld() {
         super(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        generateTiles();
     }
 
     /**
@@ -45,7 +44,6 @@ public class DesertWorld extends AbstractWorld {
      */
     public DesertWorld(int width, int height) {
         super(width, height);
-        generateTiles();
     }
 
     /**
@@ -67,9 +65,8 @@ public class DesertWorld extends AbstractWorld {
         this.setPlayerEntity(new PlayerPeon(6f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
 
-        GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
         Orc desertOrc = new Orc(1, 0.09f, 50, "orc_desert");
-        Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_desert", 4);
+        Dragon boss = new Dragon("Chuzzinoath", 3, 0.03f, 850, "dragon_desert", 4);
 
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(desertOrc), boss);
         GameManager.get().addManager(enemyManager);
@@ -81,8 +78,6 @@ public class DesertWorld extends AbstractWorld {
      * This includes sand dunes, cactus plants, dead trees and quicksand.
      */
     public void createStaticEntities() {
-        int tileCount = GameManager.get().getWorld().getTiles().size();
-        TextureManager tex = new TextureManager();
         Random rand = new Random();
         int randIndex;
 

@@ -67,16 +67,26 @@ public class DirectProjectileMovementTask extends AbstractTask {
      */
     @Override
     public void onTick(long tick) {
-        // Update position
-        SquareVector destination = new SquareVector(
-                entity.getCol() + direction[0],
-                entity.getRow() + direction[1]
-        );
-        entity.moveTowards(destination);
+        if (!taskComplete) {
+            // Update position
+            SquareVector destination = new SquareVector(
+                    entity.getCol() + direction[0],
+                    entity.getRow() + direction[1]
+            );
+            entity.moveTowards(destination);
 
-        // Check if lifetime has expired
-        if (++currentLifetime >= lifetime) {
-            taskComplete = true;
+            // Check if lifetime has expired
+            if (++currentLifetime >= lifetime) {
+                taskComplete = true;
+            }
         }
+    }
+
+    /**
+     * End the current task
+     */
+    @Override
+    public void stopTask() {
+        taskComplete = true;
     }
 }

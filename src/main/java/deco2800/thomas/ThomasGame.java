@@ -20,6 +20,7 @@ public class ThomasGame extends Game {
 	public static final String SAVE_ROOT_DIR = "thomas-saves";
 	public FileHandle saveRootHandle;
 	public MainMenuScreen mainMenuScreen;
+	public GameScreen gameScreen;
 
 	/**
 	 * Creates the main menu screen.
@@ -30,6 +31,14 @@ public class ThomasGame extends Game {
 		initUISkin();
 		mainMenuScreen = new MainMenuScreen(this);
 		this.setScreen(mainMenuScreen);
+	}
+
+	public void setMainMenuScreen() {
+		this.setScreen(mainMenuScreen);
+	}
+
+	public void setGameScreen(GameScreen gameScreen) {
+		this.setScreen(gameScreen);
 	}
 
 	/**

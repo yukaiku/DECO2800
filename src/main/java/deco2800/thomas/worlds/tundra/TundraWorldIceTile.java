@@ -18,11 +18,6 @@ public class TundraWorldIceTile extends Tile {
     public TundraWorldIceTile(String texture, float col, float row) {
         super(texture, col, row);
         this.setType("TundraIceTile");
+        this.setStatusEffect(true);
     }
-
-    @Override
-    public boolean hasStatusEffect() {
-        return true;
-    }
-
 }
