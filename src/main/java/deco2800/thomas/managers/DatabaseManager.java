@@ -465,7 +465,8 @@ public final class DatabaseManager extends AbstractManager {
             newTiles = setDesertTiles(newTiles);
         } else if (saveLocationAndFilename.equals("resources/environment/volcano/VolcanoZone.json")) {
             newTiles = setVolcanoTiles(newTiles);
-        } else if (saveLocationAndFilename.equals("resources/environment/tundra/tundra-map.json")) {
+        } else if (saveLocationAndFilename.equals("resources/environment/tundra/tundra-map.json")
+                || saveLocationAndFilename.equals("resources/environment/tundra/tundra-map-tiles-only.json")) {
             newTiles = setTundraTiles(newTiles);
         }
 

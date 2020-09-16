@@ -102,7 +102,7 @@ public class SpeedStatusTest extends BaseGDXTest {
         float startSpeed = entity.getSpeed();
         speed.applyEffect();
 
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(2);
 
         speed.applyEffect();
         Assert.assertFalse(speed.getActive());

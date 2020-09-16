@@ -109,7 +109,7 @@ public class BurnStatusTest extends BaseGDXTest {
         burn2.applyEffect();
 
         // wait 1 second so that ticksReady() can return true
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(2);
 
         Assert.assertTrue(burn.ticksReady());
 
