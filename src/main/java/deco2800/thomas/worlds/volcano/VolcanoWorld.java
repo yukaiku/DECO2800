@@ -65,6 +65,10 @@ public class VolcanoWorld extends AbstractWorld {
         enemyManager.spawnBoss(16, 20);
     }
 
+    @Override
+    public String getType() {
+        return "Volcano";
+    }
 
     /**
      * Generates the tiles for the world
@@ -107,7 +111,7 @@ public class VolcanoWorld extends AbstractWorld {
         entities.add(createRuins(-25, -5));
         entities.add(createDragonSkull(-23, 23));
         //For objects that are added randomly & require more specific addition
-        //entities, they're methodology will folllow add()
+        //entities, their methodology will follow add()
         addRandoms();
     }
 
