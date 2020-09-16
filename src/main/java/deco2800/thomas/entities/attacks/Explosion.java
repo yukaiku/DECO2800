@@ -1,7 +1,12 @@
 package deco2800.thomas.entities.attacks;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.RenderConstants;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.util.WorldUtil;
 
 /**
@@ -10,7 +15,10 @@ import deco2800.thomas.util.WorldUtil;
  * a) Applying damage when it spawns, and
  * b) Applying damage over time until its lifetime is over
  */
-public class Explosion extends CombatEntity {
+public class Explosion extends CombatEntity implements Animatable {
+    private final Animation<TextureRegion> explosion;
+    private float stateTimer = 0f;
+
     /**
      * Default constructor, sets texture and object name.
      */
@@ -18,6 +26,8 @@ public class Explosion extends CombatEntity {
         super();
         this.setTexture("explosion");
         this.setObjectName("combatExplosion");
+        explosion = new Animation<TextureRegion>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
     }
 
     /**
@@ -32,6 +42,8 @@ public class Explosion extends CombatEntity {
         super(col, row, RenderConstants.PROJECTILE_RENDER, damage, faction);
         this.setTexture("explosion");
         this.setObjectName("combatExplosion");
+        explosion = new Animation<TextureRegion>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
     }
 
     /**
@@ -49,5 +61,17 @@ public class Explosion extends CombatEntity {
         } else {
             WorldUtil.removeEntity(this);
         }
+    }
+
+    /**
+     * Get the texture region of current animation keyframe (this will be called in Renderer3D.java).
+     *
+     * @param delta the interval of the ticks
+     * @return the current texture region in animation
+     */
+    @Override
+    public TextureRegion getFrame(float delta) {
+        stateTimer += delta;
+        return explosion.getKeyFrame(stateTimer);
     }
 }
