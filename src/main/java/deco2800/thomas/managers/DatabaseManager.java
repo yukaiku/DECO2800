@@ -17,6 +17,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import deco2800.thomas.worlds.desert.CactusTile;
 import deco2800.thomas.worlds.desert.QuicksandTile;
+import deco2800.thomas.worlds.tundra.TundraWorldIceTile;
 import deco2800.thomas.worlds.volcano.VolcanoBurnTile;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
@@ -218,15 +219,15 @@ public final class DatabaseManager extends AbstractManager {
 
 	private static AbstractEntity resolveEntityToLoad(String entityObjectName) {
 		try {
-            for (String s:Arrays.asList("rock")){
-                if (entityObjectName.startsWith(s)){
+            for (String s : Arrays.asList("rock")){
+                if (entityObjectName.startsWith(s)) {
                     Rock create = new Rock();
                     create.setObjectName(entityObjectName);
                     return (AbstractEntity) create;
                 }
             }
 
-            for (String s:Arrays.asList("staticEntityID")){
+            for (String s : Arrays.asList("staticEntityID")){
                 if (entityObjectName.startsWith(s)){
                     StaticEntity create = new StaticEntity();
                     create.setObjectName(entityObjectName);
@@ -234,7 +235,7 @@ public final class DatabaseManager extends AbstractManager {
                 }
             }
 
-            for (String s:Arrays.asList("playerPeon")){
+            for (String s : Arrays.asList("playerPeon")){
                 if (entityObjectName.startsWith(s)){
                      PlayerPeon create = new PlayerPeon(1,1,1, 1);
                      create.setObjectName(entityObjectName);
@@ -242,7 +243,7 @@ public final class DatabaseManager extends AbstractManager {
                 }
             }
 
-            for (String s:Arrays.asList("combat")) {
+            for (String s : Arrays.asList("combat")) {
                 if (entityObjectName.startsWith(s)){
                     SquareVector destination = new SquareVector(0,0);
                     Fireball create = new Fireball(1, 5, 1, 1, EntityFaction.Ally);
@@ -250,9 +251,9 @@ public final class DatabaseManager extends AbstractManager {
                 }
             }
 
-            for (String s:Arrays.asList("Elder Dragon")) {
+            for (String s : Arrays.asList("Elder Dragon")) {
                 if (entityObjectName.startsWith(s)){
-                    Dragon create = new Dragon(2, 0.3f, 2000, "dragon_swamp");
+                    Dragon create = new Dragon("Elder Dragon", 2, 0.3f, 2000, "dragon_swamp", 2);
                     return (AbstractEntity) create;
                 }
             }
@@ -370,8 +371,7 @@ public final class DatabaseManager extends AbstractManager {
         }
     }
 
-    private static void descendThroughSaveFile(JsonReader reader,
-                                               Map<Integer, AbstractEntity> newEntities,
+    private static void descendThroughSaveFile(JsonReader reader, Map<Integer, AbstractEntity> newEntities,
                                                CopyOnWriteArrayList<Tile> newTiles) {
         try {
             reader.beginObject();
@@ -387,6 +387,7 @@ public final class DatabaseManager extends AbstractManager {
             logger.error("Somehow loaded the JSON file, but it's somewhat corrupted", e);
         }
     }
+
     private static void readEntities(JsonReader reader, Map<Integer, AbstractEntity> newEntities,
                                      CopyOnWriteArrayList<Tile> newTiles) throws IOException {
         while (reader.hasNext()) {
@@ -463,7 +464,9 @@ public final class DatabaseManager extends AbstractManager {
         if (saveLocationAndFilename.equals("resources/environment/desert/desert_map.json")) {
             newTiles = setDesertTiles(newTiles);
         } else if (saveLocationAndFilename.equals("resources/environment/volcano/VolcanoZone.json")) {
-            checkVolcanoWorld(newTiles);
+            newTiles = setVolcanoTiles(newTiles);
+        } else if (saveLocationAndFilename.equals("resources/environment/tundra/tundra-map.json")) {
+            newTiles = setTundraTiles(newTiles);
         }
 
         world.setTiles(newTiles);
@@ -567,30 +570,53 @@ public final class DatabaseManager extends AbstractManager {
     }
 
 	/**
-	 * Modifies the world so burning tiles can be implemented for health
-	 * -reduction functionality.
-	 *
-	 * @param newTiles A CopyOnWriteArrayList containing the current tile list
-	 *                 loaded from a local JSON file that is to be modified
-	 *                 for the volcano zone to contain burning tiles.
-	 */
-	static private void checkVolcanoWorld(CopyOnWriteArrayList<Tile> newTiles) {
-		if (GameManager.get().getWorld() instanceof VolcanoWorld) {
-			for (Tile t : newTiles) {
-				String tileTexture = t.getTextureName();
-				int tileNumber = Integer.parseInt(tileTexture.split("_")[1]);
-				if (tileNumber > 4) {
-					int index = newTiles.indexOf(t);
-					float row = t.getRow();
-					float col = t.getCol();
-					t = new VolcanoBurnTile(tileTexture, col, row, 5);
-					newTiles.add(t);
-				} else {
-					newTiles.add(t);
-				}
-			}
-		}
-	}
+     * Modifies the world so burning tiles can be implemented for health
+     * -reduction functionality.
+     *
+     * @param oldTiles A CopyOnWriteArrayList containing the current tile list
+     *                 loaded from a local JSON file that is to be modified
+     *                 for the volcano zone to contain burning tiles.
+     *
+     * @return The modified tile list, with burn tiles added.
+     */
+    static private CopyOnWriteArrayList<Tile> setVolcanoTiles(CopyOnWriteArrayList<Tile> oldTiles) {
+        CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
+        int i = 0;
+
+        for (Tile tile : oldTiles) {
+            if (Integer.parseInt(tile.getTextureName().split("_")[1]) > 4) {
+                newTiles.add(new VolcanoBurnTile(tile.getTextureName(), tile.getCol(), tile.getRow(), 5));
+            } else {
+                newTiles.add(tile);
+            }
+            newTiles.get(i).setTileID(i++);
+        }
+
+        return newTiles;
+    }
+
+    /**
+     * Modifies the world so slippery/ice-like tiles can be implemented
+     *
+     * @param oldTiles A CopyOnWriteArrayList containing the current tile list
+     *                 loaded from a local JSON file that is to be modified
+     *                 for the Tundra zone to contain slippery ice tiles.
+     *
+     * @return The modified tile list, with custom tundra tiles added.
+     */
+    static private CopyOnWriteArrayList<Tile> setTundraTiles(CopyOnWriteArrayList<Tile> oldTiles) {
+        CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
+        int i = 0;
+        for (Tile tile : oldTiles) {
+            if (Integer.parseInt(tile.getTextureName().split("-")[2]) < 3 ) {
+                newTiles.add(new TundraWorldIceTile(tile.getTextureName(), tile.getCol(), tile.getRow()));
+            } else {
+                newTiles.add(tile);
+            }
+            newTiles.get(i).setTileID(i++);
+        }
+        return newTiles;
+    }
 
 	/**
 	 * Converts the required Tiles from a Desert World into Cactus or Quicksand Tiles.
@@ -602,6 +628,7 @@ public final class DatabaseManager extends AbstractManager {
 		CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
 		Random rand = new Random();
 		int randIndex;
+        int i = 0;
 
 		for (Tile tile : oldTiles) {
 			switch (tile.getTextureName()) {
@@ -624,6 +651,7 @@ public final class DatabaseManager extends AbstractManager {
 					newTiles.add(tile);
 					break;
 			}
+            newTiles.get(i).setTileID(i++);
 		}
 
 		return newTiles;

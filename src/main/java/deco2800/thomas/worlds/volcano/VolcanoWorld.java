@@ -58,7 +58,7 @@ public class VolcanoWorld extends AbstractWorld {
         addEntity(this.getPlayerEntity());
 
         Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano");
-        Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_volcano");
+        Dragon boss = new Dragon("Deilaenth", 3, 0.03f, 750, "dragon_volcano", 1);
 
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(volcanoOrc), boss);
         GameManager.get().addManager(enemyManager);
@@ -84,11 +84,7 @@ public class VolcanoWorld extends AbstractWorld {
 
         if (notGenerated) {
             createStaticEntities();
-            for (Tile t : GameManager.get().getWorld().getTiles()) {
-            }
             notGenerated = false;
-            System.out.println(this.getEntities());
-            System.out.flush();
         }
         super.onTick(i);
     }
@@ -121,23 +117,29 @@ public class VolcanoWorld extends AbstractWorld {
      */
     public void addRandoms() {
     //Add random boulders on tiles that aren't Lava
+        int tileNumber, selector;
+        Tile t;
+        String tileTexture;
         Random random = new Random();
         int tileCount = GameManager.get().getWorld().getTiles().size();
+        AbstractWorld world = GameManager.get().getWorld();
+        int randIndex;
 
         for (int i = 0; i < 20; i++) {
+            randIndex = random.nextInt(tileCount);
 
             //Get respective volcano tile (5 <= Lava tiles Index <= 8
-            Tile t = GameManager.get().getWorld().getTile(random.nextInt(tileCount));
-            String tileTexture = t.getTextureName();
-            int tileNumber = Integer.parseInt(tileTexture.split("_")[1]);
+            t = world.getTile(randIndex);
+            tileTexture = t.getTextureName();
+            tileNumber = Integer.parseInt(tileTexture.split("_")[1]);
 
-            int selector = random.nextInt(2);
-            if (t != null && tileNumber < 5 && tileNumber > 1 && selector == 1) {
+            selector = random.nextInt(2);
+            if (tileNumber < 5 && tileNumber > 1 && selector == 1) {
                 entities.add(new Rock(t, true));
             } else if (t != null && (tileNumber == 3 || tileNumber == 4) &&
                     selector == 0) {
                 entities.add(new VolcanoBurningTree(t, true));
-            }else {
+            } else {
                 i--;
             }
         }

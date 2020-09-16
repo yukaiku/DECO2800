@@ -10,10 +10,7 @@ import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.entities.enemies.Dummy;
 import deco2800.thomas.entities.enemies.Orc;
-import deco2800.thomas.entities.environment.Barrel;
-import deco2800.thomas.entities.environment.Portal;
-import deco2800.thomas.entities.environment.Stash;
-import deco2800.thomas.entities.environment.Target;
+import deco2800.thomas.entities.environment.*;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.NonPlayablePeonManager;
 
@@ -37,10 +34,25 @@ public class TutorialWorld extends AbstractWorld{
     protected void generateTiles() {
         for (int col = -TUTORIAL_WORLD_WIDTH; col < TUTORIAL_WORLD_WIDTH; col++) {
             for (int row = -TUTORIAL_WORLD_HEIGHT; row < TUTORIAL_WORLD_HEIGHT; row++) {
-                String type = "stone_floor";
+                String type = "stone-3";
                 tiles.add(new Tile(type, col, row));
             }
         }
+
+        for (int col = -TUTORIAL_WORLD_WIDTH+1; col < TUTORIAL_WORLD_WIDTH-1; col++) {
+            for (int row = -TUTORIAL_WORLD_HEIGHT+1; row < TUTORIAL_WORLD_HEIGHT-1; row++) {
+                String type = "stone-2";
+                tiles.add(new Tile(type, col, row));
+            }
+        }
+
+        for (int col = -TUTORIAL_WORLD_WIDTH+2; col < TUTORIAL_WORLD_WIDTH-2; col++) {
+            for (int row = -TUTORIAL_WORLD_HEIGHT+2; row < TUTORIAL_WORLD_HEIGHT-2; row++) {
+                String type = "stone-1";
+                tiles.add(new Tile(type, col, row));
+            }
+        }
+
         PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f, 50);
 //        addEntity(player);
         this.setPlayerEntity(player);
@@ -56,13 +68,13 @@ public class TutorialWorld extends AbstractWorld{
 
         // Add NPC
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
-        npnSpawns.add(new TutorialNPC("Master", new SquareVector(0, 2)));
+        npnSpawns.add(new TutorialNPC("Master", new SquareVector(0, 2),"tutorial_npc"));
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, player, npnSpawns);
         GameManager.get().addManager(npcManager);
     }
 
     public void generateEntities() {
-        // Add stashs
+        // Add stashes
         for (int i = -6; i < 6 + 1; i = i + 3) {
             Tile t = GameManager.get().getWorld().getTile(i, TUTORIAL_WORLD_HEIGHT - 1);
             if (t != null) {
@@ -87,6 +99,10 @@ public class TutorialWorld extends AbstractWorld{
 
         t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, TUTORIAL_WORLD_HEIGHT - 1);
         entities.add(new Barrel(t, true));
+
+        // Add chest
+        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH - 1, -TUTORIAL_WORLD_HEIGHT);
+        entities.add(new Chest(t, true));
 
 
         // Add portal
@@ -117,9 +133,7 @@ public class TutorialWorld extends AbstractWorld{
             GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
 
             // Set new world
-            GameManager gameManager = GameManager.get();
-            gameManager.setWorld(GameScreen.gameType.NEW_GAME.method());
-
+            GameManager.get().setNextWorld();
         }
     }
 }

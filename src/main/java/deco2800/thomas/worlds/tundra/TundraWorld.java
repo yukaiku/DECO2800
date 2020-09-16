@@ -1,6 +1,8 @@
 package deco2800.thomas.worlds.tundra;
 
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.Orb;
+import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.tundra.TundraCampfire;
@@ -9,8 +11,10 @@ import deco2800.thomas.entities.environment.tundra.TundraTreeLog;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
+import org.lwjgl.Sys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +49,7 @@ public class TundraWorld extends AbstractWorld {
 
 		// Provide available enemies to the EnemyManager
 		Orc tundraOrc = new Orc(1, 0.05f, 100, "orc_tundra");
-		Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_tundra");
+		Dragon boss = new Dragon("Giaphias", 3, 0.03f, 950, "dragon_tundra", 3);
 
 		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(tundraOrc), boss);
 		GameManager.get().addManager(enemyManager);
@@ -86,6 +90,17 @@ public class TundraWorld extends AbstractWorld {
 				addTreeLog(tile.getCol(), tile.getRow());
 			} else {
 				addRock(tile.getCol(), tile.getRow());
+			}
+		}
+
+		for (AbstractEntity entity: entities) {
+			if (entity.getTexture().equals("tundra-campfire")) {
+				SquareVector vector = entity.getPosition();
+				Tile tile = getTile(vector);
+				for (Tile neighbouringTile : tile.getNeighbours().values()) {
+					neighbouringTile.setType("TundraFireTile");
+					neighbouringTile.setStatusEffect(true);
+				}
 			}
 		}
 	}

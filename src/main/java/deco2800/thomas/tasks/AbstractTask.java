@@ -17,4 +17,6 @@ public abstract class AbstractTask implements Tickable {
 
 	public abstract boolean isAlive();
 
+	public void stopTask() {
+	}
 }

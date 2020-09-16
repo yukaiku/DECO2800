@@ -7,6 +7,7 @@ import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
@@ -30,15 +31,16 @@ public class Dragon extends Boss implements PassiveEnemy {
     private int tickFollowing = 60;
     // Range at which the dragon will attempt to melee attack the player
     private int attackRange = 8;
-    Random random;
+    //the orb number for orb texture
+    int orbNumber;
 
-    public Dragon(int height, float speed, int health) {
-        super("Elder Dragon", "elder_dragon", height, speed, health);
-        this.random = new Random();
+    public Dragon(String name, int height, float speed, int health, int orb) {
+        super(name, "elder_dragon", height, speed, health);
+        orbNumber = orb;
     }
 
-    public Dragon(int height, float speed, int health, String texture) {
-        this(height, speed, health);
+    public Dragon(String name, int height, float speed, int health, String texture, int orb) {
+        this(name, height, speed, health, orb);
         super.setTextureDirections(new ArrayList<>(Arrays.asList(texture, texture + "_left", texture + "_right")));
         this.setTexture(texture + "_left");
     }
@@ -56,11 +58,13 @@ public class Dragon extends Boss implements PassiveEnemy {
 
     @Override
     public void reduceHealth(int damage) {
-        this.getHealthTracker().reduceHealth(damage);
+        hitByTarget();
+        health.reduceHealth(damage);
         if (isDead()) {
             death();
         }
-        hitByTarget();
+        isAttacked = true;
+        isAttackedCoolDown = 10;
     }
 
     /**
@@ -127,6 +131,11 @@ public class Dragon extends Boss implements PassiveEnemy {
                 setCombatTask(null);
             }
         }
+
+        // isAttacked animation
+        if (isAttacked && --isAttackedCoolDown < 0) {
+            isAttacked = false;
+        }
     }
 
     /**
@@ -139,8 +148,7 @@ public class Dragon extends Boss implements PassiveEnemy {
         Tile tile = world.getTile((float) Math.ceil((this.getCol())),
                 (float) Math.ceil((this.getRow())));
         GameManager.getManagerFromInstance(EnemyManager.class).removeBoss();
-        //Generate a random orb texture to initialise the dragon's dropped orb
-        world.setOrbEntity(new Orb(tile, "orb_" +
-                ((random.nextInt(4)) + 1)));
+        //Generate the correct orb texture to initialise the dragon's dropped orb
+        world.setOrbEntity(new Orb(tile, "orb_" + orbNumber));
     }
 }

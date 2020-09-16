@@ -35,7 +35,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	}
 
 	@Expose
-	private String texture = "error_box";
+	protected String texture = "error_box";
 
 	@Expose
 	protected SquareVector position;
@@ -293,6 +293,11 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 
 	public SquareVector getPosition() {
 		return position;
+	}
+
+
+	public SquareVector getRoundPosition() {
+		return new SquareVector(Math.round(getCol()), Math.round(getRow()));
 	}
 
 	public abstract void onTick(long i);
