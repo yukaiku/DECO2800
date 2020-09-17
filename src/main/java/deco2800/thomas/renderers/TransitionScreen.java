@@ -18,23 +18,19 @@ public class TransitionScreen implements Renderer {
         BlackBackground black = new BlackBackground();
         black.render(batch, camera);
 
-        // Check what world the player is in to display the respective transition screen
-        if (GameManager.get().getWorld() instanceof TundraWorld) {
-            // System.out.println("tundra");
-        }
-        if (GameManager.get().getWorld() instanceof VolcanoWorld) {
-            // System.out.println("volcano");
-        }
-        if (GameManager.get().getWorld() instanceof SwampWorld) {
-            // System.out.println("swamp");
-        }
-        if (GameManager.get().getWorld() instanceof DesertWorld) {
-            // System.out.println("desert");
-        }
-
         // Render the modal
         batch.begin();
-        Texture img = GameManager.get().getManager(TextureManager.class).getTexture("pause");
+        Texture img = null;
+        // Check what world the player is in to display the respective transition screen
+        if (GameManager.get().getWorld() instanceof TundraWorld) {
+            img = GameManager.get().getManager(TextureManager.class).getTexture("trs-tundra");
+        } else if (GameManager.get().getWorld() instanceof VolcanoWorld) {
+            img = GameManager.get().getManager(TextureManager.class).getTexture("trs-volcano");
+        } else if (GameManager.get().getWorld() instanceof SwampWorld) {
+            img = GameManager.get().getManager(TextureManager.class).getTexture("trs-swamp");
+        } else if (GameManager.get().getWorld() instanceof DesertWorld) {
+            img = GameManager.get().getManager(TextureManager.class).getTexture("trs-desert");
+        }
         Sprite sprite = new Sprite(img);
         batch.draw(sprite, camera.position.x - sprite.getWidth()/2,
                 camera.position.y - sprite.getHeight()/2);
