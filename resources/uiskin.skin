@@ -7,7 +7,7 @@
   green: { a: 1, b: 0, g: 1, r: 0 },
   white: { a: 1, b: 1, g: 1, r: 1 },
   red: { a: 1, b: 0, g: 0, r: 1 },
-  black: { a: 1, b: 0, g: 0, r: 0 },
+  black: { a: 1, b: 0, g: 0, r: 0 }
 },
   com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
   dialogDim: { name: white, color: { r: 0, g: 0, b: 0, a: 0.45 } },
@@ -40,8 +40,20 @@
   default-horizontal: { handle: default-splitpane }
 },
   com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
-  default: { titleFont: default-font, background: default-window, titleFontColor: white },
-  dialog: { titleFont: default-font, background: default-window, titleFontColor: white, stageBackground: dialogDim }
+  default: { titleFont: default-font, background: default-window, 
+  titleFontColor: white }, 
+  dialog: { titleFont: default-font, background: default-window, 
+  titleFontColor: white},
+  tutorial: { titleFont: default-font, background: default-window, 
+    titleFontColor: {hex: dbaa4f}},
+  tundra: { titleFont: default-font, background: default-window, 
+      titleFontColor: {hex: 9fc2c9}},
+  volcano: { titleFont: default-font, background: default-window, 
+        titleFontColor: {hex: f27813}},
+  desert: { titleFont: default-font, background: default-window, 
+          titleFontColor: {hex: f7c10f}},
+  swamp: { titleFont: default-font, background: default-window, 
+             titleFontColor: {hex: 47b82a}}
 },
   com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
   default-horizontal: { background: default-slider, knob: default-slider-knob },

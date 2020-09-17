@@ -15,10 +15,7 @@ import deco2800.thomas.entities.environment.volcano.VolcanoBurningTree;
 import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.entities.items.Shield;
-import deco2800.thomas.managers.DatabaseManager;
-import deco2800.thomas.managers.EnemyManager;
-import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.NonPlayablePeonManager;
+import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
@@ -137,19 +134,27 @@ public class VolcanoWorld extends AbstractWorld {
         final int NUM_POTIONS = 6;
         final int NUM_SHIELDS = 4;
 
+        ArrayList<AbstractDialogBox> items = new ArrayList<>();
+        
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            HealthPotion potion = new HealthPotion(tile,false);
+            HealthPotion potion = new HealthPotion(tile,false, (PlayerPeon) getPlayerEntity());
             entities.add(potion);
+            items.add(potion.getDisplay());
         }
 
         for (int i = 0; i < NUM_SHIELDS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            Shield shield = new Shield(tile, false);
+            Shield shield = new Shield(tile, false, (PlayerPeon) getPlayerEntity());
             entities.add(shield);
+            items.add(shield.getDisplay());
         }
+
+        DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
+                items);
+        GameManager.get().addManager(dialog);
     }
 
     /**

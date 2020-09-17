@@ -1,5 +1,6 @@
 package deco2800.thomas.entities.items;
 
+/**
 import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.entities.StaticEntity;
@@ -18,3 +19,4 @@ public class TestItem extends Item implements Tickable {
 
     }
 }
+ **/ 

@@ -1,5 +1,6 @@
 package deco2800.thomas.worlds.desert;
 
+import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.NPC.MerchantNPC;
@@ -62,7 +63,6 @@ public class DesertWorld extends AbstractWorld {
         npnSpawns.add(new MerchantNPC("DesertMerchantNPC", new SquareVector(-23, 20),"desert_npc2",swampMerchantShop));
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
         GameManager.get().addManager(npcManager);
-
         generateItemEntities();
     }
 
@@ -167,20 +167,27 @@ public class DesertWorld extends AbstractWorld {
     private void generateItemEntities(){
         final int NUM_POTIONS = 6;
         final int NUM_SHIELDS = 4;
-
+        ArrayList<AbstractDialogBox> items = new ArrayList<>();
+        
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            HealthPotion potion = new HealthPotion(tile,false);
+            HealthPotion potion = new HealthPotion(tile,false, (PlayerPeon) getPlayerEntity());
             entities.add(potion);
+            items.add(potion.getDisplay());
         }
 
         for (int i = 0; i < NUM_SHIELDS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            Shield shield = new Shield(tile, false);
+            Shield shield = new Shield(tile, false, (PlayerPeon) getPlayerEntity());
             entities.add(shield);
+            items.add(shield.getDisplay());
         }
+        
+        DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
+                items);
+        GameManager.get().addManager(dialog);
     }
 
     /**

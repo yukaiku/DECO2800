@@ -1,44 +1,50 @@
 package deco2800.thomas.managers;
 
 import deco2800.thomas.entities.AbstractDialogBox;
-import deco2800.thomas.managers.GameManager;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.worlds.AbstractWorld;
 
 import java.util.List;
 
 public class DialogManager extends TickableManager {
-	
+
 	public List<AbstractDialogBox> boxes;
+	private AbstractWorld world;
+	boolean ready;
+	PlayerPeon player; 
+	int wait;
+
+	public DialogManager(AbstractWorld world,
+			PlayerPeon player,  List<AbstractDialogBox> boxes) {
+		this.world = world;
+		this.player = player;
+		this.boxes = boxes;
+		wait = 0; 
+	}
 	
-	public DialogManager(List<AbstractDialogBox> boxes) {
-		// list of all abstract dialog boxes for each item.
-		this.boxes  = boxes;
-	}
-
-	public void showDialog(AbstractDialogBox dialogBox){
-		// add name, description etc.
-		dialogBox.getBox().add(dialogBox.getName());
-		drawDialog(dialogBox);
-	}
-
-	// check doesn't throw an exception for boxes that aren't showing.
-	public void hideDialog(AbstractDialogBox dialogBox){
-		dialogBox.getBox().remove();
-	}
-
-	// adds dialog box onto stage. 
-	public void drawDialog(AbstractDialogBox dialogBox){
+	public void showDialog(AbstractDialogBox dialogBox) {
 		GameManager.get().getStage().addActor(dialogBox.getBox());
 	}
 	
+	public void hideDialog(AbstractDialogBox dialogBox) {
+		dialogBox.getBox().remove();
+	}
+	
+
 	@Override
 	public void onTick(long i) {
-		for (AbstractDialogBox a: boxes) {
-			if (a.getVisible()) {
-				showDialog(a);
-			}
-			else if (!a.getVisible()) {
-				hideDialog(a);
+		if (GameManager.get().getStage() != null && !ready) {
+			ready = true;
+		}
+		if (ready) {
+			for (AbstractDialogBox a: boxes) {
+				if (a.isShowing()){
+					showDialog(a);
+				}
+				if (a.isShowing() && a.getVisibleTime() >= 750) {
+					a.setShowing(false);
+					hideDialog(a);
+				}
 			}
 		}
 	}
