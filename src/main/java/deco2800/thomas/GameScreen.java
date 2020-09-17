@@ -2,7 +2,6 @@ package deco2800.thomas;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -22,9 +21,6 @@ import deco2800.thomas.renderers.Renderer3D;
 import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
-import deco2800.thomas.worlds.desert.DesertWorld;
-import deco2800.thomas.worlds.swamp.SwampWorld;
-import deco2800.thomas.worlds.tundra.TundraWorld;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -160,7 +156,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 				// Resume the game before quit to home screen
 				GameManager.resume();
 				// Reset quest tracker
-				QuestTracker.resetQuest();
+				QuestTracker.resetOrbs();
 				// Remove enemies
 				GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
 				// Dispose the screen
