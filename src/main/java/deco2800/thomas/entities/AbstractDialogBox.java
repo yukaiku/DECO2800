@@ -20,11 +20,11 @@ public class AbstractDialogBox {
 	TextButton button;
 	
 	public AbstractDialogBox (Item item, String name, String price,
-			String description) {
+			String description, String styleType) {
 		this.name = name;
 		this.item = item;
 		Skin skin2 = new Skin(Gdx.files.internal("resources/uiskin.skin"));
-		this.box = new Window(item.getItemName(), skin2, "tutorial");
+		this.box = new Window(item.getItemName(), skin2, styleType);
 		box.isModal();
 		box.add(description).expand().center();
 		box.row();

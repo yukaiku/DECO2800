@@ -8,11 +8,12 @@ import deco2800.thomas.worlds.Tile;
 public class Shield extends Item {
     public static final String ENTITY_ID_STRING = "shield";
 
-    public Shield(Tile tile, boolean obstructed, PlayerPeon player){
+    public Shield(Tile tile, boolean obstructed, PlayerPeon player,
+            String styleType){
         super("Iron Shield",200, tile, RenderConstants.ITEM_RENDER, 
                 "shield_iron", obstructed, player);
         this.setObjectName(ENTITY_ID_STRING);
         super.display = new AbstractDialogBox(this, name, "80", "Protects " +
-                "against fireballs");
+                "against fireballs", styleType);
     }
 }

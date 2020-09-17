@@ -192,7 +192,8 @@ public class SwampWorld extends AbstractWorld {
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            HealthPotion potion = new HealthPotion(tile,false, (PlayerPeon) getPlayerEntity());
+            HealthPotion potion = new HealthPotion(tile,false,
+                    (PlayerPeon) getPlayerEntity(),"swamp");
             entities.add(potion);
             items.add(potion.getDisplay());
         }
@@ -200,7 +201,8 @@ public class SwampWorld extends AbstractWorld {
         for (int i = 0; i < NUM_SHIELDS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            Shield shield = new Shield(tile, false, (PlayerPeon) getPlayerEntity());
+            Shield shield = new Shield(tile, false,
+                    (PlayerPeon) getPlayerEntity(),"swamp");
             entities.add(shield);
             items.add(shield.getDisplay());
         }

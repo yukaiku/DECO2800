@@ -115,7 +115,7 @@ public class TutorialWorld extends AbstractWorld{
         potion = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
                 Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
         Item potionItem = new HealthPotion(potion, false,
-                (PlayerPeon) getPlayerEntity());
+                (PlayerPeon) getPlayerEntity(), "tutorial");
         entities.add(potionItem); 
         items.add(potionItem.getDisplay());
         
@@ -123,7 +123,7 @@ public class TutorialWorld extends AbstractWorld{
         shield = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
                 Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
         Item itemShield = new Shield(shield, false,
-                (PlayerPeon) getPlayerEntity());
+                (PlayerPeon) getPlayerEntity(), "tutorial");
         entities.add(itemShield); 
         items.add(itemShield.getDisplay());
         
