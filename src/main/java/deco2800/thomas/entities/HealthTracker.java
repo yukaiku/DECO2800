@@ -1,6 +1,7 @@
 package deco2800.thomas.entities;
 
-import com.google.gson.annotations.Expose;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Contains the current and maximum health value for a given character
@@ -12,13 +13,10 @@ import com.google.gson.annotations.Expose;
 public class HealthTracker {
     // Class Fields
     /** Represents the maximum health value of a character **/
-    @Expose
     private int maxHealthValue;
     /** Represents the current health value of a character  **/
-    @Expose
     private int currentHealthValue;
     /** Represents whether or not the entity has reached 0 health  **/
-    @Expose
     private boolean isDead;
 
     public HealthTracker(int maxHealthValue) {
@@ -26,6 +24,7 @@ public class HealthTracker {
         this.maxHealthValue = maxHealthValue;
         this.currentHealthValue = this.maxHealthValue;
         this.isDead = false;
+        recharge();
     }
 
     /**
@@ -127,7 +126,17 @@ public class HealthTracker {
      * per 2 seconds.
      */
     public void recharge () {
+        Timer timer = new Timer();
+        TimerTask task = new Helper();
+        if (!isDead) {
+            timer.schedule(task, 0, 2000);
+        }
+    }
 
+    private class Helper extends TimerTask {
+        public void run() {
+            regenerateHealth(1);
+        }
     }
 }
 
