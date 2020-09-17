@@ -81,14 +81,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 		NEW_GAME {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new DesertWorld();
-				GameManager.get().getManager(NetworkManager.class).startHosting("host");
-				return world;
-			}
-		},
-		TUTORIAL {
-			@Override
-			public AbstractWorld method() {
 				AbstractWorld world = new TutorialWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
@@ -116,13 +108,11 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 
 	public GameScreen(final ThomasGame game, final gameType startType) {
-		if (startType == gameType.TUTORIAL) {
+		if (startType == gameType.NEW_GAME) {
 			GameManager.get().inTutorial = true;
 			tutorial = true;
 			GameManager.get().setWorld(startType.method());
 		} else if (startType == gameType.ENV_TEAM_GAME) {
-			GameManager.get().setWorld(startType.method());
-		} else if (startType == gameType.NEW_GAME) {
 			GameManager.get().setWorld(startType.method());
 		} else if (startType == gameType.TEST_WORLD) {
 			GameManager.get().setWorld(startType.method());
