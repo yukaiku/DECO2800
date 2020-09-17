@@ -2,11 +2,7 @@ package deco2800.thomas.worlds.swamp;
 
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.SwampDeadTree;
-import deco2800.thomas.entities.SwampFallenTree;
-import deco2800.thomas.entities.SwampPond;
-import deco2800.thomas.entities.SwampTreeLog;
-import deco2800.thomas.entities.SwampTreeStub;
+import deco2800.thomas.entities.environment.swamp.*;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.enemies.dragons.SwampDragon;
