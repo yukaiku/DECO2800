@@ -68,8 +68,8 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
         this.specialEnemiesAlive = new ArrayList<>();
         this.boss = null;
 
-        this.spawnRangeMin = 10;
-        this.spawnRangeMax = 16;
+        this.spawnRangeMin = 8;
+        this.spawnRangeMax = 14;
         this.random = new Random();
         GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
     }
@@ -262,12 +262,8 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
                     wildSpawning = !wildSpawning;
                 } else if (keycode == Input.Keys.K) {
                     // Ctrl + K: kill all wild and special enemies (excludes boss)
-                    for (EnemyPeon enemy : new ArrayList<>(wildEnemiesAlive)) {
-                        removeWildEnemy(enemy);
-                    }
-                    for (EnemyPeon enemy : new ArrayList<>(specialEnemiesAlive)) {
-                        removeSpecialEnemy(enemy);
-                    }
+                    new ArrayList<>(wildEnemiesAlive).forEach(this::removeWildEnemy);
+                    new ArrayList<>(specialEnemiesAlive).forEach(this::removeSpecialEnemy);
                     // Ctrl + L: Kill the dragon
                 } else if (keycode == Input.Keys.L && boss != null) {
                     boss.reduceHealth(boss.getCurrentHealth());
@@ -285,11 +281,9 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
         if (++tick > nextTick) {
             if (wildSpawning && wildEnemiesAlive.size() < wildEnemyCap) {
                 spawnRandomWildEnemy();
-                nextTick = 15 + random.nextInt(180);
+                nextTick = 10 + random.nextInt(170);
             }
             tick = 0;
-        } else {
-            tick++;
         }
     }
 }
