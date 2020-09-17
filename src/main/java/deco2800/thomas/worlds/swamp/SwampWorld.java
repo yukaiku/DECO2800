@@ -9,6 +9,7 @@ import deco2800.thomas.entities.SwampTreeLog;
 import deco2800.thomas.entities.SwampTreeStub;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.entities.enemies.dragons.SwampDragon;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.worlds.AbstractWorld;
@@ -41,11 +42,16 @@ public class SwampWorld extends AbstractWorld {
 
         // Provide available enemies to the EnemyManager
         Orc swampOrc = new Orc(1, 0.09f, 50, "orc_swamp");
-        Dragon boss = new Dragon("Viondria", 3, 0.03f, 1050, "dragon_swamp", 2);
+        Dragon boss = new SwampDragon("Viondria", 3, 0.03f, 1050, "dragon_swamp", 2);
 
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc), boss);
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(19, -24);
+    }
+
+    @Override
+    public String getType() {
+        return "Swamp";
     }
 
     @Override

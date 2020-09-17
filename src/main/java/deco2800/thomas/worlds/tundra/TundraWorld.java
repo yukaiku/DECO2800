@@ -1,6 +1,5 @@
 package deco2800.thomas.worlds.tundra;
 
-import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.StaticEntity;
@@ -28,6 +27,12 @@ import java.util.List;
 
 public class TundraWorld extends AbstractWorld {
 	private final Logger logger = LoggerFactory.getLogger(TundraWorld.class);
+
+	/**
+	 * Load MAP_FILE_TILES_ONLY with the old DatabaseManager.loadWorld() static method
+	 * Load MAP_FILE with the new DatabaseManager.loadWorldFromJsonFile() static method
+	 */
+	public static final String MAP_FILE_TILES_ONLY = "resources/environment/tundra/tundra-map-tiles-only.json";
 	public static final String MAP_FILE = "resources/environment/tundra/tundra-map.json";
 
 	public TundraWorld() {
@@ -35,8 +40,10 @@ public class TundraWorld extends AbstractWorld {
 	}
 
 	public TundraWorld(int width, int height) {
-		DatabaseManager.loadWorld(this, MAP_FILE);
+		DatabaseManager.loadWorld(this, MAP_FILE_TILES_ONLY);
 		generateStaticEntities();
+
+		// PlayerPeon
 		this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.15f));
 		addEntity(this.getPlayerEntity());
 
@@ -47,6 +54,11 @@ public class TundraWorld extends AbstractWorld {
 		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(tundraOrc), boss);
 		GameManager.get().addManager(enemyManager);
 		enemyManager.spawnBoss(0, 0);
+	}
+
+	@Override
+	public String getType(){
+		return "Tundra";
 	}
 
 	private void generateStaticEntities() {

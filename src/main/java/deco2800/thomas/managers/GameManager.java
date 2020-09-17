@@ -10,7 +10,6 @@ import deco2800.thomas.worlds.AbstractWorld;
 
 import deco2800.thomas.worlds.desert.DesertWorld;
 import deco2800.thomas.worlds.swamp.SwampWorld;
-import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
@@ -83,7 +82,8 @@ public class GameManager {
 		PAUSED,
 		RUN,
 		GAMEOVER,
-		VICTORY
+		VICTORY,
+		TRANSITION
 	}
 	/**
 	 * Returns an instance of the GM
@@ -290,6 +290,7 @@ public class GameManager {
 		}
 		currentWorld = (currentWorld + 1) % worldOrder.size();
 		movedToNextWorld = true;
+		GameManager.get().state = State.TRANSITION;
 	}
 
 	public static void resume() {

@@ -2,7 +2,6 @@ package deco2800.thomas;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -22,9 +21,6 @@ import deco2800.thomas.renderers.Renderer3D;
 import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
-import deco2800.thomas.worlds.desert.DesertWorld;
-import deco2800.thomas.worlds.swamp.SwampWorld;
-import deco2800.thomas.worlds.tundra.TundraWorld;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +49,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	//Quest Tracker UI
 	PauseModal pauseModal = new PauseModal();
 	Result result = new Result();
-
+	TransitionScreen transitionScreen = new TransitionScreen();
 	QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
 	//Tutorial Guideline UI
 	Guideline guideline = new Guideline();
@@ -62,7 +58,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	// Buttons in the pause menu
 	Button resumeButton = new TextButton("RESUME", GameManager.get().getSkin(), "in_game");
 	Button quitButton = new TextButton("RETURN TO MAIN MENU", GameManager.get().getSkin(), "in_game");
-
+	Button enterButton = new TextButton("ENTER THE ZONE", GameManager.get().getSkin(), "in_game");
 	AbstractWorld world;
 
 	static Skin skin = new Skin(Gdx.files.internal("resources/uiskin.skin"));
@@ -79,14 +75,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	static public enum gameType {
 		NEW_GAME {
-			@Override
-			public AbstractWorld method() {
-				AbstractWorld world = new DesertWorld();
-				GameManager.get().getManager(NetworkManager.class).startHosting("host");
-				return world;
-			}
-		},
-		TUTORIAL {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new TutorialWorld();
@@ -116,11 +104,11 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 
 	public GameScreen(final ThomasGame game, final gameType startType) {
-		if (startType == gameType.TUTORIAL) {
+		if (startType == gameType.NEW_GAME) {
 			GameManager.get().inTutorial = true;
 			tutorial = true;
 			GameManager.get().setWorld(startType.method());
-		} else if (startType == gameType.NEW_GAME) {
+		} else if (startType == gameType.ENV_TEAM_GAME) {
 			GameManager.get().setWorld(startType.method());
 		} else if (startType == gameType.TEST_WORLD) {
 			GameManager.get().setWorld(startType.method());
@@ -168,7 +156,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 				// Resume the game before quit to home screen
 				GameManager.resume();
 				// Reset quest tracker
-				QuestTracker.resetQuest();
+				QuestTracker.resetOrbs();
 				// Remove enemies
 				GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
 				// Dispose the screen
@@ -177,9 +165,16 @@ public class GameScreen implements Screen, KeyDownObserver {
 				game.setMainMenuScreen();
 			}
 		});
+		enterButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				GameManager.resume();
+			}
+		});
 
 		stage.addActor(resumeButton);
 		stage.addActor(quitButton);
+		stage.addActor(enterButton);
 	}
 
 	/**
@@ -216,16 +211,17 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 
 		spriteBatch.setProjectionMatrix(cameraDebug.combined);
+		//Add questTracker UI
+		questTrackerRenderer.render(spriteBatch, cameraDebug);
 		//Add tutorial guideline if we are in the tutorial world
 		if(tutorial){
 			guideline.render(spriteBatch,cameraDebug);
 		}
-		//Add questTracker UI
-		questTrackerRenderer.render(spriteBatch, cameraDebug);
 
 		// Hide the buttons when the game is running
 		resumeButton.setPosition(-100, -100);
 		quitButton.setPosition(-100, -100);
+		enterButton.setPosition(-100, -100);
 
 		/* Refresh the experience UI for if information was updated */
 		stage.act(delta);
@@ -238,9 +234,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	public void renderPauseMenu(float delta) {
 		// Render the pause modal
-		SpriteBatch batchPauseModal = new SpriteBatch();
-		batchPauseModal.setProjectionMatrix(cameraDebug.combined);
-		pauseModal.render(batchPauseModal, cameraDebug);
+		spriteBatch.setProjectionMatrix(cameraDebug.combined);
+		pauseModal.render(spriteBatch, cameraDebug);
 
 		// Display the buttons
 		resumeButton.setPosition(width / 2 - resumeButton.getWidth() / 2,
@@ -256,13 +251,23 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	public void renderGameResult(float delta) {
 		// Render the pause modal
-		SpriteBatch batchResult = new SpriteBatch();
-		batchResult.setProjectionMatrix(cameraDebug.combined);
-		result.render(batchResult, cameraDebug);
+		spriteBatch.setProjectionMatrix(cameraDebug.combined);
+		result.render(spriteBatch, cameraDebug);
 
 		// Display the buttons
 		quitButton.setPosition(width / 2 - quitButton.getWidth() / 2,
 				height / 2 - 350);
+		stage.act(delta);
+		stage.draw();
+	}
+
+	public void renderTransitionScreen(float delta) {
+		// Render the transition screen
+		spriteBatch.setProjectionMatrix(cameraDebug.combined);
+		transitionScreen.render(spriteBatch, cameraDebug);
+
+		// Display the button
+		enterButton.setPosition(width / 2 - enterButton.getWidth() / 2, 150);
 		stage.act(delta);
 		stage.draw();
 	}
@@ -275,6 +280,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void render(float delta) {
 		switch (GameManager.get().state)
 		{
+			case TRANSITION:
+				renderTransitionScreen(delta);
+				break;
 			case RUN:
 				renderGame(delta);
 				break;
@@ -407,7 +415,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		}
 
 		if (keycode == Input.Keys.F6) {
-			DatabaseManager.saveWorld(GameManager.get().getWorld(), "save_world.json");
+			DatabaseManager.saveWorldToJsonFile(GameManager.get().getWorld(), "resources/_save_.json");
 		}
 	}
 

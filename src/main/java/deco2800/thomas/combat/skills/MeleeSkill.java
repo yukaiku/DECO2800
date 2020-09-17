@@ -14,12 +14,8 @@ import deco2800.thomas.util.SquareVector;
 public class MeleeSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
     private final int MAX_COOLDOWN = 10;
-    /* Damage to apply from fireball */
+    /* Damage to apply from attack */
     private final int DAMAGE = 10;
-    /* Speed of fireball */
-    private final float SPEED = 0.5f;
-    /* Lifetime of fireball */
-    private final int LIFETIME = 60;
 
     /* Cooldown tracker */
     private int cooldown = 0;

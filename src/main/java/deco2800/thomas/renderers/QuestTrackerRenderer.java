@@ -1,14 +1,10 @@
 package deco2800.thomas.renderers;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Agent.QuestTracker;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.managers.*;
@@ -29,7 +25,7 @@ public class QuestTrackerRenderer implements Renderer {
     @Override
     public void render(SpriteBatch batch, OrthographicCamera camera) {
         // get quest progress
-        List<Orb> orbs = QuestTracker.questTracker();
+        List<Orb> orbs = QuestTracker.orbTracker();
         //draws the orb
         batch.begin();
         for (int i = 0; i < orbs.size(); i++) {

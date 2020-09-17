@@ -67,10 +67,10 @@ public class BurnStatus extends StatusEffect {
         // the first tick is applied instantly
         if (!applied) {
             applied = true;
+            ticks--;
             return true;
         }
 
-        boolean ret;
         // 1 second (1 bn nanoseconds) between each tick
         long timeBetweenTicks = 1000000000;
         long newTime = System.nanoTime();
@@ -78,13 +78,11 @@ public class BurnStatus extends StatusEffect {
         // if it has been 1 second: decrement ticks, set a new time and return true
         if (newTime - timeLastTick >= timeBetweenTicks) {
             ticks--;
-            ret = true;
             timeLastTick = newTime;
-        } else {
-            ret = false;
+            return true;
         }
 
-        return ret;
+        return false;
     }
 
     /**
