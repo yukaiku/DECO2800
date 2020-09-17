@@ -43,7 +43,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	public static boolean tutorial = false;
 	Renderer3D renderer = new Renderer3D();
-	OverlayRenderer rendererDebug = new OverlayRenderer();
+	OverlayRenderer overlayRenderer = new OverlayRenderer();
 
 	//Renderer Object to render Zone Events
 	EventRenderer rendererEvent;
@@ -71,7 +71,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * Create a camera for panning and zooming.
 	 * Camera must be updated every render cycle.
 	 */
-	OrthographicCamera camera, cameraDebug, cameraEvent;
+	OrthographicCamera camera, cameraOverlay, cameraEvent;
 
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
 
@@ -135,7 +135,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		// Initialize camera
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cameraDebug = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cameraOverlay = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cameraEvent = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		/* Add the window to the stage */
@@ -194,14 +194,14 @@ public class GameScreen implements Screen, KeyDownObserver {
 		cameraEvent.position.set(camera.position);
 		cameraEvent.update();
 
-		cameraDebug.position.set(camera.position);
-		cameraDebug.update();
+		cameraOverlay.position.set(camera.position);
+		cameraOverlay.update();
 
 		SpriteBatch batchEvent = new SpriteBatch();
 		batchEvent.setProjectionMatrix(cameraEvent.combined);
 
-		SpriteBatch batchDebug = new SpriteBatch();
-		batchDebug.setProjectionMatrix(cameraDebug.combined);
+		SpriteBatch batchOverlay = new SpriteBatch();
+		batchOverlay.setProjectionMatrix(cameraOverlay.combined);
 
 		SpriteBatch batch = new SpriteBatch();
 		batch.setProjectionMatrix(camera.combined);
@@ -211,17 +211,17 @@ public class GameScreen implements Screen, KeyDownObserver {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		rerenderMapObjects(batch, camera);
-		rendererDebug.render(batchDebug, cameraDebug);
+		overlayRenderer.render(batchOverlay, cameraOverlay);
 		rendererEvent.render(batchEvent, cameraEvent);
 
 
-		spriteBatch.setProjectionMatrix(cameraDebug.combined);
+		spriteBatch.setProjectionMatrix(cameraOverlay.combined);
 		//Add tutorial guideline if we are in the tutorial world
 		if(tutorial){
-			guideline.render(spriteBatch,cameraDebug);
+			guideline.render(spriteBatch,cameraOverlay);
 		}
 		//Add questTracker UI
-		questTrackerRenderer.render(spriteBatch, cameraDebug);
+		questTrackerRenderer.render(spriteBatch, cameraOverlay);
 
 		// Hide the buttons when the game is running
 		resumeButton.setPosition(-100, -100);
@@ -239,8 +239,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void renderPauseMenu(float delta) {
 		// Render the pause modal
 		SpriteBatch batchPauseModal = new SpriteBatch();
-		batchPauseModal.setProjectionMatrix(cameraDebug.combined);
-		pauseModal.render(batchPauseModal, cameraDebug);
+		batchPauseModal.setProjectionMatrix(cameraOverlay.combined);
+		pauseModal.render(batchPauseModal, cameraOverlay);
 
 		// Display the buttons
 		resumeButton.setPosition(width / 2 - resumeButton.getWidth() / 2,
@@ -257,8 +257,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void renderGameResult(float delta) {
 		// Render the pause modal
 		SpriteBatch batchResult = new SpriteBatch();
-		batchResult.setProjectionMatrix(cameraDebug.combined);
-		result.render(batchResult, cameraDebug);
+		batchResult.setProjectionMatrix(cameraOverlay.combined);
+		result.render(batchResult, cameraOverlay);
 
 		// Display the buttons
 		quitButton.setPosition(width / 2 - quitButton.getWidth() / 2,
@@ -321,9 +321,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 		camera.viewportHeight = height;
 		camera.update();
 
-		cameraDebug.viewportWidth = width;
-		cameraDebug.viewportHeight = height;
-		cameraDebug.update();
+		cameraOverlay.viewportWidth = width;
+		cameraOverlay.viewportHeight = height;
+		cameraOverlay.update();
 	}
 
 	@Override
