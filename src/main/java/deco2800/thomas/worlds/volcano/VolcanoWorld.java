@@ -3,7 +3,7 @@ package deco2800.thomas.worlds.volcano;
 import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.Environment.volcano.*;
+import deco2800.thomas.entities.environment.volcano.*;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.enemies.dragons.VolcanoDragon;
@@ -311,6 +311,14 @@ public class VolcanoWorld extends AbstractWorld {
         return graveYard;
     }
 
+    /**
+     * Creates a static lavapool entity which is consequently updated during
+     * weather events in the Volcano Zone
+     *
+     * @param col - The specified column coordinate of the orb.
+     * @param row - The specified row coordinate of the orb.
+     * @return  A static entity for the Volcano Zone
+     */
     public VolcanoLavaPool createLavaPool(float col, float row) {
         List<Part> parts = new ArrayList<Part>();
 

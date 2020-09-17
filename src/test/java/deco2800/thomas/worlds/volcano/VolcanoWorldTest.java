@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.*;
-import deco2800.thomas.entities.Environment.volcano.*;
+import deco2800.thomas.entities.environment.volcano.*;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.Tile;
@@ -577,6 +577,6 @@ public class VolcanoWorldTest extends BaseGDXTest {
 
         spyWorld.createStaticEntities();
 
-        Assert.assertEquals(23, spyWorld.getEntities().size());
+        Assert.assertEquals(26, spyWorld.getEntities().size());
     }
 }
