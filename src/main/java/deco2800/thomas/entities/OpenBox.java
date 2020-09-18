@@ -2,33 +2,29 @@ package deco2800.thomas.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.items.Item;
 
-public class ItemBox extends AbstractDialogBox{
+public class OpenBox extends AbstractDialogBox {
 
-	TextButton button;
-	TextButton close;
 	Item item;
+	TextButton open;
+	TextButton close;
 	
-	public ItemBox(Item item, String name, String price, String description, String styleType) {
-		super(item, name, styleType);
+	public OpenBox(Item item, String name, String Styletype) {
+		super(item, name, Styletype);
 		this.item = item;
-		box.add(description).expand().center();
+		box.add("Open the box!").expand().center();
 		box.row();
-		box.add("Price:" + price);
-				//item.getCurrencyValue());
-		button = new TextButton("Buy", skin);
+		open = new TextButton("Open", skin);
 		close = new TextButton("Close",skin);
 		close.addListener(b);
-		button.addListener(a);
-		button.pad(1,10,1,10);
+		open.addListener(a);
 		box.setKeepWithinStage(true);
 		box.row();
-		box.add(button).center();
+		box.add(open).center();
 		box.row();
 		box.add(close).center();
 		show = false;
@@ -37,23 +33,21 @@ public class ItemBox extends AbstractDialogBox{
 		box.setPosition((Gdx.graphics.getWidth() - box.getWidth())/2,
 				(Gdx.graphics.getHeight() - box.getHeight())/2 );
 	}
-
+	
 	ChangeListener a = new ChangeListener() {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			System.out.print("Item Bought");
-			// decrease currency.
-			ItemBox.super.setShowing(false);
-			ItemBox.super.setRemove(true);
+			// increase currency.
+			OpenBox.super.setShowing(false);
+			OpenBox.super.setRemove(true);
 		}
 	};
 
 	ChangeListener b = new ChangeListener() {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			ItemBox.super.setShowing(false);
+			OpenBox.super.setShowing(false);
 			box.remove();
 		}
 	};
-	
 }

@@ -103,29 +103,22 @@ public class Item extends StaticEntity implements TouchDownObserver {
 
         // if click is close enough, then player should also be somewhat close. 
         if (isCloseCol && isCloseRow) {
-
-            // less than or just one column above. 
-            // less than or just one row above. 
+            
             if (((itemCol + 1) <= playerCol) && ((itemRow+1) <= playerRow)) {
                 System.out.println("Interacting 1!");
                 interact();
             }
-            // less than / 1 column below
-            // less than / 1 row below. 
+            
             if ((itemCol - 1) <= playerCol && ((itemRow -1) <= playerRow)) {
                 System.out.println("Interacting 2!");
                 interact();
             }
-
-            // less/than 1 column above 
-            // lessthan/1 row below 
+            
             if ((itemCol - 1) <= playerCol && ((itemRow + 1) <= playerRow)) {
                 System.out.println("Interacting 2!");
                 interact();
             }
-
-            // lessthan/1 column below 
-            // less than/1 row above. 
+            
             if ((itemCol + 1) <= playerCol && ((itemRow - 1) <= playerRow)) {
                 System.out.println("Interacting 2!");
                 interact();

@@ -17,6 +17,7 @@ import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.entities.items.Shield;
 //import deco2800.thomas.entities.items.TestItem;
+import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.DialogManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.NonPlayablePeonManager;
@@ -144,6 +145,14 @@ public class TutorialWorld extends AbstractWorld{
                 (PlayerPeon) getPlayerEntity(), "tutorial");
         entities.add(itemShield); 
         items.add(itemShield.getDisplay());
+        
+        Tile treasure;
+        treasure = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
+                Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
+        Item itemTreasure = new Treasure(treasure, false,
+                (PlayerPeon) getPlayerEntity(),"tutorial");
+        entities.add(itemTreasure);
+        items.add(itemTreasure.getDisplay());
         
         DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
                 items);

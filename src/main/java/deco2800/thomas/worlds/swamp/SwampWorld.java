@@ -15,6 +15,7 @@ import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.entities.items.Shield;
+import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.entities.environment.swamp.*;
@@ -199,6 +200,7 @@ public class SwampWorld extends AbstractWorld {
     private void generateItemEntities(){
         final int NUM_POTIONS = 6;
         final int NUM_SHIELDS = 4;
+        final int NUM_CHESTS = 3; 
 
         ArrayList<AbstractDialogBox> items = new ArrayList<>();
         
@@ -218,6 +220,15 @@ public class SwampWorld extends AbstractWorld {
                     (PlayerPeon) getPlayerEntity(),"swamp");
             entities.add(shield);
             items.add(shield.getDisplay());
+        }
+
+        for (int i = 0; i < NUM_CHESTS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            Treasure chest = new Treasure(tile, false,
+                    (PlayerPeon) getPlayerEntity(),"swamp");
+            entities.add(chest);
+            items.add(chest.getDisplay());
         }
         
         DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),

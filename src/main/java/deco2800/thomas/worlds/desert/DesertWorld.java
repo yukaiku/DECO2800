@@ -14,6 +14,7 @@ import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.entities.enemies.dragons.DesertDragon;
+import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
@@ -168,6 +169,7 @@ public class DesertWorld extends AbstractWorld {
     private void generateItemEntities(){
         final int NUM_POTIONS = 6;
         final int NUM_SHIELDS = 4;
+        final int NUM_CHESTS = 3;
         ArrayList<AbstractDialogBox> items = new ArrayList<>();
         
         for (int i = 0; i < NUM_POTIONS; i++) {
@@ -186,6 +188,15 @@ public class DesertWorld extends AbstractWorld {
                     (PlayerPeon) getPlayerEntity(),"desert");
             entities.add(shield);
             items.add(shield.getDisplay());
+        }
+
+        for (int i = 0; i < NUM_CHESTS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            Treasure chest = new Treasure(tile, false,
+                    (PlayerPeon) getPlayerEntity(),"desert");
+            entities.add(chest);
+            items.add(chest.getDisplay());
         }
         
         DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
