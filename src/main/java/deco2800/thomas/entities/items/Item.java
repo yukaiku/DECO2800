@@ -81,22 +81,17 @@ public class Item extends StaticEntity implements TouchDownObserver {
 
     @Override
     public void notifyTouchDown(int screenX, int screenY, int pointer, int button) {
-        int difference = 2;
         
-        float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(), Gdx.input.getY());
+        float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(),
+                Gdx.input.getY());
         float[] clickedPosition = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
 
         float playerCol = this.player.getPosition().getCol();
         float playerRow = this.player.getPosition().getRow();
-        //System.out.printf("%s%f\n", "Player's Column:", playerCol);
-        //System.out.printf("%s%f\n", "Player's Row:", playerRow);
+        
 
         float itemCol = this.getPosition().getCol();
         float itemRow = this.getPosition().getRow();
-        //System.out.printf("%s%f\n", "item's Column:", itemCol);
-        //System.out.printf("%s%f\n", "item's Row:", itemRow);
-
-        // Test if the mouse click is also close. 
         boolean isCloseCol =
                 (clickedPosition[0] == this.getCol()
                         || clickedPosition[0] <= this.getRow() - 1
@@ -111,27 +106,27 @@ public class Item extends StaticEntity implements TouchDownObserver {
 
             // less than or just one column above. 
             // less than or just one row above. 
-            if (((itemCol + 2) <= playerCol) && ((itemRow+2) <= playerRow)) {
+            if (((itemCol + 1) <= playerCol) && ((itemRow+1) <= playerRow)) {
                 System.out.println("Interacting 1!");
                 interact();
             }
             // less than / 1 column below
             // less than / 1 row below. 
-            if ((itemCol - 2) <= playerCol && ((itemRow -2) <= playerRow)) {
+            if ((itemCol - 1) <= playerCol && ((itemRow -1) <= playerRow)) {
                 System.out.println("Interacting 2!");
                 interact();
             }
 
             // less/than 1 column above 
             // lessthan/1 row below 
-            if ((itemCol - 2) <= playerCol && ((itemRow + 2) <= playerRow)) {
+            if ((itemCol - 1) <= playerCol && ((itemRow + 1) <= playerRow)) {
                 System.out.println("Interacting 2!");
                 interact();
             }
 
             // lessthan/1 column below 
             // less than/1 row above. 
-            if ((itemCol + 2) <= playerCol && ((itemRow - 2) <= playerRow)) {
+            if ((itemCol + 1) <= playerCol && ((itemRow - 1) <= playerRow)) {
                 System.out.println("Interacting 2!");
                 interact();
             }
