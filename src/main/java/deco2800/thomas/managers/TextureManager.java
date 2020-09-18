@@ -174,7 +174,7 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("armour_iron", new Texture("resources/inventory/armour-iron.png"));
 			textureMap.put("armour_wood", new Texture("resources/inventory/armour-wood.png"));
 			textureMap.put("treasure_box", new Texture("resources/inventory/treasure-box.png"));
-			
+
 
 		} catch (Exception e) {
 			e.printStackTrace();
