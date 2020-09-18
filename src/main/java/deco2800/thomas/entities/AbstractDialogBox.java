@@ -12,48 +12,16 @@ import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.worlds.Tile;
 
 public class AbstractDialogBox {
-	String name;
-	Item item; 
+	Object entity;
 	Window box;
 	boolean show; 
 	int time; 
-	TextButton button;
+	Skin skin2; 
 	
-	public AbstractDialogBox (Item item, String name, String price,
-			String description, String styleType) {
-		this.name = name;
-		this.item = item;
-		Skin skin2 = new Skin(Gdx.files.internal("resources/uiskin.skin"));
-		this.box = new Window(item.getItemName(), skin2, styleType);
-		box.isModal();
-		box.add(description).expand().center();
-		box.row();
-		box.add("Price:" + price);
-		button = new TextButton("Buy", skin2);
-		button.addListener(a);
-		button.pad(1,10,1,10);
-		box.setKeepWithinStage(true);
-		box.row();
-		box.add(button).expand().center();
-		show = false;
-		time = 0; 
-		box.pack();
-	}
-	
-	ChangeListener a = new ChangeListener() {
-		@Override
-		public void changed(ChangeEvent event, Actor actor) {
-			System.out.print("Item Bought");
-			// if bought - remove item and remove currency 
-		}
-	};
-	
-	public String getName() {
-		return name;
-	}
-	
-	public Item getItem() { 
-		return item; 
+	public AbstractDialogBox (Object entity, String name, String styleType) {
+		this.entity = entity;
+		this.skin2 = new Skin(Gdx.files.internal("resources/uiskin.skin"));
+		this.box = new Window(name, skin2, styleType);
 	}
 	
 	// returns if you can see the dialog box or not. 

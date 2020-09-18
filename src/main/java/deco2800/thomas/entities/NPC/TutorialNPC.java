@@ -7,6 +7,7 @@ import deco2800.thomas.util.SquareVector;
 public class TutorialNPC extends NonPlayablePeon implements Interactable {
     public TutorialNPC(String name, SquareVector position, String texture) {
         super(name, position, texture);
+        //Dialog
     }
 
     @Override
