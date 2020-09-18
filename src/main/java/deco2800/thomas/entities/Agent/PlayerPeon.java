@@ -95,28 +95,25 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
      * @param target The target string identifier
      */
     public static String getDialogue(String target) {
-        dialogues.put("plot", "Greetings my students, you both must save the world of Decodia " +
-                "by defeating the elder " +
-                "dragons and collecting the orbs they have stolen. These orbs contain the " +
-                "great power of the elements " +
-                "and without them the world is out of balance. You will have to use your combined powers of " +
-                "steel and magic to prevail against the looming terrors.");
+        dialogues.put("plot", "Greetings my students, you both must save the world of Decodia by defeating the elder dragons" +
+                "\nand collecting the orbs they have stolen. These orbs contain the great power of the elements " +
+                "\nand without them the world is out of balance. You will have to use your combined powers of " +
+                "\nsteel and magic to prevail against the looming terrors.");
 
         dialogues.put("WASD", "To move your character press W for up, S for down, A for left, D for right, " +
-                "please move to the " +
-                "checkpoint marked with a flag to proceed.");
+                "\nplease move to the checkpoint marked with a flag to proceed.");
 
         dialogues.put("attack", "An enemy is in front of you, get closer and click M1 to kill the monster");
 
         dialogues.put("orb", "There is an orb in front of you, pick it up by interacting with it.");
 
         dialogues.put("congrats", "Congratulations on completing the tutorial, " +
-                "would you like to move to the next stage or redo " +
+                "\nwould you like to move to the next stage or redo " +
                 "the tutorial?");
 
         dialogues.put("welcome", "Welcome to Decodia the world has been devastated " +
-                "with the re-emergence of the five pythagoras orbs. In order to save this world, " +
-                "you will need to collect all the orbs and restore balance to the world.");
+                "\nwith the re-emergence of the five pythagoras orbs. In order to save this world, " +
+                "\nyou will need to collect all the orbs and restore balance to the world.");
 
         dialogues.put("fire", "I am a Pyromancer,, pick me and I'll burn all that stands before you to ashes.");
 
@@ -131,32 +128,28 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         dialogues.put("sword", "I am the sword knight, i will make quick work of your enemies.");
 
         dialogues.put("swamp", "Welcome adventure to Swamp Zone , to complete this stage, " +
-                "you will have to locate the orb of muck. The monsters here are " +
-                "vulnerable to air");
+                "\nyou will have to locate the orb of muck. The monsters here are vulnerable to air");
 
         dialogues.put("volcano", "Welcome adventure to Volcano Zone , to complete this stage, " +
-                "you will have to locate the orb of lava. The monsters here are " +
-                "vulnerable to earth");
+                "\nyou will have to locate the orb of lava. The monsters here are vulnerable to earth");
 
         dialogues.put("tundra", "Welcome adventure to Tundra Zone , to complete this stage, " +
-                "you will have to locate the orb of ice. The monsters here are " +
-                "vulnerable to fire");
+                "\nyou will have to locate the orb of ice. The monsters here are vulnerable to fire");
 
         dialogues.put("desert", "Welcome adventure to Desert Zone , to complete this stage, " +
-                "you will have to locate the orb of sand. The monsters here are " +
-                "vulnerable to water");
+                "\nyou will have to locate the orb of sand. The monsters here are vulnerable to water");
 
         dialogues.put("swampy", "You have slain Siendiadut the swamp dragon and gained the element of " +
-                "earth, use it to crush your foes.");
+                "\nearth, use it to crush your foes.");
 
         dialogues.put("volcy", "You have slain Chusulth the volcano dragon and gained the element of " +
-                "fire, use it to burn your foes.");
+                "\nfire, use it to burn your foes.");
 
         dialogues.put("tundy", "You have slain Diokiedes the tundra dragon and gained the element of water, " +
-                "use it to drown your foes.");
+                "\nuse it to drown your foes.");
 
         dialogues.put("desy", "You have slain Doavnaen the desert dragon and gained the element of air, " +
-                "use it to blow down your foes.");
+                "\nuse it to blow down your foes.");
 
         dialogues.put("roar", "Roar!!!");
 
@@ -167,10 +160,10 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         dialogues.put("gob", "Shinies");
 
         dialogues.put("died", "Too bad, you died, would you like to restart from " +
-                "your previous checkpoint or start anew?");
+                "\nyour previous checkpoint or start anew?");
 
         dialogues.put("finish", "Congratulations hero, you have collected all the " +
-                "orbs and restored peace to the world.");
+                "\norbs and restored peace to the world.");
 
         return dialogues.get(target);
     }

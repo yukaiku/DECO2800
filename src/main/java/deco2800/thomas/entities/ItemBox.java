@@ -17,7 +17,7 @@ public class ItemBox extends AbstractDialogBox{
 		box.add(description).expand().center();
 		box.row();
 		box.add("Price:" + price);
-		button = new TextButton("Buy", skin2);
+		button = new TextButton("Buy", skin);
 		button.addListener(a);
 		button.pad(1,10,1,10);
 		box.setKeepWithinStage(true);
@@ -32,7 +32,8 @@ public class ItemBox extends AbstractDialogBox{
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
 			System.out.print("Item Bought");
-			// if bought - remove item and remove currency 
+			// if bought - remove item and remove currency
+			ItemBox.super.setShowing(false);
 		}
 	};
 	

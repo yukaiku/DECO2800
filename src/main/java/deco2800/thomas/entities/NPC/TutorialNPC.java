@@ -6,42 +6,32 @@ import deco2800.thomas.entities.Interactable;
 import deco2800.thomas.entities.NPCDialog;
 import deco2800.thomas.util.SquareVector;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class TutorialNPC extends NonPlayablePeon implements Interactable {
-    
-    AbstractDialogBox dialogue;
+
+    AbstractDialogBox tutorialDialogueBox;
+    public static int speechStage;
     
     public TutorialNPC(String name, SquareVector position, String texture) {
         super(name, position, texture);
-        this.dialogue = new NPCDialog(this);
-        // create linked list of dialogue? 
-        
+        this.tutorialDialogueBox = new NPCDialog(this,"Default");
+        speechStage = 0;
     }
     
     public AbstractDialogBox getBox() {
-        return dialogue;
+        return tutorialDialogueBox;
     }
     
     public void onTick(){
-        dialogue.setShowing(false);
+
     }
-    
+
     @Override
     public void interact() {
-        // tutorial vibes
-        String message1 = "";
-        message1 = PlayerPeon.getDialogue("welcome");
-        
-        
-        //Display message
-        dialogue.setShowing(true);
-        String message2 = PlayerPeon.getDialogue("WASD");
-        String message3 = PlayerPeon.getDialogue("attack");
-        String message4 = PlayerPeon.getDialogue("orb");
-        String message5 = PlayerPeon.getDialogue("congrats");
-
-        System.out.println(message1);
-        System.out.println(message2);
-        System.out.println(message3);
-        System.out.println(message4);
+        ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("WASD"));
+        tutorialDialogueBox.setShowing(true);
     }
 }
