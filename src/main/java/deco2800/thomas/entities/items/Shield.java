@@ -12,7 +12,7 @@ public class Shield extends Item {
     public Shield(Tile tile, boolean obstructed, PlayerPeon player,
             String styleType){
         super("Iron Shield",200, tile, RenderConstants.ITEM_RENDER, 
-                "shield_iron", obstructed, player);
+                "armour_iron", obstructed, player);
         this.setObjectName(ENTITY_ID_STRING);
         super.display = new ItemBox(this, name, "80", "Protects " +
                 "against fireballs", styleType);
