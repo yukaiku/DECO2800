@@ -32,8 +32,10 @@ public class ItemBox extends AbstractDialogBox{
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
 			System.out.print("Item Bought");
+			//entity.remove
 			// if bought - remove item and remove currency
 			ItemBox.super.setShowing(false);
+			ItemBox.super.setRemove(true);
 		}
 	};
 	

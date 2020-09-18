@@ -18,11 +18,13 @@ public class AbstractDialogBox {
 	boolean show; 
 	int time; 
 	Skin skin;
+	boolean remove; 
 	
 	public AbstractDialogBox (Object entity, String name, String styleType) {
 		this.entity = entity;
 		this.skin = new Skin(Gdx.files.internal("resources/uiskin.skin"));
 		this.box = new Window(name, skin, styleType);
+		this.remove = false;
 	}
 	
 	// returns if you can see the dialog box or not. 
@@ -44,5 +46,17 @@ public class AbstractDialogBox {
 	
 	public Window getBox() {
 		return box;
+	}
+	
+	public void setRemove(boolean rem){
+		remove = rem; 
+	}
+	
+	public boolean getRemove(){
+		return remove;
+	}
+	
+	public Object getEntity(){
+		return entity;
 	}
 }

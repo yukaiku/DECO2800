@@ -1,6 +1,7 @@
 package deco2800.thomas.managers;
 
 import deco2800.thomas.entities.AbstractDialogBox;
+import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.worlds.AbstractWorld;
 
@@ -43,6 +44,11 @@ public class DialogManager extends TickableManager {
 				}
 				if (a.isShowing() && a.getVisibleTime() >= 750) {
 					a.setShowing(false);
+					hideDialog(a);
+				}
+				
+				if (a.getRemove()){
+					world.removeEntity((AbstractEntity) a.getEntity());
 					hideDialog(a);
 				}
 			}
