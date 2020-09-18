@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -63,29 +64,42 @@ public class MainMenuScreen implements Screen {
 		newGameBtn.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(game, GameScreen.gameType.NEW_GAME));
+				switchScreen(GameScreen.gameType.NEW_GAME);
 			}
 		});
 
 		envTeamButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(game, GameScreen.gameType.ENV_TEAM_GAME));
+				switchScreen(GameScreen.gameType.ENV_TEAM_GAME);
 			}
 		});
 
 		testWorldBtn.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(game, GameScreen.gameType.TEST_WORLD));
+				switchScreen(GameScreen.gameType.TEST_WORLD);
 			}
 		});
+	}
+
+	/**
+	 * Add transition when switching screens
+	 */
+	public void switchScreen(GameScreen.gameType gameType) {
+		stage.getRoot().getColor().a = 1;
+		SequenceAction sequenceAction = new SequenceAction();
+		sequenceAction.addAction(Actions.fadeOut(0.3f));
+		sequenceAction.addAction(Actions.run(() -> game.setScreen(new GameScreen(game, gameType))));
+		stage.getRoot().addAction(sequenceAction);
 	}
 
 	/**
 	 * Begins things that need to begin when shown.
 	 */
 	public void show() {
+		stage.getRoot().getColor().a = 0;
+		stage.getRoot().addAction(Actions.fadeIn(0.8f));
 		Gdx.input.setInputProcessor(stage);
 	}
 
@@ -127,10 +141,6 @@ public class MainMenuScreen implements Screen {
 	 */
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		stage.getRoot().getColor().a = 0;
-		stage.getRoot().addAction(Actions.fadeIn(1f));
-
 		stage.act(delta);
 		stage.draw();
 	}
