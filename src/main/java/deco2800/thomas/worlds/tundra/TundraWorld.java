@@ -42,9 +42,9 @@ public class TundraWorld extends AbstractWorld {
 	public TundraWorld(int width, int height) {
 		DatabaseManager.loadWorld(this, MAP_FILE);
 		generateStaticEntities();
-		generateItemEntities();
 		this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.15f));
 		addEntity(this.getPlayerEntity());
+		generateItemEntities();
 
 		// Provide available enemies to the EnemyManager
 		Orc tundraOrc = new Orc(1, 0.05f, 100, "orc_tundra");

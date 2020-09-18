@@ -41,7 +41,6 @@ public class SwampWorld extends AbstractWorld {
         this.generateTileMap();
         this.generateTileIndices();
         this.generateStaticEntities();
-        this.generateItemEntities();
 
         // Create the player entity
         this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
@@ -62,6 +61,9 @@ public class SwampWorld extends AbstractWorld {
         npnSpawns.add(new MerchantNPC("SwampMerchantNPC", new SquareVector(-22, 9),"merchant_npc3",swampMerchantShop));
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
         GameManager.get().addManager(npcManager);
+        
+        //Creates Items
+        this.generateItemEntities();
     }
 
     @Override
