@@ -9,8 +9,7 @@ import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.entities.enemies.Dummy;
-import deco2800.thomas.entities.enemies.Orc;
-import deco2800.thomas.entities.environment.*;
+import deco2800.thomas.entities.environment.tutorial.*;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.NonPlayablePeonManager;
 
@@ -83,7 +82,7 @@ public class TutorialWorld extends AbstractWorld{
         }
         // Add targets
         for (int i = -6; i < 6 + 1; i = i + 2) {
-            if (i == 0) {
+            if (i == 0 | i == -2 | i == 2) {
                 continue;
             }
             Tile t = GameManager.get().getWorld().getTile(i, -TUTORIAL_WORLD_HEIGHT);
@@ -94,16 +93,24 @@ public class TutorialWorld extends AbstractWorld{
 
         Tile t;
         // Add barrels
-        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH - 1, TUTORIAL_WORLD_HEIGHT - 1);
+        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH - 1, TUTORIAL_WORLD_HEIGHT - 2);
         entities.add(new Barrel(t, true));
 
-        t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, TUTORIAL_WORLD_HEIGHT - 1);
+        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH - 1, -TUTORIAL_WORLD_HEIGHT + 1);
+        entities.add(new Barrel(t, true));
+
+        t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, TUTORIAL_WORLD_HEIGHT - 2);
+        entities.add(new Barrel(t, true));
+
+        t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, -TUTORIAL_WORLD_HEIGHT + 1);
         entities.add(new Barrel(t, true));
 
         // Add chest
-        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH - 1, -TUTORIAL_WORLD_HEIGHT);
+        t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, 0);
         entities.add(new Chest(t, true));
 
+        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH -1, 0);
+        entities.add(new Chest(t, true));
 
         // Add portal
         t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW);
