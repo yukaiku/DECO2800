@@ -10,22 +10,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TutorialNPC extends NonPlayablePeon implements Interactable {
+public class TundraNPC extends NonPlayablePeon implements Interactable {
 
     AbstractDialogBox tutorialDialogueBox;
     public static int speechStage;
     static boolean isActive = false;
 
-    public TutorialNPC(String name, SquareVector position, String texture) {
+    public TundraNPC(String name, SquareVector position, String texture) {
         super(name, position, texture);
         this.tutorialDialogueBox = new NPCDialog(this,"Default");
-        speechStage = 0;
+        speechStage = 1;
     }
-    
+
     public AbstractDialogBox getBox() {
-        return this.tutorialDialogueBox;
+        return tutorialDialogueBox;
     }
-    
+
     public void onTick(){
 
     }
@@ -41,11 +41,11 @@ public class TutorialNPC extends NonPlayablePeon implements Interactable {
     @Override
     public void interact() {
         setIsActive(true);
-        ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("welcome"));
-        tutorialDialogueBox.setShowing(true);
-        if (speechStage >= 4){
-            setIsActive(true);
-            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("congrats"));
+        if (this.getName() == "TundraQuestNPC1" && speechStage >= 1) {
+            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("tundra"));
+            tutorialDialogueBox.setShowing(true);
+        } else if (this.getName() == "TundraQuestNPC2" && speechStage >= 1){
+            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("tundra"));
             tutorialDialogueBox.setShowing(true);
         }
     }

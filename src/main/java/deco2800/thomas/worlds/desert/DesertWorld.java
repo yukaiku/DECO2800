@@ -3,6 +3,7 @@ package deco2800.thomas.worlds.desert;
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.NPC.DesertNPC;
 import deco2800.thomas.entities.NPC.MerchantNPC;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.NPC.TutorialNPC;
@@ -60,9 +61,8 @@ public class DesertWorld extends AbstractWorld {
 
         //Creates Desert NPCs
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
-        List<Item> swampMerchantShop = new ArrayList<>();
-        npnSpawns.add(new TutorialNPC("DesertQuestNPC", new SquareVector(-23, 17),"desert_npc1"));
-        npnSpawns.add(new MerchantNPC("DesertMerchantNPC", new SquareVector(-23, 20),"desert_npc2",swampMerchantShop));
+        npnSpawns.add(new DesertNPC("DesertQuestNPC1", new SquareVector(-23, 17),"desert_npc1"));
+        npnSpawns.add(new DesertNPC("DesertQuestNPC2", new SquareVector(-23, 20),"desert_npc2"));
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
         GameManager.get().addManager(npcManager);
         generateItemEntities();

@@ -10,43 +10,38 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TutorialNPC extends NonPlayablePeon implements Interactable {
+public class VolcanoNPC extends NonPlayablePeon implements Interactable {
 
     AbstractDialogBox tutorialDialogueBox;
     public static int speechStage;
     static boolean isActive = false;
 
-    public TutorialNPC(String name, SquareVector position, String texture) {
+    public VolcanoNPC(String name, SquareVector position, String texture) {
         super(name, position, texture);
         this.tutorialDialogueBox = new NPCDialog(this,"Default");
-        speechStage = 0;
+        speechStage = 1;
     }
-    
+
     public AbstractDialogBox getBox() {
-        return this.tutorialDialogueBox;
+        return tutorialDialogueBox;
     }
-    
+
     public void onTick(){
 
-    }
-
-    public static boolean getIsActive(){
-        return isActive;
     }
 
     public static void setIsActive(boolean value){
         isActive = value;
     }
 
+    public static boolean getIsActive(){
+        return isActive;
+    }
+
     @Override
     public void interact() {
         setIsActive(true);
-        ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("welcome"));
+        ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("WASD"));
         tutorialDialogueBox.setShowing(true);
-        if (speechStage >= 4){
-            setIsActive(true);
-            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("congrats"));
-            tutorialDialogueBox.setShowing(true);
-        }
     }
 }

@@ -32,7 +32,7 @@ import java.util.Random;
 public class TutorialWorld extends AbstractWorld{
 
     DialogManager dialog;
-    ArrayList<AbstractDialogBox> items;
+    List<AbstractDialogBox> allDialogBoxes;
     boolean notGenerated = true;
     static final int TUTORIAL_WORLD_WIDTH = 10; // Height and width vars for the map size; constrains tile gen
     static final int TUTORIAL_WORLD_HEIGHT = 6; // Note the map will double these numbers (bounds are +/- these limits)
@@ -85,10 +85,15 @@ public class TutorialWorld extends AbstractWorld{
         TutorialNPC NPC = new TutorialNPC("Master", new SquareVector(0,
                 2),"tutorial_npc");
         npnSpawns.add(NPC);
-        this.items = new ArrayList<>();
-        items.add(NPC.getBox());
+        this.allDialogBoxes = new ArrayList<>();
+        this.allDialogBoxes.add(NPC.getBox());
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, player, npnSpawns);
         GameManager.get().addManager(npcManager);
+
+        //Dialog manager
+        DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
+                this.allDialogBoxes);
+        GameManager.get().addManager(dialog);
     }
 
     public void generateEntities() {
@@ -136,15 +141,15 @@ public class TutorialWorld extends AbstractWorld{
         Item potionItem = new HealthPotion(potion, false,
                 (PlayerPeon) getPlayerEntity(), "tutorial");
         entities.add(potionItem); 
-        items.add(potionItem.getDisplay());
+        this.allDialogBoxes.add(potionItem.getDisplay());
         
         Tile shield;
         shield = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
                 Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
         Item itemShield = new Shield(shield, false,
                 (PlayerPeon) getPlayerEntity(), "tutorial");
-        entities.add(itemShield); 
-        items.add(itemShield.getDisplay());
+        entities.add(itemShield);
+        this.allDialogBoxes.add(itemShield.getDisplay());
         
         Tile treasure;
         treasure = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
@@ -152,11 +157,7 @@ public class TutorialWorld extends AbstractWorld{
         Item itemTreasure = new Treasure(treasure, false,
                 (PlayerPeon) getPlayerEntity(),"tutorial");
         entities.add(itemTreasure);
-        items.add(itemTreasure.getDisplay());
-        
-        DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
-                items);
-        GameManager.get().addManager(dialog);
+        this.allDialogBoxes.add(itemTreasure.getDisplay());
     }
 
     @Override

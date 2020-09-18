@@ -6,6 +6,7 @@ import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.NPC.MerchantNPC;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.NPC.TutorialNPC;
+import deco2800.thomas.entities.NPC.VolcanoNPC;
 import deco2800.thomas.entities.environment.volcano.VolcanoDragonSkull;
 import deco2800.thomas.entities.environment.volcano.VolcanoGraveYard;
 import deco2800.thomas.entities.environment.volcano.VolcanoRuins;
@@ -79,9 +80,8 @@ public class VolcanoWorld extends AbstractWorld {
 
         //Create Volcano NPCs
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
-        List<Item> swampMerchantShop = new ArrayList<>();
-        npnSpawns.add(new TutorialNPC("VolcanoQuestNPC", new SquareVector(-21, 22),"volcano_npc2"));
-        npnSpawns.add(new MerchantNPC("VolcanoMerchantNPC", new SquareVector(-24, -13),"merchant_npc1",swampMerchantShop));
+        npnSpawns.add(new VolcanoNPC("VolcanoQuestNPC2", new SquareVector(-21, 22),"volcano_npc2"));
+        npnSpawns.add(new VolcanoNPC("VolcanoQuestNPC1", new SquareVector(-24, -13),"volcano_npc1"));
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
         GameManager.get().addManager(npcManager);
         //Add local Event to this world
