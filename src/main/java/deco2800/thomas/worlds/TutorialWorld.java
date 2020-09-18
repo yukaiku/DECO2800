@@ -26,7 +26,6 @@ import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.managers.GameManager;
 import org.lwjgl.Sys;
 
-import javax.print.attribute.standard.DialogOwner;
 import java.util.Random;
 
 public class TutorialWorld extends AbstractWorld{
