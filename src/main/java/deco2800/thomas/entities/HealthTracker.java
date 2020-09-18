@@ -24,7 +24,6 @@ public class HealthTracker {
         this.maxHealthValue = maxHealthValue;
         this.currentHealthValue = this.maxHealthValue;
         this.isDead = false;
-        recharge();
     }
 
     /**
@@ -118,25 +117,6 @@ public class HealthTracker {
     public boolean isDead () {
         this.isDead = (currentHealthValue == 0);
         return isDead;
-    }
-
-
-    /**
-     * Automatically recharges the health for the player with 1 health point
-     * per 2 seconds.
-     */
-    public void recharge () {
-        Timer timer = new Timer();
-        TimerTask task = new Helper();
-        if (!isDead) {
-            timer.schedule(task, 0, 2000);
-        }
-    }
-
-    private class Helper extends TimerTask {
-        public void run() {
-            regenerateHealth(1);
-        }
     }
 }
 

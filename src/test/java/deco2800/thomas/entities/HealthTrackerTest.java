@@ -111,8 +111,4 @@ public class HealthTrackerTest {
         boolean value = health.isDead();
         Assert.assertEquals(value,false);
     }
-
-    @Test
-    public void recharge() {
-    }
 }
