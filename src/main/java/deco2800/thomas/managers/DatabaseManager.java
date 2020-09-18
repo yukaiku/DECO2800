@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -218,15 +219,15 @@ public final class DatabaseManager extends AbstractManager {
 
 	private static AbstractEntity resolveEntityToLoad(String entityObjectName) {
 		try {
-            for (String s:Arrays.asList("rock")){
-                if (entityObjectName.startsWith(s)){
+            for (String s : Arrays.asList("rock")){
+                if (entityObjectName.startsWith(s)) {
                     Rock create = new Rock();
                     create.setObjectName(entityObjectName);
                     return (AbstractEntity) create;
                 }
             }
 
-            for (String s:Arrays.asList("staticEntityID")){
+            for (String s : Arrays.asList("staticEntityID")){
                 if (entityObjectName.startsWith(s)){
                     StaticEntity create = new StaticEntity();
                     create.setObjectName(entityObjectName);
@@ -234,7 +235,7 @@ public final class DatabaseManager extends AbstractManager {
                 }
             }
 
-            for (String s:Arrays.asList("playerPeon")){
+            for (String s : Arrays.asList("playerPeon")){
                 if (entityObjectName.startsWith(s)){
                      PlayerPeon create = new PlayerPeon(1,1,1, 1);
                      create.setObjectName(entityObjectName);
@@ -242,7 +243,7 @@ public final class DatabaseManager extends AbstractManager {
                 }
             }
 
-            for (String s:Arrays.asList("combat")) {
+            for (String s : Arrays.asList("combat")) {
                 if (entityObjectName.startsWith(s)){
                     SquareVector destination = new SquareVector(0,0);
                     Fireball create = new Fireball(1, 5, 1, 1, EntityFaction.Ally);
@@ -250,9 +251,9 @@ public final class DatabaseManager extends AbstractManager {
                 }
             }
 
-            for (String s:Arrays.asList("Elder Dragon")) {
+            for (String s : Arrays.asList("Elder Dragon")) {
                 if (entityObjectName.startsWith(s)){
-                    Dragon create = new Dragon(2, 0.3f, 2000, "dragon_swamp", 2);
+                    Dragon create = new Dragon("Elder Dragon", 2, 0.3f, 2000, "dragon_swamp", 2);
                     return (AbstractEntity) create;
                 }
             }
@@ -370,8 +371,7 @@ public final class DatabaseManager extends AbstractManager {
         }
     }
 
-    private static void descendThroughSaveFile(JsonReader reader,
-                                               Map<Integer, AbstractEntity> newEntities,
+    private static void descendThroughSaveFile(JsonReader reader, Map<Integer, AbstractEntity> newEntities,
                                                CopyOnWriteArrayList<Tile> newTiles) {
         try {
             reader.beginObject();
@@ -387,6 +387,7 @@ public final class DatabaseManager extends AbstractManager {
             logger.error("Somehow loaded the JSON file, but it's somewhat corrupted", e);
         }
     }
+
     private static void readEntities(JsonReader reader, Map<Integer, AbstractEntity> newEntities,
                                      CopyOnWriteArrayList<Tile> newTiles) throws IOException {
         while (reader.hasNext()) {
@@ -426,6 +427,12 @@ public final class DatabaseManager extends AbstractManager {
 		loadWorld(world, saveLocationAndFilename);
 	}
 
+    /**
+     * Load a world from a JSON file
+     *
+     * @param world
+     * @param saveLocationAndFilename
+     */
 	public static void loadWorld(AbstractWorld world, String saveLocationAndFilename) {
 		// This check allows for the world parameter to act as an optional
 		if (world == null) {
@@ -458,7 +465,8 @@ public final class DatabaseManager extends AbstractManager {
             newTiles = setDesertTiles(newTiles);
         } else if (saveLocationAndFilename.equals("resources/environment/volcano/VolcanoZone.json")) {
             newTiles = setVolcanoTiles(newTiles);
-        } else if (saveLocationAndFilename.equals("resources/environment/tundra/tundra-map.json")) {
+        } else if (saveLocationAndFilename.equals("resources/environment/tundra/tundra-map.json")
+                || saveLocationAndFilename.equals("resources/environment/tundra/tundra-map-tiles-only.json")) {
             newTiles = setTundraTiles(newTiles);
         }
 
@@ -649,4 +657,254 @@ public final class DatabaseManager extends AbstractManager {
 
 		return newTiles;
 	}
+
+    /**
+     * Write to a JSON file
+     * @param jsonString the content of a file
+     * @param filepath the path to the file
+     */
+    private static void writeToJsonFile(String jsonString, String filepath) {
+        BufferedWriter fileWriter = null;
+        try {
+            Charset charset = Charset.forName("UTF-8");
+            Path savePath = FileSystems.getDefault().getPath(filepath);
+            java.nio.file.Files.deleteIfExists(savePath);
+            fileWriter = Files.newBufferedWriter(savePath, charset);
+            fileWriter.write(jsonString, 0, jsonString.length());
+            fileWriter.close();
+        } catch (FileNotFoundException exception) {
+            logger.error("Save could not write to file.");
+        } catch (IOException exception) {
+            logger.error("Could not overwrite previous save.");
+        } finally {
+            try {
+                if (fileWriter != null){
+                    fileWriter.close();
+                } else {
+                    logger.error("Could not close fileWriter as it is null");
+                }
+            } catch (IOException exception) {
+                logger.error("Could not overwrite previous save.");
+            } catch (NullPointerException exception) {
+                logger.error("Could not write to the file at all.");
+            }
+        }
+    }
+
+    /**
+     * Save a world to a JSON file
+     * Refer to this page of the wiki for more details:
+     * https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/Save/Load-Zone-Entities-and-Tiles
+     *
+     * @param world the world
+     * @param filepath the path to the JSON file
+     */
+	public static void saveWorldToJsonFile(AbstractWorld world, String filepath) {
+	    if (world == null) {
+	        world = GameManager.get().getWorld();
+        }
+
+	    StringBuilder outputBuilder = new StringBuilder();
+
+	    outputBuilder.append("{\"entities\": [");
+	    serializeEntities(world, outputBuilder);
+	    outputBuilder.append("],");
+
+        outputBuilder.append("\"tiles\": [");
+	    serializeTiles(world, outputBuilder);
+	    outputBuilder.append("]}");
+        writeToJsonFile(outputBuilder.toString(), filepath);
+        GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Game saved to the database.");
+    }
+
+    /**
+     * Convert all entities in a world to JSON
+     * @param world the world
+     * @param outputBuilder stores the JSON list of all entities
+     */
+    private static void serializeEntities(AbstractWorld world, StringBuilder outputBuilder) {
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .enableComplexMapKeySerialization()
+                .create();
+
+	    List<AbstractEntity> entities = world.getEntities();
+
+	    for (int i = 0; i < entities.size(); i++) {
+	        AbstractEntity entity = entities.get(i);
+
+            outputBuilder.append("{");
+            outputBuilder.append("\"entityClass\":");
+            outputBuilder.append("\"").append(entity.getClass().toString()).append("\",");
+            outputBuilder.append("\"entityObject\":");
+            outputBuilder.append(gson.toJson(entity));
+            outputBuilder.append("}");
+
+            if (i != entities.size() - 1) {
+                outputBuilder.append(',');
+            }
+        }
+    }
+
+    /**
+     * Convert all tiles in a world to JSON
+     * @param world the world
+     * @param outputBuilder stores the JSON list of all tiles
+     */
+    private static void serializeTiles(AbstractWorld world, StringBuilder outputBuilder) {
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .enableComplexMapKeySerialization()
+                .create();
+
+        List<Tile> tiles = world.getTiles();
+
+        for (int i = 0; i < tiles.size(); i++) {
+            Tile tile = tiles.get(i);
+
+            outputBuilder.append("{");
+            outputBuilder.append("\"tileClass\":");
+            outputBuilder.append("\"").append(tile.getClass().toString()).append("\",");
+            outputBuilder.append("\"tileObject\":");
+            outputBuilder.append(gson.toJson(tile));
+            outputBuilder.append("}");
+
+            if (i != tiles.size() - 1) {
+                outputBuilder.append(',');
+            }
+        }
+    }
+
+    /**
+     * Load a world from a JSON file
+     * Refer to this page of the wiki for more details:
+     * https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/Save/Load-Zone-Entities-and-Tiles
+     *
+     * @param world the world
+     * @param filepath path to the JSON file
+     */
+    public static void loadWorldFromJsonFile(AbstractWorld world, String filepath) {
+        File f = new File(filepath);
+        if (!f.exists()) {
+            GameManager.get().getManager(OnScreenMessageManager.class).
+                    addMessage("Load attempted, but no save file found");
+            logger.info("Load attempted, but no save file found");
+        }
+
+        // Delete all tiles and entities
+        world.queueTilesForRemove(world.getTiles());
+        world.queueEntitiesForRemove(world.getEntities());
+
+        try {
+            JsonReader jsonReader = new JsonReader(new FileReader(filepath));
+            jsonReader.beginObject();
+            List<AbstractEntity> entities = deserializeEntities(jsonReader);
+            CopyOnWriteArrayList<Tile> tiles = deserializeTiles(jsonReader);
+            jsonReader.endObject();
+
+            world.setEntities(entities);
+            world.setTiles(tiles);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Get the list of tiles stored in a JSON file
+     * @param jsonReader the JSON reader (part of the Gson library)
+     * @return the list of tiles stored in the JSON file
+     * @throws IOException
+     */
+    private static CopyOnWriteArrayList<Tile> deserializeTiles(JsonReader jsonReader) throws IOException {
+	    CopyOnWriteArrayList<Tile> tiles = new CopyOnWriteArrayList<>();
+
+        Map<String, Type> map = new HashMap<>();
+        map.put(Tile.class.toString(), Tile.class);
+
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .enableComplexMapKeySerialization()
+                .create();
+        jsonReader.nextName(); // "tiles"
+        jsonReader.beginArray();
+
+        while (jsonReader.hasNext()) {
+            jsonReader.beginObject();
+
+            if (!jsonReader.nextName().equals("tileClass")) {
+                throw new IOException("Expected name \"tileClass\"");
+            }
+
+            String typeName = jsonReader.nextString();
+
+            if (!jsonReader.nextName().equals("tileObject")) {
+                throw new IOException("Expected name \"tileObject\"");
+            }
+
+            Type type = GameManager.get().getManager(TypeManager.class).getType(typeName);
+
+            if (type == null) {
+                throw new RuntimeException("Tile type " + type + " not found in TypeManager");
+            }
+
+            Tile tile = gson.fromJson(jsonReader, type);
+            tiles.add(tile);
+
+            jsonReader.endObject();
+        }
+
+        jsonReader.endArray();
+
+        return tiles;
+    }
+
+    /**
+     * Get the list of entities stored in a JSON file
+     * @param jsonReader the JSON reader (part of the Gson library)
+     * @return the list of entities stored in the JSON file
+     * @throws IOException
+     */
+    private static CopyOnWriteArrayList<AbstractEntity> deserializeEntities(JsonReader jsonReader) throws IOException {
+	    CopyOnWriteArrayList<AbstractEntity> entities = new CopyOnWriteArrayList<>();
+
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .enableComplexMapKeySerialization()
+                .create();
+
+	    if (!jsonReader.nextName().equals("entities")) { // "entities"
+            throw new IOException("Expected name \"entities\"");
+	    }
+	    jsonReader.beginArray();
+
+        while (jsonReader.hasNext()) {
+            jsonReader.beginObject();
+
+            if (!jsonReader.nextName().equals("entityClass")) { // "entityClass"
+                throw new IOException("Expected name \"entityClass\"");
+            }
+
+            String typeName = jsonReader.nextString();
+            if (!jsonReader.nextName().equals("entityObject")) { // "entityObject"
+                throw new IOException("Expected name \"entityObject\"");
+            }
+
+            Type type = GameManager.get().getManager(TypeManager.class).getType(typeName);
+
+            if (type == null) {
+                throw new RuntimeException("Entity type " + type + " not found in TypeManager");
+            }
+
+            AbstractEntity entity = gson.fromJson(jsonReader, type);
+            entities.add(entity);
+
+            jsonReader.endObject();
+        }
+
+        jsonReader.endArray();
+
+        return entities;
+    }
 }

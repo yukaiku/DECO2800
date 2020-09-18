@@ -47,10 +47,25 @@ public class TutorialWorld extends AbstractWorld{
     protected void generateTiles() {
         for (int col = -TUTORIAL_WORLD_WIDTH; col < TUTORIAL_WORLD_WIDTH; col++) {
             for (int row = -TUTORIAL_WORLD_HEIGHT; row < TUTORIAL_WORLD_HEIGHT; row++) {
-                String type = "stone_floor";
+                String type = "stone-3";
                 tiles.add(new Tile(type, col, row));
             }
         }
+
+        for (int col = -TUTORIAL_WORLD_WIDTH+1; col < TUTORIAL_WORLD_WIDTH-1; col++) {
+            for (int row = -TUTORIAL_WORLD_HEIGHT+1; row < TUTORIAL_WORLD_HEIGHT-1; row++) {
+                String type = "stone-2";
+                tiles.add(new Tile(type, col, row));
+            }
+        }
+
+        for (int col = -TUTORIAL_WORLD_WIDTH+2; col < TUTORIAL_WORLD_WIDTH-2; col++) {
+            for (int row = -TUTORIAL_WORLD_HEIGHT+2; row < TUTORIAL_WORLD_HEIGHT-2; row++) {
+                String type = "stone-1";
+                tiles.add(new Tile(type, col, row));
+            }
+        }
+
         PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f, 50);
 //        addEntity(player);
         this.setPlayerEntity(player);
@@ -162,6 +177,7 @@ public class TutorialWorld extends AbstractWorld{
             gameManager.setWorld(GameScreen.gameType.NEW_GAME.method());
             
 
+            GameManager.get().setNextWorld();
         }
     }
 }

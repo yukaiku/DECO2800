@@ -17,6 +17,12 @@ import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
+import deco2800.thomas.entities.environment.swamp.*;
+import deco2800.thomas.entities.enemies.Dragon;
+import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.entities.enemies.dragons.SwampDragon;
+import deco2800.thomas.managers.DatabaseManager;
+import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
@@ -48,7 +54,7 @@ public class SwampWorld extends AbstractWorld {
 
         // Provide available enemies to the EnemyManager
         Orc swampOrc = new Orc(1, 0.09f, 50, "orc_swamp");
-        Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_swamp", 2);
+        Dragon boss = new SwampDragon("Viondria", 3, 0.03f, 1050, "dragon_swamp", 2);
 
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc), boss);
         GameManager.get().addManager(enemyManager);
@@ -64,6 +70,11 @@ public class SwampWorld extends AbstractWorld {
         
         //Creates Items
         this.generateItemEntities();
+    }
+
+    @Override
+    public String getType() {
+        return "Swamp";
     }
 
     @Override
@@ -166,7 +177,7 @@ public class SwampWorld extends AbstractWorld {
         entities.add(new SwampFallenTree((this.getTile(-4, -23)), true));
         entities.add(new SwampFallenTree((this.getTile(-2, -23)), true));
 
-        // North Forst
+        // North Forest
         entities.add(new SwampFallenTree((this.getTile(24, 14)), true));
         entities.add(new SwampFallenTree((this.getTile(23, 13)), true));
     }

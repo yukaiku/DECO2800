@@ -1,6 +1,8 @@
 package deco2800.thomas.managers;
 
-public class NonPlayablePeonManagerTest {
+import deco2800.thomas.BaseGDXTest;
+
+public class NonPlayablePeonManagerTest extends BaseGDXTest {
 	// check constructor 
 	
 	

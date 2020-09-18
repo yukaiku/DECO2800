@@ -33,6 +33,12 @@ import java.util.List;
 
 public class TundraWorld extends AbstractWorld {
 	private final Logger logger = LoggerFactory.getLogger(TundraWorld.class);
+
+	/**
+	 * Load MAP_FILE_TILES_ONLY with the old DatabaseManager.loadWorld() static method
+	 * Load MAP_FILE with the new DatabaseManager.loadWorldFromJsonFile() static method
+	 */
+	public static final String MAP_FILE_TILES_ONLY = "resources/environment/tundra/tundra-map-tiles-only.json";
 	public static final String MAP_FILE = "resources/environment/tundra/tundra-map.json";
 
 	public TundraWorld() {
@@ -40,15 +46,17 @@ public class TundraWorld extends AbstractWorld {
 	}
 
 	public TundraWorld(int width, int height) {
-		DatabaseManager.loadWorld(this, MAP_FILE);
+		DatabaseManager.loadWorld(this, MAP_FILE_TILES_ONLY);
 		generateStaticEntities();
+
+		// PlayerPeon
 		this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.15f));
 		addEntity(this.getPlayerEntity());
 		generateItemEntities();
 
 		// Provide available enemies to the EnemyManager
 		Orc tundraOrc = new Orc(1, 0.05f, 100, "orc_tundra");
-		Dragon boss = new Dragon(3, 0.03f, 1000, "dragon_tundra", 3);
+		Dragon boss = new Dragon("Giaphias", 3, 0.03f, 950, "dragon_tundra", 3);
 
 		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(tundraOrc), boss);
 		GameManager.get().addManager(enemyManager);
@@ -61,6 +69,11 @@ public class TundraWorld extends AbstractWorld {
 		npnSpawns.add(new MerchantNPC("TundraMerchantNPC", new SquareVector(-22, 9),"merchant_npc2",swampMerchantShop));
 		NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
 		GameManager.get().addManager(npcManager);
+	}
+
+	@Override
+	public String getType(){
+		return "Tundra";
 	}
 
 	private void generateStaticEntities() {

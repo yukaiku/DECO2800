@@ -2,6 +2,7 @@ package deco2800.thomas.entities;
 
 import com.badlogic.gdx.Input;
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.combat.skills.FireballSkill;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.tasks.movement.MovementTask;
 import org.junit.Test;
@@ -98,5 +99,40 @@ public class PlayerPeonTest extends BaseGDXTest {
 
         playerPeon.notifyKeyUp(Input.Keys.S);
         assertEquals(MovementTask.Direction.NONE, playerPeon.getMovingDirection());
+    }
+
+    /**
+<<<<<<< HEAD
+     * Test when added 2 new skills into skill list and press button num2. The
+     * active skill should be the new one with index 1
+     */
+    @Test
+    public void testPlayerSwapToAValidIndexSkill() {
+        PlayerPeon playerPeon = new PlayerPeon(10f, 10f, 0.15f, 10);
+        playerPeon.getWizardSkills().add(new FireballSkill(playerPeon));
+        playerPeon.getWizardSkills().add(new FireballSkill(playerPeon));
+        playerPeon.notifyKeyDown(Input.Keys.NUM_2);
+
+        assertEquals(1, playerPeon.getActiveWizardSkill());
+    }
+
+    /**
+     * Test swap to an invalid skill index. In this case, we swap to the third skill while
+     * we only have 1 skill int the skill list.
+     */
+    @Test
+    public void testPlayerSwapToAnInvalidIndexSkill() {
+        PlayerPeon playerPeon = new PlayerPeon(10f, 10f, 0.15f, 10);
+        playerPeon.notifyKeyDown(Input.Keys.NUM_3);
+
+        assertEquals(0, playerPeon.getActiveWizardSkill());
+    }
+
+    /**
+     * Test getting dialogue through PlayerPeon class works
+     */
+    @Test
+    public void testGetDialogue() {
+        assertEquals(PlayerPeon.getDialogue("roar"), "Roar!!!");
     }
 }

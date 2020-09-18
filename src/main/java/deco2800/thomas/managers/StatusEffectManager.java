@@ -32,6 +32,15 @@ public class StatusEffectManager extends TickableManager {
     }
 
     /**
+     * Returns the current list of status effects.
+     *
+     * @return The current list of status effect.
+     */
+    public CopyOnWriteArrayList<StatusEffect> getCurrentStatusEffects() {
+        return currentStatusEffects;
+    }
+
+    /**
      * Removes all status effects from an entity.
      *
      * @param entity The entity having its effects removed.

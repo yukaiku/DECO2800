@@ -99,16 +99,24 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("projectile", new Texture("resources/rocks.png"));
 
 			// storyline
-			textureMap.put("stone_floor", new Texture("resources/tutorial/tutorial-tile-design.png"));
-			textureMap.put("target", new Texture("resources/tutorial/tutorial-target.png"));
-			textureMap.put("portal", new Texture("resources/tutorial/tutorial-portal.png"));
-			textureMap.put("stash", new Texture("resources/tutorial/tutorial-stash.png"));
-			textureMap.put("barrel", new Texture("resources/tutorial/tutorial-barrel.png"));
-			textureMap.put("chest", new Texture("resources/tutorial/tutorial-chest.png"));
-			textureMap.put("dialog-box", new Texture("resources/tutorial/guideline.png"));
+			textureMap.put("stone-1", new Texture("resources/storyline/tile/tile1.png"));
+			textureMap.put("stone-2", new Texture("resources/storyline/tile/tile2.png"));
+			textureMap.put("stone-3", new Texture("resources/storyline/tile/tile3.png"));
+			textureMap.put("target", new Texture("resources/storyline/object/target.png"));
+			textureMap.put("portal", new Texture("resources/storyline/object/portal.png"));
+			textureMap.put("stash", new Texture("resources/storyline/object/tutorial-stash.png"));
+			textureMap.put("barrel", new Texture("resources/storyline/object/barrel.png"));
+			textureMap.put("chest", new Texture("resources/storyline/object/chest.png"));
+			textureMap.put("dialog-box", new Texture("resources/storyline/guideline.png"));
 			textureMap.put("orb", new Texture("resources/orb.png"));
-			textureMap.put("victory", new Texture("resources/tutorial/victory-screen.png"));
-			textureMap.put("pause", new Texture("resources/tutorial/pause-menu-beta.png"));
+			textureMap.put("victory", new Texture("resources/storyline/victory-screen.png"));
+			textureMap.put("defeat", new Texture("resources/storyline/defeat-screen.png"));
+			textureMap.put("pause", new Texture("resources/storyline/pause-menu.png"));
+			textureMap.put("trs-desert", new Texture("resources/storyline/transition/transition-desert.png"));
+			textureMap.put("trs-swamp", new Texture("resources/storyline/transition/transition-swamp.png"));
+			textureMap.put("trs-tundra", new Texture("resources/storyline/transition/transition-tundra.png"));
+			textureMap.put("trs-volcano", new Texture("resources/storyline/transition/transition-volcano.png"));
+
 
 			// npcs
 			textureMap.put("tutorial_npc", new Texture("resources/npcs/tutorial_npc.png"));
@@ -149,8 +157,8 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("game-over", new Texture("resources/healthResources/game-over.png"));
 
 			// Attacks
-			textureMap.put("fireball_left", new Texture("resources/combat/fireball_left.png"));
 			textureMap.put("fireball_right", new Texture("resources/combat/fireball_right.png"));
+			textureMap.put("explosion", new Texture("resources/combat/explosive_fireball3.png"));
 
 			// Player
 			textureMap.put("player_left", new Texture("resources/combat/move_left.png"));
@@ -161,6 +169,12 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("potion_large", new Texture("resources/items/potion-large.png"));
 			textureMap.put("shield_iron", new Texture("resources/items/shield-iron.png"));
 			textureMap.put("shield_wood", new Texture("resources/items/shield-wood.png"));
+			textureMap.put("potion_small", new Texture("resources/inventory/potion-small.png"));
+			textureMap.put("potion_large", new Texture("resources/inventory/potion-large.png"));
+			textureMap.put("armour_iron", new Texture("resources/inventory/armour-iron.png"));
+			textureMap.put("armour_wood", new Texture("resources/inventory/armour-wood.png"));
+			textureMap.put("treasure_box", new Texture("resources/inventory/treasure-box.png"));
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -206,6 +220,7 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("Ruins_6", new Texture("resources/environment/volcano/entities/Ruins_6.png"));
 			textureMap.put("Ruins_7", new Texture("resources/environment/volcano/entities/Ruins_7.png"));
 			textureMap.put("Bones", new Texture("resources/environment/volcano/entities/Bones.png"));
+			textureMap.put("LavaPool", new Texture("resources/environment/transparent_tiletexture.png"));
 			textureMap.put("BurningTree", new Texture("resources/environment/volcano/entities/BurningTreePlaceholder.png"));
 			textureMap.put("DragonSkull", new Texture("resources/environment/volcano/entities/DragonSkull2.png"));
 		} catch (Exception e) {
@@ -294,8 +309,8 @@ public class TextureManager extends AbstractManager {
 		try {
 			// Note: The initial facing direction should be RIGHT. The flipped version is not needed.
 			// player standing
-			Array<TextureRegion> playerStand = new Array<>();
-			playerStand.add(new TextureRegion(new Texture("resources/combat/move_right.png"), 262, 256));
+				Array<TextureRegion> playerStand = new Array<>();
+				playerStand.add(new TextureRegion(new Texture("resources/combat/move_right.png")));
 			animationFrames.put("player_stand", playerStand);
 
 			// player melee attacks
@@ -309,6 +324,23 @@ public class TextureManager extends AbstractManager {
 			Array<TextureRegion> playerRange = new Array<>();
 			playerRange.add(new TextureRegion(new Texture("resources/combat/range_right1.png"), 0, 0, 350, 400));
 			animationFrames.put("player_range", playerRange);
+
+			Array<TextureRegion> fireballExplosion = new Array<>();
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball1.png")));
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball2.png")));
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball3.png")));
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball4.png")));
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball5.png")));
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball6.png")));
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball7.png")));
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball8.png")));
+			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball9.png")));
+
+			animationFrames.put("fireballExplosion", fireballExplosion);
+
+			Array<TextureRegion> fireballDefault = new Array<>();
+			fireballDefault.add(new TextureRegion(new Texture("resources/combat/fireball_right.png")));
+			animationFrames.put("fireballDefault", fireballDefault);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
