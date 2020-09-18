@@ -32,6 +32,7 @@ import java.util.Random;
 public class TutorialWorld extends AbstractWorld{
 
     DialogManager dialog;
+    ArrayList<AbstractDialogBox> items;
     boolean notGenerated = true;
     static final int TUTORIAL_WORLD_WIDTH = 10; // Height and width vars for the map size; constrains tile gen
     static final int TUTORIAL_WORLD_HEIGHT = 6; // Note the map will double these numbers (bounds are +/- these limits)
@@ -66,10 +67,13 @@ public class TutorialWorld extends AbstractWorld{
 
         // Add NPC
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
-        npnSpawns.add(new TutorialNPC("Master", new SquareVector(0, 2),"tutorial_npc"));
+        TutorialNPC NPC = new TutorialNPC("Master", new SquareVector(0,
+                2),"tutorial_npc");
+        npnSpawns.add(NPC);
+        this.items = new ArrayList<>();
+        items.add(NPC.getBox());
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, player, npnSpawns);
         GameManager.get().addManager(npcManager);
-        
     }
 
     public void generateEntities() {
@@ -109,7 +113,7 @@ public class TutorialWorld extends AbstractWorld{
         entities.add(new Portal(t, false));
 
         // add potion and shield. 
-        ArrayList<AbstractDialogBox> items = new ArrayList<>();
+        
         
         Tile potion;
         potion = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
