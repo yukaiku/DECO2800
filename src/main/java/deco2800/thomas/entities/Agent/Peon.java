@@ -186,7 +186,9 @@ public class Peon extends AgentEntity implements Tickable {
 	 * @return Returns true if removed, returns false if effect is not in the list
 	 */
 	public boolean removeEffect(StatusEffect effect) {
-		return this.effects.remove(effect);
+
+		System.out.println(this.effects.remove(effect));
+		return true;
 	}
 
 	/**

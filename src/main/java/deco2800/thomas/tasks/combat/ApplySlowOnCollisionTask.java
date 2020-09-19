@@ -74,7 +74,7 @@ public class ApplySlowOnCollisionTask extends AbstractTask {
         if (e instanceof Peon) {
             Peon peon = (Peon) e;
 
-            peon.addEffect(new SpeedStatus(peon, 0.5f, 3));
+            peon.addEffect(new SpeedStatus(peon, 0.1f, 5));
             this.taskComplete = true;
             if (peon.isDead()) {
                 peon.death();
