@@ -12,7 +12,7 @@ public class AbstractDialogBox {
 	Skin skin;
 	boolean remove; 
 	
-	public AbstractDialogBox (Object entity, String name, String styleType) {
+	public AbstractDialogBox(Object entity, String name, String styleType) {
 		this.entity = entity;
 		this.skin = new Skin(Gdx.files.internal("resources/uiskin.skin"));
 		this.box = new Window(name, skin, styleType);
