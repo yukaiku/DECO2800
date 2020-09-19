@@ -217,7 +217,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		questTrackerRenderer.render(spriteBatch, cameraOverlay);
 		//Add tutorial guideline if we are in the tutorial world
 		if(tutorial){
-			guideline.render(spriteBatch,cameraDebug);
+			guideline.render(spriteBatch,cameraOverlay);
 		}
 
 		// Hide the buttons when the game is running
@@ -265,8 +265,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	public void renderTransitionScreen(float delta) {
 		// Render the transition screen
-		spriteBatch.setProjectionMatrix(cameraDebug.combined);
-		transitionScreen.render(spriteBatch, cameraDebug);
+		spriteBatch.setProjectionMatrix(cameraOverlay.combined);
+		transitionScreen.render(spriteBatch, cameraOverlay);
 
 		// Display the button
 		enterButton.setPosition(width / 2 - enterButton.getWidth() / 2, 150);
