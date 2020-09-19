@@ -8,6 +8,7 @@ import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.combat.skills.FireBombSkill;
 import deco2800.thomas.combat.skills.FireballSkill;
+import deco2800.thomas.combat.skills.IceballSkill;
 import deco2800.thomas.combat.skills.ScorpionStingSkill;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
@@ -27,7 +28,7 @@ import java.util.*;
 public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, KeyDownObserver, KeyUpObserver {
     // Animation Testing
     public enum State {
-        IDLE, WALK, ATTACK_MELEE, ATTACK_RANGE
+        IDLE, WALK, ATTACK_MELEE, ATTACK_RANGE, INCAPACITATED
     }
 
     public State currentState;
@@ -73,6 +74,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         wizardSkills = new ArrayList<>();
         wizardSkills.add(new FireballSkill(this));
         wizardSkills.add(new ScorpionStingSkill(this));
+        wizardSkills.add(new IceballSkill(this));
         activeWizardSkill = 0;
         mechSkill = new FireBombSkill(this);
 
@@ -180,29 +182,9 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
             death();
         }
 
-        // Update movement task
-        if (getMovementTask() != null && getMovementTask().isAlive()) {
-            getMovementTask().onTick(i);
-
-            if (getMovementTask().isComplete()) {
-                setMovementTask(null);
-            }
-        }
-
         if (--duration < 0) {
             duration = 0;
             currentState = State.IDLE;
-        }
-
-        // Update combat task
-        if (getCombatTask() != null) {
-            currentState = State.ATTACK_MELEE;
-            duration = 12;
-            getCombatTask().onTick(i);
-
-            if (getCombatTask().isComplete()) {
-                setCombatTask(null);
-            }
         }
 
         // Update skills
@@ -215,23 +197,8 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
             mechSkill.onTick(i);
         }
 
-        // Check current effects to be applied or removed
-        if (!getEffects().isEmpty()) {
-            for (StatusEffect effect : getEffects()) {
-                if (effect.getAffectedEntity() == null) {
-                    if (!effect.getActive()) {
-                        removeEffect(effect);
-                    }
-                } else {
-                    effect.applyEffect();
-                }
-            }
-        }
-
-        // isAttacked animation
-        if (isAttacked && --isAttackedCoolDown < 0) {
-            isAttacked = false;
-        }
+        // Update tasks and effects
+        super.onTick(i);
     }
 
     /**
@@ -250,6 +217,8 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
             case ATTACK_MELEE:
                 region = playerMeleeAttack.getKeyFrame(stateTimer);
                 break;
+            case INCAPACITATED:
+
             case IDLE:
             default:
                 region = playerStand.getKeyFrame(stateTimer);

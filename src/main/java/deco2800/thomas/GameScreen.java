@@ -1,14 +1,19 @@
 package deco2800.thomas;
 
-import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.Agent.QuestTracker;
@@ -16,12 +21,12 @@ import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.renderers.*;
-import deco2800.thomas.renderers.OverlayRenderer;
-import deco2800.thomas.renderers.Renderer3D;
 import deco2800.thomas.util.CameraUtil;
-import deco2800.thomas.worlds.*;
-
-import deco2800.thomas.worlds.volcano.VolcanoWorld;
+import deco2800.thomas.worlds.AbstractWorld;
+import deco2800.thomas.worlds.TestWorld;
+import deco2800.thomas.worlds.Tile;
+import deco2800.thomas.worlds.TutorialWorld;
+import deco2800.thomas.worlds.desert.DesertWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,7 +86,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 		TEST_WORLD {
 			@Override
 			public AbstractWorld method() {
+
 				AbstractWorld world = new TutorialWorld();
+
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
@@ -89,7 +96,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		ENV_TEAM_GAME {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new VolcanoWorld();
+				AbstractWorld world = new DesertWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}

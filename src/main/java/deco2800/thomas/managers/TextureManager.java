@@ -361,6 +361,35 @@ public class TextureManager extends AbstractManager {
 			addAnimationFramesSprite("goblinVolcanoAttack", "resources/enemies/goblin_desert_sprite_sheet.png",
 					3, 350, 486, true);
 
+			// Icebreath attack
+			Array<TextureRegion> freezeTile = new Array<>();
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave0.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave1.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave2.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave3.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave4.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave5.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave6.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave7.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave8.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave9.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave10.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave11.png")));
+			animationFrames.put("freezeTile", freezeTile);
+
+			// Sand Tornado attack
+			Array<TextureRegion> sandTornado = new Array<>();
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado0.png")));
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado1.png")));
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado2.png")));
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado3.png")));
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado4.png")));
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado5.png")));
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado6.png")));
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado7.png")));
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado8.png")));
+			animationFrames.put("sandTornado", sandTornado);
+
 		} catch (GdxRuntimeException e) {
 			e.printStackTrace();
 		}
