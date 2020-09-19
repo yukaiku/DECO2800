@@ -3,7 +3,7 @@ import deco2800.thomas.entities.*;
 
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
-import deco2800.thomas.entities.environment.Tree;
+import deco2800.thomas.entities.Environment.Tree;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import java.util.ArrayList;

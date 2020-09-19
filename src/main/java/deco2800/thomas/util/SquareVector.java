@@ -1,5 +1,7 @@
 package deco2800.thomas.util;
 
+import static java.lang.Float.parseFloat;
+
 public class SquareVector {
 	private float col; // col corresponds to the X coordinate
 	private float row; // row corresponds to the Y coordinate
@@ -22,8 +24,8 @@ public class SquareVector {
 
 	public SquareVector(String vector) {
 		String[] pos = vector.split(",", 2);
-		this.col = Float.parseFloat(pos[0]);
-		this.row = Float.parseFloat(pos[1]);
+		this.col = parseFloat(pos[0]);
+		this.row = parseFloat(pos[1]);
 	}
 
 

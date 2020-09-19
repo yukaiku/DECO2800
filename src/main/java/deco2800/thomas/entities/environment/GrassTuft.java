@@ -1,4 +1,4 @@
-package deco2800.thomas.entities.environment;
+package deco2800.thomas.entities.Environment;
 
 
 import deco2800.thomas.entities.AbstractEntity;

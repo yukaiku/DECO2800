@@ -9,11 +9,10 @@ import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.entities.enemies.Dummy;
-import deco2800.thomas.entities.enemies.Orc;
-import deco2800.thomas.entities.environment.Barrel;
-import deco2800.thomas.entities.environment.Portal;
-import deco2800.thomas.entities.environment.Stash;
-import deco2800.thomas.entities.environment.Target;
+import deco2800.thomas.entities.Environment.Barrel;
+import deco2800.thomas.entities.Environment.Portal;
+import deco2800.thomas.entities.Environment.Stash;
+import deco2800.thomas.entities.Environment.Target;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.NonPlayablePeonManager;
 
@@ -48,10 +47,13 @@ public class TutorialWorld extends AbstractWorld{
 
         // Create an enemy manager without wild enemy spawning.
         EnemyManager enemyManager = new EnemyManager(this);
+
         // Add dummy (special enemy) to the world
         Dummy dummy = new Dummy(1, 0, 100);
+
         // Spawn a dummy
         enemyManager.spawnSpecialEnemy(dummy, 5, 0);
+
         GameManager.get().addManager(enemyManager);
 
         // Add NPC
@@ -106,7 +108,7 @@ public class TutorialWorld extends AbstractWorld{
             notGenerated = false;
         }
 
-        AgentEntity player = this.getPlayerEntity();
+        PlayerPeon player = this.getPlayerEntity();
         // Check if the player is in the portal
         if (Math.abs(player.getCol() - PORTAL_COL) < 0.1 &
                 Math.abs(player.getRow() - PORTAL_ROW) < 0.1) {
@@ -120,6 +122,8 @@ public class TutorialWorld extends AbstractWorld{
             GameManager gameManager = GameManager.get();
             gameManager.setWorld(GameScreen.gameType.NEW_GAME.method());
 
+            // Keep $$ on world change.
+            gameManager.getWorld().getPlayerEntity().credit(player.getWallet());
         }
     }
 }
