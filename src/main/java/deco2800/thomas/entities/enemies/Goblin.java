@@ -30,6 +30,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
     private final Animation<TextureRegion> goblinIdle;
     private float stateTimer;
     private final Animation<TextureRegion> goblinAttacking;
+    private MovementTask.Direction facingDirection;
 
     private int duration = 0;
     private int tickFollowing = 30;
@@ -131,9 +132,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
             currentState = State.ATTACK_MELEE;
             duration = 12;
             getCombatTask().onTick(i);
-
             if (getCombatTask().isComplete()) {
-                this.currentState = State.IDLE;
                 setCombatTask(null);
             }
         }
@@ -149,13 +148,21 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
         TextureRegion region;
         switch (currentState) {
             case ATTACK_MELEE:
-                System.out.println("Goblin attacking");
                 region = goblinAttacking.getKeyFrame(stateTimer);
                 break;
             case IDLE:
             default:
                 stateTimer = 0;
                 region = goblinIdle.getKeyFrame(stateTimer);
+        }
+        if ((getMovingDirection() == MovementTask.Direction.LEFT ||
+                facingDirection == MovementTask.Direction.LEFT) && !region.isFlipX()) {
+            region.flip(true, false);
+            facingDirection = MovementTask.Direction.LEFT;
+        } else if ((getMovingDirection() == MovementTask.Direction.RIGHT ||
+                facingDirection == MovementTask.Direction.RIGHT) && region.isFlipX()) {
+            region.flip(true, false);
+            facingDirection = MovementTask.Direction.RIGHT;
         }
         stateTimer = (stateTimer + 1) % 2;
         return region;
