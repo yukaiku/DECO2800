@@ -55,13 +55,13 @@ public class NPCDialog extends AbstractDialogBox {
 				}
 				switch (TutorialNPC.speechStage) {
 					case 1:
-						setString(getLine("attack"));
+						setString(getLine("WASD"));
 						break;
 					case 2:
-						setString(getLine("orb"));
+						setString(getLine("attack"));
 						break;
 					case 3:
-						setString(getLine("plot"));
+						setString(getLine("orb"));
 						break;
 					case 4:
 						setString(getLine("congrats"));
