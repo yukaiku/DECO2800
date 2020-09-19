@@ -1,5 +1,6 @@
 package deco2800.thomas.worlds;
 
+import com.badlogic.gdx.physics.box2d.World;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.AbstractEntity;
@@ -83,6 +84,11 @@ public abstract class AbstractWorld implements Tickable {
 	}
 
 	/**
+	 *
+	 */
+	private WorldEvent worldEvent;
+
+	/**
 	 * Constructor that creates a world with given width and height
 	 *
 	 * @param width  width of the world; horizontal coordinates of the world will be within `[-width, width]`
@@ -134,7 +140,9 @@ public abstract class AbstractWorld implements Tickable {
 				QuestTracker.increaseOrbs(orbEntity);
 				this.removeEntity(playerEntity);
 				this.removeEntity(orbEntity);
-				GameManager.get().setNextWorld();
+				if (GameManager.get().state != GameManager.State.VICTORY) {
+					GameManager.get().setNextWorld();
+				}
 			}
 		}
 	}
@@ -460,5 +468,13 @@ public abstract class AbstractWorld implements Tickable {
 	 */
 	public int getHeight() {
 		return this.height;
+	}
+
+	public WorldEvent getWorldEvent() {
+		return this.worldEvent;
+	}
+
+	public void setWorldEvent(WorldEvent event) {
+		this.worldEvent = event;
 	}
 }

@@ -61,6 +61,7 @@ public class EventRenderer implements Renderer {
         The run function below is called once every 1 sec, incrementing counter until the activity of the
         Event needs to be switched from active to inactive and vice versa.
          */
+
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -120,8 +121,8 @@ public class EventRenderer implements Renderer {
             filePath = "snow/white-snow.p";
             textureDir = "snow";
         } else if (currentWorld instanceof VolcanoWorld) {
-            filePath = "rain/blue-rain.p";
-            textureDir = "rain";
+            filePath = "embers/ember-effect.p";
+            textureDir = "embers";
         } else if (currentWorld instanceof DesertWorld) {
             filePath = "sandstorm/sandstorm.p";
             textureDir = "sandstorm";
@@ -165,14 +166,24 @@ public class EventRenderer implements Renderer {
             particleEffect.update(Gdx.graphics.getDeltaTime());
 
             batch.begin();
-
             particleEffect.draw(batch);
-
             batch.end();
+
+            //Trigger updated entities & tiles for the respective event
+            if (GameManager.get().getWorld().getWorldEvent() != null &&
+                    !GameManager.get().getWorld().getWorldEvent().getActive()) {
+                GameManager.get().getWorld().getWorldEvent().setActive(true);
+                GameManager.get().getWorld().getWorldEvent().triggerEvent();
+            }
 
             if (particleEffect.isComplete()) {
                 particleEffect.reset();
             }
+            //Restore original tile/entity updates to original state prior event
+        } else if (GameManager.get().getWorld().getWorldEvent() != null &&
+                GameManager.get().getWorld().getWorldEvent().getActive()) {
+            GameManager.get().getWorld().getWorldEvent().setActive(false);
+            GameManager.get().getWorld().getWorldEvent().removeEvent();
         }
     }
 }

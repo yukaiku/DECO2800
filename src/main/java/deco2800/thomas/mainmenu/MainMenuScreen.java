@@ -42,22 +42,18 @@ public class MainMenuScreen implements Screen {
 		envTeamButton.setPosition(10, 250);
 		stage.addActor(envTeamButton);
 
-		Button tutorialBtn = new TextButton("TUTORIAL", skin, "main_menu");
-		tutorialBtn.setPosition(10, 200);
-		stage.addActor(tutorialBtn);
-
 		Button newGameBtn = new TextButton("SINGLE PLAYER", skin, "main_menu");
-		newGameBtn.setPosition(10, 150);
+		newGameBtn.setPosition(10, 200);
 		stage.addActor(newGameBtn);
 
 		Button testWorldBtn = new TextButton("TEST WORLD", skin, "main_menu");
-		testWorldBtn.setPosition(10, 100);
+		testWorldBtn.setPosition(10, 150);
 		stage.addActor(testWorldBtn);
 
-		tutorialBtn.addListener(new ClickListener() {
+		newGameBtn.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(game, GameScreen.gameType.TUTORIAL));
+				game.setScreen(new GameScreen(game, GameScreen.gameType.NEW_GAME));
 			}
 		});
 
@@ -65,13 +61,6 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.setScreen(new GameScreen(game, GameScreen.gameType.ENV_TEAM_GAME));
-			}
-		});
-
-		newGameBtn.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(game, GameScreen.gameType.NEW_GAME));
 			}
 		});
 

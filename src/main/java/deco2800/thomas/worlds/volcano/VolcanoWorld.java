@@ -3,12 +3,25 @@ package deco2800.thomas.worlds.volcano;
 import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.VolcanoDragonSkull;
-import deco2800.thomas.entities.VolcanoGraveYard;
-import deco2800.thomas.entities.VolcanoRuins;
+import deco2800.thomas.entities.NPC.MerchantNPC;
+import deco2800.thomas.entities.NPC.NonPlayablePeon;
+import deco2800.thomas.entities.NPC.TutorialNPC;
+import deco2800.thomas.entities.NPC.VolcanoNPC;
+import deco2800.thomas.entities.environment.volcano.VolcanoDragonSkull;
+import deco2800.thomas.entities.environment.volcano.VolcanoGraveYard;
+import deco2800.thomas.entities.environment.volcano.VolcanoRuins;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.volcano.VolcanoBurningTree;
+import deco2800.thomas.entities.items.HealthPotion;
+import deco2800.thomas.entities.items.Item;
+import deco2800.thomas.entities.items.Shield;
+import deco2800.thomas.entities.items.Treasure;
+import deco2800.thomas.managers.*;
+import deco2800.thomas.entities.environment.volcano.*;
+import deco2800.thomas.entities.enemies.Dragon;
+import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.entities.enemies.dragons.VolcanoDragon;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -56,15 +69,29 @@ public class VolcanoWorld extends AbstractWorld {
         //Add player to game
         this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.15f));
         addEntity(this.getPlayerEntity());
+        generateItemEntities();
 
         Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano");
-        Dragon boss = new Dragon("Deilaenth", 3, 0.03f, 750, "dragon_volcano", 1);
+        Dragon boss = new VolcanoDragon("Deilaenth", 3, 0.03f, 1000, "dragon_volcano", 1);
 
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(volcanoOrc), boss);
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(16, 20);
+
+        //Create Volcano NPCs
+        List<NonPlayablePeon> npnSpawns = new ArrayList<>();
+        npnSpawns.add(new VolcanoNPC("VolcanoQuestNPC2", new SquareVector(-21, 22),"volcano_npc2"));
+        npnSpawns.add(new VolcanoNPC("VolcanoQuestNPC1", new SquareVector(-24, -13),"volcano_npc1"));
+        NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
+        GameManager.get().addManager(npcManager);
+        //Add local Event to this world
+        this.setWorldEvent(new VolcanoEvent(this));
     }
 
+    @Override
+    public String getType() {
+        return "Volcano";
+    }
 
     /**
      * Generates the tiles for the world
@@ -106,9 +133,57 @@ public class VolcanoWorld extends AbstractWorld {
         entities.add(createGraveYard(7, -15));
         entities.add(createRuins(-25, -5));
         entities.add(createDragonSkull(-23, 23));
+        entities.add(createLavaPool(-12, -20)); //Left Lava Pool
+        entities.add(createLavaPool(5, -10)); //Middle Lava Pool
+        entities.add(createLavaPool(19, -7)); //Right Lava Pool
         //For objects that are added randomly & require more specific addition
-        //entities, they're methodology will folllow add()
+        //entities, their methodology will follow add()
         addRandoms();
+    }
+
+    /**
+     * Generates items for volcano region, all positions of item are randomized
+     * every time player loads into volcano zone.
+     *
+     * Items: Health potions, Iron shields etc.
+     */
+    private void generateItemEntities(){
+        final int NUM_POTIONS = 6;
+        final int NUM_SHIELDS = 4;
+        final int NUM_CHESTS = 3; 
+
+        ArrayList<AbstractDialogBox> items = new ArrayList<>();
+        
+        for (int i = 0; i < NUM_POTIONS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            HealthPotion potion = new HealthPotion(tile,false,
+                    (PlayerPeon) getPlayerEntity(), "volcano");
+            entities.add(potion);
+            items.add(potion.getDisplay());
+        }
+
+        for (int i = 0; i < NUM_SHIELDS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            Shield shield = new Shield(tile, false,
+                    (PlayerPeon) getPlayerEntity(),"volcano");
+            entities.add(shield);
+            items.add(shield.getDisplay());
+        }
+        
+        for (int i = 0; i < NUM_CHESTS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            Treasure chest = new Treasure(tile, false,
+                    (PlayerPeon) getPlayerEntity(),"volcano");
+            entities.add(chest);
+            items.add(chest.getDisplay());
+        }
+
+        DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
+                items);
+        GameManager.get().addManager(dialog);
     }
 
     /**
@@ -264,12 +339,12 @@ public class VolcanoWorld extends AbstractWorld {
         //Bottom right corner
         parts.add(new Part(new SquareVector(13, -7), "fenceN-W", true));
 
-        //Verticle sides Left
+        //Vertical sides Left
         parts.add(new Part(new SquareVector(0, -6), "fenceN-S", true));
         parts.add(new Part(new SquareVector(0, -5), "fenceN-S", true));
         parts.add(new Part(new SquareVector(0,  -2), "fenceN-S", true));
         parts.add(new Part(new SquareVector(0, -1), "fenceN-S", true));
-        //Verticle sides Right
+        //Vertical sides Right
         parts.add(new Part(new SquareVector(13, -6), "fenceN-S", true));
         parts.add(new Part(new SquareVector(13, -5), "fenceN-S", true));
         parts.add(new Part(new SquareVector(13,  -2), "fenceN-S", true));
@@ -304,11 +379,79 @@ public class VolcanoWorld extends AbstractWorld {
     }
 
     /**
-     * Volcano EventHandler method that will be called on in future builds
-     * once a condition in gameticks passes.
+     * Creates a static lavapool entity which is consequently updated during
+     * weather events in the Volcano Zone
      *
+     * @param col - The specified column coordinate of the orb.
+     * @param row - The specified row coordinate of the orb.
+     * @return  A static entity for the Volcano Zone
      */
-    public void volcanoEvent () {
+    public VolcanoLavaPool createLavaPool(float col, float row) {
+        List<Part> parts = new ArrayList<Part>();
 
+        //Second layer of edges
+        parts.add(new Part(new SquareVector(-3, 0), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-2, 1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-1, 2), "LavaPool", false));
+        parts.add(new Part(new SquareVector(0, 3), "LavaPool", false));
+
+        parts.add(new Part(new SquareVector(1, 3), "LavaPool", false));
+        parts.add(new Part(new SquareVector(2, 2), "LavaPool", false));
+        parts.add(new Part(new SquareVector(3, 1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(4, 0), "LavaPool", false));
+
+        parts.add(new Part(new SquareVector(4, -1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(3, -2), "LavaPool", false));
+        parts.add(new Part(new SquareVector(2, -3), "LavaPool", false));
+        parts.add(new Part(new SquareVector(1, -4), "LavaPool", false));
+
+        parts.add(new Part(new SquareVector(0, -4), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-1, -3), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-2, -2), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-3, -1), "LavaPool", false));
+
+        //First layer of edges going clock wise
+        parts.add(new Part(new SquareVector(-2, 0), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-1, 1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(0, 2), "LavaPool", false));
+        parts.add(new Part(new SquareVector(1, 2), "LavaPool", false));
+
+        parts.add(new Part(new SquareVector(2, 1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(3, 0), "LavaPool", false));
+        parts.add(new Part(new SquareVector(3, -1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(2, -2), "LavaPool", false));
+
+        parts.add(new Part(new SquareVector(1, -3), "LavaPool", false));
+        parts.add(new Part(new SquareVector(0, -3), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-1, -2), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-2, -1), "LavaPool", false));
+
+        //Inner parts
+        parts.add(new Part(new SquareVector(0, 0), "LavaPool", false));
+        parts.add(new Part(new SquareVector(1, -1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(1, 0), "LavaPool", false));
+        parts.add(new Part(new SquareVector(0, -1), "LavaPool", false));
+
+        parts.add(new Part(new SquareVector(-1, 0), "LavaPool", false));
+        parts.add(new Part(new SquareVector(-1, -1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(0, -2), "LavaPool", false));
+        parts.add(new Part(new SquareVector(1, -2), "LavaPool", false));
+
+        //Outer parts
+        parts.add(new Part(new SquareVector(0, 1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(1, 1), "LavaPool", false));
+        parts.add(new Part(new SquareVector(2, 0), "LavaPool", false));
+        parts.add(new Part(new SquareVector(2, -1), "LavaPool", false));
+
+        VolcanoLavaPool lavaPool = new VolcanoLavaPool(col, row, parts);
+
+        //REMOVE THIS ONCE MAP SIZE IS INCREASE TO 50 x 50 IN LATER SPRINTS,
+        // AND SETUP LAVA POOLS ACCORDINGLY
+        for (SquareVector coord : lavaPool.getChildrenPositions()) {
+            getTile(coord).setTexture("Volcano_1");
+        }
+
+        System.out.println(lavaPool.getChildrenPositions().toString());
+        return lavaPool;
     }
 }

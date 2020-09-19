@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.Animatable;
-import deco2800.thomas.entities.attacks.Projectile;
+import deco2800.thomas.entities.attacks.*;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
@@ -20,7 +20,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
@@ -234,8 +233,7 @@ public class Renderer3D implements Renderer {
 		float width = tex.getWidth() * entity.getColRenderLength() * WorldUtil.SCALE_X;
 		float height = tex.getHeight() * entity.getRowRenderLength() * WorldUtil.SCALE_Y;
 		if (entity instanceof Projectile) {
-			batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width / 2,
-					height / 2, width, height, 2, 2, ((Projectile) entity).getDirection());
+			renderProjectiles(batch, entity, entityWorldCord, tex);
 		} else if (entity instanceof Animatable) {
 			batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width, height);
 			if (entity instanceof Peon && ((Peon) entity).isAttacked()) {
@@ -254,6 +252,23 @@ public class Renderer3D implements Renderer {
 				batch.draw(tex, x, y, width, height);
 			}
 		}
+	}
+
+	private void renderProjectiles(SpriteBatch batch, AbstractEntity entity, float[] entityWorldCord, Texture tex) {
+		float x = entityWorldCord[0];
+		float y = entityWorldCord[1];
+
+		float width = tex.getWidth() * entity.getColRenderLength() * WorldUtil.SCALE_X;
+		float height = tex.getHeight() * entity.getRowRenderLength() * WorldUtil.SCALE_Y;
+
+		if (entity instanceof VolcanoFireball) {
+			batch.setColor(102, 0, 0, 1);
+		} else if (entity instanceof StingProjectile){
+			batch.setColor(0, 102, 0, 1);
+		}
+		batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width / 2,
+				height / 2, width, height, 2, 2, ((Projectile) entity).getDirection());
+		batch.setColor(Color.WHITE);
 	}
 
 	private void renderPeonMovementTiles(SpriteBatch batch, OrthographicCamera camera, AbstractEntity entity, float[] entityWorldCord) {
@@ -304,7 +319,6 @@ public class Renderer3D implements Renderer {
 							tileWorldCord[1]);// + ((tile.getElevation() + 1) * elevationZeroThiccness * WorldUtil.SCALE_Y)
 					//+ WorldUtil.TILE_HEIGHT-10);
 				}
-
 			}
 		}
 

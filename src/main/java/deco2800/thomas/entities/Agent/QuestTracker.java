@@ -8,7 +8,9 @@ import java.util.List;
 
 /**
  * A QuestTracker class
- * Contains functions for tracking the quest progress from increasing to decreasing and resetting status
+ * Contains functions for tracking the quest progress
+ * An example would be tracking of the overall completion of the games(orbs)
+ * More quest can be inserted in here and a quest tracker popup can be used to display the quests status of misc quest.
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/quest-tracker-counter
  */
@@ -22,11 +24,11 @@ public class QuestTracker{
     }
 
     /**
-     * Quest Tracker function that tracks the orbs the user currently has
+     * Orb Tracker function that tracks the orbs the user currently has
      *
      * @return orbCount the number of orbs the user currently has
      */
-    public static List<Orb> questTracker() {
+    public static List<Orb> orbTracker() {
         return orbs;
     }
 
@@ -36,7 +38,7 @@ public class QuestTracker{
      * To be used on when a new game is run or upon death
      * @return returns number of orbs in orbs list after reset
      */
-    public static int resetQuest() {
+    public static int resetOrbs() {
         orbs.clear();
         return orbs.size();
     }
