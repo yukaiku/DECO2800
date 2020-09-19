@@ -103,6 +103,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		switch (startType) {
 			// start new game without debug mode
 			case NEW_GAME:
+				GameManager.get().debugMode = false;
 				GameManager.get().state = GameManager.State.TRANSITION;
 				GameManager.get().tutorial = true;
 				GameManager.get().setWorld(startType.method());

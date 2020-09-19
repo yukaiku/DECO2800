@@ -120,8 +120,7 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("control", new Texture("resources/storyline/control.png"));
 			textureMap.put("leave", new Texture("resources/storyline/leave-message.png"));
 
-
-			// npcs
+			// NPCs
 			textureMap.put("tutorial_npc", new Texture("resources/npcs/tutorial_npc.png"));
 			textureMap.put("desert_npc1", new Texture("resources/npcs/npc1_desert.png"));
 			textureMap.put("desert_npc2", new Texture("resources/npcs/npc2_desert.png"));
@@ -135,7 +134,7 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("merchant_npc2", new Texture("resources/npcs/npc4.png"));
 			textureMap.put("merchant_npc3", new Texture("resources/npcs/npc5.png"));
 
-			//health & game over screen
+			// health & game over screen
 			textureMap.put("health0", new Texture("resources/healthResources/health-bar-0.png"));
 			textureMap.put("health5", new Texture("resources/healthResources/health-bar-5.png"));
 			textureMap.put("health10", new Texture("resources/healthResources/health-bar-10.png"));
