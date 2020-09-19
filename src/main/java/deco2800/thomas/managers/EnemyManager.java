@@ -2,6 +2,7 @@ package deco2800.thomas.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.Boss;
 import deco2800.thomas.entities.enemies.Goblin;
@@ -271,7 +272,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
                     new ArrayList<>(specialEnemiesAlive).forEach(this::removeSpecialEnemy);
                     // Ctrl + L: Kill the dragon
                 } else if (keycode == Input.Keys.L && boss != null) {
-                    boss.reduceHealth(boss.getCurrentHealth());
+                    boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
                 } else if (keycode == Input.Keys.S) {
                     // Ctrl + S: Spawn a special enemy
                     Goblin goblin = new Goblin(1, 0.1f, 20);

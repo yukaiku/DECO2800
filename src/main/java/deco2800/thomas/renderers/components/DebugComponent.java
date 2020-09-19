@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.enemies.Boss;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -106,7 +107,8 @@ public class DebugComponent extends OverlayComponent {
 //				String.format("Username: %s", GameManager.get().getManager(NetworkManager.class).getUsername()));
         line++;
         debugLine(batch, ++line, "== Health ==");
-        debugLine(batch, ++line, String.format("Health: %d", GameManager.get().getWorld().getPlayerEntity().getCurrentHealth()));
+        debugLine(batch, ++line, String.format("Health: %d",
+                ((Peon)GameManager.get().getWorld().getPlayerEntity()).getCurrentHealth()));
         line++;
         debugLine(batch, ++line, "== Speed ==");
         debugLine(batch, ++line, String.format("Speed: %f", GameManager.get().getWorld().getPlayerEntity().getSpeed()));

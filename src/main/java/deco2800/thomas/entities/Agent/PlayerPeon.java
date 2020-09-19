@@ -197,14 +197,9 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
 
         // Update combat task
         if (getCombatTask() != null) {
-            getCombatTask().onTick(i);
-            if (getCombatTask() instanceof MeleeAttackTask) {
-                currentState = State.MELEE_ATTACK;
-            } else {
-                currentState = State.RANGE_ATTACK;
-            }
-            // Due to the combat task is currently executed instantly, will set a cool down here
+            currentState = State.MELEE_ATTACK;
             duration = 9;
+            getCombatTask().onTick(i);
 
             if (getCombatTask().isComplete()) {
                 setCombatTask(null);

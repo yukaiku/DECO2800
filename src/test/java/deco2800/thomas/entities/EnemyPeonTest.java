@@ -1,11 +1,9 @@
 package deco2800.thomas.entities;
 
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.util.SquareVector;
-import org.junit.Assert;
-import org.junit.Before;
 
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.Goblin;
@@ -64,8 +62,9 @@ public class EnemyPeonTest extends BaseGDXTest {
     @Test
     public void testReduceHealth() {
         EnemyPeon enemy =  new Orc(1, 1, 100);
-        enemy.reduceHealth(50);
-        assertEquals(enemy.getCurrentHealth(), 50);
+        int damage = enemy.applyDamage(50, DamageType.COMMON);
+        assertEquals(damage, 100 - enemy.getCurrentHealth());
+        assertEquals(50, damage);
     }
 
     @Test
@@ -73,7 +72,7 @@ public class EnemyPeonTest extends BaseGDXTest {
         EnemyPeon enemy =  new Orc(1, 1, 100);
         enemy.setCurrentHealthValue(10);
         enemy.regenerateHealth(40);
-        assertEquals(enemy.getCurrentHealth(), 50);
+        assertEquals(50, enemy.getCurrentHealth());
     }
 
     @Test
