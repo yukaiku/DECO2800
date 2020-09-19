@@ -50,7 +50,9 @@ public class Item extends StaticEntity implements TouchDownObserver {
     }
 
     public void chargePlayer() {
-        player.takeMoney(goldValue);
+        if (PlayerPeon.checkBalance() > 0) {
+            player.takeMoney(goldValue);
+        }
     }
 
     public void setObstructions() {
