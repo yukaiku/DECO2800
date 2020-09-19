@@ -6,7 +6,7 @@ package deco2800.thomas.entities.enemies;
  * and the capability to be spawned by other enemies.
  */
 public abstract class Minion extends EnemyPeon {
-    public Minion(String name, String texture, int height, float speed, int health) {
-        super(name, texture, height, speed, health);
+    public Minion(int health, float speed) {
+        super(health, speed);
     }
 }

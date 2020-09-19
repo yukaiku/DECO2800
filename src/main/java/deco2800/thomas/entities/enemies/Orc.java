@@ -1,11 +1,15 @@
 package deco2800.thomas.entities.enemies;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.StatusEffectManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
-import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.EnemyUtil;
 import deco2800.thomas.util.SquareVector;
 
@@ -19,6 +23,9 @@ import java.util.Arrays;
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/monsters/orc
  */
 public class Orc extends Monster implements AggressiveEnemy {
+    private Variation variation;
+    private final Animation<TextureRegion> orcIdle;
+    private float stateTimer;
 
     private int tickFollowing = 30;
     private int tickDetecting = 15;
@@ -28,19 +35,46 @@ public class Orc extends Monster implements AggressiveEnemy {
     // Range at which the orc will stop chasing the player
     private final int discardRadius = 12;
     // Range at which the orc will attempt to melee attack the player
-    private int attackRange = 2;
-
-    public Orc(int height, float speed, int health) {
-        super("Orc", "orc_swamp_right", height, speed, health, true);
-    }
+    private final int attackRange = 2;
 
     /**
-     * Initialise an orc with custom textures (for different variations)
+     * Initialise an orc with different variations
      */
-    public Orc(int height, float speed, int health, String texture) {
-        this(height, speed, health);
-        super.setTextureDirections(new ArrayList<>(Arrays.asList(texture, texture + "_left", texture + "_right")));
-        this.setTexture(texture + "_right");
+    public Orc(Variation variation, int health, float speed) {
+        super(health, speed);
+        this.variation = variation;
+
+        switch (variation) {
+            case DESERT:
+                this.identifier = "orcDesert";
+                this.setTexture("orcDesert");
+                this.setObjectName("Desert Orc");
+                break;
+            case TUNDRA:
+                this.identifier = "orcTundra";
+                this.setTexture("orcTundra");
+                this.setObjectName("Tundra Orc");
+                break;
+            case VOLCANO:
+                this.identifier = "orcVolcano";
+                this.setTexture("orcVolcano");
+                this.setObjectName("Volcano Orc");
+                break;
+            case SWAMP:
+            default:
+                this.identifier = "orcSwamp";
+                this.setTexture("orcSwamp");
+                this.setObjectName("Swamp Orc");
+                break;
+        }
+
+        this.orcIdle = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
+        this.stateTimer = 0;
+    }
+
+    public Orc(int health, float speed) {
+        this(Variation.SWAMP, health, speed);
     }
 
     /**
@@ -74,19 +108,6 @@ public class Orc extends Monster implements AggressiveEnemy {
                 removeWildEnemy(this);
     }
 
-    /**
-     * Sets the texture of the orc based on the way it is moving
-     */
-    private void setOrcTexture() {
-        if (getTarget() != null) {
-            if (getTarget().getCol() < this.getCol()) {
-                setTexture(getTextureDirection(TEXTURE_LEFT));
-            } else {
-                setTexture(getTextureDirection(TEXTURE_RIGHT));
-            }
-        }
-    }
-
     @Override
     public void attackPlayer() {
         if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange));
@@ -101,7 +122,6 @@ public class Orc extends Monster implements AggressiveEnemy {
             if (super.getTarget() != null) {
                 setMovementTask(new MovementTask(this, super.getTarget().
                         getPosition()));
-                setOrcTexture();
                 attackPlayer();
             }
             tickFollowing = 0;
@@ -121,8 +141,15 @@ public class Orc extends Monster implements AggressiveEnemy {
     }
 
     @Override
+    public TextureRegion getFrame(float delta) {
+        TextureRegion region;
+        region = orcIdle.getKeyFrame(stateTimer);
+        stateTimer = stateTimer + delta;
+        return region;
+    }
+
+    @Override
     public Orc deepCopy() {
-        return new Orc(super.getHeight(), super.getSpeed(),
-                super.getMaxHealth(), super.getTextureDirection(TEXTURE_BASE));
+        return new Orc(variation, super.getMaxHealth(), super.getSpeed());
     }
 }

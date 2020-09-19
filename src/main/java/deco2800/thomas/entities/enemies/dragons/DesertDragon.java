@@ -1,14 +1,27 @@
 package deco2800.thomas.entities.enemies.dragons;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.DesertFireball;
 import deco2800.thomas.entities.attacks.VolcanoFireball;
 import deco2800.thomas.entities.enemies.Dragon;
+import deco2800.thomas.entities.enemies.Variation;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.SandTornadoAttackTask;
+import deco2800.thomas.entities.enemies.Variation;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.TextureManager;
 
 public class DesertDragon extends Dragon {
-    public DesertDragon(String name, int height, float speed, int health, String texture, int orb) {
-        super(name, height, speed, health, texture, orb);
+    public DesertDragon(int health, float speed, int orbNumber) {
+        super(health, speed, orbNumber);
+        this.variation = Variation.DESERT;
+        this.identifier = "dragonDesert";
+        this.setTexture("dragonDesert");
+        this.setObjectName("Chuzzinoath");
+        this.dragonIdle = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
     }
 
     @Override

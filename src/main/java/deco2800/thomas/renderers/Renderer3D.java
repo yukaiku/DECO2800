@@ -2,6 +2,14 @@ package deco2800.thomas.renderers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import deco2800.thomas.entities.Agent.Peon;
+import deco2800.thomas.entities.Animatable;
+import deco2800.thomas.entities.attacks.*;
+import deco2800.thomas.managers.InputManager;
+import deco2800.thomas.util.SquareVector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -233,7 +241,6 @@ public class Renderer3D implements Renderer {
 		if (entity instanceof Projectile) {
 			renderProjectiles(batch, entity, entityWorldCord, tex);
 		} else if (entity instanceof Animatable) {
-			batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width, height);
 			if (entity instanceof Peon && ((Peon) entity).isAttacked()) {
 				batch.setColor(102, 0, 0, 1);
 				batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width, height);

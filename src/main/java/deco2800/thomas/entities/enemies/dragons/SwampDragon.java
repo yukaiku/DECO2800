@@ -10,8 +10,9 @@ import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
 import deco2800.thomas.util.EnemyUtil;
 
 public class SwampDragon extends Dragon {
-    public SwampDragon(String name, int height, float speed, int health, String texture, int orb) {
-        super(name, height, speed, health, texture, orb);
+    public SwampDragon(int health, float speed, int orbNumber) {
+        super(health, speed, orbNumber);
+        this.setObjectName("Viondria");
     }
 
     @Override
