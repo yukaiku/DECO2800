@@ -234,7 +234,6 @@ public class Renderer3D implements Renderer {
 		if (entity instanceof Projectile) {
 			renderProjectiles(batch, entity, entityWorldCord, tex);
 		} else if (entity instanceof Animatable) {
-			batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width, height);
 			if (entity instanceof Peon && ((Peon) entity).isAttacked()) {
 				batch.setColor(102, 0, 0, 1);
 				batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width, height);
