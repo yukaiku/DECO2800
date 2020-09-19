@@ -55,6 +55,19 @@ public class TextureManager extends AbstractManager {
 
 			// enemies
 			textureMap.put("enemyDefault", new Texture("resources/enemies/goblin_swamp.png"));
+			textureMap.put("goblinDesert", new Texture("resources/enemies/goblin_desert.png"));
+			textureMap.put("goblinSwamp", new Texture("resources/enemies/goblin_swamp.png"));
+			textureMap.put("goblinTundra", new Texture("resources/enemies/goblin_tundra.png"));
+			textureMap.put("goblinVolcano", new Texture("resources/enemies/goblin_volcano.png"));
+			textureMap.put("orcDesert", new Texture("resources/enemies/orc_desert.png"));
+			textureMap.put("orcSwamp", new Texture("resources/enemies/orc_swamp.png"));
+			textureMap.put("orcTundra", new Texture("resources/enemies/orc_tundra.png"));
+			textureMap.put("orcVolcano", new Texture("resources/enemies/orc_volcano.png"));
+			textureMap.put("dragonDesert", new Texture("resources/enemies/dragon_desert.png"));
+			textureMap.put("dragonSwamp", new Texture("resources/enemies/dragon_swamp.png"));
+			textureMap.put("dragonTundra", new Texture("resources/enemies/dragon_tundra.png"));
+			textureMap.put("dragonVolcano", new Texture("resources/enemies/dragon_volcano.png"));
+
 			textureMap.put("dummy", new Texture("resources/enemies/dummy.png"));
 			textureMap.put("elder_dragon", new Texture("resources/enemies/elder_dragon.png"));
 

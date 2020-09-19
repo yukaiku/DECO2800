@@ -14,6 +14,7 @@ public class DesertDragon extends Dragon {
         super(health, speed, orbNumber);
         this.variation = Variation.DESERT;
         this.identifier = "dragonDesert";
+        this.setTexture("dragonDesert");
         this.setObjectName("Chuzzinoath");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
