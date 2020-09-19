@@ -62,13 +62,13 @@ public class DebugComponent extends OverlayComponent {
     }
 
     private void debugLine(SpriteBatch batch, int line, String string) {
-        font.draw(batch, string, overlayRenderer.getOriginX() + 10,
-                overlayRenderer.getOriginY() + overlayRenderer.getHeight() - line * 20 - 10);
+        font.draw(batch, string, overlayRenderer.getX() + 10,
+                overlayRenderer.getY() + overlayRenderer.getHeight() - line * 20 - 10);
     }
 
     private void chatLine(SpriteBatch batch, int line, String string) {
-        font.draw(batch, string, overlayRenderer.getOriginX() + 10,
-                overlayRenderer.getOriginY() + line * 25 + 25);
+        font.draw(batch, string, overlayRenderer.getX() + 10,
+                overlayRenderer.getY() + line * 25 + 25);
     }
 
     private void renderDebugText(SpriteBatch batch) {

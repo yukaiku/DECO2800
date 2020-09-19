@@ -1,12 +1,12 @@
 package deco2800.thomas.renderers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import java.util.List;
-
+/**
+ * An abstract class for components displayed in the overlay renderer
+ */
 public abstract class OverlayComponent {
-    protected List<Actor> actors;
+    /* Reference to the parent overlay */
     protected OverlayRenderer overlayRenderer;
 
     public OverlayComponent(OverlayRenderer overlayRenderer) {
@@ -14,7 +14,10 @@ public abstract class OverlayComponent {
     }
 
     /**
-     * @param batch
+     * Each component will have a render method to let the
+     * overlay renderer call it continuously
+     *
+     * @param batch the sprite batch to draw into
      */
     public abstract void render(SpriteBatch batch);
 }

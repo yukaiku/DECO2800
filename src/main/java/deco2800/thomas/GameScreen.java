@@ -43,7 +43,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	public static boolean tutorial = false;
 	Renderer3D renderer = new Renderer3D();
-	OverlayRenderer overlayRenderer = new OverlayRenderer();
+	OverlayRenderer overlayRenderer;
 
 	//Renderer Object to render Zone Events
 	EventRenderer rendererEvent;
@@ -180,6 +180,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		stage.addActor(resumeButton);
 		stage.addActor(quitButton);
+
+		overlayRenderer = new OverlayRenderer();
 	}
 
 	/**

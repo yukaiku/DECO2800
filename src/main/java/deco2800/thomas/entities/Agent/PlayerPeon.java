@@ -33,6 +33,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
     public enum State {
         STANDING, WALKING, MELEE_ATTACK, RANGE_ATTACK
     }
+
     public State currentState;
     public State previousState;
     private MovementTask.Direction facingDirection;
@@ -296,6 +297,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
 
     /**
      * Get the texture region of current animation keyframe (this will be called in Renderer3D.java).
+     *
      * @param delta the interval of the ticks
      * @return the current texture region in animation
      */
@@ -487,6 +489,10 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
 
     public int getActiveWizardSkill() {
         return this.activeWizardSkill;
+    }
+
+    public Skill getMechSkill() {
+        return this.mechSkill;
     }
 
     /**
