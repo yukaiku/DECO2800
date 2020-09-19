@@ -49,7 +49,7 @@ public class GameManager {
 
 	public boolean debugMode = false;
 
-	public boolean inTutorial = false;
+	public boolean tutorial = true;
 
 	// Whether or not the player has moved to the next Zone
 	public boolean movedToNextWorld;

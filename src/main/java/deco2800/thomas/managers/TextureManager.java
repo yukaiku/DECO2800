@@ -105,10 +105,10 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("stone-3", new Texture("resources/storyline/tile/tile3.png"));
 			textureMap.put("target", new Texture("resources/storyline/object/target.png"));
 			textureMap.put("portal", new Texture("resources/storyline/object/portal.png"));
-			textureMap.put("stash", new Texture("resources/storyline/object/tutorial-stash.png"));
+			textureMap.put("stash", new Texture("resources/storyline/object/stash.png"));
 			textureMap.put("barrel", new Texture("resources/storyline/object/barrel.png"));
 			textureMap.put("chest", new Texture("resources/storyline/object/chest.png"));
-			textureMap.put("dialog-box", new Texture("resources/storyline/guideline.png"));
+			textureMap.put("dialog-box", new Texture("resources/storyline/story-intro.png"));
 			textureMap.put("orb", new Texture("resources/orb.png"));
 			textureMap.put("victory", new Texture("resources/storyline/victory-screen.png"));
 			textureMap.put("defeat", new Texture("resources/storyline/defeat-screen.png"));
@@ -117,6 +117,8 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("trs-swamp", new Texture("resources/storyline/transition/transition-swamp.png"));
 			textureMap.put("trs-tundra", new Texture("resources/storyline/transition/transition-tundra.png"));
 			textureMap.put("trs-volcano", new Texture("resources/storyline/transition/transition-volcano.png"));
+			textureMap.put("control", new Texture("resources/storyline/control.png"));
+			textureMap.put("leave", new Texture("resources/storyline/leave-message.png"));
 
 
 			// npcs
@@ -329,6 +331,11 @@ public class TextureManager extends AbstractManager {
 					"resources/player/rightmech1_melee1.png", "resources/player/rightmech1_melee2.png",
 					"resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee3.png");
 			addAnimationFramesCollection("player_range", "resources/player/rightmech1_move.png");
+
+			addAnimationFramesCollection("playerFireball", "resources/combat/right_skill1_fire1.png",
+					"resources/combat/right_skill1_fire2.png", "resources/combat/right_skill1_fire3.png",
+					"resources/combat/right_skill1_fire4.png", "resources/combat/right_skill1_fire5.png");
+			addAnimationFramesCollection("playerFireballDefault", "resources/combat/right_skill1_fire1.png");
 
 			// fireballs
 			addAnimationFramesCollection("fireballDefault", "resources/combat/fireball_right.png");
