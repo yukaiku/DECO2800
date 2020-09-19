@@ -123,7 +123,7 @@ public class PlayerPeonTest extends BaseGDXTest {
     @Test
     public void testPlayerSwapToAnInvalidIndexSkill() {
         PlayerPeon playerPeon = new PlayerPeon(10f, 10f, 0.15f, 10);
-        playerPeon.notifyKeyDown(Input.Keys.NUM_3);
+        playerPeon.notifyKeyDown(Input.Keys.NUM_6);
 
         assertEquals(0, playerPeon.getActiveWizardSkill());
     }
