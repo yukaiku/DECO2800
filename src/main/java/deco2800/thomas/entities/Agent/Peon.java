@@ -68,24 +68,23 @@ public class Peon extends AgentEntity implements Tickable {
 	 * @param i Ticks since game start
 	 */
 	@Override
-	public void onTick(long i) {
+	public void onTick(long i) {	
 		// Update movement task
 		if (movementTask != null && movementTask.isAlive()) {
-			if (movementTask.isComplete()) {
-				this.movementTask = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
-			}
 			movementTask.onTick(i);
+			if (movementTask.isComplete()) {
+				this.movementTask = null;
+			}
 		} else {
-			movementTask = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
+			movementTask = null;
 		}
 
 		// Update combat task
 		if (combatTask != null) {
-
+			combatTask.onTick(i);
 			if (combatTask.isComplete()) {
 				combatTask = null;
 			}
-			combatTask.onTick(i);
 		} else {
 		}
 
@@ -186,7 +185,9 @@ public class Peon extends AgentEntity implements Tickable {
 	 * @return Returns true if removed, returns false if effect is not in the list
 	 */
 	public boolean removeEffect(StatusEffect effect) {
-		return this.effects.remove(effect);
+
+		System.out.println(this.effects.remove(effect));
+		return true;
 	}
 
 	/**
