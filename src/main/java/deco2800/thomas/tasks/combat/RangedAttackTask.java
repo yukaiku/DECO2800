@@ -17,6 +17,8 @@ public abstract class RangedAttackTask extends AbstractTask {
     // Task state
     private boolean taskAlive = true;
     private boolean taskComplete = false;
+    private float targetCol, targetRow, speed;
+    private int damage, lifetime;
 
     /**
      * Spawns a projectile with specified parameters.
@@ -30,8 +32,6 @@ public abstract class RangedAttackTask extends AbstractTask {
     public RangedAttackTask(AbstractEntity entity, float targetCol, float targetRow, int damage,
                             float speed, int lifetime) {
         super(entity);
-        spawn(entity.getCol(), entity.getRow(), targetCol, targetRow, damage, speed,
-                lifetime, entity.getFaction());
     }
 
     /**
@@ -73,6 +73,8 @@ public abstract class RangedAttackTask extends AbstractTask {
      */
     @Override
     public void onTick(long tick) {
+        spawn(entity.getCol(), entity.getRow(), targetCol, targetRow, damage, speed,
+                lifetime, entity.getFaction());
         taskComplete = true;
     }
 }
