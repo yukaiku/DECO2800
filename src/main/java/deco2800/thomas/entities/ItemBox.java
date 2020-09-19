@@ -24,8 +24,8 @@ public class ItemBox extends AbstractDialogBox {
 		else{
 			setup(description, price);
 		}
-		close.addListener(b);
 		button.addListener(a);
+		close.addListener(b);
 		button.pad(1,10,1,10);
 		box.setKeepWithinStage(true);
 		box.row();
@@ -57,8 +57,16 @@ public class ItemBox extends AbstractDialogBox {
 	ChangeListener a = new ChangeListener() {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			if (PlayerPeon.checkBalance() > 0 || (item.getClass() == Treasure.class)) {
+			if (PlayerPeon.checkBalance() > 0) {
+				System.out.print(ItemBox.super.isShowing());
+				System.out.print(ItemBox.super.isShowing());
+				ItemBox.super.setShowing(false);
+				ItemBox.super.setRemove(true);
+				box.remove();
 				item.chargePlayer();
+			}
+			else if (item.getClass() == Treasure.class){
+				System.out.print(ItemBox.super.getRemove());
 				ItemBox.super.setShowing(false);
 				ItemBox.super.setRemove(true);
 				box.remove();
