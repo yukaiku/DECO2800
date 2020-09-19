@@ -475,4 +475,21 @@ public abstract class AbstractWorld implements Tickable {
 	public void setWorldEvent(WorldEvent event) {
 		this.worldEvent = event;
 	}
+
+	public void dispose() {
+		// Clear all tiles and entities
+		for (AbstractEntity e : this.entities) {
+			e.dispose();
+		}
+		this.entities.clear();
+		this.entitiesToRemove.clear();
+		this.playerEntity.dispose();
+		this.playerEntity = null;
+
+		for (Tile t : this.tiles) {
+			t.dispose();
+		}
+		this.tiles.clear();
+		this.tilesToRemove.clear();
+	}
 }
