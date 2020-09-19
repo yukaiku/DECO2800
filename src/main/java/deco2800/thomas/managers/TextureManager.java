@@ -337,11 +337,11 @@ public class TextureManager extends AbstractManager {
 			addAnimationFramesCollection("dragonVolcanoIdle", "resources/enemies/dragon_volcano.png");
 			addAnimationFramesSprite("goblinDesertAttack", "resources/enemies/goblin_desert_sprite_sheet.png",
 					3, 350, 486, true);
-			addAnimationFramesSprite("goblinSwampAttack", "resources/enemies/goblin_desert_sprite_sheet.png",
+			addAnimationFramesSprite("goblinSwampAttack", "resources/enemies/goblin_swamp_sprite_sheet.png",
 					3, 350, 486, true);
-			addAnimationFramesSprite("goblinTundraAttack", "resources/enemies/goblin_desert_sprite_sheet.png",
+			addAnimationFramesSprite("goblinTundraAttack", "resources/enemies/goblin_tundra_sprite_sheet.png",
 					3, 350, 486, true);
-			addAnimationFramesSprite("goblinVolcanoAttack", "resources/enemies/goblin_desert_sprite_sheet.png",
+			addAnimationFramesSprite("goblinVolcanoAttack", "resources/enemies/goblin_volcano_sprite_sheet.png",
 					3, 350, 486, true);
 
 		} catch (GdxRuntimeException e) {

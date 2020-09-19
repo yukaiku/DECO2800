@@ -3,6 +3,8 @@ package deco2800.thomas.entities.enemies;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
@@ -18,19 +20,26 @@ import deco2800.thomas.util.SquareVector;
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/minions/goblin
  */
-public class Goblin extends Minion implements AggressiveEnemy {
+public class Goblin extends Minion implements AggressiveEnemy, Animatable {
+    public enum State {
+        IDLE, WALK, ATTACK_MELEE
+    }
+
+    public State currentState;
     private Variation variation;
     private final Animation<TextureRegion> goblinIdle;
     private float stateTimer;
+    private final Animation<TextureRegion> goblinAttacking;
 
+    private int duration = 0;
     private int tickFollowing = 30;
     // Range at which the goblin will attempt to melee attack the player
     private int attackRange = 2;
 
+
     public Goblin(Variation variation, int health, float speed) {
         super(health, speed);
         this.variation = variation;
-
         switch (variation) {
             case DESERT:
                 this.identifier = "goblinDesert";
@@ -50,10 +59,11 @@ public class Goblin extends Minion implements AggressiveEnemy {
                 this.setObjectName("Swamp Goblin");
                 break;
         }
-
         this.goblinIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
+        this.goblinAttacking = new Animation<> (0.1f, GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
         this.stateTimer = 0;
+        currentState = State.IDLE;
         detectTarget();
     }
 
@@ -84,6 +94,9 @@ public class Goblin extends Minion implements AggressiveEnemy {
     public void attackPlayer() {
         if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange)) {
             SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
+            System.out.println("Begin goblin attacking");
+            currentState = State.ATTACK_MELEE;
+            System.out.println(currentState);
             setCombatTask(new MeleeAttackTask(this, origin, 1, 1, 5));
         }
     }
@@ -91,6 +104,11 @@ public class Goblin extends Minion implements AggressiveEnemy {
     @Override
     public void onTick(long i){
         // update target following path every 0.5 second (30 ticks)
+        if (--duration < 0) {
+            duration = 0;
+            currentState = State.IDLE;
+        }
+
         if (++tickFollowing > 30) {
             if (super.getTarget() != null) {
                 setMovementTask(new MovementTask(this, super.getTarget().getPosition()));
@@ -106,8 +124,12 @@ public class Goblin extends Minion implements AggressiveEnemy {
             }
         }
         if (getCombatTask() != null && getCombatTask().isAlive()) {
+            currentState = State.ATTACK_MELEE;
+            duration = 12;
             getCombatTask().onTick(i);
+
             if (getCombatTask().isComplete()) {
+                this.currentState = State.IDLE;
                 setCombatTask(null);
             }
         }
@@ -121,8 +143,17 @@ public class Goblin extends Minion implements AggressiveEnemy {
     @Override
     public TextureRegion getFrame(float delta) {
         TextureRegion region;
-        region = goblinIdle.getKeyFrame(stateTimer);
-        stateTimer = stateTimer + delta;
+        switch (currentState) {
+            case ATTACK_MELEE:
+                System.out.println("Goblin attacking");
+                region = goblinAttacking.getKeyFrame(stateTimer);
+                break;
+            case IDLE:
+            default:
+                stateTimer = 0;
+                region = goblinIdle.getKeyFrame(stateTimer);
+        }
+        stateTimer = (stateTimer + 1) % 2;
         return region;
     }
 
