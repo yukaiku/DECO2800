@@ -374,9 +374,9 @@ public class TextureManager extends AbstractManager {
 										  boolean horizontal) throws GdxRuntimeException {
 		Array<TextureRegion> frames = new Array<>();
 		Texture sprite = new Texture(file);
-		if (horizontal) for (int i = 1; i < numOfFrames + 1; i++) {
+		if (horizontal) for (int i = 0; i < numOfFrames; i++) {
 			frames.add(new TextureRegion(sprite, i * frameWidth, 0, frameWidth, frameHeight));
-		} else for (int i = 1; i < numOfFrames + 1; i++) {
+		} else for (int i = 0; i < numOfFrames; i++) {
 			frames.add(new TextureRegion(sprite, 0, i * frameHeight, frameWidth, frameHeight));
 		}
 		animationFrames.put(id, frames);
