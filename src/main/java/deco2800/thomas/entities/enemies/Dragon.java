@@ -157,6 +157,6 @@ public class Dragon extends Boss implements PassiveEnemy {
         //Generate the correct orb texture to initialise the dragon's dropped orb
         world.setOrbEntity(new Orb(tile, "orb_" + orbNumber));
 
-        GameManager.get().getWorld().getPlayerEntity().credit(1500);
+        ((PlayerPeon) GameManager.get().getWorld().getPlayerEntity()).credit(1500);
     }
 }
