@@ -54,6 +54,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	Button resumeButton = new TextButton("RESUME", GameManager.get().getSkin(), "in_game");
 	Button quitButton = new TextButton("RETURN TO MAIN MENU", GameManager.get().getSkin(), "in_game");
 	Button enterButton = new TextButton("ENTER THE ZONE", GameManager.get().getSkin(), "in_game");
+	Button playAgainButton = new TextButton("TRY AGAIN", GameManager.get().getSkin(), "in_game");
 	AbstractWorld world;
 
 	static Skin skin = new Skin(Gdx.files.internal("resources/uiskin.skin"));
@@ -100,6 +101,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	public GameScreen(final ThomasGame game, final gameType startType) {
 		if (startType == gameType.NEW_GAME) {
+			GameManager.get().state = GameManager.State.TRANSITION;
 			GameManager.get().tutorial = true;
 			GameManager.get().setWorld(startType.method());
 		} else if (startType == gameType.ENV_TEAM_GAME) {
@@ -165,10 +167,26 @@ public class GameScreen implements Screen, KeyDownObserver {
 				GameManager.resume();
 			}
 		});
+		playAgainButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				// Resume the game before quit to home screen
+				GameManager.resume();
+				// Reset quest tracker
+				QuestTracker.resetOrbs();
+				// Remove enemies
+				GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
+				// Dispose the screen
+				dispose();
+				// Set main menu screen
+				game.setScreen(new GameScreen(game, gameType.NEW_GAME));
+			}
+		});
 
 		stage.addActor(resumeButton);
 		stage.addActor(quitButton);
 		stage.addActor(enterButton);
+		stage.addActor(playAgainButton);
 
 		overlayRenderer = new OverlayRenderer();
 	}
@@ -212,6 +230,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		resumeButton.setPosition(-100, -100);
 		quitButton.setPosition(-100, -100);
 		enterButton.setPosition(-100, -100);
+		playAgainButton.setPosition(-100, -100);
 
 		/* Refresh the experience UI for if information was updated */
 		stage.act(delta);
@@ -247,6 +266,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 		// Display the buttons
 		quitButton.setPosition(width / 2 - quitButton.getWidth() / 2,
 				height / 2 - 350);
+		playAgainButton.setPosition(width / 2 - playAgainButton.getWidth() / 2,
+				height / 2 - 300);
 		stage.act(delta);
 		stage.draw();
 	}
