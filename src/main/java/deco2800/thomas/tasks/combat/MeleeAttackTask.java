@@ -91,7 +91,7 @@ public class MeleeAttackTask extends AbstractTask {
         if (e instanceof Peon) {
             Peon peon = (Peon) e;
 
-            peon.applyDamage(((CombatEntity) entity).getDamage(), DamageType.COMMON);
+            peon.applyDamage(this.damage, DamageType.COMMON);
             if (peon.isDead()) {
                 peon.death();
             }
