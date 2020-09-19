@@ -30,16 +30,10 @@ public class BurnStatusTest extends BaseGDXTest {
     private BurnStatus burn;
 
     // the entity being passed to the status
-    private AgentEntity entity;
-
-    // the health tracker used to verify damage dealt
-//    private HealthTracker healthTracker;
+    private Peon entity;
 
     @Before
     public void setUp() throws Exception {
-//        entity = mock(AgentEntity.class);
-//        healthTracker = new HealthTracker(50);
-//        when(entity.getHealthTracker()).thenReturn(healthTracker);
         entity = new Peon(0, 0, 0, 50);
         burn = new BurnStatus(entity, 5, 2);
     }
@@ -69,7 +63,6 @@ public class BurnStatusTest extends BaseGDXTest {
     @Test
     public void applyEffectFirstTick() {
         burn.applyEffect();
-//        Assert.assertEquals(healthTracker.getCurrentHealthValue(), 45);
         Assert.assertEquals(entity.getCurrentHealth(), 45);
     }
 
@@ -82,7 +75,6 @@ public class BurnStatusTest extends BaseGDXTest {
         burn.applyEffect();
         burn.applyEffect();
 
-//        Assert.assertEquals(healthTracker.getCurrentHealthValue(), 45);
         Assert.assertEquals(entity.getCurrentHealth(), 45);
     }
 
@@ -119,8 +111,7 @@ public class BurnStatusTest extends BaseGDXTest {
 
         burn2.applyEffect();
         // should have taken two instances of 4 dmg
-//        Assert.assertEquals(healthTracker.getCurrentHealthValue(), 42);
-        Assert.assertEquals(entity.getCurrentHealth(), 42);
+        Assert.assertEquals(42, entity.getCurrentHealth());
         Assert.assertFalse(burn2.getActive());
     }
 }

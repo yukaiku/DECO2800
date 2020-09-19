@@ -2,6 +2,7 @@ package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.Agent.Peon;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,14 +18,14 @@ public class StatusEffectTest extends BaseGDXTest {
     private StatusEffect effect;
 
     // the entity being passed to the status effect
-    private AgentEntity entity;
+    private Peon entity;
 
     /**
      * A blank child of StatusEffect so that the abstract class
      * can be tested.
      */
     private static class StatusEffectTester extends StatusEffect {
-        public StatusEffectTester(AgentEntity entity) {
+        public StatusEffectTester(Peon entity) {
             super(entity);
         }
 
@@ -35,7 +36,7 @@ public class StatusEffectTest extends BaseGDXTest {
 
     @Before
     public void setUp() throws Exception {
-        entity = mock(AgentEntity.class);
+        entity = mock(Peon.class);
         effect = new StatusEffectTester(entity);
     }
 

@@ -2,6 +2,7 @@ package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.util.SquareVector;
 import org.junit.Assert;
@@ -27,7 +28,7 @@ public class QuicksandBurnStatusTest extends BaseGDXTest {
     public void setUp() throws Exception {
         pos = mock(SquareVector.class);
         HealthTracker healthTracker = mock(HealthTracker.class);
-        AgentEntity entity = mock(AgentEntity.class);
+        Peon entity = mock(Peon.class);
         when(entity.getPosition()).thenReturn(pos);
         when(entity.getHealthTracker()).thenReturn(healthTracker);
         when(healthTracker.getCurrentHealthValue()).thenReturn(50);

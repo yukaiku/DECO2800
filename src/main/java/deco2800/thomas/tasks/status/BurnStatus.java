@@ -1,6 +1,8 @@
 package deco2800.thomas.tasks.status;
 
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.HealthTracker;
 
 /**
@@ -28,7 +30,7 @@ public class BurnStatus extends StatusEffect {
      *
      * @param entity The entity this status is being applied to.
      */
-    public BurnStatus(AgentEntity entity) {
+    public BurnStatus(Peon entity) {
         super(entity);
         timeLastTick = System.nanoTime();
         burnDamage = 1;
@@ -43,7 +45,7 @@ public class BurnStatus extends StatusEffect {
      * @param burnDamage The damage inflicted by each tick.
      * @param ticks The number of damage ticks in this effect.
      */
-    public BurnStatus(AgentEntity entity, int burnDamage, int ticks) {
+    public BurnStatus(Peon entity, int burnDamage, int ticks) {
         super(entity);
         this.burnDamage = burnDamage;
         timeLastTick = System.nanoTime();
@@ -93,7 +95,7 @@ public class BurnStatus extends StatusEffect {
         // we skip application if the next tick is not ready
         if (!ticksReady()) return;
 
-        getAffectedEntity().reduceHealth(burnDamage);
+        getAffectedEntity().applyDamage(burnDamage, DamageType.FIRE);
 //        int health = healthTracker.getCurrentHealthValue();
 //        healthTracker.setCurrentHealthValue(health - burnDamage);
 
