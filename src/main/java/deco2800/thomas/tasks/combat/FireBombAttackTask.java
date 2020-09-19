@@ -1,8 +1,11 @@
 package deco2800.thomas.tasks.combat;
 
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.entities.attacks.Explosion;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.AbstractTask;
@@ -84,12 +87,12 @@ public class FireBombAttackTask extends AbstractTask {
      * @param damage Damage to apply
      */
     private void applyDamage (AbstractEntity e, int damage) {
-        if (e instanceof AgentEntity) {
-            AgentEntity agentEntity = (AgentEntity) e;
+        if (e instanceof Peon) {
+            Peon peon = (Peon) e;
 
-            agentEntity.reduceHealth(damage);
-            if (agentEntity.isDead()) {
-                agentEntity.death();
+            peon.applyDamage(damage, DamageType.FIRE);
+            if (peon.isDead()) {
+                peon.death();
             }
         }
     }

@@ -1,7 +1,9 @@
 package deco2800.thomas.tasks.combat;
 
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
@@ -94,12 +96,13 @@ public class ApplyDamageOverTimeTask extends AbstractTask {
      * @param e Enemy entity
      */
     private void applyDamage (AbstractEntity e) {
-        if (e instanceof AgentEntity) {
-            AgentEntity agentEntity = (AgentEntity) e;
+        if (e instanceof Peon) {
+            Peon peon = (Peon) e;
 
-            agentEntity.reduceHealth(((CombatEntity) entity).getDamage());
-            if (agentEntity.isDead()) {
-                agentEntity.death();
+            peon.applyDamage(((CombatEntity) entity).getDamage(), DamageType.COMMON);
+            this.taskComplete = true;
+            if (peon.isDead()) {
+                peon.death();
             }
         }
     }

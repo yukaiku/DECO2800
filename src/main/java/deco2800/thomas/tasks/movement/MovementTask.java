@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PathFindingService;
@@ -174,32 +175,32 @@ public class MovementTask extends AbstractTask {
 
 		// check if the tile has an effect, apply the effect if so
 		Tile tile = gameManager.getWorld().getTile(position);
-		if (tile != null && tile.hasStatusEffect()) {
+		if (tile != null && tile.hasStatusEffect() && entity instanceof Peon) {
 			switch(tile.getType()) {
 				// burn tiles damage over time
 				case "BurnTile":
-					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 5, 5));
+					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus((Peon)entity, 5, 5));
 				break;
 
 				// quicksand damages over time and slows
 				case "Quicksand":
-					gameManager.getManager(StatusEffectManager.class).addStatus(new SpeedStatus(entity, 0.25f, 3));
-					gameManager.getManager(StatusEffectManager.class).addStatus(new QuicksandBurnStatus(entity, 5, 100, position));
+					gameManager.getManager(StatusEffectManager.class).addStatus(new SpeedStatus((Peon)entity, 0.25f, 3));
+					gameManager.getManager(StatusEffectManager.class).addStatus(new QuicksandBurnStatus((Peon)entity, 5, 100, position));
 				break;
 
 				// neighbours of cactus plants damage once when the player first arrives
 				case "CactusNeighbour":
-					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 10, 1));
+					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus((Peon)entity, 10, 1));
 				break;
 
 				// ice tiles speed up the player temporarily
 				case "TundraIceTile":
-				gameManager.getManager(StatusEffectManager.class).addStatus(new SpeedStatus(entity, 1.1f, 1));
+				gameManager.getManager(StatusEffectManager.class).addStatus(new SpeedStatus((Peon)entity, 1.1f, 1));
 				break;
 
 				// neighbours of tundra fire entities inflict damage over time
 				case "TundraFireTile":
-				gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus(entity, 5, 2));
+				gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus((Peon)entity, 5, 2));
 				break;
 
 			}
