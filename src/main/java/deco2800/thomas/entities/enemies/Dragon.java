@@ -47,6 +47,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
         this.orbNumber = orbNumber;
         this.variation = Variation.SWAMP; // default
         this.identifier = "dragonSwamp";
+        this.setTexture("dragonSwamp");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
         this.stateTimer = 0;

@@ -15,6 +15,7 @@ public class VolcanoDragon extends Dragon {
     public VolcanoDragon(int health, float speed, int orbNumber) {
         super(health, speed, orbNumber);
         this.identifier = "dragonVolcano";
+        this.setTexture("dragonVolcano");
         this.variation = Variation.VOLCANO;
         this.setObjectName("Deilaenth");
         this.dragonIdle = new Animation<>(0.1f,

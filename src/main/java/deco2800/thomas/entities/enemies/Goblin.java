@@ -43,19 +43,23 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
         switch (variation) {
             case DESERT:
                 this.identifier = "goblinDesert";
+                this.setTexture("goblinDesert");
                 this.setObjectName("Desert Goblin");
                 break;
             case TUNDRA:
                 this.identifier = "goblinTundra";
+                this.setTexture("goblinTundra");
                 this.setObjectName("Tundra Goblin");
                 break;
             case VOLCANO:
                 this.identifier = "goblinVolcano";
+                this.setTexture("goblinVolcano");
                 this.setObjectName("Volcano Goblin");
                 break;
             case SWAMP:
             default:
                 this.identifier = "goblinSwamp";
+                this.setTexture("goblinSwamp");
                 this.setObjectName("Swamp Goblin");
                 break;
         }

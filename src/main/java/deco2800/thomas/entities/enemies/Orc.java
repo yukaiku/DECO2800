@@ -47,19 +47,23 @@ public class Orc extends Monster implements AggressiveEnemy {
         switch (variation) {
             case DESERT:
                 this.identifier = "orcDesert";
+                this.setTexture("orcDesert");
                 this.setObjectName("Desert Orc");
                 break;
             case TUNDRA:
                 this.identifier = "orcTundra";
+                this.setTexture("orcTundra");
                 this.setObjectName("Tundra Orc");
                 break;
             case VOLCANO:
                 this.identifier = "orcVolcano";
+                this.setTexture("orcVolcano");
                 this.setObjectName("Volcano Orc");
                 break;
             case SWAMP:
             default:
                 this.identifier = "orcSwamp";
+                this.setTexture("orcSwamp");
                 this.setObjectName("Swamp Orc");
                 break;
         }

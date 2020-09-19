@@ -21,6 +21,7 @@ public class Dummy extends Monster implements PassiveEnemy {
     public Dummy(int health, float speed) {
         super(health, speed);
         this.identifier = "dummy";
+        this.setTexture("dummy");
         this.setObjectName("Dummy");
 
         this.stateTimer = 0;
