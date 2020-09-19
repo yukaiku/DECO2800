@@ -50,4 +50,7 @@ public class RenderConstants {
 	public static final int TUNDRA_TREE_LOG = 1;
 	public static final int TUNDRA_ROCK = 1;
 	public static final int BARREL_RENDER = 1;
+
+	// All Item Entities render with a value of 2
+	public static final int ITEM_RENDER = 2;
 }

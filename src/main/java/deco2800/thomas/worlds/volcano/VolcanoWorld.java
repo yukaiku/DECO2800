@@ -3,6 +3,21 @@ package deco2800.thomas.worlds.volcano;
 import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.NPC.MerchantNPC;
+import deco2800.thomas.entities.NPC.NonPlayablePeon;
+import deco2800.thomas.entities.NPC.TutorialNPC;
+import deco2800.thomas.entities.NPC.VolcanoNPC;
+import deco2800.thomas.entities.environment.volcano.VolcanoDragonSkull;
+import deco2800.thomas.entities.environment.volcano.VolcanoGraveYard;
+import deco2800.thomas.entities.environment.volcano.VolcanoRuins;
+import deco2800.thomas.entities.enemies.Dragon;
+import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.entities.environment.volcano.VolcanoBurningTree;
+import deco2800.thomas.entities.items.HealthPotion;
+import deco2800.thomas.entities.items.Item;
+import deco2800.thomas.entities.items.Shield;
+import deco2800.thomas.entities.items.Treasure;
+import deco2800.thomas.managers.*;
 import deco2800.thomas.entities.environment.volcano.*;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
@@ -54,6 +69,7 @@ public class VolcanoWorld extends AbstractWorld {
         //Add player to game
         this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.15f));
         addEntity(this.getPlayerEntity());
+        generateItemEntities();
 
         Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano");
         Dragon boss = new VolcanoDragon("Deilaenth", 3, 0.03f, 1000, "dragon_volcano", 1);
@@ -62,6 +78,12 @@ public class VolcanoWorld extends AbstractWorld {
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(16, 20);
 
+        //Create Volcano NPCs
+        List<NonPlayablePeon> npnSpawns = new ArrayList<>();
+        npnSpawns.add(new VolcanoNPC("VolcanoQuestNPC2", new SquareVector(-21, 22),"volcano_npc2"));
+        npnSpawns.add(new VolcanoNPC("VolcanoQuestNPC1", new SquareVector(-24, -13),"volcano_npc1"));
+        NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
+        GameManager.get().addManager(npcManager);
         //Add local Event to this world
         this.setWorldEvent(new VolcanoEvent(this));
     }
@@ -117,6 +139,51 @@ public class VolcanoWorld extends AbstractWorld {
         //For objects that are added randomly & require more specific addition
         //entities, their methodology will follow add()
         addRandoms();
+    }
+
+    /**
+     * Generates items for volcano region, all positions of item are randomized
+     * every time player loads into volcano zone.
+     *
+     * Items: Health potions, Iron shields etc.
+     */
+    private void generateItemEntities(){
+        final int NUM_POTIONS = 6;
+        final int NUM_SHIELDS = 4;
+        final int NUM_CHESTS = 3; 
+
+        ArrayList<AbstractDialogBox> items = new ArrayList<>();
+        
+        for (int i = 0; i < NUM_POTIONS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            HealthPotion potion = new HealthPotion(tile,false,
+                    (PlayerPeon) getPlayerEntity(), "volcano");
+            entities.add(potion);
+            items.add(potion.getDisplay());
+        }
+
+        for (int i = 0; i < NUM_SHIELDS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            Shield shield = new Shield(tile, false,
+                    (PlayerPeon) getPlayerEntity(),"volcano");
+            entities.add(shield);
+            items.add(shield.getDisplay());
+        }
+        
+        for (int i = 0; i < NUM_CHESTS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            Treasure chest = new Treasure(tile, false,
+                    (PlayerPeon) getPlayerEntity(),"volcano");
+            entities.add(chest);
+            items.add(chest.getDisplay());
+        }
+
+        DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
+                items);
+        GameManager.get().addManager(dialog);
     }
 
     /**

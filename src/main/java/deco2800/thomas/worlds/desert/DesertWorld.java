@@ -1,18 +1,30 @@
 package deco2800.thomas.worlds.desert;
 
+import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.NPC.DesertNPC;
+import deco2800.thomas.entities.NPC.MerchantNPC;
+import deco2800.thomas.entities.NPC.NonPlayablePeon;
+import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.desert.*;
+import deco2800.thomas.entities.items.HealthPotion;
+import deco2800.thomas.entities.items.Item;
+import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.entities.enemies.dragons.DesertDragon;
+import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
+import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -45,6 +57,15 @@ public class DesertWorld extends AbstractWorld {
      */
     public DesertWorld(int width, int height) {
         super(width, height);
+        generateTiles();
+
+        //Creates Desert NPCs
+        List<NonPlayablePeon> npnSpawns = new ArrayList<>();
+        npnSpawns.add(new DesertNPC("DesertQuestNPC1", new SquareVector(-23, 17),"desert_npc1"));
+        npnSpawns.add(new DesertNPC("DesertQuestNPC2", new SquareVector(-23, 20),"desert_npc2"));
+        NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
+        GameManager.get().addManager(npcManager);
+        generateItemEntities();
     }
 
     /**
@@ -137,6 +158,50 @@ public class DesertWorld extends AbstractWorld {
                     break;
             }
         }
+    }
+
+    /**
+     * Generates items for desert region, all positions of item are randomized
+     * every time player loads into desert zone.
+     *
+     * Items: Health potions, Iron shields etc.
+     */
+    private void generateItemEntities(){
+        final int NUM_POTIONS = 6;
+        final int NUM_SHIELDS = 4;
+        final int NUM_CHESTS = 3;
+        ArrayList<AbstractDialogBox> items = new ArrayList<>();
+        
+        for (int i = 0; i < NUM_POTIONS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            HealthPotion potion = new HealthPotion(tile,false,
+                    (PlayerPeon) getPlayerEntity(),"desert");
+            entities.add(potion);
+            items.add(potion.getDisplay());
+        }
+
+        for (int i = 0; i < NUM_SHIELDS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            Shield shield = new Shield(tile, false,
+                    (PlayerPeon) getPlayerEntity(),"desert");
+            entities.add(shield);
+            items.add(shield.getDisplay());
+        }
+
+        for (int i = 0; i < NUM_CHESTS; i++) {
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            Treasure chest = new Treasure(tile, false,
+                    (PlayerPeon) getPlayerEntity(),"desert");
+            entities.add(chest);
+            items.add(chest.getDisplay());
+        }
+        
+        DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
+                items);
+        GameManager.get().addManager(dialog);
     }
 
     /**
