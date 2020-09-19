@@ -388,6 +388,7 @@ public class TextureManager extends AbstractManager {
 			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado6.png")));
 			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado7.png")));
 			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado8.png")));
+			animationFrames.put("sandTornado", sandTornado);
 
 		} catch (GdxRuntimeException e) {
 			e.printStackTrace();

@@ -33,6 +33,9 @@ public class SandTornado extends Projectile implements Animatable, Tickable {
     @Override
     public TextureRegion getFrame(float delta) {
         stateTimer += delta;
+        if (stateTimer > tornado.getAnimationDuration()) {
+            stateTimer = 0;
+        }
         return tornado.getKeyFrame(stateTimer);
     }
 }
