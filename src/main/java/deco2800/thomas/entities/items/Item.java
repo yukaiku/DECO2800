@@ -121,12 +121,12 @@ public class Item extends StaticEntity implements TouchDownObserver {
 
         boolean isCloseCol =
                 (clickedPosition[0] == this.getCol()
-                        || clickedPosition[0] <= this.getRow() - 1
-                        || clickedPosition[0] <= this.getRow() + 1);
+                        || clickedPosition[0] == this.getRow() - 1
+                        || clickedPosition[0] == this.getRow() + 1);
 
         boolean isCloseRow = (clickedPosition[1] == this.getRow() ||
-                clickedPosition[1] <= this.getRow() - 1 ||
-                clickedPosition[1] <= this.getRow() + 1);
+                clickedPosition[1] == this.getRow() - 1 ||
+                clickedPosition[1] == this.getRow() + 1);
 
         // if click is close enough, then player should also be somewhat close.
         if (isCloseCol && isCloseRow) {
