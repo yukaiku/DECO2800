@@ -10,6 +10,7 @@ import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.entities.enemies.Variation;
 import deco2800.thomas.entities.environment.desert.*;
 import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
@@ -87,9 +88,9 @@ public class DesertWorld extends AbstractWorld {
         this.setPlayerEntity(new PlayerPeon(6f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
 
-        Orc desertOrc = new Orc(1, 0.09f, 50, "orc_desert");
-        Dragon boss = new DesertDragon("Chuzzinoath", 3, 0.03f, 850, "dragon_desert", 4);
-
+        // Provide available enemies to the EnemyManager
+        Orc desertOrc = new Orc(Variation.DESERT, 50, 0.09f);
+        DesertDragon boss = new DesertDragon(850, 0.03f, 4);
         EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(desertOrc), boss);
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(21, 6);

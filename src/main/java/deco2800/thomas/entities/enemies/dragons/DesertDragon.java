@@ -6,8 +6,10 @@ import deco2800.thomas.entities.attacks.VolcanoFireball;
 import deco2800.thomas.entities.enemies.Dragon;
 
 public class DesertDragon extends Dragon {
-    public DesertDragon(String name, int height, float speed, int health, String texture, int orb) {
-        super(name, height, speed, health, texture, orb);
+    public DesertDragon(int health, float speed, int orbNumber) {
+        super(health, speed, orbNumber);
+        this.identifier = "dragonDesert";
+        this.setObjectName("Chuzzinoath");
     }
 
     @Override

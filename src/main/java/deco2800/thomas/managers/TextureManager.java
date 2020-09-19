@@ -54,30 +54,7 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("spacman_blue", new Texture("resources/spacman_blue.png"));
 
 			// enemies
-			textureMap.put("goblin_swamp_left", new Texture("resources/enemies/goblin_swamp_left.png"));
-			textureMap.put("goblin_swamp_right", new Texture("resources/enemies/goblin_swamp_right.png"));
-			textureMap.put("goblin_volcano_left", new Texture("resources/enemies/goblin_volcano_left.png"));
-			textureMap.put("goblin_volcano_right", new Texture("resources/enemies/goblin_volcano_right.png"));
-			textureMap.put("goblin_tundra_left", new Texture("resources/enemies/goblin_tundra_left.png"));
-			textureMap.put("goblin_tundra_right", new Texture("resources/enemies/goblin_tundra_right.png"));
-			textureMap.put("goblin_desert_left", new Texture("resources/enemies/goblin_desert_left.png"));
-			textureMap.put("goblin_desert_right", new Texture("resources/enemies/goblin_desert_right.png"));
-			textureMap.put("orc_swamp_left", new Texture("resources/enemies/orc_swamp_left.png"));
-			textureMap.put("orc_swamp_right", new Texture("resources/enemies/orc_swamp_right.png"));
-			textureMap.put("orc_volcano_left", new Texture("resources/enemies/orc_volcano_left.png"));
-			textureMap.put("orc_volcano_right", new Texture("resources/enemies/orc_volcano_right.png"));
-			textureMap.put("orc_tundra_left", new Texture("resources/enemies/orc_tundra_left.png"));
-			textureMap.put("orc_tundra_right", new Texture("resources/enemies/orc_tundra_right.png"));
-			textureMap.put("orc_desert_left", new Texture("resources/enemies/orc_desert_left.png"));
-			textureMap.put("orc_desert_right", new Texture("resources/enemies/orc_desert_right.png"));
-			textureMap.put("dragon_swamp_left", new Texture("resources/enemies/dragon_swamp_left.png"));
-			textureMap.put("dragon_swamp_right", new Texture("resources/enemies/dragon_swamp_right.png"));
-			textureMap.put("dragon_volcano_left", new Texture("resources/enemies/dragon_volcano_left.png"));
-			textureMap.put("dragon_volcano_right", new Texture("resources/enemies/dragon_volcano_right.png"));
-			textureMap.put("dragon_tundra_left", new Texture("resources/enemies/dragon_tundra_left.png"));
-			textureMap.put("dragon_tundra_right", new Texture("resources/enemies/dragon_tundra_right.png"));
-			textureMap.put("dragon_desert_left", new Texture("resources/enemies/dragon_desert_left.png"));
-			textureMap.put("dragon_desert_right", new Texture("resources/enemies/dragon_desert_right.png"));
+			textureMap.put("enemyDefault", new Texture("resources/enemies/goblin_swamp.png"));
 			textureMap.put("dummy", new Texture("resources/enemies/dummy.png"));
 			textureMap.put("elder_dragon", new Texture("resources/enemies/elder_dragon.png"));
 
@@ -328,7 +305,7 @@ public class TextureManager extends AbstractManager {
 					"resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee1.png",
 					"resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee2.png",
 					"resources/player/rightmech1_melee1.png", "resources/player/rightmech1_melee2.png",
-					"resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee3.png");
+					"resources/player/rightmech1_melee2.png");
 			addAnimationFramesCollection("player_range", "resources/player/rightmech1_move.png");
 
 			addAnimationFramesCollection("playerFireball", "resources/combat/right_skill1_fire1.png",
@@ -345,10 +322,19 @@ public class TextureManager extends AbstractManager {
 					"resources/combat/explosive_fireball8.png", "resources/combat/explosive_fireball9.png");
 
 			// enemies
-			addAnimationFramesCollection("goblinDesertIdle", "resources/enemies/goblin_desert_right.png");
-			addAnimationFramesCollection("goblinSwampIdle", "resources/enemies/goblin_swamp_right.png");
-			addAnimationFramesCollection("goblinTundraIdle", "resources/enemies/goblin_tundra_right.png");
-			addAnimationFramesCollection("goblinVolcanoIdle", "resources/enemies/goblin_volcano_right.png");
+			addAnimationFramesCollection("dummyIdle", "resources/enemies/dummy.png");
+			addAnimationFramesCollection("goblinDesertIdle", "resources/enemies/goblin_desert.png");
+			addAnimationFramesCollection("goblinSwampIdle", "resources/enemies/goblin_swamp.png");
+			addAnimationFramesCollection("goblinTundraIdle", "resources/enemies/goblin_tundra.png");
+			addAnimationFramesCollection("goblinVolcanoIdle", "resources/enemies/goblin_volcano.png");
+			addAnimationFramesCollection("orcDesertIdle", "resources/enemies/orc_desert.png");
+			addAnimationFramesCollection("orcSwampIdle", "resources/enemies/orc_swamp.png");
+			addAnimationFramesCollection("orcTundraIdle", "resources/enemies/orc_tundra.png");
+			addAnimationFramesCollection("orcVolcanoIdle", "resources/enemies/orc_volcano.png");
+			addAnimationFramesCollection("dragonDesertIdle", "resources/enemies/dragon_desert.png");
+			addAnimationFramesCollection("dragonSwampIdle", "resources/enemies/dragon_swamp.png");
+			addAnimationFramesCollection("dragonTundraIdle", "resources/enemies/dragon_tundra.png");
+			addAnimationFramesCollection("dragonVolcanoIdle", "resources/enemies/dragon_volcano.png");
 			addAnimationFramesSprite("goblinDesertAttack", "resources/enemies/goblin_desert_sprite_sheet.png",
 					3, 350, 486, true);
 			addAnimationFramesSprite("goblinSwampAttack", "resources/enemies/goblin_desert_sprite_sheet.png",

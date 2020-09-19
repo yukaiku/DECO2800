@@ -1,5 +1,7 @@
 package deco2800.thomas.entities.enemies;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
@@ -8,6 +10,7 @@ import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
@@ -26,7 +29,11 @@ import java.util.Random;
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/bosses/dragon
  */
-public class Dragon extends Boss implements PassiveEnemy {
+public abstract class Dragon extends Boss implements PassiveEnemy {
+    protected Variation variation;
+    private final Animation<TextureRegion> dragonIdle;
+    private float stateTimer;
+
     private int tickFollowing = 60;
     // Range at which the dragon will attempt to melee attack the player
     private int attackRange = 8;
@@ -35,15 +42,13 @@ public class Dragon extends Boss implements PassiveEnemy {
     //
     Random random = new Random();
 
-    public Dragon(String name, int height, float speed, int health, int orb) {
-        super(name, "elder_dragon", height, speed, health);
-        orbNumber = orb;
-    }
-
-    public Dragon(String name, int height, float speed, int health, String texture, int orb) {
-        this(name, height, speed, health, orb);
-        super.setTextureDirections(new ArrayList<>(Arrays.asList(texture, texture + "_left", texture + "_right")));
-        this.setTexture(texture + "_left");
+    public Dragon(int health, float speed, int orbNumber) {
+        super(health, speed);
+        this.orbNumber = orbNumber;
+        this.variation = Variation.SWAMP; // default
+        this.dragonIdle = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
+        this.stateTimer = 0;
     }
 
     /**
@@ -52,7 +57,7 @@ public class Dragon extends Boss implements PassiveEnemy {
      */
     public void summonGoblin() {
         if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() < 10) {
-            Goblin goblin = new Goblin(1, 0.1f, 20, "goblin" + getTextureDirection(TEXTURE_BASE).substring(6));
+            Goblin goblin = new Goblin(variation, 20, 0.1f);
             GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(goblin, this.getCol() + 1, this.getRow() + 2);
         }
     }
@@ -86,20 +91,6 @@ public class Dragon extends Boss implements PassiveEnemy {
         }
     }
 
-    /**
-     * Sets the appropriate texture based on the direction the dragon
-     * is moving
-     */
-    private void setDragonTexture() {
-        if (getTarget() != null) {
-            if (getTarget().getCol() < this.getCol()) {
-                setTexture(getTextureDirection(TEXTURE_LEFT));
-            } else {
-                setTexture(getTextureDirection(TEXTURE_RIGHT));
-            }
-        }
-    }
-
     @Override
     public void attackPlayer() {
         if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange));
@@ -125,7 +116,6 @@ public class Dragon extends Boss implements PassiveEnemy {
                 setMovementTask(new MovementTask(this, super.getTarget().
                         getPosition()));
                 attackPlayer();
-                setDragonTexture();
             }
             tickFollowing = 0;
         }
@@ -161,5 +151,13 @@ public class Dragon extends Boss implements PassiveEnemy {
         GameManager.getManagerFromInstance(EnemyManager.class).removeBoss();
         //Generate the correct orb texture to initialise the dragon's dropped orb
         world.setOrbEntity(new Orb(tile, "orb_" + orbNumber));
+    }
+
+    @Override
+    public TextureRegion getFrame(float delta) {
+        TextureRegion region;
+        region = dragonIdle.getKeyFrame(stateTimer);
+        stateTimer = stateTimer + delta;
+        return region;
     }
 }

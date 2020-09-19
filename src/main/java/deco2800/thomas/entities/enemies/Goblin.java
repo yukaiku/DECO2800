@@ -1,18 +1,15 @@
 package deco2800.thomas.entities.enemies;
 
-import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.StatusEffectManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
 import deco2800.thomas.util.SquareVector;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A class that defines an implementation of a minion enemy type called a Goblin.
@@ -22,19 +19,46 @@ import java.util.Arrays;
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/minions/goblin
  */
 public class Goblin extends Minion implements AggressiveEnemy {
+    private Variation variation;
+    private final Animation<TextureRegion> goblinIdle;
+    private float stateTimer;
+
     private int tickFollowing = 30;
     // Range at which the goblin will attempt to melee attack the player
     private int attackRange = 2;
 
-    public Goblin(int height, float speed, int health) {
-        super("Goblin", "goblin_swamp_right", height, speed, health);
+    public Goblin(Variation variation, int health, float speed) {
+        super(health, speed);
+        this.variation = variation;
+
+        switch (variation) {
+            case DESERT:
+                this.identifier = "goblinDesert";
+                this.setObjectName("Desert Goblin");
+                break;
+            case TUNDRA:
+                this.identifier = "goblinTundra";
+                this.setObjectName("Tundra Goblin");
+                break;
+            case VOLCANO:
+                this.identifier = "goblinVolcano";
+                this.setObjectName("Volcano Goblin");
+                break;
+            case SWAMP:
+            default:
+                this.identifier = "goblinSwamp";
+                this.setObjectName("Swamp Goblin");
+                break;
+        }
+
+        this.goblinIdle = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
+        this.stateTimer = 0;
+        detectTarget();
     }
 
-    public Goblin(int height, float speed, int health, String texture) {
-        this(height, speed, health);
-        super.setTextureDirections(new ArrayList<>(Arrays.asList(texture, texture + "_left", texture + "_right")));
-        this.setTexture(texture + "_right");
-        detectTarget();
+    public Goblin(int health, float speed) {
+        this(Variation.SWAMP, health, speed);
     }
 
     /**
@@ -42,23 +66,11 @@ public class Goblin extends Minion implements AggressiveEnemy {
      * by another enemy
      */
     public void detectTarget() {
-        AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
-        if (player != null) {
-            super.setTarget(GameManager.get().getWorld().getPlayerEntity());
-            setMovementTask(new MovementTask(this, super.getTarget().getPosition()));
-        }
-    }
-
-    /**
-     * Sets the appropriate texture based on the direction the goblin
-     * is moving
-     */
-    private void setGoblinTexture() {
-        if (getTarget() != null) {
-            if (getTarget().getCol() < this.getCol()) {
-                setTexture(getTextureDirection(TEXTURE_LEFT));
-            } else {
-                setTexture(getTextureDirection(TEXTURE_RIGHT));
+        if (GameManager.get().getWorld() != null) {
+            AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
+            if (player != null) {
+                super.setTarget(GameManager.get().getWorld().getPlayerEntity());
+                setMovementTask(new MovementTask(this, super.getTarget().getPosition()));
             }
         }
     }
@@ -82,7 +94,6 @@ public class Goblin extends Minion implements AggressiveEnemy {
         if (++tickFollowing > 30) {
             if (super.getTarget() != null) {
                 setMovementTask(new MovementTask(this, super.getTarget().getPosition()));
-                setGoblinTexture();
                 attackPlayer();
             }
             tickFollowing = 0;
@@ -108,7 +119,15 @@ public class Goblin extends Minion implements AggressiveEnemy {
     }
 
     @Override
+    public TextureRegion getFrame(float delta) {
+        TextureRegion region;
+        region = goblinIdle.getKeyFrame(stateTimer);
+        stateTimer = stateTimer + delta;
+        return region;
+    }
+
+    @Override
     public Goblin deepCopy() {
-        return new Goblin(super.getHeight(), super.getSpeed(), super.getMaxHealth(), super.getTexture());
+        return new Goblin(variation, super.getMaxHealth(), super.getSpeed());
     }
 }

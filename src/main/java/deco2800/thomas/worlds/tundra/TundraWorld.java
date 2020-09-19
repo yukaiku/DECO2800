@@ -11,6 +11,8 @@ import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.entities.enemies.Variation;
+import deco2800.thomas.entities.enemies.dragons.TundraDragon;
 import deco2800.thomas.entities.environment.tundra.TundraCampfire;
 import deco2800.thomas.entities.environment.tundra.TundraRock;
 import deco2800.thomas.entities.environment.tundra.TundraTreeLog;
@@ -60,9 +62,8 @@ public class TundraWorld extends AbstractWorld {
 		generateItemEntities();
 
 		// Provide available enemies to the EnemyManager
-		Orc tundraOrc = new Orc(1, 0.05f, 100, "orc_tundra");
-		Dragon boss = new Dragon("Giaphias", 3, 0.03f, 950, "dragon_tundra", 3);
-
+		Orc tundraOrc = new Orc(Variation.TUNDRA, 100, 0.05f);
+		TundraDragon boss = new TundraDragon(950, 0.03f, 3);
 		EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(tundraOrc), boss);
 		GameManager.get().addManager(enemyManager);
 		enemyManager.spawnBoss(0, 0);

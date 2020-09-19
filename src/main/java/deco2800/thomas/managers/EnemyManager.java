@@ -6,6 +6,7 @@ import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.Boss;
 import deco2800.thomas.entities.enemies.Goblin;
+import deco2800.thomas.entities.enemies.Variation;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.worlds.AbstractWorld;
 
@@ -275,7 +276,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
                     boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
                 } else if (keycode == Input.Keys.S) {
                     // Ctrl + S: Spawn a special enemy
-                    Goblin goblin = new Goblin(1, 0.1f, 20);
+                    Goblin goblin = new Goblin(Variation.SWAMP, 50, 0.05f);
                     spawnSpecialEnemy(goblin, 0, 0);
                 }
             }

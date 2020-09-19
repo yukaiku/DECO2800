@@ -7,11 +7,10 @@ import deco2800.thomas.entities.NPC.MerchantNPC;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.entities.NPC.VolcanoNPC;
+import deco2800.thomas.entities.enemies.*;
 import deco2800.thomas.entities.environment.volcano.VolcanoDragonSkull;
 import deco2800.thomas.entities.environment.volcano.VolcanoGraveYard;
 import deco2800.thomas.entities.environment.volcano.VolcanoRuins;
-import deco2800.thomas.entities.enemies.Dragon;
-import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.volcano.VolcanoBurningTree;
 import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
@@ -71,9 +70,9 @@ public class VolcanoWorld extends AbstractWorld {
         addEntity(this.getPlayerEntity());
         generateItemEntities();
 
-        Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano");
-        Dragon boss = new VolcanoDragon("Deilaenth", 3, 0.03f, 1000, "dragon_volcano", 1);
-
+        // Provide available enemies to the EnemyManager
+        Orc volcanoOrc = new Orc(Variation.VOLCANO, 50, 0.09f);
+        VolcanoDragon boss = new VolcanoDragon(1000, 0.03f, 1);
         EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(volcanoOrc), boss);
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(16, 20);

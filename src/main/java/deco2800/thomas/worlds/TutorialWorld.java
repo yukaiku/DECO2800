@@ -76,7 +76,7 @@ public class TutorialWorld extends AbstractWorld{
         // Create an enemy manager without wild enemy spawning.
         EnemyManager enemyManager = new EnemyManager(this);
         // Add dummy (special enemy) to the world
-        Dummy dummy = new Dummy(1, 0, 100);
+        Dummy dummy = new Dummy(100, 0);
         // Spawn a dummy
         enemyManager.spawnSpecialEnemy(dummy, 5, 0);
         GameManager.get().addManager(enemyManager);

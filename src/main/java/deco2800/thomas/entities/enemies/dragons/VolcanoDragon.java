@@ -8,8 +8,10 @@ import deco2800.thomas.util.EnemyUtil;
 public class VolcanoDragon extends Dragon {
     int attackRange = 4;
 
-    public VolcanoDragon(String name, int height, float speed, int health, String texture, int orb) {
-        super(name, height, speed, health, texture, orb);
+    public VolcanoDragon(int health, float speed, int orbNumber) {
+        super(health, speed, orbNumber);
+        this.identifier = "dragonVolcano";
+        this.setObjectName("Deilaenth");
     }
 
     @Override
