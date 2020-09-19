@@ -31,10 +31,9 @@ import deco2800.thomas.worlds.Tile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Implemented subclass of Abstract world for the Volcano Zone in Polyhedron.
@@ -49,6 +48,9 @@ public class VolcanoWorld extends AbstractWorld {
     private final int ORB_ROW = 20;
 
     private boolean notGenerated = true;
+
+    private List<AbstractDialogBox> allVolcanoDialogues;
+    private VolcanoLavaPool lavaPool;
 
     /**
      * Default Constructor for volcano world.
@@ -69,7 +71,8 @@ public class VolcanoWorld extends AbstractWorld {
         //Add player to game
         this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.15f));
         addEntity(this.getPlayerEntity());
-        generateItemEntities();
+
+        this.allVolcanoDialogues = new ArrayList<>();
 
         Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano");
         Dragon boss = new VolcanoDragon("Deilaenth", 3, 0.03f, 1000, "dragon_volcano", 1);
@@ -80,10 +83,23 @@ public class VolcanoWorld extends AbstractWorld {
 
         //Create Volcano NPCs
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
-        npnSpawns.add(new VolcanoNPC("VolcanoQuestNPC2", new SquareVector(-21, 22),"volcano_npc2"));
-        npnSpawns.add(new VolcanoNPC("VolcanoQuestNPC1", new SquareVector(-24, -13),"volcano_npc1"));
+        VolcanoNPC volcanoNpc1 = new VolcanoNPC("VolcanoQuestNPC1", new SquareVector(-24, -13),"volcano_npc1");
+        VolcanoNPC volcanoNpc2 = new VolcanoNPC("VolcanoQuestNPC2", new SquareVector(-21, 22),"volcano_npc2");
+        npnSpawns.add(volcanoNpc2);
+        npnSpawns.add(volcanoNpc1);
+        this.allVolcanoDialogues.add(volcanoNpc2.getBox());
+        this.allVolcanoDialogues.add(volcanoNpc1.getBox());
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
         GameManager.get().addManager(npcManager);
+
+
+        generateItemEntities();
+
+        //Creates dialogue manager
+        DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
+                this.allVolcanoDialogues);
+        GameManager.get().addManager(dialog);
+
         //Add local Event to this world
         this.setWorldEvent(new VolcanoEvent(this));
     }
@@ -150,40 +166,66 @@ public class VolcanoWorld extends AbstractWorld {
     private void generateItemEntities(){
         final int NUM_POTIONS = 6;
         final int NUM_SHIELDS = 4;
-        final int NUM_CHESTS = 3; 
+        final int NUM_CHESTS = 3;
 
-        ArrayList<AbstractDialogBox> items = new ArrayList<>();
-        
+        /*
+        List<Integer> spawnableItemCoordinateX = new ArrayList<>();
+        List<Integer> spawnableItemCoordinateY = new ArrayList<>();
+        HashMap<Integer, Integer> testList = new HashMap<>();
+        List<Integer> spawnableItemCoordinatez = new ArrayList<>();
+
+
+        for (int j = (0-DEFAULT_WIDTH); j < DEFAULT_WIDTH ;j++){
+            for (int k = (0-DEFAULT_HEIGHT); k < DEFAULT_HEIGHT ; k++){
+                if (getTile(j,k).getTextureName() != "Volcano_5" ||
+                        getTile(j,k).getTextureName() != "Volcano_6" ||
+                        getTile(j,k).getTextureName() != "Volcano_7" ||
+                        getTile(j,k).getTextureName() != "Volcano_8"){
+                    spawnableItemCoordinateX.add(j);
+                    spawnableItemCoordinateY.add(k);
+                }
+                testList.put(j,k);
+            }
+        }*/
+
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            HealthPotion potion = new HealthPotion(tile,false,
-                    (PlayerPeon) getPlayerEntity(), "volcano");
+            HealthPotion potion = new HealthPotion(tile, false,
+                        (PlayerPeon) getPlayerEntity(), "volcano");
             entities.add(potion);
-            items.add(potion.getDisplay());
+            this.allVolcanoDialogues.add(potion.getDisplay());
+
         }
+
+        /*
+        Random generator = new Random();
+        Object[] values = testList.values().toArray();
+        Object randomValue = values[generator.nextInt(values.length)];
+        int randomValue2 = (int) values[generator.nextInt(values.length)];
+        System.out.println(testList);
+         */
+
 
         for (int i = 0; i < NUM_SHIELDS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            Shield shield = new Shield(tile, false,
-                    (PlayerPeon) getPlayerEntity(),"volcano");
-            entities.add(shield);
-            items.add(shield.getDisplay());
+
+                Shield shield = new Shield(tile, false,
+                        (PlayerPeon) getPlayerEntity(), "volcano");
+                entities.add(shield);
+                this.allVolcanoDialogues.add(shield.getDisplay());
+
         }
         
         for (int i = 0; i < NUM_CHESTS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            Treasure chest = new Treasure(tile, false,
-                    (PlayerPeon) getPlayerEntity(),"volcano");
-            entities.add(chest);
-            items.add(chest.getDisplay());
+                Treasure chest = new Treasure(tile, false,
+                        (PlayerPeon) getPlayerEntity(), "volcano");
+                entities.add(chest);
+                this.allVolcanoDialogues.add(chest.getDisplay());
         }
-
-        DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
-                items);
-        GameManager.get().addManager(dialog);
     }
 
     /**
@@ -443,15 +485,15 @@ public class VolcanoWorld extends AbstractWorld {
         parts.add(new Part(new SquareVector(2, 0), "LavaPool", false));
         parts.add(new Part(new SquareVector(2, -1), "LavaPool", false));
 
-        VolcanoLavaPool lavaPool = new VolcanoLavaPool(col, row, parts);
+        this.lavaPool = new VolcanoLavaPool(col, row, parts);
 
         //REMOVE THIS ONCE MAP SIZE IS INCREASE TO 50 x 50 IN LATER SPRINTS,
         // AND SETUP LAVA POOLS ACCORDINGLY
-        for (SquareVector coord : lavaPool.getChildrenPositions()) {
+        for (SquareVector coord : this.lavaPool.getChildrenPositions()) {
             getTile(coord).setTexture("Volcano_1");
         }
 
-        System.out.println(lavaPool.getChildrenPositions().toString());
-        return lavaPool;
+        System.out.println(this.lavaPool.getChildrenPositions());
+        return this.lavaPool;
     }
 }
