@@ -81,7 +81,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		TEST_WORLD {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new VolcanoWorld();
+				AbstractWorld world = new TutorialWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
@@ -100,16 +100,28 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 
 	public GameScreen(final ThomasGame game, final gameType startType) {
-		if (startType == gameType.NEW_GAME) {
-			GameManager.get().state = GameManager.State.TRANSITION;
-			GameManager.get().tutorial = true;
-			GameManager.get().setWorld(startType.method());
-		} else if (startType == gameType.ENV_TEAM_GAME) {
-			GameManager.get().setWorld(startType.method());
-		} else if (startType == gameType.TEST_WORLD) {
-			GameManager.get().setWorld(startType.method());
-		} else {
-			GameManager.get().setNextWorld();
+		switch (startType) {
+			// start new game without debug mode
+			case NEW_GAME:
+				GameManager.get().debugMode = false;
+				GameManager.get().state = GameManager.State.TRANSITION;
+				GameManager.get().tutorial = true;
+				GameManager.get().setWorld(startType.method());
+				break;
+			// enter environment maps with debugging
+			case ENV_TEAM_GAME:
+				GameManager.get().debugMode = true;
+				GameManager.get().setWorld(startType.method());
+				break;
+			// start new game with debugging
+			case TEST_WORLD:
+				GameManager.get().debugMode = true;
+				GameManager.get().tutorial = true;
+				GameManager.get().setWorld(startType.method());
+				break;
+			default:
+				GameManager.get().setNextWorld();
+				break;
 		}
 		/* Create an example world for the engine */
 		this.game = game;

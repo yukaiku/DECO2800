@@ -39,34 +39,29 @@ public class MainMenuScreen implements Screen {
 		Label logo = new Label("Polyhedron", skin);
 		logo.setFontScale(5.0f);
 //		logo.setPosition(1280 / 2 - 225, 720 / 2 + 100);
-		logo.setPosition(180, 510);
-		logo.addAction(Actions.moveTo(280, 510, 0.4f, Interpolation.PowOut.pow3Out));
+		logo.setPosition(180, 540);
+		logo.addAction(Actions.moveTo(280, 540, 0.4f, Interpolation.PowOut.pow3Out));
 		stage.addActor(logo);
 
 		Button envTeamButton = new TextButton("ENV TEAM", skin, "main_menu");
-//		envTeamButton.setPosition(10, 250);
-		envTeamButton.setPosition(200, 300);
-		envTeamButton.addAction(Actions.moveTo(300, 300, 0.6f, Interpolation.PowOut.pow3Out));
+		envTeamButton.setPosition(200, 330);
+		envTeamButton.addAction(Actions.moveTo(300, 330, 0.6f, Interpolation.PowOut.pow3Out));
 		stage.addActor(envTeamButton);
 
-		Button newGameBtn = new TextButton("SINGLE PLAYER", skin, "main_menu");
-//		newGameBtn.setPosition(10, 200);
-		newGameBtn.setPosition(200, 250);
-		newGameBtn.addAction(Actions.moveTo(300, 250, 0.8f, Interpolation.PowOut.pow3Out));
-		stage.addActor(newGameBtn);
-
-		Button testWorldBtn = new TextButton("TEST WORLD", skin, "main_menu");
-//		testWorldBtn.setPosition(10, 150);
-		testWorldBtn.setPosition(200, 200);
-		testWorldBtn.addAction(Actions.moveTo(300, 200, 1f, Interpolation.PowOut.pow3Out));
+		Button testWorldBtn = new TextButton("DEBUG START", skin, "main_menu");
+		testWorldBtn.setPosition(200, 280);
+		testWorldBtn.addAction(Actions.moveTo(300, 280, 0.8f, Interpolation.PowOut.pow3Out));
 		stage.addActor(testWorldBtn);
 
-		newGameBtn.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				switchScreen(GameScreen.gameType.NEW_GAME);
-			}
-		});
+		Button newGameBtn = new TextButton("NEW GAME", skin, "main_menu");
+		newGameBtn.setPosition(200, 210);
+		newGameBtn.addAction(Actions.moveTo(300, 210, 1f, Interpolation.PowOut.pow3Out));
+		stage.addActor(newGameBtn);
+
+		Button exitBtn = new TextButton("EXIT", skin, "main_menu");
+		exitBtn.setPosition(200, 160);
+		exitBtn.addAction(Actions.moveTo(300, 160, 1.2f, Interpolation.PowOut.pow3Out));
+		stage.addActor(exitBtn);
 
 		envTeamButton.addListener(new ClickListener() {
 			@Override
@@ -79,6 +74,20 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				switchScreen(GameScreen.gameType.TEST_WORLD);
+			}
+		});
+
+		newGameBtn.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				switchScreen(GameScreen.gameType.NEW_GAME);
+			}
+		});
+
+		exitBtn.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				Gdx.app.exit();
 			}
 		});
 	}
