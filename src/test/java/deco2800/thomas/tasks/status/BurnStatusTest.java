@@ -2,6 +2,7 @@ package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.managers.GameManager;
 import org.junit.Assert;
@@ -32,13 +33,14 @@ public class BurnStatusTest extends BaseGDXTest {
     private AgentEntity entity;
 
     // the health tracker used to verify damage dealt
-    private HealthTracker healthTracker;
+//    private HealthTracker healthTracker;
 
     @Before
     public void setUp() throws Exception {
-        entity = mock(AgentEntity.class);
-        healthTracker = new HealthTracker(50);
-        when(entity.getHealthTracker()).thenReturn(healthTracker);
+//        entity = mock(AgentEntity.class);
+//        healthTracker = new HealthTracker(50);
+//        when(entity.getHealthTracker()).thenReturn(healthTracker);
+        entity = new Peon(0, 0, 0, 50);
         burn = new BurnStatus(entity, 5, 2);
     }
 
@@ -67,7 +69,8 @@ public class BurnStatusTest extends BaseGDXTest {
     @Test
     public void applyEffectFirstTick() {
         burn.applyEffect();
-        Assert.assertEquals(healthTracker.getCurrentHealthValue(), 45);
+//        Assert.assertEquals(healthTracker.getCurrentHealthValue(), 45);
+        Assert.assertEquals(entity.getCurrentHealth(), 45);
     }
 
     /**
@@ -79,7 +82,8 @@ public class BurnStatusTest extends BaseGDXTest {
         burn.applyEffect();
         burn.applyEffect();
 
-        Assert.assertEquals(healthTracker.getCurrentHealthValue(), 45);
+//        Assert.assertEquals(healthTracker.getCurrentHealthValue(), 45);
+        Assert.assertEquals(entity.getCurrentHealth(), 45);
     }
 
     /**
@@ -115,7 +119,8 @@ public class BurnStatusTest extends BaseGDXTest {
 
         burn2.applyEffect();
         // should have taken two instances of 4 dmg
-        Assert.assertEquals(healthTracker.getCurrentHealthValue(), 42);
+//        Assert.assertEquals(healthTracker.getCurrentHealthValue(), 42);
+        Assert.assertEquals(entity.getCurrentHealth(), 42);
         Assert.assertFalse(burn2.getActive());
     }
 }
