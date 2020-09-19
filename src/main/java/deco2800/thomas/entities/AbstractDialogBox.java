@@ -1,15 +1,7 @@
 package deco2800.thomas.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import deco2800.thomas.entities.items.*;
-import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.TextureManager;
-import deco2800.thomas.worlds.Tile;
 
 public class AbstractDialogBox {
 
@@ -20,7 +12,7 @@ public class AbstractDialogBox {
 	Skin skin;
 	boolean remove; 
 	
-	public AbstractDialogBox (Object entity, String name, String styleType) {
+	public AbstractDialogBox(Object entity, String name, String styleType) {
 		this.entity = entity;
 		this.skin = new Skin(Gdx.files.internal("resources/uiskin.skin"));
 		this.box = new Window(name, skin, styleType);

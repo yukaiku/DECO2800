@@ -1,4 +1,4 @@
-package deco2800.thomas.entities.Agent;
+package deco2800.thomas.entities.agent;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -25,7 +25,7 @@ import deco2800.thomas.util.WorldUtil;
 
 import java.util.*;
 
-public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, KeyDownObserver, KeyUpObserver {
+public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObserver, KeyDownObserver, KeyUpObserver {
     // Animation Testing
     public enum State {
         STANDING, WALKING, MELEE_ATTACK, RANGE_ATTACK

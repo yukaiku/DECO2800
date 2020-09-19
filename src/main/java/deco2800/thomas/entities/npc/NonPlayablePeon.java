@@ -1,16 +1,15 @@
-package deco2800.thomas.entities.NPC;
+package deco2800.thomas.entities.npc;
 
 import com.badlogic.gdx.Gdx;
 import deco2800.thomas.GameScreen;
 import deco2800.thomas.ThomasGame;
 import deco2800.thomas.entities.Interactable;
-import deco2800.thomas.entities.Agent.Peon;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
-import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
 
 public class NonPlayablePeon extends Peon implements Interactable {
@@ -18,7 +17,6 @@ public class NonPlayablePeon extends Peon implements Interactable {
     protected PlayerPeon player;
     protected String name;
     private boolean hasFinishedSetup;
-    protected SquareVector positionCheck;
 
     public NonPlayablePeon(String name, SquareVector position, String texture) {
         super();
@@ -42,7 +40,6 @@ public class NonPlayablePeon extends Peon implements Interactable {
      * This is run after the world has been added to the GameManager, otherwise a NullPointerException
      * would be thrown.
      * @see GameScreen#GameScreen(ThomasGame, GameScreen.gameType)
-     * @see TestWorld#generateWorld()
      */
     private void setObstructions() {
         try {
@@ -88,6 +85,7 @@ public class NonPlayablePeon extends Peon implements Interactable {
         boolean isCloseRow = clickedPosition[1] == this.getRow() ||
                              clickedPosition[1] == this.getRow() - 1 ||
                              clickedPosition[1] == this.getRow() + 1;
+
         if (isCloseCol && isCloseRow) {
             if ((this.getPosition().getCol()+1== this.player.getPosition().getCol())
                     && (this.getPosition().getRow() == this.player.getPosition().getRow())) {

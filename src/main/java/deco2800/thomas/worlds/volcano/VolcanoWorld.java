@@ -1,12 +1,9 @@
 package deco2800.thomas.worlds.volcano;
 
-import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.*;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.NPC.MerchantNPC;
-import deco2800.thomas.entities.NPC.NonPlayablePeon;
-import deco2800.thomas.entities.NPC.TutorialNPC;
-import deco2800.thomas.entities.NPC.VolcanoNPC;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.npc.NonPlayablePeon;
+import deco2800.thomas.entities.npc.VolcanoNPC;
 import deco2800.thomas.entities.environment.volcano.VolcanoDragonSkull;
 import deco2800.thomas.entities.environment.volcano.VolcanoGraveYard;
 import deco2800.thomas.entities.environment.volcano.VolcanoRuins;
@@ -19,8 +16,6 @@ import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.entities.environment.volcano.*;
-import deco2800.thomas.entities.enemies.Dragon;
-import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.enemies.dragons.VolcanoDragon;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;

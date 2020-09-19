@@ -1,14 +1,13 @@
 package deco2800.thomas.managers;
 
 import deco2800.thomas.BaseGDXTest;
-import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.tasks.status.StatusEffect;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
 
 /**
  * Tests the status effect manager, which is responsible for storing

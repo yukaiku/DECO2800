@@ -1,10 +1,8 @@
 package deco2800.thomas.entities.enemies;
 
-import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.Agent.Peon;
-
-import java.util.Objects;
+import deco2800.thomas.entities.agent.Peon;
 
 /**
  * An abstract class inheriting from Peon that will define the

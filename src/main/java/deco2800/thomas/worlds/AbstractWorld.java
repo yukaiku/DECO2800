@@ -1,12 +1,10 @@
 package deco2800.thomas.worlds;
 
-import com.badlogic.gdx.physics.box2d.World;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.Agent.QuestTracker;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.BoundingBox;
@@ -139,10 +137,7 @@ public abstract class AbstractWorld implements Tickable {
 			if (playerEntity.getPosition().equals(orbEntity.getPosition())) {
 				QuestTracker.increaseOrbs(orbEntity);
 				this.removeEntity(playerEntity);
-				this.removeEntity(orbEntity);
-				if (GameManager.get().state != GameManager.State.VICTORY) {
-					GameManager.get().setNextWorld();
-				}
+				GameManager.get().setNextWorld();
 			}
 		}
 	}

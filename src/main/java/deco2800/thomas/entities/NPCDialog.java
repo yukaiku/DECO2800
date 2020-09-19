@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.NPC.*;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.npc.*;
 
 import java.util.HashMap;
 

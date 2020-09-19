@@ -2,7 +2,6 @@ package deco2800.thomas.tasks.combat;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.attacks.StingProjectile;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.movement.DirectProjectileMovementTask;

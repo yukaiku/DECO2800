@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

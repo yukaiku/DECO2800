@@ -1,16 +1,12 @@
 package deco2800.thomas.entities;
 
 import deco2800.thomas.BaseGDXTest;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.util.WorldUtil;
-import deco2800.thomas.worlds.Tile; 
-import deco2800.thomas.entities.NPC.NonPlayablePeon;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.worlds.Tile;
+import deco2800.thomas.entities.npc.NonPlayablePeon;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.Before; 
-import deco2800.thomas.util.SquareVector; 
-import deco2800.thomas.worlds.TestWorld;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.util.SquareVector;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.BaseGDXTest;
-import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.util.SquareVector;
 import org.junit.Assert;
@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
 
 /**
  * Tests the QuicksandBurnStatus generalisation of the BurnStatus class.

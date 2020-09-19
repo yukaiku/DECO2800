@@ -10,8 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Agent.Peon;
-import deco2800.thomas.entities.Agent.QuestTracker;
+import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
@@ -53,6 +53,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 	QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
 	//Tutorial Guideline UI
 	Guideline guideline = new Guideline();
+
+	CurrencyRenderer currencyRenderer = new CurrencyRenderer();
 
 
 	// Buttons in the pause menu
@@ -215,13 +217,16 @@ public class GameScreen implements Screen, KeyDownObserver {
 		questTrackerRenderer.render(spriteBatch, cameraDebug);
 		//Add tutorial guideline if we are in the tutorial world
 		if(tutorial){
-			guideline.render(spriteBatch,cameraDebug);
+			guideline.render(spriteBatch, cameraDebug);
 		}
 
 		// Hide the buttons when the game is running
 		resumeButton.setPosition(-100, -100);
 		quitButton.setPosition(-100, -100);
 		enterButton.setPosition(-100, -100);
+
+		// Currency UI
+		currencyRenderer.render(spriteBatch, cameraDebug);
 
 		/* Refresh the experience UI for if information was updated */
 		stage.act(delta);

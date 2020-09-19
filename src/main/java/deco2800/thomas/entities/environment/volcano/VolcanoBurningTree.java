@@ -1,6 +1,6 @@
 package deco2800.thomas.entities.environment.volcano;
 
-import deco2800.thomas.entities.Agent.HasHealth;
+import deco2800.thomas.entities.agent.HasHealth;
 import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.worlds.Tile;

@@ -2,12 +2,9 @@ package deco2800.thomas.worlds.desert;
 
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.NPC.DesertNPC;
-import deco2800.thomas.entities.NPC.MerchantNPC;
-import deco2800.thomas.entities.NPC.NonPlayablePeon;
-import deco2800.thomas.entities.NPC.TutorialNPC;
-import deco2800.thomas.entities.Orb;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.npc.DesertNPC;
+import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.desert.*;
@@ -18,7 +15,6 @@ import deco2800.thomas.entities.enemies.dragons.DesertDragon;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
-import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 

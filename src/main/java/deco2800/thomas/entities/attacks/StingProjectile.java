@@ -2,9 +2,8 @@ package deco2800.thomas.entities.attacks;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Disposable;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Agent.Peon;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.RenderConstants;
@@ -12,7 +11,6 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.status.BurnStatus;
 import deco2800.thomas.util.WorldUtil;
-import org.lwjgl.Sys;
 
 import java.util.List;
 

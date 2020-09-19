@@ -7,7 +7,6 @@ import java.util.Set;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.worlds.Tile;

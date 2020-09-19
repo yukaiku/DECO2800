@@ -2,21 +2,22 @@ package deco2800.thomas.worlds;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import deco2800.thomas.GameScreen;
 import deco2800.thomas.entities.AbstractDialogBox;
-import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.NPC.NonPlayablePeon;
-import deco2800.thomas.entities.NPC.TutorialNPC;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.environment.Barrel;
+import deco2800.thomas.entities.environment.Portal;
+import deco2800.thomas.entities.environment.Stash;
+import deco2800.thomas.entities.environment.Target;
+import deco2800.thomas.entities.npc.NonPlayablePeon;
+import deco2800.thomas.entities.npc.TutorialNPC;
 import deco2800.thomas.entities.enemies.Dummy;
-import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.*;
 import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.entities.items.Shield;
-//import deco2800.thomas.entities.items.TestItem;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.DialogManager;
 import deco2800.thomas.managers.EnemyManager;
@@ -25,9 +26,6 @@ import deco2800.thomas.managers.NonPlayablePeonManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.managers.GameManager;
-import org.lwjgl.Sys;
-
-import java.util.Random;
 
 public class TutorialWorld extends AbstractWorld{
 
@@ -38,7 +36,7 @@ public class TutorialWorld extends AbstractWorld{
     static final int TUTORIAL_WORLD_HEIGHT = 6; // Note the map will double these numbers (bounds are +/- these limits)
     private final int PORTAL_COL = 0;
     private final int PORTAL_ROW = -TUTORIAL_WORLD_HEIGHT;
-    
+
 
     public TutorialWorld() {
         super(TUTORIAL_WORLD_WIDTH, TUTORIAL_WORLD_HEIGHT);
@@ -74,10 +72,13 @@ public class TutorialWorld extends AbstractWorld{
 
         // Create an enemy manager without wild enemy spawning.
         EnemyManager enemyManager = new EnemyManager(this);
+
         // Add dummy (special enemy) to the world
         Dummy dummy = new Dummy(1, 0, 100);
+
         // Spawn a dummy
         enemyManager.spawnSpecialEnemy(dummy, 5, 0);
+
         GameManager.get().addManager(enemyManager);
 
         // Add NPC
@@ -135,14 +136,15 @@ public class TutorialWorld extends AbstractWorld{
         // add potion and shield. 
         
         /**
+        // add potion and shield.
         Tile potion;
         potion = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
                 Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
         Item potionItem = new HealthPotion(potion, false,
                 (PlayerPeon) getPlayerEntity(), "tutorial");
-        entities.add(potionItem); 
+        entities.add(potionItem);
         this.allDialogBoxes.add(potionItem.getDisplay());
-        
+
         Tile shield;
         shield = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
                 Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
@@ -150,7 +152,7 @@ public class TutorialWorld extends AbstractWorld{
                 (PlayerPeon) getPlayerEntity(), "tutorial");
         entities.add(itemShield);
         this.allDialogBoxes.add(itemShield.getDisplay());
-        
+
         Tile treasure;
         treasure = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
                 Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
@@ -186,9 +188,11 @@ public class TutorialWorld extends AbstractWorld{
             // Set new world
             GameManager gameManager = GameManager.get();
             gameManager.setWorld(GameScreen.gameType.NEW_GAME.method());
-            
+
 
             GameManager.get().setNextWorld();
+            // Keep $$ on world change.
+            PlayerPeon.credit(((PlayerPeon) player).getWallet());
         }
     }
 }

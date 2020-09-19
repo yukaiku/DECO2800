@@ -1,7 +1,7 @@
 package deco2800.thomas.entities;
 
 import deco2800.thomas.BaseGDXTest;
-import deco2800.thomas.entities.Agent.QuestTracker;
+import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.worlds.Tile;
 import org.junit.Test;
 

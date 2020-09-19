@@ -1,5 +1,5 @@
 package deco2800.thomas.entities.environment;
-import deco2800.thomas.entities.Agent.HasHealth;
+import deco2800.thomas.entities.agent.HasHealth;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.entities.RenderConstants;

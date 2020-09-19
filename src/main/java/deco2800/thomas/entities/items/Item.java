@@ -1,14 +1,12 @@
 package deco2800.thomas.entities.items;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import deco2800.thomas.entities.*;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.util.WorldUtil;
-import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import java.util.Random;
 import java.util.List;
@@ -66,6 +64,12 @@ public class Item extends StaticEntity implements TouchDownObserver {
     
     public void setPlayer(PlayerPeon pl) { 
         player = pl; 
+    }
+
+    public void chargePlayer() {
+        if (PlayerPeon.checkBalance() > 0) {
+            player.takeMoney(goldValue);
+        }
     }
 
     public void setObstructions() {
