@@ -99,20 +99,24 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("projectile", new Texture("resources/rocks.png"));
 
 			// storyline
-			/*textureMap.put("stone_floor", new Texture("resources/tutorial/tile/tutorial-tile-design.png"));*/
-			textureMap.put("stone-1", new Texture("resources/tutorial/tile/tile1.png"));
-			textureMap.put("stone-2", new Texture("resources/tutorial/tile/tile2.png"));
-			textureMap.put("stone-3", new Texture("resources/tutorial/tile/tile3.png"));
-			textureMap.put("target", new Texture("resources/tutorial/object/target.png"));
-			textureMap.put("portal", new Texture("resources/tutorial/object/portal.png"));
-			textureMap.put("stash", new Texture("resources/tutorial/object/tutorial-stash.png"));
-			textureMap.put("barrel", new Texture("resources/tutorial/object/barrel.png"));
-			textureMap.put("chest", new Texture("resources/tutorial/object/chest.png"));
-			textureMap.put("dialog-box", new Texture("resources/tutorial/guideline.png"));
+			textureMap.put("stone-1", new Texture("resources/storyline/tile/tile1.png"));
+			textureMap.put("stone-2", new Texture("resources/storyline/tile/tile2.png"));
+			textureMap.put("stone-3", new Texture("resources/storyline/tile/tile3.png"));
+			textureMap.put("target", new Texture("resources/storyline/object/target.png"));
+			textureMap.put("portal", new Texture("resources/storyline/object/portal.png"));
+			textureMap.put("stash", new Texture("resources/storyline/object/tutorial-stash.png"));
+			textureMap.put("barrel", new Texture("resources/storyline/object/barrel.png"));
+			textureMap.put("chest", new Texture("resources/storyline/object/chest.png"));
+			textureMap.put("dialog-box", new Texture("resources/storyline/guideline.png"));
 			textureMap.put("orb", new Texture("resources/orb.png"));
-			textureMap.put("victory", new Texture("resources/tutorial/victory-screen.png"));
-			textureMap.put("defeat", new Texture("resources/tutorial/defeat-screen.png"));
-			textureMap.put("pause", new Texture("resources/tutorial/pause-menu.png"));
+			textureMap.put("victory", new Texture("resources/storyline/victory-screen.png"));
+			textureMap.put("defeat", new Texture("resources/storyline/defeat-screen.png"));
+			textureMap.put("pause", new Texture("resources/storyline/pause-menu.png"));
+			textureMap.put("trs-desert", new Texture("resources/storyline/transition/transition-desert.png"));
+			textureMap.put("trs-swamp", new Texture("resources/storyline/transition/transition-swamp.png"));
+			textureMap.put("trs-tundra", new Texture("resources/storyline/transition/transition-tundra.png"));
+			textureMap.put("trs-volcano", new Texture("resources/storyline/transition/transition-volcano.png"));
+
 
 			// npcs
 			textureMap.put("tutorial_npc", new Texture("resources/npcs/tutorial_npc.png"));
@@ -169,6 +173,8 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("potion_large", new Texture("resources/inventory/potion-large.png"));
 			textureMap.put("armour_iron", new Texture("resources/inventory/armour-iron.png"));
 			textureMap.put("armour_wood", new Texture("resources/inventory/armour-wood.png"));
+			textureMap.put("treasure_box", new Texture("resources/inventory/treasure-box.png"));
+
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -214,6 +220,7 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("Ruins_6", new Texture("resources/environment/volcano/entities/Ruins_6.png"));
 			textureMap.put("Ruins_7", new Texture("resources/environment/volcano/entities/Ruins_7.png"));
 			textureMap.put("Bones", new Texture("resources/environment/volcano/entities/Bones.png"));
+			textureMap.put("LavaPool", new Texture("resources/environment/transparent_tiletexture.png"));
 			textureMap.put("BurningTree", new Texture("resources/environment/volcano/entities/BurningTreePlaceholder.png"));
 			textureMap.put("DragonSkull", new Texture("resources/environment/volcano/entities/DragonSkull2.png"));
 		} catch (Exception e) {

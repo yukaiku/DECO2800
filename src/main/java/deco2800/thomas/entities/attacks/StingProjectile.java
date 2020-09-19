@@ -27,13 +27,30 @@ public class StingProjectile extends Projectile implements Animatable {
     /**
      * Default constructor, sets texture and object name.
      */
+    /* Enum containing the possible states of this class*/
+    public enum State {
+        DEFAULT, EXPLODING
+    }
+    /* The current state of this entity*/
+    public Fireball.State currentState;
+    /* Animation for when this entity is exploding */
+    private final Animation<TextureRegion> explosion;
+    /* Default animation */
+    private final Animation<TextureRegion> defaultState;
+    /* The current timer on this class */
+    private float stateTimer = 0;
+
     public StingProjectile() {
         super();
         this.setTexture("fireball_right");
         this.setObjectName("combatStingProjectile");
         animation = new Animation<TextureRegion>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
-
+        explosion = new Animation<TextureRegion>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
+        defaultState = new Animation<TextureRegion>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
+        currentState = Fireball.State.DEFAULT;
     }
 
     /**
@@ -51,13 +68,18 @@ public class StingProjectile extends Projectile implements Animatable {
         this.setObjectName("combatStingProjectile");
         animation = new Animation<TextureRegion>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
+        explosion = new Animation<TextureRegion>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
+        defaultState = new Animation<TextureRegion>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
+        currentState = Fireball.State.DEFAULT;
     }
 
     @Override
     public void onTick(long i) {
         // Update movement task
         if (movementTask != null) {
-            if(movementTask.isComplete()) {
+            if(movementTask.isComplete() && stateTimer > 9) {
                 WorldUtil.removeEntity(this);
             }
             movementTask.onTick(i);
@@ -67,13 +89,13 @@ public class StingProjectile extends Projectile implements Animatable {
         // Update combat task
         if (combatTask != null) {
             if (combatTask.isComplete()) {
-                applyPoison();
-                WorldUtil.removeEntity(this);
-            } else {
-                combatTask.onTick(i);
+                if (!movementTask.isComplete()) {
+                    applyPoison();
+                }
+                currentState = Fireball.State.EXPLODING;
+                movementTask.stopTask();
             }
-        } else {
-            WorldUtil.removeEntity(this);
+            combatTask.onTick(i);
         }
     }
 
@@ -104,6 +126,18 @@ public class StingProjectile extends Projectile implements Animatable {
      */
     @Override
     public TextureRegion getFrame(float delta) {
-        return animation.getKeyFrame(0);
+        TextureRegion region;
+        // Get the animation frame based on the current state
+        switch (currentState) {
+            case EXPLODING:
+                region = explosion.getKeyFrame(stateTimer);
+                break;
+            default:
+                stateTimer = 0;
+                region = defaultState.getKeyFrame(stateTimer);
+                break;
+        }
+        stateTimer = stateTimer + delta;
+        return region;
     }
 }

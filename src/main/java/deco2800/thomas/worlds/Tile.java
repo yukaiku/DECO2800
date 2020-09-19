@@ -50,6 +50,7 @@ public class Tile {
 	/**
 	 * Coordinates, which is a pair of numbers (col, row)
 	 */
+	@Expose
 	private SquareVector coords;
 
 	private StaticEntity parent;

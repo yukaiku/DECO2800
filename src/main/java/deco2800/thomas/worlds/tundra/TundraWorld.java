@@ -1,7 +1,12 @@
 package deco2800.thomas.worlds.tundra;
 
 import com.badlogic.gdx.Game;
+import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.NPC.MerchantNPC;
+import deco2800.thomas.entities.NPC.NonPlayablePeon;
+import deco2800.thomas.entities.NPC.TundraNPC;
+import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.entities.enemies.Dragon;
@@ -9,9 +14,11 @@ import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.tundra.TundraCampfire;
 import deco2800.thomas.entities.environment.tundra.TundraRock;
 import deco2800.thomas.entities.environment.tundra.TundraTreeLog;
-import deco2800.thomas.managers.DatabaseManager;
-import deco2800.thomas.managers.EnemyManager;
-import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.entities.items.HealthPotion;
+import deco2800.thomas.entities.items.Item;
+import deco2800.thomas.entities.items.Shield;
+import deco2800.thomas.entities.items.Treasure;
+import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
@@ -28,17 +35,29 @@ import java.util.List;
 
 public class TundraWorld extends AbstractWorld {
 	private final Logger logger = LoggerFactory.getLogger(TundraWorld.class);
+
+	/**
+	 * Load MAP_FILE_TILES_ONLY with the old DatabaseManager.loadWorld() static method
+	 * Load MAP_FILE with the new DatabaseManager.loadWorldFromJsonFile() static method
+	 */
+	public static final String MAP_FILE_TILES_ONLY = "resources/environment/tundra/tundra-map-tiles-only.json";
 	public static final String MAP_FILE = "resources/environment/tundra/tundra-map.json";
+
+	private ArrayList<AbstractDialogBox> allTundraDialogues;
 
 	public TundraWorld() {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 
 	public TundraWorld(int width, int height) {
-		DatabaseManager.loadWorld(this, MAP_FILE);
+		DatabaseManager.loadWorld(this, MAP_FILE_TILES_ONLY);
 		generateStaticEntities();
+		this.allTundraDialogues = new ArrayList<>();
+
+		// PlayerPeon
 		this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.15f));
 		addEntity(this.getPlayerEntity());
+		generateItemEntities();
 
 		// Provide available enemies to the EnemyManager
 		Orc tundraOrc = new Orc(1, 0.05f, 100, "orc_tundra");
@@ -47,6 +66,27 @@ public class TundraWorld extends AbstractWorld {
 		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(tundraOrc), boss);
 		GameManager.get().addManager(enemyManager);
 		enemyManager.spawnBoss(0, 0);
+
+		//Creates Tundra NPCs
+		List<NonPlayablePeon> npnSpawns = new ArrayList<>();
+		TundraNPC tundraNpc1 = new TundraNPC("TundraQuestNPC1", new SquareVector(-8, -24),"tundra_npc1");
+		TundraNPC tundraNpc2 = new TundraNPC("TundraQuestNPC2", new SquareVector(-22, -9),"tundra_npc2");
+		npnSpawns.add(tundraNpc1);
+		npnSpawns.add(tundraNpc2);
+		NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
+		GameManager.get().addManager(npcManager);
+
+		//Creates dialogue manager
+		this.allTundraDialogues.add(tundraNpc1.getBox());
+		this.allTundraDialogues.add(tundraNpc2.getBox());
+		DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
+				this.allTundraDialogues);
+		GameManager.get().addManager(dialog);
+	}
+
+	@Override
+	public String getType(){
+		return "Tundra";
 	}
 
 	private void generateStaticEntities() {
@@ -97,6 +137,46 @@ public class TundraWorld extends AbstractWorld {
 			}
 		}
 	}
+
+	/**
+	 * Generates items for tundra region, all positions of item are randomized
+	 * every time player loads into tundra zone.
+	 *
+	 * Items: Health potions, Iron shields etc.
+	 */
+	private void generateItemEntities(){
+		final int NUM_POTIONS = 6;
+		final int NUM_SHIELDS = 4;
+		final int NUM_CHESTS = 3;
+		
+		for (int i = 0; i < NUM_POTIONS; i++) {
+			Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+					Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+			HealthPotion potion = new HealthPotion(tile,false,
+					(PlayerPeon) getPlayerEntity(),"tundra");
+			entities.add(potion);
+			this.allTundraDialogues.add(potion.getDisplay());
+		}
+
+		for (int i = 0; i < NUM_SHIELDS; i++) {
+			Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+					Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+			Shield shield = new Shield(tile, false,
+					(PlayerPeon) getPlayerEntity(),"tundra");
+			entities.add(shield);
+			this.allTundraDialogues.add(shield.getDisplay());
+		}
+
+		for (int i = 0; i < NUM_CHESTS; i++) {
+			Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+					Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+			Treasure chest = new Treasure(tile, false,
+					(PlayerPeon) getPlayerEntity(),"tundra");
+			entities.add(chest);
+			this.allTundraDialogues.add(chest.getDisplay());
+		}
+	}
+
 
 	private void addCampfire(float col, float row) {
 		Tile tile = getTile(col, row);
