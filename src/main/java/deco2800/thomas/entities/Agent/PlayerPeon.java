@@ -17,7 +17,6 @@ import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
-import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
@@ -28,7 +27,7 @@ import java.util.*;
 public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, KeyDownObserver, KeyUpObserver {
     // Animation Testing
     public enum State {
-        STANDING, WALKING, MELEE_ATTACK, RANGE_ATTACK
+        IDLE, WALK, ATTACK_MELEE, ATTACK_RANGE
     }
 
     public State currentState;
@@ -79,8 +78,8 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
 
         // Animation Testing
         facingDirection = MovementTask.Direction.RIGHT;
-        currentState = State.STANDING;
-        previousState = State.STANDING;
+        currentState = State.IDLE;
+        previousState = State.IDLE;
         stateTimer = 0;
         playerMeleeAttack = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_melee"));
@@ -192,13 +191,13 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
 
         if (--duration < 0) {
             duration = 0;
-            currentState = State.STANDING;
+            currentState = State.IDLE;
         }
 
         // Update combat task
         if (getCombatTask() != null) {
-            currentState = State.MELEE_ATTACK;
-            duration = 9;
+            currentState = State.ATTACK_MELEE;
+            duration = 12;
             getCombatTask().onTick(i);
 
             if (getCombatTask().isComplete()) {
@@ -245,13 +244,13 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         TextureRegion region;
         // Get the animation frame based on the current state
         switch (currentState) {
-            case RANGE_ATTACK:
+            case ATTACK_RANGE:
                 region = playerRangeAttack.getKeyFrame(stateTimer);
                 break;
-            case MELEE_ATTACK:
+            case ATTACK_MELEE:
                 region = playerMeleeAttack.getKeyFrame(stateTimer);
                 break;
-            case STANDING:
+            case IDLE:
             default:
                 region = playerStand.getKeyFrame(stateTimer);
         }
@@ -306,10 +305,12 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         }
 
         // set the facing direction when attacking
-        if (clickedPosition[0] < this.getCol()) {
-            facingDirection = MovementTask.Direction.LEFT;
-        } else {
-            facingDirection = MovementTask.Direction.RIGHT;
+        if (getMovementTask() == null) {
+            if (clickedPosition[0] < this.getCol()) {
+                facingDirection = MovementTask.Direction.LEFT;
+            } else {
+                facingDirection = MovementTask.Direction.RIGHT;
+            }
         }
     }
 
