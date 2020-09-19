@@ -18,13 +18,12 @@ public class ItemBox extends AbstractDialogBox {
 		super(item, name, styleType);
 		this.item = item;
 		button = new TextButton("", skin);
-		close = new TextButton("",skin);
+		close = new TextButton("Close",skin);
 		
 		if (item.getClass() == Treasure.class){
 			box.add("Open the box!").expand().center();
 			box.row();
 			button.setText("Open");
-			close.setText("Close");
 		}
 		else{
 			setup(description, price);
@@ -49,7 +48,6 @@ public class ItemBox extends AbstractDialogBox {
 		box.row();
 		box.add("Price:" + price);
 		button.setText("Buy");
-		close.setText("Close");
 	}
 
 	ChangeListener a = new ChangeListener() {
