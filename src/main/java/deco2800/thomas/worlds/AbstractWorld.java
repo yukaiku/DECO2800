@@ -414,9 +414,7 @@ public abstract class AbstractWorld implements Tickable {
 	}
 
 	public void onTick(long i) {
-		if (!GameManager.get().inTutorial) {
-			this.checkObtainedOrb();
-		}
+		this.checkObtainedOrb();
 
 		for (AbstractEntity entity : entitiesToRemove) {
 			entities.remove(entity);
@@ -476,5 +474,25 @@ public abstract class AbstractWorld implements Tickable {
 
 	public void setWorldEvent(WorldEvent event) {
 		this.worldEvent = event;
+	}
+
+	/**
+	 * Disposes the World, clearing all entities and tiles from memory.
+	 */
+	public void dispose() {
+		// Clear all tiles and entities
+		for (AbstractEntity e : this.entities) {
+			e.dispose();
+		}
+		this.entities.clear();
+		this.entitiesToRemove.clear();
+		this.playerEntity.dispose();
+		this.playerEntity = null;
+
+		for (Tile t : this.tiles) {
+			t.dispose();
+		}
+		this.tiles.clear();
+		this.tilesToRemove.clear();
 	}
 }

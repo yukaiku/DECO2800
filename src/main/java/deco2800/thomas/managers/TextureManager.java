@@ -3,6 +3,7 @@ package deco2800.thomas.managers;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -104,10 +105,10 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("stone-3", new Texture("resources/storyline/tile/tile3.png"));
 			textureMap.put("target", new Texture("resources/storyline/object/target.png"));
 			textureMap.put("portal", new Texture("resources/storyline/object/portal.png"));
-			textureMap.put("stash", new Texture("resources/storyline/object/tutorial-stash.png"));
+			textureMap.put("stash", new Texture("resources/storyline/object/stash.png"));
 			textureMap.put("barrel", new Texture("resources/storyline/object/barrel.png"));
 			textureMap.put("chest", new Texture("resources/storyline/object/chest.png"));
-			textureMap.put("dialog-box", new Texture("resources/storyline/guideline.png"));
+			textureMap.put("dialog-box", new Texture("resources/storyline/story-intro.png"));
 			textureMap.put("orb", new Texture("resources/orb.png"));
 			textureMap.put("victory", new Texture("resources/storyline/victory-screen.png"));
 			textureMap.put("defeat", new Texture("resources/storyline/defeat-screen.png"));
@@ -116,9 +117,10 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("trs-swamp", new Texture("resources/storyline/transition/transition-swamp.png"));
 			textureMap.put("trs-tundra", new Texture("resources/storyline/transition/transition-tundra.png"));
 			textureMap.put("trs-volcano", new Texture("resources/storyline/transition/transition-volcano.png"));
+			textureMap.put("control", new Texture("resources/storyline/control.png"));
+			textureMap.put("leave", new Texture("resources/storyline/leave-message.png"));
 
-
-			// npcs
+			// NPCs
 			textureMap.put("tutorial_npc", new Texture("resources/npcs/tutorial_npc.png"));
 			textureMap.put("desert_npc1", new Texture("resources/npcs/npc1_desert.png"));
 			textureMap.put("desert_npc2", new Texture("resources/npcs/npc2_desert.png"));
@@ -132,7 +134,7 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("merchant_npc2", new Texture("resources/npcs/npc4.png"));
 			textureMap.put("merchant_npc3", new Texture("resources/npcs/npc5.png"));
 
-			//health & game over screen
+			// health & game over screen
 			textureMap.put("health0", new Texture("resources/healthResources/health-bar-0.png"));
 			textureMap.put("health5", new Texture("resources/healthResources/health-bar-5.png"));
 			textureMap.put("health10", new Texture("resources/healthResources/health-bar-10.png"));
@@ -174,6 +176,8 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("armour_iron", new Texture("resources/inventory/armour-iron.png"));
 			textureMap.put("armour_wood", new Texture("resources/inventory/armour-wood.png"));
 			textureMap.put("treasure_box", new Texture("resources/inventory/treasure-box.png"));
+
+			//Inventory Menu
 
 
 		} catch (Exception e) {
@@ -305,43 +309,57 @@ public class TextureManager extends AbstractManager {
 		textureMap.put("fireball_left", new Texture("resources/combat/fireball_left.png"));
 	}
 
+	/* ------------------------------------------------------------------------
+	 * 				               ANIMATION FRAMES
+	 * ------------------------------------------------------------------------ */
+
+	/**
+	 * Add the animation frames from a collections of files or a single sprite file.
+	 *
+	 * To import from a collection of files, use {@link #addAnimationFramesCollection(String id, String... files)}
+	 * To import from a sprite sheet, use {@link #addAnimationFramesSprite(String id, String file, int numOfFrames,
+	 * 		int frameWidth, int frameHeight, boolean horizontal)}
+	 *
+	 * Note: The initial facing direction should be RIGHT. The flipped version is not needed.
+	 */
 	private void addAnimationFrames() {
 		try {
-			// Note: The initial facing direction should be RIGHT. The flipped version is not needed.
-			// player standing
-				Array<TextureRegion> playerStand = new Array<>();
-				playerStand.add(new TextureRegion(new Texture("resources/player/rightmech1_move.png")));
-			animationFrames.put("player_stand", playerStand);
+			// players
+			addAnimationFramesCollection("player_stand", "resources/player/rightmech1_move.png");
+			addAnimationFramesCollection("player_melee", "resources/player/rightmech1_melee3.png",
+					"resources/player/rightmech1_melee1.png", "resources/player/rightmech1_melee2.png",
+					"resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee1.png",
+					"resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee2.png",
+					"resources/player/rightmech1_melee1.png", "resources/player/rightmech1_melee2.png",
+					"resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee3.png");
+			addAnimationFramesCollection("player_range", "resources/player/rightmech1_move.png");
 
-			// player melee attacks
-			Array<TextureRegion> playerMelee = new Array<>();
-			playerMelee.add(new TextureRegion(new Texture("resources/player/rightmech1_move.png"), 0, 0, 345, 350));
-			playerMelee.add(new TextureRegion(new Texture("resources/player/rightmech1_melee3.png"), 0, 0, 345, 350));
-			playerMelee.add(new TextureRegion(new Texture("resources/player/rightmech1_melee1.png"), 0, 0, 345, 350));
-			playerMelee.add(new TextureRegion(new Texture("resources/player/rightmech1_melee2.png"), 0, 0, 345, 350));
-			animationFrames.put("player_melee", playerMelee);
+			addAnimationFramesCollection("playerFireball", "resources/combat/right_skill1_fire1.png",
+					"resources/combat/right_skill1_fire2.png", "resources/combat/right_skill1_fire3.png",
+					"resources/combat/right_skill1_fire4.png", "resources/combat/right_skill1_fire5.png");
+			addAnimationFramesCollection("playerFireballDefault", "resources/combat/right_skill1_fire1.png");
 
-			// player range attacks
-			Array<TextureRegion> playerRange = new Array<>();
-			playerRange.add(new TextureRegion(new Texture("resources/player/rightmech1_move.png"), 0, 0, 350, 400));
-			animationFrames.put("player_range", playerRange);
+			// fireballs
+			addAnimationFramesCollection("fireballDefault", "resources/combat/fireball_right.png");
+			addAnimationFramesCollection("fireballExplosion", "resources/combat/explosive_fireball1.png",
+					"resources/combat/explosive_fireball2.png", "resources/combat/explosive_fireball3.png",
+					"resources/combat/explosive_fireball4.png", "resources/combat/explosive_fireball5.png",
+					"resources/combat/explosive_fireball6.png", "resources/combat/explosive_fireball7.png",
+					"resources/combat/explosive_fireball8.png", "resources/combat/explosive_fireball9.png");
 
-			Array<TextureRegion> fireballExplosion = new Array<>();
-			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball1.png")));
-			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball2.png")));
-			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball3.png")));
-			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball4.png")));
-			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball5.png")));
-			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball6.png")));
-			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball7.png")));
-			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball8.png")));
-			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball9.png")));
-
-			animationFrames.put("fireballExplosion", fireballExplosion);
-
-			Array<TextureRegion> fireballDefault = new Array<>();
-			fireballDefault.add(new TextureRegion(new Texture("resources/combat/fireball_right.png")));
-			animationFrames.put("fireballDefault", fireballDefault);
+			// enemies
+			addAnimationFramesCollection("goblinDesertIdle", "resources/enemies/goblin_desert_right.png");
+			addAnimationFramesCollection("goblinSwampIdle", "resources/enemies/goblin_swamp_right.png");
+			addAnimationFramesCollection("goblinTundraIdle", "resources/enemies/goblin_tundra_right.png");
+			addAnimationFramesCollection("goblinVolcanoIdle", "resources/enemies/goblin_volcano_right.png");
+			addAnimationFramesSprite("goblinDesertAttack", "resources/enemies/goblin_desert_sprite_sheet.png",
+					3, 350, 486, true);
+			addAnimationFramesSprite("goblinSwampAttack", "resources/enemies/goblin_desert_sprite_sheet.png",
+					3, 350, 486, true);
+			addAnimationFramesSprite("goblinTundraAttack", "resources/enemies/goblin_desert_sprite_sheet.png",
+					3, 350, 486, true);
+			addAnimationFramesSprite("goblinVolcanoAttack", "resources/enemies/goblin_desert_sprite_sheet.png",
+					3, 350, 486, true);
 
 			// Icebreath attack
 			Array<TextureRegion> freezeTile = new Array<>();
@@ -370,11 +388,30 @@ public class TextureManager extends AbstractManager {
 			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado6.png")));
 			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado7.png")));
 			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado8.png")));
-			animationFrames.put("sandTornado", sandTornado);
 
-		} catch (Exception e) {
+		} catch (GdxRuntimeException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/** Import animation frames from multiple files, where each file is one frame. */
+	private void addAnimationFramesCollection(String id, String ...files) throws GdxRuntimeException {
+		Array<TextureRegion> frames = new Array<>();
+		for (String file : files) frames.add(new TextureRegion(new Texture(file)));
+		animationFrames.put(id, frames);
+	}
+
+	/** Import animation frames from single sprite file. */
+	private void addAnimationFramesSprite(String id, String file, int numOfFrames, int frameWidth, int frameHeight,
+										  boolean horizontal) throws GdxRuntimeException {
+		Array<TextureRegion> frames = new Array<>();
+		Texture sprite = new Texture(file);
+		if (horizontal) for (int i = 1; i < numOfFrames + 1; i++) {
+			frames.add(new TextureRegion(sprite, i * frameWidth, 0, frameWidth, frameHeight));
+		} else for (int i = 1; i < numOfFrames + 1; i++) {
+			frames.add(new TextureRegion(sprite, 0, i * frameHeight, frameWidth, frameHeight));
+		}
+		animationFrames.put(id, frames);
 	}
 
 	public Array<TextureRegion> getAnimationFrames(String id) {
