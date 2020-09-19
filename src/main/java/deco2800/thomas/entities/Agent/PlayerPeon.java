@@ -182,29 +182,9 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
             death();
         }
 
-        // Update movement task
-        if (getMovementTask() != null && getMovementTask().isAlive()) {
-            getMovementTask().onTick(i);
-
-            if (getMovementTask().isComplete()) {
-                setMovementTask(null);
-            }
-        }
-
         if (--duration < 0) {
             duration = 0;
             currentState = State.IDLE;
-        }
-
-        // Update combat task
-        if (getCombatTask() != null) {
-            currentState = State.ATTACK_MELEE;
-            duration = 12;
-            getCombatTask().onTick(i);
-
-            if (getCombatTask().isComplete()) {
-                setCombatTask(null);
-            }
         }
 
         // Update skills
@@ -217,23 +197,8 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
             mechSkill.onTick(i);
         }
 
-        // Check current effects to be applied or removed
-        if (!getEffects().isEmpty()) {
-            for (StatusEffect effect : getEffects()) {
-                if (effect.getAffectedEntity() == null) {
-                    if (!effect.getActive()) {
-                        removeEffect(effect);
-                    }
-                } else {
-                    effect.applyEffect();
-                }
-            }
-        }
-
-        // isAttacked animation
-        if (isAttacked && --isAttackedCoolDown < 0) {
-            isAttacked = false;
-        }
+        // Update tasks and effects
+        super.onTick(i);
     }
 
     /**
