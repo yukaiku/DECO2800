@@ -414,9 +414,7 @@ public abstract class AbstractWorld implements Tickable {
 	}
 
 	public void onTick(long i) {
-		if (!GameManager.get().inTutorial) {
-			this.checkObtainedOrb();
-		}
+		this.checkObtainedOrb();
 
 		for (AbstractEntity entity : entitiesToRemove) {
 			entities.remove(entity);

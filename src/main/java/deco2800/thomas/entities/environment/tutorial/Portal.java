@@ -1,4 +1,4 @@
-package deco2800.thomas.entities.environment;
+package deco2800.thomas.entities.environment.tutorial;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.worlds.Tile;
