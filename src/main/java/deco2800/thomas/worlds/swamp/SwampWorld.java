@@ -58,7 +58,7 @@ public class SwampWorld extends AbstractWorld {
         Orc swampOrc = new Orc(1, 0.09f, 50, "orc_swamp");
         Dragon boss = new SwampDragon("Viondria", 3, 0.03f, 1050, "dragon_swamp", 2);
 
-        EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc), boss);
+        EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(swampOrc), boss);
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(19, -24);
 

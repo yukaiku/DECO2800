@@ -50,7 +50,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
     private final float spawnRangeMax;
     private final Random random;
     private int tick = 0;
-    private int nextTick = 120;
+    private int nextTick = 60;
 
     /**
      * Initialise an enemy manager without wild enemies. (e.g. for tutorial maps)
@@ -192,18 +192,23 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
 
     /** Spawns a random enemy from the configuration list. Normally it will be called automatically by the manager. */
     private void spawnRandomWildEnemy() {
-        // generate a random position within radius range
-        float degree = random.nextFloat() * 360;
-        float radius = spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin);
-        float tileX = world.getPlayerEntity().getCol() + Math.round(Math.sin(degree) * radius);
-        float tileY = world.getPlayerEntity().getRow() + Math.round(Math.cos(degree) * radius);
+        for (int i = 0; i < 5; i++) {
+            // generate a random position within radius range
+            float degree = random.nextFloat() * 360;
+            float radius = spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin);
+            float tileX = world.getPlayerEntity().getCol() + Math.round(Math.sin(degree) * radius);
+            float tileY = world.getPlayerEntity().getRow() + Math.round(Math.cos(degree) * radius);
 
-        // prevent spawning outside of the map
-        if (tileX > -world.getWidth() + 1 && tileX < world.getWidth() - 2 &&
-                tileY > -world.getHeight() + 1 && tileY < world.getHeight() - 1) {
-            // choose a random enemy blueprint
-            EnemyPeon enemy = wildEnemyConfigs.get(random.nextInt(wildEnemyConfigs.size())).deepCopy();
-            spawnWildEnemy(enemy, tileX, tileY);
+            // prevent spawning outside of the map or tiles with effects
+            if (tileX > -world.getWidth() + 1 && tileX < world.getWidth() - 2 &&
+                    tileY > -world.getHeight() + 1 && tileY < world.getHeight() - 1 &&
+                    world.getTile(tileX, tileY) != null && !world.getTile(tileX, tileY).isObstructed() &&
+                    !world.getTile(tileX, tileY).hasStatusEffect()) {
+                // choose a random enemy blueprint
+                EnemyPeon enemy = wildEnemyConfigs.get(random.nextInt(wildEnemyConfigs.size())).deepCopy();
+                spawnWildEnemy(enemy, tileX, tileY);
+                break;
+            }
         }
     }
 
@@ -281,7 +286,12 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
         if (++tick > nextTick) {
             if (wildSpawning && wildEnemiesAlive.size() < wildEnemyCap) {
                 spawnRandomWildEnemy();
-                nextTick = 10 + random.nextInt(170);
+                if (wildEnemiesAlive.size() == wildEnemyCap) {
+                    // give player a rest
+                    nextTick = 1200 + random.nextInt(90);
+                } else {
+                    nextTick = random.nextInt(90);
+                }
             }
             tick = 0;
         }
