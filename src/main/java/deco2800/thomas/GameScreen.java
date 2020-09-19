@@ -41,6 +41,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 	Guideline guideline = new Guideline();
 	QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
 
+	CurrencyRenderer currencyRenderer = new CurrencyRenderer();
+
 	AbstractWorld world;
 
 	static Skin skin;
@@ -164,10 +166,14 @@ public class GameScreen implements Screen, KeyDownObserver {
 			batchGuideline.setProjectionMatrix(cameraDebug.combined);
 			guideline.render(batchGuideline, cameraDebug);
 		}
-		// Questtracker UI
 		SpriteBatch batchGuideline = new SpriteBatch();
 		batchGuideline.setProjectionMatrix(cameraDebug.combined);
+
+		// Questtracker UI
 		questTrackerRenderer.render(batchGuideline, cameraDebug);
+
+		// Currency UI
+		currencyRenderer.render(batchGuideline, cameraDebug);
 
 		/* Refresh the experience UI for if information was updated */
 		stage.act(delta);
