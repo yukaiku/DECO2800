@@ -220,7 +220,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         // Check current effects to be applied or removed
         if (!getEffects().isEmpty()) {
             for (StatusEffect effect : getEffects()) {
-                if (effect.getAffectedEntity() != null) {
+                if (effect.getAffectedEntity() == null) {
                     if (!effect.getActive()) {
                         removeEffect(effect);
                     }
