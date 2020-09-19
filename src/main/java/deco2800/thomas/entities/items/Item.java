@@ -49,6 +49,10 @@ public class Item extends StaticEntity implements TouchDownObserver {
         player = pl; 
     }
 
+    public void chargePlayer() {
+        player.takeMoney(goldValue);
+    }
+
     public void setObstructions() {
         try {
             Tile feet = GameManager.get().getWorld().getTile(this.getCol(),
