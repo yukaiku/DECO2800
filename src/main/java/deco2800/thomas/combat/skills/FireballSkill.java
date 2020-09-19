@@ -8,11 +8,11 @@ import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireballAttackTask;
 
 /**
- * Launches a fireball that deals damage when it hits a target.
+ * Launches a fireball that deals damage when it hits a target. 
  */
 public class FireballSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private final int MAX_COOLDOWN = 10;
+    private final int MAX_COOLDOWN = 20;
     /* Damage to apply from fireball */
     private final int DAMAGE = 10;
     /* Speed of fireball */

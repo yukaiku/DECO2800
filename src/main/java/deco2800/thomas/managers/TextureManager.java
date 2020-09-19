@@ -323,11 +323,8 @@ public class TextureManager extends AbstractManager {
 		try {
 			// players
 			addAnimationFramesCollection("player_stand", "resources/player/rightmech1_move.png");
-			addAnimationFramesCollection("player_melee", "resources/player/rightmech1_melee3.png",
-					"resources/player/rightmech1_melee1.png", "resources/player/rightmech1_melee2.png",
-					"resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee1.png",
-					"resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee2.png",
-					"resources/player/rightmech1_melee1.png", "resources/player/rightmech1_melee2.png",
+			addAnimationFramesCollection("player_melee",
+					"resources/player/rightmech1_melee1.png",
 					"resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee3.png");
 			addAnimationFramesCollection("player_range", "resources/player/rightmech1_move.png");
 

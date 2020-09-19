@@ -196,6 +196,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
 
         // Update combat task
         if (getCombatTask() != null) {
+            stateTimer = 0;
             currentState = State.ATTACK_MELEE;
             duration = 12;
             getCombatTask().onTick(i);
@@ -279,7 +280,6 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
      */
     @Override
     public void notifyTouchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println("Touch down - player.");
         float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(), Gdx.input.getY());
         float[] clickedPosition = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
 
@@ -288,6 +288,8 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
                 //Set combat task to fireball task
                 Skill wizardSkill = wizardSkills.get(activeWizardSkill);
                 if (wizardSkill.getCooldown() <= 0) {
+                    stateTimer = 0;
+                    currentState = State.ATTACK_RANGE;
                     this.setCombatTask(wizardSkill.getNewSkillTask(clickedPosition[0], clickedPosition[1]));
                 }
             } catch (SkillOnCooldownException e) {
@@ -297,6 +299,8 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         } else if (button == Input.Buttons.RIGHT) {
             try {
                 if (mechSkill.getCooldown() <= 0) {
+                    stateTimer = 0;
+                    currentState = State.ATTACK_MELEE;
                     this.setCombatTask(mechSkill.getNewSkillTask(clickedPosition[0], clickedPosition[1]));
                 }
             } catch (SkillOnCooldownException e) {
