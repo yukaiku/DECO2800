@@ -2,21 +2,22 @@ package deco2800.thomas.worlds;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import deco2800.thomas.GameScreen;
 import deco2800.thomas.entities.AbstractDialogBox;
-import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.NPC.NonPlayablePeon;
-import deco2800.thomas.entities.NPC.TutorialNPC;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.environment.Barrel;
+import deco2800.thomas.entities.environment.Portal;
+import deco2800.thomas.entities.environment.Stash;
+import deco2800.thomas.entities.environment.Target;
+import deco2800.thomas.entities.npc.NonPlayablePeon;
+import deco2800.thomas.entities.npc.TutorialNPC;
 import deco2800.thomas.entities.enemies.Dummy;
-import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.*;
 import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.entities.items.Shield;
-//import deco2800.thomas.entities.items.TestItem;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.DialogManager;
 import deco2800.thomas.managers.EnemyManager;
@@ -25,9 +26,6 @@ import deco2800.thomas.managers.NonPlayablePeonManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.managers.GameManager;
-import org.lwjgl.Sys;
-
-import java.util.Random;
 
 public class TutorialWorld extends AbstractWorld{
 
@@ -192,7 +190,7 @@ public class TutorialWorld extends AbstractWorld{
 
             GameManager.get().setNextWorld();
             // Keep $$ on world change.
-            gameManager.getWorld().getPlayerEntity().credit(player.getWallet());
+            PlayerPeon.credit(((PlayerPeon) player).getWallet());
         }
     }
 }

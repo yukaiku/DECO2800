@@ -1,6 +1,6 @@
 package deco2800.thomas.tasks.status;
 
-import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.agent.AgentEntity;
 
 /**
  * An abstract class for a status effect, which can be generalised to apply

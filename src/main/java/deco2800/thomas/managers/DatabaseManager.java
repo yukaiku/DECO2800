@@ -1,8 +1,8 @@
 package deco2800.thomas.managers;
 
 import deco2800.thomas.entities.*;
-import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.worlds.AbstractWorld;
@@ -19,7 +19,6 @@ import deco2800.thomas.worlds.desert.CactusTile;
 import deco2800.thomas.worlds.desert.QuicksandTile;
 import deco2800.thomas.worlds.tundra.TundraWorldIceTile;
 import deco2800.thomas.worlds.volcano.VolcanoBurnTile;
-import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

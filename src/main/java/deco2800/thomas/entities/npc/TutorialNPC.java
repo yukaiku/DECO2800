@@ -1,31 +1,27 @@
-package deco2800.thomas.entities.NPC;
+package deco2800.thomas.entities.npc;
 
 import deco2800.thomas.entities.AbstractDialogBox;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.Interactable;
 import deco2800.thomas.entities.NPCDialog;
 import deco2800.thomas.util.SquareVector;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-public class DesertNPC extends NonPlayablePeon implements Interactable {
+public class TutorialNPC extends NonPlayablePeon implements Interactable {
 
     AbstractDialogBox tutorialDialogueBox;
     public static int speechStage;
     static boolean isActive = false;
 
-    public DesertNPC(String name, SquareVector position, String texture) {
+    public TutorialNPC(String name, SquareVector position, String texture) {
         super(name, position, texture);
         this.tutorialDialogueBox = new NPCDialog(this,"Default");
-        speechStage = 1;
+        speechStage = 0;
     }
-
+    
     public AbstractDialogBox getBox() {
-        return tutorialDialogueBox;
+        return this.tutorialDialogueBox;
     }
-
+    
     public void onTick(){
 
     }
@@ -41,7 +37,12 @@ public class DesertNPC extends NonPlayablePeon implements Interactable {
     @Override
     public void interact() {
         setIsActive(true);
-        ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("WASD"));
+        ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("welcome"));
         tutorialDialogueBox.setShowing(true);
+        if (speechStage >= 4){
+            setIsActive(true);
+            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("congrats"));
+            tutorialDialogueBox.setShowing(true);
+        }
     }
 }

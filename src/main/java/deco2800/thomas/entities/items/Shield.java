@@ -1,7 +1,6 @@
 package deco2800.thomas.entities.items;
 
-import deco2800.thomas.entities.AbstractDialogBox;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.ItemBox;
 import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.worlds.Tile;

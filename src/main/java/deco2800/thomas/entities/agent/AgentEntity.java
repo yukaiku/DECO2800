@@ -1,4 +1,4 @@
-package deco2800.thomas.entities.Agent;
+package deco2800.thomas.entities.agent;
 
 import com.google.gson.annotations.Expose;
 
@@ -9,7 +9,6 @@ import deco2800.thomas.util.SquareVector;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 
 public abstract class AgentEntity extends AbstractEntity {
 	@Expose

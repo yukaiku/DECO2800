@@ -1,4 +1,4 @@
-package deco2800.thomas.entities.Agent;
+package deco2800.thomas.entities.agent;
 
 import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.RenderConstants;

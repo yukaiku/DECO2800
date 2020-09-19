@@ -3,7 +3,7 @@ package deco2800.thomas.renderers;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
 
 public class CurrencyRenderer implements Renderer {
@@ -13,7 +13,7 @@ public class CurrencyRenderer implements Renderer {
     @Override
     public void render(SpriteBatch batch, OrthographicCamera camera) {
         // get quest progress
-        float wallet = GameManager.get().getWorld().getPlayerEntity().getWallet();
+        float wallet = ((PlayerPeon) GameManager.get().getWorld().getPlayerEntity()).getWallet();
 
         batch.begin();
         if (font == null) {

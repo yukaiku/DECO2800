@@ -1,21 +1,17 @@
 package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.BaseGDXTest;
-import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.HealthTracker;
-import deco2800.thomas.managers.GameManager;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.concurrent.TimeUnit;
 
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
 
 /**
  * Tests the BurnStatus generalisation of StatusEffect and its methods.

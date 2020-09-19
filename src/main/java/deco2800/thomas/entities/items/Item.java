@@ -1,14 +1,12 @@
 package deco2800.thomas.entities.items;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import deco2800.thomas.entities.*;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.util.WorldUtil;
-import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import java.util.Random;
 

@@ -1,11 +1,8 @@
 package deco2800.thomas.entities;
 
 import deco2800.thomas.BaseGDXTest;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.enemies.Dragon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.util.SquareVector;
-import org.junit.Assert;
-import org.junit.Before;
 
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.Goblin;

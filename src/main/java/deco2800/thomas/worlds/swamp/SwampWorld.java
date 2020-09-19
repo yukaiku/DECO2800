@@ -1,11 +1,9 @@
 package deco2800.thomas.worlds.swamp;
 
 import deco2800.thomas.entities.*;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.NPC.MerchantNPC;
-import deco2800.thomas.entities.NPC.NonPlayablePeon;
-import deco2800.thomas.entities.NPC.SwampNPC;
-import deco2800.thomas.entities.NPC.TutorialNPC;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.npc.NonPlayablePeon;
+import deco2800.thomas.entities.npc.SwampNPC;
 import deco2800.thomas.entities.environment.swamp.SwampDeadTree;
 import deco2800.thomas.entities.environment.swamp.SwampFallenTree;
 import deco2800.thomas.entities.environment.swamp.SwampPond;
@@ -19,9 +17,6 @@ import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
-import deco2800.thomas.entities.environment.swamp.*;
-import deco2800.thomas.entities.enemies.Dragon;
-import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.enemies.dragons.SwampDragon;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;

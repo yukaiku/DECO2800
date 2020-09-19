@@ -1,11 +1,9 @@
 package deco2800.thomas.entities.enemies;
 
-import com.badlogic.gdx.Game;
-import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
@@ -66,7 +64,7 @@ public class Goblin extends Minion implements AggressiveEnemy {
     @Override
     public void death() {
         GameManager.getManagerFromInstance(EnemyManager.class).removeSpecialEnemy(this);
-        GameManager.get().getWorld().getPlayerEntity().credit(8.50f);
+        PlayerPeon.credit(8.50f);
     }
 
     @Override

@@ -1,14 +1,9 @@
 package deco2800.thomas.worlds.tundra;
 
-import com.badlogic.gdx.Game;
 import deco2800.thomas.entities.AbstractDialogBox;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.NPC.MerchantNPC;
-import deco2800.thomas.entities.NPC.NonPlayablePeon;
-import deco2800.thomas.entities.NPC.TundraNPC;
-import deco2800.thomas.entities.NPC.TutorialNPC;
-import deco2800.thomas.entities.Orb;
-import deco2800.thomas.entities.StaticEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.npc.NonPlayablePeon;
+import deco2800.thomas.entities.npc.TundraNPC;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.tundra.TundraCampfire;
@@ -22,7 +17,6 @@ import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
-import org.lwjgl.Sys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

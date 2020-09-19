@@ -1,13 +1,12 @@
 package deco2800.thomas.entities.enemies;
 
-import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
@@ -15,7 +14,6 @@ import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 
-import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -157,6 +155,6 @@ public class Dragon extends Boss implements PassiveEnemy {
         //Generate the correct orb texture to initialise the dragon's dropped orb
         world.setOrbEntity(new Orb(tile, "orb_" + orbNumber));
 
-        ((PlayerPeon) GameManager.get().getWorld().getPlayerEntity()).credit(1500);
+        PlayerPeon.credit(1500);
     }
 }

@@ -1,7 +1,5 @@
 package deco2800.thomas.entities.enemies;
 
-import deco2800.thomas.entities.Agent.Peon;
-
 /**
  * An interface that defines the behaviour of passive enemies.
  * Passive enemies will not attack the player unless attacked

@@ -1,11 +1,7 @@
 package deco2800.thomas.worlds;
 
-import com.badlogic.gdx.Game;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.worlds.AbstractWorld;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.util.BoundingBox;
