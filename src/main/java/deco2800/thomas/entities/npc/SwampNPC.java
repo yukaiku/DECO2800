@@ -37,7 +37,12 @@ public class SwampNPC extends NonPlayablePeon implements Interactable {
     @Override
     public void interact() {
         setIsActive(true);
-        ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("WASD"));
-        tutorialDialogueBox.setShowing(true);
+        if (this.getName() == "SwampQuestNPC1" && speechStage >= 1) {
+            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("swamp"));
+            tutorialDialogueBox.setShowing(true);
+        } else if (this.getName() == "SwampQuestNPC2" && speechStage >= 1){
+            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("swamp"));
+            tutorialDialogueBox.setShowing(true);
+        }
     }
 }

@@ -142,32 +142,38 @@ public class TundraWorld extends AbstractWorld {
 		final int NUM_POTIONS = 6;
 		final int NUM_SHIELDS = 4;
 		final int NUM_CHESTS = 3;
-		
+
 		for (int i = 0; i < NUM_POTIONS; i++) {
 			Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
 					Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-			HealthPotion potion = new HealthPotion(tile,false,
-					(PlayerPeon) getPlayerEntity(),"tundra");
-			entities.add(potion);
-			this.allTundraDialogues.add(potion.getDisplay());
+
+				HealthPotion potion = new HealthPotion(tile, false,
+						(PlayerPeon) getPlayerEntity(), "tundra");
+				entities.add(potion);
+				this.allTundraDialogues.add(potion.getDisplay());
+
 		}
 
 		for (int i = 0; i < NUM_SHIELDS; i++) {
 			Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
 					Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-			Shield shield = new Shield(tile, false,
-					(PlayerPeon) getPlayerEntity(),"tundra");
-			entities.add(shield);
-			this.allTundraDialogues.add(shield.getDisplay());
+
+				Shield shield = new Shield(tile, false,
+						(PlayerPeon) getPlayerEntity(), "tundra");
+				entities.add(shield);
+				this.allTundraDialogues.add(shield.getDisplay());
+
 		}
 
 		for (int i = 0; i < NUM_CHESTS; i++) {
 			Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
 					Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-			Treasure chest = new Treasure(tile, false,
-					(PlayerPeon) getPlayerEntity(),"tundra");
-			entities.add(chest);
-			this.allTundraDialogues.add(chest.getDisplay());
+
+				Treasure chest = new Treasure(tile, false,
+						(PlayerPeon) getPlayerEntity(), "tundra");
+				entities.add(chest);
+				this.allTundraDialogues.add(chest.getDisplay());
+
 		}
 	}
 

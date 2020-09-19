@@ -37,7 +37,12 @@ public class VolcanoNPC extends NonPlayablePeon implements Interactable {
     @Override
     public void interact() {
         setIsActive(true);
-        ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("WASD"));
-        tutorialDialogueBox.setShowing(true);
+        if (this.getName() == "VolcanoQuestNPC1" && speechStage >= 1) {
+            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("volcano"));
+            tutorialDialogueBox.setShowing(true);
+        } else if (this.getName() == "VolcanoQuestNPC2" && speechStage >= 1){
+            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("volcano"));
+            tutorialDialogueBox.setShowing(true);
+        }
     }
 }

@@ -37,7 +37,12 @@ public class DesertNPC extends NonPlayablePeon implements Interactable {
     @Override
     public void interact() {
         setIsActive(true);
-        ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("WASD"));
-        tutorialDialogueBox.setShowing(true);
+        if (this.getName() == "DesertQuestNPC1" && speechStage >= 1) {
+            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("desert"));
+            tutorialDialogueBox.setShowing(true);
+        } else if (this.getName() == "DesertQuestNPC2" && speechStage >= 1){
+            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("desert"));
+            tutorialDialogueBox.setShowing(true);
+        }
     }
 }
