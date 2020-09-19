@@ -23,6 +23,11 @@ public class Item extends StaticEntity implements TouchDownObserver {
     protected PlayerPeon player; 
     boolean ready;
 
+    public Item(String name, int value){
+        this.name = name;
+        this.goldValue = value;
+    }
+
     public Item(String name, int value, Tile tile, int renderOrder,
             String texture, boolean obstructed, PlayerPeon player){
         super(tile, RenderConstants.ITEM_RENDER, texture, obstructed);
@@ -59,7 +64,7 @@ public class Item extends StaticEntity implements TouchDownObserver {
     }
 
     public AbstractDialogBox getDisplay() {
-        return display; 
+        return this.display;
     }
     
     public void setPlayer(PlayerPeon pl) { 
@@ -90,14 +95,14 @@ public class Item extends StaticEntity implements TouchDownObserver {
         if (GameManager.get().getWorld() != null && !ready) {
             setObstructions();
         }
-        if (display.isShowing()) {
-            display.setVisibleTime(display.getVisibleTime() + 1);
+        if (this.display.isShowing()) {
+            this.display.setVisibleTime(display.getVisibleTime() + 1);
         }
     }
     
     public void interact() {
-        display.setVisibleTime(0);
-        display.setShowing(true);
+        this.display.setVisibleTime(0);
+        this.display.setShowing(true);
     }
 
     @Override

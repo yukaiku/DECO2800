@@ -6,6 +6,10 @@ public class LoadedPeon extends Peon {
 
     private float wallet = 0f;
 
+    public LoadedPeon(){
+        this.wallet = 0;
+    }
+
     public LoadedPeon(float row, float col, float speed, int health) {
         // Initialise abstract entity
         super(row, col, speed, health);

@@ -66,7 +66,7 @@ public class TutorialWorld extends AbstractWorld{
         }
 
         PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f, 50);
-//        addEntity(player);
+            addEntity(player);
         this.setPlayerEntity(player);
         addEntity(this.getPlayerEntity());
 
@@ -135,7 +135,7 @@ public class TutorialWorld extends AbstractWorld{
 
         // add potion and shield. 
         
-        /**
+        /*
         // add potion and shield.
         Tile potion;
         potion = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
