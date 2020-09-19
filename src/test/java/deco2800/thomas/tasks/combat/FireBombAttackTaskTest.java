@@ -1,24 +1,22 @@
 package deco2800.thomas.tasks.combat;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.entities.attacks.Explosion;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
-import deco2800.thomas.tasks.combat.ApplyDamageOnCollisionTask;
 import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.verification.VerificationMode;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -87,7 +85,7 @@ public class FireBombAttackTaskTest extends BaseGDXTest {
         task.onTick(1);
 
         // Verify reduceHealth is called
-        verify(agentEntity).reduceHealth(anyInt());
+        verify(agentEntity).applyDamage(anyInt(), DamageType.COMMON);
     }
 
     /**

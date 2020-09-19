@@ -1,24 +1,40 @@
 package deco2800.thomas.entities.Agent;
 
 import deco2800.thomas.Tickable;
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TaskPool;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.status.StatusEffect;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * A peon represents an active entity within the game. For example, the player,
+ * an enemy, a boss or an NPC.
+ */
 public class Peon extends AgentEntity implements Tickable {
+	/* Tasks for this peon */
 	private AbstractTask movementTask;
 	private AbstractTask combatTask;
-	private ArrayList<StatusEffect> effects;
-	private float armour;
-	private float damage;
+	/* Status effects on this peon */
+	private CopyOnWriteArrayList<StatusEffect> effects;
+	/* Combat stats for this entity */
+	private final float ARMOUR_CONSTANT = 1000f; // Changes effectiveness of armour values, higher = less effective
+	private float armour; // Reduces incoming damage
+	private float damage; // Base outgoing damage value
+	private float speed; // Base movement speed
+	private DamageType vulnerability; // Peon takes extra damage from this damage type
 
+
+	/* Combat status of this entity */
 	protected boolean isAttacked = false;
 	protected int isAttackedCoolDown = 0;
 
+	/**
+	 * Creates a generic peon class.
+	 */
 	public Peon() {
 		super();
 		this.setTexture("spacman_ded");
@@ -26,7 +42,7 @@ public class Peon extends AgentEntity implements Tickable {
 		this.setHeight(1);
 		this.speed = 0.05f;
 		this.save = true;
-		this.effects = new ArrayList<StatusEffect>();
+		this.effects = new CopyOnWriteArrayList<StatusEffect>();
 	}
 
 	/**
@@ -35,11 +51,16 @@ public class Peon extends AgentEntity implements Tickable {
 	public Peon(float row, float col, float speed, int health) {
 		super(row, col, RenderConstants.PEON_RENDER, speed, health);
 		this.setTexture("spacman_ded");
-		this.effects = new ArrayList<StatusEffect>();
+		this.effects = new CopyOnWriteArrayList<StatusEffect>();
 	}
 
+	/**
+	 * Performs a single tick for the peon.
+	 * @param i Ticks since game start
+	 */
 	@Override
 	public void onTick(long i) {
+		// Update movement task
 		if (movementTask != null && movementTask.isAlive()) {
 			if (movementTask.isComplete()) {
 				this.movementTask = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
@@ -63,31 +84,68 @@ public class Peon extends AgentEntity implements Tickable {
 		if (isAttacked && --isAttackedCoolDown < 0) {
 			isAttacked = false;
 		}
+
+		// Update effects
+		for (StatusEffect effect : this.effects) {
+			if (effect.getActive()) {
+				effect.applyEffect();
+			} else {
+				removeEffect(effect);
+			}
+		}
 	}
 
+	/**
+	 * Applies damage to the peon according to damage calculation algorithm.
+	 * @param damage The amount of damage to be taken by this AgentEntity.
+	 * @param damageType
+	 * @returns Damage dealt. (TODO)
+	 */
 	@Override
-	public void reduceHealth(int damage) {
-		health.reduceHealth(damage);
+	public void applyDamage(int damage, DamageType damageType) {
+		int damageApplied = (int)(damage * ARMOUR_CONSTANT / getArmour() * (damageType == vulnerability ? 1.5 : 1));
+		health.reduceHealth(damageApplied);
 		isAttacked = true;
 		isAttackedCoolDown = 5;
+
+		//return damageApplied;
 	}
 
+	/**
+	 * Returns whether this peon was recently attacked.
+	 */
 	public boolean isAttacked() {
 		return this.isAttacked;
 	}
 
+	/**
+	 * Sets this peon's movement task.
+	 * @param movementTask New movement task to use.
+	 */
 	protected void setMovementTask(AbstractTask movementTask) {
 		this.movementTask = movementTask;
 	}
 
+	/**
+	 * Returns this peon's movement task.
+	 * @return Current movement task or null if none set.
+	 */
 	public AbstractTask getMovementTask() {
 		return movementTask;
 	}
 
+	/**
+	 * Returns this peon's combat task.
+	 * @return Current combat task or null if none set.
+	 */
 	public AbstractTask getCombatTask() {
 		return combatTask;
 	}
 
+	/**
+	 * Sets this peon's combat task. (Will override any in progress).
+	 * @param combatTask New combat task to use.
+	 */
 	public void setCombatTask(AbstractTask combatTask) {
 		this.combatTask = combatTask;
 	}
@@ -97,7 +155,7 @@ public class Peon extends AgentEntity implements Tickable {
 	 *
 	 * @return List of active effects
 	 */
-	public ArrayList<StatusEffect> getEffects() {
+	public CopyOnWriteArrayList<StatusEffect> getEffects() {
 		return effects;
 	}
 
@@ -106,7 +164,7 @@ public class Peon extends AgentEntity implements Tickable {
 	 *
 	 * @param effects List of StatusEffects
 	 */
-	public void setEffects(ArrayList<StatusEffect> effects) {
+	public void setEffects(CopyOnWriteArrayList<StatusEffect> effects) {
 		this.effects = effects;
 	}
 

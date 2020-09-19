@@ -1,5 +1,6 @@
 package deco2800.thomas.entities.enemies;
 
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.EntityFaction;
@@ -7,7 +8,6 @@ import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
@@ -15,7 +15,6 @@ import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 
-import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -59,7 +58,7 @@ public class Dragon extends Boss implements PassiveEnemy {
     }
 
     @Override
-    public void reduceHealth(int damage) {
+    public void applyDamage(int damage, DamageType damageType) {
         hitByTarget();
         health.reduceHealth(damage);
         if (isDead()) {

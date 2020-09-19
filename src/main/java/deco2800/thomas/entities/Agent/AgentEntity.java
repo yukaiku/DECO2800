@@ -2,6 +2,7 @@ package deco2800.thomas.entities.Agent;
 
 import com.google.gson.annotations.Expose;
 
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.tasks.movement.MovementTask;
@@ -9,7 +10,6 @@ import deco2800.thomas.util.SquareVector;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 
 public abstract class AgentEntity extends AbstractEntity {
 	@Expose
@@ -102,9 +102,10 @@ public abstract class AgentEntity extends AbstractEntity {
 
 	/**
 	 * Reduces the health of this AgentEntity. by the given amount.
-	 * @param damage The amount of damage to be taken by this AgentEntity.
-	 */
-	public void reduceHealth(int damage) {
+     * @param damage The amount of damage to be taken by this AgentEntity.
+     * @param damageType
+     */
+	public void applyDamage(int damage, DamageType damageType) {
 		health.reduceHealth(damage);
 	}
 

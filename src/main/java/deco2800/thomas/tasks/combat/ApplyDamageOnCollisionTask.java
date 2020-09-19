@@ -1,5 +1,6 @@
 package deco2800.thomas.tasks.combat;
 
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
@@ -89,7 +90,7 @@ public class ApplyDamageOnCollisionTask extends AbstractTask {
         if (e instanceof AgentEntity) {
             AgentEntity agentEntity = (AgentEntity) e;
 
-            agentEntity.reduceHealth(((CombatEntity) entity).getDamage());
+            agentEntity.applyDamage(((CombatEntity) entity).getDamage(), DamageType.COMMON);
             this.taskComplete = true;
             if (agentEntity.isDead()) {
                 agentEntity.death();

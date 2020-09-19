@@ -1,11 +1,11 @@
 package deco2800.thomas.tasks.combat;
 
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.tasks.combat.ApplyDamageOnCollisionTask;
 import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
@@ -68,7 +68,7 @@ public class ApplyDamageOnCollisionTaskTest extends BaseGDXTest {
 
         // Verify getDamage and reduceHealth are called
         verify(combatEntity).getDamage();
-        verify(agentEntity).reduceHealth(anyInt());
+        verify(agentEntity).applyDamage(anyInt(), DamageType.COMMON);
 
         // Verify state change
         assertTrue(task.isComplete());

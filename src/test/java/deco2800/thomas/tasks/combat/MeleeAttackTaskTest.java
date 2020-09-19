@@ -1,11 +1,11 @@
 package deco2800.thomas.tasks.combat;
 
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
@@ -65,7 +65,7 @@ public class MeleeAttackTaskTest extends BaseGDXTest {
         task.onTick(1);
 
         // Verify reduceHealth is called
-        verify(agentEntity).reduceHealth(anyInt());
+        verify(agentEntity).applyDamage(anyInt(), DamageType.COMMON);
 
         // Verify state change
         assertTrue(task.isComplete());
@@ -94,7 +94,7 @@ public class MeleeAttackTaskTest extends BaseGDXTest {
         task.onTick(1);
 
         // Verify reduceHealth is not called
-        verify(agentEntity, never()).reduceHealth(anyInt());
+        verify(agentEntity, never()).applyDamage(anyInt(), DamageType.COMMON);
 
         // Verify state change
         assertTrue(task.isComplete());

@@ -1,18 +1,17 @@
 package deco2800.thomas.tasks.combat;
 
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.tasks.combat.ApplyDamageOnCollisionTask;
 import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.verification.VerificationMode;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -72,7 +71,7 @@ public class ApplyDamageOverTimeTaskTest extends BaseGDXTest {
 
         // Verify getDamage and reduceHealth are called
         verify(combatEntity).getDamage();
-        verify(agentEntity).reduceHealth(anyInt());
+        verify(agentEntity).applyDamage(anyInt(), DamageType.COMMON);
     }
 
     /**
@@ -89,7 +88,7 @@ public class ApplyDamageOverTimeTaskTest extends BaseGDXTest {
 
         // Verify getDamage and reduceHealth are called each time
         verify(combatEntity, times(5)).getDamage();
-        verify(agentEntity, times(5)).reduceHealth(anyInt());
+        verify(agentEntity, times(5)).applyDamage(anyInt(), DamageType.COMMON);
     }
 
     /**
@@ -105,7 +104,7 @@ public class ApplyDamageOverTimeTaskTest extends BaseGDXTest {
 
         // Verify getDamage and reduceHealth are called only twice
         verify(combatEntity, times(2)).getDamage();
-        verify(agentEntity, times(2)).reduceHealth(anyInt());
+        verify(agentEntity, times(2)).applyDamage(anyInt(), DamageType.COMMON);
     }
 
     /**
