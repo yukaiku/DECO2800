@@ -359,6 +359,18 @@ public class TextureManager extends AbstractManager {
 			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave11.png")));
 			animationFrames.put("freezeTile", freezeTile);
 
+			// Sand Tornado attack
+			Array<TextureRegion> sandTornado = new Array<>();
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado0.png")));
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado1.png")));
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado2.png")));
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado3.png")));
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado4.png")));
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado5.png")));
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado6.png")));
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado7.png")));
+			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado8.png")));
+			animationFrames.put("sandTornado", sandTornado);
 
 		} catch (Exception e) {
 			e.printStackTrace();
