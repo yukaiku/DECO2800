@@ -60,7 +60,7 @@ public class FireballSkillTest extends BaseGDXTest {
         FireballSkill testSkill = new FireballSkill(mockedEntity);
 
         assertEquals(0, testSkill.getCooldown());
-        assertEquals(10, testSkill.getCooldownMax());
+        assertEquals(20, testSkill.getCooldownMax());
         assertNotNull(testSkill.getTexture());
     }
 

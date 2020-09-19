@@ -29,26 +29,18 @@ import java.util.Random;
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/bosses/dragon
  */
-public abstract class Dragon extends Boss implements PassiveEnemy, Animatable {
-    public enum State {
-        IDLE, WALK, ATTACKING
-    }
-    public State currentState;
-    public State previousState;
-    protected Variation variation;
-    protected Animation<TextureRegion> dragonIdle = null;
-    private float stateTimer;
-    protected Animation<TextureRegion> dragonAttacking = null;
+public abstract class Dragon extends Boss implements PassiveEnemy {
     private MovementTask.Direction facingDirection;
+    protected Animation<TextureRegion> dragonIdle;
+    protected Variation variation;
     protected int duration = 0;
     private int tickFollowing = 60;
     // Range at which the dragon will attempt to melee attack the player
     protected int attackRange = 4;
     //the orb number for orb texture
     int orbNumber;
-    //
+    private float stateTimer = 0;
     Random random = new Random();
-
     public Dragon(int health, float speed, int orbNumber) {
         super(health, speed);
         this.orbNumber = orbNumber;
@@ -56,12 +48,6 @@ public abstract class Dragon extends Boss implements PassiveEnemy, Animatable {
         this.variation = Variation.SWAMP; // default
         this.identifier = "dragonSwamp";
         this.setTexture("dragonSwamp");
-
-        this.stateTimer = 0;
-        currentState = State.IDLE;
-        previousState = State.IDLE;
-        facingDirection = MovementTask.Direction.RIGHT;
-        this.stateTimer = 0;
     }
 
     /**
@@ -116,11 +102,6 @@ public abstract class Dragon extends Boss implements PassiveEnemy, Animatable {
 
     @Override
     public void onTick(long i) {
-        if (--duration < 0) {
-            duration = 0;
-            currentState = State.IDLE;
-        }
-
         // update target following path every 1 second (60 ticks)
         if (++tickFollowing + random.nextInt(9) > 80) {
             if (super.getTarget() != null) {
@@ -177,16 +158,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy, Animatable {
 
     @Override
     public TextureRegion getFrame(float delta) {
-        TextureRegion region;
-        switch (currentState) {
-            case ATTACKING:
-                region = dragonAttacking.getKeyFrame(stateTimer);
-                break;
-            case IDLE:
-            default:
-                stateTimer = 0;
-                region = dragonIdle.getKeyFrame(stateTimer);
-        }
+        TextureRegion region = dragonIdle.getKeyFrame(stateTimer);
         if ((getMovingDirection() == MovementTask.Direction.LEFT ||
                 facingDirection == MovementTask.Direction.LEFT) && !region.isFlipX()) {
             region.flip(true, false);
@@ -196,8 +168,6 @@ public abstract class Dragon extends Boss implements PassiveEnemy, Animatable {
             region.flip(true, false);
             facingDirection = MovementTask.Direction.RIGHT;
         }
-        stateTimer = currentState == previousState ? stateTimer + delta : 0;
-        previousState = currentState;
         return region;
     }
 }

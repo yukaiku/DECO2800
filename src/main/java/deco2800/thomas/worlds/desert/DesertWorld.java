@@ -93,7 +93,7 @@ public class DesertWorld extends AbstractWorld {
         DesertDragon boss = new DesertDragon(850, 0.03f, 4);
         EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(desertOrc), boss);
         GameManager.get().addManager(enemyManager);
-        enemyManager.spawnBoss(21, 6);
+        enemyManager.spawnBoss(16, 6);
     }
 
     /**

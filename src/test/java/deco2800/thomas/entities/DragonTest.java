@@ -6,19 +6,15 @@ import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.attacks.DesertFireball;
-import deco2800.thomas.entities.attacks.Explosion;
-import deco2800.thomas.entities.attacks.Fireball;
-import deco2800.thomas.entities.attacks.VolcanoFireball;
+import deco2800.thomas.entities.attacks.*;
 import deco2800.thomas.entities.enemies.Goblin;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.dragons.DesertDragon;
 import deco2800.thomas.entities.enemies.dragons.SwampDragon;
+import deco2800.thomas.entities.enemies.dragons.TundraDragon;
 import deco2800.thomas.entities.enemies.dragons.VolcanoDragon;
 import deco2800.thomas.managers.*;
-import deco2800.thomas.tasks.combat.FireBombAttackTask;
-import deco2800.thomas.tasks.combat.MeleeAttackTask;
-import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
+import deco2800.thomas.tasks.combat.*;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import org.junit.Before;
@@ -37,10 +33,10 @@ import static org.mockito.Mockito.*;
 public class DragonTest extends BaseGDXTest {
     private AbstractWorld world;
     private PlayerPeon playerPeon;
-    private Dragon dragon;
     private VolcanoDragon volcanoDragon;
     private SwampDragon swampDragon;
     private DesertDragon desertDragon;
+    private TundraDragon tundraDragon;
 
     private GameManager gameManager;
     private EnemyManager enemyManager;
@@ -79,40 +75,37 @@ public class DragonTest extends BaseGDXTest {
         when(GameManager.get().getWorld()).thenReturn(world);
         when(GameManager.get().getWorld().getPlayerEntity()).thenReturn(playerPeon);
 
-        volcanoDragon = new VolcanoDragon("Volcano_dragon", 1, 0.1f, 1000, "dragon_volcano", 1);
-        swampDragon = new SwampDragon("swamp_dragon", 1, 0.1f, 1000, "dragon_swamp", 2);
-        desertDragon = new DesertDragon("desert_dragon", 1, 0.1f, 1000, "dragon_desert", 3);
+        volcanoDragon = new VolcanoDragon(1000, 0.1f, 1);
+        swampDragon = new SwampDragon (1000, 0.1f, 2);
+        desertDragon = new DesertDragon(1000, 0.1f, 3);
+        tundraDragon = new TundraDragon(1000, 0.1f, 4);
     }
 
     @Test
-    public void testConstructor() {
-        assertEquals(dragon.getHeight(), 1);
-        assertEquals(dragon.getObjectName(), "elder_dragon");
-        assertEquals(dragon.getSpeed(), 0.15f, 0.01);
-        assertEquals(dragon.getCurrentHealth(), 1000);
+    public void testConstructors() {
+        assertEquals(volcanoDragon.getObjectName(), "Chusulth");
+        assertEquals(desertDragon.getObjectName(), "Doavnaen");
+        assertEquals(tundraDragon.getObjectName(), "Diokiedes");
+        assertEquals(swampDragon.getObjectName(), "Siendiadut");
+
+        assertEquals(volcanoDragon.getSpeed(), 0.1f, 0.01);
+        assertEquals(volcanoDragon.getCurrentHealth(), 1000);
     }
 
     @Test
     public void testSummonGoblin() {
-        dragon.summonGoblin();
+        swampDragon.summonGoblin();
         verify(enemyManager, times(1)).spawnSpecialEnemy(any(Goblin.class), anyFloat(), anyFloat());
     }
 
     @Test
     public void testOnHit() {
-        assertEquals(dragon.applyDamage(1, DamageType.COMMON), 1);
-        assertNotNull(dragon.getTarget());
+        assertEquals(desertDragon.applyDamage(1, DamageType.COMMON), 1);
+        assertNotNull(desertDragon.getTarget());
     }
 
     @Test
-    public void testMeleeAttack() {
-        dragon.hitByTarget();
-        dragon.elementalAttack();
-        assertTrue(dragon.getCombatTask() instanceof MeleeAttackTask);
-    }
-
-    @Test
-    public void testVolcanoDragonMeleeAttack() {
+    public void testVolcanoDragonElementalAttack() {
         volcanoDragon.hitByTarget();
         volcanoDragon.elementalAttack();
         assertTrue(volcanoDragon.getCombatTask() instanceof FireBombAttackTask);
@@ -121,36 +114,59 @@ public class DragonTest extends BaseGDXTest {
     }
 
     @Test
-    public void testSummonRangedAttack() {
-        dragon.hitByTarget();
-        dragon.breathAttack();
-        verify(world, times(1)).addEntity(any(Fireball.class));
+    public void testSwampDragonElementalAttack() {
+        swampDragon.hitByTarget();
+        swampDragon.elementalAttack();
+        assertTrue(swampDragon.getCombatTask() instanceof ScorpionStingAttackTask);
     }
 
     @Test
-    public void testVolcanoSummonRangedAttack() {
+    public void testDesertDragonElementalAttack() {
+        desertDragon.hitByTarget();
+        desertDragon.elementalAttack();
+        assertTrue(desertDragon.getCombatTask() instanceof SandTornadoAttackTask);
+    }
+
+    @Test
+    public void testTundraDragonElementalAttack() {
+        tundraDragon.hitByTarget();
+        tundraDragon.elementalAttack();
+        assertTrue(tundraDragon.getCombatTask() instanceof IceBreathTask);
+        tundraDragon.getCombatTask().onTick(1);
+        verify(world, times(1)).addEntity(any(Freeze.class));
+    }
+
+    @Test
+    public void testVolcanoBreathAttack() {
         volcanoDragon.hitByTarget();
         volcanoDragon.breathAttack();
         verify(world, times(3)).addEntity(any(VolcanoFireball.class));
     }
 
     @Test
-    public void testSwampSummonRangedAttack() {
+    public void testSwampBreathAttack() {
         swampDragon.hitByTarget();
         swampDragon.breathAttack();
-        assertTrue(swampDragon.getCombatTask() instanceof ScorpionStingAttackTask);
+        verify(world, times(1)).addEntity(any(Fireball.class));
     }
 
     @Test
-    public void testDesertSummonRangedAttack() {
+    public void testDesertBreathAttack() {
         desertDragon.hitByTarget();
         desertDragon.breathAttack();
         verify(world, times(1)).addEntity(any(DesertFireball.class));
     }
 
     @Test
+    public void testTundraBreathAttack() {
+        tundraDragon.hitByTarget();
+        tundraDragon.breathAttack();
+        verify(world, times(1)).addEntity(any(Iceball.class));
+    }
+
+    @Test
     public void testDeath() {
-        dragon.death();
+        volcanoDragon.death();
         verify(enemyManager, times(1)).removeBoss();
         verify(world, times(1)).setOrbEntity(any(Orb.class));
     }

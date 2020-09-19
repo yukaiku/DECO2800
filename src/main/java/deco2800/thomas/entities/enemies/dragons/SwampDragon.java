@@ -18,13 +18,11 @@ import deco2800.thomas.util.SquareVector;
 public class SwampDragon extends Dragon {
     public SwampDragon(int health, float speed, int orbNumber) {
         super(health, speed, orbNumber);
-        this.setObjectName("Viondria");
+        this.setObjectName("Siendiadut");
         this.variation = Variation.SWAMP;
 
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
-        this.dragonAttacking = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
     }
 
     @Override

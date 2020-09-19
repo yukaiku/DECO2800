@@ -22,20 +22,15 @@ public class DesertDragon extends Dragon {
         this.variation = Variation.DESERT;
         this.identifier = "dragonDesert";
         this.setTexture("dragonDesert");
-        this.setObjectName("Chuzzinoath");
-
+        this.setObjectName("Doavnaen");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
-        this.dragonAttacking = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
     }
 
     @Override
     public void elementalAttack() {
         if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange));
         SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
-        currentState = State.ATTACKING;
-        duration = 12;
         setCombatTask(new SandTornadoAttackTask(this, getTarget().getCol(), getTarget().getRow(),
                 10, 0.2f, 100));
     }

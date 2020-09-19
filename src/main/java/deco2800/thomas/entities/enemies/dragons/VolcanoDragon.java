@@ -18,12 +18,9 @@ public class VolcanoDragon extends Dragon {
         this.identifier = "dragonVolcano";
         this.setTexture("dragonVolcano");
         this.variation = Variation.VOLCANO;
-        this.setObjectName("Deilaenth");
-
+        this.setObjectName("Chusulth");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
-        this.dragonAttacking = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
     }
 
     @Override

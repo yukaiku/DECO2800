@@ -104,7 +104,7 @@ public class Fireball extends Projectile implements Animatable, Tickable{
         }
         // Update combat task
         if (combatTask != null) {
-            if (combatTask.isComplete()) {
+            if (combatTask.isComplete() ^ movementTask.isComplete()) {
                 currentState = State.EXPLODING;
                 movementTask.stopTask();
                 combatTask.stopTask();

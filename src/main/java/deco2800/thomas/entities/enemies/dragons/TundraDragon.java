@@ -21,12 +21,9 @@ public class TundraDragon extends Dragon {
         this.identifier = "dragonTundra";
         this.setTexture("dragonTundra");
         this.variation = Variation.TUNDRA;
-        this.setObjectName("Giaphias");
-
+        this.setObjectName("Diokiedes");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
-        this.dragonAttacking = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
     }
 
     @Override
