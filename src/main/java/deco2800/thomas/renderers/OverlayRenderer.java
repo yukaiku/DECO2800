@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.enemies.Boss;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.WorldUtil;
@@ -103,7 +104,8 @@ public class OverlayRenderer implements Renderer {
 //				String.format("Username: %s", GameManager.get().getManager(NetworkManager.class).getUsername()));
 		line++;
 		debugLine(batch, camera, ++line, "== Health ==");
-		debugLine(batch, camera, ++line, String.format("Health: %d", GameManager.get().getWorld().getPlayerEntity().getCurrentHealth()));
+		debugLine(batch, camera, ++line, String.format("Health: %d",
+				((Peon)GameManager.get().getWorld().getPlayerEntity()).getCurrentHealth()));
 		line++;
 		debugLine(batch, camera, ++line, "== Speed ==");
 		debugLine(batch, camera, ++line, String.format("Speed: %f", GameManager.get().getWorld().getPlayerEntity().getSpeed()));

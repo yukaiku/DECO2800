@@ -2,6 +2,7 @@ package deco2800.thomas.entities.Agent;
 
 import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.DamageType;
+import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TaskPool;
@@ -22,9 +23,9 @@ public class Peon extends AgentEntity implements Tickable {
 	private CopyOnWriteArrayList<StatusEffect> effects;
 	/* Combat stats for this entity */
 	private final float ARMOUR_CONSTANT = 1000f; // Changes effectiveness of armour values, higher = less effective
+	private HealthTracker health;
 	private float armour; // Reduces incoming damage
 	private float damage; // Base outgoing damage value
-	private float speed; // Base movement speed
 	private DamageType vulnerability; // Peon takes extra damage from this damage type
 
 
@@ -43,15 +44,23 @@ public class Peon extends AgentEntity implements Tickable {
 		this.speed = 0.05f;
 		this.save = true;
 		this.effects = new CopyOnWriteArrayList<StatusEffect>();
+		this.damage = 10;
+		this.armour = ARMOUR_CONSTANT; // No damage reduction
+		this.vulnerability = DamageType.COMMON;
+		this.health = new HealthTracker(100);
 	}
 
 	/**
 	 * Peon constructor
      */
 	public Peon(float row, float col, float speed, int health) {
-		super(row, col, RenderConstants.PEON_RENDER, speed, health);
+		super(row, col, RenderConstants.PEON_RENDER, speed);
 		this.setTexture("spacman_ded");
 		this.effects = new CopyOnWriteArrayList<StatusEffect>();
+		this.damage = 10;
+		this.armour = ARMOUR_CONSTANT; // No damage reduction
+		this.vulnerability = DamageType.COMMON;
+		this.health = new HealthTracker(health);
 	}
 
 	/**
@@ -99,16 +108,15 @@ public class Peon extends AgentEntity implements Tickable {
 	 * Applies damage to the peon according to damage calculation algorithm.
 	 * @param damage The amount of damage to be taken by this AgentEntity.
 	 * @param damageType
-	 * @returns Damage dealt. (TODO)
+	 * @returns Damage dealt.
 	 */
-	@Override
-	public void applyDamage(int damage, DamageType damageType) {
+	public int applyDamage(int damage, DamageType damageType) {
 		int damageApplied = (int)(damage * ARMOUR_CONSTANT / getArmour() * (damageType == vulnerability ? 1.5 : 1));
 		health.reduceHealth(damageApplied);
 		isAttacked = true;
 		isAttackedCoolDown = 5;
 
-		//return damageApplied;
+		return damageApplied;
 	}
 
 	/**
@@ -205,4 +213,59 @@ public class Peon extends AgentEntity implements Tickable {
 		this.armour = armour;
 	}
 
+	/**
+	 * Returns the maximum health of this AgentEntity.
+	 */
+	public int getMaxHealth() {
+		return health.getMaxHealthValue();
+	}
+
+	/**
+	 * Sets the maximum health of this AgentEntity.
+	 * @param newMaxHealth the new maximum health of this enemy.
+	 */
+	public void setMaxHealth(int newMaxHealth) {
+		this.health.setMaxHealthValue(newMaxHealth);
+	}
+
+	/**
+	 * Returns the current health of this AgentEntity.
+	 */
+	public int getCurrentHealth() {
+		return health.getCurrentHealthValue();
+	}
+
+	/**
+	 * Sets the current health of this AgentEntity. to be a new value.
+	 * @param newHealth The new current health of this AgentEntity.
+	 */
+	public void setCurrentHealthValue(int newHealth) {
+		health.setCurrentHealthValue(newHealth);
+	}
+
+	/**
+	 * Increases the health of this AgentEntity. by the given amount.
+	 * @param regen The amount of health this AgentEntity.is to be healed by.
+	 */
+	public void regenerateHealth(int regen) {
+		health.regenerateHealth(regen);
+	}
+
+	/**
+	 * Checks if the given AgentEntity has died (health reduced to 0 or below);
+	 * @return True if AgentEntity is dead, False otherwise
+	 */
+	public boolean isDead() {
+		return this.getCurrentHealth() <= 0;
+	}
+
+	public HealthTracker getHealthTracker() {
+		return this.health;
+	}
+
+	/**
+	 * Defines behaviour when an agent entity dies
+	 */
+	public void death() {
+	}
 }

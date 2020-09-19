@@ -57,15 +57,21 @@ public class Dragon extends Boss implements PassiveEnemy {
         }
     }
 
+    /**
+     * Applies damage to the dragon.
+     * @param damage The amount of damage to be taken by this Peon.
+     * @param damageType Type of damage to apply.
+     * @return Damage dealt.
+     */
     @Override
-    public void applyDamage(int damage, DamageType damageType) {
+    public int applyDamage(int damage, DamageType damageType) {
+        int damageDealt = super.applyDamage(damage, damageType);
         hitByTarget();
-        health.reduceHealth(damage);
         if (isDead()) {
             death();
         }
-        isAttacked = true;
-        isAttackedCoolDown = 10;
+
+        return damageDealt;
     }
 
     /**

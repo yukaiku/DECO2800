@@ -2,6 +2,7 @@ package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.managers.GameManager;
 import org.junit.Assert;
@@ -29,14 +30,14 @@ public class BurnStatusTest extends BaseGDXTest {
     private BurnStatus burn;
 
     // the entity being passed to the status
-    private AgentEntity entity;
+    private Peon entity;
 
     // the health tracker used to verify damage dealt
     private HealthTracker healthTracker;
 
     @Before
     public void setUp() throws Exception {
-        entity = mock(AgentEntity.class);
+        entity = mock(Peon.class);
         healthTracker = new HealthTracker(50);
         when(entity.getHealthTracker()).thenReturn(healthTracker);
         burn = new BurnStatus(entity, 5, 2);

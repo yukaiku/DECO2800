@@ -3,6 +3,7 @@ package deco2800.thomas.tasks.combat;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
@@ -53,14 +54,14 @@ public class ApplyDamageOnCollisionTaskTest extends BaseGDXTest {
         CombatEntity combatEntity = mock(CombatEntity.class);
         when(combatEntity.getFaction()).thenReturn(EntityFaction.Evil);
         when(combatEntity.getBounds()).thenReturn(new BoundingBox(new SquareVector(0, 0), 10, 10));
-        AgentEntity agentEntity = mock(AgentEntity.class);
-        when(agentEntity.getFaction()).thenReturn(EntityFaction.Ally);
+        Peon peon = mock(Peon.class);
+        when(peon.getFaction()).thenReturn(EntityFaction.Ally);
 
         // Mock abstract world
         AbstractWorld abstractWorld = mock(AbstractWorld.class);
         when(GameManager.get().getWorld()).thenReturn(abstractWorld);
         when(abstractWorld.getEntitiesInBounds(any(BoundingBox.class)))
-                .thenReturn(new ArrayList<>(Arrays.asList(combatEntity, agentEntity)));
+                .thenReturn(new ArrayList<>(Arrays.asList(combatEntity, peon)));
 
         // Start task
         ApplyDamageOnCollisionTask task = new ApplyDamageOnCollisionTask(combatEntity, 1);
@@ -68,7 +69,7 @@ public class ApplyDamageOnCollisionTaskTest extends BaseGDXTest {
 
         // Verify getDamage and reduceHealth are called
         verify(combatEntity).getDamage();
-        verify(agentEntity).applyDamage(anyInt(), DamageType.COMMON);
+        verify(peon).applyDamage(anyInt(), DamageType.COMMON);
 
         // Verify state change
         assertTrue(task.isComplete());

@@ -2,6 +2,7 @@ package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.Agent.Peon;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +35,7 @@ public class SpeedStatusTest extends BaseGDXTest {
             }
         };
         multiplier = 0.5f;
-        speed = new SpeedStatus(entity, multiplier, 1);
+        speed = new SpeedStatus((Peon)entity, multiplier, 1);
     }
 
     /**
@@ -83,7 +84,7 @@ public class SpeedStatusTest extends BaseGDXTest {
     public void multipleEffects() {
         float startSpeed = entity.getSpeed();
         float otherMultiplier = 0.1f;
-        SpeedStatus speed2 = new SpeedStatus(entity, otherMultiplier, 1);
+        SpeedStatus speed2 = new SpeedStatus((Peon)entity, otherMultiplier, 1);
 
         speed.applyEffect();
         speed2.applyEffect();
