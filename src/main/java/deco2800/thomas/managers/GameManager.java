@@ -47,7 +47,7 @@ public class GameManager {
 
 	public float fps = 0;
 
-	public boolean debugMode = true;
+	public boolean debugMode = false;
 
 	public boolean inTutorial = false;
 
