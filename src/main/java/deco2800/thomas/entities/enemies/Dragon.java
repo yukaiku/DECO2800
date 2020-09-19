@@ -5,14 +5,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 
-import deco2800.thomas.tasks.combat.IceBreathTask;
-import deco2800.thomas.tasks.combat.SandTornadoAttackTask;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
@@ -21,8 +20,6 @@ import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -32,14 +29,21 @@ import java.util.Random;
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/bosses/dragon
  */
-public abstract class Dragon extends Boss implements PassiveEnemy {
+public abstract class Dragon extends Boss implements PassiveEnemy, Animatable {
+    public enum State {
+        IDLE, WALK, ATTACKING
+    }
+    public State currentState;
+    public State previousState;
     protected Variation variation;
-    protected Animation<TextureRegion> dragonIdle;
+    protected Animation<TextureRegion> dragonIdle = null;
     private float stateTimer;
-
+    protected Animation<TextureRegion> dragonAttacking = null;
+    private MovementTask.Direction facingDirection;
+    protected int duration = 0;
     private int tickFollowing = 60;
     // Range at which the dragon will attempt to melee attack the player
-    private int attackRange = 8;
+    protected int attackRange = 4;
     //the orb number for orb texture
     int orbNumber;
     //
@@ -48,11 +52,15 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     public Dragon(int health, float speed, int orbNumber) {
         super(health, speed);
         this.orbNumber = orbNumber;
+
         this.variation = Variation.SWAMP; // default
         this.identifier = "dragonSwamp";
         this.setTexture("dragonSwamp");
-        this.dragonIdle = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
+
+        this.stateTimer = 0;
+        currentState = State.IDLE;
+        previousState = State.IDLE;
+        facingDirection = MovementTask.Direction.RIGHT;
         this.stateTimer = 0;
     }
 
@@ -95,34 +103,41 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
         }
     }
 
-    @Override
-    public void attackPlayer() {
+    public void elementalAttack() {
         if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange));
             SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
-            //setCombatTask(new MeleeAttackTask(this, origin, 8, 8, 20));
-
-            setCombatTask(new SandTornadoAttackTask(this, getTarget().getCol(), getTarget().getRow(),
-                    1, 0.2f, 50));
+            setCombatTask(new MeleeAttackTask(this, origin, 8, 8, 20));
     }
 
-    public void summonRangedAttack() {
+    public void breathAttack() {
         Fireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
                 getTarget().getRow(), 10, 0.2f, 60, EntityFaction.Evil);
     }
 
     @Override
     public void onTick(long i) {
+        if (--duration < 0) {
+            duration = 0;
+            currentState = State.IDLE;
+        }
+
         // update target following path every 1 second (60 ticks)
         if (++tickFollowing + random.nextInt(9) > 80) {
             if (super.getTarget() != null) {
+                // Sets dragon direction
+                if (getTarget().getCol() < this.getCol()) {
+                    facingDirection = MovementTask.Direction.LEFT;
+                } else {
+                    facingDirection = MovementTask.Direction.RIGHT;
+                }
                 // Throws a fireball at the player, and attempts to summon a
                 // goblin, and attempts to initialise movement and combat
                 // tasks
                 summonGoblin();
-                summonRangedAttack();
+                breathAttack();
+                elementalAttack();
                 setMovementTask(new MovementTask(this, super.getTarget().
                         getPosition()));
-                attackPlayer();
             }
             tickFollowing = 0;
         }
@@ -163,8 +178,26 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     @Override
     public TextureRegion getFrame(float delta) {
         TextureRegion region;
-        region = dragonIdle.getKeyFrame(stateTimer);
-        stateTimer = stateTimer + delta;
+        switch (currentState) {
+            case ATTACKING:
+                region = dragonAttacking.getKeyFrame(stateTimer);
+                break;
+            case IDLE:
+            default:
+                stateTimer = 0;
+                region = dragonIdle.getKeyFrame(stateTimer);
+        }
+        if ((getMovingDirection() == MovementTask.Direction.LEFT ||
+                facingDirection == MovementTask.Direction.LEFT) && !region.isFlipX()) {
+            region.flip(true, false);
+            facingDirection = MovementTask.Direction.LEFT;
+        } else if ((getMovingDirection() == MovementTask.Direction.RIGHT ||
+                facingDirection == MovementTask.Direction.RIGHT) && region.isFlipX()) {
+            region.flip(true, false);
+            facingDirection = MovementTask.Direction.RIGHT;
+        }
+        stateTimer = currentState == previousState ? stateTimer + delta : 0;
+        previousState = currentState;
         return region;
     }
 }

@@ -24,7 +24,6 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
     public enum State {
         IDLE, WALK, ATTACK_MELEE
     }
-
     public State currentState;
     public State previousState;
     private Variation variation;

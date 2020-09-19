@@ -271,7 +271,7 @@ public class Renderer3D implements Renderer {
 		} else if (entity instanceof StingProjectile){
 			batch.setColor(0, 102, 0, 1);
 		} else if (entity instanceof Iceball) {
-			batch.setColor(0, 255, 255, 1);
+			batch.setColor(0, 0, 102, 1);
 		}
 		batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width / 2,
 				height / 2, width, height, 2, 2, ((Projectile) entity).getDirection());

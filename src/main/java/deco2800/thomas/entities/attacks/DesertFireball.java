@@ -41,7 +41,7 @@ public class DesertFireball extends Fireball {
         }
         // Update combat task
         if (combatTask != null) {
-            if (movementTask.isComplete() && !combatTask.isComplete()) {
+            if (combatTask.isComplete() ^ movementTask.isComplete()) {
                 currentState = State.EXPLODING;
                 AbstractWorld world = GameManager.get().getWorld();
                 Tile tile = world.getTile((float) Math.ceil((this.getCol())),

@@ -348,6 +348,8 @@ public class TextureManager extends AbstractManager {
 			addAnimationFramesCollection("dragonSwampIdle", "resources/enemies/dragon_swamp.png");
 			addAnimationFramesCollection("dragonTundraIdle", "resources/enemies/dragon_tundra.png");
 			addAnimationFramesCollection("dragonVolcanoIdle", "resources/enemies/dragon_volcano.png");
+
+			// Goblin attack sprites
 			addAnimationFramesSprite("goblinDesertAttack", "resources/enemies/goblin_desert_sprite_sheet.png",
 					3, 350, 486, true);
 			addAnimationFramesSprite("goblinSwampAttack", "resources/enemies/goblin_swamp_sprite_sheet.png",
@@ -356,6 +358,26 @@ public class TextureManager extends AbstractManager {
 					3, 350, 486, true);
 			addAnimationFramesSprite("goblinVolcanoAttack", "resources/enemies/goblin_volcano_sprite_sheet.png",
 					3, 350, 486, true);
+
+			// Orc attack sprites
+			addAnimationFramesSprite("orcDesertAttack", "resources/enemies/orc_desert_sprite_sheet.png",
+					3, 257, 324, false);
+			addAnimationFramesSprite("orcSwampAttack", "resources/enemies/orc_swamp_sprite_sheet.png",
+					3, 257, 324, false);
+			addAnimationFramesSprite("orcTundraAttack", "resources/enemies/orc_tundra_sprite_sheet.png",
+					3, 257, 324, false);
+			addAnimationFramesSprite("orcVolcanoAttack", "resources/enemies/orc_volcano_sprite_sheet.png",
+					3, 257, 324, false);
+
+			// Dragon attack sprites
+			addAnimationFramesSprite("dragonDesertAttack", "resources/enemies/dragon_desert_sprite_sheet.png",
+					2, 472, 264, true);
+			addAnimationFramesSprite("dragonSwampAttack", "resources/enemies/dragon_swamp_sprite_sheet.png",
+					2, 492, 264, false);
+			addAnimationFramesSprite("dragonTundraAttack", "resources/enemies/dragon_tundra_sprite_sheet.png",
+					2, 492, 264, true);
+			addAnimationFramesSprite("dragonVolcanoAttack", "resources/enemies/dragon_volcano_sprite_sheet.png",
+					2, 492, 264, false);
 
 			// Icebreath attack
 			Array<TextureRegion> freezeTile = new Array<>();

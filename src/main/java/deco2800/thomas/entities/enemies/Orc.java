@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.StatusEffectManager;
@@ -22,10 +23,18 @@ import java.util.Arrays;
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/monsters/orc
  */
-public class Orc extends Monster implements AggressiveEnemy {
+public class Orc extends Monster implements AggressiveEnemy, Animatable {
+    public enum State {
+        IDLE, WALK, ATTACK_MELEE
+    }
+    public State currentState;
+    public State previousState;
     private Variation variation;
     private final Animation<TextureRegion> orcIdle;
     private float stateTimer;
+    private final Animation<TextureRegion> orcAttacking;
+    private int duration = 0;
+    private MovementTask.Direction facingDirection;
 
     private int tickFollowing = 30;
     private int tickDetecting = 15;
@@ -43,7 +52,6 @@ public class Orc extends Monster implements AggressiveEnemy {
     public Orc(Variation variation, int health, float speed) {
         super(health, speed);
         this.variation = variation;
-
         switch (variation) {
             case DESERT:
                 this.identifier = "orcDesert";
@@ -67,10 +75,14 @@ public class Orc extends Monster implements AggressiveEnemy {
                 this.setObjectName("Swamp Orc");
                 break;
         }
-
+        this.stateTimer = 0;
+        currentState = State.IDLE;
+        previousState = State.IDLE;
+        facingDirection = MovementTask.Direction.RIGHT;
         this.orcIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
-        this.stateTimer = 0;
+        this.orcAttacking = new Animation<> (0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
     }
 
     public Orc(int health, float speed) {
@@ -112,14 +124,26 @@ public class Orc extends Monster implements AggressiveEnemy {
     public void attackPlayer() {
         if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange));
             SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
+            currentState = State.ATTACK_MELEE;
+            duration = 12;
             setCombatTask(new MeleeAttackTask(this, origin, 2, 2, 10));
     }
 
     @Override
     public void onTick(long i) {
+        if (--duration < 0) {
+            duration = 0;
+            currentState = State.IDLE;
+        }
+
         // update target following path every 1 second (60 ticks)
         if (++tickFollowing > 60) {
             if (super.getTarget() != null) {
+                if (getTarget().getCol() < this.getCol()) {
+                    facingDirection = MovementTask.Direction.LEFT;
+                } else {
+                    facingDirection = MovementTask.Direction.RIGHT;
+                }
                 setMovementTask(new MovementTask(this, super.getTarget().
                         getPosition()));
                 attackPlayer();
@@ -143,8 +167,26 @@ public class Orc extends Monster implements AggressiveEnemy {
     @Override
     public TextureRegion getFrame(float delta) {
         TextureRegion region;
-        region = orcIdle.getKeyFrame(stateTimer);
-        stateTimer = stateTimer + delta;
+        switch (currentState) {
+            case ATTACK_MELEE:
+                region = orcAttacking.getKeyFrame(stateTimer);
+                break;
+            case IDLE:
+            default:
+                stateTimer = 0;
+                region = orcIdle.getKeyFrame(stateTimer);
+        }
+        if ((getMovingDirection() == MovementTask.Direction.LEFT ||
+                facingDirection == MovementTask.Direction.LEFT) && !region.isFlipX()) {
+            region.flip(true, false);
+            facingDirection = MovementTask.Direction.LEFT;
+        } else if ((getMovingDirection() == MovementTask.Direction.RIGHT ||
+                facingDirection == MovementTask.Direction.RIGHT) && region.isFlipX()) {
+            region.flip(true, false);
+            facingDirection = MovementTask.Direction.RIGHT;
+        }
+        stateTimer = currentState == previousState ? stateTimer + delta : 0;
+        previousState = currentState;
         return region;
     }
 

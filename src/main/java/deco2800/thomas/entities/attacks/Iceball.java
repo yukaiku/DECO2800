@@ -9,7 +9,10 @@ import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.tasks.combat.ApplyDamageOnCollisionTask;
+import deco2800.thomas.tasks.movement.DirectProjectileMovementTask;
 import deco2800.thomas.tasks.status.SpeedStatus;
+import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
 import java.util.List;
@@ -81,13 +84,22 @@ public class Iceball extends Projectile implements Animatable {
         if (combatTask != null) {
             if (combatTask.isComplete()) {
                 if (!movementTask.isComplete()) {
-                    //applySlow();
+                    applySlow();
                 }
                 currentState = Fireball.State.EXPLODING;
                 movementTask.stopTask();
             }
             combatTask.onTick(i);
         }
+    }
+
+    public static void spawn(float col, float row, float targetCol, float targetRow,
+                             int damage, float speed, long lifetime, EntityFaction faction) {
+        Iceball iceball = new Iceball(col, row, damage, speed, faction);
+        iceball.setMovementTask(new DirectProjectileMovementTask(iceball,
+                new SquareVector(targetCol, targetRow), lifetime));
+        iceball.setCombatTask(new ApplyDamageOnCollisionTask(iceball, lifetime));
+        GameManager.get().getWorld().addEntity(iceball);
     }
 
     /**
