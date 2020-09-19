@@ -336,12 +336,24 @@ public class TextureManager extends AbstractManager {
 			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball7.png")));
 			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball8.png")));
 			fireballExplosion.add(new TextureRegion(new Texture("resources/combat/explosive_fireball9.png")));
-
 			animationFrames.put("fireballExplosion", fireballExplosion);
 
 			Array<TextureRegion> fireballDefault = new Array<>();
 			fireballDefault.add(new TextureRegion(new Texture("resources/combat/fireball_right.png")));
 			animationFrames.put("fireballDefault", fireballDefault);
+
+			Array<TextureRegion> playerFireball = new Array<>();
+			playerFireball.add(new TextureRegion(new Texture("resources/combat/right_skill1_fire1.png")));
+			playerFireball.add(new TextureRegion(new Texture("resources/combat/right_skill1_fire2.png")));
+			playerFireball.add(new TextureRegion(new Texture("resources/combat/right_skill1_fire3.png")));
+			playerFireball.add(new TextureRegion(new Texture("resources/combat/right_skill1_fire4.png")));
+			playerFireball.add(new TextureRegion(new Texture("resources/combat/right_skill1_fire5.png")));
+			animationFrames.put("playerFireball", playerFireball);
+
+			Array<TextureRegion> playerFireballDefault = new Array<>();
+			playerFireballDefault.add(new TextureRegion(new Texture("resources/combat/right_skill1_fire1.png")));
+			animationFrames.put("playerFireballDefault", playerFireballDefault);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

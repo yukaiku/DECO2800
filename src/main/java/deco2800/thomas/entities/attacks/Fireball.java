@@ -29,9 +29,9 @@ public class Fireball extends Projectile implements Animatable, Tickable{
     /* The current state of this entity*/
     public Fireball.State currentState;
     /* Animation for when this entity is exploding */
-    private final Animation<TextureRegion> explosion;
+    protected Animation<TextureRegion> explosion;
     /* Default animation */
-    private final Animation<TextureRegion> defaultState;
+    protected Animation<TextureRegion> defaultState;
     /* The current timer on this class */
     protected float stateTimer = 0;
     /**
