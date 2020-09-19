@@ -165,8 +165,8 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("active_selector", new Texture("resources/combat/selector.png"));
 
 			// Player
-			textureMap.put("player_left", new Texture("resources/combat/move_left.png"));
-			textureMap.put("player_right", new Texture("resources/combat/move_right.png"));
+			textureMap.put("player_left", new Texture("resources/player/leftmech1_move.png"));
+			textureMap.put("player_right", new Texture("resources/player/rightmech1_move.png"));
 
 			// Inventory
 			textureMap.put("potion_small", new Texture("resources/inventory/potion-small.png"));
@@ -310,19 +310,20 @@ public class TextureManager extends AbstractManager {
 			// Note: The initial facing direction should be RIGHT. The flipped version is not needed.
 			// player standing
 				Array<TextureRegion> playerStand = new Array<>();
-				playerStand.add(new TextureRegion(new Texture("resources/combat/move_right.png")));
+				playerStand.add(new TextureRegion(new Texture("resources/player/rightmech1_move.png")));
 			animationFrames.put("player_stand", playerStand);
 
 			// player melee attacks
 			Array<TextureRegion> playerMelee = new Array<>();
-			playerMelee.add(new TextureRegion(new Texture("resources/combat/melee_right1.png"), 0, 0, 350, 400));
-			playerMelee.add(new TextureRegion(new Texture("resources/combat/melee_right2.png"), 0, 0, 350, 400));
-			playerMelee.add(new TextureRegion(new Texture("resources/combat/melee_right3.png"), 0, 0, 350, 400));
+			playerMelee.add(new TextureRegion(new Texture("resources/player/rightmech1_move.png"), 0, 0, 345, 350));
+			playerMelee.add(new TextureRegion(new Texture("resources/player/rightmech1_melee3.png"), 0, 0, 345, 350));
+			playerMelee.add(new TextureRegion(new Texture("resources/player/rightmech1_melee1.png"), 0, 0, 345, 350));
+			playerMelee.add(new TextureRegion(new Texture("resources/player/rightmech1_melee2.png"), 0, 0, 345, 350));
 			animationFrames.put("player_melee", playerMelee);
 
 			// player range attacks
 			Array<TextureRegion> playerRange = new Array<>();
-			playerRange.add(new TextureRegion(new Texture("resources/combat/range_right1.png"), 0, 0, 350, 400));
+			playerRange.add(new TextureRegion(new Texture("resources/player/rightmech1_move.png"), 0, 0, 350, 400));
 			animationFrames.put("player_range", playerRange);
 
 			Array<TextureRegion> fireballExplosion = new Array<>();
