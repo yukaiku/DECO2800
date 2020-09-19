@@ -176,8 +176,6 @@ public class TutorialWorld extends AbstractWorld{
         // Check if the player is in the portal
         if (Math.abs(player.getCol() - PORTAL_COL) < 0.1 &
                 Math.abs(player.getRow() - PORTAL_ROW) < 0.1) {
-            // Remove guideline modal
-            GameScreen.tutorial = false;
             // Remove the current map's enemy manager
             GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
 

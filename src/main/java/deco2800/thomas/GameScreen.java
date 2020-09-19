@@ -49,7 +49,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 	PauseModal pauseModal = new PauseModal();
 	Result result = new Result();
 	TransitionScreen transitionScreen = new TransitionScreen();
-	QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
 
 	// Buttons in the pause menu
 	Button resumeButton = new TextButton("RESUME", GameManager.get().getSkin(), "in_game");
@@ -101,6 +100,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	public GameScreen(final ThomasGame game, final gameType startType) {
 		if (startType == gameType.NEW_GAME) {
+			GameManager.get().tutorial = true;
 			GameManager.get().setWorld(startType.method());
 		} else if (startType == gameType.ENV_TEAM_GAME) {
 			GameManager.get().setWorld(startType.method());
@@ -117,8 +117,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		// Initialize camera
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cameraEvent = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cameraOverlay = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cameraEvent = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		/* Add the window to the stage */
 		GameManager.get().setSkin(skin);
@@ -207,8 +207,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 
 		spriteBatch.setProjectionMatrix(cameraOverlay.combined);
-		//Add questTracker UI
-		questTrackerRenderer.render(spriteBatch, cameraOverlay);
 
 		// Hide the buttons when the game is running
 		resumeButton.setPosition(-100, -100);
