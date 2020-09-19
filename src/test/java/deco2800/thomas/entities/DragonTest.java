@@ -1,10 +1,8 @@
 package deco2800.thomas.entities;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import com.sun.source.tree.AssertTree;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Agent.PlayerPeon;
@@ -18,12 +16,10 @@ import deco2800.thomas.entities.enemies.dragons.DesertDragon;
 import deco2800.thomas.entities.enemies.dragons.SwampDragon;
 import deco2800.thomas.entities.enemies.dragons.VolcanoDragon;
 import deco2800.thomas.managers.*;
-import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
 import deco2800.thomas.worlds.AbstractWorld;
-import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,8 +27,6 @@ import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -84,7 +78,7 @@ public class DragonTest extends BaseGDXTest {
         playerPeon = mock(PlayerPeon.class);
         when(GameManager.get().getWorld()).thenReturn(world);
         when(GameManager.get().getWorld().getPlayerEntity()).thenReturn(playerPeon);
-        dragon = new Dragon("elder_dragon", 1, 0.15f, 1000, "dragon_volcano", 1);
+
         volcanoDragon = new VolcanoDragon("Volcano_dragon", 1, 0.1f, 1000, "dragon_volcano", 1);
         swampDragon = new SwampDragon("swamp_dragon", 1, 0.1f, 1000, "dragon_swamp", 2);
         desertDragon = new DesertDragon("desert_dragon", 1, 0.1f, 1000, "dragon_desert", 3);
@@ -113,14 +107,14 @@ public class DragonTest extends BaseGDXTest {
     @Test
     public void testMeleeAttack() {
         dragon.hitByTarget();
-        dragon.attackPlayer();
+        dragon.elementalAttack();
         assertTrue(dragon.getCombatTask() instanceof MeleeAttackTask);
     }
 
     @Test
     public void testVolcanoDragonMeleeAttack() {
         volcanoDragon.hitByTarget();
-        volcanoDragon.attackPlayer();
+        volcanoDragon.elementalAttack();
         assertTrue(volcanoDragon.getCombatTask() instanceof FireBombAttackTask);
         volcanoDragon.getCombatTask().onTick(1);
         verify(world, times(25)).addEntity(any(Explosion.class));
@@ -129,28 +123,28 @@ public class DragonTest extends BaseGDXTest {
     @Test
     public void testSummonRangedAttack() {
         dragon.hitByTarget();
-        dragon.summonRangedAttack();
+        dragon.breathAttack();
         verify(world, times(1)).addEntity(any(Fireball.class));
     }
 
     @Test
     public void testVolcanoSummonRangedAttack() {
         volcanoDragon.hitByTarget();
-        volcanoDragon.summonRangedAttack();
+        volcanoDragon.breathAttack();
         verify(world, times(3)).addEntity(any(VolcanoFireball.class));
     }
 
     @Test
     public void testSwampSummonRangedAttack() {
         swampDragon.hitByTarget();
-        swampDragon.summonRangedAttack();
+        swampDragon.breathAttack();
         assertTrue(swampDragon.getCombatTask() instanceof ScorpionStingAttackTask);
     }
 
     @Test
     public void testDesertSummonRangedAttack() {
         desertDragon.hitByTarget();
-        desertDragon.summonRangedAttack();
+        desertDragon.breathAttack();
         verify(world, times(1)).addEntity(any(DesertFireball.class));
     }
 
