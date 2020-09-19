@@ -159,6 +159,10 @@ public class TextureManager extends AbstractManager {
 			// Attacks
 			textureMap.put("fireball_right", new Texture("resources/combat/fireball_right.png"));
 			textureMap.put("explosion", new Texture("resources/combat/explosive_fireball3.png"));
+			textureMap.put("wizard_icon", new Texture("resources/combat/waterwizard.png"));
+			textureMap.put("knight_icon", new Texture("resources/combat/knight.png"));
+			textureMap.put("knight_hotbar", new Texture("resources/combat/hotbar2.png"));
+			textureMap.put("active_selector", new Texture("resources/combat/selector.png"));
 
 			// Player
 			textureMap.put("player_left", new Texture("resources/combat/move_left.png"));
