@@ -32,6 +32,12 @@ public abstract class RangedAttackTask extends AbstractTask {
     public RangedAttackTask(AbstractEntity entity, float targetCol, float targetRow, int damage,
                             float speed, int lifetime) {
         super(entity);
+        this.targetCol = targetCol;
+        this.targetRow = targetRow;
+        this.damage = damage;
+        this.speed = speed;
+        this.lifetime = lifetime;
+
     }
 
     /**
