@@ -14,7 +14,15 @@ public class ItemBox extends AbstractDialogBox {
 	TextButton button;
 	TextButton close;
 	Item item;
-	
+
+	/**
+	 * Subclass of AbstractDialogBox for all items. 
+	 * @param item Item to create a dialog box for. 
+	 * @param name name of item 
+	 * @param price price of item 
+	 * @param description description of item to display in box. 
+	 * @param styleType environment-dependent styleType of item 
+	 */
 	public ItemBox(Item item, String name, String price, String description, String styleType) {
 		super(item, name, styleType);
 		this.item = item;
@@ -29,8 +37,8 @@ public class ItemBox extends AbstractDialogBox {
 		else{
 			setup(description, price);
 		}
-		button.addListener(a);
-		close.addListener(b);
+		button.addListener(primary);
+		close.addListener(secondary);
 		button.pad(1,10,1,10);
 		box.setKeepWithinStage(true);
 		box.row();
@@ -43,23 +51,59 @@ public class ItemBox extends AbstractDialogBox {
 		box.setPosition((Gdx.graphics.getWidth() - box.getWidth())/2,
 				(Gdx.graphics.getHeight() - box.getHeight())/2 );
 	}
-	
+
+	/**
+	 * Returns the primary text button. Displays Open if Item is Treasure, 
+	 * and Buy otherwise.
+	 */
 	public TextButton getButton(){
 		return button; 
 	}
-	
+
+	/**
+	 * Returns the close button.
+	 */
 	public TextButton getCloseButton(){
 		return close; 
 	}
-	
+
+	/**
+	 * Sets up Window and Button widgets with correct information. 
+	 * @param description description of item 
+	 * @param price price of item. 
+	 */
 	private void setup(String description, String price) {
 		box.add(description).expand().center();
 		box.row();
 		box.add("Price:" + price);
 		button.setText("Buy");
 	}
-	
-	ChangeListener a = new ChangeListener() {
+
+	/**
+	 * Returns the ChangeListener for button TextButton.
+	 */
+	public ChangeListener getA(){
+		return primary;
+	}
+
+	/**
+	 * Returns the ChangeListener for close TextButton. 
+	 */
+	public ChangeListener getB(){
+		return secondary;
+	}
+
+	/**
+	 * ChangeListener for the primary button which displays "Buy" or "Open"
+	 */
+	ChangeListener primary = new ChangeListener() {
+		/**
+		 * Opens the treasure box. If other type of item and player has 
+		 * enough funds, buys item and removes from map. Hides ItemBox from 
+		 * Game Screen. 
+		 * @param event ChangeEvent of button being pushed
+		 * @param actor button member variable, which was the button pushed. 
+		 */
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
 			System.out.print("Before statement\n");
@@ -83,16 +127,16 @@ public class ItemBox extends AbstractDialogBox {
 			}
 		}
 	};
-	
-	public ChangeListener getA(){
-		return a; 
-	}
-	
-	public ChangeListener getB(){
-		return b; 
-	}
 
-	ChangeListener b = new ChangeListener() {
+	/**
+	 * ChangeListener for the primary button which displays "Close"
+	 */
+	ChangeListener secondary = new ChangeListener() {
+		/**
+		 * Hides ItemBox because Close button has been pressed. 
+		 * @param event ChangeEvent of button being pushed
+		 * @param actor button member variable, which was the button pushed. 
+		 */
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
 			ItemBox.super.setShowing(false);

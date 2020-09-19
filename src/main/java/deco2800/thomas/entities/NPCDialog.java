@@ -13,7 +13,7 @@ public class NPCDialog extends AbstractDialogBox {
 
 	TextButton button;
 	HashMap<String, String> tutorialDialogue = new HashMap<>();
-	// constructs NPC DailgoBox. 
+	
 	public NPCDialog(Object entity, String string) {
 		super(entity, "PolyHedron: Tutorial", "tutorial");
 		// add first dialogue.
