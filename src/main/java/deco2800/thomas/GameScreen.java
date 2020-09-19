@@ -54,7 +54,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	Button resumeButton = new TextButton("RESUME", GameManager.get().getSkin(), "in_game");
 	Button quitButton = new TextButton("RETURN TO MAIN MENU", GameManager.get().getSkin(), "in_game");
 	Button enterButton = new TextButton("ENTER THE ZONE", GameManager.get().getSkin(), "in_game");
-	Button playAgainButton = new TextButton("TRY AGAIN", GameManager.get().getSkin(), "in_game");
+	Button playAgainButton = new TextButton("PLAY AGAIN", GameManager.get().getSkin(), "in_game");
 	AbstractWorld world;
 
 	static Skin skin = new Skin(Gdx.files.internal("resources/uiskin.skin"));
