@@ -67,7 +67,8 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
         }
         this.goblinIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
-        this.goblinAttacking = new Animation<> (0.1f, GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
+        this.goblinAttacking = new Animation<> (0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
         this.stateTimer = 0;
         currentState = State.IDLE;
         previousState = State.IDLE;
@@ -102,9 +103,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
     public void attackPlayer() {
         if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange)) {
             SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
-            System.out.println("Begin goblin attacking");
             currentState = State.ATTACK_MELEE;
-            System.out.println(currentState);
             setCombatTask(new MeleeAttackTask(this, origin, 1, 1, 5));
         }
     }
@@ -119,7 +118,13 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
 
         if (++tickFollowing > 30) {
             if (super.getTarget() != null) {
-
+                if (getTarget() != null) {
+                    if (getTarget().getCol() < this.getCol()) {
+                        facingDirection = MovementTask.Direction.LEFT;
+                    } else {
+                        facingDirection = MovementTask.Direction.RIGHT;
+                    }
+                }
                 setMovementTask(new MovementTask(this, super.getTarget().getPosition()));
                 attackPlayer();
             }
