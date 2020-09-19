@@ -6,6 +6,7 @@ import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.combat.skills.FireballSkill;
 import deco2800.thomas.combat.skills.MeleeSkill;
+import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.managers.GameManager;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PlayerPeon extends Peon implements TouchDownObserver, KeyDownObserver, KeyUpObserver {
+public class PlayerPeon extends LoadedPeon implements TouchDownObserver, KeyDownObserver, KeyUpObserver {
     public static int DEFAULT_HEALTH = 50;
     private static int orbCount = 0;
 

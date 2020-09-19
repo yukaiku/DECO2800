@@ -38,6 +38,7 @@ public final class DatabaseManager extends AbstractManager {
 	private static final String TEXTURESTRING = "texture";
 	private static final String ROWPOSSTRING = "rowPos";
 	private static final String COLPOSSTRING = "colPos";
+	private static final String WALLETSTRING = "wallet";
 	private static String saveName = "";
 	private static List<String> saveNameList = new ArrayList<>();
 
@@ -59,8 +60,8 @@ public final class DatabaseManager extends AbstractManager {
      */
     private static StringBuilder generateJsonForTile(Tile t, StringBuilder entireJsonAsString, boolean appendComma) {
         Gson tileJson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        Float rowPosition = t.getRow();
-        Float colPosition = t.getCol();
+        float rowPosition = t.getRow();
+        float colPosition = t.getCol();
         String json = tileJson.toJson(t);
 
         JsonElement element = tileJson.fromJson(json, JsonElement.class);
@@ -91,9 +92,10 @@ public final class DatabaseManager extends AbstractManager {
     private static StringBuilder generateJsonForEntity(AbstractEntity e, StringBuilder entireJsonAsString,
                                                       boolean appendComma) {
         Gson tileJson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        Float rowPosition = e.getRow();
-        Float colPosition = e.getCol();
+        float rowPosition = e.getRow();
+        float colPosition = e.getCol();
         String json = tileJson.toJson(e);
+
 
         JsonElement element = tileJson.fromJson(json, JsonElement.class);
         JsonObject jsonObject = element.getAsJsonObject();
@@ -105,7 +107,9 @@ public final class DatabaseManager extends AbstractManager {
         }
         result.addProperty(ROWPOSSTRING, rowPosition);
         result.addProperty(COLPOSSTRING, colPosition);
-
+        if (e instanceof PlayerPeon) {
+            result.addProperty(WALLETSTRING, ((PlayerPeon) e).getWallet());
+        }
         String finalJson = result.toString();
         entireJsonAsString.append(finalJson);
         if (appendComma) {
@@ -168,7 +172,7 @@ public final class DatabaseManager extends AbstractManager {
             while (reader.hasNext()) {
             	reader.beginObject();
 
-                Tile tile = new Tile("textureName", 0,0);
+                Tile tile = new Tile("textureName", 0f,0f);
                 while (reader.hasNext()) {
                     checkBasicTileSettings(tile,reader.nextName(),reader);
                 }
@@ -235,7 +239,7 @@ public final class DatabaseManager extends AbstractManager {
 
             for (String s:Arrays.asList("playerPeon")){
                 if (entityObjectName.startsWith(s)){
-                     PlayerPeon create = new PlayerPeon(1,1,1, 1);
+                     PlayerPeon create = new PlayerPeon(1f,1f,1f, 1);
                      create.setObjectName(entityObjectName);
                      return (AbstractEntity) create;
                 }
@@ -243,8 +247,8 @@ public final class DatabaseManager extends AbstractManager {
 
             for (String s:Arrays.asList("combat")) {
                 if (entityObjectName.startsWith(s)){
-                    SquareVector destination = new SquareVector(0,0);
-                    Fireball create = new Fireball(1, 5, 1, 1, EntityFaction.Ally);
+                    SquareVector destination = new SquareVector(0f,0f);
+                    Fireball create = new Fireball(1f, 5f, 1, 1f, EntityFaction.Ally);
                     return (AbstractEntity) create;
                 }
             }
@@ -280,10 +284,10 @@ public final class DatabaseManager extends AbstractManager {
                 case "speed":
                     ((AgentEntity)entity).setSpeed((float) reader.nextDouble());
                     return entity;
-                case "colPos":
+                case COLPOSSTRING:
                     entity.setCol((float) reader.nextDouble());
                     return entity;
-                case "rowPos":
+                case ROWPOSSTRING:
                     entity.setRow((float) reader.nextDouble());
                     return entity;
                 case "texture":
@@ -303,7 +307,9 @@ public final class DatabaseManager extends AbstractManager {
                     ((StaticEntity) entity).setChildren(children);
                     reader.endObject();
                     return entity;
-
+                case WALLETSTRING:
+                    ((PlayerPeon) entity).credit((float) reader.nextDouble());
+                    return entity;
                 case "entityID":
                     entity.setEntityID(reader.nextInt());
                     return entity;
@@ -576,7 +582,7 @@ public final class DatabaseManager extends AbstractManager {
 					int index = newTiles.indexOf(t);
 					float row = t.getRow();
 					float col = t.getCol();
-					t = new VolcanoBurnTile(tileTexture, col, row, 5);
+					t = new VolcanoBurnTile(tileTexture, col, row, 5f);
 					newTiles.add(t);
 				} else {
 					newTiles.add(t);

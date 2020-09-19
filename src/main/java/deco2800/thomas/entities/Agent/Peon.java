@@ -34,7 +34,6 @@ public class Peon extends AgentEntity implements Tickable {
 				this.movementTask = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
 			}
 			movementTask.onTick(i);
-			System.out.println("Doing movement");
 		} else {
 			movementTask = GameManager.getManagerFromInstance(TaskPool.class).getTask(this);
 		}
@@ -45,10 +44,9 @@ public class Peon extends AgentEntity implements Tickable {
 			if (combatTask.isComplete()) {
 				combatTask = null;
 			}
-			System.out.println("Doing");
 			combatTask.onTick(i);
 		} else {
-			System.out.println("No taska");
+			// Do nothing
 		}
 	}
 
