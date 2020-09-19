@@ -12,7 +12,6 @@ import deco2800.thomas.util.EnemyUtil;
 public class SwampDragon extends Dragon {
     public SwampDragon(int health, float speed, int orbNumber) {
         super(health, speed, orbNumber);
-        this.identifier = "dragonSwamp";
         this.setObjectName("Viondria");
     }
 

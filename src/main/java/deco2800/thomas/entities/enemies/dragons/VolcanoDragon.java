@@ -1,7 +1,11 @@
 package deco2800.thomas.entities.enemies.dragons;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.VolcanoFireball;
 import deco2800.thomas.entities.enemies.Dragon;
+import deco2800.thomas.entities.enemies.Variation;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
 import deco2800.thomas.util.EnemyUtil;
 
@@ -11,7 +15,10 @@ public class VolcanoDragon extends Dragon {
     public VolcanoDragon(int health, float speed, int orbNumber) {
         super(health, speed, orbNumber);
         this.identifier = "dragonVolcano";
+        this.variation = Variation.VOLCANO;
         this.setObjectName("Deilaenth");
+        this.dragonIdle = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
     }
 
     @Override

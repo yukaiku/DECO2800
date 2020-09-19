@@ -31,7 +31,7 @@ import java.util.Random;
  */
 public abstract class Dragon extends Boss implements PassiveEnemy {
     protected Variation variation;
-    private final Animation<TextureRegion> dragonIdle;
+    protected Animation<TextureRegion> dragonIdle;
     private float stateTimer;
 
     private int tickFollowing = 60;
@@ -46,6 +46,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
         super(health, speed);
         this.orbNumber = orbNumber;
         this.variation = Variation.SWAMP; // default
+        this.identifier = "dragonSwamp";
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
         this.stateTimer = 0;
