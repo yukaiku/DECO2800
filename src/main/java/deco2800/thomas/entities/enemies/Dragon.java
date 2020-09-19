@@ -8,7 +8,7 @@ import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.tasks.combat.MeleeAttackTask;
+import deco2800.thomas.tasks.combat.IceBreathTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
 import deco2800.thomas.util.SquareVector;
@@ -104,7 +104,9 @@ public class Dragon extends Boss implements PassiveEnemy {
     public void attackPlayer() {
         if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange));
             SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
-            setCombatTask(new MeleeAttackTask(this, origin, 8, 8, 20));
+            //setCombatTask(new MeleeAttackTask(this, origin, 8, 8, 20));
+            setCombatTask(new IceBreathTask(this, getTarget().getCol(), getTarget().getRow(),
+                    10, 4, 4));
     }
 
     public void summonRangedAttack() {

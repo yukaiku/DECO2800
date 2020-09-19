@@ -21,6 +21,7 @@ import deco2800.thomas.renderers.Renderer3D;
 import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.*;
 
+import deco2800.thomas.worlds.tundra.TundraWorld;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +86,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		TEST_WORLD {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new VolcanoWorld();
+				AbstractWorld world = new TundraWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
