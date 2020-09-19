@@ -2,6 +2,7 @@ package deco2800.thomas.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import deco2800.thomas.entities.items.Item;
 
 public class AbstractDialogBox {
 
