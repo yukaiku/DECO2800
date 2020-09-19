@@ -22,20 +22,20 @@ public class SpeedStatusTest extends BaseGDXTest {
     private SpeedStatus speed;
 
     // the entity being passed to the status
-    private AgentEntity entity;
+    private Peon entity;
 
     // the speed multiplier of the status
     private float multiplier;
 
     @Before
     public void setUp() throws Exception {
-        entity = new AgentEntity() {
+        entity = new Peon() {
             @Override
             public void onTick(long i) {
             }
         };
         multiplier = 0.5f;
-        speed = new SpeedStatus((Peon)entity, multiplier, 1);
+        speed = new SpeedStatus(entity, multiplier, 1);
     }
 
     /**

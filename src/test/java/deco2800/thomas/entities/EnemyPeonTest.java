@@ -63,7 +63,7 @@ public class EnemyPeonTest extends BaseGDXTest {
     public void testReduceHealth() {
         EnemyPeon enemy =  new Orc(1, 1, 100);
         enemy.applyDamage(50, DamageType.COMMON);
-        assertEquals(enemy.getCurrentHealth(), 50);
+        assertEquals(50, enemy.getCurrentHealth());
     }
 
     @Test
@@ -71,7 +71,7 @@ public class EnemyPeonTest extends BaseGDXTest {
         EnemyPeon enemy =  new Orc(1, 1, 100);
         enemy.setCurrentHealthValue(10);
         enemy.regenerateHealth(40);
-        assertEquals(enemy.getCurrentHealth(), 50);
+        assertEquals(50, enemy.getCurrentHealth());
     }
 
     @Test

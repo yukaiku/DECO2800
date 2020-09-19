@@ -69,7 +69,7 @@ public class ApplyDamageOnCollisionTaskTest extends BaseGDXTest {
 
         // Verify getDamage and reduceHealth are called
         verify(combatEntity).getDamage();
-        verify(peon).applyDamage(anyInt(), DamageType.COMMON);
+        verify(peon).applyDamage(anyInt(), any(DamageType.class));
 
         // Verify state change
         assertTrue(task.isComplete());

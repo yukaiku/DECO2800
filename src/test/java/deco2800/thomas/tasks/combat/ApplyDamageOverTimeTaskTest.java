@@ -72,7 +72,7 @@ public class ApplyDamageOverTimeTaskTest extends BaseGDXTest {
 
         // Verify getDamage and reduceHealth are called
         verify(combatEntity).getDamage();
-        verify(peon).applyDamage(anyInt(), DamageType.COMMON);
+        verify(peon).applyDamage(anyInt(), any(DamageType.class));
     }
 
     /**
@@ -89,7 +89,7 @@ public class ApplyDamageOverTimeTaskTest extends BaseGDXTest {
 
         // Verify getDamage and reduceHealth are called each time
         verify(combatEntity, times(5)).getDamage();
-        verify(peon, times(5)).applyDamage(anyInt(), DamageType.COMMON);
+        verify(peon, times(5)).applyDamage(anyInt(), any(DamageType.class));
     }
 
     /**
@@ -105,7 +105,7 @@ public class ApplyDamageOverTimeTaskTest extends BaseGDXTest {
 
         // Verify getDamage and reduceHealth are called only twice
         verify(combatEntity, times(2)).getDamage();
-        verify(peon, times(2)).applyDamage(anyInt(), DamageType.COMMON);
+        verify(peon, times(2)).applyDamage(anyInt(), any(DamageType.class));
     }
 
     /**

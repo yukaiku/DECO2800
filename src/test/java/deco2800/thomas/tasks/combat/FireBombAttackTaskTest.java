@@ -86,7 +86,7 @@ public class FireBombAttackTaskTest extends BaseGDXTest {
         task.onTick(1);
 
         // Verify reduceHealth is called
-        verify(peon).applyDamage(anyInt(), DamageType.COMMON);
+        verify(peon).applyDamage(anyInt(), eq(DamageType.FIRE));
     }
 
     /**

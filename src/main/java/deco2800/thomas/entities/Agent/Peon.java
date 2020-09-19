@@ -46,7 +46,7 @@ public class Peon extends AgentEntity implements Tickable {
 		this.effects = new CopyOnWriteArrayList<StatusEffect>();
 		this.damage = 10;
 		this.armour = ARMOUR_CONSTANT; // No damage reduction
-		this.vulnerability = DamageType.COMMON;
+		this.vulnerability = DamageType.NONE;
 		this.health = new HealthTracker(100);
 	}
 
@@ -107,16 +107,19 @@ public class Peon extends AgentEntity implements Tickable {
 	/**
 	 * Applies damage to the peon according to damage calculation algorithm.
 	 * @param damage The amount of damage to be taken by this AgentEntity.
-	 * @param damageType
+	 * @param damageType The type of damage to apply from DamageType enum.
 	 * @returns Damage dealt.
 	 */
 	public int applyDamage(int damage, DamageType damageType) {
-		int damageApplied = (int)(damage * ARMOUR_CONSTANT / getArmour() * (damageType == vulnerability ? 1.5 : 1));
-		health.reduceHealth(damageApplied);
+		float damageApplied = (float)damage * ARMOUR_CONSTANT / getArmour();
+		if (damageType == vulnerability && vulnerability != DamageType.NONE) {
+			damageApplied *= 1.5f;
+		}
+		health.reduceHealth((int)damageApplied);
 		isAttacked = true;
 		isAttackedCoolDown = 5;
 
-		return damageApplied;
+		return (int)damageApplied;
 	}
 
 	/**

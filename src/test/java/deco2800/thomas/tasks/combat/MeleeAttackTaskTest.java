@@ -66,7 +66,7 @@ public class MeleeAttackTaskTest extends BaseGDXTest {
         task.onTick(1);
 
         // Verify reduceHealth is called
-        verify(peon).applyDamage(anyInt(), DamageType.COMMON);
+        verify(peon).applyDamage(anyInt(), any(DamageType.class));
 
         // Verify state change
         assertTrue(task.isComplete());
@@ -95,7 +95,7 @@ public class MeleeAttackTaskTest extends BaseGDXTest {
         task.onTick(1);
 
         // Verify reduceHealth is not called
-        verify(peon, never()).applyDamage(anyInt(), DamageType.COMMON);
+        verify(peon, never()).applyDamage(anyInt(), any(DamageType.class));
 
         // Verify state change
         assertTrue(task.isComplete());
