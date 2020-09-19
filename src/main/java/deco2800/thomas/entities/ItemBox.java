@@ -44,6 +44,14 @@ public class ItemBox extends AbstractDialogBox {
 				(Gdx.graphics.getHeight() - box.getHeight())/2 );
 	}
 	
+	public TextButton getButton(){
+		return button; 
+	}
+	
+	public TextButton getCloseButton(){
+		return close; 
+	}
+	
 	private void setup(String description, String price) {
 		box.add(description).expand().center();
 		box.row();
@@ -75,6 +83,14 @@ public class ItemBox extends AbstractDialogBox {
 			}
 		}
 	};
+	
+	public ChangeListener getA(){
+		return a; 
+	}
+	
+	public ChangeListener getB(){
+		return b; 
+	}
 
 	ChangeListener b = new ChangeListener() {
 		@Override
