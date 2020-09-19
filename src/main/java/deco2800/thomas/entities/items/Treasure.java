@@ -13,6 +13,7 @@ public class Treasure extends Item{
 		super("Treasure", 0, tile, RenderConstants.ITEM_RENDER, "treasure_box",
 				obstructed, player);
 		this.setObjectName(ENTITY_ID_STRING);
+		
 		super.display = new ItemBox(this, "treasure", "0", "Treasure Box",
 				styleType);
 	}
