@@ -117,6 +117,7 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("trs-tundra", new Texture("resources/storyline/transition/transition-tundra.png"));
 			textureMap.put("trs-volcano", new Texture("resources/storyline/transition/transition-volcano.png"));
 			textureMap.put("control", new Texture("resources/storyline/control.png"));
+			textureMap.put("leave", new Texture("resources/storyline/leave-message.png"));
 
 
 			// npcs

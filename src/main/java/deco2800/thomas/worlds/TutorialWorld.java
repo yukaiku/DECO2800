@@ -115,6 +115,10 @@ public class TutorialWorld extends AbstractWorld{
         // Add portal
         t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW);
         entities.add(new Portal(t, false));
+
+        // Add message on how to leave tutorial (temporary)
+        t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW + 2);
+        entities.add(new Notify(t, false));
     }
 
     @Override
