@@ -68,7 +68,7 @@ public class Peon extends AgentEntity implements Tickable {
 	 * @param i Ticks since game start
 	 */
 	@Override
-	public void onTick(long i) {
+	public void onTick(long i) {	
 		// Update movement task
 		if (movementTask != null && movementTask.isAlive()) {
 			if (movementTask.isComplete()) {

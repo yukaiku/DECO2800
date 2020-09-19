@@ -342,6 +342,24 @@ public class TextureManager extends AbstractManager {
 			Array<TextureRegion> fireballDefault = new Array<>();
 			fireballDefault.add(new TextureRegion(new Texture("resources/combat/fireball_right.png")));
 			animationFrames.put("fireballDefault", fireballDefault);
+
+			// Icebreath attack
+			Array<TextureRegion> freezeTile = new Array<>();
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave0.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave1.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave2.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave3.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave4.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave5.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave6.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave7.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave8.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave9.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave10.png")));
+			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave11.png")));
+			animationFrames.put("freezeTile", freezeTile);
+
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
