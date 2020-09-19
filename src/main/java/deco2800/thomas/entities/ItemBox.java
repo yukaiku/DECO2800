@@ -17,9 +17,14 @@ public class ItemBox extends AbstractDialogBox {
 	public ItemBox(Item item, String name, String price, String description, String styleType) {
 		super(item, name, styleType);
 		this.item = item;
+		button = new TextButton("", skin);
+		close = new TextButton("",skin);
 		
 		if (item.getClass() == Treasure.class){
-			setupTreasureBox();
+			box.add("Open the box!").expand().center();
+			box.row();
+			button.setText("Open");
+			close.setText("Close");
 		}
 		else{
 			setup(description, price);
@@ -39,19 +44,12 @@ public class ItemBox extends AbstractDialogBox {
 				(Gdx.graphics.getHeight() - box.getHeight())/2 );
 	}
 	
-	private void setupTreasureBox(){
-		box.add("Open the box!").expand().center();
-		box.row();
-		button = new TextButton("Open", skin);
-		close = new TextButton("Close",skin);
-	}
-
 	private void setup(String description, String price) {
 		box.add(description).expand().center();
 		box.row();
 		box.add("Price:" + price);
-		button = new TextButton("Buy", skin);
-		close = new TextButton("Close",skin);
+		button.setText("Buy");
+		close.setText("Close");
 	}
 
 	ChangeListener a = new ChangeListener() {
