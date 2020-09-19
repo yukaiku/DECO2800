@@ -11,6 +11,7 @@ import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.NPC.NonPlayablePeon;
 import deco2800.thomas.entities.NPC.TutorialNPC;
 import deco2800.thomas.entities.enemies.Dummy;
+import deco2800.thomas.entities.environment.tutorial.*;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.*;
 import deco2800.thomas.entities.items.HealthPotion;
@@ -38,7 +39,7 @@ public class TutorialWorld extends AbstractWorld{
     static final int TUTORIAL_WORLD_HEIGHT = 6; // Note the map will double these numbers (bounds are +/- these limits)
     private final int PORTAL_COL = 0;
     private final int PORTAL_ROW = -TUTORIAL_WORLD_HEIGHT;
-    
+
 
     public TutorialWorld() {
         super(TUTORIAL_WORLD_WIDTH, TUTORIAL_WORLD_HEIGHT);
@@ -106,7 +107,7 @@ public class TutorialWorld extends AbstractWorld{
         }
         // Add targets
         for (int i = -6; i < 6 + 1; i = i + 2) {
-            if (i == 0) {
+            if (i == 0 | i == -2 | i == 2) {
                 continue;
             }
             Tile t = GameManager.get().getWorld().getTile(i, -TUTORIAL_WORLD_HEIGHT);
@@ -117,32 +118,40 @@ public class TutorialWorld extends AbstractWorld{
 
         Tile t;
         // Add barrels
-        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH - 1, TUTORIAL_WORLD_HEIGHT - 1);
+        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH - 1, TUTORIAL_WORLD_HEIGHT - 2);
         entities.add(new Barrel(t, true));
 
-        t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, TUTORIAL_WORLD_HEIGHT - 1);
+        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH - 1, -TUTORIAL_WORLD_HEIGHT + 1);
+        entities.add(new Barrel(t, true));
+
+        t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, TUTORIAL_WORLD_HEIGHT - 2);
+        entities.add(new Barrel(t, true));
+
+        t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, -TUTORIAL_WORLD_HEIGHT + 1);
         entities.add(new Barrel(t, true));
 
         // Add chest
-        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH - 1, -TUTORIAL_WORLD_HEIGHT);
+        t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, 0);
         entities.add(new Chest(t, true));
 
+        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH -1, 0);
+        entities.add(new Chest(t, true));
 
         // Add portal
         t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW);
         entities.add(new Portal(t, false));
 
-        // add potion and shield. 
-        
-        
+        // add potion and shield.
+
+
         Tile potion;
         potion = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
                 Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
         Item potionItem = new HealthPotion(potion, false,
                 (PlayerPeon) getPlayerEntity(), "tutorial");
-        entities.add(potionItem); 
+        entities.add(potionItem);
         this.allDialogBoxes.add(potionItem.getDisplay());
-        
+
         Tile shield;
         shield = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
                 Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
@@ -150,7 +159,7 @@ public class TutorialWorld extends AbstractWorld{
                 (PlayerPeon) getPlayerEntity(), "tutorial");
         entities.add(itemShield);
         this.allDialogBoxes.add(itemShield.getDisplay());
-        
+
         Tile treasure;
         treasure = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
                 Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
@@ -158,6 +167,10 @@ public class TutorialWorld extends AbstractWorld{
                 (PlayerPeon) getPlayerEntity(),"tutorial");
         entities.add(itemTreasure);
         this.allDialogBoxes.add(itemTreasure.getDisplay());
+
+        // Add message on how to leave tutorial (temporary)
+        t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW + 2);
+        entities.add(new Notify(t, false));
     }
 
     @Override
@@ -182,7 +195,7 @@ public class TutorialWorld extends AbstractWorld{
             // Set new world
             GameManager gameManager = GameManager.get();
             gameManager.setWorld(GameScreen.gameType.NEW_GAME.method());
-            
+
 
             GameManager.get().setNextWorld();
         }

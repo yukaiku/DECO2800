@@ -17,7 +17,7 @@ public class GuidelineComponent extends OverlayComponent {
 
     public GuidelineComponent(OverlayRenderer overlayRenderer) {
         super(overlayRenderer);
-        guideline = new Sprite(GameManager.get().getManager(TextureManager.class).getTexture("dialog-box"));
+        guideline = new Sprite(GameManager.get().getManager(TextureManager.class).getTexture("control"));
     }
 
     @Override
