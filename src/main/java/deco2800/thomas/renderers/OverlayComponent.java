@@ -1,5 +1,6 @@
 package deco2800.thomas.renderers;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -19,5 +20,5 @@ public abstract class OverlayComponent {
      *
      * @param batch the sprite batch to draw into
      */
-    public abstract void render(SpriteBatch batch);
+    public abstract void render(SpriteBatch batch, OrthographicCamera camera);
 }

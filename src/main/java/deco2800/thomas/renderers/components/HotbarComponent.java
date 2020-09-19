@@ -3,6 +3,7 @@ package deco2800.thomas.renderers.components;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -45,7 +46,7 @@ public class HotbarComponent extends OverlayComponent {
      * @param batch the sprite batch to draw into
      */
     @Override
-    public void render(SpriteBatch batch) {
+    public void render(SpriteBatch batch, OrthographicCamera camera) {
         batch.begin();
 
         wizardIcon.setPosition(overlayRenderer.getX() + 0.15f * overlayRenderer.getWidth(), overlayRenderer.getY());

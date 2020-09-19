@@ -2,6 +2,7 @@ package deco2800.thomas.renderers.components;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -27,7 +28,7 @@ public class DebugComponent extends OverlayComponent {
     }
 
     @Override
-    public void render(SpriteBatch batch) {
+    public void render(SpriteBatch batch, OrthographicCamera camera) {
         if (shapeRenderer == null) {
             shapeRenderer = new ShapeRenderer();
         }

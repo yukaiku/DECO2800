@@ -1,4 +1,4 @@
-package deco2800.thomas.renderers;
+package deco2800.thomas.renderers.components;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,23 +7,23 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import deco2800.thomas.entities.Agent.QuestTracker;
 import deco2800.thomas.entities.Orb;
-import deco2800.thomas.managers.*;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.renderers.OverlayComponent;
+import deco2800.thomas.renderers.OverlayRenderer;
 
 import java.util.List;
 
-
-/**
- * A QuestTrackerRenderer class that implements Renderer
- * Overrides the render to display quest tracker
- *
- * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/quest-tracker-ui
- */
-public class QuestTrackerRenderer implements Renderer {
+public class QuestTrackerComponent extends OverlayComponent {
 
     BitmapFont font;
 
+    public QuestTrackerComponent(OverlayRenderer overlayRenderer) {
+        super(overlayRenderer);
+    }
+
     @Override
-    public void render(SpriteBatch batch, OrthographicCamera camera) {
+    public void render(SpriteBatch batch, OrthographicCamera camera){
         // get quest progress
         List<Orb> orbs = QuestTracker.orbTracker();
         //draws the orb
@@ -40,6 +40,5 @@ public class QuestTrackerRenderer implements Renderer {
         }
         font.draw(batch, "orbs: ", camera.position.x + camera.viewportWidth/2 - 7 - 57 * 5,camera.position.y + camera.viewportHeight / 2 - 50/4);
         batch.end();
-
     }
 }

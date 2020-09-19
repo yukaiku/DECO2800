@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import deco2800.thomas.renderers.components.DebugComponent;
 import deco2800.thomas.renderers.components.HotbarComponent;
+import deco2800.thomas.renderers.components.QuestTrackerComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class OverlayRenderer implements Renderer {
         this.components = new ArrayList<>();
         this.components.add(new DebugComponent(this));
         this.components.add(new HotbarComponent(this));
+        this.components.add(new QuestTrackerComponent(this));
     }
 
     @Override
@@ -39,7 +41,7 @@ public class OverlayRenderer implements Renderer {
         this.setHeight(camera.viewportHeight);
 
         for (OverlayComponent component : this.components) {
-            component.render(batch);
+            component.render(batch, camera);
         }
     }
 

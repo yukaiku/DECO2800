@@ -50,7 +50,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 	PauseModal pauseModal = new PauseModal();
 	Result result = new Result();
 	TransitionScreen transitionScreen = new TransitionScreen();
-	QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
 	//Tutorial Guideline UI
 	Guideline guideline = new Guideline();
 
@@ -213,8 +212,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 
 		spriteBatch.setProjectionMatrix(cameraOverlay.combined);
-		//Add questTracker UI
-		questTrackerRenderer.render(spriteBatch, cameraOverlay);
 		//Add tutorial guideline if we are in the tutorial world
 		if(tutorial){
 			guideline.render(spriteBatch,cameraOverlay);
