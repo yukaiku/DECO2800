@@ -16,6 +16,6 @@ public class SwampDragon extends Dragon {
 
     @Override
     public void summonRangedAttack() {
-        this.setCombatTask(new ScorpionStingAttackTask(this, getTarget().getCol(), getTarget().getRow(), 1, 0.15f, 60));
+        this.setCombatTask(new ScorpionStingAttackTask(this, getTarget().getCol(), getTarget().getRow(), 10, 0.15f, 60));
     }
 }

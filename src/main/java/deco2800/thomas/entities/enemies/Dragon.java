@@ -70,7 +70,6 @@ public class Dragon extends Boss implements PassiveEnemy {
         if (isDead()) {
             death();
         }
-
         return damageDealt;
     }
 

@@ -1,5 +1,6 @@
 package deco2800.thomas.entities.enemies.dragons;
 import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.attacks.VolcanoFireball;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
