@@ -178,7 +178,6 @@ public class TutorialWorld extends AbstractWorld{
                 Math.abs(player.getRow() - PORTAL_ROW) < 0.1) {
             // Remove guideline modal
             GameScreen.tutorial = false;
-            GameManager.get().inTutorial = false;
             // Remove the current map's enemy manager
             GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
 

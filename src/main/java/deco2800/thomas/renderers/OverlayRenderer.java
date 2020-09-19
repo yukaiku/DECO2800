@@ -3,6 +3,7 @@ package deco2800.thomas.renderers;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import deco2800.thomas.renderers.components.DebugComponent;
+import deco2800.thomas.renderers.components.GuidelineComponent;
 import deco2800.thomas.renderers.components.HotbarComponent;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class OverlayRenderer implements Renderer {
         this.components = new ArrayList<>();
         this.components.add(new DebugComponent(this));
         this.components.add(new HotbarComponent(this));
+        this.components.add(new GuidelineComponent(this));
     }
 
     @Override

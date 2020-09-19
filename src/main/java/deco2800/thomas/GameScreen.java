@@ -37,7 +37,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * 3D is for Isometric worlds
 	 * Check the documentation for each renderer to see how it handles WorldEntity coordinates
 	 */
-	public static boolean tutorial = false;
 	Renderer3D renderer = new Renderer3D();
 	OverlayRenderer overlayRenderer;
 
@@ -51,9 +50,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 	Result result = new Result();
 	TransitionScreen transitionScreen = new TransitionScreen();
 	QuestTrackerRenderer questTrackerRenderer = new QuestTrackerRenderer();
-	//Tutorial Guideline UI
-	Guideline guideline = new Guideline();
-
 
 	// Buttons in the pause menu
 	Button resumeButton = new TextButton("RESUME", GameManager.get().getSkin(), "in_game");
@@ -105,8 +101,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	public GameScreen(final ThomasGame game, final gameType startType) {
 		if (startType == gameType.NEW_GAME) {
-			GameManager.get().inTutorial = true;
-			tutorial = true;
 			GameManager.get().setWorld(startType.method());
 		} else if (startType == gameType.ENV_TEAM_GAME) {
 			GameManager.get().setWorld(startType.method());
@@ -123,8 +117,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		// Initialize camera
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cameraOverlay = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cameraEvent = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cameraOverlay = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		/* Add the window to the stage */
 		GameManager.get().setSkin(skin);
@@ -215,10 +209,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 		spriteBatch.setProjectionMatrix(cameraOverlay.combined);
 		//Add questTracker UI
 		questTrackerRenderer.render(spriteBatch, cameraOverlay);
-		//Add tutorial guideline if we are in the tutorial world
-		if(tutorial){
-			guideline.render(spriteBatch,cameraOverlay);
-		}
 
 		// Hide the buttons when the game is running
 		resumeButton.setPosition(-100, -100);
@@ -375,8 +365,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 			}
 		}
 
-		if (keycode == Input.Keys.F9 & GameManager.get().inTutorial) {
-			tutorial = !tutorial;
+		if (keycode == Input.Keys.F9) {
+			GameManager.get().tutorial = !GameManager.get().tutorial;
 		}
 
 		if (keycode == Input.Keys.F5) {
