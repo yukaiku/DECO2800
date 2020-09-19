@@ -274,6 +274,7 @@ public class GameManager {
 	public void setNextWorld() {
 		// removes the previous enemy manager
 		managers.removeIf(manager -> manager instanceof EnemyManager);
+		this.getWorld().dispose(); // Dispose world
 		switch (worldOrder.get(currentWorld)) {
 			case TUNDRA_WORLD:
 				this.setWorld(new TundraWorld());

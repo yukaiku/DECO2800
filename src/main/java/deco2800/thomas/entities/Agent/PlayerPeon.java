@@ -279,6 +279,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
      */
     @Override
     public void notifyTouchDown(int screenX, int screenY, int pointer, int button) {
+        System.out.println("Touch down - player.");
         float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(), Gdx.input.getY());
         float[] clickedPosition = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
 
@@ -453,6 +454,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
      */
     @Override
     public void dispose() {
+        System.out.println("Disposing player.");
         GameManager.getManagerFromInstance(InputManager.class).removeTouchDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).removeKeyDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).removeKeyUpListener(this);
