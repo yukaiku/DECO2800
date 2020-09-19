@@ -1,9 +1,11 @@
 package deco2800.thomas.util;
 
-import static java.lang.Float.parseFloat;
+import com.google.gson.annotations.Expose;
 
 public class SquareVector {
+	@Expose
 	private float col; // col corresponds to the X coordinate
+	@Expose
 	private float row; // row corresponds to the Y coordinate
 
 	/**
@@ -24,8 +26,8 @@ public class SquareVector {
 
 	public SquareVector(String vector) {
 		String[] pos = vector.split(",", 2);
-		this.col = parseFloat(pos[0]);
-		this.row = parseFloat(pos[1]);
+		this.col = Float.parseFloat(pos[0]);
+		this.row = Float.parseFloat(pos[1]);
 	}
 
 
@@ -115,9 +117,6 @@ public class SquareVector {
 		double xShift = Math.cos(angle) * distance;
 		double yShift = Math.sin(angle) * distance;
 
-		//System.out.println(String.format("    dCol: %.2f, dRow: %.2f, angle: %.2f, colShift: %.2f, rowShift: %.2f", deltaCol, deltaRow, angle, xShift, yShift));
-
-
 		this.col += xShift;
 		this.row += yShift;
 	}
@@ -143,6 +142,43 @@ public class SquareVector {
 		}
 		SquareVector vector = (SquareVector) obj;
 		return isCloseEnoughToBeTheSame(vector);
+	}
+
+	/**
+	 * Returns whether a given SquareVector is set on the same Tile
+	 * as this SquareVector.
+	 *
+	 * @param obj The other SquareVector.
+	 * @return Whether this SquareVector and obj share a Tile.
+	 */
+	public boolean tileEquals(Object obj) {
+		if (!(obj instanceof SquareVector)) {
+			return false;
+		}
+		boolean colTrue, rowTrue;
+		SquareVector vector = (SquareVector) obj;
+
+		// round all positions to make comparisons possible
+		float roundCol = Math.round(getCol());
+		float roundRow = Math.round(getRow());
+		float roundVecCol = Math.round(vector.getCol());
+		float roundVecRow = Math.round(vector.getRow());
+
+		// check if the columns originate from the same Tile
+		if (roundCol <= getCol()) {
+			colTrue = roundCol == roundVecCol || roundCol == Math.round(vector.getCol() - 0.5);
+		} else {
+			colTrue = roundCol == roundVecCol || roundCol == Math.round(vector.getCol() + 0.5);
+		}
+
+		// check if the rows originate from the same Tile
+		if (roundRow <= getRow()) {
+			rowTrue = roundRow == roundVecRow || roundRow == Math.round(vector.getRow() - 0.5);
+		} else {
+			rowTrue = roundRow == roundVecRow || roundRow == Math.round(vector.getRow() + 0.5);
+		}
+
+		return rowTrue && colTrue;
 	}
 
 	@Override

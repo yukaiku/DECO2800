@@ -16,6 +16,8 @@ public class QuicksandTile extends Tile {
      */
     public QuicksandTile(String texture) {
         super(texture);
+        this.setType("Quicksand");
+        this.setStatusEffect(true);
     }
 
     /**
@@ -27,21 +29,15 @@ public class QuicksandTile extends Tile {
      */
     public QuicksandTile(String texture, float col, float row) {
         super(texture, col, row);
+        this.setType("Quicksand");
+        this.setStatusEffect(true);
     }
 
     /**
      * Creates a CactusTile without any designated params.
      */
     public QuicksandTile() {
-    }
-
-    /**
-     * Returns the type of this Tile.
-     *
-     * @return The type of this Tile.
-     */
-    @Override
-    public String getType() {
-        return "Quicksand";
+        this.setType("Quicksand");
+        this.setStatusEffect(true);
     }
 }

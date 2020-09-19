@@ -12,6 +12,7 @@ public class RenderConstants {
 	public static final int TARGET_RENDER = 1;
 	public static final int STASH_RENDER = 1;
 	public static final int PORTAL_RENDER = 1;
+	public static final int CHEST_RENDER = 1;
 	public static final int PEON_RENDER = 3;
 	public static final int TREE_RENDER = 5;
 	public static final int PROJECTILE_RENDER = 6;
@@ -41,7 +42,7 @@ public class RenderConstants {
 	public static final int VOLCANO_BONES = 1;
 	public static final int VOLCANO_BURNING_TREE = 1;
 	public static final int VOLCANO_DRAGON_SKULL = 1;
-	public static final int VOLCANO_LAVA_POOL = 1;
+	public static final int VOLCANO_LAVA_POOL = 2;
 	public static final int VOLCANO_GRAVEYARD = 1;
 
 	// Entities in Tundra Zone
@@ -49,4 +50,7 @@ public class RenderConstants {
 	public static final int TUNDRA_TREE_LOG = 1;
 	public static final int TUNDRA_ROCK = 1;
 	public static final int BARREL_RENDER = 1;
+
+	// All Item Entities render with a value of 2
+	public static final int ITEM_RENDER = 2;
 }

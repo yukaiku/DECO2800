@@ -11,6 +11,7 @@ public class TundraCampfire extends StaticEntity {
 	private static final boolean OBSTRUCTED = true;
 
 	private TundraCampfire() {
+		this.setObjectName(ENTITY_ID_STRING);
 	}
 
 	public TundraCampfire(Tile tile) {

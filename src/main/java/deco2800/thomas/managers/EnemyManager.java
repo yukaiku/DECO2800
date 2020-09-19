@@ -268,6 +268,9 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
                     for (EnemyPeon enemy : new ArrayList<>(specialEnemiesAlive)) {
                         removeSpecialEnemy(enemy);
                     }
+                    // Ctrl + L: Kill the dragon
+                } else if (keycode == Input.Keys.L && boss != null) {
+                    boss.reduceHealth(boss.getCurrentHealth());
                 } else if (keycode == Input.Keys.S) {
                     // Ctrl + S: Spawn a special enemy
                     Goblin goblin = new Goblin(1, 0.1f, 20);

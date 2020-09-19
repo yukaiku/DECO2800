@@ -1,10 +1,12 @@
 package deco2800.thomas.worlds;
 
+import com.badlogic.gdx.physics.box2d.World;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.Agent.QuestTracker;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.BoundingBox;
@@ -31,7 +33,7 @@ public abstract class AbstractWorld implements Tickable {
 	 */
 	protected static final int DEFAULT_HEIGHT = 25;
 
-    protected PlayerPeon playerEntity;
+    protected AgentEntity playerEntity;
 
 	/**
 	 * The static entity which is the Orb. All maps
@@ -82,6 +84,11 @@ public abstract class AbstractWorld implements Tickable {
 	}
 
 	/**
+	 *
+	 */
+	private WorldEvent worldEvent;
+
+	/**
 	 * Constructor that creates a world with given width and height
 	 *
 	 * @param width  width of the world; horizontal coordinates of the world will be within `[-width, width]`
@@ -125,10 +132,12 @@ public abstract class AbstractWorld implements Tickable {
 
 	/**
 	 * Check if the player's position is same as the orb's position
+	 * Removes orb, add to tracker and jump to next world
 	 */
 	protected void checkObtainedOrb() {
 		if (orbEntity != null) {
 			if (playerEntity.getPosition().equals(orbEntity.getPosition())) {
+				QuestTracker.increaseOrbs(orbEntity);
 				this.removeEntity(playerEntity);
 				GameManager.get().setNextWorld();
 			}
@@ -434,11 +443,11 @@ public abstract class AbstractWorld implements Tickable {
         }
     }
 
-    public PlayerPeon getPlayerEntity() {
+    public AgentEntity getPlayerEntity() {
         return playerEntity;
     }
 
-	public void setPlayerEntity(PlayerPeon playerEntity) {
+	public void setPlayerEntity(AgentEntity playerEntity) {
 		this.playerEntity = playerEntity;
 	}
 
@@ -456,5 +465,13 @@ public abstract class AbstractWorld implements Tickable {
 	 */
 	public int getHeight() {
 		return this.height;
+	}
+
+	public WorldEvent getWorldEvent() {
+		return this.worldEvent;
+	}
+
+	public void setWorldEvent(WorldEvent event) {
+		this.worldEvent = event;
 	}
 }
