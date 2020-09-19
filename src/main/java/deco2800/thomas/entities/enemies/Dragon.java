@@ -106,7 +106,7 @@ public class Dragon extends Boss implements PassiveEnemy {
             SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
             //setCombatTask(new MeleeAttackTask(this, origin, 8, 8, 20));
             setCombatTask(new IceBreathTask(this, getTarget().getCol(), getTarget().getRow(),
-                    10, 4, 4));
+                    1));
     }
 
     public void summonRangedAttack() {
