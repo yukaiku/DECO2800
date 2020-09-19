@@ -134,6 +134,9 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("player_left", new Texture("resources/combat/move_left.png"));
 			textureMap.put("player_right", new Texture("resources/combat/move_right.png"));
 
+			//Inventory Menu
+
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
