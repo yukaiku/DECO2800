@@ -474,7 +474,9 @@ public final class DatabaseManager extends AbstractManager {
         world.assignTileNeighbours();
         world.setEntities(new ArrayList<AbstractEntity>(newEntities.values()));
         logger.info("Load succeeded");
-        GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Loaded game from the database.");
+        if (GameManager.get().debugMode) {
+            GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Loaded game from the database.");
+        }
     }
 
     private static void writeToJson(String entireString) {

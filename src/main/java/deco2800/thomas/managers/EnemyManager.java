@@ -204,7 +204,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
             if (tileX > -world.getWidth() + 1 && tileX < world.getWidth() - 2 &&
                     tileY > -world.getHeight() + 1 && tileY < world.getHeight() - 1 &&
                     world.getTile(tileX, tileY) != null && !world.getTile(tileX, tileY).isObstructed() &&
-                    !world.getTile(tileX, tileY).hasStatusEffect()) {
+                    world.getTile(tileX, tileY).getType() != "BurnTile") {
                 // choose a random enemy blueprint
                 EnemyPeon enemy = wildEnemyConfigs.get(random.nextInt(wildEnemyConfigs.size())).deepCopy();
                 spawnWildEnemy(enemy, tileX, tileY);

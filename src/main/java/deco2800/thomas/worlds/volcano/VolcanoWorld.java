@@ -157,28 +157,47 @@ public class VolcanoWorld extends AbstractWorld {
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            HealthPotion potion = new HealthPotion(tile,false,
-                    (PlayerPeon) getPlayerEntity(), "volcano");
-            entities.add(potion);
-            items.add(potion.getDisplay());
+            if (Integer.parseInt(tile.getTextureName().split("_")[1]) < 5
+            && !tile.hasParent()) {
+                HealthPotion potion = new HealthPotion(tile,false,
+                        (PlayerPeon) getPlayerEntity(), "volcano");
+                entities.add(potion);
+                items.add(potion.getDisplay());
+
+            } else {
+                i--;
+            }
+
         }
 
         for (int i = 0; i < NUM_SHIELDS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            Shield shield = new Shield(tile, false,
-                    (PlayerPeon) getPlayerEntity(),"volcano");
-            entities.add(shield);
-            items.add(shield.getDisplay());
+            if (Integer.parseInt(tile.getTextureName().split("_")[1]) < 5
+                    && !tile.hasParent()) {
+                Shield shield = new Shield(tile, false,
+                        (PlayerPeon) getPlayerEntity(),"volcano");
+                entities.add(shield);
+                items.add(shield.getDisplay());
+            } else {
+                i--;
+            }
+
         }
         
         for (int i = 0; i < NUM_CHESTS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            Treasure chest = new Treasure(tile, false,
-                    (PlayerPeon) getPlayerEntity(),"volcano");
-            entities.add(chest);
-            items.add(chest.getDisplay());
+            if (Integer.parseInt(tile.getTextureName().split("_")[1]) < 5
+                    && !tile.hasParent()) {
+                Treasure chest = new Treasure(tile, false,
+                        (PlayerPeon) getPlayerEntity(),"volcano");
+                entities.add(chest);
+                items.add(chest.getDisplay());
+            } else {
+                i--;
+            }
+
         }
 
         DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
@@ -209,10 +228,10 @@ public class VolcanoWorld extends AbstractWorld {
             tileNumber = Integer.parseInt(tileTexture.split("_")[1]);
 
             selector = random.nextInt(2);
-            if (tileNumber < 5 && tileNumber > 1 && selector == 1) {
+            if (tileNumber < 5 && tileNumber > 1 && selector == 1 && !t.hasParent()) {
                 entities.add(new Rock(t, true));
             } else if (t != null && (tileNumber == 3 || tileNumber == 4) &&
-                    selector == 0) {
+                    selector == 0 && !t.hasParent()) {
                 entities.add(new VolcanoBurningTree(t, true));
             } else {
                 i--;
