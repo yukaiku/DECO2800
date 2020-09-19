@@ -39,7 +39,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	public static boolean tutorial = false;
 	Renderer3D renderer = new Renderer3D();
-	OverlayRenderer rendererDebug = new OverlayRenderer();
+	OverlayRenderer overlayRenderer;
 
 	//Renderer Object to render Zone Events
 	EventRenderer rendererEvent;
@@ -67,7 +67,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * Create a camera for panning and zooming.
 	 * Camera must be updated every render cycle.
 	 */
-	OrthographicCamera camera, cameraDebug, cameraEvent;
+	OrthographicCamera camera, cameraOverlay, cameraEvent;
 
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
 
@@ -123,7 +123,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		// Initialize camera
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cameraDebug = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cameraOverlay = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cameraEvent = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		/* Add the window to the stage */
@@ -175,6 +175,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 		stage.addActor(resumeButton);
 		stage.addActor(quitButton);
 		stage.addActor(enterButton);
+
+		overlayRenderer = new OverlayRenderer();
 	}
 
 	/**
@@ -189,14 +191,14 @@ public class GameScreen implements Screen, KeyDownObserver {
 		cameraEvent.position.set(camera.position);
 		cameraEvent.update();
 
-		cameraDebug.position.set(camera.position);
-		cameraDebug.update();
+		cameraOverlay.position.set(camera.position);
+		cameraOverlay.update();
 
 		SpriteBatch batchEvent = new SpriteBatch();
 		batchEvent.setProjectionMatrix(cameraEvent.combined);
 
-		SpriteBatch batchDebug = new SpriteBatch();
-		batchDebug.setProjectionMatrix(cameraDebug.combined);
+		SpriteBatch batchOverlay = new SpriteBatch();
+		batchOverlay.setProjectionMatrix(cameraOverlay.combined);
 
 		SpriteBatch batch = new SpriteBatch();
 		batch.setProjectionMatrix(camera.combined);
@@ -206,16 +208,16 @@ public class GameScreen implements Screen, KeyDownObserver {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		rerenderMapObjects(batch, camera);
-		rendererDebug.render(batchDebug, cameraDebug);
+		overlayRenderer.render(batchOverlay, cameraOverlay);
 		rendererEvent.render(batchEvent, cameraEvent);
 
 
-		spriteBatch.setProjectionMatrix(cameraDebug.combined);
+		spriteBatch.setProjectionMatrix(cameraOverlay.combined);
 		//Add questTracker UI
-		questTrackerRenderer.render(spriteBatch, cameraDebug);
+		questTrackerRenderer.render(spriteBatch, cameraOverlay);
 		//Add tutorial guideline if we are in the tutorial world
 		if(tutorial){
-			guideline.render(spriteBatch,cameraDebug);
+			guideline.render(spriteBatch,cameraOverlay);
 		}
 
 		// Hide the buttons when the game is running
@@ -234,8 +236,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	public void renderPauseMenu(float delta) {
 		// Render the pause modal
-		spriteBatch.setProjectionMatrix(cameraDebug.combined);
-		pauseModal.render(spriteBatch, cameraDebug);
+		spriteBatch.setProjectionMatrix(cameraOverlay.combined);
+		pauseModal.render(spriteBatch, cameraOverlay);
 
 		// Display the buttons
 		resumeButton.setPosition(width / 2 - resumeButton.getWidth() / 2,
@@ -251,8 +253,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	public void renderGameResult(float delta) {
 		// Render the pause modal
-		spriteBatch.setProjectionMatrix(cameraDebug.combined);
-		result.render(spriteBatch, cameraDebug);
+		spriteBatch.setProjectionMatrix(cameraOverlay.combined);
+		result.render(spriteBatch, cameraOverlay);
 
 		// Display the buttons
 		quitButton.setPosition(width / 2 - quitButton.getWidth() / 2,
@@ -263,8 +265,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	public void renderTransitionScreen(float delta) {
 		// Render the transition screen
-		spriteBatch.setProjectionMatrix(cameraDebug.combined);
-		transitionScreen.render(spriteBatch, cameraDebug);
+		spriteBatch.setProjectionMatrix(cameraOverlay.combined);
+		transitionScreen.render(spriteBatch, cameraOverlay);
 
 		// Display the button
 		enterButton.setPosition(width / 2 - enterButton.getWidth() / 2, 150);
@@ -329,9 +331,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 		camera.viewportHeight = height;
 		camera.update();
 
-		cameraDebug.viewportWidth = width;
-		cameraDebug.viewportHeight = height;
-		cameraDebug.update();
+		cameraOverlay.viewportWidth = width;
+		cameraOverlay.viewportHeight = height;
+		cameraOverlay.update();
 	}
 
 	@Override
