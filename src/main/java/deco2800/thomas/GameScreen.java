@@ -277,6 +277,10 @@ public class GameScreen implements Screen, KeyDownObserver {
 		spriteBatch.setProjectionMatrix(cameraOverlay.combined);
 		transitionScreen.render(spriteBatch, cameraOverlay);
 
+		//Hide the other buttons
+		resumeButton.setPosition(-100, -100);
+		quitButton.setPosition(-100, -100);
+		playAgainButton.setPosition(-100, -100);
 		// Display the button
 		enterButton.setPosition(width / 2 - enterButton.getWidth() / 2, 150);
 		stage.act(delta);
