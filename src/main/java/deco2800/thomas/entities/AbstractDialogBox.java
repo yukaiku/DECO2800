@@ -67,8 +67,8 @@ public class AbstractDialogBox {
 	 * Sets boolean value checking whether to remove entity or not. 
 	 * If true, entity is removed.
 	 */
-	public void setRemove(boolean remove){
-		this.remove = remove; 
+	public void setRemove(boolean rem){
+		this.remove = rem; 
 	}
 
 	/**
