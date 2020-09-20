@@ -2,6 +2,7 @@ package deco2800.thomas.entities.attacks;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.Animatable;
@@ -115,6 +116,7 @@ public class Iceball extends Projectile implements Animatable {
                     EntityFaction faction = peon.getFaction();
                     if (faction != EntityFaction.None && faction != this.getFaction()) {
                         peon.addEffect(new SpeedStatus(peon, 0.3f, 10));
+                        peon.applyDamage(this.getDamage(), DamageType.ICE);
                     }
                 }
             }
