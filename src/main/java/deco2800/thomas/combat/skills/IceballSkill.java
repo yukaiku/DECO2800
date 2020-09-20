@@ -9,7 +9,7 @@ import deco2800.thomas.tasks.combat.IceballAttackTask;
 
 public class IceballSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private final int MAX_COOLDOWN = 10;
+    private final int MAX_COOLDOWN = 50;
     /* Damage to apply from sting */
     private final int DAMAGE = 8;
     /* Speed of projectile */

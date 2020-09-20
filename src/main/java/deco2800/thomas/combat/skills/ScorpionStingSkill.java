@@ -13,7 +13,7 @@ import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
  */
 public class ScorpionStingSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private final int MAX_COOLDOWN = 20;
+    private final int MAX_COOLDOWN = 50;
     /* Damage to apply from sting */
     private final int DAMAGE = 8;
     /* Speed of projectile */

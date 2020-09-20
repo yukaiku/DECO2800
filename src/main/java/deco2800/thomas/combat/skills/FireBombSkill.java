@@ -13,7 +13,7 @@ import deco2800.thomas.tasks.combat.FireballAttackTask;
  */
 public class FireBombSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private final int MAX_COOLDOWN = 30 * 1; // TODO Fix magic number
+    private final int MAX_COOLDOWN = 160; // TODO Fix magic number
     /* Damage to apply from explosion */
     private final int DAMAGE = 20;
     /* Lifetime of explosion */
