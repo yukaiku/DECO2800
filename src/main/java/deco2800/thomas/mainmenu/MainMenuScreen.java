@@ -2,7 +2,11 @@ package deco2800.thomas.mainmenu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -36,29 +40,46 @@ public class MainMenuScreen implements Screen {
 		background.setFillParent(true);
 		stage.addActor(background);
 
-		Label logo = new Label("Polyhedron", skin);
-		logo.setFontScale(5.0f);
-//		logo.setPosition(1280 / 2 - 225, 720 / 2 + 100);
-		logo.setPosition(180, 540);
-		logo.addAction(Actions.moveTo(280, 540, 0.4f, Interpolation.PowOut.pow3Out));
+		Texture titleTex = new Texture(Gdx.files.internal("resources/fonts/title.png"), true);
+		titleTex.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.Linear);
+		BitmapFont titleFont = new BitmapFont(Gdx.files.internal("resources/fonts/title.fnt"), new TextureRegion(titleTex),
+				false);
+		Label.LabelStyle titleStyle = new Label.LabelStyle(titleFont, Color.WHITE);
+		Label logo = new Label("Polyhedron", titleStyle);
+		Label small = new Label("Studio Fd ii", titleStyle);
+		small.setFontScale(0.6f);
+		logo.setFontScale(2.2f);
+		logo.setPosition(200, 540);
+		small.setPosition(250, 495);
+		logo.addAction(Actions.moveTo(300, 540, 0.4f, Interpolation.PowOut.pow3Out));
+		small.addAction(Actions.moveTo(350, 495, 0.4f, Interpolation.PowOut.pow3Out));
 		stage.addActor(logo);
+		stage.addActor(small);
 
-		Button envTeamButton = new TextButton("ENV TEAM", skin, "main_menu");
+		Texture menuTex = new Texture(Gdx.files.internal("resources/fonts/times.png"), true);
+		menuTex.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.Linear);
+		BitmapFont menuFont = new BitmapFont(Gdx.files.internal("resources/fonts/times.fnt"),
+				new TextureRegion(menuTex), false);
+		TextButton.TextButtonStyle menuStyle = new TextButton.TextButtonStyle();
+		menuStyle.font = menuFont;
+		menuStyle.fontColor = Color.valueOf("#cccccc");
+
+		Button envTeamButton = new TextButton("ENV TEAM", menuStyle);
 		envTeamButton.setPosition(200, 330);
 		envTeamButton.addAction(Actions.moveTo(300, 330, 0.6f, Interpolation.PowOut.pow3Out));
 		stage.addActor(envTeamButton);
 
-		Button testWorldBtn = new TextButton("DEBUG START", skin, "main_menu");
+		Button testWorldBtn = new TextButton("DEBUG START", menuStyle);
 		testWorldBtn.setPosition(200, 280);
 		testWorldBtn.addAction(Actions.moveTo(300, 280, 0.8f, Interpolation.PowOut.pow3Out));
 		stage.addActor(testWorldBtn);
 
-		Button newGameBtn = new TextButton("NEW GAME", skin, "main_menu");
+		Button newGameBtn = new TextButton("NEW GAME", menuStyle);
 		newGameBtn.setPosition(200, 210);
 		newGameBtn.addAction(Actions.moveTo(300, 210, 1f, Interpolation.PowOut.pow3Out));
 		stage.addActor(newGameBtn);
 
-		Button exitBtn = new TextButton("EXIT", skin, "main_menu");
+		Button exitBtn = new TextButton("EXIT", menuStyle);
 		exitBtn.setPosition(200, 160);
 		exitBtn.addAction(Actions.moveTo(300, 160, 1.2f, Interpolation.PowOut.pow3Out));
 		stage.addActor(exitBtn);
@@ -125,7 +146,6 @@ public class MainMenuScreen implements Screen {
 	public void resume() {
 		//do nothing
 	}
-
 	/**
 	 * Hides the screen.
 	 */
