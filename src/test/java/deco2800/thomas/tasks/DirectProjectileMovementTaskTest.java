@@ -1,5 +1,6 @@
 package deco2800.thomas.tasks;
 
+import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.attacks.Projectile;
 import deco2800.thomas.tasks.movement.DirectProjectileMovementTask;
 import deco2800.thomas.util.SquareVector;
@@ -11,7 +12,7 @@ import static org.junit.Assert.*;
 /**
  * Test for DirectProjectileMovementTask class
  */
-public class DirectProjectileMovementTaskTest {
+public class DirectProjectileMovementTaskTest extends BaseGDXTest {
     /**
      * Verifies that the moveTowards method is being called per tick.
      */
