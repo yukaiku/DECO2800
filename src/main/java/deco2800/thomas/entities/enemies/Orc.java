@@ -1,21 +1,17 @@
 package deco2800.thomas.entities.enemies;
-import com.badlogic.gdx.Game;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
 import deco2800.thomas.util.SquareVector;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A class that defines an implementation of an orc.
@@ -29,10 +25,10 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
     }
     public State currentState;
     public State previousState;
-    private Variation variation;
+    private final Variation variation;
     private final Animation<TextureRegion> orcIdle;
-    private float stateTimer;
     private final Animation<TextureRegion> orcAttacking;
+    private float stateTimer;
     private int duration = 0;
     private MovementTask.Direction facingDirection;
 
@@ -96,7 +92,7 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
         if (player != null && EnemyUtil.playerInRadius(this, player,
                 detectRadius)) {
-            super.setTarget((PlayerPeon) player);
+            super.setTarget(player);
             setMovementTask(new MovementTask(this,
                     super.getTarget().getPosition()));
         }
@@ -122,11 +118,12 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
 
     @Override
     public void attackPlayer() {
-        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange));
+        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange)) {
             SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
             currentState = State.ATTACK_MELEE;
             duration = 12;
             setCombatTask(new MeleeAttackTask(this, origin, 2, 2, 10));
+        }
     }
 
     @Override

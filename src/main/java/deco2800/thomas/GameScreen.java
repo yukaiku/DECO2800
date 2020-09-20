@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.Agent.QuestTracker;
@@ -26,9 +27,8 @@ import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.TutorialWorld;
-import deco2800.thomas.worlds.desert.DesertWorld;
-import deco2800.thomas.worlds.swamp.SwampWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,8 +88,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		TEST_WORLD {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new SwampWorld();
-
+				AbstractWorld world = new TutorialWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
@@ -124,6 +123,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 			// start new game with debugging
 			case TEST_WORLD:
 				GameManager.get().debugMode = true;
+				GameManager.get().state = GameManager.State.TRANSITION;
 				GameManager.get().tutorial = true;
 				GameManager.get().setWorld(startType.method());
 				break;

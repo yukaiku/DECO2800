@@ -2,17 +2,14 @@ package deco2800.thomas.entities.enemies;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
-
-import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
@@ -44,7 +41,6 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     public Dragon(int health, float speed, int orbNumber) {
         super(health, speed);
         this.orbNumber = orbNumber;
-
         this.variation = Variation.SWAMP; // default
         this.identifier = "dragonSwamp";
         this.setTexture("dragonSwamp");
@@ -83,16 +79,17 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     public void hitByTarget() {
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
         if (player != null) {
-            super.setTarget((PlayerPeon) player);
+            super.setTarget(player);
             setMovementTask(new MovementTask(this,
                     super.getTarget().getPosition()));
         }
     }
 
     public void elementalAttack() {
-        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange));
+        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange)) {
             SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
             setCombatTask(new MeleeAttackTask(this, origin, 8, 8, 20));
+        }
     }
 
     public void breathAttack() {

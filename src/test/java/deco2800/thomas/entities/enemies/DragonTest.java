@@ -1,4 +1,4 @@
-package deco2800.thomas.entities;
+package deco2800.thomas.entities.enemies;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -6,15 +6,17 @@ import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.*;
-import deco2800.thomas.entities.enemies.Goblin;
-import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.dragons.DesertDragon;
 import deco2800.thomas.entities.enemies.dragons.SwampDragon;
 import deco2800.thomas.entities.enemies.dragons.TundraDragon;
 import deco2800.thomas.entities.enemies.dragons.VolcanoDragon;
 import deco2800.thomas.managers.*;
-import deco2800.thomas.tasks.combat.*;
+import deco2800.thomas.tasks.combat.FireBombAttackTask;
+import deco2800.thomas.tasks.combat.IceBreathTask;
+import deco2800.thomas.tasks.combat.SandTornadoAttackTask;
+import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import org.junit.Before;

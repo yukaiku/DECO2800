@@ -1,7 +1,8 @@
 package deco2800.thomas.entities.enemies.dragons;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
+
 import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.attacks.VolcanoFireball;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Variation;
@@ -15,9 +16,9 @@ public class VolcanoDragon extends Dragon {
 
     public VolcanoDragon(int health, float speed, int orbNumber) {
         super(health, speed, orbNumber);
+        this.variation = Variation.VOLCANO;
         this.identifier = "dragonVolcano";
         this.setTexture("dragonVolcano");
-        this.variation = Variation.VOLCANO;
         this.setObjectName("Chusulth");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
@@ -25,8 +26,9 @@ public class VolcanoDragon extends Dragon {
 
     @Override
     public void elementalAttack() {
-        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange));
-            setCombatTask(new FireBombAttackTask(this, 20,8,  20, 5, 5));
+        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange)) {
+            setCombatTask(new FireBombAttackTask(this, 20, 8, 20, 5, 5));
+        }
     }
 
     @Override
