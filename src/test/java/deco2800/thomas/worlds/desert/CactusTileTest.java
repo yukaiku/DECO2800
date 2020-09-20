@@ -1,12 +1,13 @@
 package deco2800.thomas.worlds.desert;
 
+import deco2800.thomas.BaseGDXTest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class CactusTileTest {
+public class CactusTileTest extends BaseGDXTest {
 
     CactusTile cactus1;
     CactusTile cactus2;

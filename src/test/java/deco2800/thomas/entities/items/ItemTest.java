@@ -1,8 +1,11 @@
 package deco2800.thomas.entities.items;
 
 import deco2800.thomas.entities.agent.LoadedPeon;
+import deco2800.thomas.managers.*;
+import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.agent.PlayerPeon;
@@ -12,13 +15,65 @@ import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.Goblin;
 import deco2800.thomas.entities.enemies.Orc;
 import org.junit.Test;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.StringBuilder;
+import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.items.Item;
+import deco2800.thomas.entities.items.Treasure;
+import deco2800.thomas.observers.TouchDownObserver;
+import deco2800.thomas.worlds.Tile;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({GameManager.class, DatabaseManager.class, PlayerPeon.class, Item.class})
+@PowerMockIgnore({"jdk.internal.reflect.*"})
 public class ItemTest extends BaseGDXTest{
+
+    @Mock
+    private GameManager mockGM;
+    private TestWorld world;
+    public PlayerPeon player;
+
+    @Before
+    public void setUp() throws Exception {
+        player = new PlayerPeon(0f, 0f, 0.05f);
+
+        world = new TestWorld();
+        world.setPlayerEntity(player);
+
+        mockGM = mock(GameManager.class);
+        mockStatic(GameManager.class);
+
+        when(GameManager.get()).thenReturn(mockGM);
+        when(mockGM.getWorld()).thenReturn(world);
+
+        // Mocked input manager
+        InputManager Im = new InputManager();
+
+        OnScreenMessageManager mockOSMM = mock(OnScreenMessageManager.class);
+        when(mockGM.getManager(OnScreenMessageManager.class)).thenReturn(mockOSMM);
+
+        when(GameManager.getManagerFromInstance(InputManager.class)).thenReturn(Im);
+
+        // Mocked texture manager
+        TextureManager mockTM = new TextureManager();
+        when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(mockTM);
+    }
 
     @Test
     public void getItemName() {
@@ -54,19 +109,8 @@ public class ItemTest extends BaseGDXTest{
     @Test
     public void chargePlayer() {
         Item testPotion = new Item("health_potion",50);
-        LoadedPeon testPlayer = new LoadedPeon();
-        testPlayer.addMoney(100);
-        testPlayer.takeMoney(50);
+        player.addMoney(100);
         testPotion.chargePlayer();
-        Assert.assertEquals(50,testPlayer.getWallet());
-    }
-
-    @Test
-    public void interact() {
-
-    }
-
-    @Test
-    public void notifyTouchDown() {
+        Assert.assertEquals(50,player.getWallet(),0.5);
     }
 }

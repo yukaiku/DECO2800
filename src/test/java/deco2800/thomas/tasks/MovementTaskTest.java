@@ -1,5 +1,6 @@
 package deco2800.thomas.tasks;
 
+import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.movement.MovementTask;
@@ -21,7 +22,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({WorldUtil.class, GameManager.class})
-public class MovementTaskTest {
+public class MovementTaskTest extends BaseGDXTest {
     private MovementTask spyMovementTask;
     private PlayerPeon playerPeon;
     private SquareVector destination;

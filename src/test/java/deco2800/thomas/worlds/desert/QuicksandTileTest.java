@@ -1,10 +1,11 @@
 package deco2800.thomas.worlds.desert;
 
+import deco2800.thomas.BaseGDXTest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class QuicksandTileTest {
+public class QuicksandTileTest extends BaseGDXTest {
 
     QuicksandTile quicksand1;
     QuicksandTile quicksand2;
