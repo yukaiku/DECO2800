@@ -119,7 +119,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
                 if (getTarget() != null) {
                     if (getTarget().getCol() < this.getCol()) {
                         facingDirection = MovementTask.Direction.LEFT;
-                    } else {
+                    } else if (getTarget().getCol() > this.getCol()) {
                         facingDirection = MovementTask.Direction.RIGHT;
                     }
                 }

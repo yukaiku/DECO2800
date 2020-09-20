@@ -138,7 +138,7 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
             if (super.getTarget() != null) {
                 if (getTarget().getCol() < this.getCol()) {
                     facingDirection = MovementTask.Direction.LEFT;
-                } else {
+                } else if (getTarget().getCol() > this.getCol()) {
                     facingDirection = MovementTask.Direction.RIGHT;
                 }
                 setMovementTask(new MovementTask(this, super.getTarget().

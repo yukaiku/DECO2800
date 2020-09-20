@@ -19,7 +19,6 @@ import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.tasks.movement.MovementTask;
-import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
@@ -34,7 +33,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
     public State currentState;
     public State previousState;
     private MovementTask.Direction facingDirection;
-    private final Animation<TextureRegion> playerStand;
+    private final Animation<TextureRegion> playerIdle;
     private final Animation<TextureRegion> playerMeleeAttack;
     private final Animation<TextureRegion> playerRangeAttack;
     private float stateTimer;
@@ -83,12 +82,12 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         currentState = State.IDLE;
         previousState = State.IDLE;
         stateTimer = 0;
-        playerMeleeAttack = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_melee"));
+        playerMeleeAttack = new Animation<>(0.08f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerMelee"));
         playerRangeAttack = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_range"));
-        playerStand = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_stand"));
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerRange"));
+        playerIdle = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerIdle"));
     }
 
     /**
@@ -186,6 +185,10 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
             duration = 0;
             currentState = State.IDLE;
         }
+        if (combatTask != null) {
+            currentState = State.ATTACK_MELEE;
+            duration = 12;
+        }
 
         // Update skills
         for (Skill s : wizardSkills) {
@@ -218,10 +221,11 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
                 region = playerMeleeAttack.getKeyFrame(stateTimer);
                 break;
             case INCAPACITATED:
-
+            case WALK:
             case IDLE:
             default:
-                region = playerStand.getKeyFrame(stateTimer);
+                region = playerIdle.getKeyFrame(stateTimer);
+                break;
         }
         // Render the correct direction of the texture
         if ((getMovingDirection() == MovementTask.Direction.LEFT ||

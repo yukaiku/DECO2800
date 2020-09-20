@@ -319,11 +319,14 @@ public class TextureManager extends AbstractManager {
 	private void addAnimationFrames() {
 		try {
 			// players
-			addAnimationFramesCollection("player_stand", "resources/player/rightmech1_move.png");
-			addAnimationFramesCollection("player_melee",
-					"resources/player/rightmech1_melee1.png",
-					"resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee3.png");
-			addAnimationFramesCollection("player_range", "resources/player/rightmech1_move.png");
+			addAnimationFramesCollection("playerIdle", "resources/player/rightmech1_move.png");
+			addAnimationFramesCollection("playerMelee", "resources/player/rightmech1_melee3.png",
+					"resources/player/rightmech1_melee1.png", "resources/player/rightmech1_melee2.png",
+					"resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee1.png",
+					"resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee2.png",
+					"resources/player/rightmech1_melee1.png", "resources/player/rightmech1_melee2.png",
+					"resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee3.png");  // intended
+			addAnimationFramesCollection("playerRange", "resources/player/rightmech1_move.png");
 
 			addAnimationFramesCollection("playerFireball", "resources/combat/right_skill1_fire1.png",
 					"resources/combat/right_skill1_fire2.png", "resources/combat/right_skill1_fire3.png",
@@ -344,6 +347,22 @@ public class TextureManager extends AbstractManager {
 					"resources/combat/water_skill1_2.png", "resources/combat/water_skill1_3.png",
 					"resources/combat/water_skill1_4.png");
 
+			// Icebreath attack
+			addAnimationFramesCollection("freezeTile", "resources/combat/ice-wave0.png",
+					"resources/combat/ice-wave1.png", "resources/combat/ice-wave2.png",
+					"resources/combat/ice-wave3.png", "resources/combat/ice-wave4.png",
+					"resources/combat/ice-wave5.png", "resources/combat/ice-wave6.png",
+					"resources/combat/ice-wave7.png", "resources/combat/ice-wave8.png",
+					"resources/combat/ice-wave9.png", "resources/combat/ice-wave10.png",
+					"resources/combat/ice-wave11.png");
+
+			// Sand Tornado attack
+			addAnimationFramesCollection("sandTornado", "resources/combat/tornado0.png",
+					"resources/combat/tornado1.png", "resources/combat/tornado2.png",
+					"resources/combat/tornado3.png", "resources/combat/tornado4.png",
+					"resources/combat/tornado5.png", "resources/combat/tornado6.png",
+					"resources/combat/tornado7.png", "resources/combat/tornado8.png");
+
 			// enemies
 			addAnimationFramesCollection("dummyIdle", "resources/enemies/dummy.png");
 			addAnimationFramesCollection("goblinDesertIdle", "resources/enemies/goblin_desert.png");
@@ -359,7 +378,7 @@ public class TextureManager extends AbstractManager {
 			addAnimationFramesCollection("dragonTundraIdle", "resources/enemies/dragon_tundra.png");
 			addAnimationFramesCollection("dragonVolcanoIdle", "resources/enemies/dragon_volcano.png");
 
-			// Goblin attack sprites
+			// goblin attack sprites
 			addAnimationFramesSprite("goblinDesertAttack", "resources/enemies/goblin_desert_sprite_sheet.png",
 					3, 350, 486, true);
 			addAnimationFramesSprite("goblinSwampAttack", "resources/enemies/goblin_swamp_sprite_sheet.png",
@@ -369,7 +388,7 @@ public class TextureManager extends AbstractManager {
 			addAnimationFramesSprite("goblinVolcanoAttack", "resources/enemies/goblin_volcano_sprite_sheet.png",
 					3, 350, 486, true);
 
-			// Orc attack sprites
+			// orc attack sprites
 			addAnimationFramesSprite("orcDesertAttack", "resources/enemies/orc_desert_sprite_sheet.png",
 					3, 257, 324, false);
 			addAnimationFramesSprite("orcSwampAttack", "resources/enemies/orc_swamp_sprite_sheet.png",
@@ -379,7 +398,7 @@ public class TextureManager extends AbstractManager {
 			addAnimationFramesSprite("orcVolcanoAttack", "resources/enemies/orc_volcano_sprite_sheet.png",
 					3, 257, 324, false);
 
-			// Dragon attack sprites
+			// dragon attack sprites
 			addAnimationFramesSprite("dragonDesertAttack", "resources/enemies/dragon_desert_sprite_sheet.png",
 					2, 472, 264, true);
 			addAnimationFramesSprite("dragonSwampAttack", "resources/enemies/dragon_swamp_sprite_sheet.png",
@@ -388,35 +407,6 @@ public class TextureManager extends AbstractManager {
 					2, 492, 264, true);
 			addAnimationFramesSprite("dragonVolcanoAttack", "resources/enemies/dragon_volcano_sprite_sheet.png",
 					2, 492, 264, false);
-
-			// Icebreath attack
-			Array<TextureRegion> freezeTile = new Array<>();
-			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave0.png")));
-			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave1.png")));
-			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave2.png")));
-			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave3.png")));
-			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave4.png")));
-			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave5.png")));
-			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave6.png")));
-			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave7.png")));
-			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave8.png")));
-			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave9.png")));
-			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave10.png")));
-			freezeTile.add(new TextureRegion(new Texture("resources/combat/ice-wave11.png")));
-			animationFrames.put("freezeTile", freezeTile);
-
-			// Sand Tornado attack
-			Array<TextureRegion> sandTornado = new Array<>();
-			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado0.png")));
-			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado1.png")));
-			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado2.png")));
-			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado3.png")));
-			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado4.png")));
-			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado5.png")));
-			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado6.png")));
-			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado7.png")));
-			sandTornado.add(new TextureRegion(new Texture("resources/combat/tornado8.png")));
-			animationFrames.put("sandTornado", sandTornado);
 
 		} catch (GdxRuntimeException e) {
 			e.printStackTrace();
@@ -443,6 +433,11 @@ public class TextureManager extends AbstractManager {
 		animationFrames.put(id, frames);
 	}
 
+	/**
+	 * Get the frame of the animation
+	 * @param id Texture identifier
+	 * @return Frame of the animation
+	 */
 	public Array<TextureRegion> getAnimationFrames(String id) {
 		if (animationFrames.containsKey(id)) {
 			return animationFrames.get(id);
