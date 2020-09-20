@@ -3,6 +3,12 @@ package deco2800.thomas.entities.enemies;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.agent.Peon;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import deco2800.thomas.entities.Animatable;
+import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.TextureManager;
 
 /**
  * An abstract class inheriting from Peon that will define the
@@ -10,7 +16,9 @@ import deco2800.thomas.entities.agent.Peon;
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies
  */
-public abstract class EnemyPeon extends Peon {
+public abstract class EnemyPeon extends Peon implements Animatable {
+    // "orcDesert", "orcSwamp"...
+    protected String identifier;
 
     // The target to follow and attack. This can be players or even enemies, or null for passive enemies.
     // Enemies are initialised with no target.
@@ -21,17 +29,11 @@ public abstract class EnemyPeon extends Peon {
      * Initialise an abstract Enemy.
      * The position of the enemy is normally set by the spawnSpecialEnemy() in EnemyManager.
      */
-    public EnemyPeon(String name, String texture, int height, float speed, int health) {
+    public EnemyPeon(int health, float speed) {
         super(0, 0, speed < 0 ? 0.05f : speed, health);
-        if (name == null) {
-            name = "EnemyPeon";
-        }
-        if (texture == null) {
-            texture = "orc_swamp_right";
-        }
-        this.setObjectName(name);
-        this.setTexture(texture);
-        this.setHeight(height <= 0 ? 1 : height);
+        this.setObjectName("Enemy");
+        // We don't need setTexture anymore because all enemies are now animatable
+        this.setTexture("enemyDefault");
         this.setFaction(EntityFaction.Evil);
         this.target = null;
     }
@@ -49,23 +51,35 @@ public abstract class EnemyPeon extends Peon {
         super.setRow(y);
     }
 
+    private boolean faceRight() {
+        if (getTarget() != null) {
+            return (getTarget().getCol() > this.getCol());
+        }
+        return true;
+    }
+
     /**
      * Returns the AgentEntity this enemy is currently targeting.
-     * @return
+     * @return the target
      */
     public AgentEntity getTarget() {
         return target;
     }
 
     /**
-     * Sets the  to be targeted by this enemy.
-     * @param target
+     * Sets the target for the enemy
+     * @param target The target
      */
     public void setTarget(AgentEntity target) {
         this.target = target;
     }
 
     public void attackPlayer() {
+    }
+
+    public TextureRegion getFrame(float delta) {
+        return new TextureRegion(GameManager.getManagerFromInstance(
+                TextureManager.class).getTexture("enemyDefault"));
     }
 
     /**

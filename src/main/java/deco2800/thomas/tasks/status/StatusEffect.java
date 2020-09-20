@@ -1,6 +1,7 @@
 package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.Peon;
 
 /**
  * An abstract class for a status effect, which can be generalised to apply
@@ -12,14 +13,14 @@ public abstract class StatusEffect {
     private boolean active = true;
 
     // the entity that this effect is applied to
-    private final AgentEntity affectedEntity;
+    private final Peon affectedEntity;
 
     /**
      * Creates a new StatusEffect on a designated entity.
      *
      * @param entity The designated entity.
      */
-    public StatusEffect(AgentEntity entity) {
+    public StatusEffect(Peon entity) {
         affectedEntity = entity;
         if (entity == null) {
             active = false;
@@ -49,7 +50,7 @@ public abstract class StatusEffect {
      *
      * @return The entity being affected by this status.
      */
-    public AgentEntity getAffectedEntity() {
+    public Peon getAffectedEntity() {
         return this.affectedEntity;
     }
 

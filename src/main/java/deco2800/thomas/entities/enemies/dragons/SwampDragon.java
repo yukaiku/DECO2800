@@ -1,15 +1,25 @@
 package deco2800.thomas.entities.enemies.dragons;
 
 import deco2800.thomas.entities.enemies.Dragon;
+import com.badlogic.gdx.graphics.g2d.Animation;
+
+import deco2800.thomas.entities.enemies.Dragon;
+import deco2800.thomas.entities.enemies.Variation;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
 
 public class SwampDragon extends Dragon {
-    public SwampDragon(String name, int height, float speed, int health, String texture, int orb) {
-        super(name, height, speed, health, texture, orb);
+    public SwampDragon(int health, float speed, int orbNumber) {
+        super(health, speed, orbNumber);
+        this.variation = Variation.SWAMP;
+        this.setObjectName("Siendiadut");
+        this.dragonIdle = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
     }
 
     @Override
-    public void summonRangedAttack() {
-        this.setCombatTask(new ScorpionStingAttackTask(this, getTarget().getCol(), getTarget().getRow(), 1, 0.15f, 60));
+    public void elementalAttack() {
+        this.setCombatTask(new ScorpionStingAttackTask(this, getTarget().getCol(), getTarget().getRow(), 10, 0.15f, 60));
     }
 }

@@ -5,6 +5,7 @@ import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.Dragon;
+import deco2800.thomas.entities.enemies.dragons.SwampDragon;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.util.SquareVector;
@@ -253,9 +254,9 @@ public final class DatabaseManager extends AbstractManager {
                 }
             }
 
-            for (String s : Arrays.asList("Elder Dragon")) {
+            for (String s : Arrays.asList("Swamp Dragon")) {
                 if (entityObjectName.startsWith(s)){
-                    Dragon create = new Dragon("Elder Dragon", 2, 0.3f, 2000, "dragon_swamp", 2);
+                    Dragon create = new SwampDragon(2000, 0.3f, 2);
                     return (AbstractEntity) create;
                 }
             }
@@ -478,7 +479,9 @@ public final class DatabaseManager extends AbstractManager {
         world.assignTileNeighbours();
         world.setEntities(new ArrayList<AbstractEntity>(newEntities.values()));
         logger.info("Load succeeded");
-        GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Loaded game from the database.");
+        if (GameManager.get().debugMode) {
+            GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Loaded game from the database.");
+        }
     }
 
     private static void writeToJson(String entireString) {

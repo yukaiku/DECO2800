@@ -27,9 +27,9 @@ public class Fireball extends Projectile implements Animatable, Tickable{
     /* The current state of this entity*/
     public Fireball.State currentState;
     /* Animation for when this entity is exploding */
-    private final Animation<TextureRegion> explosion;
+    protected Animation<TextureRegion> explosion;
     /* Default animation */
-    private final Animation<TextureRegion> defaultState;
+    protected Animation<TextureRegion> defaultState;
     /* The current timer on this class */
     protected float stateTimer = 0;
     /**
@@ -39,9 +39,9 @@ public class Fireball extends Projectile implements Animatable, Tickable{
         super();
         this.setTexture("fireball_right");
         this.setObjectName("combatFireball");
-        explosion = new Animation<TextureRegion>(0.1f,
+        explosion = new Animation<>(0.08f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
-        defaultState = new Animation<TextureRegion>(0.1f,
+        defaultState = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
         currentState = State.DEFAULT;
     }
@@ -102,7 +102,7 @@ public class Fireball extends Projectile implements Animatable, Tickable{
         }
         // Update combat task
         if (combatTask != null) {
-            if (combatTask.isComplete()) {
+            if (combatTask.isComplete() ^ movementTask.isComplete()) {
                 currentState = State.EXPLODING;
                 movementTask.stopTask();
                 combatTask.stopTask();

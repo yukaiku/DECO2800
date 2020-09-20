@@ -3,10 +3,14 @@ package deco2800.thomas.managers;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Goblin;
+import deco2800.thomas.entities.enemies.Variation;
+import deco2800.thomas.entities.enemies.dragons.SwampDragon;
 import deco2800.thomas.worlds.TestWorld;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +23,7 @@ public class EnemyManagerTest extends BaseGDXTest {
     @Before
     public void setUp() {
         world = new TestWorld();
+        TextureManager textureManager = mock(TextureManager.class);
     }
 
     @Test
@@ -28,7 +33,7 @@ public class EnemyManagerTest extends BaseGDXTest {
         EnemyManager em2 = new EnemyManager(world, 10, new ArrayList<>());
         assertEquals(em2.getWildEnemyCap(), 10);
         assertEquals(em2.getWildEnemiesAlive(), new ArrayList<>());
-        Dragon boss = new Dragon("Elder Dragon", 1, 1, 1,1);
+        SwampDragon boss = new SwampDragon(1, 1, 1);
         EnemyManager em3 = new EnemyManager(world, 10, new ArrayList<>(), boss);
         assertSame(em3.getBoss(), boss);
     }
@@ -42,7 +47,7 @@ public class EnemyManagerTest extends BaseGDXTest {
         em.disableWildEnemySpawning();
         assertFalse(em.checkWildEnemySpawning());
 
-        Goblin enemy = new Goblin(1, 1,1);
+        Goblin enemy = new Goblin(Variation.SWAMP, 50, 0.05f);
         em.spawnSpecialEnemy(enemy, 1, 1);
         assertEquals(em.getSpecialEnemiesAlive(), Collections.singletonList(enemy));
     }
@@ -57,7 +62,7 @@ public class EnemyManagerTest extends BaseGDXTest {
     @Test
     public void testBoss() {
         EnemyManager em = new EnemyManager(world, 10, new ArrayList<>());
-        Dragon boss = new Dragon("Elder Dragon", 1, 1, 1, 1);
+        SwampDragon boss = new SwampDragon(1, 1, 1);
         em.setBoss(boss);
         assertSame(em.getBoss(), boss);
         em.spawnBoss(0, 0);

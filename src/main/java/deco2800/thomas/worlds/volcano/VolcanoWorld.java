@@ -4,11 +4,15 @@ import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.VolcanoNPC;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.npc.MerchantNPC;
+import deco2800.thomas.entities.npc.NonPlayablePeon;
+import deco2800.thomas.entities.npc.TutorialNPC;
+import deco2800.thomas.entities.npc.VolcanoNPC;
+import deco2800.thomas.entities.enemies.*;
 import deco2800.thomas.entities.environment.volcano.VolcanoDragonSkull;
 import deco2800.thomas.entities.environment.volcano.VolcanoGraveYard;
 import deco2800.thomas.entities.environment.volcano.VolcanoRuins;
-import deco2800.thomas.entities.enemies.Dragon;
-import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.volcano.VolcanoBurningTree;
 import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
@@ -69,10 +73,10 @@ public class VolcanoWorld extends AbstractWorld {
 
         this.allVolcanoDialogues = new ArrayList<>();
 
-        Orc volcanoOrc = new Orc(1, 0.09f, 50, "orc_volcano");
-        Dragon boss = new VolcanoDragon("Deilaenth", 3, 0.03f, 1000, "dragon_volcano", 1);
-
-        EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(volcanoOrc), boss);
+        // Provide available enemies to the EnemyManager
+        Orc volcanoOrc = new Orc(Variation.VOLCANO, 50, 0.09f);
+        VolcanoDragon boss = new VolcanoDragon(1000, 0.03f, 1);
+        EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(volcanoOrc), boss);
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(16, 20);
 
@@ -185,6 +189,7 @@ public class VolcanoWorld extends AbstractWorld {
             }
         }*/
 
+        /*
         while (spawnedPotion < NUM_POTIONS){
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
@@ -198,18 +203,24 @@ public class VolcanoWorld extends AbstractWorld {
                 this.allVolcanoDialogues.add(potion.getDisplay());
                 spawnedPotion ++;
             }
-        }
+        }*/
 
-        /*
+
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            HealthPotion potion = new HealthPotion(tile, false,
+            if (Integer.parseInt(tile.getTextureName().split("_")[1]) < 5
+            && !tile.hasParent()) {
+                HealthPotion potion = new HealthPotion(tile,false,
                         (PlayerPeon) getPlayerEntity(), "volcano");
-            entities.add(potion);
-            this.allVolcanoDialogues.add(potion.getDisplay());
+                entities.add(potion);
+                this.allVolcanoDialogues.add(potion.getDisplay());
 
-        }*/
+            } else {
+                i--;
+            }
+
+        }
 
         /*
         Random generator = new Random();
@@ -220,33 +231,31 @@ public class VolcanoWorld extends AbstractWorld {
          */
 
 
-        while (spawnedShields < NUM_SHIELDS){
+        for (int i =0; i < NUM_SHIELDS; i++){
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            if (!tile.getTextureName().equals("Volcano_5") ||
-                    !tile.getTextureName().equals("Volcano_6") ||
-                    !tile.getTextureName().equals("Volcano_7") ||
-                    !tile.getTextureName().equals("Volcano_8")) {
+            if (Integer.parseInt(tile.getTextureName().split("_")[1]) < 5
+                    && !tile.hasParent()) {
                 Shield shield = new Shield(tile, false,
-                        (PlayerPeon) getPlayerEntity(), "volcano");
+                        (PlayerPeon) getPlayerEntity(),"volcano");
                 entities.add(shield);
                 this.allVolcanoDialogues.add(shield.getDisplay());
-                spawnedShields++;
+            } else {
+                i--;
             }
         }
         
-        while (spawnedChests < NUM_CHESTS){
+        for (int i = 0; i <NUM_CHESTS; i++){
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            if (!tile.getTextureName().equals("Volcano_5") ||
-                    !tile.getTextureName().equals("Volcano_6") ||
-                    !tile.getTextureName().equals("Volcano_7") ||
-                    !tile.getTextureName().equals("Volcano_8")) {
+            if (Integer.parseInt(tile.getTextureName().split("_")[1]) < 5
+                    && !tile.hasParent()) {
                 Treasure chest = new Treasure(tile, false,
-                        (PlayerPeon) getPlayerEntity(), "volcano");
+                        (PlayerPeon) getPlayerEntity(),"volcano");
                 entities.add(chest);
                 this.allVolcanoDialogues.add(chest.getDisplay());
-                spawnedChests++;
+            } else {
+                i--;
             }
         }
     }
@@ -274,10 +283,10 @@ public class VolcanoWorld extends AbstractWorld {
             tileNumber = Integer.parseInt(tileTexture.split("_")[1]);
 
             selector = random.nextInt(2);
-            if (tileNumber < 5 && tileNumber > 1 && selector == 1) {
+            if (tileNumber < 5 && tileNumber > 1 && selector == 1 && !t.hasParent()) {
                 entities.add(new Rock(t, true));
             } else if (t != null && (tileNumber == 3 || tileNumber == 4) &&
-                    selector == 0) {
+                    selector == 0 && !t.hasParent()) {
                 entities.add(new VolcanoBurningTree(t, true));
             } else {
                 i--;

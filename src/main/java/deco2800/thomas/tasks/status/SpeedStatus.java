@@ -1,6 +1,7 @@
 package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.Peon;
 
 /**
  * A generalisation of the StatusEffect class which applied a speed
@@ -29,7 +30,7 @@ public class SpeedStatus extends StatusEffect {
      * @param speedMultiplier The speed multiplier of this effect.
      * @param timeLength The time (in seconds) of this effect.
      */
-    public SpeedStatus(AgentEntity entity, float speedMultiplier, int timeLength) {
+    public SpeedStatus(Peon entity, float speedMultiplier, int timeLength) {
         super(entity);
         this.multiplier = speedMultiplier;
         this.timeLength = timeLength;

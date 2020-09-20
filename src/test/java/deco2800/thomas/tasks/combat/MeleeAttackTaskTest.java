@@ -2,6 +2,8 @@ package deco2800.thomas.tasks.combat;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.combat.DamageType;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
@@ -50,21 +52,21 @@ public class MeleeAttackTaskTest extends BaseGDXTest {
         // Mock combat entity and agent entity (so that they're on different factions)
         CombatEntity combatEntity = mock(CombatEntity.class);
         when(combatEntity.getFaction()).thenReturn(EntityFaction.Evil);
-        AgentEntity agentEntity = mock(AgentEntity.class);
-        when(agentEntity.getFaction()).thenReturn(EntityFaction.Ally);
+        Peon peon = mock(Peon.class);
+        when(peon.getFaction()).thenReturn(EntityFaction.Ally);
 
         // Mock abstract world
         AbstractWorld abstractWorld = mock(AbstractWorld.class);
         when(GameManager.get().getWorld()).thenReturn(abstractWorld);
         when(abstractWorld.getEntitiesInBounds(any(BoundingBox.class)))
-                .thenReturn(new ArrayList<>(Arrays.asList(combatEntity, agentEntity)));
+                .thenReturn(new ArrayList<>(Arrays.asList(combatEntity, peon)));
 
         // Start task
         MeleeAttackTask task = new MeleeAttackTask(combatEntity, new SquareVector(0, 0), 10, 10, 50);
         task.onTick(1);
 
         // Verify reduceHealth is called
-        verify(agentEntity).reduceHealth(anyInt());
+        verify(peon).applyDamage(anyInt(), any(DamageType.class));
 
         // Verify state change
         assertTrue(task.isComplete());
@@ -79,8 +81,8 @@ public class MeleeAttackTaskTest extends BaseGDXTest {
         // Mock combat entity and agent entity (so that they're on different factions)
         CombatEntity combatEntity = mock(CombatEntity.class);
         when(combatEntity.getFaction()).thenReturn(EntityFaction.Evil);
-        AgentEntity agentEntity = mock(AgentEntity.class);
-        when(agentEntity.getFaction()).thenReturn(EntityFaction.Ally);
+        Peon peon = mock(Peon.class);
+        when(peon.getFaction()).thenReturn(EntityFaction.Ally);
 
         // Mock abstract world
         AbstractWorld abstractWorld = mock(AbstractWorld.class);
@@ -93,7 +95,7 @@ public class MeleeAttackTaskTest extends BaseGDXTest {
         task.onTick(1);
 
         // Verify reduceHealth is not called
-        verify(agentEntity, never()).reduceHealth(anyInt());
+        verify(peon, never()).applyDamage(anyInt(), any(DamageType.class));
 
         // Verify state change
         assertTrue(task.isComplete());

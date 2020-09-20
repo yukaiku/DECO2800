@@ -140,5 +140,5 @@ behind: false
 premultipliedAlpha: false
 spriteMode: single
 - Image Paths -
-rain-blurred.png
+waterdrop.png
 

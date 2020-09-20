@@ -1,10 +1,11 @@
 package deco2800.thomas.entities;
 
+import deco2800.thomas.BaseGDXTest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class HealthTrackerTest {
+public class HealthTrackerTest extends BaseGDXTest {
 
     @Test
     public void getMaxHealthValue() {

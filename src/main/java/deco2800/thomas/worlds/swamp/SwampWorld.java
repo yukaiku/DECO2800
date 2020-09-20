@@ -4,13 +4,18 @@ import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.SwampNPC;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.npc.MerchantNPC;
+import deco2800.thomas.entities.npc.NonPlayablePeon;
+import deco2800.thomas.entities.npc.SwampNPC;
+import deco2800.thomas.entities.npc.TutorialNPC;
+import deco2800.thomas.entities.enemies.*;
+import deco2800.thomas.entities.enemies.dragons.DesertDragon;
 import deco2800.thomas.entities.environment.swamp.SwampDeadTree;
 import deco2800.thomas.entities.environment.swamp.SwampFallenTree;
 import deco2800.thomas.entities.environment.swamp.SwampPond;
 import deco2800.thomas.entities.environment.swamp.SwampTreeLog;
 import deco2800.thomas.entities.environment.swamp.SwampTreeStub;
-import deco2800.thomas.entities.enemies.Dragon;
-import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.entities.items.Shield;
@@ -56,10 +61,9 @@ public class SwampWorld extends AbstractWorld {
         this.generateItemEntities();
 
         // Provide available enemies to the EnemyManager
-        Orc swampOrc = new Orc(1, 0.09f, 50, "orc_swamp");
-        Dragon boss = new SwampDragon("Viondria", 3, 0.03f, 1050, "dragon_swamp", 2);
-
-        EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc), boss);
+        Orc swampOrc = new Orc(Variation.SWAMP, 50, 0.09f);
+        SwampDragon boss = new SwampDragon(1050, 0.03f, 2);
+        EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(swampOrc), boss);
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(19, -24);
 

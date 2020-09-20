@@ -1,6 +1,8 @@
 package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.combat.DamageType;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.HealthTracker;
 
 /**
@@ -21,19 +23,19 @@ public class BurnStatus extends StatusEffect {
     private boolean applied = false;
 
     // the health tracker of the entity this effect applies to
-    private HealthTracker healthTracker;
+//    private HealthTracker healthTracker;
 
     /**
      * Creates a new BurnStatus with default damage and ticks (1 dmg, 1 tick).
      *
      * @param entity The entity this status is being applied to.
      */
-    public BurnStatus(AgentEntity entity) {
+    public BurnStatus(Peon entity) {
         super(entity);
         timeLastTick = System.nanoTime();
         burnDamage = 1;
         ticks = 1;
-        healthTracker = getAffectedEntity().getHealthTracker();
+//        healthTracker = getAffectedEntity().getHealthTracker();
     }
 
     /**
@@ -43,15 +45,15 @@ public class BurnStatus extends StatusEffect {
      * @param burnDamage The damage inflicted by each tick.
      * @param ticks The number of damage ticks in this effect.
      */
-    public BurnStatus(AgentEntity entity, int burnDamage, int ticks) {
+    public BurnStatus(Peon entity, int burnDamage, int ticks) {
         super(entity);
         this.burnDamage = burnDamage;
         timeLastTick = System.nanoTime();
         this.ticks = ticks;
 
-        if (entity != null) {
-            healthTracker = getAffectedEntity().getHealthTracker();
-        }
+//        if (entity != null) {
+//            healthTracker = getAffectedEntity().getHealthTracker();
+//        }
     }
 
     /**
@@ -93,8 +95,9 @@ public class BurnStatus extends StatusEffect {
         // we skip application if the next tick is not ready
         if (!ticksReady()) return;
 
-        int health = healthTracker.getCurrentHealthValue();
-        healthTracker.setCurrentHealthValue(health - burnDamage);
+        getAffectedEntity().applyDamage(burnDamage, DamageType.FIRE);
+//        int health = healthTracker.getCurrentHealthValue();
+//        healthTracker.setCurrentHealthValue(health - burnDamage);
 
         // if all ticks are done, we set to inactive
         if (ticks == 0) {

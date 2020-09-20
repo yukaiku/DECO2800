@@ -7,13 +7,15 @@ import deco2800.thomas.GameScreen;
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.entities.environment.Barrel;
-import deco2800.thomas.entities.environment.Portal;
-import deco2800.thomas.entities.environment.Stash;
-import deco2800.thomas.entities.environment.Target;
+import deco2800.thomas.entities.environment.tutorial.Barrel;
+import deco2800.thomas.entities.environment.tutorial.Portal;
+import deco2800.thomas.entities.environment.tutorial.Stash;
+import deco2800.thomas.entities.environment.tutorial.Target;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.TutorialNPC;
 import deco2800.thomas.entities.enemies.Dummy;
+import deco2800.thomas.entities.environment.tutorial.*;
+import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.environment.*;
 import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
@@ -73,9 +75,7 @@ public class TutorialWorld extends AbstractWorld{
         // Create an enemy manager without wild enemy spawning.
         EnemyManager enemyManager = new EnemyManager(this);
 
-        // Add dummy (special enemy) to the world
-        Dummy dummy = new Dummy(1, 0, 100);
-
+        Dummy dummy = new Dummy(100, 0);
         // Spawn a dummy
         enemyManager.spawnSpecialEnemy(dummy, 5, 0);
 
@@ -107,7 +107,7 @@ public class TutorialWorld extends AbstractWorld{
         }
         // Add targets
         for (int i = -6; i < 6 + 1; i = i + 2) {
-            if (i == 0) {
+            if (i == 0 | i == -2 | i == 2) {
                 continue;
             }
             Tile t = GameManager.get().getWorld().getTile(i, -TUTORIAL_WORLD_HEIGHT);
@@ -118,25 +118,34 @@ public class TutorialWorld extends AbstractWorld{
 
         Tile t;
         // Add barrels
-        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH - 1, TUTORIAL_WORLD_HEIGHT - 1);
+        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH - 1, TUTORIAL_WORLD_HEIGHT - 2);
         entities.add(new Barrel(t, true));
 
-        t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, TUTORIAL_WORLD_HEIGHT - 1);
+        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH - 1, -TUTORIAL_WORLD_HEIGHT + 1);
+        entities.add(new Barrel(t, true));
+
+        t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, TUTORIAL_WORLD_HEIGHT - 2);
+        entities.add(new Barrel(t, true));
+
+        t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, -TUTORIAL_WORLD_HEIGHT + 1);
         entities.add(new Barrel(t, true));
 
         // Add chest
-        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH - 1, -TUTORIAL_WORLD_HEIGHT);
+        t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, 0);
         entities.add(new Chest(t, true));
 
+        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH -1, 0);
+        entities.add(new Chest(t, true));
 
         // Add portal
         t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW);
         entities.add(new Portal(t, false));
 
+
         // add potion and shield. 
         
-        /*
-        // add potion and shield.
+
+/*
         Tile potion;
         potion = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
                 Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
@@ -160,7 +169,12 @@ public class TutorialWorld extends AbstractWorld{
                 (PlayerPeon) getPlayerEntity(),"tutorial");
         entities.add(itemTreasure);
         this.allDialogBoxes.add(itemTreasure.getDisplay());
+
          */
+
+        // Add message on how to leave tutorial (temporary)
+        t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW + 2);
+        entities.add(new Notify(t, false));
     }
 
     @Override
@@ -179,9 +193,6 @@ public class TutorialWorld extends AbstractWorld{
         // Check if the player is in the portal
         if (Math.abs(player.getCol() - PORTAL_COL) < 0.1 &
                 Math.abs(player.getRow() - PORTAL_ROW) < 0.1) {
-            // Remove guideline modal
-            GameScreen.tutorial = false;
-            GameManager.get().inTutorial = false;
             // Remove the current map's enemy manager
             GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
 

@@ -2,9 +2,11 @@ package deco2800.thomas.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.Boss;
 import deco2800.thomas.entities.enemies.Goblin;
+import deco2800.thomas.entities.enemies.Variation;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.worlds.AbstractWorld;
 
@@ -50,7 +52,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
     private final float spawnRangeMax;
     private final Random random;
     private int tick = 0;
-    private int nextTick = 120;
+    private int nextTick = 60;
 
     /**
      * Initialise an enemy manager without wild enemies. (e.g. for tutorial maps)
@@ -68,8 +70,8 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
         this.specialEnemiesAlive = new ArrayList<>();
         this.boss = null;
 
-        this.spawnRangeMin = 10;
-        this.spawnRangeMax = 16;
+        this.spawnRangeMin = 8;
+        this.spawnRangeMax = 14;
         this.random = new Random();
         GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
     }
@@ -192,18 +194,23 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
 
     /** Spawns a random enemy from the configuration list. Normally it will be called automatically by the manager. */
     private void spawnRandomWildEnemy() {
-        // generate a random position within radius range
-        float degree = random.nextFloat() * 360;
-        float radius = spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin);
-        float tileX = world.getPlayerEntity().getCol() + Math.round(Math.sin(degree) * radius);
-        float tileY = world.getPlayerEntity().getRow() + Math.round(Math.cos(degree) * radius);
+        for (int i = 0; i < 5; i++) {
+            // generate a random position within radius range
+            float degree = random.nextFloat() * 360;
+            float radius = spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin);
+            float tileX = world.getPlayerEntity().getCol() + Math.round(Math.sin(degree) * radius);
+            float tileY = world.getPlayerEntity().getRow() + Math.round(Math.cos(degree) * radius);
 
-        // prevent spawning outside of the map
-        if (tileX > -world.getWidth() + 1 && tileX < world.getWidth() - 2 &&
-                tileY > -world.getHeight() + 1 && tileY < world.getHeight() - 1) {
-            // choose a random enemy blueprint
-            EnemyPeon enemy = wildEnemyConfigs.get(random.nextInt(wildEnemyConfigs.size())).deepCopy();
-            spawnWildEnemy(enemy, tileX, tileY);
+            // prevent spawning outside of the map or tiles with effects
+            if (tileX > -world.getWidth() + 1 && tileX < world.getWidth() - 2 &&
+                    tileY > -world.getHeight() + 1 && tileY < world.getHeight() - 1 &&
+                    world.getTile(tileX, tileY) != null && !world.getTile(tileX, tileY).isObstructed() &&
+                    !world.getTile(tileX, tileY).getType().equals("BurnTile")) {
+                // choose a random enemy blueprint
+                EnemyPeon enemy = wildEnemyConfigs.get(random.nextInt(wildEnemyConfigs.size())).deepCopy();
+                spawnWildEnemy(enemy, tileX, tileY);
+                break;
+            }
         }
     }
 
@@ -262,18 +269,14 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
                     wildSpawning = !wildSpawning;
                 } else if (keycode == Input.Keys.K) {
                     // Ctrl + K: kill all wild and special enemies (excludes boss)
-                    for (EnemyPeon enemy : new ArrayList<>(wildEnemiesAlive)) {
-                        removeWildEnemy(enemy);
-                    }
-                    for (EnemyPeon enemy : new ArrayList<>(specialEnemiesAlive)) {
-                        removeSpecialEnemy(enemy);
-                    }
+                    new ArrayList<>(wildEnemiesAlive).forEach(this::removeWildEnemy);
+                    new ArrayList<>(specialEnemiesAlive).forEach(this::removeSpecialEnemy);
                     // Ctrl + L: Kill the dragon
                 } else if (keycode == Input.Keys.L && boss != null) {
-                    boss.reduceHealth(boss.getCurrentHealth());
+                    boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
                 } else if (keycode == Input.Keys.S) {
                     // Ctrl + S: Spawn a special enemy
-                    Goblin goblin = new Goblin(1, 0.1f, 20);
+                    Goblin goblin = new Goblin(Variation.SWAMP, 50, 0.05f);
                     spawnSpecialEnemy(goblin, 0, 0);
                 }
             }
@@ -285,11 +288,14 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
         if (++tick > nextTick) {
             if (wildSpawning && wildEnemiesAlive.size() < wildEnemyCap) {
                 spawnRandomWildEnemy();
-                nextTick = 15 + random.nextInt(180);
+                if (wildEnemiesAlive.size() == wildEnemyCap) {
+                    // give player a rest
+                    nextTick = 1200 + random.nextInt(90);
+                } else {
+                    nextTick = random.nextInt(90);
+                }
             }
             tick = 0;
-        } else {
-            tick++;
         }
     }
 }

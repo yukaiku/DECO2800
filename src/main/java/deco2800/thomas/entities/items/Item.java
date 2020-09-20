@@ -131,4 +131,12 @@ public class Item extends StaticEntity implements TouchDownObserver {
             }
         }
     }
+
+    /**
+     * Remove touch down listener.
+     */
+    @Override
+    public void dispose() {
+        GameManager.getManagerFromInstance(InputManager.class).removeTouchDownListener(this);
+    }
 }

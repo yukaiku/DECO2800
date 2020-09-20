@@ -2,6 +2,10 @@ package deco2800.thomas.entities.enemies;
 
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.Fireball;
@@ -25,24 +29,24 @@ import java.util.Random;
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/bosses/dragon
  */
-public class Dragon extends Boss implements PassiveEnemy {
+public abstract class Dragon extends Boss implements PassiveEnemy {
+    private MovementTask.Direction facingDirection;
+    protected Animation<TextureRegion> dragonIdle;
+    protected Variation variation;
+    protected int duration = 0;
     private int tickFollowing = 60;
     // Range at which the dragon will attempt to melee attack the player
-    private int attackRange = 8;
+    protected int attackRange = 4;
     //the orb number for orb texture
     int orbNumber;
-    //
+    private float stateTimer = 0;
     Random random = new Random();
-
-    public Dragon(String name, int height, float speed, int health, int orb) {
-        super(name, "elder_dragon", height, speed, health);
-        orbNumber = orb;
-    }
-
-    public Dragon(String name, int height, float speed, int health, String texture, int orb) {
-        this(name, height, speed, health, orb);
-        super.setTextureDirections(new ArrayList<>(Arrays.asList(texture, texture + "_left", texture + "_right")));
-        this.setTexture(texture + "_left");
+    public Dragon(int health, float speed, int orbNumber) {
+        super(health, speed);
+        this.orbNumber = orbNumber;
+        this.variation = Variation.SWAMP; // default
+        this.identifier = "dragonSwamp";
+        this.setTexture("dragonSwamp");
     }
 
     /**
@@ -51,20 +55,25 @@ public class Dragon extends Boss implements PassiveEnemy {
      */
     public void summonGoblin() {
         if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() < 10) {
-            Goblin goblin = new Goblin(1, 0.1f, 20, "goblin" + getTextureDirection(TEXTURE_BASE).substring(6));
+            Goblin goblin = new Goblin(variation, 20, 0.1f);
             GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(goblin, this.getCol() + 1, this.getRow() + 2);
         }
     }
 
+    /**
+     * Applies damage to the dragon.
+     * @param damage The amount of damage to be taken by this Peon.
+     * @param damageType Type of damage to apply.
+     * @return Damage dealt.
+     */
     @Override
-    public void reduceHealth(int damage) {
+    public int applyDamage(int damage, DamageType damageType) {
+        int damageDealt = super.applyDamage(damage, damageType);
         hitByTarget();
-        health.reduceHealth(damage);
         if (isDead()) {
             death();
         }
-        isAttacked = true;
-        isAttackedCoolDown = 10;
+        return damageDealt;
     }
 
     /**
@@ -73,34 +82,20 @@ public class Dragon extends Boss implements PassiveEnemy {
     public void hitByTarget() {
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
         if (player != null) {
-            super.setTarget((PlayerPeon) player);
+            super.setTarget(player);
             setMovementTask(new MovementTask(this,
                     super.getTarget().getPosition()));
         }
     }
 
-    /**
-     * Sets the appropriate texture based on the direction the dragon
-     * is moving
-     */
-    private void setDragonTexture() {
-        if (getTarget() != null) {
-            if (getTarget().getCol() < this.getCol()) {
-                setTexture(getTextureDirection(TEXTURE_LEFT));
-            } else {
-                setTexture(getTextureDirection(TEXTURE_RIGHT));
-            }
+    public void elementalAttack() {
+        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange)) {
+            SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
+            setCombatTask(new MeleeAttackTask(this, origin, 8, 8, 20));
         }
     }
 
-    @Override
-    public void attackPlayer() {
-        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange));
-            SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
-            setCombatTask(new MeleeAttackTask(this, origin, 8, 8, 20));
-    }
-
-    public void summonRangedAttack() {
+    public void breathAttack() {
         Fireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
                 getTarget().getRow(), 10, 0.2f, 60, EntityFaction.Evil);
     }
@@ -110,36 +105,26 @@ public class Dragon extends Boss implements PassiveEnemy {
         // update target following path every 1 second (60 ticks)
         if (++tickFollowing + random.nextInt(9) > 80) {
             if (super.getTarget() != null) {
+                // Sets dragon direction
+                if (getTarget().getCol() < this.getCol()) {
+                    facingDirection = MovementTask.Direction.LEFT;
+                } else if (getTarget().getCol() > this.getCol()) {
+                    facingDirection = MovementTask.Direction.RIGHT;
+                }
                 // Throws a fireball at the player, and attempts to summon a
                 // goblin, and attempts to initialise movement and combat
                 // tasks
                 summonGoblin();
-                summonRangedAttack();
+                breathAttack();
+                elementalAttack();
                 setMovementTask(new MovementTask(this, super.getTarget().
                         getPosition()));
-                attackPlayer();
-                setDragonTexture();
             }
             tickFollowing = 0;
         }
-        // execute tasks
-        if (getMovementTask() != null && getMovementTask().isAlive()) {
-            getMovementTask().onTick(i);
-            if (getMovementTask().isComplete()) {
-                setMovementTask(null);
-            }
-        }
-        if (getCombatTask() != null && getCombatTask().isAlive()) {
-            getCombatTask().onTick(i);
-            if (getCombatTask().isComplete()) {
-                setCombatTask(null);
-            }
-        }
 
-        // isAttacked animation
-        if (isAttacked && --isAttackedCoolDown < 0) {
-            isAttacked = false;
-        }
+        // Update tasks and effects
+        super.onTick(i);
     }
 
     /**
@@ -156,5 +141,20 @@ public class Dragon extends Boss implements PassiveEnemy {
         world.setOrbEntity(new Orb(tile, "orb_" + orbNumber));
 
         PlayerPeon.credit(1500);
+    }
+
+    @Override
+    public TextureRegion getFrame(float delta) {
+        TextureRegion region = dragonIdle.getKeyFrame(stateTimer);
+        if ((getMovingDirection() == MovementTask.Direction.LEFT ||
+                facingDirection == MovementTask.Direction.LEFT) && !region.isFlipX()) {
+            region.flip(true, false);
+            facingDirection = MovementTask.Direction.LEFT;
+        } else if ((getMovingDirection() == MovementTask.Direction.RIGHT ||
+                facingDirection == MovementTask.Direction.RIGHT) && region.isFlipX()) {
+            region.flip(true, false);
+            facingDirection = MovementTask.Direction.RIGHT;
+        }
+        return region;
     }
 }

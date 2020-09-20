@@ -6,12 +6,7 @@ package deco2800.thomas.entities.enemies;
  * and provide rewards when defeated.
  */
 public abstract class Boss extends EnemyPeon {
-    public Boss(String name, String texture, int height, float speed, int health) {
-        super(name, texture, height, speed, health);
-    }
-
-    @Override
-    public void death() {
-        // some special rules when the boss is dead.
+    public Boss(int health, float speed) {
+        super(health, speed);
     }
 }

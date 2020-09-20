@@ -1,16 +1,35 @@
 package deco2800.thomas.entities.enemies.dragons;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.DesertFireball;
 import deco2800.thomas.entities.enemies.Dragon;
+import deco2800.thomas.entities.enemies.Variation;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.tasks.combat.SandTornadoAttackTask;
+import deco2800.thomas.util.EnemyUtil;
 
 public class DesertDragon extends Dragon {
-    public DesertDragon(String name, int height, float speed, int health, String texture, int orb) {
-        super(name, height, speed, health, texture, orb);
+    public DesertDragon(int health, float speed, int orbNumber) {
+        super(health, speed, orbNumber);
+        this.variation = Variation.DESERT;
+        this.identifier = "dragonDesert";
+        this.setTexture("dragonDesert");
+        this.setObjectName("Doavnaen");
+        this.dragonIdle = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
     }
 
     @Override
-    public void summonRangedAttack() {
+    public void elementalAttack() {
+        setCombatTask(new SandTornadoAttackTask(this, getTarget().getCol(), getTarget().getRow(),
+                    10, 0.2f, 100));
+    }
+
+    @Override
+    public void breathAttack() {
         DesertFireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
                 getTarget().getRow(), 10, 0.1f, 60, EntityFaction.Evil);
     }

@@ -8,6 +8,7 @@ import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.combat.skills.FireBombSkill;
 import deco2800.thomas.combat.skills.FireballSkill;
+import deco2800.thomas.combat.skills.IceballSkill;
 import deco2800.thomas.combat.skills.ScorpionStingSkill;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
@@ -17,25 +18,28 @@ import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
-import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
-import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObserver, KeyDownObserver, KeyUpObserver {
     // Animation Testing
     public enum State {
-        STANDING, WALKING, MELEE_ATTACK, RANGE_ATTACK
+        IDLE, WALK, ATTACK_MELEE, ATTACK_RANGE, INCAPACITATED
     }
+
     public State currentState;
     public State previousState;
     private MovementTask.Direction facingDirection;
-    private final Animation<TextureRegion> playerStand;
+    private final Animation<TextureRegion> playerIdle;
     private final Animation<TextureRegion> playerMeleeAttack;
     private final Animation<TextureRegion> playerRangeAttack;
+    private final Animation<TextureRegion> playerSpin;
     private float stateTimer;
     private int duration = 0;
 
@@ -73,20 +77,23 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         wizardSkills = new ArrayList<>();
         wizardSkills.add(new FireballSkill(this));
         wizardSkills.add(new ScorpionStingSkill(this));
+        wizardSkills.add(new IceballSkill(this));
         activeWizardSkill = 0;
         mechSkill = new FireBombSkill(this);
 
         // Animation Testing
         facingDirection = MovementTask.Direction.RIGHT;
-        currentState = State.STANDING;
-        previousState = State.STANDING;
+        currentState = State.IDLE;
+        previousState = State.IDLE;
         stateTimer = 0;
-        playerMeleeAttack = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_melee"));
+        playerMeleeAttack = new Animation<>(0.08f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerMelee"));
         playerRangeAttack = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_range"));
-        playerStand = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_stand"));
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerRange"));
+        playerSpin = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerSpin"));
+        playerIdle = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerIdle"));
     }
 
     /**
@@ -180,34 +187,13 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
             death();
         }
 
-        // Update movement task
-        if (getMovementTask() != null && getMovementTask().isAlive()) {
-            getMovementTask().onTick(i);
-
-            if (getMovementTask().isComplete()) {
-                setMovementTask(null);
-            }
-        }
-
         if (--duration < 0) {
             duration = 0;
-            currentState = State.STANDING;
+            currentState = State.IDLE;
         }
-
-        // Update combat task
-        if (getCombatTask() != null) {
-            getCombatTask().onTick(i);
-            if (getCombatTask() instanceof MeleeAttackTask) {
-                currentState = State.MELEE_ATTACK;
-            } else {
-                currentState = State.RANGE_ATTACK;
-            }
-            // Due to the combat task is currently executed instantly, will set a cool down here
-            duration = 9;
-
-            if (getCombatTask().isComplete()) {
-                setCombatTask(null);
-            }
+        if (combatTask != null) {
+            currentState = State.ATTACK_MELEE;
+            duration = 12;
         }
 
         // Update skills
@@ -220,27 +206,13 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
             mechSkill.onTick(i);
         }
 
-        // Check current effects to be applied or removed
-        if (!getEffects().isEmpty()) {
-            for (StatusEffect effect : getEffects()) {
-                if (effect.getAffectedEntity() == null) {
-                    if (!effect.getActive()) {
-                        removeEffect(effect);
-                    }
-                } else {
-                    effect.applyEffect();
-                }
-            }
-        }
-
-        // isAttacked animation
-        if (isAttacked && --isAttackedCoolDown < 0) {
-            isAttacked = false;
-        }
+        // Update tasks and effects
+        super.onTick(i);
     }
 
     /**
      * Get the texture region of current animation keyframe (this will be called in Renderer3D.java).
+     *
      * @param delta the interval of the ticks
      * @return the current texture region in animation
      */
@@ -248,15 +220,20 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         TextureRegion region;
         // Get the animation frame based on the current state
         switch (currentState) {
-            case RANGE_ATTACK:
+            case ATTACK_RANGE:
                 region = playerRangeAttack.getKeyFrame(stateTimer);
                 break;
-            case MELEE_ATTACK:
+            case ATTACK_MELEE:
                 region = playerMeleeAttack.getKeyFrame(stateTimer);
                 break;
-            case STANDING:
+            case INCAPACITATED:
+                region = playerSpin.getKeyFrame(stateTimer);
+                break;
+            case WALK:
+            case IDLE:
             default:
-                region = playerStand.getKeyFrame(stateTimer);
+                region = playerIdle.getKeyFrame(stateTimer);
+                break;
         }
         // Render the correct direction of the texture
         if ((getMovingDirection() == MovementTask.Direction.LEFT ||
@@ -283,6 +260,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
      */
     @Override
     public void notifyTouchDown(int screenX, int screenY, int pointer, int button) {
+        System.out.println("Touch down - player.");
         float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(), Gdx.input.getY());
         float[] clickedPosition = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
 
@@ -309,10 +287,12 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         }
 
         // set the facing direction when attacking
-        if (clickedPosition[0] < this.getCol()) {
-            facingDirection = MovementTask.Direction.LEFT;
-        } else {
-            facingDirection = MovementTask.Direction.RIGHT;
+        if (getMovementTask() == null) {
+            if (clickedPosition[0] < this.getCol()) {
+                facingDirection = MovementTask.Direction.LEFT;
+            } else {
+                facingDirection = MovementTask.Direction.RIGHT;
+            }
         }
     }
 
@@ -434,6 +414,10 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         return this.activeWizardSkill;
     }
 
+    public Skill getMechSkill() {
+        return this.mechSkill;
+    }
+
     /**
      * Triggered when health goes below zero. Removes entity
      * from world.
@@ -451,8 +435,17 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
      */
     @Override
     public void dispose() {
+        System.out.println("Disposing player.");
         GameManager.getManagerFromInstance(InputManager.class).removeTouchDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).removeKeyDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).removeKeyUpListener(this);
+    }
+
+    public State getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(State currentState) {
+        this.currentState = currentState;
     }
 }

@@ -28,7 +28,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 public class FireballSkillTest extends BaseGDXTest {
     private AbstractEntity mockedEntity;
     private GameManager mockedGameManager;
-    private TextureManager textureManager = new TextureManager();
+    private TextureManager textureManager;
 
     /**
      * Mocks classes for these tests.
@@ -45,6 +45,9 @@ public class FireballSkillTest extends BaseGDXTest {
         mockedGameManager = mock(GameManager.class);
         mockStatic(GameManager.class);
         when(GameManager.get()).thenReturn(mockedGameManager);
+
+        // Mock texture manager
+        textureManager = mock(TextureManager.class);
         when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
 
         // Mock an abstract world
@@ -60,8 +63,8 @@ public class FireballSkillTest extends BaseGDXTest {
         FireballSkill testSkill = new FireballSkill(mockedEntity);
 
         assertEquals(0, testSkill.getCooldown());
-        assertEquals(10, testSkill.getCooldownMax());
-        assertNull(testSkill.getTexture());
+        assertEquals(20, testSkill.getCooldownMax());
+        assertNotNull(testSkill.getTexture());
     }
 
     /**

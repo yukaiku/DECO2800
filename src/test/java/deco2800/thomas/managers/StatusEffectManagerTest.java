@@ -2,6 +2,7 @@ package deco2800.thomas.managers;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.tasks.status.StatusEffect;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,14 +22,14 @@ public class StatusEffectManagerTest extends BaseGDXTest {
     // a mocked StatusEffect instance for testing
     private StatusEffect effect;
 
-    // a mocking AgentEntity instance for testing
-    private AgentEntity entity;
+    // a mocking Peon instance for testing
+    private Peon entity;
 
     @Before
     public void setUp() throws Exception {
         effect = mock(StatusEffect.class);
         manager = spy(new StatusEffectManager());
-        entity = mock(AgentEntity.class);
+        entity = mock(Peon.class);
     }
 
     /**

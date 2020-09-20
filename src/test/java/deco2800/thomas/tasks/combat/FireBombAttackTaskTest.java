@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.combat.DamageType;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.entities.attacks.Explosion;
@@ -36,7 +38,7 @@ public class FireBombAttackTaskTest extends BaseGDXTest {
     private GameManager gameManager;
     private AbstractWorld abstractWorld;
     private CombatEntity combatEntity;
-    private AgentEntity agentEntity;
+    private Peon peon;
 
     /**
      * Prepare for testing by mocking relevant classes.
@@ -63,14 +65,14 @@ public class FireBombAttackTaskTest extends BaseGDXTest {
         combatEntity = mock(CombatEntity.class);
         when(combatEntity.getFaction()).thenReturn(EntityFaction.Evil);
         when(combatEntity.getBounds()).thenReturn(new BoundingBox(new SquareVector(0, 0), 10, 10));
-        agentEntity = mock(AgentEntity.class);
-        when(agentEntity.getFaction()).thenReturn(EntityFaction.Ally);
+        peon = mock(Peon.class);
+        when(peon.getFaction()).thenReturn(EntityFaction.Ally);
 
         // Mock abstract world
         abstractWorld = mock(AbstractWorld.class);
         when(GameManager.get().getWorld()).thenReturn(abstractWorld);
         when(abstractWorld.getEntitiesInBounds(any(BoundingBox.class)))
-                .thenReturn(new ArrayList<>(Arrays.asList(combatEntity, agentEntity)));
+                .thenReturn(new ArrayList<>(Arrays.asList(combatEntity, peon)));
     }
 
     /**
@@ -84,7 +86,7 @@ public class FireBombAttackTaskTest extends BaseGDXTest {
         task.onTick(1);
 
         // Verify reduceHealth is called
-        verify(agentEntity).reduceHealth(anyInt());
+        verify(peon).applyDamage(anyInt(), eq(DamageType.FIRE));
     }
 
     /**
