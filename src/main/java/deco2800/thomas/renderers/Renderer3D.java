@@ -54,7 +54,7 @@ public class Renderer3D implements Renderer {
 
 	private int tilesSkipped = 0;
 
-	private TextureManager textureManager = GameManager.getManagerFromInstance(TextureManager.class);
+	private final TextureManager textureManager = GameManager.getManagerFromInstance(TextureManager.class);
 
 	/**
 	 * Renders onto a batch, given a renderables with entities It is expected
@@ -75,26 +75,20 @@ public class Renderer3D implements Renderer {
 
 		batch.begin();
 		// Render elements section by section
-		//	tiles will render the static entity attaced to each tile after the tile is rendered
+		//tiles will render the static entity attaced to each tile after the tile is rendered
 
 		tilesSkipped = 0;
 		for (Tile t : tileMap) {
 			// Render each tile
 			renderTile(batch, camera, tileMap, tilesToBeSkipped, t);
-
 			// Render each undiscovered area
 		}
 
-
 		renderAbstractEntities(batch, camera);
-
 		renderMouse(batch);
-
 		debugRender(batch, camera);
-
 		batch.end();
 	}
-
 
 	/**
 	 * Render a single tile.
@@ -127,10 +121,7 @@ public class Renderer3D implements Renderer {
 				tex.getHeight() * WorldUtil.SCALE_Y);
 		GameManager.get().setTilesRendered(tileMap.size() - tilesSkipped);
 		GameManager.get().setTilesCount(tileMap.size());
-
-
 	}
-
 
 	/**
 	 * Render the tile under the mouse.
@@ -158,9 +149,7 @@ public class Renderer3D implements Renderer {
 					tex.getWidth() * WorldUtil.SCALE_X,
 					tex.getHeight() * WorldUtil.SCALE_Y);
 		}
-
 	}
-
 
 	/**
 	 * Render all the entities on in view, including movement tiles, and excluding undiscovered area.
@@ -202,9 +191,7 @@ public class Renderer3D implements Renderer {
 				Set<SquareVector> childrenPosns = staticEntity.getChildrenPositions();
 
 				for (SquareVector childpos : childrenPosns) {
-
 					Texture childTex = staticEntity.getTexture(childpos);
-
 					float[] childWorldCoord = WorldUtil.colRowToWorldCords(childpos.getCol(), childpos.getRow());
 
 					// time for some funky math: we want to render the entity at the centre of the tile. 
@@ -226,7 +213,6 @@ public class Renderer3D implements Renderer {
 				}
 			}
 		}
-
 		GameManager.get().setEntitiesRendered(entities.size() - entitiesSkipped);
 		GameManager.get().setEntitiesCount(entities.size());
 	}
@@ -235,9 +221,9 @@ public class Renderer3D implements Renderer {
 	private void renderAbstractEntity(SpriteBatch batch, AbstractEntity entity, float[] entityWorldCord, Texture tex) {
 		float x = entityWorldCord[0];
 		float y = entityWorldCord[1];
-
 		float width = tex.getWidth() * entity.getColRenderLength() * WorldUtil.SCALE_X;
 		float height = tex.getHeight() * entity.getRowRenderLength() * WorldUtil.SCALE_Y;
+
 		if (entity instanceof Projectile) {
 			renderProjectiles(batch, entity, entityWorldCord, tex);
 		} else if (entity instanceof Animatable) {
@@ -249,13 +235,7 @@ public class Renderer3D implements Renderer {
 				batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width, height);
 			}
 		} else {
-			if (entity instanceof Peon && ((Peon) entity).isAttacked()) {
-				batch.setColor(102, 0, 0, 1);
-				batch.draw(tex, x, y, width, height);
-				batch.setColor(Color.WHITE);
-			} else {
-				batch.draw(tex, x, y, width, height);
-			}
+			batch.draw(tex, x, y, width, height);
 		}
 	}
 
@@ -297,7 +277,6 @@ public class Renderer3D implements Renderer {
 						tileWorldCord[1]// + ((tile.getElevation() + 1) * elevationZeroThiccness * WorldUtil.SCALE_Y)
 						, tex.getWidth() * WorldUtil.SCALE_X,
 						tex.getHeight() * WorldUtil.SCALE_Y);
-
 			}
 //			if (!path.isEmpty()) {
 //				// draw Peon
