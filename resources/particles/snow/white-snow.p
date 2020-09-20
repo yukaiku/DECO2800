@@ -82,8 +82,8 @@ active: false
 active: true
 lowMin: 0.0
 lowMax: 0.0
-highMin: 70.0
-highMax: 100.0
+highMin: 50.0
+highMax: 70.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -143,7 +143,12 @@ aligned: false
 additive: true
 behind: false
 premultipliedAlpha: false
-spriteMode: single
+spriteMode: random
 - Image Paths -
-snow-flake.png
+snowflake1.png
+snowflake2.png
+snowflake3.png
+snowflake4.png
+snowflake5.png
+snowflake6.png
 
