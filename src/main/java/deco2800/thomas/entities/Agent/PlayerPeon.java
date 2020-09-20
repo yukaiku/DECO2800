@@ -22,7 +22,10 @@ import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, KeyDownObserver, KeyUpObserver {
     // Animation Testing
@@ -36,6 +39,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
     private final Animation<TextureRegion> playerIdle;
     private final Animation<TextureRegion> playerMeleeAttack;
     private final Animation<TextureRegion> playerRangeAttack;
+    private final Animation<TextureRegion> playerSpin;
     private float stateTimer;
     private int duration = 0;
 
@@ -86,6 +90,8 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerMelee"));
         playerRangeAttack = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerRange"));
+        playerSpin = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerSpin"));
         playerIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerIdle"));
     }
@@ -221,6 +227,8 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
                 region = playerMeleeAttack.getKeyFrame(stateTimer);
                 break;
             case INCAPACITATED:
+                region =  playerSpin.getKeyFrame(stateTimer);
+                break;
             case WALK:
             case IDLE:
             default:
@@ -431,5 +439,13 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         GameManager.getManagerFromInstance(InputManager.class).removeTouchDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).removeKeyDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).removeKeyUpListener(this);
+    }
+
+    public State getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(State currentState) {
+        this.currentState = currentState;
     }
 }

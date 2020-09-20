@@ -83,9 +83,8 @@ public class ApplyTornadoOnCollisionTask extends AbstractTask {
 
     private void applyTornado (AbstractEntity e) {
         if (e instanceof PlayerPeon) {
-            System.out.println("Test");
             PlayerPeon playerPeon = (PlayerPeon) e;
-            playerPeon.addEffect(new TornadoStatus(playerPeon, 1));
+            playerPeon.addEffect(new TornadoStatus(playerPeon, 10));
         }
     }
 }

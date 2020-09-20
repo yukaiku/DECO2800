@@ -111,7 +111,7 @@ public class StingProjectile extends Projectile implements Animatable {
                     Peon peon = (Peon)e;
                     EntityFaction faction = peon.getFaction();
                     if (faction != EntityFaction.None && faction != this.getFaction()) {
-                        peon.addEffect(new BurnStatus(peon));
+                        peon.addEffect(new BurnStatus(peon, this.getDamage(), 10));
                     }
                 }
             }
