@@ -3,7 +3,6 @@ package deco2800.thomas.entities.enemies;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -26,7 +25,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
     }
     public State currentState;
     public State previousState;
-    private Variation variation;
+    private final Variation variation;
     private final Animation<TextureRegion> goblinIdle;
     private float stateTimer;
     private final Animation<TextureRegion> goblinAttacking;

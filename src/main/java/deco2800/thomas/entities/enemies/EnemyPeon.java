@@ -8,8 +8,6 @@ import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 
-import java.util.Objects;
-
 /**
  * An abstract class inheriting from Peon that will define the
  * behaviour of all enemies. All enemies must have some form of health.
@@ -60,15 +58,15 @@ public abstract class EnemyPeon extends Peon implements Animatable {
 
     /**
      * Returns the AgentEntity this enemy is currently targeting.
-     * @return
+     * @return the target
      */
     public AgentEntity getTarget() {
         return target;
     }
 
     /**
-     * Sets the  to be targeted by this enemy.
-     * @param target
+     * Sets the target for the enemy
+     * @param target The target
      */
     public void setTarget(AgentEntity target) {
         this.target = target;

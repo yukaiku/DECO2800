@@ -2,10 +2,8 @@ package deco2800.thomas.entities.enemies;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.managers.TextureManager;
 
 /**
@@ -23,7 +21,6 @@ public class Dummy extends Monster implements PassiveEnemy {
         this.identifier = "dummy";
         this.setTexture("dummy");
         this.setObjectName("Dummy");
-
         this.stateTimer = 0;
         this.dummyIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
