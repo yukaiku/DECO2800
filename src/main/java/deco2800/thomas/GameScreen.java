@@ -22,7 +22,6 @@ import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.renderers.*;
-import deco2800.thomas.renderers.components.QuestTrackerComponent;
 import deco2800.thomas.util.CameraUtil;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.TestWorld;
@@ -57,11 +56,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 	PauseModal pauseModal = new PauseModal();
 	Result result = new Result();
 	TransitionScreen transitionScreen = new TransitionScreen();
-	//QuestTrackerComponent questTrackerRenderer = new QuestTrackerComponent();
-	//Tutorial Guideline UI
-	//Guideline guideline = new Guideline();
-
-	CurrencyRenderer currencyRenderer = new CurrencyRenderer();
 
 	// Buttons in the pause menu
 	Button resumeButton = new TextButton("RESUME", GameManager.get().getSkin(), "in_game");
@@ -250,13 +244,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 		rendererEvent.render(batchEvent, cameraEvent);
 
 
-		spriteBatch.setProjectionMatrix(cameraDebug.combined);
-		//Add questTracker UI
-		questTrackerRenderer.render(spriteBatch, cameraDebug);
-		//Add tutorial guideline if we are in the tutorial world
-		if(tutorial){
-			guideline.render(spriteBatch, cameraDebug);
-		}
 		spriteBatch.setProjectionMatrix(cameraOverlay.combined);
 
 		// Hide the buttons when the game is running
@@ -264,9 +251,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 		quitButton.setPosition(-100, -100);
 		enterButton.setPosition(-100, -100);
 		playAgainButton.setPosition(-100, -100);
-
-		// Currency UI
-		currencyRenderer.render(spriteBatch, cameraDebug);
 
 		/* Refresh the experience UI for if information was updated */
 		stage.act(delta);
