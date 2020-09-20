@@ -27,6 +27,7 @@ import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.TutorialWorld;
+import deco2800.thomas.worlds.swamp.SwampWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 
 import org.slf4j.Logger;
@@ -80,7 +81,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		NEW_GAME {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new TundraWorld();
+				AbstractWorld world = new TutorialWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
