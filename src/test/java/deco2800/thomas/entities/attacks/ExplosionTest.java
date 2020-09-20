@@ -1,6 +1,9 @@
 package deco2800.thomas.entities.attacks;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.RenderConstants;
@@ -68,12 +71,16 @@ public class ExplosionTest extends BaseGDXTest {
         AbstractTask combatTask = mock(AbstractTask.class);
         when(combatTask.isComplete()).thenReturn(true);
 
-        // Mock a texture manager, and a texture
+        // Mock a texture manager, a texture and an animation
         Texture texture = mock(Texture.class);
         when(texture.getWidth()).thenReturn(10);
         when(texture.getHeight()).thenReturn(10);
+        Array<TextureRegion> animation = new Array<>();
+        animation.add(new TextureRegion(new Texture("resources/combat/move_right.png"), 262, 256));
+
         TextureManager textureManager = mock(TextureManager.class);
         when(textureManager.getTexture(anyString())).thenReturn(texture);
+        when(textureManager.getAnimationFrames(anyString())).thenReturn(animation);
 
         // Mock the game manager, and a CombatManager
         GameManager gameManager = mock(GameManager.class);
