@@ -66,7 +66,7 @@ public class TutorialWorld extends AbstractWorld{
         }
 
         PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f, 50);
-//        addEntity(player);
+            addEntity(player);
         this.setPlayerEntity(player);
         addEntity(this.getPlayerEntity());
 
@@ -92,7 +92,7 @@ public class TutorialWorld extends AbstractWorld{
         GameManager.get().addManager(npcManager);
 
         //Dialog manager
-        DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
+        dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
                 this.allDialogBoxes);
         GameManager.get().addManager(dialog);
     }
@@ -133,9 +133,10 @@ public class TutorialWorld extends AbstractWorld{
         t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW);
         entities.add(new Portal(t, false));
 
+        // add potion and shield. 
+        
+        /*
         // add potion and shield.
-
-
         Tile potion;
         potion = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
                 Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
@@ -159,6 +160,7 @@ public class TutorialWorld extends AbstractWorld{
                 (PlayerPeon) getPlayerEntity(),"tutorial");
         entities.add(itemTreasure);
         this.allDialogBoxes.add(itemTreasure.getDisplay());
+         */
     }
 
     @Override

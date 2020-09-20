@@ -37,7 +37,7 @@ public class TutorialNPC extends NonPlayablePeon implements Interactable {
     @Override
     public void interact() {
         setIsActive(true);
-        ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("welcome"));
+        ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("plot"));
         tutorialDialogueBox.setShowing(true);
         if (speechStage >= 4){
             setIsActive(true);

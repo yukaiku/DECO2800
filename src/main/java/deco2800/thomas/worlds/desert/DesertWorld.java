@@ -38,6 +38,8 @@ public class DesertWorld extends AbstractWorld {
     // the save file location for the desert zone map
     public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/desert/desert_map.json";
 
+    private List<AbstractDialogBox> allDesertDialogues;
+
     /**
      * Constructor that creates a world with default width and height.
      */
@@ -53,15 +55,6 @@ public class DesertWorld extends AbstractWorld {
      */
     public DesertWorld(int width, int height) {
         super(width, height);
-        generateTiles();
-
-        //Creates Desert NPCs
-        List<NonPlayablePeon> npnSpawns = new ArrayList<>();
-        npnSpawns.add(new DesertNPC("DesertQuestNPC1", new SquareVector(-23, 17),"desert_npc1"));
-        npnSpawns.add(new DesertNPC("DesertQuestNPC2", new SquareVector(-23, 20),"desert_npc2"));
-        NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
-        GameManager.get().addManager(npcManager);
-        generateItemEntities();
     }
 
     /**
@@ -82,6 +75,7 @@ public class DesertWorld extends AbstractWorld {
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
         this.setPlayerEntity(new PlayerPeon(6f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
+        this.allDesertDialogues = new ArrayList<>();
 
         Orc desertOrc = new Orc(1, 0.09f, 50, "orc_desert");
         Dragon boss = new DesertDragon("Chuzzinoath", 3, 0.03f, 850, "dragon_desert", 4);
@@ -89,6 +83,23 @@ public class DesertWorld extends AbstractWorld {
         EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(desertOrc), boss);
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(21, 6);
+
+        //Creates Desert NPCs
+        List<NonPlayablePeon> npnSpawns = new ArrayList<>();
+        DesertNPC desertNpc1 = new DesertNPC("DesertQuestNPC1", new SquareVector(-23, 17),"desert_npc1");
+        DesertNPC desertNpc2 = new DesertNPC("DesertQuestNPC2", new SquareVector(-23, 20),"desert_npc2");
+        npnSpawns.add(desertNpc1);
+        npnSpawns.add(desertNpc2);
+        this.allDesertDialogues.add(desertNpc1.getBox());
+        this.allDesertDialogues.add(desertNpc2.getBox());
+        NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
+        GameManager.get().addManager(npcManager);
+        generateItemEntities();
+
+        //Creates dialogue manager
+        DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
+                this.allDesertDialogues);
+        GameManager.get().addManager(dialog);
     }
 
     /**
@@ -166,15 +177,14 @@ public class DesertWorld extends AbstractWorld {
         final int NUM_POTIONS = 6;
         final int NUM_SHIELDS = 4;
         final int NUM_CHESTS = 3;
-        ArrayList<AbstractDialogBox> items = new ArrayList<>();
-        
+
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
             HealthPotion potion = new HealthPotion(tile,false,
                     (PlayerPeon) getPlayerEntity(),"desert");
             entities.add(potion);
-            items.add(potion.getDisplay());
+            this.allDesertDialogues.add(potion.getDisplay());
         }
 
         for (int i = 0; i < NUM_SHIELDS; i++) {
@@ -183,7 +193,7 @@ public class DesertWorld extends AbstractWorld {
             Shield shield = new Shield(tile, false,
                     (PlayerPeon) getPlayerEntity(),"desert");
             entities.add(shield);
-            items.add(shield.getDisplay());
+            this.allDesertDialogues.add(shield.getDisplay());
         }
 
         for (int i = 0; i < NUM_CHESTS; i++) {
@@ -192,12 +202,8 @@ public class DesertWorld extends AbstractWorld {
             Treasure chest = new Treasure(tile, false,
                     (PlayerPeon) getPlayerEntity(),"desert");
             entities.add(chest);
-            items.add(chest.getDisplay());
+            this.allDesertDialogues.add(chest.getDisplay());
         }
-        
-        DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
-                items);
-        GameManager.get().addManager(dialog);
     }
 
     /**
