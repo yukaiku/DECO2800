@@ -39,11 +39,11 @@ public class Iceball extends Projectile implements Animatable {
         super();
         this.setTexture("fireball_right");
         this.setObjectName("combatIceballProjectile");
-        animation = new Animation<TextureRegion>(0.1f,
+        animation = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballDefault"));
-        explosion = new Animation<TextureRegion>(0.1f,
+        explosion = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballExplosion"));
-        defaultState = new Animation<TextureRegion>(0.1f,
+        defaultState = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballDefault"));
         currentState = Fireball.State.DEFAULT;
     }

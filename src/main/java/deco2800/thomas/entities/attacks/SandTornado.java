@@ -18,7 +18,7 @@ public class SandTornado extends Projectile implements Animatable, Tickable {
         super();
         this.setTexture("explosion");
         this.setObjectName("combatExplosion");
-        tornado = new Animation<TextureRegion>(0.1f,
+        tornado = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("sandTornado"));
     }
 
@@ -26,7 +26,7 @@ public class SandTornado extends Projectile implements Animatable, Tickable {
         super(col, row, RenderConstants.PROJECTILE_RENDER, damage, speed, faction);
         this.setTexture("explosion");
         this.setObjectName("combatExplosion");
-        tornado = new Animation<TextureRegion>(0.1f,
+        tornado = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("sandTornado"));
     }
 

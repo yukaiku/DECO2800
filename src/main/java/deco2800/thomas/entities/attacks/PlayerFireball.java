@@ -13,9 +13,9 @@ import deco2800.thomas.util.WorldUtil;
 public class PlayerFireball extends Fireball {
     public PlayerFireball(float col, float row, int damage, float speed, EntityFaction faction) {
         super(col, row, damage, speed, faction);
-        explosion = new Animation<TextureRegion>(0.1f,
+        explosion = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerFireball"));
-        defaultState = new Animation<TextureRegion>(0.1f,
+        defaultState = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerFireballDefault"));
     }
 

@@ -105,7 +105,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
                 // Sets dragon direction
                 if (getTarget().getCol() < this.getCol()) {
                     facingDirection = MovementTask.Direction.LEFT;
-                } else {
+                } else if (getTarget().getCol() > this.getCol()) {
                     facingDirection = MovementTask.Direction.RIGHT;
                 }
                 // Throws a fireball at the player, and attempts to summon a

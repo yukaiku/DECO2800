@@ -41,9 +41,9 @@ public class Fireball extends Projectile implements Animatable, Tickable{
         super();
         this.setTexture("fireball_right");
         this.setObjectName("combatFireball");
-        explosion = new Animation<TextureRegion>(0.1f,
+        explosion = new Animation<>(0.08f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
-        defaultState = new Animation<TextureRegion>(0.1f,
+        defaultState = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
         currentState = State.DEFAULT;
     }

@@ -32,7 +32,7 @@ public abstract class AgentEntity extends AbstractEntity {
 
 	public void setSpeed(float speed) {
 		this.speed = speed;
-		System.out.println(speed);
+//		System.out.println(speed);
 	}
 
 	public MovementTask.Direction getMovingDirection() {

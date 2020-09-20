@@ -36,7 +36,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
     public State currentState;
     public State previousState;
     private MovementTask.Direction facingDirection;
-    private final Animation<TextureRegion> playerStand;
+    private final Animation<TextureRegion> playerIdle;
     private final Animation<TextureRegion> playerMeleeAttack;
     private final Animation<TextureRegion> playerRangeAttack;
     private final Animation<TextureRegion> playerSpin;
@@ -86,13 +86,14 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         currentState = State.IDLE;
         previousState = State.IDLE;
         stateTimer = 0;
-        playerMeleeAttack = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_melee"));
+        playerMeleeAttack = new Animation<>(0.08f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerMelee"));
         playerRangeAttack = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_range"));
-        playerStand = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_stand"));
-        playerSpin = new Animation<>(1f, GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_spin"));
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerRange"));
+        playerSpin = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerSpin"));
+        playerIdle = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerIdle"));
     }
 
     /**
@@ -190,6 +191,10 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
             duration = 0;
             currentState = State.IDLE;
         }
+        if (combatTask != null) {
+            currentState = State.ATTACK_MELEE;
+            duration = 12;
+        }
 
         // Update skills
         for (Skill s : wizardSkills) {
@@ -222,11 +227,13 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
                 region = playerMeleeAttack.getKeyFrame(stateTimer);
                 break;
             case INCAPACITATED:
-                region =  playerSpin.getKeyFrame(stateTimer);
+                region = playerSpin.getKeyFrame(stateTimer);
                 break;
+            case WALK:
             case IDLE:
             default:
-                region = playerStand.getKeyFrame(stateTimer);
+                region = playerIdle.getKeyFrame(stateTimer);
+                break;
         }
         // Render the correct direction of the texture
         if ((getMovingDirection() == MovementTask.Direction.LEFT ||
@@ -239,9 +246,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
             facingDirection = MovementTask.Direction.RIGHT;
         }
         stateTimer = currentState == previousState ? stateTimer + delta : 0;
-        System.out.println(stateTimer);
         previousState = currentState;
-        System.out.println(currentState);
         return region;
     }
 
