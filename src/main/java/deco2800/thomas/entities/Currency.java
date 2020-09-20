@@ -1,7 +1,5 @@
 package deco2800.thomas.entities;
 
-import deco2800.thomas.entities.items.Item;
-
 public class Currency {
     protected int currency;
 

@@ -1,11 +1,9 @@
-package deco2800.thomas.entities.Agent;
+package deco2800.thomas.entities.agent;
 
 import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.entities.RenderConstants;
-import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.TaskPool;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.status.StatusEffect;
 
@@ -18,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Peon extends AgentEntity implements Tickable {
 	/* Tasks for this peon */
 	private AbstractTask movementTask;
-	private AbstractTask combatTask;
+	protected AbstractTask combatTask;
 	/* Status effects on this peon */
 	private CopyOnWriteArrayList<StatusEffect> effects;
 	/* Combat stats for this entity */
@@ -56,7 +54,7 @@ public class Peon extends AgentEntity implements Tickable {
 	public Peon(float row, float col, float speed, int health) {
 		super(row, col, RenderConstants.PEON_RENDER, speed);
 		this.setTexture("spacman_ded");
-		this.effects = new CopyOnWriteArrayList<StatusEffect>();
+		this.effects = new CopyOnWriteArrayList<>();
 		this.damage = 10;
 		this.armour = ARMOUR_CONSTANT; // No damage reduction
 		this.vulnerability = DamageType.NONE;
@@ -185,7 +183,6 @@ public class Peon extends AgentEntity implements Tickable {
 	 * @return Returns true if removed, returns false if effect is not in the list
 	 */
 	public boolean removeEffect(StatusEffect effect) {
-
 		System.out.println(this.effects.remove(effect));
 		return true;
 	}

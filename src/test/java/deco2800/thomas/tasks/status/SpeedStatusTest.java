@@ -1,15 +1,13 @@
 package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.BaseGDXTest;
-import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.entities.Agent.Peon;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.Peon;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
-
-import static org.junit.Assert.*;
 
 /**
  * Tests the BurnStatus generalisation of StatusEffect and its methods.

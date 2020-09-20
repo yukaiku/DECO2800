@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.DamageType;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.*;
 import deco2800.thomas.entities.enemies.dragons.DesertDragon;

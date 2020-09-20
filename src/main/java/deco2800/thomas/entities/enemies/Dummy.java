@@ -1,5 +1,8 @@
 package deco2800.thomas.entities.enemies;
 
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.managers.EnemyManager;
+import deco2800.thomas.managers.GameManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.managers.EnemyManager;
@@ -33,6 +36,7 @@ public class Dummy extends Monster implements PassiveEnemy {
     @Override
     public void death() {
         GameManager.getManagerFromInstance(EnemyManager.class).removeSpecialEnemy(this);
+        PlayerPeon.credit(100);
     }
 
     @Override

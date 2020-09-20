@@ -23,7 +23,7 @@ public class Freeze extends Projectile implements Animatable {
         this.setRowRenderLength(1.0f);
         this.setTexture("explosion");
         this.setObjectName("combatExplosion");
-        freeze = new Animation<TextureRegion>(0.02f,
+        freeze = new Animation<>(0.02f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
     }
 

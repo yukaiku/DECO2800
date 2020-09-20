@@ -3,7 +3,6 @@ package deco2800.thomas.entities.attacks;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.Tickable;
-import deco2800.thomas.entities.Agent.PlayerPeon;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.RenderConstants;
@@ -11,7 +10,6 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.ApplyDamageOnCollisionTask;
 import deco2800.thomas.tasks.movement.DirectProjectileMovementTask;
-import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
@@ -41,9 +39,9 @@ public class Fireball extends Projectile implements Animatable, Tickable{
         super();
         this.setTexture("fireball_right");
         this.setObjectName("combatFireball");
-        explosion = new Animation<TextureRegion>(0.1f,
+        explosion = new Animation<>(0.08f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
-        defaultState = new Animation<TextureRegion>(0.1f,
+        defaultState = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
         currentState = State.DEFAULT;
     }

@@ -1,10 +1,10 @@
-package deco2800.thomas.entities.Agent;
+package deco2800.thomas.entities.agent;
 
 import com.badlogic.gdx.Input;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.combat.skills.FireballSkill;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.tasks.status.StatusEffect;

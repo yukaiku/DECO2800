@@ -1,8 +1,11 @@
 package deco2800.thomas.entities.enemies;
 
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.managers.EnemyManager;
+import deco2800.thomas.managers.GameManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -95,6 +98,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
     @Override
     public void death() {
         GameManager.getManagerFromInstance(EnemyManager.class).removeSpecialEnemy(this);
+        PlayerPeon.credit(8.50f);
     }
 
     @Override
@@ -102,6 +106,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
         if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange)) {
             SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
             currentState = State.ATTACK_MELEE;
+            duration = 12;
             setCombatTask(new MeleeAttackTask(this, origin, 1, 1, 5));
         }
     }
@@ -119,7 +124,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
                 if (getTarget() != null) {
                     if (getTarget().getCol() < this.getCol()) {
                         facingDirection = MovementTask.Direction.LEFT;
-                    } else {
+                    } else if (getTarget().getCol() > this.getCol()) {
                         facingDirection = MovementTask.Direction.RIGHT;
                     }
                 }

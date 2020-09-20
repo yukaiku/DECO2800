@@ -24,9 +24,7 @@ public class TundraDragon extends Dragon {
 
     @Override
     public void elementalAttack() {
-        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange)) {
-            setCombatTask(new IceBreathTask(this, getTarget().getCol(), getTarget().getRow(), 20));
-        }
+        setCombatTask(new IceBreathTask(this, getTarget().getCol(), getTarget().getRow(), 20));
     }
 
     @Override

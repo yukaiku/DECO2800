@@ -2,10 +2,9 @@ package deco2800.thomas.tasks.movement;
 
 import java.util.List;
 
-
-import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.entities.Agent.Peon;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PathFindingService;
 import deco2800.thomas.managers.StatusEffectManager;

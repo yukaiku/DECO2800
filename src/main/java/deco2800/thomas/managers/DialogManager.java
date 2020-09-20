@@ -2,7 +2,7 @@ package deco2800.thomas.managers;
 
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.worlds.AbstractWorld;
 
 import java.util.List;
@@ -13,42 +13,66 @@ public class DialogManager extends TickableManager {
 	private AbstractWorld world;
 	boolean ready;
 	PlayerPeon player; 
-	int wait;
+	
 
+	/**
+	 * Constructs a dialog manager. 
+	 * @param world the game world 
+	 * @param player player
+	 * @param boxes List of AbstractDialogBoxes in this world. 
+	 */
 	public DialogManager(AbstractWorld world,
 			PlayerPeon player,  List<AbstractDialogBox> boxes) {
 		this.world = world;
 		this.player = player;
 		this.boxes = boxes;
-		wait = 0; 
 	}
-	
+
+	/**
+	 * Displays the given dialogBox on Game Screen. 
+	 * @param dialogBox dialogBox to display on Screen.
+	 */
 	public void showDialog(AbstractDialogBox dialogBox) {
 		GameManager.get().getStage().addActor(dialogBox.getBox());
 	}
-	
+
+	/**
+	 * Hides the dialogBox from the Game Screen. 
+	 * @param dialogBox dialogBox to hide from Screen. 
+	 */
 	public void hideDialog(AbstractDialogBox dialogBox) {
 		dialogBox.getBox().remove();
 	}
-	
 
+	/**
+	 * Returns whether the DialogManager is ready to show AbstractDialogBoxes.
+	 */
+	public boolean getReady(){
+		return ready; 
+	}
+	/**
+	 * Manages actions happening as time passes in game world. 
+	 * @param i Current game Tick 
+	 */
 	@Override
 	public void onTick(long i) {
 		if (GameManager.get().getStage() != null && !ready) {
 			ready = true;
 		}
 		if (ready) {
+			int numShowing = 0;
 			for (AbstractDialogBox a: boxes) {
-				if (a.isShowing()){
+				if (a.isShowing() && numShowing < 1){
 					showDialog(a);
+					numShowing++;
 				}
 				if (a.isShowing() && a.getVisibleTime() >= 750) {
 					a.setShowing(false);
 					hideDialog(a);
 				}
-				
 				if (a.getRemove()){
 					world.removeEntity((AbstractEntity) a.getEntity());
+					a.setRemove(false);
 					hideDialog(a);
 				}
 			}

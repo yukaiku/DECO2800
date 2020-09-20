@@ -1,11 +1,14 @@
 package deco2800.thomas.worlds.swamp;
 
 import deco2800.thomas.entities.*;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.NPC.MerchantNPC;
-import deco2800.thomas.entities.NPC.NonPlayablePeon;
-import deco2800.thomas.entities.NPC.SwampNPC;
-import deco2800.thomas.entities.NPC.TutorialNPC;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.npc.NonPlayablePeon;
+import deco2800.thomas.entities.npc.SwampNPC;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.npc.MerchantNPC;
+import deco2800.thomas.entities.npc.NonPlayablePeon;
+import deco2800.thomas.entities.npc.SwampNPC;
+import deco2800.thomas.entities.npc.TutorialNPC;
 import deco2800.thomas.entities.enemies.*;
 import deco2800.thomas.entities.enemies.dragons.DesertDragon;
 import deco2800.thomas.entities.environment.swamp.SwampDeadTree;
@@ -19,9 +22,6 @@ import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
-import deco2800.thomas.entities.environment.swamp.*;
-import deco2800.thomas.entities.enemies.Dragon;
-import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.enemies.dragons.SwampDragon;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
@@ -40,6 +40,8 @@ public class SwampWorld extends AbstractWorld {
     private final Logger logger = LoggerFactory.getLogger(TestWorld.class);
     public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/swamp/swamp-game-map.json";
 
+    private List<AbstractDialogBox> allSwampDialogues;
+
     public SwampWorld() {
         this(AbstractWorld.DEFAULT_WIDTH, AbstractWorld.DEFAULT_HEIGHT);
     }
@@ -49,10 +51,14 @@ public class SwampWorld extends AbstractWorld {
         this.generateTileMap();
         this.generateTileIndices();
         this.generateStaticEntities();
+        this.allSwampDialogues = new ArrayList<>();
 
         // Create the player entity
         this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
+
+        //Creates Items
+        this.generateItemEntities();
 
         // Provide available enemies to the EnemyManager
         Orc swampOrc = new Orc(Variation.SWAMP, 50, 0.09f);
@@ -64,13 +70,19 @@ public class SwampWorld extends AbstractWorld {
         //Creates swamp NPCs
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
         List<Item> swampMerchantShop = new ArrayList<>();
-        npnSpawns.add(new SwampNPC("SwampQuestNPC1", new SquareVector(-21, 5),"swamp_npc1"));
-        npnSpawns.add(new SwampNPC("SwampQuestNPC2", new SquareVector(-22, 9),"swamp_npc2"));
+        SwampNPC swampNpc1 = new SwampNPC("SwampQuestNPC1", new SquareVector(-21, 5),"swamp_npc1");
+        SwampNPC swampNpc2 = new SwampNPC("SwampQuestNPC2", new SquareVector(-22, 9),"swamp_npc2");
+        npnSpawns.add(swampNpc1);
+        npnSpawns.add(swampNpc2);
+        this.allSwampDialogues.add(swampNpc1.getBox());
+        this.allSwampDialogues.add(swampNpc2.getBox());
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
         GameManager.get().addManager(npcManager);
-        
-        //Creates Items
-        this.generateItemEntities();
+
+        //Creates dialogue manager
+        DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
+                this.allSwampDialogues);
+        GameManager.get().addManager(dialog);
     }
 
     @Override
@@ -200,17 +212,17 @@ public class SwampWorld extends AbstractWorld {
     private void generateItemEntities(){
         final int NUM_POTIONS = 6;
         final int NUM_SHIELDS = 4;
-        final int NUM_CHESTS = 3; 
+        final int NUM_CHESTS = 3;
 
-        ArrayList<AbstractDialogBox> items = new ArrayList<>();
-        
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            HealthPotion potion = new HealthPotion(tile,false,
-                    (PlayerPeon) getPlayerEntity(),"swamp");
-            entities.add(potion);
-            items.add(potion.getDisplay());
+
+                HealthPotion potion = new HealthPotion(tile, false,
+                        (PlayerPeon) getPlayerEntity(), "swamp");
+                entities.add(potion);
+                this.allSwampDialogues.add(potion.getDisplay());
+
         }
 
         for (int i = 0; i < NUM_SHIELDS; i++) {
@@ -219,7 +231,7 @@ public class SwampWorld extends AbstractWorld {
             Shield shield = new Shield(tile, false,
                     (PlayerPeon) getPlayerEntity(),"swamp");
             entities.add(shield);
-            items.add(shield.getDisplay());
+            this.allSwampDialogues.add(shield.getDisplay());
         }
 
         for (int i = 0; i < NUM_CHESTS; i++) {
@@ -228,12 +240,8 @@ public class SwampWorld extends AbstractWorld {
             Treasure chest = new Treasure(tile, false,
                     (PlayerPeon) getPlayerEntity(),"swamp");
             entities.add(chest);
-            items.add(chest.getDisplay());
+            this.allSwampDialogues.add(chest.getDisplay());
         }
-        
-        DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
-                items);
-        GameManager.get().addManager(dialog);
     }
 
     @Override

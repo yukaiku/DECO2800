@@ -1,8 +1,8 @@
 package deco2800.thomas.tasks.status;
 
+import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.combat.DamageType;
-import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.entities.Agent.Peon;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.HealthTracker;
 
 /**

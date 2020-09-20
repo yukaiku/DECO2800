@@ -1,8 +1,14 @@
 package deco2800.thomas.entities.enemies;
 
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.util.SquareVector;
+
+import deco2800.thomas.entities.enemies.EnemyPeon;
+import deco2800.thomas.entities.enemies.Goblin;
+import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.combat.DamageType;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.util.SquareVector;
 import org.junit.Test;
 

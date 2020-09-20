@@ -2,10 +2,7 @@ package deco2800.thomas;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.EntityCompare;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import com.badlogic.gdx.graphics.Texture;
-import deco2800.thomas.entities.*;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
@@ -16,7 +13,6 @@ import deco2800.thomas.worlds.Tile;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.lwjgl.Sys;
 import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -33,7 +29,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
 
 
 @RunWith(PowerMockRunner.class)

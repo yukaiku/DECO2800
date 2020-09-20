@@ -1,8 +1,8 @@
 package deco2800.thomas.entities.items;
 
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.ItemBox;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.RenderConstants;
-import deco2800.thomas.entities.OpenBox;
 import deco2800.thomas.worlds.Tile;
 
 public class Treasure extends Item{
@@ -13,6 +13,8 @@ public class Treasure extends Item{
 		super("Treasure", 0, tile, RenderConstants.ITEM_RENDER, "treasure_box",
 				obstructed, player);
 		this.setObjectName(ENTITY_ID_STRING);
-		super.display = new OpenBox(this, "treasure", styleType);
+		
+		super.display = new ItemBox(this, "treasure", "0", "Treasure Box",
+				styleType);
 	}
 }

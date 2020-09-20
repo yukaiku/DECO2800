@@ -16,8 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Agent.Peon;
-import deco2800.thomas.entities.Agent.QuestTracker;
+import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
@@ -27,6 +27,7 @@ import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.TutorialWorld;
+import deco2800.thomas.worlds.swamp.SwampWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 
 import org.slf4j.Logger;

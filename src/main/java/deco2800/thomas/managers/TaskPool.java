@@ -1,6 +1,6 @@
 package deco2800.thomas.managers;
 
-import deco2800.thomas.entities.Agent.AgentEntity;
+import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.worlds.AbstractWorld;

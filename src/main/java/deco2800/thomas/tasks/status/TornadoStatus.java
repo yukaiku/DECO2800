@@ -1,7 +1,7 @@
 package deco2800.thomas.tasks.status;
 
-import deco2800.thomas.entities.Agent.Peon;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 
 public class TornadoStatus extends StatusEffect {
 

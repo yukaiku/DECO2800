@@ -1,5 +1,6 @@
 package deco2800.thomas.managers;
 
+import deco2800.thomas.BaseGDXTest;
 import org.junit.Test;
 
 import static org.mockito.Mockito.mock;
@@ -12,7 +13,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
 
-public class SoundManagerTest {
+public class SoundManagerTest extends BaseGDXTest {
 
 	/**
 	 * Confirms that the SoundManager attempted to play a sound file.

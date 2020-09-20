@@ -1,14 +1,10 @@
-package deco2800.thomas.entities.NPC;
+package deco2800.thomas.entities.npc;
 
 import deco2800.thomas.entities.AbstractDialogBox;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.Interactable;
 import deco2800.thomas.entities.NPCDialog;
 import deco2800.thomas.util.SquareVector;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class VolcanoNPC extends NonPlayablePeon implements Interactable {
 
@@ -41,7 +37,12 @@ public class VolcanoNPC extends NonPlayablePeon implements Interactable {
     @Override
     public void interact() {
         setIsActive(true);
-        ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("WASD"));
-        tutorialDialogueBox.setShowing(true);
+        if (this.getName() == "VolcanoQuestNPC1" && speechStage >= 1) {
+            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("volcano"));
+            tutorialDialogueBox.setShowing(true);
+        } else if (this.getName() == "VolcanoQuestNPC2" && speechStage >= 1){
+            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("volcano"));
+            tutorialDialogueBox.setShowing(true);
+        }
     }
 }

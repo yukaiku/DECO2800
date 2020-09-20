@@ -1,4 +1,4 @@
-package deco2800.thomas.entities.NPC;
+package deco2800.thomas.entities.npc;
 
 import deco2800.thomas.entities.Interactable;
 import deco2800.thomas.entities.Tradeable;

@@ -1,4 +1,4 @@
-package deco2800.thomas.entities.Agent;
+package deco2800.thomas.entities.agent;
 
 import com.google.gson.annotations.Expose;
 import deco2800.thomas.entities.AbstractEntity;
@@ -32,7 +32,7 @@ public abstract class AgentEntity extends AbstractEntity {
 
 	public void setSpeed(float speed) {
 		this.speed = speed;
-		System.out.println(speed);
+//		System.out.println(speed);
 	}
 
 	public MovementTask.Direction getMovingDirection() {

@@ -1,22 +1,18 @@
-package deco2800.thomas.entities.NPC;
+package deco2800.thomas.entities.npc;
 
 import deco2800.thomas.entities.AbstractDialogBox;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.Interactable;
 import deco2800.thomas.entities.NPCDialog;
 import deco2800.thomas.util.SquareVector;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-public class TundraNPC extends NonPlayablePeon implements Interactable {
+public class SwampNPC extends NonPlayablePeon implements Interactable {
 
     AbstractDialogBox tutorialDialogueBox;
     public static int speechStage;
     static boolean isActive = false;
 
-    public TundraNPC(String name, SquareVector position, String texture) {
+    public SwampNPC(String name, SquareVector position, String texture) {
         super(name, position, texture);
         this.tutorialDialogueBox = new NPCDialog(this,"Default");
         speechStage = 1;
@@ -41,11 +37,11 @@ public class TundraNPC extends NonPlayablePeon implements Interactable {
     @Override
     public void interact() {
         setIsActive(true);
-        if (this.getName() == "TundraQuestNPC1" && speechStage >= 1) {
-            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("tundra"));
+        if (this.getName() == "SwampQuestNPC1" && speechStage >= 1) {
+            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("swamp"));
             tutorialDialogueBox.setShowing(true);
-        } else if (this.getName() == "TundraQuestNPC2" && speechStage >= 1){
-            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("tundra"));
+        } else if (this.getName() == "SwampQuestNPC2" && speechStage >= 1){
+            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("swamp"));
             tutorialDialogueBox.setShowing(true);
         }
     }

@@ -1,9 +1,13 @@
 package deco2800.thomas.entities.enemies;
 
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.managers.EnemyManager;
+import deco2800.thomas.managers.GameManager;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import deco2800.thomas.entities.Agent.AgentEntity;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -114,6 +118,7 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
     public void death() {
         GameManager.getManagerFromInstance(EnemyManager.class).
                 removeWildEnemy(this);
+        PlayerPeon.credit(40);
     }
 
     @Override
@@ -138,7 +143,7 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
             if (super.getTarget() != null) {
                 if (getTarget().getCol() < this.getCol()) {
                     facingDirection = MovementTask.Direction.LEFT;
-                } else {
+                } else if (getTarget().getCol() > this.getCol()) {
                     facingDirection = MovementTask.Direction.RIGHT;
                 }
                 setMovementTask(new MovementTask(this, super.getTarget().

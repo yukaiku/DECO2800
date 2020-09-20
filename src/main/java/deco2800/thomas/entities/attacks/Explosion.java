@@ -26,7 +26,7 @@ public class Explosion extends CombatEntity implements Animatable {
         super();
         this.setTexture("explosion");
         this.setObjectName("combatExplosion");
-        explosion = new Animation<TextureRegion>(0.1f,
+        explosion = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
     }
 

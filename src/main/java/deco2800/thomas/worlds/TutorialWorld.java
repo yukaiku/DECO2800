@@ -2,14 +2,17 @@ package deco2800.thomas.worlds;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import deco2800.thomas.GameScreen;
 import deco2800.thomas.entities.AbstractDialogBox;
-import deco2800.thomas.entities.Agent.AgentEntity;
-import deco2800.thomas.entities.Agent.PlayerPeon;
-import deco2800.thomas.entities.NPC.NonPlayablePeon;
-import deco2800.thomas.entities.NPC.TutorialNPC;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.environment.tutorial.Barrel;
+import deco2800.thomas.entities.environment.tutorial.Portal;
+import deco2800.thomas.entities.environment.tutorial.Stash;
+import deco2800.thomas.entities.environment.tutorial.Target;
+import deco2800.thomas.entities.npc.NonPlayablePeon;
+import deco2800.thomas.entities.npc.TutorialNPC;
 import deco2800.thomas.entities.enemies.Dummy;
 import deco2800.thomas.entities.environment.tutorial.*;
 import deco2800.thomas.entities.enemies.Orc;
@@ -17,7 +20,6 @@ import deco2800.thomas.entities.environment.*;
 import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.entities.items.Shield;
-//import deco2800.thomas.entities.items.TestItem;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.DialogManager;
 import deco2800.thomas.managers.EnemyManager;
@@ -26,9 +28,6 @@ import deco2800.thomas.managers.NonPlayablePeonManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.managers.GameManager;
-import org.lwjgl.Sys;
-
-import java.util.Random;
 
 public class TutorialWorld extends AbstractWorld{
 
@@ -69,16 +68,17 @@ public class TutorialWorld extends AbstractWorld{
         }
 
         PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f, 50);
-//        addEntity(player);
+            addEntity(player);
         this.setPlayerEntity(player);
         addEntity(this.getPlayerEntity());
 
         // Create an enemy manager without wild enemy spawning.
         EnemyManager enemyManager = new EnemyManager(this);
-        // Add dummy (special enemy) to the world
+
         Dummy dummy = new Dummy(100, 0);
         // Spawn a dummy
         enemyManager.spawnSpecialEnemy(dummy, 5, 0);
+
         GameManager.get().addManager(enemyManager);
 
         // Add NPC
@@ -92,7 +92,7 @@ public class TutorialWorld extends AbstractWorld{
         GameManager.get().addManager(npcManager);
 
         //Dialog manager
-        DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
+        dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
                 this.allDialogBoxes);
         GameManager.get().addManager(dialog);
     }
@@ -141,9 +141,11 @@ public class TutorialWorld extends AbstractWorld{
         t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW);
         entities.add(new Portal(t, false));
 
-        // add potion and shield.
 
+        // add potion and shield. 
+        
 
+/*
         Tile potion;
         potion = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
                 Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
@@ -167,6 +169,8 @@ public class TutorialWorld extends AbstractWorld{
                 (PlayerPeon) getPlayerEntity(),"tutorial");
         entities.add(itemTreasure);
         this.allDialogBoxes.add(itemTreasure.getDisplay());
+
+         */
 
         // Add message on how to leave tutorial (temporary)
         t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW + 2);
@@ -198,6 +202,8 @@ public class TutorialWorld extends AbstractWorld{
 
 
             GameManager.get().setNextWorld();
+            // Keep $$ on world change.
+            PlayerPeon.credit(((PlayerPeon) player).getWallet());
         }
     }
 }

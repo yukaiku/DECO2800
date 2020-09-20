@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
-import deco2800.thomas.entities.Agent.PlayerPeon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.worlds.AbstractWorld;

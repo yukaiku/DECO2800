@@ -1,5 +1,6 @@
 package deco2800.thomas.entities.enemies.dragons;
 
+import deco2800.thomas.entities.enemies.Dragon;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
 import deco2800.thomas.entities.enemies.Dragon;
