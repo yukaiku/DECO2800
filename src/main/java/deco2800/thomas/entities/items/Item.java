@@ -8,6 +8,8 @@ import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
+
+import javax.sound.midi.SysexMessage;
 import java.util.Random;
 import java.util.List;
 import java.util.Map;
@@ -72,8 +74,10 @@ public class Item extends StaticEntity implements TouchDownObserver {
     }
 
     public void chargePlayer() {
+        System.out.println("-- Charge player");
         if (PlayerPeon.checkBalance() > 0) {
-            player.takeMoney(goldValue);
+            System.out.println(PlayerPeon.checkBalance());
+            PlayerPeon.debit(goldValue);
         }
     }
     
