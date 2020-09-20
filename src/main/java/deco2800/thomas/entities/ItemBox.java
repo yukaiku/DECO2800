@@ -108,9 +108,6 @@ public class ItemBox extends AbstractDialogBox {
 		public void changed(ChangeEvent event, Actor actor) {
 			if (PlayerPeon.checkBalance() > 0 || item.getClass() == Treasure.class ) {
 				System.out.print(ItemBox.super.getEntity());
-				if (ItemBox.super.getEntity() == null){
-					System.out.print("item null");
-				}
 				ItemBox.super.setShowing(false);
 				ItemBox.super.setRemove(true);
 				box.remove();

@@ -33,8 +33,6 @@ public class AbstractDialogBoxTest extends BaseGDXTest {
 		AbstractDialogBox tester = new AbstractDialogBox(item,"Health Potion"
 				,"tutorial");
 		Assert.assertEquals(0, tester.getVisibleTime());
-		tester.setVisibleTime(10);
-		Assert.assertEquals(11,tester.getVisibleTime());
 	}
 	
 	@Test 
