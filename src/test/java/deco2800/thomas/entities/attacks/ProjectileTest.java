@@ -1,6 +1,7 @@
-package deco2800.thomas.entities;
+package deco2800.thomas.entities.attacks;
 
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.Projectile;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.AbstractTask;
