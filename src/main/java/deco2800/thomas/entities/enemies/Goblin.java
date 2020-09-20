@@ -128,26 +128,9 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
             }
             tickFollowing = 0;
         }
-        // execute tasks
-        if (getMovementTask() != null && getMovementTask().isAlive()) {
-            getMovementTask().onTick(i);
-            if (getMovementTask().isComplete()) {
-                setMovementTask(null);
-            }
-        }
-        if (getCombatTask() != null && getCombatTask().isAlive()) {
-            currentState = State.ATTACK_MELEE;
-            duration = 12;
-            getCombatTask().onTick(i);
-            if (getCombatTask().isComplete()) {
-                setCombatTask(null);
-            }
-        }
 
-        // isAttacked animation
-        if (isAttacked && --isAttackedCoolDown < 0) {
-            isAttacked = false;
-        }
+        // Update tasks and effects
+        super.onTick(i);
     }
 
     @Override

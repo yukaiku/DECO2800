@@ -119,24 +119,9 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
             }
             tickFollowing = 0;
         }
-        // execute tasks
-        if (getMovementTask() != null && getMovementTask().isAlive()) {
-            getMovementTask().onTick(i);
-            if (getMovementTask().isComplete()) {
-                setMovementTask(null);
-            }
-        }
-        if (getCombatTask() != null && getCombatTask().isAlive()) {
-            getCombatTask().onTick(i);
-            if (getCombatTask().isComplete()) {
-                setCombatTask(null);
-            }
-        }
 
-        // isAttacked animation
-        if (isAttacked && --isAttackedCoolDown < 0) {
-            isAttacked = false;
-        }
+        // Update tasks and effects
+        super.onTick(i);
     }
 
     /**
