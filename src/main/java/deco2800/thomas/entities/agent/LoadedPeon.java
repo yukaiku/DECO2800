@@ -18,21 +18,21 @@ public class LoadedPeon extends Peon {
     public static float checkBalance() {
         PlayerPeon player = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
         if (!player.isDead()) {
-            player.takeMoney(player.getWallet());
+            return player.getWallet();
         }
         return 0f;
     }
 
     public static void debit(float amount) {
         PlayerPeon player = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
-        if (!player.isDead()) {
+        if (!player.isDead() && amount > 0) {
             player.takeMoney(amount);
         }
     }
 
     public static void credit(float amount) {
         PlayerPeon player = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
-        if (!player.isDead()) {
+        if (!player.isDead() && amount > 0) {
             player.addMoney(amount);
         }
     }
