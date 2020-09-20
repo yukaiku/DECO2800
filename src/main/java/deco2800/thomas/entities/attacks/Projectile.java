@@ -59,12 +59,20 @@ public class Projectile extends CombatEntity {
     }
 
     /**
-     * Returns the direction the projectile is moving in degrees.
+     * Returns the direction the projectile is facing in degrees.
      * Note: 0 degrees = towards the right.
      * @return Direction of projectile.
      */
     public float getDirection() {
         return direction;
+    }
+
+    /**
+     * Sets the direction the projectile is facing. Will be overwritten by movement.
+     * @param direction Direction to face
+     */
+    public void setDirection(float direction) {
+        this.direction = direction;
     }
 
     /**

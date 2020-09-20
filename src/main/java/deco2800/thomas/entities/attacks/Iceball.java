@@ -38,13 +38,13 @@ public class Iceball extends Projectile implements Animatable {
     public Iceball() {
         super();
         this.setTexture("fireball_right");
-        this.setObjectName("combatStingProjectile");
+        this.setObjectName("combatIceballProjectile");
         animation = new Animation<TextureRegion>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballDefault"));
         explosion = new Animation<TextureRegion>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballExplosion"));
         defaultState = new Animation<TextureRegion>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballDefault"));
         currentState = Fireball.State.DEFAULT;
     }
 
@@ -60,13 +60,13 @@ public class Iceball extends Projectile implements Animatable {
     public Iceball (float col, float row, int damage, float speed, EntityFaction faction) {
         super(col, row, RenderConstants.PROJECTILE_RENDER, damage, speed, faction);
         this.setTexture("fireball_right");
-        this.setObjectName("combatStingProjectile");
+        this.setObjectName("combatIceballProjectile");
         animation = new Animation<TextureRegion>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballDefault"));
         explosion = new Animation<TextureRegion>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballExplosion"));
         defaultState = new Animation<TextureRegion>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballDefault"));
         currentState = Fireball.State.DEFAULT;
     }
 
@@ -104,8 +104,8 @@ public class Iceball extends Projectile implements Animatable {
     }
 
     /**
-     * Called when the projectile hits an enemy. Applies a damage over time
-     * effect to the enemy.
+     * Called when the projectile hits an enemy. Applies a slow to the enemy,
+     * and does an amount of damage.
      */
     private void applySlow() {
         List<AbstractEntity> collisionEntities = GameManager.get().getWorld().getEntitiesInBounds(this.getBounds());
@@ -115,8 +115,9 @@ public class Iceball extends Projectile implements Animatable {
                     Peon peon = (Peon)e;
                     EntityFaction faction = peon.getFaction();
                     if (faction != EntityFaction.None && faction != this.getFaction()) {
-                        peon.addEffect(new SpeedStatus(peon, 0.3f, 10));
+                        peon.addEffect(new SpeedStatus(peon, 0.3f, 5));
                         peon.applyDamage(this.getDamage(), DamageType.ICE);
+                        this.setDirection(0f); // Ice spikes should always face up.
                     }
                 }
             }

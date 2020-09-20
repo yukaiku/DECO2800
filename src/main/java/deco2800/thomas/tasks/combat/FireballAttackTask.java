@@ -39,7 +39,7 @@ public class FireballAttackTask extends RangedAttackTask {
      */
     @Override
     protected void spawn(float col, float row, float targetCol, float targetRow, int damage, float speed, long lifetime, EntityFaction faction) {
-        Fireball fireball = new PlayerFireball(col, row, damage, speed, faction);
+        Fireball fireball = new Fireball(col, row, damage, speed, faction);
         fireball.setMovementTask(new DirectProjectileMovementTask(fireball,
                 new SquareVector(targetCol, targetRow), lifetime));
         fireball.setCombatTask(new ApplyDamageOnCollisionTask(fireball, lifetime));

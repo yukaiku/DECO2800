@@ -334,6 +334,12 @@ public class TextureManager extends AbstractManager {
 					"resources/combat/explosive_fireball6.png", "resources/combat/explosive_fireball7.png",
 					"resources/combat/explosive_fireball8.png", "resources/combat/explosive_fireball9.png");
 
+			// Iceballs
+			addAnimationFramesCollection("iceballDefault", "resources/combat/iceball_small.png");
+			addAnimationFramesCollection("iceballExplosion", "resources/combat/water_skill1_1.png",
+					"resources/combat/water_skill1_2.png", "resources/combat/water_skill1_3.png",
+					"resources/combat/water_skill1_4.png");
+
 			// enemies
 			addAnimationFramesCollection("dummyIdle", "resources/enemies/dummy.png");
 			addAnimationFramesCollection("goblinDesertIdle", "resources/enemies/goblin_desert.png");
