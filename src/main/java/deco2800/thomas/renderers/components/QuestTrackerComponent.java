@@ -40,7 +40,7 @@ public class QuestTrackerComponent extends OverlayComponent {
             font = new BitmapFont();
             font.getData().setScale(2f);
         }
-        font.draw(batch, "orbs: ", overlayRenderer.getX() + overlayRenderer.getWidth() - 300,
+        font.draw(batch, "Orbs: ", overlayRenderer.getX() + overlayRenderer.getWidth() - 300,
                 overlayRenderer.getY() + overlayRenderer.getHeight() - 20);
         batch.end();
     }

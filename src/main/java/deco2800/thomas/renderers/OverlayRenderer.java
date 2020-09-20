@@ -2,10 +2,7 @@ package deco2800.thomas.renderers;
 
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import deco2800.thomas.renderers.components.DebugComponent;
-import deco2800.thomas.renderers.components.GuidelineComponent;
-import deco2800.thomas.renderers.components.HotbarComponent;
-import deco2800.thomas.renderers.components.QuestTrackerComponent;
+import deco2800.thomas.renderers.components.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +31,7 @@ public class OverlayRenderer implements Renderer {
     public void setUpComponents() {
         this.getComponents().add(new DebugComponent(this));
         this.getComponents().add(new HotbarComponent(this));
+        this.getComponents().add(new CurrencyComponent(this));
         this.getComponents().add(new QuestTrackerComponent(this));
         this.getComponents().add(new GuidelineComponent(this));
     }
