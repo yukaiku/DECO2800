@@ -102,6 +102,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
         if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange)) {
             SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
             currentState = State.ATTACK_MELEE;
+            duration = 12;
             setCombatTask(new MeleeAttackTask(this, origin, 1, 1, 5));
         }
     }

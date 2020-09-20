@@ -24,10 +24,8 @@ public class DesertDragon extends Dragon {
 
     @Override
     public void elementalAttack() {
-        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange)) {
-            setCombatTask(new SandTornadoAttackTask(this, getTarget().getCol(), getTarget().getRow(),
+        setCombatTask(new SandTornadoAttackTask(this, getTarget().getCol(), getTarget().getRow(),
                     10, 0.2f, 100));
-        }
     }
 
     @Override
