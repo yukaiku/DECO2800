@@ -37,7 +37,7 @@ public class TextureManager extends AbstractManager {
 	/**
 	 * A HashMap of all textures with string keys
 	 */
-	private Map<String, Texture> textureMap = new HashMap<>();
+	private final Map<String, Texture> textureMap = new HashMap<>();
 
 	// a hashmap storing all animation frames
 	private final Map<String, Array<TextureRegion>> animationFrames = new HashMap<>();
@@ -327,12 +327,12 @@ public class TextureManager extends AbstractManager {
 					"resources/player/rightmech1_melee1.png", "resources/player/rightmech1_melee2.png",
 					"resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee3.png");  // intended
 			addAnimationFramesCollection("playerRange", "resources/player/rightmech1_move.png");
-
 			addAnimationFramesCollection("playerFireball", "resources/combat/right_skill1_fire1.png",
 					"resources/combat/right_skill1_fire2.png", "resources/combat/right_skill1_fire3.png",
 					"resources/combat/right_skill1_fire4.png", "resources/combat/right_skill1_fire5.png");
 			addAnimationFramesCollection("playerFireballDefault", "resources/combat/right_skill1_fire1.png");
-			addAnimationFramesCollection("player_spin", "resources/player/rightmech1_move.png", "resources/player/leftmech1_move.png");
+			addAnimationFramesCollection("playerSpin", "resources/player/rightmech1_move.png",
+					"resources/player/leftmech1_move.png");
 
 			// fireballs
 			addAnimationFramesCollection("fireballDefault", "resources/combat/fireball_right.png");

@@ -2,23 +2,19 @@ package deco2800.thomas.renderers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import deco2800.thomas.entities.Agent.Peon;
-import deco2800.thomas.entities.Animatable;
-import deco2800.thomas.entities.attacks.*;
-import deco2800.thomas.managers.InputManager;
-import deco2800.thomas.util.SquareVector;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Agent.Peon;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.StaticEntity;
-import deco2800.thomas.entities.attacks.*;
+import deco2800.thomas.entities.attacks.CombatEntity;
+import deco2800.thomas.entities.attacks.Projectile;
+import deco2800.thomas.entities.attacks.StingProjectile;
+import deco2800.thomas.entities.attacks.VolcanoFireball;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.managers.TextureManager;
@@ -28,6 +24,7 @@ import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.Vector2;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

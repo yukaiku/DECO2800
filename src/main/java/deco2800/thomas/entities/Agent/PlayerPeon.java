@@ -227,7 +227,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
                 region = playerMeleeAttack.getKeyFrame(stateTimer);
                 break;
             case INCAPACITATED:
-                region =  playerSpin.getKeyFrame(stateTimer);
+                region = playerSpin.getKeyFrame(stateTimer);
                 break;
             case WALK:
             case IDLE:
