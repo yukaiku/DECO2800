@@ -2,6 +2,7 @@ package deco2800.thomas.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import deco2800.thomas.entities.agent.PlayerPeon;
@@ -13,7 +14,8 @@ public class NPCDialog extends AbstractDialogBox {
 
 	TextButton button;
 	HashMap<String, String> tutorialDialogue = new HashMap<>();
-	
+
+	// constructs NPC DailgoBox.
 	public NPCDialog(Object entity, String string) {
 		super(entity, "PolyHedron: Tutorial", "tutorial");
 		// add first dialogue.
@@ -28,20 +30,19 @@ public class NPCDialog extends AbstractDialogBox {
 		button = new TextButton("Next",skin);
 		box.add(button).expand().center();
 		box.addListener(a);
-		show = false;
 		time = 0;
+		setShowing(false);
 		box.pack();
 		box.setPosition((Gdx.graphics.getWidth() - box.getWidth())/2,(Gdx.graphics.getHeight() - box.getHeight())/2 );
 	}
 
-	public void setString(String str){
+	public void setString(String str) {
 		box.reset();
 		box.add(str).expand().center();
-		button = new TextButton("Next",skin);
+		button = new TextButton("Next", skin);
 		box.add(button).expand().center();
 		box.pack();
 	}
-
 	public String getLine(String str){
 		return this.tutorialDialogue.get(str);
 	}
@@ -56,6 +57,7 @@ public class NPCDialog extends AbstractDialogBox {
 				switch (TutorialNPC.speechStage) {
 					case 1:
 						setString(getLine("WASD"));
+						button.setText("next");
 						break;
 					case 2:
 						setString(getLine("attack"));
@@ -65,14 +67,8 @@ public class NPCDialog extends AbstractDialogBox {
 						break;
 					case 4:
 						setString(getLine("congrats"));
-						box.removeActor(button);
-						button = new TextButton("Close", skin);
-						box.add(button).expand().center();
+						box.removeListener(this);
 						box.addListener(b);
-						box.pack();
-						break;
-					default:
-						setString(getLine("congrats"));
 						break;
 				}
 			}
@@ -81,14 +77,9 @@ public class NPCDialog extends AbstractDialogBox {
 				switch (TundraNPC.speechStage) {
 					case 1:
 						setString(getLine("tundra"));
-						box.removeActor(button);
-						button = new TextButton("Close", skin);
-						box.add(button).expand().center();
+						//button.setText("Close");
+						box.removeListener(this);
 						box.addListener(b);
-						box.pack();
-						break;
-					default:
-						setString(getLine("tundra"));
 						break;
 				}
 			}
@@ -97,14 +88,9 @@ public class NPCDialog extends AbstractDialogBox {
 				switch (VolcanoNPC.speechStage) {
 					case 1:
 						setString(getLine("volcano"));
-						box.removeActor(button);
-						button = new TextButton("Close", skin);
-						box.add(button).expand().center();
+						//button.setText("Close");
+						box.removeListener(this);
 						box.addListener(b);
-						box.pack();
-						break;
-					default:
-						setString(getLine("volcano"));
 						break;
 				}
 			}
@@ -113,14 +99,9 @@ public class NPCDialog extends AbstractDialogBox {
 				switch (SwampNPC.speechStage) {
 					case 1:
 						setString(getLine("swamp"));
-						box.removeActor(button);
-						button = new TextButton("Close", skin);
-						box.add(button).expand().center();
+						//button.setText("Close");
+						box.removeListener(this);
 						box.addListener(b);
-						box.pack();
-						break;
-					default:
-						setString(getLine("swamp"));
 						break;
 				}
 			}
@@ -129,14 +110,9 @@ public class NPCDialog extends AbstractDialogBox {
 				switch (DesertNPC.speechStage) {
 					case 1:
 						setString(getLine("desert"));
-						box.removeActor(button);
-						button = new TextButton("Close", skin);
-						box.add(button).expand().center();
+						//button.setText("Close");
+						box.removeListener(this);
 						box.addListener(b);
-						box.pack();
-						break;
-					default:
-						setString(getLine("desert"));
 						break;
 				}
 			}
@@ -147,6 +123,7 @@ public class NPCDialog extends AbstractDialogBox {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
 			setShowing(false);
+			box.reset();
 			box.remove();
 			DesertNPC.setIsActive(false);
 			TundraNPC.setIsActive(false);

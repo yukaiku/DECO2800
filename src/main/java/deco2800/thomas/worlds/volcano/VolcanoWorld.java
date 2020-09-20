@@ -162,7 +162,9 @@ public class VolcanoWorld extends AbstractWorld {
         final int NUM_POTIONS = 6;
         final int NUM_SHIELDS = 4;
         final int NUM_CHESTS = 3;
-
+        int spawnedPotion = 0;
+        int spawnedShields = 0;
+        int spawnedChests = 0;
         /*
         List<Integer> spawnableItemCoordinateX = new ArrayList<>();
         List<Integer> spawnableItemCoordinateY = new ArrayList<>();
@@ -183,6 +185,22 @@ public class VolcanoWorld extends AbstractWorld {
             }
         }*/
 
+        while (spawnedPotion < NUM_POTIONS){
+            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
+                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            if (!tile.getTextureName().equals("Volcano_5") ||
+                    !tile.getTextureName().equals("Volcano_6") ||
+                    !tile.getTextureName().equals("Volcano_7") ||
+                    !tile.getTextureName().equals("Volcano_8")){
+                HealthPotion potion = new HealthPotion(tile, false,
+                        (PlayerPeon) getPlayerEntity(), "volcano");
+                entities.add(potion);
+                this.allVolcanoDialogues.add(potion.getDisplay());
+                spawnedPotion ++;
+            }
+        }
+
+        /*
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
@@ -191,7 +209,7 @@ public class VolcanoWorld extends AbstractWorld {
             entities.add(potion);
             this.allVolcanoDialogues.add(potion.getDisplay());
 
-        }
+        }*/
 
         /*
         Random generator = new Random();
@@ -202,24 +220,34 @@ public class VolcanoWorld extends AbstractWorld {
          */
 
 
-        for (int i = 0; i < NUM_SHIELDS; i++) {
+        while (spawnedShields < NUM_SHIELDS){
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-
+            if (!tile.getTextureName().equals("Volcano_5") ||
+                    !tile.getTextureName().equals("Volcano_6") ||
+                    !tile.getTextureName().equals("Volcano_7") ||
+                    !tile.getTextureName().equals("Volcano_8")) {
                 Shield shield = new Shield(tile, false,
                         (PlayerPeon) getPlayerEntity(), "volcano");
                 entities.add(shield);
                 this.allVolcanoDialogues.add(shield.getDisplay());
-
+                spawnedShields++;
+            }
         }
         
-        for (int i = 0; i < NUM_CHESTS; i++) {
+        while (spawnedChests < NUM_CHESTS){
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
+            if (!tile.getTextureName().equals("Volcano_5") ||
+                    !tile.getTextureName().equals("Volcano_6") ||
+                    !tile.getTextureName().equals("Volcano_7") ||
+                    !tile.getTextureName().equals("Volcano_8")) {
                 Treasure chest = new Treasure(tile, false,
                         (PlayerPeon) getPlayerEntity(), "volcano");
                 entities.add(chest);
                 this.allVolcanoDialogues.add(chest.getDisplay());
+                spawnedChests++;
+            }
         }
     }
 
