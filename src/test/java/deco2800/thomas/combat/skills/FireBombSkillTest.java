@@ -7,6 +7,7 @@ import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.AbstractTask;
+import deco2800.thomas.tasks.combat.FireBombAttackTask;
 import deco2800.thomas.tasks.combat.FireballAttackTask;
 import deco2800.thomas.worlds.AbstractWorld;
 import org.junit.Before;
@@ -21,11 +22,11 @@ import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 /**
- * Tests the fireball skill.
+ * Tests the fire bomb skill.
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(GameManager.class)
-public class FireballSkillTest extends BaseGDXTest {
+public class FireBombSkillTest extends BaseGDXTest {
     private AbstractEntity mockedEntity;
     private GameManager mockedGameManager;
     private TextureManager textureManager;
@@ -60,10 +61,10 @@ public class FireballSkillTest extends BaseGDXTest {
      */
     @Test
     public void testValidConstructor() {
-        FireballSkill testSkill = new FireballSkill(mockedEntity);
+        FireBombSkill testSkill = new FireBombSkill(mockedEntity);
 
         assertEquals(0, testSkill.getCooldown());
-        assertEquals(20, testSkill.getCooldownMax());
+        assertEquals(160, testSkill.getCooldownMax());
         assertNotNull(testSkill.getTexture());
     }
 
@@ -82,10 +83,10 @@ public class FireballSkillTest extends BaseGDXTest {
     public void testValidCombatTask() {
         try {
             // Create skill, and create new task
-            FireballSkill testSkill = new FireballSkill(mockedEntity);
+            FireBombSkill testSkill = new FireBombSkill(mockedEntity);
             AbstractTask task = testSkill.getNewSkillTask(10f, 10f);
 
-            assertTrue(task instanceof FireballAttackTask);
+            assertTrue(task instanceof FireBombAttackTask);
         } catch (SkillOnCooldownException e) {
             fail("Unexpected SkillOnCooldownException.");
         }
@@ -99,7 +100,7 @@ public class FireballSkillTest extends BaseGDXTest {
     public void testCooldown() {
         try {
             // Create skill, and create new task
-            FireballSkill testSkill = new FireballSkill(mockedEntity);
+            FireBombSkill testSkill = new FireBombSkill(mockedEntity);
             testSkill.getNewSkillTask(10f, 10f);
 
             assertEquals(testSkill.getCooldownMax(), testSkill.getCooldown());
@@ -117,7 +118,7 @@ public class FireballSkillTest extends BaseGDXTest {
     @Test (expected = SkillOnCooldownException.class)
     public void testSkillOnCooldownNewTaskException() throws SkillOnCooldownException {
         // Create skill, and create new task, perform a tick
-        FireballSkill testSkill = new FireballSkill(mockedEntity);
+        FireBombSkill testSkill = new FireBombSkill(mockedEntity);
         testSkill.getNewSkillTask(10f, 10f);
         testSkill.onTick(0);
 

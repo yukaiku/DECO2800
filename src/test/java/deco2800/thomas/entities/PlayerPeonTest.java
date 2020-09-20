@@ -102,7 +102,6 @@ public class PlayerPeonTest extends BaseGDXTest {
     }
 
     /**
-<<<<<<< HEAD
      * Test when added 2 new skills into skill list and press button num2. The
      * active skill should be the new one with index 1
      */

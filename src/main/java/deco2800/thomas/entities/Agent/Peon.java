@@ -110,7 +110,7 @@ public class Peon extends AgentEntity implements Tickable {
 	 * @returns Damage dealt.
 	 */
 	public int applyDamage(int damage, DamageType damageType) {
-		int damageApplied = damage * (int)(ARMOUR_CONSTANT / getArmour());
+		int damageApplied = (int)(damage * (ARMOUR_CONSTANT / getArmour()));
 		if (damageType == vulnerability && vulnerability != DamageType.NONE) {
 			damageApplied *= 1.5f;
 		}
@@ -197,6 +197,22 @@ public class Peon extends AgentEntity implements Tickable {
 	 */
 	public void addEffect(StatusEffect effect) {
 		this.effects.add(effect);
+	}
+
+	/**
+	 * Sets the type of damage this peon is vulnerable to. (Takes +50% damage).
+	 * @param damageType Type of damage from DamageType.
+	 */
+	public void setVulnerability(DamageType damageType) {
+		vulnerability = damageType;
+	}
+
+	/**
+	 * Returns the type of damage this peon is vulnerable to. (Takes +50% damage).
+	 * @return DamageType this peon is vulnerable to.
+	 */
+	public DamageType getVulnerability() {
+		return vulnerability;
 	}
 
 	/**
