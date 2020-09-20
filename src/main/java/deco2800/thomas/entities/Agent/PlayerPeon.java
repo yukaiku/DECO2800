@@ -19,11 +19,13 @@ import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.tasks.movement.MovementTask;
-import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, KeyDownObserver, KeyUpObserver {
     // Animation Testing
@@ -37,6 +39,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
     private final Animation<TextureRegion> playerStand;
     private final Animation<TextureRegion> playerMeleeAttack;
     private final Animation<TextureRegion> playerRangeAttack;
+    private final Animation<TextureRegion> playerSpin;
     private float stateTimer;
     private int duration = 0;
 
@@ -89,6 +92,7 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_range"));
         playerStand = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_stand"));
+        playerSpin = new Animation<>(1f, GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("player_spin"));
     }
 
     /**
@@ -218,7 +222,8 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
                 region = playerMeleeAttack.getKeyFrame(stateTimer);
                 break;
             case INCAPACITATED:
-
+                region =  playerSpin.getKeyFrame(stateTimer);
+                break;
             case IDLE:
             default:
                 region = playerStand.getKeyFrame(stateTimer);
@@ -234,7 +239,9 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
             facingDirection = MovementTask.Direction.RIGHT;
         }
         stateTimer = currentState == previousState ? stateTimer + delta : 0;
+        System.out.println(stateTimer);
         previousState = currentState;
+        System.out.println(currentState);
         return region;
     }
 
@@ -427,5 +434,13 @@ public class PlayerPeon extends Peon implements Animatable, TouchDownObserver, K
         GameManager.getManagerFromInstance(InputManager.class).removeTouchDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).removeKeyDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).removeKeyUpListener(this);
+    }
+
+    public State getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(State currentState) {
+        this.currentState = currentState;
     }
 }

@@ -329,6 +329,7 @@ public class TextureManager extends AbstractManager {
 					"resources/combat/right_skill1_fire2.png", "resources/combat/right_skill1_fire3.png",
 					"resources/combat/right_skill1_fire4.png", "resources/combat/right_skill1_fire5.png");
 			addAnimationFramesCollection("playerFireballDefault", "resources/combat/right_skill1_fire1.png");
+			addAnimationFramesCollection("player_spin", "resources/player/rightmech1_move.png", "resources/player/leftmech1_move.png");
 
 			// fireballs
 			addAnimationFramesCollection("fireballDefault", "resources/combat/fireball_right.png");

@@ -37,7 +37,7 @@ public class DesertDragon extends Dragon {
 
     @Override
     public void breathAttack() {
-        DesertFireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
-                getTarget().getRow(), 10, 0.1f, 60, EntityFaction.Evil);
+        //DesertFireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
+        //        getTarget().getRow(), 10, 0.1f, 60, EntityFaction.Evil);
     }
 }

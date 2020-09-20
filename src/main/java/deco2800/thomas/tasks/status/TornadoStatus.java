@@ -1,6 +1,7 @@
 package deco2800.thomas.tasks.status;
 
 import deco2800.thomas.entities.Agent.Peon;
+import deco2800.thomas.entities.Agent.PlayerPeon;
 
 public class TornadoStatus extends StatusEffect {
 
@@ -65,10 +66,12 @@ public class TornadoStatus extends StatusEffect {
     public void applyEffect() {
         // we skip application if the next tick is not ready
         if (!ticksReady()) return;
+        if (getAffectedEntity() instanceof PlayerPeon) {
+            PlayerPeon peon = (PlayerPeon) getAffectedEntity();
+            peon.setCurrentState(PlayerPeon.State.INCAPACITATED);
+            System.out.println("applied");
+        }
 
-        getAffectedEntity().setCol((float) (getAffectedEntity().getCol() + 0.1));
-
-        System.out.println("applied");
 //        int health = healthTracker.getCurrentHealthValue();
 //        healthTracker.setCurrentHealthValue(health - burnDamage);
 
