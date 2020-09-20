@@ -106,24 +106,15 @@ public class ItemBox extends AbstractDialogBox {
 		 */
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			System.out.print("Before statement\n");
-			System.out.print(LoadedPeon.checkBalance());
-			System.out.print(ItemBox.super.getEntity());
-			System.out.print(ItemBox.super.isShowing());
-			System.out.print(ItemBox.super.getRemove());
-			if (PlayerPeon.checkBalance() < 0 || item.getClass() == Treasure.class ) {
-				System.out.print("After statement\n");
+			if (PlayerPeon.checkBalance() > 0 || item.getClass() == Treasure.class ) {
 				System.out.print(ItemBox.super.getEntity());
 				if (ItemBox.super.getEntity() == null){
 					System.out.print("item null");
 				}
-				System.out.print(ItemBox.super.isShowing());
-				System.out.print(ItemBox.super.getRemove());
 				ItemBox.super.setShowing(false);
 				ItemBox.super.setRemove(true);
 				box.remove();
 				item.chargePlayer();
-				System.out.print("end of statement \n");
 			}
 		}
 	};
