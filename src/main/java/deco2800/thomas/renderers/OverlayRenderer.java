@@ -22,17 +22,20 @@ public class OverlayRenderer implements Renderer {
     private float height;
     private List<OverlayComponent> components;
 
-    /**
-     * In order to render a component we have to add it to
-     * the component list. If we want to remove a component out of
-     * the overlay, we just need to remove it out of the component list
-     */
     public OverlayRenderer() {
         this.components = new ArrayList<>();
-        this.components.add(new DebugComponent(this));
-        this.components.add(new HotbarComponent(this));
-        this.components.add(new QuestTrackerComponent(this));
-        this.components.add(new GuidelineComponent(this));
+    }
+
+    /**
+     * In order to render a component we have to add it to the component list. The method
+     * will add prepared components into the component list. If we want to remove a component
+     * out of the overlay, we just need to remove it out of the component list
+     */
+    public void setUpComponents() {
+        this.getComponents().add(new DebugComponent(this));
+        this.getComponents().add(new HotbarComponent(this));
+        this.getComponents().add(new QuestTrackerComponent(this));
+        this.getComponents().add(new GuidelineComponent(this));
     }
 
     @Override
@@ -42,7 +45,7 @@ public class OverlayRenderer implements Renderer {
         this.setWidth(camera.viewportWidth);
         this.setHeight(camera.viewportHeight);
 
-        for (OverlayComponent component : this.components) {
+        for (OverlayComponent component : this.getComponents()) {
             component.render(batch);
         }
     }
@@ -77,5 +80,9 @@ public class OverlayRenderer implements Renderer {
 
     public void setHeight(float height) {
         this.height = height;
+    }
+
+    public List<OverlayComponent> getComponents() {
+        return this.components;
     }
 }

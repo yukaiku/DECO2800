@@ -209,6 +209,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		stage.addActor(playAgainButton);
 
 		overlayRenderer = new OverlayRenderer();
+		overlayRenderer.setUpComponents();
 	}
 
 	/**

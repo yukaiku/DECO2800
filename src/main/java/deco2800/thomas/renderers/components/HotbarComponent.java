@@ -32,7 +32,6 @@ public class HotbarComponent extends OverlayComponent {
         wizardIcon = new Sprite(GameManager.get().getManager(TextureManager.class).getTexture("wizard_icon"));
         knightIcon = new Sprite(GameManager.get().getManager(TextureManager.class).getTexture("knight_icon"));
         activeSelector = new Sprite(GameManager.get().getManager(TextureManager.class).getTexture("active_selector"));
-        playerEntity = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
         coolDownBox = new ShapeRenderer();
     }
 
@@ -47,6 +46,8 @@ public class HotbarComponent extends OverlayComponent {
      */
     @Override
     public void render(SpriteBatch batch) {
+        this.playerEntity = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
+
         batch.begin();
 
         wizardIcon.setPosition(overlayRenderer.getX() + 0.15f * overlayRenderer.getWidth(), overlayRenderer.getY());
