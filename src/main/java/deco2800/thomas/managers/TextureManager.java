@@ -294,9 +294,13 @@ public class TextureManager extends AbstractManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		// Attacks
 		textureMap.put("fireball_right", new Texture("resources/combat/fireball_right.png"));
-		textureMap.put("fireball_left", new Texture("resources/combat/fireball_left.png"));
+		textureMap.put("fireballIcon", new Texture("resources/combat/fireball_right.png"));
+		textureMap.put("stingIcon", new Texture("resources/combat/fireball_left.png"));
+		textureMap.put("iceballIcon", new Texture("resources/combat/iceball_small.png"));
+		textureMap.put("explosionIcon", new Texture("resources/combat/explosive_fireball3.png"));
 	}
 
 	/* ------------------------------------------------------------------------

@@ -48,7 +48,7 @@ public class IceballSkill implements Skill, Tickable {
 
     @Override
     public String getTexture() {
-        return "fireball_right";
+        return "iceballIcon";
     }
 
     @Override

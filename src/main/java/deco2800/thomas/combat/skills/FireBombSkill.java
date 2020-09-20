@@ -81,7 +81,7 @@ public class FireBombSkill implements Skill, Tickable {
      */
     @Override
     public String getTexture() {
-        return "fireball_right";
+        return "explosionIcon";
     }
 
     /**

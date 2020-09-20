@@ -77,7 +77,7 @@ public class ScorpionStingSkill implements Skill, Tickable {
      */
     @Override
     public String getTexture() {
-        return "fireball_right";
+        return "stingIcon";
     }
 
     /**
