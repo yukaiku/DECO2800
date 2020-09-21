@@ -20,9 +20,9 @@ public class FireBombSkill implements Skill, Tickable {
     /* Tick period of explosion */
     private static final int TICK_PERIOD = 20;
     /* Height of explosion */
-    private final int height = 3;
+    private static final int HEIGHT = 3;
     /* Width of explosion */
-    private final int width = 3;
+    private static final int WIDTH = 3;
 
     /* Cooldown tracker */
     private int cooldown = 0;
@@ -94,7 +94,7 @@ public class FireBombSkill implements Skill, Tickable {
     @Override
     public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
         if (cooldown <= 0) {
-            AbstractTask task = new FireBombAttackTask(entity, DAMAGE, LIFETIME, TICK_PERIOD, height, width);
+            AbstractTask task = new FireBombAttackTask(entity, DAMAGE, LIFETIME, TICK_PERIOD, HEIGHT, WIDTH);
             cooldown = MAX_COOLDOWN;
             return task;
         } else {
