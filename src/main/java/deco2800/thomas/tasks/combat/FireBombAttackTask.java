@@ -18,17 +18,17 @@ import java.util.List;
  */
 public class FireBombAttackTask extends AbstractTask {
     /* Lifetime of the effect */
-    private long lifetime;
+    private final long lifetime;
     /* Tick period of effect */
-    private long tickPeriod;
+    private final long tickPeriod;
     /* Damage to apply */
-    private int damage;
+    private final int damage;
     /* Task status */
     private boolean complete = false;
     /* Explosion height */
-    private int height;
+    private final int height;
     /* Explosion width */
-    private int width;
+    private final int width;
 
     /**
      * Creates an instance of the ExplosionTask which executes the FireBomb attack and spawns
@@ -66,7 +66,7 @@ public class FireBombAttackTask extends AbstractTask {
      */
     private void applyInitialDamage() {
         SquareVector origin = new SquareVector(entity.getCol() - 1, entity.getRow() - 1);
-        float dimensions[] = WorldUtil.colRowToWorldCords(3, 3);
+        float[] dimensions = WorldUtil.colRowToWorldCords(3, 3);
         BoundingBox bounds = new BoundingBox(origin, dimensions[0], dimensions[1]);
         List<AbstractEntity> collidingEntities = GameManager.get().getWorld().getEntitiesInBounds(bounds);
         if (collidingEntities.size() > 1) { // Own bounding box should always be present
