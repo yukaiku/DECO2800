@@ -21,11 +21,10 @@ public class Peon extends AgentEntity implements Tickable {
 	private CopyOnWriteArrayList<StatusEffect> effects;
 	/* Combat stats for this entity */
 	private static final float armourConstant = 1000f; // Changes effectiveness of armour values, higher = less effective
-	private HealthTracker health;
+	private final HealthTracker health;
 	private float armour; // Reduces incoming damage
 	private float damage; // Base outgoing damage value
 	private DamageType vulnerability; // Peon takes extra damage from this damage type
-
 
 	/* Combat status of this entity */
 	protected boolean isAttacked = false;
@@ -182,7 +181,7 @@ public class Peon extends AgentEntity implements Tickable {
 	 * @return Returns true if removed, returns false if effect is not in the list
 	 */
 	public boolean removeEffect(StatusEffect effect) {
-		return true;
+		return this.effects.remove(effect);
 	}
 
 	/**

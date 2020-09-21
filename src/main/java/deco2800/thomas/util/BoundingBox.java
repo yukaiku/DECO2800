@@ -94,9 +94,9 @@ public class BoundingBox {
      * @return True if boxes overlap, false otherwise.
      */
     public boolean overlaps(BoundingBox bounds) {
-        return this.getLeft() > bounds.getRight() ||
+        return !(this.getLeft() > bounds.getRight() ||
                 this.getBottom() > bounds.getTop() ||
                 this.getRight() < bounds.getLeft() ||
-                this.getTop() < bounds.getBottom();
+                this.getTop() < bounds.getBottom());
     }
 }
