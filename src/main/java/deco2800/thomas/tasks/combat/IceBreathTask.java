@@ -7,9 +7,9 @@ import deco2800.thomas.tasks.AbstractTask;
 
 public class IceBreathTask extends AbstractTask {
     /* How many ticks between spawning the next row of ice */
-    private static final int ticksBetweenSpawn = 7;
+    private static final int TICKS_BETWEEN_SPAWN = 7;
     /* Maximum length of ice breath. */
-    private static final int maxLength = 11;
+    private static final int MAX_LENGTH = 11;
     /* Initial width of ice */
     private int width = 1;
     private int tickCounter = 0;
@@ -96,7 +96,7 @@ public class IceBreathTask extends AbstractTask {
     @Override
     public void onTick(long ticks) {
         if (--tickCounter <= 0) {
-            tickCounter = ticksBetweenSpawn;
+            tickCounter = TICKS_BETWEEN_SPAWN;
 
             // Increase width every 3 cells
             if (++length % 3 == 0) {
@@ -118,7 +118,7 @@ public class IceBreathTask extends AbstractTask {
             }
 
             // Complete task when max length is reached.
-            if (length >= maxLength) {
+            if (length >= MAX_LENGTH) {
                 complete = true;
             }
         }

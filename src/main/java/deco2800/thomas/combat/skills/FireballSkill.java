@@ -12,13 +12,13 @@ import deco2800.thomas.tasks.combat.FireballAttackTask;
  */
 public class FireballSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private static final int maxCooldown = 20;
+    private static final int MAX_COOLDOWN = 20;
     /* Damage to apply from fireball */
-    private static final int damage = 10;
+    private static final int DAMAGE = 10;
     /* Speed of fireball */
-    private static final float speed = 0.5f;
+    private static final float SPEED = 0.5f;
     /* Lifetime of fireball */
-    private static final int lifetime = 60;
+    private static final int LIFETIME = 60;
 
     /* Cooldown tracker */
     private int cooldown = 0;
@@ -65,7 +65,7 @@ public class FireballSkill implements Skill, Tickable {
      */
     @Override
     public int getCooldownMax() {
-        return maxCooldown;
+        return MAX_COOLDOWN;
     }
 
     /**
@@ -90,8 +90,8 @@ public class FireballSkill implements Skill, Tickable {
     @Override
     public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
         if (cooldown <= 0) {
-            AbstractTask task = new FireballAttackTask(entity, targetX, targetY, damage, speed, lifetime);
-            cooldown = maxCooldown;
+            AbstractTask task = new FireballAttackTask(entity, targetX, targetY, DAMAGE, SPEED, LIFETIME);
+            cooldown = MAX_COOLDOWN;
             return task;
         } else {
             throw new SkillOnCooldownException();

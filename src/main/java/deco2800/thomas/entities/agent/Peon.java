@@ -20,7 +20,7 @@ public class Peon extends AgentEntity implements Tickable {
 	/* Status effects on this peon */
 	private CopyOnWriteArrayList<StatusEffect> effects;
 	/* Combat stats for this entity */
-	private static final float armourConstant = 1000f; // Changes effectiveness of armour values, higher = less effective
+	private static final float ARMOUR_CONSTANT = 1000f; // Changes effectiveness of armour values, higher = less effective
 	private final HealthTracker health;
 	private float armour; // Reduces incoming damage
 	private float damage; // Base outgoing damage value
@@ -42,7 +42,7 @@ public class Peon extends AgentEntity implements Tickable {
 		this.save = true;
 		this.effects = new CopyOnWriteArrayList<>();
 		this.damage = 10;
-		this.armour = armourConstant; // No damage reduction
+		this.armour = ARMOUR_CONSTANT; // No damage reduction
 		this.vulnerability = DamageType.NONE;
 		this.health = new HealthTracker(100);
 	}
@@ -55,7 +55,7 @@ public class Peon extends AgentEntity implements Tickable {
 		this.setTexture("spacman_ded");
 		this.effects = new CopyOnWriteArrayList<>();
 		this.damage = 10;
-		this.armour = armourConstant; // No damage reduction
+		this.armour = ARMOUR_CONSTANT; // No damage reduction
 		this.vulnerability = DamageType.NONE;
 		this.health = new HealthTracker(health);
 	}
@@ -106,7 +106,7 @@ public class Peon extends AgentEntity implements Tickable {
 	 * @returns Damage dealt.
 	 */
 	public int applyDamage(int damage, DamageType damageType) {
-		int damageApplied = (int)(damage * (armourConstant / getArmour()));
+		int damageApplied = (int)(damage * (ARMOUR_CONSTANT / getArmour()));
 		if (damageType == vulnerability && vulnerability != DamageType.NONE) {
 			damageApplied *= 1.5f;
 		}

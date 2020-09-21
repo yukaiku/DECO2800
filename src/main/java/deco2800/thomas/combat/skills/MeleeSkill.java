@@ -13,9 +13,9 @@ import deco2800.thomas.util.SquareVector;
  */
 public class MeleeSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private static final int maxCooldown = 10;
+    private static final int MAX_COOLDOWN = 10;
     /* Damage to apply from attack */
-    private static final int damage = 10;
+    private static final int DAMAGE = 10;
 
     /* Cooldown tracker */
     private int cooldown = 0;
@@ -62,7 +62,7 @@ public class MeleeSkill implements Skill, Tickable {
      */
     @Override
     public int getCooldownMax() {
-        return maxCooldown;
+        return MAX_COOLDOWN;
     }
 
     /**
@@ -93,24 +93,24 @@ public class MeleeSkill implements Skill, Tickable {
             if (angle > -45 && angle < 45) {
                 // Spawn above entity
                 origin = new SquareVector(entity.getCol(), entity.getRow() + 1);
-                task = new MeleeAttackTask(entity, origin, 2, 2, damage);
+                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
 
             } else if (angle >= -135 && angle <= -45) {
                 // Spawn to left of player
                 origin = new SquareVector(entity.getCol() - 1, entity.getRow());
-                task = new MeleeAttackTask(entity, origin, 2, 2, damage);
+                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
 
             } else if (angle < -135 || angle > 135) {
                 // Spawn below player
                 origin = new SquareVector(entity.getCol(), entity.getRow() - 1);
-                task = new MeleeAttackTask(entity, origin, 2, 2, damage);
+                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
 
             } else {
                 // Spawn right of player
                 origin = new SquareVector(entity.getCol() + 1, entity.getRow());
-                task = new MeleeAttackTask(entity, origin, 2, 2, damage);
+                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
             }
-            cooldown = maxCooldown;
+            cooldown = MAX_COOLDOWN;
             return task;
         } else {
             throw new SkillOnCooldownException();

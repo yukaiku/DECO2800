@@ -12,13 +12,13 @@ import deco2800.thomas.tasks.combat.FireBombAttackTask;
  */
 public class FireBombSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private static final int maxCooldown = 160;
+    private static final int MAX_COOLDOWN = 160;
     /* Damage to apply from explosion */
-    private static final int damage = 20;
+    private static final int DAMAGE = 20;
     /* Lifetime of explosion */
-    private static final int lifetime = 60;
+    private static final int LIFETIME = 60;
     /* Tick period of explosion */
-    private static final int tickPeriod = 20;
+    private static final int TICK_PERIOD = 20;
     /* Height of explosion */
     private final int height = 3;
     /* Width of explosion */
@@ -69,7 +69,7 @@ public class FireBombSkill implements Skill, Tickable {
      */
     @Override
     public int getCooldownMax() {
-        return maxCooldown;
+        return MAX_COOLDOWN;
     }
 
     /**
@@ -94,8 +94,8 @@ public class FireBombSkill implements Skill, Tickable {
     @Override
     public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
         if (cooldown <= 0) {
-            AbstractTask task = new FireBombAttackTask(entity, damage, lifetime, tickPeriod, height, width);
-            cooldown = maxCooldown;
+            AbstractTask task = new FireBombAttackTask(entity, DAMAGE, LIFETIME, TICK_PERIOD, height, width);
+            cooldown = MAX_COOLDOWN;
             return task;
         } else {
             throw new SkillOnCooldownException();
