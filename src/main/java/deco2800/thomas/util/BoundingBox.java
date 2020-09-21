@@ -8,8 +8,9 @@ package deco2800.thomas.util;
  * update the position of the bounds.
  */
 public class BoundingBox {
-    private SquareVector bottomLeft;
-    private float width, height;
+    private final SquareVector bottomLeft;
+    private float width;
+    private float height;
 
     /**
      * Creates a new instance of a BoundingBox with the given parameters.
@@ -93,12 +94,9 @@ public class BoundingBox {
      * @return True if boxes overlap, false otherwise.
      */
     public boolean overlaps(BoundingBox bounds) {
-        if (this.getLeft() > bounds.getRight() ||
+        return this.getLeft() > bounds.getRight() ||
                 this.getBottom() > bounds.getTop() ||
                 this.getRight() < bounds.getLeft() ||
-                this.getTop() < bounds.getBottom()) {
-            return false;
-        }
-        return true;
+                this.getTop() < bounds.getBottom();
     }
 }
