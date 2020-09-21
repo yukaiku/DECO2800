@@ -79,7 +79,7 @@ public class MainMenuScreen implements Screen {
 		newGameBtn.addAction(Actions.moveTo(300, 210, 1f, Interpolation.PowOut.pow3Out));
 		stage.addActor(newGameBtn);
 
-		Button exitBtn = new TextButton("EXIT", menuStyle);
+		Button exitBtn = new TextButton("QUIT", menuStyle);
 		exitBtn.setPosition(200, 160);
 		exitBtn.addAction(Actions.moveTo(300, 160, 1.2f, Interpolation.PowOut.pow3Out));
 		stage.addActor(exitBtn);
