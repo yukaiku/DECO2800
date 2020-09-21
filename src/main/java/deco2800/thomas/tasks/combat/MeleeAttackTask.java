@@ -18,14 +18,13 @@ import java.util.List;
  */
 public class MeleeAttackTask extends AbstractTask {
     /* Reference to the current game world */
-    private AbstractWorld world;
+    private final AbstractWorld world;
     /* Bounding box to attack */
-    private BoundingBox bounds;
+    private final BoundingBox bounds;
     /* Damage to apply */
-    private int damage;
+    private final int damage;
 
     // Task state
-    private boolean taskAlive = true;
     private boolean taskComplete = false;
 
     /**
@@ -38,7 +37,7 @@ public class MeleeAttackTask extends AbstractTask {
      */
     public MeleeAttackTask(AbstractEntity entity, SquareVector origin, float width, float height, int damage) {
         super(entity);
-        float dimensions[] = WorldUtil.colRowToWorldCords(width, height);
+        float[] dimensions = WorldUtil.colRowToWorldCords(width, height);
         this.bounds = new BoundingBox(origin, dimensions[0], dimensions[1]);
         this.damage = damage;
         this.world = GameManager.get().getWorld();
@@ -59,7 +58,7 @@ public class MeleeAttackTask extends AbstractTask {
      */
     @Override
     public boolean isAlive() {
-        return taskAlive;
+        return true;
     }
 
     /**
