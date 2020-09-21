@@ -8,7 +8,6 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
-import deco2800.thomas.tasks.combat.FireballAttackTask;
 import deco2800.thomas.worlds.AbstractWorld;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +39,7 @@ public class FireBombSkillTest extends BaseGDXTest {
         mockedEntity = mock(AbstractEntity.class);
         when(mockedEntity.getCol()).thenReturn(0f);
         when(mockedEntity.getRow()).thenReturn(0f);
-        when(mockedEntity.getFaction()).thenReturn(EntityFaction.Ally);
+        when(mockedEntity.getFaction()).thenReturn(EntityFaction.ALLY);
 
         // Mock the game manager
         mockedGameManager = mock(GameManager.class);

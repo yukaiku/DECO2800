@@ -1,7 +1,6 @@
 package deco2800.thomas.tasks.combat;
 
 import deco2800.thomas.BaseGDXTest;
-import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.EntityFaction;
@@ -52,10 +51,10 @@ public class ApplyDamageOnCollisionTaskTest extends BaseGDXTest {
     public void applyingDamageOnCollisionTest() {
         // Mock combat entity and agent entity (so that they're on different factions)
         CombatEntity combatEntity = mock(CombatEntity.class);
-        when(combatEntity.getFaction()).thenReturn(EntityFaction.Evil);
+        when(combatEntity.getFaction()).thenReturn(EntityFaction.EVIL);
         when(combatEntity.getBounds()).thenReturn(new BoundingBox(new SquareVector(0, 0), 10, 10));
         Peon peon = mock(Peon.class);
-        when(peon.getFaction()).thenReturn(EntityFaction.Ally);
+        when(peon.getFaction()).thenReturn(EntityFaction.ALLY);
 
         // Mock abstract world
         AbstractWorld abstractWorld = mock(AbstractWorld.class);

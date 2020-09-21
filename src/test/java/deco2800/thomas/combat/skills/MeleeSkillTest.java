@@ -39,7 +39,7 @@ public class MeleeSkillTest extends BaseGDXTest {
         mockedEntity = mock(AbstractEntity.class);
         when(mockedEntity.getCol()).thenReturn(0f);
         when(mockedEntity.getRow()).thenReturn(0f);
-        when(mockedEntity.getFaction()).thenReturn(EntityFaction.Ally);
+        when(mockedEntity.getFaction()).thenReturn(EntityFaction.ALLY);
 
         // Mock the game manager
         mockedGameManager = mock(GameManager.class);

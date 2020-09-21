@@ -66,7 +66,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         this.setTexture("player_right");
         this.setColRenderLength(1.4f);
         this.setRowRenderLength(1.8f);
-        this.setFaction(EntityFaction.Ally);
+        this.setFaction(EntityFaction.ALLY);
 
         // Subscribe listeners
         GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);

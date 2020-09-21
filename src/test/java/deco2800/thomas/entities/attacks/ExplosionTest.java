@@ -1,13 +1,11 @@
 package deco2800.thomas.entities.attacks;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.RenderConstants;
-import deco2800.thomas.entities.attacks.Projectile;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.AbstractTask;
@@ -35,13 +33,13 @@ public class ExplosionTest extends BaseGDXTest {
      */
     @Test
     public void testValidConstructor() {
-        Explosion explosion = new Explosion(1, 1, 10, EntityFaction.Ally);
+        Explosion explosion = new Explosion(1, 1, 10, EntityFaction.ALLY);
 
         assertEquals(1, explosion.getCol(), 0.001);
         assertEquals(1, explosion.getRow(), 0.001);
         assertEquals(RenderConstants.PROJECTILE_RENDER, explosion.getRenderOrder());
         assertEquals(10, explosion.getDamage());
-        assertEquals(EntityFaction.Ally, explosion.getFaction());
+        assertEquals(EntityFaction.ALLY, explosion.getFaction());
     }
 
     /**
@@ -54,7 +52,7 @@ public class ExplosionTest extends BaseGDXTest {
         when(combatTask.isComplete()).thenReturn(false);
 
         // Create explosion to test on, and set tasks
-        Explosion explosion = new Explosion(0, 0, 10, EntityFaction.Ally);
+        Explosion explosion = new Explosion(0, 0, 10, EntityFaction.ALLY);
         explosion.setCombatTask(combatTask);
 
         // Call on tick, and verify the task was called appropriately
@@ -90,7 +88,7 @@ public class ExplosionTest extends BaseGDXTest {
         when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
 
         // Create explosion to test on, and set tasks
-        Explosion explosion = new Explosion(0, 0, 10, EntityFaction.Ally);
+        Explosion explosion = new Explosion(0, 0, 10, EntityFaction.ALLY);
         explosion.setCombatTask(combatTask);
 
         // Call on tick, then verify that the entity was remove from the world

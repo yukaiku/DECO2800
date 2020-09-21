@@ -5,8 +5,6 @@ import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.agent.Peon;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.entities.Animatable;
-import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 
@@ -34,7 +32,7 @@ public abstract class EnemyPeon extends Peon implements Animatable {
         this.setObjectName("Enemy");
         // We don't need setTexture anymore because all enemies are now animatable
         this.setTexture("enemyDefault");
-        this.setFaction(EntityFaction.Evil);
+        this.setFaction(EntityFaction.EVIL);
         this.target = null;
     }
 

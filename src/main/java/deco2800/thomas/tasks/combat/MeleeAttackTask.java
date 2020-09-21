@@ -2,10 +2,8 @@ package deco2800.thomas.tasks.combat;
 
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.util.BoundingBox;
@@ -75,7 +73,7 @@ public class MeleeAttackTask extends AbstractTask {
         if (collidingEntities.size() > 1) { // Own bounding box should always be present
             for (AbstractEntity e : collidingEntities) {
                 EntityFaction faction = e.getFaction();
-                if (faction != EntityFaction.None && faction != entity.getFaction()) {
+                if (faction != EntityFaction.NONE && faction != entity.getFaction()) {
                     applyDamage(e);
                 }
             }

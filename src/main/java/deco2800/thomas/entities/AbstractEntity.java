@@ -52,7 +52,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	private int entityID = 0;
 
 	/* Faction of entity defaults to none */
-	private EntityFaction faction = EntityFaction.None;
+	private EntityFaction faction = EntityFaction.NONE;
 
 	/**
 	 * Whether an entity should trigger a collision.

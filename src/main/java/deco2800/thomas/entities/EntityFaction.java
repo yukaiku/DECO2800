@@ -5,7 +5,7 @@ package deco2800.thomas.entities;
  * is friend or foe to another.
  */
 public enum EntityFaction {
-    None,       // Default behaviour, such as rocks / buildings
-    Evil,       // Such as orcs etc
-    Ally        // Player allegience
+    NONE,       // Default behaviour, such as rocks / buildings
+    EVIL,       // Such as orcs etc
+    ALLY        // Player allegience
 }

@@ -34,12 +34,12 @@ public class VolcanoDragon extends Dragon {
     @Override
     public void breathAttack() {
         VolcanoFireball.spawn(this.getCol() + 1, this.getRow() + 1, getTarget().getCol(),
-                getTarget().getRow(), 20, 0.15f, 60, EntityFaction.Evil);
+                getTarget().getRow(), 20, 0.15f, 60, EntityFaction.EVIL);
 
         VolcanoFireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
-                getTarget().getRow(), 20, 0.15f, 60, EntityFaction.Evil);
+                getTarget().getRow(), 20, 0.15f, 60, EntityFaction.EVIL);
 
         VolcanoFireball.spawn(this.getCol() - 1, this.getRow() - 1, getTarget().getCol(),
-                getTarget().getRow(), 20, 0.15f, 60, EntityFaction.Evil);
+                getTarget().getRow(), 20, 0.15f, 60, EntityFaction.EVIL);
     }
 }

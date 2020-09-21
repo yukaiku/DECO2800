@@ -2,7 +2,6 @@ package deco2800.thomas.entities.attacks;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.attacks.Projectile;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.AbstractTask;
 
@@ -29,14 +28,14 @@ public class ProjectileTest extends BaseGDXTest {
      */
     @Test
     public void testValidConstructor() {
-        Projectile projectile = new Projectile(0, 10, 0, 10, 5, EntityFaction.Ally);
+        Projectile projectile = new Projectile(0, 10, 0, 10, 5, EntityFaction.ALLY);
 
         assertEquals(0, projectile.getCol(), 0.001);
         assertEquals(10, projectile.getRow(), 0.001);
         assertEquals(0, projectile.getRenderOrder());
         assertEquals(10, projectile.getDamage());
         assertEquals(5, projectile.getSpeed(), 0.001);
-        assertEquals(EntityFaction.Ally, projectile.getFaction());
+        assertEquals(EntityFaction.ALLY, projectile.getFaction());
     }
 
     /**
@@ -51,7 +50,7 @@ public class ProjectileTest extends BaseGDXTest {
         when(combatTask.isComplete()).thenReturn(false);
 
         // Create projectile to test on, and set tasks
-        Projectile projectile = new Projectile(0, 10, 0, 10, 5, EntityFaction.Ally);
+        Projectile projectile = new Projectile(0, 10, 0, 10, 5, EntityFaction.ALLY);
         projectile.setMovementTask(movementTask);
         projectile.setCombatTask(combatTask);
 
@@ -79,7 +78,7 @@ public class ProjectileTest extends BaseGDXTest {
         when(GameManager.get()).thenReturn(gameManager);
 
         // Create projectile to test on, and set tasks
-        Projectile projectile = new Projectile(0, 10, 0, 10, 5, EntityFaction.Ally);
+        Projectile projectile = new Projectile(0, 10, 0, 10, 5, EntityFaction.ALLY);
         projectile.setMovementTask(movementTask);
         projectile.setCombatTask(combatTask);
 
