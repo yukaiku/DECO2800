@@ -13,14 +13,14 @@ import deco2800.thomas.util.SquareVector;
  */
 public class MeleeSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private final int MAX_COOLDOWN = 10;
+    private static final int maxCooldown = 10;
     /* Damage to apply from attack */
-    private final int DAMAGE = 10;
+    private static final int damage = 10;
 
     /* Cooldown tracker */
     private int cooldown = 0;
     /* Reference to parent entity */
-    private AbstractEntity entity;
+    private final AbstractEntity entity;
 
     /**
      * Creates a new MeleeSkill and binds it to the Entity.
@@ -62,7 +62,7 @@ public class MeleeSkill implements Skill, Tickable {
      */
     @Override
     public int getCooldownMax() {
-        return MAX_COOLDOWN;
+        return maxCooldown;
     }
 
     /**
@@ -93,29 +93,29 @@ public class MeleeSkill implements Skill, Tickable {
             if (angle > -45 && angle < 45) {
                 // Spawn above entity
                 origin = new SquareVector(entity.getCol(), entity.getRow() + 1);
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
+                task = new MeleeAttackTask(entity, origin, 2, 2, damage);
 
             } else if (angle >= -135 && angle <= -45) {
                 // Spawn to left of player
                 origin = new SquareVector(entity.getCol() - 1, entity.getRow());
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
+                task = new MeleeAttackTask(entity, origin, 2, 2, damage);
 
             } else if (angle < -135 || angle > 135) {
                 // Spawn below player
                 origin = new SquareVector(entity.getCol(), entity.getRow() - 1);
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
+                task = new MeleeAttackTask(entity, origin, 2, 2, damage);
 
             } else if (angle >= 45 && angle <= 135) {
                 // Spawn right of player
                 origin = new SquareVector(entity.getCol() + 1, entity.getRow());
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
+                task = new MeleeAttackTask(entity, origin, 2, 2, damage);
             } else {
                 // This code is unreachable, but required to stop
                 // warnings.
                 System.out.println("Unreachable code was reached! (MeleeSkill)");
                 task = null;
             }
-            cooldown = MAX_COOLDOWN;
+            cooldown = maxCooldown;
             return task;
         } else {
             throw new SkillOnCooldownException();
