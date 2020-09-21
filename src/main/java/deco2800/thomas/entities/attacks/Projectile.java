@@ -1,10 +1,8 @@
 package deco2800.thomas.entities.attacks;
 
 import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
-import deco2800.thomas.worlds.AbstractWorld;
 
 /**
  * A projectile is an entity that moves over distance and applies
@@ -16,8 +14,6 @@ public class Projectile extends CombatEntity {
     private float speed;
     // Direction (in degrees) projectile is moving
     private float direction;
-    // Reference to current game world
-    private AbstractWorld world;
 
     /**
      * Default constructor, just an empty projectile.
@@ -39,7 +35,6 @@ public class Projectile extends CombatEntity {
         super(col, row, renderOrder, damage, faction);
         this.speed = speed;
         this.direction = 0;
-        this.world = GameManager.get().getWorld();
     }
 
     /**

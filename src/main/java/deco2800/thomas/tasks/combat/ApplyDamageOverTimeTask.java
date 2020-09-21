@@ -17,15 +17,16 @@ import java.util.List;
  */
 public class ApplyDamageOverTimeTask extends AbstractTask {
     // Reference to current game world
-    private AbstractWorld world;
+    private final AbstractWorld world;
     // Lifetime of task
-    private long lifetime, currentLifetime;
+    private final long lifetime;
+    private long currentLifetime;
     // Tick rate
-    private long tick, tickPeriod;
+    private long tick;
+    private final long tickPeriod;
 
     // Task state
-    private boolean taskAlive = true;
-    private boolean taskComplete = false;
+    private boolean taskComplete;
 
     /**
      * Creates an instance of the task.
@@ -36,7 +37,6 @@ public class ApplyDamageOverTimeTask extends AbstractTask {
     public ApplyDamageOverTimeTask(CombatEntity entity, long lifetime, long period) {
         super(entity);
 
-        //this.entity = entity;
         this.taskComplete = false;
         world = GameManager.get().getWorld();
 
@@ -62,7 +62,7 @@ public class ApplyDamageOverTimeTask extends AbstractTask {
      */
     @Override
     public boolean isAlive() {
-        return taskAlive;
+        return true;
     }
 
     /**

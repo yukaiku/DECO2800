@@ -64,11 +64,11 @@ public class StingProjectile extends Projectile implements Animatable {
         super(col, row, RenderConstants.PROJECTILE_RENDER, damage, speed, faction);
         this.setTexture("fireball_right");
         this.setObjectName("combatStingProjectile");
-        animation = new Animation<TextureRegion>(0.1f,
+        animation = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
-        explosion = new Animation<TextureRegion>(0.1f,
+        explosion = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
-        defaultState = new Animation<TextureRegion>(0.1f,
+        defaultState = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
         currentState = Fireball.State.DEFAULT;
     }

@@ -32,7 +32,6 @@ public class ApplyDamageOnCollisionTask extends AbstractTask {
     public ApplyDamageOnCollisionTask(CombatEntity entity, long lifetime) {
         super(entity);
 
-        //this.entity = entity;
         this.taskComplete = false;
         world = GameManager.get().getWorld();
 
