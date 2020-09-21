@@ -105,15 +105,10 @@ public class MeleeSkill implements Skill, Tickable {
                 origin = new SquareVector(entity.getCol(), entity.getRow() - 1);
                 task = new MeleeAttackTask(entity, origin, 2, 2, damage);
 
-            } else if (angle >= 45 && angle <= 135) {
+            } else {
                 // Spawn right of player
                 origin = new SquareVector(entity.getCol() + 1, entity.getRow());
                 task = new MeleeAttackTask(entity, origin, 2, 2, damage);
-            } else {
-                // This code is unreachable, but required to stop
-                // warnings.
-                System.out.println("Unreachable code was reached! (MeleeSkill)");
-                task = null;
             }
             cooldown = maxCooldown;
             return task;

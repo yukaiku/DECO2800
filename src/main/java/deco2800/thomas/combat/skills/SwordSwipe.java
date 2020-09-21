@@ -14,14 +14,14 @@ import deco2800.thomas.util.SquareVector;
  */
 public class SwordSwipe implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private final int MAX_COOLDOWN = 10 * 50; // 50 is a magic number ):
+    private static final int maxCooldown = 10 * 50; // 50 is a magic number ):
     /* Damage to apply from sword swipe */
-    private final int DAMAGE = 20;
+    private static final int damage = 20;
 
     /* Cooldown tracker */
     private int cooldown = 0;
     /* Reference to parent entity */
-    private AbstractEntity entity;
+    private final AbstractEntity entity;
 
     /**
      * Creates a new SwordSwipe and binds it to the Entity.
@@ -63,7 +63,7 @@ public class SwordSwipe implements Skill, Tickable {
      */
     @Override
     public int getCooldownMax() {
-        return MAX_COOLDOWN;
+        return maxCooldown;
     }
 
     /**
@@ -94,29 +94,24 @@ public class SwordSwipe implements Skill, Tickable {
             if (angle > -45 && angle < 45) {
                 // Spawn above entity
                 origin = new SquareVector(entity.getCol() - 1, entity.getRow() + 1);
-                task = new MeleeAttackTask(entity, origin, 3, 2, DAMAGE);
+                task = new MeleeAttackTask(entity, origin, 3, 2, damage);
 
             } else if (angle >= -135 && angle <= -45) {
                 // Spawn to left of player
                 origin = new SquareVector(entity.getCol() - 2, entity.getRow() + 1);
-                task = new MeleeAttackTask(entity, origin, 2, 3, DAMAGE);
+                task = new MeleeAttackTask(entity, origin, 2, 3, damage);
 
             } else if (angle < -135 || angle > 135) {
                 // Spawn below player
                 origin = new SquareVector(entity.getCol() - 1, entity.getRow());
-                task = new MeleeAttackTask(entity, origin, 3, 2, DAMAGE);
+                task = new MeleeAttackTask(entity, origin, 3, 2, damage);
 
-            } else if (angle >= 45 && angle <= 135) {
+            } else {
                 // Spawn right of player
                 origin = new SquareVector(entity.getCol() + 1, entity.getRow() + 1);
-                task = new MeleeAttackTask(entity, origin, 2, 3, DAMAGE);
-            } else {
-                // This code is unreachable, but required to stop
-                // warnings.
-                System.out.println("Unreachable code was reached! (SwordSwipe)");
-                task = null;
+                task = new MeleeAttackTask(entity, origin, 2, 3, damage);
             }
-            cooldown = MAX_COOLDOWN;
+            cooldown = maxCooldown;
             return task;
         } else {
             throw new SkillOnCooldownException();
