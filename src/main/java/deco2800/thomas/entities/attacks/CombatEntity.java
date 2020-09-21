@@ -6,7 +6,8 @@ import deco2800.thomas.tasks.AbstractTask;
 
 public abstract class CombatEntity extends AbstractEntity {
     private int damage;
-    protected AbstractTask movementTask, combatTask;
+    protected AbstractTask movementTask;
+    protected AbstractTask combatTask;
 
     public CombatEntity() {
         super();
