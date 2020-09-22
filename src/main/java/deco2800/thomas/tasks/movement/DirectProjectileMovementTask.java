@@ -11,15 +11,15 @@ import deco2800.thomas.util.SquareVector;
  */
 public class DirectProjectileMovementTask extends AbstractTask {
     // Entity who owns this task
-    private Projectile entity;
+    private final Projectile entity;
     // Delta step size to move towards
-    private float direction[];
+    private final float[] direction;
     // Lifetime of task
-    private long lifetime, currentLifetime;
+    private final long lifetime;
+    private long currentLifetime;
 
     // Current task state
-    private boolean taskAlive = true;
-    private boolean taskComplete = false;
+    private boolean taskComplete;
 
     /**
      * Creates an instance of the movement task, that will move the projectile until
@@ -58,7 +58,7 @@ public class DirectProjectileMovementTask extends AbstractTask {
      */
     @Override
     public boolean isAlive() {
-        return taskAlive;
+        return true;
     }
 
     /**

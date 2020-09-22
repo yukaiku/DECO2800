@@ -249,7 +249,7 @@ public final class DatabaseManager extends AbstractManager {
             for (String s : Arrays.asList("combat")) {
                 if (entityObjectName.startsWith(s)){
                     SquareVector destination = new SquareVector(0f,0f);
-                    Fireball create = new Fireball(1f, 5f, 1, 1f, EntityFaction.Ally);
+                    Fireball create = new Fireball(1f, 5f, 1, 1f, EntityFaction.ALLY);
                     return (AbstractEntity) create;
                 }
             }

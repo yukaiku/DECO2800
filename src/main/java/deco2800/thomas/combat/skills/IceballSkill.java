@@ -9,18 +9,18 @@ import deco2800.thomas.tasks.combat.IceballAttackTask;
 
 public class IceballSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private final int MAX_COOLDOWN = 50;
+    private static final int MAX_COOLDOWN = 50;
     /* Damage to apply from sting */
-    private final int DAMAGE = 8;
+    private static final int DAMAGE = 8;
     /* Speed of projectile */
-    private final float SPEED = 0.5f;
+    private static final float SPEED = 0.5f;
     /* Lifetime of projectile */
-    private final int LIFETIME = 60;
+    private static final int LIFETIME = 60;
 
     /* Cooldown tracker */
     private int cooldown = 0;
     /* Reference to parent entity */
-    private AbstractEntity entity;
+    private final AbstractEntity entity;
 
     public IceballSkill(AbstractEntity parent) {
         if (parent == null) {

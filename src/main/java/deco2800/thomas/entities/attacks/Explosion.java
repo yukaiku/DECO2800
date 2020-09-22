@@ -16,7 +16,7 @@ import deco2800.thomas.util.WorldUtil;
  * b) Applying damage over time until its lifetime is over
  */
 public class Explosion extends CombatEntity implements Animatable {
-    private final Animation<TextureRegion> explosion;
+    private final Animation<TextureRegion> animationFrames;
     private float stateTimer = 0f;
 
     /**
@@ -26,7 +26,7 @@ public class Explosion extends CombatEntity implements Animatable {
         super();
         this.setTexture("explosion");
         this.setObjectName("combatExplosion");
-        explosion = new Animation<>(0.1f,
+        animationFrames = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
     }
 
@@ -42,7 +42,7 @@ public class Explosion extends CombatEntity implements Animatable {
         super(col, row, RenderConstants.PROJECTILE_RENDER, damage, faction);
         this.setTexture("explosion");
         this.setObjectName("combatExplosion");
-        explosion = new Animation<TextureRegion>(0.1f,
+        animationFrames = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
     }
 
@@ -72,6 +72,6 @@ public class Explosion extends CombatEntity implements Animatable {
     @Override
     public TextureRegion getFrame(float delta) {
         stateTimer += delta;
-        return explosion.getKeyFrame(stateTimer);
+        return animationFrames.getKeyFrame(stateTimer);
     }
 }

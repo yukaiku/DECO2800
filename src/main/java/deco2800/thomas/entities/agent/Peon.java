@@ -20,12 +20,11 @@ public class Peon extends AgentEntity implements Tickable {
 	/* Status effects on this peon */
 	private CopyOnWriteArrayList<StatusEffect> effects;
 	/* Combat stats for this entity */
-	private final float ARMOUR_CONSTANT = 1000f; // Changes effectiveness of armour values, higher = less effective
-	private HealthTracker health;
+	private static final float ARMOUR_CONSTANT = 1000f; // Changes effectiveness of armour values, higher = less effective
+	private final HealthTracker health;
 	private float armour; // Reduces incoming damage
 	private float damage; // Base outgoing damage value
 	private DamageType vulnerability; // Peon takes extra damage from this damage type
-
 
 	/* Combat status of this entity */
 	protected boolean isAttacked = false;
@@ -41,7 +40,7 @@ public class Peon extends AgentEntity implements Tickable {
 		this.setHeight(1);
 		this.speed = 0.05f;
 		this.save = true;
-		this.effects = new CopyOnWriteArrayList<StatusEffect>();
+		this.effects = new CopyOnWriteArrayList<>();
 		this.damage = 10;
 		this.armour = ARMOUR_CONSTANT; // No damage reduction
 		this.vulnerability = DamageType.NONE;
@@ -83,7 +82,6 @@ public class Peon extends AgentEntity implements Tickable {
 			if (combatTask.isComplete()) {
 				combatTask = null;
 			}
-		} else {
 		}
 
 		// isAttacked animation
@@ -183,8 +181,7 @@ public class Peon extends AgentEntity implements Tickable {
 	 * @return Returns true if removed, returns false if effect is not in the list
 	 */
 	public boolean removeEffect(StatusEffect effect) {
-		System.out.println(this.effects.remove(effect));
-		return true;
+		return this.effects.remove(effect);
 	}
 
 	/**
@@ -284,5 +281,6 @@ public class Peon extends AgentEntity implements Tickable {
 	 * Defines behaviour when an agent entity dies
 	 */
 	public void death() {
+		// Currently no implementation as the Peon is treated as an AbstractClass.
 	}
 }

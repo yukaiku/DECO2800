@@ -114,7 +114,7 @@ public class Iceball extends Projectile implements Animatable {
                 if (e instanceof Peon) {
                     Peon peon = (Peon)e;
                     EntityFaction faction = peon.getFaction();
-                    if (faction != EntityFaction.None && faction != this.getFaction()) {
+                    if (faction != EntityFaction.NONE && faction != this.getFaction()) {
                         peon.addEffect(new SpeedStatus(peon, 0.3f, 5));
                         peon.applyDamage(this.getDamage(), DamageType.ICE);
                         this.setDirection(0f); // Ice spikes should always face up.

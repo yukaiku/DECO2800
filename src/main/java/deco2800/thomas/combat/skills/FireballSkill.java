@@ -12,18 +12,18 @@ import deco2800.thomas.tasks.combat.FireballAttackTask;
  */
 public class FireballSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private final int MAX_COOLDOWN = 20;
+    private static final int MAX_COOLDOWN = 20;
     /* Damage to apply from fireball */
-    private final int DAMAGE = 10;
+    private static final int DAMAGE = 10;
     /* Speed of fireball */
-    private final float SPEED = 0.5f;
+    private static final float SPEED = 0.5f;
     /* Lifetime of fireball */
-    private final int LIFETIME = 60;
+    private static final int LIFETIME = 60;
 
     /* Cooldown tracker */
     private int cooldown = 0;
     /* Reference to parent entity */
-    private AbstractEntity entity;
+    private final AbstractEntity entity;
 
     /**
      * Creates a new FireballSkill and binds it to the Entity.

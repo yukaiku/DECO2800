@@ -6,29 +6,28 @@ import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
-import deco2800.thomas.tasks.combat.FireballAttackTask;
 
 /**
  * Launches a fireball that deals damage when it hits a target.
  */
 public class FireBombSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private final int MAX_COOLDOWN = 160; // TODO Fix magic number
+    private static final int MAX_COOLDOWN = 160;
     /* Damage to apply from explosion */
-    private final int DAMAGE = 20;
+    private static final int DAMAGE = 20;
     /* Lifetime of explosion */
-    private final int LIFETIME = 60;
+    private static final int LIFETIME = 60;
     /* Tick period of explosion */
-    private final int TICK_PERIOD = 20;
+    private static final int TICK_PERIOD = 20;
     /* Height of explosion */
-    private final int HEIGHT = 3;
+    private static final int HEIGHT = 3;
     /* Width of explosion */
-    private final int WIDTH = 3;
+    private static final int WIDTH = 3;
 
     /* Cooldown tracker */
     private int cooldown = 0;
     /* Reference to parent entity */
-    private AbstractEntity entity;
+    private final AbstractEntity entity;
 
     /**
      * Creates a new FireBombSkill and binds it to the Entity.
@@ -77,7 +76,7 @@ public class FireBombSkill implements Skill, Tickable {
      * Returns a string containing the name of the texture that is used to represent
      * this skill on the skill bar.
      *
-     * @return
+     * @return String name of skill icon
      */
     @Override
     public String getTexture() {

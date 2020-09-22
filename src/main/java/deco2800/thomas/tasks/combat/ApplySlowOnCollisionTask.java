@@ -57,7 +57,7 @@ public class ApplySlowOnCollisionTask extends AbstractTask {
             if (collidingEntities.size() > 1) { // Own bounding box should always be present
                 for (AbstractEntity e : collidingEntities) {
                     EntityFaction faction = e.getFaction();
-                    if (faction != EntityFaction.None && faction != entity.getFaction()) {
+                    if (faction != EntityFaction.NONE && faction != entity.getFaction()) {
                         applySlow(e);
                     }
                 }

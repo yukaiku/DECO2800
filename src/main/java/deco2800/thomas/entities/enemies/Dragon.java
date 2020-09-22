@@ -18,8 +18,6 @@ import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -97,7 +95,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
 
     public void breathAttack() {
         Fireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
-                getTarget().getRow(), 10, 0.2f, 60, EntityFaction.Evil);
+                getTarget().getRow(), 10, 0.2f, 60, EntityFaction.EVIL);
     }
 
     @Override

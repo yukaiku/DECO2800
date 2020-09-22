@@ -14,14 +14,14 @@ import deco2800.thomas.util.SquareVector;
  */
 public class SwordSwipe implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private final int MAX_COOLDOWN = 10 * 50; // 50 is a magic number ):
+    private static final int MAX_COOLDOWN = 10 * 50; // 50 is a magic number ):
     /* Damage to apply from sword swipe */
-    private final int DAMAGE = 20;
+    private static final int DAMAGE = 20;
 
     /* Cooldown tracker */
     private int cooldown = 0;
     /* Reference to parent entity */
-    private AbstractEntity entity;
+    private final AbstractEntity entity;
 
     /**
      * Creates a new SwordSwipe and binds it to the Entity.
@@ -106,15 +106,10 @@ public class SwordSwipe implements Skill, Tickable {
                 origin = new SquareVector(entity.getCol() - 1, entity.getRow());
                 task = new MeleeAttackTask(entity, origin, 3, 2, DAMAGE);
 
-            } else if (angle >= 45 && angle <= 135) {
+            } else {
                 // Spawn right of player
                 origin = new SquareVector(entity.getCol() + 1, entity.getRow() + 1);
                 task = new MeleeAttackTask(entity, origin, 2, 3, DAMAGE);
-            } else {
-                // This code is unreachable, but required to stop
-                // warnings.
-                System.out.println("Unreachable code was reached! (SwordSwipe)");
-                task = null;
             }
             cooldown = MAX_COOLDOWN;
             return task;

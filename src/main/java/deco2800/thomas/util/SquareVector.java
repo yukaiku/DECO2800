@@ -92,7 +92,7 @@ public class SquareVector {
 
 	public float distance(SquareVector vector) {
 		return Math.abs(Math.round(getCol()) - Math.round(vector.getCol()))
-				+ Math.abs(Math.round(getRow()) - Math.round(vector.getRow()));
+				+ (float)Math.abs(Math.round(getRow()) - Math.round(vector.getRow()));
 	}
 
 	private float distanceAsCartesian(SquareVector point) {

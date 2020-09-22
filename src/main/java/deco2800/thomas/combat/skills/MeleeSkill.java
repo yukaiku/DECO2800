@@ -13,14 +13,14 @@ import deco2800.thomas.util.SquareVector;
  */
 public class MeleeSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private final int MAX_COOLDOWN = 10;
+    private static final int MAX_COOLDOWN = 10;
     /* Damage to apply from attack */
-    private final int DAMAGE = 10;
+    private static final int DAMAGE = 10;
 
     /* Cooldown tracker */
     private int cooldown = 0;
     /* Reference to parent entity */
-    private AbstractEntity entity;
+    private final AbstractEntity entity;
 
     /**
      * Creates a new MeleeSkill and binds it to the Entity.
@@ -105,15 +105,10 @@ public class MeleeSkill implements Skill, Tickable {
                 origin = new SquareVector(entity.getCol(), entity.getRow() - 1);
                 task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
 
-            } else if (angle >= 45 && angle <= 135) {
+            } else {
                 // Spawn right of player
                 origin = new SquareVector(entity.getCol() + 1, entity.getRow());
                 task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
-            } else {
-                // This code is unreachable, but required to stop
-                // warnings.
-                System.out.println("Unreachable code was reached! (MeleeSkill)");
-                task = null;
             }
             cooldown = MAX_COOLDOWN;
             return task;

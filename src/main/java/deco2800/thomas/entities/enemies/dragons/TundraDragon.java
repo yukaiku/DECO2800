@@ -9,7 +9,6 @@ import deco2800.thomas.entities.enemies.Variation;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.IceBreathTask;
-import deco2800.thomas.util.EnemyUtil;
 
 public class TundraDragon extends Dragon {
     public TundraDragon(int health, float speed, int orbNumber) {
@@ -30,6 +29,6 @@ public class TundraDragon extends Dragon {
     @Override
     public void breathAttack() {
         Iceball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
-                getTarget().getRow(), 10, 0.1f, 60, EntityFaction.Evil);
+                getTarget().getRow(), 10, 0.1f, 60, EntityFaction.EVIL);
     }
 }

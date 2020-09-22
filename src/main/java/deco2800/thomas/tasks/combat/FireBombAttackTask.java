@@ -2,10 +2,8 @@ package deco2800.thomas.tasks.combat;
 
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.entities.attacks.Explosion;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.AbstractTask;
@@ -20,17 +18,17 @@ import java.util.List;
  */
 public class FireBombAttackTask extends AbstractTask {
     /* Lifetime of the effect */
-    private long lifetime;
+    private final long lifetime;
     /* Tick period of effect */
-    private long tickPeriod;
+    private final long tickPeriod;
     /* Damage to apply */
-    private int damage;
+    private final int damage;
     /* Task status */
     private boolean complete = false;
     /* Explosion height */
-    private int height;
+    private final int height;
     /* Explosion width */
-    private int width;
+    private final int width;
 
     /**
      * Creates an instance of the ExplosionTask which executes the FireBomb attack and spawns
@@ -68,13 +66,13 @@ public class FireBombAttackTask extends AbstractTask {
      */
     private void applyInitialDamage() {
         SquareVector origin = new SquareVector(entity.getCol() - 1, entity.getRow() - 1);
-        float dimensions[] = WorldUtil.colRowToWorldCords(3, 3);
+        float[] dimensions = WorldUtil.colRowToWorldCords(3, 3);
         BoundingBox bounds = new BoundingBox(origin, dimensions[0], dimensions[1]);
         List<AbstractEntity> collidingEntities = GameManager.get().getWorld().getEntitiesInBounds(bounds);
         if (collidingEntities.size() > 1) { // Own bounding box should always be present
             for (AbstractEntity e : collidingEntities) {
                 EntityFaction faction = e.getFaction();
-                if (faction != EntityFaction.None && faction != entity.getFaction()) {
+                if (faction != EntityFaction.NONE && faction != entity.getFaction()) {
                     applyDamage(e, damage);
                 }
             }

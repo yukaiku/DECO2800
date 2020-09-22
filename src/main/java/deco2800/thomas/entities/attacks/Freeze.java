@@ -22,7 +22,7 @@ public class Freeze extends Projectile implements Animatable {
         this.setColRenderLength(0.3f);
         this.setRowRenderLength(1.0f);
         this.setTexture("explosion");
-        this.setObjectName("combatExplosion");
+        this.setObjectName("freezeWave");
         freeze = new Animation<>(0.02f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
     }
@@ -37,12 +37,12 @@ public class Freeze extends Projectile implements Animatable {
      */
     public Freeze (float col, float row, int damage, EntityFaction faction, float direction) {
         super(col, row, RenderConstants.PROJECTILE_RENDER, damage, 0, faction);
-        this.setObjectName("combatExplosion");
+        this.setObjectName("freezeWave");
         this.direction = direction;
         this.setColRenderLength(0.3f);
         this.setRowRenderLength(1.0f);
         this.setTexture("explosion");
-        freeze = new Animation<TextureRegion>(0.02f,
+        freeze = new Animation<>(0.02f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("freezeTile"));
     }
 

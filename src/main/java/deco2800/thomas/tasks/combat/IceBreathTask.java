@@ -1,17 +1,15 @@
 package deco2800.thomas.tasks.combat;
 
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.Freeze;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.AbstractTask;
-import deco2800.thomas.util.SquareVector;
 
 public class IceBreathTask extends AbstractTask {
     /* How many ticks between spawning the next row of ice */
-    private final int TICKS_BETWEEN_SPAWN = 7;
+    private static final int TICKS_BETWEEN_SPAWN = 7;
     /* Maximum length of ice breath. */
-    private final int MAX_LENGTH = 11;
+    private static final int MAX_LENGTH = 11;
     /* Initial width of ice */
     private int width = 1;
     private int tickCounter = 0;
@@ -21,7 +19,7 @@ public class IceBreathTask extends AbstractTask {
     private float originX;
     private float originY;
 
-    private int damage;
+    private final int damage;
 
     // Task tracker
     private boolean complete = false;

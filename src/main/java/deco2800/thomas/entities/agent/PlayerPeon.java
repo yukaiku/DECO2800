@@ -66,7 +66,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         this.setTexture("player_right");
         this.setColRenderLength(1.4f);
         this.setRowRenderLength(1.8f);
-        this.setFaction(EntityFaction.Ally);
+        this.setFaction(EntityFaction.ALLY);
 
         // Subscribe listeners
         GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
@@ -260,7 +260,6 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
      */
     @Override
     public void notifyTouchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println("Touch down - player.");
         float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(), Gdx.input.getY());
         float[] clickedPosition = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
 
@@ -435,7 +434,6 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
      */
     @Override
     public void dispose() {
-        System.out.println("Disposing player.");
         GameManager.getManagerFromInstance(InputManager.class).removeTouchDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).removeKeyDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).removeKeyUpListener(this);

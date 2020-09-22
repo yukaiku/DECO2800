@@ -2,7 +2,6 @@ package deco2800.thomas.tasks.combat;
 
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.CombatEntity;
@@ -18,15 +17,16 @@ import java.util.List;
  */
 public class ApplyDamageOverTimeTask extends AbstractTask {
     // Reference to current game world
-    private AbstractWorld world;
+    private final AbstractWorld world;
     // Lifetime of task
-    private long lifetime, currentLifetime;
+    private final long lifetime;
+    private long currentLifetime;
     // Tick rate
-    private long tick, tickPeriod;
+    private long tick;
+    private final long tickPeriod;
 
     // Task state
-    private boolean taskAlive = true;
-    private boolean taskComplete = false;
+    private boolean taskComplete;
 
     /**
      * Creates an instance of the task.
@@ -37,7 +37,6 @@ public class ApplyDamageOverTimeTask extends AbstractTask {
     public ApplyDamageOverTimeTask(CombatEntity entity, long lifetime, long period) {
         super(entity);
 
-        //this.entity = entity;
         this.taskComplete = false;
         world = GameManager.get().getWorld();
 
@@ -63,7 +62,7 @@ public class ApplyDamageOverTimeTask extends AbstractTask {
      */
     @Override
     public boolean isAlive() {
-        return taskAlive;
+        return true;
     }
 
     /**
@@ -78,7 +77,7 @@ public class ApplyDamageOverTimeTask extends AbstractTask {
             if (collidingEntities.size() > 1) { // Own bounding box should always be present
                 for (AbstractEntity e : collidingEntities) {
                     EntityFaction faction = e.getFaction();
-                    if (faction != EntityFaction.None && faction != entity.getFaction()) {
+                    if (faction != EntityFaction.NONE && faction != entity.getFaction()) {
                         applyDamage(e);
                     }
                 }

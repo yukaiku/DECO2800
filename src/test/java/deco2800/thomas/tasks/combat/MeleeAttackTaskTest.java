@@ -1,7 +1,6 @@
 package deco2800.thomas.tasks.combat;
 
 import deco2800.thomas.BaseGDXTest;
-import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.EntityFaction;
@@ -51,9 +50,9 @@ public class MeleeAttackTaskTest extends BaseGDXTest {
     public void applyingDamageOnCollisionTest() {
         // Mock combat entity and agent entity (so that they're on different factions)
         CombatEntity combatEntity = mock(CombatEntity.class);
-        when(combatEntity.getFaction()).thenReturn(EntityFaction.Evil);
+        when(combatEntity.getFaction()).thenReturn(EntityFaction.EVIL);
         Peon peon = mock(Peon.class);
-        when(peon.getFaction()).thenReturn(EntityFaction.Ally);
+        when(peon.getFaction()).thenReturn(EntityFaction.ALLY);
 
         // Mock abstract world
         AbstractWorld abstractWorld = mock(AbstractWorld.class);
@@ -80,9 +79,9 @@ public class MeleeAttackTaskTest extends BaseGDXTest {
     public void noDamageTest() {
         // Mock combat entity and agent entity (so that they're on different factions)
         CombatEntity combatEntity = mock(CombatEntity.class);
-        when(combatEntity.getFaction()).thenReturn(EntityFaction.Evil);
+        when(combatEntity.getFaction()).thenReturn(EntityFaction.EVIL);
         Peon peon = mock(Peon.class);
-        when(peon.getFaction()).thenReturn(EntityFaction.Ally);
+        when(peon.getFaction()).thenReturn(EntityFaction.ALLY);
 
         // Mock abstract world
         AbstractWorld abstractWorld = mock(AbstractWorld.class);

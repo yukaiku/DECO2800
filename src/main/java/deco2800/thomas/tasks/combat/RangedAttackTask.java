@@ -3,7 +3,6 @@ package deco2800.thomas.tasks.combat;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.tasks.AbstractTask;
-import deco2800.thomas.worlds.AbstractWorld;
 
 /**
  * The RangedAttackTask is used to spawn projectiles into the game world.
@@ -11,14 +10,13 @@ import deco2800.thomas.worlds.AbstractWorld;
  * builds.
  */
 public abstract class RangedAttackTask extends AbstractTask {
-    /* Reference to the current game world */
-    private AbstractWorld world;
-
     // Task state
-    private boolean taskAlive = true;
     private boolean taskComplete = false;
-    private float targetCol, targetRow, speed;
-    private int damage, lifetime;
+    private final float targetCol;
+    private final float targetRow;
+    private final float speed;
+    private final int damage;
+    private final int lifetime;
 
     /**
      * Spawns a projectile with specified parameters.
@@ -37,7 +35,6 @@ public abstract class RangedAttackTask extends AbstractTask {
         this.damage = damage;
         this.speed = speed;
         this.lifetime = lifetime;
-
     }
 
     /**
@@ -70,7 +67,7 @@ public abstract class RangedAttackTask extends AbstractTask {
      */
     @Override
     public boolean isAlive() {
-        return taskAlive;
+        return true;
     }
 
     /**
