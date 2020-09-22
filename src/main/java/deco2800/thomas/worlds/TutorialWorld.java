@@ -142,36 +142,6 @@ public class TutorialWorld extends AbstractWorld{
         entities.add(new Portal(t, false));
 
 
-        // add potion and shield. 
-        
-
-/*
-        Tile potion;
-        potion = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
-                Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
-        Item potionItem = new HealthPotion(potion, false,
-                (PlayerPeon) getPlayerEntity(), "tutorial");
-        entities.add(potionItem);
-        this.allDialogBoxes.add(potionItem.getDisplay());
-
-        Tile shield;
-        shield = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
-                Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
-        Item itemShield = new Shield(shield, false,
-                (PlayerPeon) getPlayerEntity(), "tutorial");
-        entities.add(itemShield);
-        this.allDialogBoxes.add(itemShield.getDisplay());
-
-        Tile treasure;
-        treasure = GameManager.get().getWorld().getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
-                Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
-        Item itemTreasure = new Treasure(treasure, false,
-                (PlayerPeon) getPlayerEntity(),"tutorial");
-        entities.add(itemTreasure);
-        this.allDialogBoxes.add(itemTreasure.getDisplay());
-
-         */
-
         // Add message on how to leave tutorial (temporary)
         t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW + 2);
         entities.add(new Notify(t, false));

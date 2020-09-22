@@ -9,21 +9,16 @@ import deco2800.thomas.util.SquareVector;
 public class DesertNPC extends NonPlayablePeon implements Interactable {
 
     AbstractDialogBox tutorialDialogueBox;
-    public static int speechStage;
+    public static final int speechStage = 1;
     static boolean isActive = false;
 
     public DesertNPC(String name, SquareVector position, String texture) {
         super(name, position, texture);
         this.tutorialDialogueBox = new NPCDialog(this,"Default");
-        speechStage = 1;
     }
 
     public AbstractDialogBox getBox() {
         return tutorialDialogueBox;
-    }
-
-    public void onTick(){
-
     }
 
     public static boolean getIsActive(){
@@ -37,10 +32,7 @@ public class DesertNPC extends NonPlayablePeon implements Interactable {
     @Override
     public void interact() {
         setIsActive(true);
-        if (this.getName() == "DesertQuestNPC1" && speechStage >= 1) {
-            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("desert"));
-            tutorialDialogueBox.setShowing(true);
-        } else if (this.getName() == "DesertQuestNPC2" && speechStage >= 1){
+        if ((this.getName().equals("DesertQuestNPC1") || this.getName().equals("DesertQuestNPC2")) && speechStage >= 1) {
             ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("desert"));
             tutorialDialogueBox.setShowing(true);
         }

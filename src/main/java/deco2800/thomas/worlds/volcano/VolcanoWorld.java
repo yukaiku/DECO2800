@@ -4,11 +4,6 @@ import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.VolcanoNPC;
-import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.entities.npc.MerchantNPC;
-import deco2800.thomas.entities.npc.NonPlayablePeon;
-import deco2800.thomas.entities.npc.TutorialNPC;
-import deco2800.thomas.entities.npc.VolcanoNPC;
 import deco2800.thomas.entities.enemies.*;
 import deco2800.thomas.entities.environment.volcano.VolcanoDragonSkull;
 import deco2800.thomas.entities.environment.volcano.VolcanoGraveYard;
@@ -31,8 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 /**
  * Implemented subclass of Abstract world for the Volcano Zone in Polyhedron.
@@ -49,7 +42,6 @@ public class VolcanoWorld extends AbstractWorld {
     private boolean notGenerated = true;
 
     private List<AbstractDialogBox> allVolcanoDialogues;
-    private VolcanoLavaPool lavaPool;
 
     /**
      * Default Constructor for volcano world.
@@ -166,44 +158,6 @@ public class VolcanoWorld extends AbstractWorld {
         final int NUM_POTIONS = 6;
         final int NUM_SHIELDS = 4;
         final int NUM_CHESTS = 3;
-        int spawnedPotion = 0;
-        int spawnedShields = 0;
-        int spawnedChests = 0;
-        /*
-        List<Integer> spawnableItemCoordinateX = new ArrayList<>();
-        List<Integer> spawnableItemCoordinateY = new ArrayList<>();
-        HashMap<Integer, Integer> testList = new HashMap<>();
-        List<Integer> spawnableItemCoordinatez = new ArrayList<>();
-
-
-        for (int j = (0-DEFAULT_WIDTH); j < DEFAULT_WIDTH ;j++){
-            for (int k = (0-DEFAULT_HEIGHT); k < DEFAULT_HEIGHT ; k++){
-                if (getTile(j,k).getTextureName() != "Volcano_5" ||
-                        getTile(j,k).getTextureName() != "Volcano_6" ||
-                        getTile(j,k).getTextureName() != "Volcano_7" ||
-                        getTile(j,k).getTextureName() != "Volcano_8"){
-                    spawnableItemCoordinateX.add(j);
-                    spawnableItemCoordinateY.add(k);
-                }
-                testList.put(j,k);
-            }
-        }*/
-
-        /*
-        while (spawnedPotion < NUM_POTIONS){
-            Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
-                    Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            if (!tile.getTextureName().equals("Volcano_5") ||
-                    !tile.getTextureName().equals("Volcano_6") ||
-                    !tile.getTextureName().equals("Volcano_7") ||
-                    !tile.getTextureName().equals("Volcano_8")){
-                HealthPotion potion = new HealthPotion(tile, false,
-                        (PlayerPeon) getPlayerEntity(), "volcano");
-                entities.add(potion);
-                this.allVolcanoDialogues.add(potion.getDisplay());
-                spawnedPotion ++;
-            }
-        }*/
 
 
         for (int i = 0; i < NUM_POTIONS; i++) {
@@ -221,14 +175,6 @@ public class VolcanoWorld extends AbstractWorld {
             }
 
         }
-
-        /*
-        Random generator = new Random();
-        Object[] values = testList.values().toArray();
-        Object randomValue = values[generator.nextInt(values.length)];
-        int randomValue2 = (int) values[generator.nextInt(values.length)];
-        System.out.println(testList);
-         */
 
 
         for (int i =0; i < NUM_SHIELDS; i++){
@@ -517,15 +463,15 @@ public class VolcanoWorld extends AbstractWorld {
         parts.add(new Part(new SquareVector(2, 0), "LavaPool", false));
         parts.add(new Part(new SquareVector(2, -1), "LavaPool", false));
 
-        this.lavaPool = new VolcanoLavaPool(col, row, parts);
+        VolcanoLavaPool lavaPool = new VolcanoLavaPool(col, row, parts);
 
         //REMOVE THIS ONCE MAP SIZE IS INCREASE TO 50 x 50 IN LATER SPRINTS,
         // AND SETUP LAVA POOLS ACCORDINGLY
-        for (SquareVector coord : this.lavaPool.getChildrenPositions()) {
+        for (SquareVector coord : lavaPool.getChildrenPositions()) {
             getTile(coord).setTexture("Volcano_1");
         }
 
-        System.out.println(this.lavaPool.getChildrenPositions());
-        return this.lavaPool;
+        System.out.println(lavaPool.getChildrenPositions());
+        return lavaPool;
     }
 }

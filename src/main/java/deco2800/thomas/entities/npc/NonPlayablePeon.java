@@ -63,8 +63,7 @@ public class NonPlayablePeon extends Peon implements Interactable {
 
     @Override
     public void interact() {
-        System.out.println("hello world!");
-        
+        //interaction with npc goes here
     }
 
     public String getName() {

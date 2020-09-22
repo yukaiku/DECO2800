@@ -9,22 +9,18 @@ import deco2800.thomas.util.SquareVector;
 public class SwampNPC extends NonPlayablePeon implements Interactable {
 
     AbstractDialogBox tutorialDialogueBox;
-    public static int speechStage;
+    public static final int speechStage = 1;
     static boolean isActive = false;
 
     public SwampNPC(String name, SquareVector position, String texture) {
         super(name, position, texture);
         this.tutorialDialogueBox = new NPCDialog(this,"Default");
-        speechStage = 1;
     }
 
     public AbstractDialogBox getBox() {
         return tutorialDialogueBox;
     }
 
-    public void onTick(){
-
-    }
 
     public static boolean getIsActive(){
         return isActive;
@@ -37,10 +33,7 @@ public class SwampNPC extends NonPlayablePeon implements Interactable {
     @Override
     public void interact() {
         setIsActive(true);
-        if (this.getName() == "SwampQuestNPC1" && speechStage >= 1) {
-            ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("swamp"));
-            tutorialDialogueBox.setShowing(true);
-        } else if (this.getName() == "SwampQuestNPC2" && speechStage >= 1){
+        if ((this.getName().equals("SwampQuestNPC1") || this.getName().equals("SwampQuestNPC2")) && speechStage >= 1) {
             ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("swamp"));
             tutorialDialogueBox.setShowing(true);
         }

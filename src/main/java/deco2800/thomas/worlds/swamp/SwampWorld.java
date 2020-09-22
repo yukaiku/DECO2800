@@ -4,11 +4,6 @@ import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.SwampNPC;
-import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.entities.npc.MerchantNPC;
-import deco2800.thomas.entities.npc.NonPlayablePeon;
-import deco2800.thomas.entities.npc.SwampNPC;
-import deco2800.thomas.entities.npc.TutorialNPC;
 import deco2800.thomas.entities.enemies.*;
 import deco2800.thomas.entities.enemies.dragons.DesertDragon;
 import deco2800.thomas.entities.environment.swamp.SwampDeadTree;
@@ -69,7 +64,6 @@ public class SwampWorld extends AbstractWorld {
 
         //Creates swamp NPCs
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
-        List<Item> swampMerchantShop = new ArrayList<>();
         SwampNPC swampNpc1 = new SwampNPC("SwampQuestNPC1", new SquareVector(-21, 5),"swamp_npc1");
         SwampNPC swampNpc2 = new SwampNPC("SwampQuestNPC2", new SquareVector(-22, 9),"swamp_npc2");
         npnSpawns.add(swampNpc1);

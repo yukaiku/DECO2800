@@ -18,26 +18,26 @@ public class MerchantNPC extends NonPlayablePeon implements Interactable, Tradea
 
     @Override
     public void interact(){
-
+        //Interacts with merchant npc
     }
 
     @Override
     public void getCurrencyValue() {
-
+        //Get currency
     }
 
     @Override
     public void setCurrency() {
-
+        //sets currency of merchant
     }
 
     @Override
     public void removeCurrency() {
-
+        //removes currency from player
     }
 
     @Override
     public void addCurrency() {
-
+        //adds currency to player
     }
 }

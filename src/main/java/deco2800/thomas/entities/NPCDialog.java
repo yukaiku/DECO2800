@@ -2,28 +2,19 @@ package deco2800.thomas.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.npc.*;
 
-import java.util.HashMap;
-
 public class NPCDialog extends AbstractDialogBox {
 
-	TextButton button;
-	HashMap<String, String> tutorialDialogue = new HashMap<>();
+	private TextButton button;
 
-	// constructs NPC DailgoBox.
+	// constructs NPC DialogBox.
 	public NPCDialog(Object entity, String string) {
 		super(entity, "PolyHedron: Tutorial", "tutorial");
 		// add first dialogue.
-		this.tutorialDialogue.put("WASD", PlayerPeon.getDialogue("WASD"));
-		this.tutorialDialogue.put("attack", PlayerPeon.getDialogue("attack"));
-		this.tutorialDialogue.put("orb", PlayerPeon.getDialogue("orb"));
-		this.tutorialDialogue.put("congrats", PlayerPeon.getDialogue("congrats"));
-		this.tutorialDialogue.put("plot", PlayerPeon.getDialogue("plot"));
 		box.add(string).expand().center();
 		box.row();
 		box.setKeepWithinStage(true);
@@ -43,77 +34,65 @@ public class NPCDialog extends AbstractDialogBox {
 		box.add(button).expand().center();
 		box.pack();
 	}
-	public String getLine(String str){
-		return this.tutorialDialogue.get(str);
-	}
 
 	ChangeListener a = new ChangeListener() {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			if (TutorialNPC.getIsActive() == true) {
+			if (TutorialNPC.getIsActive()) {
 				if (TutorialNPC.speechStage < 4) {
 					TutorialNPC.speechStage += 1;
 				}
 				switch (TutorialNPC.speechStage) {
 					case 1:
-						setString(getLine("WASD"));
+						setString(PlayerPeon.getDialogue("WASD"));
 						button.setText("next");
 						break;
 					case 2:
-						setString(getLine("attack"));
+						setString(PlayerPeon.getDialogue("attack"));
 						break;
 					case 3:
-						setString(getLine("orb"));
+						setString(PlayerPeon.getDialogue("orb"));
 						break;
 					case 4:
-						setString(getLine("congrats"));
+						setString(PlayerPeon.getDialogue("congrats"));
 						box.removeListener(this);
 						box.addListener(b);
+						break;
+					default:
+						setString(PlayerPeon.getDialogue("congrats"));
 						break;
 				}
 			}
 
-			if (TundraNPC.getIsActive() == true) {
-				switch (TundraNPC.speechStage) {
-					case 1:
-						setString(getLine("tundra"));
-						//button.setText("Close");
-						box.removeListener(this);
-						box.addListener(b);
-						break;
+			if (TundraNPC.getIsActive()) {
+				if (TundraNPC.speechStage >= 1) {
+					setString(PlayerPeon.getDialogue("tundra"));
+					box.removeListener(this);
+					box.addListener(b);
 				}
 			}
 
-			if (VolcanoNPC.getIsActive() == true){
-				switch (VolcanoNPC.speechStage) {
-					case 1:
-						setString(getLine("volcano"));
-						//button.setText("Close");
-						box.removeListener(this);
-						box.addListener(b);
-						break;
+			if (VolcanoNPC.getIsActive()){
+				if (VolcanoNPC.speechStage >= 1) {
+					setString(PlayerPeon.getDialogue("volcano"));
+					box.removeListener(this);
+					box.addListener(b);
 				}
 			}
 
-			if (SwampNPC.getIsActive() == true){
-				switch (SwampNPC.speechStage) {
-					case 1:
-						setString(getLine("swamp"));
-						//button.setText("Close");
-						box.removeListener(this);
-						box.addListener(b);
-						break;
+			if (SwampNPC.getIsActive()){
+				if (SwampNPC.speechStage >= 1) {
+					setString(PlayerPeon.getDialogue("swamp"));
+					box.removeListener(this);
+					box.addListener(b);
 				}
 			}
 
-			if (DesertNPC.getIsActive() == true){
-				switch (DesertNPC.speechStage) {
-					case 1:
-						setString(getLine("desert"));
-						//button.setText("Close");
-						box.removeListener(this);
-						box.addListener(b);
-						break;
+			if (DesertNPC.getIsActive()){
+				if (DesertNPC.speechStage >= 1) {
+					setString(PlayerPeon.getDialogue("desert"));
+					box.removeListener(this);
+					box.addListener(b);
 				}
 			}
 		}

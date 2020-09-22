@@ -16,7 +16,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.entities.attacks.CombatEntity;
