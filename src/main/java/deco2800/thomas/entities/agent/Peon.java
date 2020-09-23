@@ -228,6 +228,12 @@ public class Peon extends AgentEntity implements Tickable {
 	}
 
 	/**
+	 * Adds an amount of armour to the Peon
+	 * @param armour
+	 */
+	public void addArmour(float armour) { this.armour += armour; }
+
+	/**
 	 * Returns the maximum health of this AgentEntity.
 	 */
 	public int getMaxHealth() {

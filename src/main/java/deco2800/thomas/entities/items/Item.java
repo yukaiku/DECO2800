@@ -9,11 +9,7 @@ import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
 
-import javax.sound.midi.SysexMessage;
 import java.util.Random;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.HashMap;
 
 public class Item extends StaticEntity implements TouchDownObserver {
 
@@ -51,19 +47,6 @@ public class Item extends StaticEntity implements TouchDownObserver {
         return new Random().nextInt(2*max - 0) - max;
     }
 
-    public static int randomItemPositionGenerator2 (List<Integer> list, int max){
-        return list.get(new Random().nextInt((max - 0) +1 ) + 0);
-    }
-
-    public static <K, V> K getKey(HashMap<K, V> map, V value) {
-        for (Entry<K, V> entry : map.entrySet()) {
-            if (entry.getValue().equals(value)) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
-
     public AbstractDialogBox getDisplay() {
         return this.display;
     }
@@ -77,6 +60,13 @@ public class Item extends StaticEntity implements TouchDownObserver {
         if (PlayerPeon.checkBalance() > 0) {
             System.out.println(PlayerPeon.checkBalance());
             PlayerPeon.debit(goldValue);
+
+            if (this.getItemName().equals("Health Potion")) {
+                this.player.regenerateHealth(40);
+            }
+            if (this.getItemName().equals("Iron Shield") && this.player.getArmour() < 2000) {
+                this.player.addArmour(1000);
+            }
         }
     }
     

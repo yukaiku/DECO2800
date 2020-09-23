@@ -9,6 +9,8 @@ import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.entities.items.Treasure;
 
+import java.util.Random;
+
 public class ItemBox extends AbstractDialogBox {
 
 	TextButton button;
@@ -106,12 +108,20 @@ public class ItemBox extends AbstractDialogBox {
 		 */
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			if (PlayerPeon.checkBalance() > 0 || item.getClass() == Treasure.class ) {
+			if ((PlayerPeon.checkBalance() > 0) && (PlayerPeon.checkBalance() > item.getCurrencyValue())) {
 				System.out.print(ItemBox.super.getEntity());
 				ItemBox.super.setShowing(false);
 				ItemBox.super.setRemove(true);
 				box.remove();
 				item.chargePlayer();
+			}
+			if (item.getClass() == Treasure.class){
+				System.out.print(ItemBox.super.getEntity());
+				ItemBox.super.setShowing(false);
+				ItemBox.super.setRemove(true);
+				box.remove();
+				int randomCredit = new Random().nextInt(60-30) + 30;
+				PlayerPeon.credit(randomCredit);
 			}
 		}
 	};
