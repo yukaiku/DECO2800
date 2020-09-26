@@ -1,7 +1,6 @@
 package deco2800.thomas.entities.attacks;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;

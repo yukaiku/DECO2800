@@ -115,14 +115,11 @@ public class Fireball extends Projectile implements Animatable, Tickable{
     public TextureRegion getFrame(float delta) {
         TextureRegion region;
         // Get the animation frame based on the current state
-        switch (currentState) {
-            case EXPLODING:
-                region = explosion.getKeyFrame(stateTimer);
-                break;
-            default:
-                stateTimer = 0;
-                region = defaultState.getKeyFrame(stateTimer);
-                break;
+        if (currentState == State.EXPLODING) {
+            region = explosion.getKeyFrame(stateTimer);
+        } else {
+            stateTimer = 0;
+            region = defaultState.getKeyFrame(stateTimer);
         }
         stateTimer = stateTimer + delta;
         return region;
