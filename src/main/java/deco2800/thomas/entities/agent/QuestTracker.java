@@ -37,7 +37,6 @@ public class QuestTracker{
      */
     public static int resetOrbs() {
         orbs.clear();
-        GameManager.resetWorldOrder();
         return orbs.size();
     }
 
