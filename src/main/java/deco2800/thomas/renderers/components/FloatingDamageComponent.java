@@ -2,6 +2,7 @@ package deco2800.thomas.renderers.components;
 
 import deco2800.thomas.Tickable;
 
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -10,8 +11,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class FloatingDamageComponent implements Tickable {
     /* List of currently active floating damage instances. */
-    private CopyOnWriteArrayList<FloatingDamageText> floatingDamageInstances;
-    private CopyOnWriteArrayList<FloatingDamageText> floatingDamageInstancesToRemove;
+    private List<FloatingDamageText> floatingDamageInstances;
+    private List<FloatingDamageText> floatingDamageInstancesToRemove;
+
+    /**
+     * Creates an instance of the FloatingDamageComponent.
+     */
+    public void FloatingDamageComponent() {
+        floatingDamageInstances = new CopyOnWriteArrayList<>();
+        floatingDamageInstancesToRemove = new CopyOnWriteArrayList<>();
+    }
 
     /**
      * Updates all floating damage text instances currently managed.
