@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-//import deco2800.thomas.managers.Manager;
-
 import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.worlds.AbstractWorld;
 
@@ -18,7 +16,6 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -68,13 +65,12 @@ public class GameManager {
 	 */
 	public boolean showCoordsEntity = false;
 
-	private static enum WorldType {
+	private enum WorldType {
 		SWAMP_WORLD,
 		TUNDRA_WORLD,
 		DESERT_WORLD,
 		VOLCANO_WORLD
 	}
-	private static int currentWorld = 0;
 	private ArrayList<WorldType> worldOrder;
 
 	public State state = State.RUN;
@@ -276,7 +272,8 @@ public class GameManager {
 		// removes the previous enemy manager
 		managers.removeIf(manager -> manager instanceof EnemyManager);
 		this.getWorld().dispose(); // Dispose world
-		switch (worldOrder.get(QuestTracker.orbTracker().size())) {
+		WorldType worldType = worldOrder.get(QuestTracker.orbTracker().size());
+		switch (worldType) {
 			//SWAMP , TUNDRA, DESERT, VOLCANO
 			case SWAMP_WORLD:
 				this.setWorld(new SwampWorld());
