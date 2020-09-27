@@ -2,8 +2,8 @@ package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.AbstractTask;
@@ -26,7 +26,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(GameManager.class)
 public class IceballSkillTest extends BaseGDXTest {
-    private AbstractEntity mockedEntity;
+    private Peon mockedEntity;
     private GameManager mockedGameManager;
     private TextureManager textureManager;
 
@@ -36,7 +36,7 @@ public class IceballSkillTest extends BaseGDXTest {
     @Before
     public void setup() {
         // Mocks an abstract entity
-        mockedEntity = mock(AbstractEntity.class);
+        mockedEntity = mock(Peon.class);
         when(mockedEntity.getCol()).thenReturn(0f);
         when(mockedEntity.getRow()).thenReturn(0f);
         when(mockedEntity.getFaction()).thenReturn(EntityFaction.ALLY);
