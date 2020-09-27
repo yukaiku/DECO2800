@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import deco2800.thomas.renderers.components.*;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,10 +90,10 @@ public class OverlayRenderer implements Renderer {
      * @param type Class to return
      * @return OverlayComponent of type, or null
      */
-    public OverlayComponent getComponentByInstance(Class type) {
+    public <T extends OverlayComponent> T getComponentByInstance(Class<T> type) {
         for (OverlayComponent component : this.components) {
-            if (type.isInstance(component)) {
-                return component;
+            if (component.getClass() == type) {
+                return (T)component;
             }
         }
         return null;

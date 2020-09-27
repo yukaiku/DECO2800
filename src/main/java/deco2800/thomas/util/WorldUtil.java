@@ -6,11 +6,13 @@ import java.util.Set;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import deco2800.thomas.GameScreen;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.ScreenManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.OverlayComponent;
+import deco2800.thomas.renderers.OverlayRenderer;
 import deco2800.thomas.renderers.components.FloatingDamageComponent;
 import deco2800.thomas.worlds.Tile;
 
@@ -116,9 +118,14 @@ public class WorldUtil {
 	 * Returns a reference to the floating damage component.
 	 */
 	public static FloatingDamageComponent getFloatingDamageComponent() {
-		OverlayComponent component = GameManager.get().getManager(ScreenManager.class).getCurrentScreen()
-				.getOverlayRenderer().getComponentByInstance(FloatingDamageComponent.class);
-		return (FloatingDamageComponent)component;
+		GameManager gm = GameManager.get();
+		ScreenManager sm = gm.getManager(ScreenManager.class);
+		GameScreen cs = sm.getCurrentScreen();
+		OverlayRenderer or = cs.getOverlayRenderer();
+		OverlayComponent fd = or.getComponentByInstance(FloatingDamageComponent.class);
+		//OverlayComponent component = GameManager.get().getManager(ScreenManager.class).getCurrentScreen()
+		//		.getOverlayRenderer().getComponentByInstance(FloatingDamageComponent.class);
+		return (FloatingDamageComponent)fd;
 	}
 
 	/**
