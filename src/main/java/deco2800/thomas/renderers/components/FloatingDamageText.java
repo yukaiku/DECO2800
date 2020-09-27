@@ -110,5 +110,6 @@ public class FloatingDamageText implements Tickable {
      */
     public void onTick(long i) {
         life--;
+        y++;
     }
 }

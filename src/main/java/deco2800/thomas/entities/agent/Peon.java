@@ -118,7 +118,7 @@ public class Peon extends AgentEntity implements Tickable {
 
 			// Create floating damage text
 			WorldUtil.getFloatingDamageComponent().add(damageApplied, Color.RED,
-					WorldUtil.colRowToWorldCords(this.getCol(), this.getRow()), 60);
+					WorldUtil.colRowToWorldCords(this.getCol() + 0.5f, this.getRow() + 2), 60);
 
 			// Update is attack status
 			isAttacked = true;

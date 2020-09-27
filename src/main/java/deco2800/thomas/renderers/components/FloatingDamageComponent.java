@@ -62,8 +62,7 @@ public class FloatingDamageComponent extends OverlayComponent implements Tickabl
      * Adds a new instance of floating damage text to the component.
      * @param value Value to show
      * @param color Color to render in
-     * @param x X position in world coordinates
-     * @param y Y position in world coordinates
+     * @param position Array for position, X and Y.
      * @param life Lifetime in ticks
      */
     public void add(int value, Color color, float[] position, int life) {
@@ -89,12 +88,9 @@ public class FloatingDamageComponent extends OverlayComponent implements Tickabl
 
         batch.begin();
         for (FloatingDamageText text : floatingDamageInstances) {
-            System.out.println("Render damage text.");
-            batch.setColor(text.getColor());
-
+            font.setColor(text.getColor());
             font.draw(batch, text.getValue(), text.getX(), text.getY());
         }
-        batch.setColor(Color.WHITE);
         batch.end();
     }
 }
