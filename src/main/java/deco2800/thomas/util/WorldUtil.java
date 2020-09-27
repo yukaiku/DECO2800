@@ -118,14 +118,9 @@ public class WorldUtil {
 	 * Returns a reference to the floating damage component.
 	 */
 	public static FloatingDamageComponent getFloatingDamageComponent() {
-		GameManager gm = GameManager.get();
-		ScreenManager sm = gm.getManager(ScreenManager.class);
-		GameScreen cs = sm.getCurrentScreen();
-		OverlayRenderer or = cs.getOverlayRenderer();
-		OverlayComponent fd = or.getComponentByInstance(FloatingDamageComponent.class);
-		//OverlayComponent component = GameManager.get().getManager(ScreenManager.class).getCurrentScreen()
-		//		.getOverlayRenderer().getComponentByInstance(FloatingDamageComponent.class);
-		return (FloatingDamageComponent)fd;
+		OverlayComponent component = GameManager.get().getManager(ScreenManager.class).getCurrentScreen()
+				.getOverlayRenderer().getComponentByInstance(FloatingDamageComponent.class);
+		return (FloatingDamageComponent)component;
 	}
 
 	/**

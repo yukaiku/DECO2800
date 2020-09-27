@@ -218,7 +218,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 		overlayRenderer = new OverlayRenderer();
 		overlayRenderer.setUpComponents();
-		
+
 		GameManager.getManagerFromInstance(ScreenManager.class).setCurrentScreen(this);
 	}
 

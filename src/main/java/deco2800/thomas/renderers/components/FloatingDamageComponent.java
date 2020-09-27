@@ -89,9 +89,10 @@ public class FloatingDamageComponent extends OverlayComponent implements Tickabl
 
         batch.begin();
         for (FloatingDamageText text : floatingDamageInstances) {
+            System.out.println("Render damage text.");
             batch.setColor(text.getColor());
-            font.draw(batch, text.getValue(), text.getX() - overlayRenderer.getX(),
-                    text.getY() - overlayRenderer.getY());
+
+            font.draw(batch, text.getValue(), text.getX(), text.getY());
         }
         batch.setColor(Color.WHITE);
         batch.end();
