@@ -14,10 +14,12 @@ import deco2800.thomas.entities.enemies.bosses.TundraDragon;
 import deco2800.thomas.entities.enemies.bosses.VolcanoDragon;
 import deco2800.thomas.entities.enemies.minions.Goblin;
 import deco2800.thomas.managers.*;
+import deco2800.thomas.renderers.components.FloatingDamageComponent;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
 import deco2800.thomas.tasks.combat.IceBreathTask;
 import deco2800.thomas.tasks.combat.SandTornadoAttackTask;
 import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
+import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import org.junit.Before;
@@ -32,7 +34,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(GameManager.class)
+@PrepareForTest({GameManager.class, WorldUtil.class})
 public class DragonTest extends BaseGDXTest {
     private AbstractWorld world;
     private PlayerPeon playerPeon;
@@ -46,6 +48,12 @@ public class DragonTest extends BaseGDXTest {
 
     @Before
     public void setUp() throws Exception {
+        // Mock floating damage
+        FloatingDamageComponent fdc = mock(FloatingDamageComponent.class);
+        PowerMockito.mockStatic(WorldUtil.class);
+        when(WorldUtil.getFloatingDamageComponent()).thenReturn(fdc);
+        when(WorldUtil.colRowToWorldCords(anyFloat(), anyFloat())).thenCallRealMethod();
+
         PowerMockito.mockStatic(GameManager.class);
         enemyManager = mock(EnemyManager.class);
         InputManager inputManager = mock(InputManager.class);

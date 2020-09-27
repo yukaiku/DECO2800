@@ -4,14 +4,30 @@ import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.minions.Goblin;
 import deco2800.thomas.util.SquareVector;
-
 import deco2800.thomas.entities.enemies.monsters.Orc;
 import deco2800.thomas.combat.DamageType;
+import deco2800.thomas.renderers.components.FloatingDamageComponent;
+import deco2800.thomas.util.WorldUtil;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(WorldUtil.class)
 public class EnemyPeonTest extends BaseGDXTest {
+    @Before
+    public void setup() {
+        FloatingDamageComponent fdc = mock(FloatingDamageComponent.class);
+        PowerMockito.mockStatic(WorldUtil.class);
+        when(WorldUtil.getFloatingDamageComponent()).thenReturn(fdc);
+    }
 
     @Test
     public void testConstructor() {

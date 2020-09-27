@@ -1,11 +1,13 @@
 package deco2800.thomas.entities.agent;
 
+import com.badlogic.gdx.graphics.Color;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.status.StatusEffect;
+import deco2800.thomas.util.WorldUtil;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -110,9 +112,18 @@ public class Peon extends AgentEntity implements Tickable {
 		if (damageType == vulnerability && vulnerability != DamageType.NONE) {
 			damageApplied *= 1.5f;
 		}
-		health.reduceHealth(damageApplied);
-		isAttacked = true;
-		isAttackedCoolDown = 5;
+		if (damageApplied > 0) {
+			// Reduce health
+			health.reduceHealth(damageApplied);
+
+			// Create floating damage text
+			WorldUtil.getFloatingDamageComponent().add(damageApplied, Color.RED,
+					WorldUtil.colRowToWorldCords(this.getCol() + 0.5f, this.getRow() + 2), 60);
+
+			// Update is attack status
+			isAttacked = true;
+			isAttackedCoolDown = 5;
+		}
 
 		return damageApplied;
 	}
@@ -261,6 +272,22 @@ public class Peon extends AgentEntity implements Tickable {
 	 */
 	public void setCurrentHealthValue(int newHealth) {
 		health.setCurrentHealthValue(newHealth);
+	}
+
+	/**
+	 * Gets the current base damage of the Peon
+	 * @return damage
+	 */
+	public float getDamage() {
+		return damage;
+	}
+
+	/**
+	 * Set sets the current base damage of the Peon
+	 * @param damage
+	 */
+	public void setDamage(float damage) {
+		this.damage = damage;
 	}
 
 	/**

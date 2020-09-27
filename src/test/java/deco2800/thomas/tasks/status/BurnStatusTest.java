@@ -4,10 +4,14 @@ import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.HealthTracker;
+import deco2800.thomas.renderers.components.FloatingDamageComponent;
+import deco2800.thomas.util.WorldUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.concurrent.TimeUnit;
@@ -20,6 +24,7 @@ import static org.mockito.Mockito.*;
  * These tests depend on the functionality of the HealthTracker class.
  */
 @RunWith(PowerMockRunner.class)
+@PrepareForTest(WorldUtil.class)
 public class BurnStatusTest extends BaseGDXTest {
 
     // the main BurnStatus instance being tested
@@ -32,6 +37,11 @@ public class BurnStatusTest extends BaseGDXTest {
     public void setUp() throws Exception {
         entity = new Peon(0, 0, 0, 50);
         burn = new BurnStatus(entity, 5, 2);
+
+        // Mock floating damage
+        FloatingDamageComponent fdc = mock(FloatingDamageComponent.class);
+        PowerMockito.mockStatic(WorldUtil.class);
+        when(WorldUtil.getFloatingDamageComponent()).thenReturn(fdc);
     }
 
     /**

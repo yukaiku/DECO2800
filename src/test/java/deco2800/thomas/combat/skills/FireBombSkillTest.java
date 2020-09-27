@@ -2,8 +2,8 @@ package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.AbstractTask;
@@ -26,7 +26,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(GameManager.class)
 public class FireBombSkillTest extends BaseGDXTest {
-    private AbstractEntity mockedEntity;
+    private Peon mockedEntity;
     private GameManager mockedGameManager;
     private TextureManager textureManager;
 
@@ -36,7 +36,7 @@ public class FireBombSkillTest extends BaseGDXTest {
     @Before
     public void setup() {
         // Mocks an abstract entity
-        mockedEntity = mock(AbstractEntity.class);
+        mockedEntity = mock(Peon.class);
         when(mockedEntity.getCol()).thenReturn(0f);
         when(mockedEntity.getRow()).thenReturn(0f);
         when(mockedEntity.getFaction()).thenReturn(EntityFaction.ALLY);
@@ -62,7 +62,7 @@ public class FireBombSkillTest extends BaseGDXTest {
     public void testValidConstructor() {
         FireBombSkill testSkill = new FireBombSkill(mockedEntity);
 
-        assertEquals(0, testSkill.getCooldown());
+        assertEquals(0, testSkill.getCooldownRemaining());
         assertEquals(160, testSkill.getCooldownMax());
         assertNotNull(testSkill.getTexture());
     }
@@ -102,9 +102,9 @@ public class FireBombSkillTest extends BaseGDXTest {
             FireBombSkill testSkill = new FireBombSkill(mockedEntity);
             testSkill.getNewSkillTask(10f, 10f);
 
-            assertEquals(testSkill.getCooldownMax(), testSkill.getCooldown());
+            assertEquals(testSkill.getCooldownMax(), testSkill.getCooldownRemaining());
             testSkill.onTick(0);
-            assertEquals(testSkill.getCooldownMax() - 1, testSkill.getCooldown());
+            assertEquals(testSkill.getCooldownMax() - 1, testSkill.getCooldownRemaining());
         } catch (SkillOnCooldownException e) {
             fail("Unexpected SkillOnCooldownException.");
         }
