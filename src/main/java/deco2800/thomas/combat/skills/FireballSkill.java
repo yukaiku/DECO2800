@@ -1,8 +1,6 @@
 package deco2800.thomas.combat.skills;
 
-import deco2800.thomas.Tickable;
-import deco2800.thomas.combat.Skill;
-import deco2800.thomas.combat.SkillOnCooldownException;
+import deco2800.thomas.combat.AbstractSkill;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireballAttackTask;
@@ -10,7 +8,7 @@ import deco2800.thomas.tasks.combat.FireballAttackTask;
 /**
  * Launches a fireball that deals damage when it hits a target. 
  */
-public class FireballSkill implements Skill, Tickable {
+public class FireballSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
     private static final int cooldown = 20;
     /* Damage multiplier to apply to the fireball.
@@ -21,8 +19,6 @@ public class FireballSkill implements Skill, Tickable {
     /* Lifetime of fireball */
     private static final int lifetime = 60;
 
-    /* Cooldown tracker */
-    private int cooldownRemaining = 0;
     /* Reference to parent entity */
     private final Peon entity;
 
@@ -36,27 +32,6 @@ public class FireballSkill implements Skill, Tickable {
             throw new NullPointerException();
         }
         this.entity = parent;
-    }
-
-    /**
-     * On tick is called periodically (time dependant on the world settings).
-     * @param tick Current game tick
-     */
-    @Override
-    public void onTick(long tick) {
-        if (cooldownRemaining > 0) {
-            cooldownRemaining--;
-        }
-    }
-
-    /**
-     * Returns (in ticks) how long is remaining on the cooldown.
-     *
-     * @return Cooldown remaining.
-     */
-    @Override
-    public int getCooldownRemaining() {
-        return cooldownRemaining;
     }
 
     /**
@@ -86,17 +61,10 @@ public class FireballSkill implements Skill, Tickable {
      * @param targetX X position of target in ColRow coordinates
      * @param targetY Y position of target in ColRow coordinates
      * @return New AbstractTask to execute.
-     * @throws SkillOnCooldownException when cooldown > 0
      */
     @Override
-    public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
+    protected AbstractTask getTask(float targetX, float targetY) {
         int damage = (int) (entity.getDamage() * damageMultiplier);
-        if (cooldownRemaining <= 0) {
-            AbstractTask task = new FireballAttackTask(entity, targetX, targetY, damage, speed, lifetime);
-            cooldownRemaining = cooldown;
-            return task;
-        } else {
-            throw new SkillOnCooldownException();
-        }
+        return new FireballAttackTask(entity, targetX, targetY, damage, speed, lifetime);
     }
 }

@@ -1,30 +1,26 @@
 package deco2800.thomas.combat.skills;
 
-import deco2800.thomas.Tickable;
-import deco2800.thomas.combat.Skill;
-import deco2800.thomas.combat.SkillOnCooldownException;
+import deco2800.thomas.combat.AbstractSkill;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.IceballAttackTask;
 
-public class IceballSkill implements Skill, Tickable {
+public class IceballSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
     private static final int MAX_COOLDOWN = 50;
     /* Damage multiplier to apply to the iceball.
     Multiplies the peon base damage value. */
-    private static final float damageMultiplier = 0.4f;
+    private static final float DAMAGE_MULTIPLIER = 0.4f;
     /* Lifetime of explosion */
     /* Speed of projectile */
     private static final float SPEED = 0.5f;
     /* Lifetime of projectile */
     private static final int LIFETIME = 60;
-
+    /* Speed multiplier to apply */
     private final float speedMultiplier;
-
+    /* Duration of slow effect */
     private final int slowDuration;
 
-    /* Cooldown tracker */
-    private int cooldown = 0;
     /* Reference to parent entity */
     private final Peon entity;
 
@@ -38,18 +34,6 @@ public class IceballSkill implements Skill, Tickable {
     }
 
     @Override
-    public void onTick(long tick) {
-        if (cooldown > 0) {
-            cooldown--;
-        }
-    }
-
-    @Override
-    public int getCooldownRemaining() {
-        return cooldown;
-    }
-
-    @Override
     public int getCooldownMax() {
         return MAX_COOLDOWN;
     }
@@ -60,15 +44,9 @@ public class IceballSkill implements Skill, Tickable {
     }
 
     @Override
-    public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
-        int damage = (int) (entity.getDamage() * damageMultiplier);
-        if (cooldown <= 0) {
-            AbstractTask task = new IceballAttackTask(entity, targetX, targetY,
+    protected AbstractTask getTask(float targetX, float targetY) {
+        int damage = (int) (entity.getDamage() * DAMAGE_MULTIPLIER);
+        return new IceballAttackTask(entity, targetX, targetY,
                     damage, SPEED, LIFETIME, speedMultiplier, slowDuration);
-            cooldown = MAX_COOLDOWN;
-            return task;
-        } else {
-            throw new SkillOnCooldownException();
-        }
     }
 }

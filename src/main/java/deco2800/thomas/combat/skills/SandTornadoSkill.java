@@ -1,25 +1,21 @@
 package deco2800.thomas.combat.skills;
 
-import deco2800.thomas.Tickable;
-import deco2800.thomas.combat.Skill;
-import deco2800.thomas.combat.SkillOnCooldownException;
+import deco2800.thomas.combat.AbstractSkill;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.SandTornadoAttackTask;
 
-public class SandTornadoSkill implements Skill, Tickable {
+public class SandTornadoSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static final int cooldown = 30;
+    private static final int COOLDOWN = 30;
     /* Damage multiplier to apply to the ice tile.
     Multiplies the peon base damage value. */
-    private static final float damageMultiplier = 0.4f;
+    private static final float DAMAGE_MULTIPLIER = 0.4f;
     /* Speed of sand tornado */
-    private static final float speed = 0.2f;
+    private static final float SPEED = 0.2f;
     /* Lifetime of sand tornado */
-    private static final int lifetime = 60;
+    private static final int LIFETIME = 60;
 
-    /* Cooldown tracker */
-    private int cooldownRemaining = 0;
     /* Reference to parent entity */
     private final Peon entity;
 
@@ -31,13 +27,8 @@ public class SandTornadoSkill implements Skill, Tickable {
     }
 
     @Override
-    public int getCooldownRemaining() {
-        return cooldownRemaining;
-    }
-
-    @Override
     public int getCooldownMax() {
-        return cooldown;
+        return COOLDOWN;
     }
 
     @Override
@@ -46,21 +37,8 @@ public class SandTornadoSkill implements Skill, Tickable {
     }
 
     @Override
-    public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
-        int damage = (int) (entity.getDamage() * damageMultiplier);
-        if (cooldownRemaining <= 0) {
-            AbstractTask task = new SandTornadoAttackTask(entity, targetX, targetY, damage, speed, lifetime);
-            cooldownRemaining = cooldown;
-            return task;
-        } else {
-            throw new SkillOnCooldownException();
-        }
-    }
-
-    @Override
-    public void onTick(long tick) {
-        if (cooldownRemaining > 0) {
-            cooldownRemaining--;
-        }
+    protected AbstractTask getTask(float targetX, float targetY) {
+        int damage = (int) (entity.getDamage() * DAMAGE_MULTIPLIER);
+        return new SandTornadoAttackTask(entity, targetX, targetY, damage, SPEED, LIFETIME);
     }
 }

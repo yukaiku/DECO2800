@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import deco2800.thomas.combat.Skill;
+import deco2800.thomas.combat.AbstractSkill;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
@@ -70,7 +70,7 @@ public class HotbarComponent extends OverlayComponent {
      * @param batch  the sprite batch to draw into
      * @param skills the skill list to loop
      */
-    private void renderSkills(SpriteBatch batch, List<Skill> skills) {
+    private void renderSkills(SpriteBatch batch, List<AbstractSkill> skills) {
         for (int i = 0; i < 5; i++) {
             Sprite skillHolder = new Sprite(GameManager.get().getManager(TextureManager.class).getTexture("knight_hotbar"));
             skillHolder.setPosition(lastRenderedSprite.getX() + lastRenderedSprite.getWidth(), lastRenderedSprite.getY());
@@ -94,7 +94,7 @@ public class HotbarComponent extends OverlayComponent {
      * @param skill       the skill we want to render
      * @param skillHolder the skill holder where the skill will be put
      */
-    private void renderSkill(SpriteBatch batch, Skill skill, Sprite skillHolder) {
+    private void renderSkill(SpriteBatch batch, AbstractSkill skill, Sprite skillHolder) {
         float skillIconWidth = 0.7f * skillHolder.getWidth();
         float skillIconHeight = 0.7f * skillHolder.getHeight();
         float skillIconX = skillHolder.getX() + 0.5f * skillHolder.getWidth() - 0.5f * skillIconWidth;
@@ -124,7 +124,7 @@ public class HotbarComponent extends OverlayComponent {
      * @param width     width of the black box
      * @param maxHeight the maximum height of the black box
      */
-    private void renderCoolDownBox(SpriteBatch batch, Skill skill, float x, float y, float width, float maxHeight) {
+    private void renderCoolDownBox(SpriteBatch batch, AbstractSkill skill, float x, float y, float width, float maxHeight) {
         float height = (float) skill.getCooldownRemaining() / skill.getCooldownMax() * maxHeight;
 
         coolDownBox.setProjectionMatrix(batch.getProjectionMatrix());
@@ -143,7 +143,7 @@ public class HotbarComponent extends OverlayComponent {
      * @param batch the sprite batch to draw into
      * @param skill the ultimate skill to render
      */
-    private void renderMechSkill(SpriteBatch batch, Skill skill) {
+    private void renderMechSkill(SpriteBatch batch, AbstractSkill skill) {
         if (skill != null) {
             Sprite skillHolder = new Sprite(GameManager.get().getManager(TextureManager.class).getTexture("knight_hotbar"));
             skillHolder.setPosition(lastRenderedSprite.getX() + lastRenderedSprite.getWidth(), lastRenderedSprite.getY());

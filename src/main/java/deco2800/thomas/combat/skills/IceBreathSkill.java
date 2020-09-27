@@ -1,25 +1,21 @@
 package deco2800.thomas.combat.skills;
 
-import deco2800.thomas.Tickable;
-import deco2800.thomas.combat.Skill;
-import deco2800.thomas.combat.SkillOnCooldownException;
+import deco2800.thomas.combat.AbstractSkill;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.IceBreathTask;
 
-public class IceBreathSkill implements Skill, Tickable {
+public class IceBreathSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static final int cooldown = 20;
+    private static final int COOLDOWN = 20;
     /* Damage multiplier to apply to the ice tile.
     Multiplies the peon base damage value. */
-    private static final float damageMultiplier = 0.4f;
-
+    private static final float DAMAGE_MULTIPLIER = 0.4f;
+    /* Speed multiplier to apply for slow effect. */
     private final float speedMultiplier;
-
+    /* Duration of slow effect. */
     private final int slowDuration;
 
-    /* Cooldown tracker */
-    private int cooldownRemaining = 0;
     /* Reference to parent entity */
     private final Peon entity;
 
@@ -30,13 +26,8 @@ public class IceBreathSkill implements Skill, Tickable {
     }
 
     @Override
-    public int getCooldownRemaining() {
-        return cooldownRemaining;
-    }
-
-    @Override
     public int getCooldownMax() {
-        return cooldown;
+        return COOLDOWN;
     }
 
     @Override
@@ -45,22 +36,9 @@ public class IceBreathSkill implements Skill, Tickable {
     }
 
     @Override
-    public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
-        int damage = (int) (entity.getDamage() * damageMultiplier);
-        if (cooldownRemaining <= 0) {
-            AbstractTask task = new IceBreathTask(entity, targetX, targetY,
+    protected AbstractTask getTask(float targetX, float targetY) {
+        int damage = (int) (entity.getDamage() * DAMAGE_MULTIPLIER);
+        return new IceBreathTask(entity, targetX, targetY,
                     damage, speedMultiplier, slowDuration);
-            cooldownRemaining = cooldown;
-            return task;
-        } else {
-            throw new SkillOnCooldownException();
-        }
-    }
-
-    @Override
-    public void onTick(long tick) {
-        if (cooldownRemaining > 0) {
-            cooldownRemaining--;
-        }
     }
 }
