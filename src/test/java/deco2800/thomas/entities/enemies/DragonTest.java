@@ -98,7 +98,7 @@ public class DragonTest extends BaseGDXTest {
     @Test
     public void testSummonGoblin() {
         swampDragon.summonGoblin();
-        verify(enemyManager, times(1)).spawnSpecialEnemy(any(Goblin.class), anyFloat(), anyFloat());
+        verify(enemyManager, times(1)).spawnSpecialEnemy(eq("swampGoblin"), anyFloat(), anyFloat());
     }
 
     @Test

@@ -2,10 +2,8 @@ package deco2800.thomas.worlds.volcano;
 
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.entities.enemies.monsters.Orc;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.VolcanoNPC;
-import deco2800.thomas.entities.enemies.*;
 import deco2800.thomas.entities.environment.volcano.VolcanoDragonSkull;
 import deco2800.thomas.entities.environment.volcano.VolcanoGraveYard;
 import deco2800.thomas.entities.environment.volcano.VolcanoRuins;
@@ -16,7 +14,6 @@ import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.entities.environment.volcano.*;
-import deco2800.thomas.entities.enemies.bosses.VolcanoDragon;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -66,10 +63,8 @@ public class VolcanoWorld extends AbstractWorld {
 
         this.allVolcanoDialogues = new ArrayList<>();
 
-        // Provide available enemies to the EnemyManager
-        Orc volcanoOrc = new Orc(Variation.VOLCANO, 50, 0.09f);
-        VolcanoDragon boss = new VolcanoDragon(1000, 0.03f, 1);
-        EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(volcanoOrc), boss);
+        // Provide enemies
+        EnemyManager enemyManager = new EnemyManager(this, "volcanoDragon", 7, "volcanoOrc");
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(16, 20);
 

@@ -9,32 +9,63 @@ import deco2800.thomas.entities.enemies.monsters.Dummy;
 import deco2800.thomas.entities.enemies.monsters.Orc;
 
 /**
- * Usage:
- * For wild enemies (auto-spawn),
- * For special enemies (manual-spawn),
+ * Here lists all available enemies and their variations for convenience.
+ * Each variation of enemies will now has an index (e.g. "swampOrc").
+ * Some params are initial values and can be changed later in EnemyManager.
+ *
+ * Adding different variation example:
+ *     case "speedySwampOrc": return new Orc(Variation.SWAMP, 50, 0.15f);
+ *
+ * Usage for spawning:
+ *     For wild enemies (auto-spawn) and bosses, provide their enemyIds when initialising the enemy manager.
+ *     For special enemies (manual-spawn), use EnemyManager.spawnSpecialEnemy(String enemyIndex, float x, float y)
+ *
+ * Wiki:
+ *
+ * todo: doc, wiki, testing
  */
 public class EnemyIndex {
-    public static EnemyPeon makeEnemy(String enemyId) throws InvalidEnemyException {
-        switch (enemyId) {
+
+    // todo: put Variation enum here
+
+    /**
+     * This function will be called only once when initialising a new EnemyManager.
+     */
+    public static EnemyPeon makeEnemy(String enemyIndex) throws InvalidEnemyException {
+        switch (enemyIndex) {
+            // swamp world
             case "swampOrc": return new Orc(Variation.SWAMP, 50, 0.09f);
             case "swampGoblin": return new Goblin(Variation.SWAMP, 20, 0.1f);
             case "swampDragon": return new SwampDragon(1050, 0.03f, 2);
 
+            // tundra world
             case "tundraOrc": return new Orc(Variation.TUNDRA, 100, 0.05f);
             case "tundraGoblin": return new Goblin(Variation.TUNDRA, 20, 0.1f);
             case "tundraDragon": return new TundraDragon(950, 0.03f, 3);
 
+            // desert world
             case "desertOrc": return new Orc(Variation.DESERT, 50, 0.09f);
             case "desertGoblin": return new Goblin(Variation.DESERT, 20, 0.1f);
             case "desertDragon": return new DesertDragon(850, 0.03f, 4);
 
+            // volcano world
             case "volcanoOrc": return new Orc(Variation.VOLCANO, 50, 0.09f);
             case "volcanoGoblin": return new Goblin(Variation.VOLCANO, 20, 0.1f);
             case "volcanoDragon": return new VolcanoDragon(1000, 0.03f , 1);
 
+            // tutorial world
             case "dummy": return new Dummy(100, 0);
 
+            // debugging
+            case "summonGoblin": return new Goblin(Variation.SWAMP, 50, 0.1f);
+            case "testOrc": return new Orc(Variation.SWAMP, 1, 1);
+            case "testGoblin": return new Goblin(Variation.SWAMP, 1, 1);
+            case "testDragon": return new SwampDragon(1, 1, 2);
             default: throw new InvalidEnemyException();
         }
+    }
+
+    private EnemyIndex() {
+        // Prevent calling the public constructor.
     }
 }

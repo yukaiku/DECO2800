@@ -142,10 +142,8 @@ public class TestWorld extends AbstractWorld {
 		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f, 50));
 		addEntity(this.getPlayerEntity());
 
-		// Provide available enemies to the EnemyManager
-		Orc swampOrc = new Orc(Variation.SWAMP, 100, 0.05f);
-		Dragon boss = new SwampDragon(1000, 0.03f, 1);
-		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc), boss);
+		// Provide enemies
+		EnemyManager enemyManager = new EnemyManager(this, "swampDragon", 5, "swampOrc");
 		GameManager.get().addManager(enemyManager);
 		enemyManager.spawnBoss(-2, 0);
 	}

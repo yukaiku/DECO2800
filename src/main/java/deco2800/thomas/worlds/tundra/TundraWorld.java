@@ -4,9 +4,6 @@ import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.TundraNPC;
-import deco2800.thomas.entities.enemies.monsters.Orc;
-import deco2800.thomas.entities.enemies.Variation;
-import deco2800.thomas.entities.enemies.bosses.TundraDragon;
 import deco2800.thomas.entities.environment.tundra.TundraCampfire;
 import deco2800.thomas.entities.environment.tundra.TundraRock;
 import deco2800.thomas.entities.environment.tundra.TundraTreeLog;
@@ -54,14 +51,12 @@ public class TundraWorld extends AbstractWorld {
 		addEntity(this.getPlayerEntity());
 		generateItemEntities();
 
-		// Provide available enemies to the EnemyManager
-		Orc tundraOrc = new Orc(Variation.TUNDRA, 100, 0.05f);
-		TundraDragon boss = new TundraDragon(950, 0.03f, 3);
-		EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(tundraOrc), boss);
+		// Provide enemies
+		EnemyManager enemyManager = new EnemyManager(this, "tundraDragon", 7, "tundraOrc");
 		GameManager.get().addManager(enemyManager);
 		enemyManager.spawnBoss(0, 0);
 
-		//Creates Tundra NPCs
+		// Creates Tundra NPCs
 		List<NonPlayablePeon> npnSpawns = new ArrayList<>();
 		TundraNPC tundraNpc1 = new TundraNPC("TundraQuestNPC1", new SquareVector(-8, -24),"tundra_npc1");
 		TundraNPC tundraNpc2 = new TundraNPC("TundraQuestNPC2", new SquareVector(-22, -9),"tundra_npc2");

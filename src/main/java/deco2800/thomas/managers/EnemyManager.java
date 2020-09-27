@@ -3,16 +3,14 @@ package deco2800.thomas.managers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import deco2800.thomas.combat.DamageType;
+import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.enemies.EnemyPeon;
+import deco2800.thomas.entities.enemies.InvalidEnemyException;
 import deco2800.thomas.entities.enemies.bosses.Boss;
-import deco2800.thomas.entities.enemies.minions.Goblin;
-import deco2800.thomas.entities.enemies.Variation;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.worlds.AbstractWorld;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * EnemyManager handles the spawning mechanism of the enemies.
@@ -24,6 +22,8 @@ import java.util.Random;
  * Special enemies do not randomly spawn and need to be manually placed at the given position.
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/enemy-manager
+ *
+ * todo: store special enemy blueprints
  */
 public class EnemyManager extends TickableManager implements KeyDownObserver {
     // the target world
@@ -36,7 +36,8 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
     private int wildEnemyCap;
 
     // list of configured enemies allowed to spawn
-    private final List<EnemyPeon> wildEnemyConfigs;
+    private final List<String> wildEnemyIndexes;
+    private final Map<String, EnemyPeon> wildEnemyConfigs;
 
     // current wild enemies alive (excludes boss)
     private final List<EnemyPeon> wildEnemiesAlive;
@@ -55,21 +56,36 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
     private int nextTick = 60;
 
     /**
-     * Initialise an enemy manager without wild enemies. (e.g. for tutorial maps)
-     * This constructor is intended for manually spawning special enemies (e.g. dummies) later on the map,
-     * if the world does not have enemies at all, you don't need an EnemyManager.
+     * Initialise an enemy manager with wild enemies and boss configured.
      * @param world The world where the manager will operate on.
+     * @param bossIndex The enemy index of the boss. Bosses need to be later manually placed
+     *                  using the spawnBoss() method.
+     * @param wildEnemyCap The maximum number of wild enemies allowed to exist at one time.
+     * @param wildEnemyIndexes The enemy indexes of the wild enemies.
      */
-    public EnemyManager(AbstractWorld world) {
+    public EnemyManager(AbstractWorld world, String bossIndex, int wildEnemyCap, String ...wildEnemyIndexes) {
         this.world = world;
+        this.wildSpawning = wildEnemyCap > 0;
+        this.wildEnemyCap = wildEnemyCap;
+        this.wildEnemyIndexes = new ArrayList<>();
+        this.wildEnemyConfigs = new HashMap<>();
 
-        this.wildSpawning = false;
-        this.wildEnemyCap = 0;
-        this.wildEnemyConfigs = new ArrayList<>();
+        // wild enemy blueprints
+        Collections.addAll(this.wildEnemyIndexes, wildEnemyIndexes);
+        for (String index : wildEnemyIndexes) {
+            try {
+                wildEnemyConfigs.put(index, EnemyIndex.makeEnemy(index));
+            } catch (InvalidEnemyException ignored) {
+            }
+        }
         this.wildEnemiesAlive = new ArrayList<>();
-        this.specialEnemiesAlive = new ArrayList<>();
-        this.boss = null;
 
+        this.specialEnemiesAlive = new ArrayList<>();
+        try {
+            this.boss = bossIndex == null ? null : (Boss) EnemyIndex.makeEnemy(bossIndex);
+        } catch (InvalidEnemyException e) {
+            this.boss = null;
+        }
         this.spawnRangeMin = 8;
         this.spawnRangeMax = 14;
         this.random = new Random();
@@ -80,26 +96,20 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
      * Initialise an enemy manager with wild enemies configured.
      * @param world The world where the manager will operate on.
      * @param wildEnemyCap The maximum number of wild enemies allowed to exist at one time.
-     * @param wildEnemyConfigs Blueprints of enemies (one for each type) the manager will automatically spawn.
-     * The wildEnemyConfigs should not contain bosses, otherwise they will be randomly placed and generated.
+     * @param wildEnemyIndexes The enemy indexes of the wild enemies.
      */
-    public EnemyManager(AbstractWorld world, int wildEnemyCap, List<EnemyPeon> wildEnemyConfigs) {
-        this(world);
-        this.wildSpawning = !wildEnemyConfigs.isEmpty();
-        this.wildEnemyCap = wildEnemyCap;
-        this.wildEnemyConfigs.addAll(wildEnemyConfigs);
+    public EnemyManager(AbstractWorld world, int wildEnemyCap, String ...wildEnemyIndexes) {
+        this(world, null, wildEnemyCap, wildEnemyIndexes);
     }
 
     /**
-     * Initialise an enemy manager with a boss configured.
+     Initialise an enemy manager without wild enemies and bosses. (e.g. for tutorial maps)
+     * This constructor is intended for manually spawning special enemies (e.g. dummies) later on the map,
+     * if the world does not have enemies at all, you don't need an EnemyManager.
      * @param world The world where the manager will operate on.
-     * @param wildEnemyCap The maximum number of wild enemies allowed to exist at one time.
-     * @param wildEnemyConfigs Blueprints of enemies (one for each type) the manager will automatically spawn.
-     * @param boss The boss enemy in the map. Bosses need to be later manually placed using the spawnBoss() method.
      */
-    public EnemyManager(AbstractWorld world, int wildEnemyCap, List<EnemyPeon> wildEnemyConfigs, Boss boss) {
-        this(world, wildEnemyCap, wildEnemyConfigs);
-        this.boss = boss;
+    public EnemyManager(AbstractWorld world) {
+        this(world, null, 0);
     }
 
     /**
@@ -135,7 +145,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
      * @return the number of enemies alive.
      */
     public int getEnemyCount() {
-        return wildEnemiesAlive.size() + specialEnemiesAlive.size() + ((boss == null || boss.isDead()) ? 0 : 1);
+        return wildEnemiesAlive.size() + specialEnemiesAlive.size() + (boss == null ? 0 : boss.isDead() ? 0 : 1);
     }
 
     /** Get the current wild enemies alive in the map. */
@@ -170,14 +180,18 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
     /**
      * Spawn the special enemies (e.g. minions, dummies) at the given position.
      * Special Enemies will bypass the wild enemy limits and configs.
-     * @param enemy The special EnemyPeon to spawn.
+     * @param enemyIndex The enemy index of the special enemy
      * @param x The x position on the map.
      * @param y The y position on the map.
      */
-    public void spawnSpecialEnemy(EnemyPeon enemy, float x, float y) {
-        enemy.setPosition(x, y);
-        world.addEntity(enemy);
-        specialEnemiesAlive.add(enemy);
+    public void spawnSpecialEnemy(String enemyIndex, float x, float y) {
+        try {
+            EnemyPeon enemy = EnemyIndex.makeEnemy(enemyIndex);
+            enemy.setPosition(x, y);
+            world.addEntity(enemy);
+            specialEnemiesAlive.add(enemy);
+        } catch (InvalidEnemyException ignored) {
+        }
     }
 
     /**
@@ -206,9 +220,13 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
                     tileY > -world.getHeight() + 1 && tileY < world.getHeight() - 1 &&
                     world.getTile(tileX, tileY) != null && !world.getTile(tileX, tileY).isObstructed() &&
                     !world.getTile(tileX, tileY).getType().equals("BurnTile")) {
-                // choose a random enemy blueprint
-                EnemyPeon enemy = wildEnemyConfigs.get(random.nextInt(wildEnemyConfigs.size())).deepCopy();
-                spawnWildEnemy(enemy, tileX, tileY);
+                // choose a random enemy
+                try {
+                    EnemyPeon enemy = EnemyIndex.makeEnemy(wildEnemyIndexes.get(random.nextInt(wildEnemyIndexes.size())));
+                    spawnWildEnemy(enemy, tileX, tileY);
+                } catch (InvalidEnemyException e) {
+                    break;
+                }
                 break;
             }
         }
@@ -236,21 +254,6 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
         }
     }
 
-    /** Automatically detects the enemy type and remove from the world. (Not recommended since it takes some time) */
-    public void removeEnemyAuto(EnemyPeon enemy) {
-        if (wildEnemiesAlive.contains(enemy)) {
-            removeWildEnemy(enemy);
-            return;
-        }
-        if (specialEnemiesAlive.contains(enemy)) {
-            removeSpecialEnemy(enemy);
-            return;
-        }
-        if (boss == enemy) {
-            removeBoss();
-        }
-    }
-
     /** Get the world name the manager is operating on */
     public String getWorldName() {
         return world.toString().substring(world.toString().lastIndexOf('.') + 1);
@@ -263,7 +266,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
     @Override
     public void notifyKeyDown(int keycode) {
         if (GameManager.get().debugMode && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
-            Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
+                Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
             if (keycode == Input.Keys.P) {
                 // Ctrl + P: Toggle wild enemy spawning
                 wildSpawning = !wildSpawning;
@@ -276,8 +279,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
                 boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
             } else if (keycode == Input.Keys.S) {
                 // Ctrl + S: Spawn a special enemy
-                Goblin goblin = new Goblin(Variation.SWAMP, 50, 0.05f);
-                spawnSpecialEnemy(goblin, 0, 0);
+                spawnSpecialEnemy("swampGoblin", 0, 0);
             }
         }
     }

@@ -56,8 +56,8 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
      */
     public void summonGoblin() {
         if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() < 10) {
-            Goblin goblin = new Goblin(variation, 20, 0.1f);
-            GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(goblin, this.getCol() + 1, this.getRow() + 2);
+            GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(
+                    variation.name().toLowerCase() + "Goblin", this.getCol() + 1, this.getRow() + 2);
         }
     }
 

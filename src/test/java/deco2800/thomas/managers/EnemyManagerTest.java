@@ -28,12 +28,11 @@ public class EnemyManagerTest extends BaseGDXTest {
     public void testConstructors() {
         EnemyManager em1 = new EnemyManager(world);
         assertEquals(em1.getWildEnemyCap(), 0);
-        EnemyManager em2 = new EnemyManager(world, 10, new ArrayList<>());
+        EnemyManager em2 = new EnemyManager(world, null, 10);
         assertEquals(em2.getWildEnemyCap(), 10);
         assertEquals(em2.getWildEnemiesAlive(), new ArrayList<>());
-        SwampDragon boss = new SwampDragon(1, 1, 1);
-        EnemyManager em3 = new EnemyManager(world, 10, new ArrayList<>(), boss);
-        assertSame(em3.getBoss(), boss);
+        EnemyManager em3 = new EnemyManager(world, "swampDragon", 10);
+        assertEquals(em3.getBoss().getClass(), SwampDragon.class);
     }
 
     @Test
@@ -45,27 +44,23 @@ public class EnemyManagerTest extends BaseGDXTest {
         em.disableWildEnemySpawning();
         assertFalse(em.checkWildEnemySpawning());
 
-        Goblin enemy = new Goblin(Variation.SWAMP, 50, 0.05f);
-        em.spawnSpecialEnemy(enemy, 1, 1);
-        assertEquals(em.getSpecialEnemiesAlive(), Collections.singletonList(enemy));
+        em.spawnSpecialEnemy("testGoblin", 1, 1);
+        assertEquals(em.getSpecialEnemiesAlive().get(0).getClass(), Goblin.class);
     }
 
     @Test
     public void testWildEnemyCap() {
-        EnemyManager em = new EnemyManager(world, 10, new ArrayList<>());
+        EnemyManager em = new EnemyManager(world, null, 10);
         em.setWildEnemyCap(20);
         assertEquals(em.getWildEnemyCap(), 20);
     }
 
     @Test
     public void testBoss() {
-        EnemyManager em = new EnemyManager(world, 10, new ArrayList<>());
-        SwampDragon boss = new SwampDragon(1, 1, 1);
-        em.setBoss(boss);
-        assertSame(em.getBoss(), boss);
+        EnemyManager em = new EnemyManager(world, "swampDragon", 10);
         em.spawnBoss(0, 0);
-        assertEquals(em.getBoss().getCol(), 0, 0.5);
-        assertEquals(em.getBoss().getRow(), 0, 0.5);
+        assertEquals(em.getBoss().getCol(), 0, 0.001);
+        assertEquals(em.getBoss().getRow(), 0, 0.001);
     }
 
     @After
