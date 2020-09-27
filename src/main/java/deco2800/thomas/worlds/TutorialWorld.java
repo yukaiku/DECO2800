@@ -107,7 +107,7 @@ public class TutorialWorld extends AbstractWorld{
         }
         // Add targets
         for (int i = -6; i < 6 + 1; i = i + 2) {
-            if (i == 0 | i == -2 | i == 2) {
+            if (i == 0 || i == -2 || i == 2) {
                 continue;
             }
             Tile t = GameManager.get().getWorld().getTile(i, -TUTORIAL_WORLD_HEIGHT);
