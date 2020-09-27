@@ -20,6 +20,8 @@ public class IceBreathTask extends AbstractTask {
     private float originY;
 
     private final int damage;
+    private final float speedMultiplier;
+    private final int slowDuration;
 
     // Task tracker
     private boolean complete = false;
@@ -32,9 +34,12 @@ public class IceBreathTask extends AbstractTask {
      * @param targetRow Y direction to move towards
      * @param damage    Damage to apply
      */
-    public IceBreathTask(AbstractEntity entity, float targetCol, float targetRow, int damage) {
+    public IceBreathTask(AbstractEntity entity, float targetCol, float targetRow,
+                         int damage, float speedMultiplier, int slowDuration) {
         super(entity);
         this.damage = damage;
+        this.speedMultiplier = speedMultiplier;
+        this.slowDuration = slowDuration;
         this.originX = entity.getCol() + 2;
         this.originY = entity.getRow() + 2;
 
@@ -85,7 +90,7 @@ public class IceBreathTask extends AbstractTask {
     private void spawn(float col, float row) {
         float direction = (float)Math.toDegrees(Math.atan2(deltaY, deltaX));
         Freeze freeze = new Freeze(col, row, this.damage, this.entity.getFaction(), direction);
-        freeze.setCombatTask(new ApplySlowOnCollisionTask(freeze, 1));
+        freeze.setCombatTask(new ApplySlowOnCollisionTask(freeze, 1, speedMultiplier, slowDuration));
         GameManager.get().getWorld().addEntity(freeze);
     }
 

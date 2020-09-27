@@ -1,24 +1,37 @@
 package deco2800.thomas.entities.agent;
 
-import com.badlogic.gdx.Input;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.DamageType;
-import deco2800.thomas.combat.skills.FireballSkill;
-import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.renderers.components.FloatingDamageComponent;
 import deco2800.thomas.tasks.AbstractTask;
-import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.tasks.status.StatusEffect;
+import deco2800.thomas.util.WorldUtil;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.anyLong;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 /**
  * Tests the PeonClass.
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(WorldUtil.class)
 public class PeonTest extends BaseGDXTest {
+    @Before
+    public void setup() {
+        FloatingDamageComponent fdc = mock(FloatingDamageComponent.class);
+        mockStatic(WorldUtil.class);
+        when(WorldUtil.getFloatingDamageComponent()).thenReturn(fdc);
+    }
+
     /**
      * Tests for a valid constructor of the Peon.
      */
