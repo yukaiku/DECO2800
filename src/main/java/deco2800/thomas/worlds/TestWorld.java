@@ -1,10 +1,6 @@
 package deco2800.thomas.worlds;
 import deco2800.thomas.entities.*;
 
-import deco2800.thomas.entities.enemies.bosses.Dragon;
-import deco2800.thomas.entities.enemies.monsters.Orc;
-import deco2800.thomas.entities.enemies.Variation;
-import deco2800.thomas.entities.enemies.bosses.SwampDragon;
 import deco2800.thomas.entities.environment.Tree;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -23,8 +19,6 @@ import org.slf4j.LoggerFactory;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Part;
 import deco2800.thomas.entities.StaticEntity;
-
-import java.util.*;
 
 @SuppressWarnings("unused")
 public class TestWorld extends AbstractWorld {

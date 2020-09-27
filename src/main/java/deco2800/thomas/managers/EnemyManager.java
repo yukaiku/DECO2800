@@ -74,7 +74,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
         Collections.addAll(this.wildEnemyIndexes, wildEnemyIndexes);
         for (String index : wildEnemyIndexes) {
             try {
-                wildEnemyConfigs.put(index, EnemyIndex.makeEnemy(index));
+                wildEnemyConfigs.put(index, EnemyIndex.getEnemy(index));
             } catch (InvalidEnemyException ignored) {
             }
         }
@@ -82,7 +82,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
 
         this.specialEnemiesAlive = new ArrayList<>();
         try {
-            this.boss = bossIndex == null ? null : (Boss) EnemyIndex.makeEnemy(bossIndex);
+            this.boss = bossIndex == null ? null : (Boss) EnemyIndex.getEnemy(bossIndex);
         } catch (InvalidEnemyException e) {
             this.boss = null;
         }
@@ -186,7 +186,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
      */
     public void spawnSpecialEnemy(String enemyIndex, float x, float y) {
         try {
-            EnemyPeon enemy = EnemyIndex.makeEnemy(enemyIndex);
+            EnemyPeon enemy = EnemyIndex.getEnemy(enemyIndex);
             enemy.setPosition(x, y);
             world.addEntity(enemy);
             specialEnemiesAlive.add(enemy);
@@ -222,7 +222,8 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
                     !world.getTile(tileX, tileY).getType().equals("BurnTile")) {
                 // choose a random enemy
                 try {
-                    EnemyPeon enemy = EnemyIndex.makeEnemy(wildEnemyIndexes.get(random.nextInt(wildEnemyIndexes.size())));
+                    // todo: spawn rates
+                    EnemyPeon enemy = EnemyIndex.getEnemy(wildEnemyIndexes.get(random.nextInt(wildEnemyIndexes.size())));
                     spawnWildEnemy(enemy, tileX, tileY);
                 } catch (InvalidEnemyException e) {
                     break;

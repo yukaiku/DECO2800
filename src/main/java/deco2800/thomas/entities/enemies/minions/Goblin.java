@@ -3,7 +3,7 @@ package deco2800.thomas.entities.enemies.minions;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.AggressiveEnemy;
-import deco2800.thomas.entities.enemies.Variation;
+import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -28,7 +28,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
     }
     private State currentState;
     private State previousState;
-    private final Variation variation;
+    private final EnemyIndex.Variation variation;
     private final Animation<TextureRegion> goblinIdle;
     private float stateTimer;
     private final Animation<TextureRegion> goblinAttacking;
@@ -40,7 +40,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
     private int attackRange = 2;
 
 
-    public Goblin(Variation variation, int health, float speed) {
+    public Goblin(EnemyIndex.Variation variation, int health, float speed) {
         super(health, speed);
         this.variation = variation;
         switch (variation) {
@@ -78,7 +78,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
     }
 
     public Goblin(int health, float speed) {
-        this(Variation.SWAMP, health, speed);
+        this(EnemyIndex.Variation.SWAMP, health, speed);
     }
 
     /**

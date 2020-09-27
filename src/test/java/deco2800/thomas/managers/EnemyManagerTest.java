@@ -2,7 +2,6 @@ package deco2800.thomas.managers;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.enemies.minions.Goblin;
-import deco2800.thomas.entities.enemies.Variation;
 import deco2800.thomas.entities.enemies.bosses.SwampDragon;
 import deco2800.thomas.worlds.TestWorld;
 import org.junit.After;
@@ -11,7 +10,6 @@ import org.junit.Test;
 import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static org.junit.Assert.*;
 

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.VolcanoFireball;
-import deco2800.thomas.entities.enemies.Variation;
+import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
@@ -15,7 +15,7 @@ public class VolcanoDragon extends Dragon {
 
     public VolcanoDragon(int health, float speed, int orbNumber) {
         super(health, speed, orbNumber);
-        this.variation = Variation.VOLCANO;
+        this.variation = EnemyIndex.Variation.VOLCANO;
         this.identifier = "dragonVolcano";
         this.setTexture("dragonVolcano");
         this.setObjectName("Chusulth");

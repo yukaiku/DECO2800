@@ -3,7 +3,7 @@ package deco2800.thomas.entities.enemies.monsters;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.AggressiveEnemy;
-import deco2800.thomas.entities.enemies.Variation;
+import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 
@@ -29,7 +29,7 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
     }
     public State currentState;
     public State previousState;
-    private final Variation variation;
+    private final EnemyIndex.Variation variation;
     private final Animation<TextureRegion> orcIdle;
     private final Animation<TextureRegion> orcAttacking;
     private float stateTimer;
@@ -49,7 +49,7 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
     /**
      * Initialise an orc with different variations
      */
-    public Orc(Variation variation, int health, float speed) {
+    public Orc(EnemyIndex.Variation variation, int health, float speed) {
         super(health, speed);
         this.variation = variation;
         switch (variation) {
@@ -86,7 +86,7 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
     }
 
     public Orc(int health, float speed) {
-        this(Variation.SWAMP, health, speed);
+        this(EnemyIndex.Variation.SWAMP, health, speed);
     }
 
     /**

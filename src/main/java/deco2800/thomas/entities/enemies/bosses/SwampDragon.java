@@ -2,7 +2,7 @@ package deco2800.thomas.entities.enemies.bosses;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 
-import deco2800.thomas.entities.enemies.Variation;
+import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
@@ -10,7 +10,7 @@ import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
 public class SwampDragon extends Dragon {
     public SwampDragon(int health, float speed, int orbNumber) {
         super(health, speed, orbNumber);
-        this.variation = Variation.SWAMP;
+        this.variation = EnemyIndex.Variation.SWAMP;
         this.setObjectName("Siendiadut");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));

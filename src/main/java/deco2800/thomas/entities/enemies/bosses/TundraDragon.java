@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.Iceball;
-import deco2800.thomas.entities.enemies.Variation;
+import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.IceBreathTask;
@@ -12,7 +12,7 @@ import deco2800.thomas.tasks.combat.IceBreathTask;
 public class TundraDragon extends Dragon {
     public TundraDragon(int health, float speed, int orbNumber) {
         super(health, speed, orbNumber);
-        this.variation = Variation.TUNDRA;
+        this.variation = EnemyIndex.Variation.TUNDRA;
         this.identifier = "dragonTundra";
         this.setTexture("dragonTundra");
         this.setObjectName("Diokiedes");

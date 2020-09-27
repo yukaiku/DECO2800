@@ -13,7 +13,7 @@ import deco2800.thomas.entities.enemies.monsters.Orc;
  * Each variation of enemies will now has an index (e.g. "swampOrc").
  * Some params are initial values and can be changed later in EnemyManager.
  *
- * Adding different variation example:
+ * Adding a different variation example:
  *     case "speedySwampOrc": return new Orc(Variation.SWAMP, 50, 0.15f);
  *
  * Usage for spawning:
@@ -21,17 +21,16 @@ import deco2800.thomas.entities.enemies.monsters.Orc;
  *     For special enemies (manual-spawn), use EnemyManager.spawnSpecialEnemy(String enemyIndex, float x, float y)
  *
  * Wiki:
- *
  * todo: doc, wiki, testing
  */
 public class EnemyIndex {
-
-    // todo: put Variation enum here
+    /** World Variations */
+    public enum Variation { DESERT, SWAMP, TUNDRA, VOLCANO }
 
     /**
      * This function will be called only once when initialising a new EnemyManager.
      */
-    public static EnemyPeon makeEnemy(String enemyIndex) throws InvalidEnemyException {
+    public static EnemyPeon getEnemy(String enemyIndex) throws InvalidEnemyException {
         switch (enemyIndex) {
             // swamp world
             case "swampOrc": return new Orc(Variation.SWAMP, 50, 0.09f);

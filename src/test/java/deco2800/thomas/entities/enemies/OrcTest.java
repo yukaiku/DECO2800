@@ -66,10 +66,10 @@ public class OrcTest extends BaseGDXTest {
         when(GameManager.get().getWorld()).thenReturn(world);
         when(GameManager.get().getWorld().getPlayerEntity()).thenReturn(playerPeon);
 
-        volcanoOrc = new Orc(Variation.VOLCANO, 100, 0.1f);
-        desertOrc = new Orc(Variation.DESERT, 100, 0.1f);
-        swampOrc = new Orc(Variation.SWAMP, 100, 0.1f);
-        tundraOrc = new Orc(Variation.TUNDRA, 100, 0.1f);
+        volcanoOrc = new Orc(EnemyIndex.Variation.VOLCANO, 100, 0.1f);
+        desertOrc = new Orc(EnemyIndex.Variation.DESERT, 100, 0.1f);
+        swampOrc = new Orc(EnemyIndex.Variation.SWAMP, 100, 0.1f);
+        tundraOrc = new Orc(EnemyIndex.Variation.TUNDRA, 100, 0.1f);
     }
 
     @Test
