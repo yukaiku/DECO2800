@@ -14,7 +14,6 @@ import deco2800.thomas.entities.enemies.dragons.TundraDragon;
 import deco2800.thomas.entities.enemies.dragons.VolcanoDragon;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.renderers.components.FloatingDamageComponent;
-import deco2800.thomas.renderers.components.FloatingDamageText;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
 import deco2800.thomas.tasks.combat.IceBreathTask;
 import deco2800.thomas.tasks.combat.SandTornadoAttackTask;
@@ -52,6 +51,7 @@ public class DragonTest extends BaseGDXTest {
         FloatingDamageComponent fdc = mock(FloatingDamageComponent.class);
         PowerMockito.mockStatic(WorldUtil.class);
         when(WorldUtil.getFloatingDamageComponent()).thenReturn(fdc);
+        when(WorldUtil.colRowToWorldCords(anyFloat(), anyFloat())).thenCallRealMethod();
 
         PowerMockito.mockStatic(GameManager.class);
         enemyManager = mock(EnemyManager.class);
