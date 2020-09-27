@@ -3,7 +3,7 @@ package deco2800.thomas.combat.skills;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireballAttackTask;
 
@@ -13,8 +13,9 @@ import deco2800.thomas.tasks.combat.FireballAttackTask;
 public class FireballSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
     private static final int cooldown = 20;
-    /* Damage to apply from fireball */
-    private static final int damage = 10;
+    /* Damage multiplier to apply to the fireball.
+    Multiplies the peon base damage value. */
+    private static final float damageMultiplier = 0.4f;
     /* Speed of fireball */
     private static final float speed = 0.5f;
     /* Lifetime of fireball */
@@ -23,14 +24,14 @@ public class FireballSkill implements Skill, Tickable {
     /* Cooldown tracker */
     private int cooldownRemaining = 0;
     /* Reference to parent entity */
-    private final AbstractEntity entity;
+    private final Peon entity;
 
     /**
      * Creates a new FireballSkill and binds it to the Entity.
      * @param parent Parent entity of skill.
      * @throws NullPointerException when parent is null
      */
-    public FireballSkill(AbstractEntity parent) {
+    public FireballSkill(Peon parent) {
         if (parent == null) {
             throw new NullPointerException();
         }
@@ -89,6 +90,7 @@ public class FireballSkill implements Skill, Tickable {
      */
     @Override
     public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
+        int damage = (int) (entity.getDamage() * damageMultiplier);
         if (cooldownRemaining <= 0) {
             AbstractTask task = new FireballAttackTask(entity, targetX, targetY, damage, speed, lifetime);
             cooldownRemaining = cooldown;

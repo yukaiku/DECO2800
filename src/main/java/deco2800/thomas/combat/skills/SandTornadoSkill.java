@@ -3,26 +3,27 @@ package deco2800.thomas.combat.skills;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.SandTornadoAttackTask;
 
 public class SandTornadoSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
     private static final int cooldown = 30;
-    /* Damage to apply from fireball */
-    private static final int damage = 50;
-    /* Speed of fireball */
+    /* Damage multiplier to apply to the ice tile.
+    Multiplies the peon base damage value. */
+    private static final float damageMultiplier = 0.4f;
+    /* Speed of sand tornado */
     private static final float speed = 0.2f;
-    /* Lifetime of fireball */
+    /* Lifetime of sand tornado */
     private static final int lifetime = 60;
 
     /* Cooldown tracker */
     private int cooldownRemaining = 0;
     /* Reference to parent entity */
-    private final AbstractEntity entity;
+    private final Peon entity;
 
-    public SandTornadoSkill(AbstractEntity entity) {
+    public SandTornadoSkill(Peon entity) {
         if (entity == null) {
             throw new NullPointerException();
         }
@@ -46,6 +47,7 @@ public class SandTornadoSkill implements Skill, Tickable {
 
     @Override
     public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
+        int damage = (int) (entity.getDamage() * damageMultiplier);
         if (cooldownRemaining <= 0) {
             AbstractTask task = new SandTornadoAttackTask(entity, targetX, targetY, damage, speed, lifetime);
             cooldownRemaining = cooldown;

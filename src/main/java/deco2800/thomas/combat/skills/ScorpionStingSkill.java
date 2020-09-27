@@ -3,7 +3,7 @@ package deco2800.thomas.combat.skills;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
 
@@ -14,8 +14,9 @@ import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
 public class ScorpionStingSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
     private static final int MAX_COOLDOWN = 50;
-    /* Damage to apply from sting */
-    private static final int DAMAGE = 4;
+    /* Damage multiplier to apply to the ice tile.
+    Multiplies the peon base damage value. */
+    private static final float damageMultiplier = 0.4f;
     /* Speed of projectile */
     private static final float SPEED = 0.5f;
     /* Lifetime of projectile */
@@ -24,14 +25,14 @@ public class ScorpionStingSkill implements Skill, Tickable {
     /* Cooldown tracker */
     private int cooldown = 0;
     /* Reference to parent entity */
-    private final AbstractEntity entity;
+    private final Peon entity;
 
     /**
      * Creates a new ScorpionStingSkill and binds it to the Entity.
      * @param parent Parent entity of skill.
      * @throws NullPointerException when parent is null
      */
-    public ScorpionStingSkill(AbstractEntity parent) {
+    public ScorpionStingSkill(Peon parent) {
         if (parent == null) {
             throw new NullPointerException();
         }
@@ -90,8 +91,9 @@ public class ScorpionStingSkill implements Skill, Tickable {
      */
     @Override
     public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
+        int damage = (int) (entity.getDamage() * damageMultiplier);
         if (cooldown <= 0) {
-            AbstractTask task = new ScorpionStingAttackTask(entity, targetX, targetY, DAMAGE, SPEED, LIFETIME);
+            AbstractTask task = new ScorpionStingAttackTask(entity, targetX, targetY, damage, SPEED, LIFETIME);
             cooldown = MAX_COOLDOWN;
             return task;
         } else {
