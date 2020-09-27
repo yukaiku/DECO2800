@@ -66,10 +66,10 @@ public class GoblinTest extends BaseGDXTest {
         when(GameManager.get().getWorld()).thenReturn(world);
         when(GameManager.get().getWorld().getPlayerEntity()).thenReturn(playerPeon);
 
-        volcanoGoblin = new Goblin(EnemyIndex.Variation.VOLCANO, 100, 0.1f);
-        desertGoblin = new Goblin(EnemyIndex.Variation.DESERT, 100, 0.1f);
-        swampGoblin = new Goblin(EnemyIndex.Variation.SWAMP, 100, 0.1f);
-        tundraGoblin = new Goblin(EnemyIndex.Variation.TUNDRA, 100, 0.1f);
+        volcanoGoblin = new Goblin(EnemyIndex.Variation.VOLCANO, 100, 0.1f, 1, 1, 1);
+        desertGoblin = new Goblin(EnemyIndex.Variation.DESERT, 100, 0.1f, 1, 1, 1);
+        swampGoblin = new Goblin(EnemyIndex.Variation.SWAMP, 100, 0.1f, 1, 1, 1);
+        tundraGoblin = new Goblin(EnemyIndex.Variation.TUNDRA, 100, 0.1f, 1, 1, 1);
     }
 
     @Test

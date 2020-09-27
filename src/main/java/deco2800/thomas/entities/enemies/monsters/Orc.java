@@ -3,7 +3,7 @@ package deco2800.thomas.entities.enemies.monsters;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.AggressiveEnemy;
-import deco2800.thomas.entities.enemies.EnemyIndex;
+import deco2800.thomas.entities.enemies.EnemyIndex.Variation;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 
@@ -29,7 +29,7 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
     }
     public State currentState;
     public State previousState;
-    private final EnemyIndex.Variation variation;
+    private final Variation variation;
     private final Animation<TextureRegion> orcIdle;
     private final Animation<TextureRegion> orcAttacking;
     private float stateTimer;
@@ -39,19 +39,31 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
     private int tickFollowing = 30;
     private int tickDetecting = 15;
 
+    private float spawnRate;
+
     // Range at which the orc will begin to chase the player
-    private final static int detectRadius = 8;
+    private final int followRange;
     // Range at which the orc will stop chasing the player
-    private final static int discardRadius = 12;
+    private final int discardRange;
     // Range at which the orc will attempt to melee attack the player
-    private final static int attackRange = 2;
+    private final int meleeRange;
 
     /**
      * Initialise an orc with different variations
      */
-    public Orc(EnemyIndex.Variation variation, int health, float speed) {
+    public Orc(Variation variation, int health, float speed, int damage, int sightRange, int meleeRange,
+               float spawnRate) {
         super(health, speed);
+        super.setDamage(damage);
         this.variation = variation;
+
+        this.followRange = sightRange;
+        this.discardRange = sightRange + 2;
+        this.meleeRange = meleeRange;
+
+        this.spawnRate = spawnRate;
+
+        // renders and animations
         switch (variation) {
             case DESERT:
                 this.identifier = "orcDesert";
@@ -85,17 +97,13 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
     }
 
-    public Orc(int health, float speed) {
-        this(EnemyIndex.Variation.SWAMP, health, speed);
-    }
-
     /**
      * Detects the target with the given aware radius.
      */
     public void detectTarget() {
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
         if (player != null && EnemyUtil.playerInRadius(this, player,
-                detectRadius)) {
+                followRange)) {
             super.setTarget(player);
             setMovementTask(new MovementTask(this,
                     super.getTarget().getPosition()));
@@ -108,7 +116,7 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
     public void pursueTarget() {
         AgentEntity player = GameManager.get().getWorld().getPlayerEntity();
         if (player != null && !EnemyUtil.playerInRadius(this, player,
-                discardRadius)) {
+                discardRange)) {
             super.setTarget(null);
             setMovementTask(null);
         }
@@ -123,11 +131,11 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
 
     @Override
     public void attackPlayer() {
-        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange)) {
+        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), meleeRange)) {
             SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
             currentState = State.ATTACK_MELEE;
             duration = 12;
-            setCombatTask(new MeleeAttackTask(this, origin, 2, 2, 10));
+            setCombatTask(new MeleeAttackTask(this, origin, 2, 2, getDamage()));
         }
     }
 
@@ -166,6 +174,16 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
         super.onTick(i);
     }
 
+    /** Get the current spawn rate. */
+    public float getSpawnRate() {
+        return this.spawnRate;
+    }
+
+    /** Sets the spawn rate. */
+    public void setSpawnRate(float spawnRate) {
+        this.spawnRate = spawnRate;
+    }
+
     @Override
     public TextureRegion getFrame(float delta) {
         TextureRegion region;
@@ -194,6 +212,6 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
 
     @Override
     public Orc deepCopy() {
-        return new Orc(variation, super.getMaxHealth(), super.getSpeed());
+        return new Orc(variation, getMaxHealth(), getSpeed(), getDamage(), followRange, meleeRange, spawnRate);
     }
 }

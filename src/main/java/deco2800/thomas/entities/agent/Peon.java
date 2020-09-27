@@ -25,7 +25,7 @@ public class Peon extends AgentEntity implements Tickable {
 	private static final float ARMOUR_CONSTANT = 1000f; // Changes effectiveness of armour values, higher = less effective
 	private final HealthTracker health;
 	private float armour; // Reduces incoming damage
-	private float damage; // Base outgoing damage value
+	private int damage; // Base outgoing damage value
 	private DamageType vulnerability; // Peon takes extra damage from this damage type
 
 	/* Combat status of this entity */
@@ -278,7 +278,7 @@ public class Peon extends AgentEntity implements Tickable {
 	 * Gets the current base damage of the Peon
 	 * @return damage
 	 */
-	public float getDamage() {
+	public int getDamage() {
 		return damage;
 	}
 
@@ -286,7 +286,7 @@ public class Peon extends AgentEntity implements Tickable {
 	 * Set sets the current base damage of the Peon
 	 * @param damage
 	 */
-	public void setDamage(float damage) {
+	public void setDamage(int damage) {
 		this.damage = damage;
 	}
 
