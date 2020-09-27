@@ -16,9 +16,12 @@ import java.util.List;
  */
 
 public class QuestTracker{
-
     //Orbs tracker
-    private static List<Orb> orbs = new ArrayList<>();
+    private static List<Orb> orbs;
+
+    public QuestTracker(){
+        orbs = new ArrayList<>();
+    }
 
     /**
      * Orb Tracker function that tracks the orbs the user currently has

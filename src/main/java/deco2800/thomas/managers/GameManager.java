@@ -264,8 +264,6 @@ public class GameManager {
 	 */
 	public static void resetWorldOrder(){
 		currentWorld = 0;
-		//randomise the worldOrder
-		//Collections.shuffle(worldOrder);
 	}
 
 	/**
