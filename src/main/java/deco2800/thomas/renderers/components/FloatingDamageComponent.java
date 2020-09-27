@@ -1,6 +1,9 @@
 package deco2800.thomas.renderers.components;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import deco2800.thomas.Tickable;
+import deco2800.thomas.renderers.OverlayComponent;
+import deco2800.thomas.renderers.OverlayRenderer;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -9,7 +12,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * This component renders floating damage numbers above the heads of
  * entities that have been hit by damage, or received a heal.
  */
-public class FloatingDamageComponent implements Tickable {
+public class FloatingDamageComponent extends OverlayComponent implements Tickable {
     /* List of currently active floating damage instances. */
     private List<FloatingDamageText> floatingDamageInstances;
     private List<FloatingDamageText> floatingDamageInstancesToRemove;
@@ -17,7 +20,8 @@ public class FloatingDamageComponent implements Tickable {
     /**
      * Creates an instance of the FloatingDamageComponent.
      */
-    public void FloatingDamageComponent() {
+    public FloatingDamageComponent(OverlayRenderer overlayRenderer) {
+        super(overlayRenderer);
         floatingDamageInstances = new CopyOnWriteArrayList<>();
         floatingDamageInstancesToRemove = new CopyOnWriteArrayList<>();
     }
@@ -49,5 +53,14 @@ public class FloatingDamageComponent implements Tickable {
      */
     public void remove(FloatingDamageText text) {
         floatingDamageInstancesToRemove.add(text);
+    }
+
+    /**
+     * Render this component.
+     * @param batch the sprite batch to draw into
+     */
+    @Override
+    public void render(SpriteBatch batch) {
+
     }
 }

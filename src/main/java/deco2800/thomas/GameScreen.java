@@ -105,6 +105,14 @@ public class GameScreen implements Screen, KeyDownObserver {
 		public abstract AbstractWorld method(); // could also be in an interface that MyEnum implements
 	}
 
+	/**
+	 * Gets the current OverlayRenderer.
+	 * @return OverlayRenderer
+	 */
+	public OverlayRenderer getOverlayRenderer() {
+		return overlayRenderer;
+	}
+
 
 	public GameScreen(final ThomasGame game, final gameType startType) {
 		switch (startType) {

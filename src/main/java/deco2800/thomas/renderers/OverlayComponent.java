@@ -1,6 +1,5 @@
 package deco2800.thomas.renderers;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**

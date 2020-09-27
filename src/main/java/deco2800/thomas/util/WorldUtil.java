@@ -8,7 +8,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.ScreenManager;
 import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.renderers.OverlayComponent;
+import deco2800.thomas.renderers.components.FloatingDamageComponent;
 import deco2800.thomas.worlds.Tile;
 
 /**
@@ -107,6 +110,15 @@ public class WorldUtil {
 				|| squareX > (camera.position.x + camera.viewportWidth * camera.zoom / 2 + TILE_WIDTH * camera.zoom * bufferWidth + 50)
 				|| squareY < (camera.position.y - camera.viewportHeight * camera.zoom / 2 - 4 * TILE_HEIGHT * camera.zoom * bufferWidth)
 				|| squareY > (camera.position.y + camera.viewportHeight * camera.zoom / 2 + TILE_HEIGHT * camera.zoom * bufferWidth - 50);
+	}
+
+	/**
+	 * Returns a reference to the floating damage component.
+	 */
+	public static FloatingDamageComponent getFloatingDamageComponent() {
+		OverlayComponent component = GameManager.get().getManager(ScreenManager.class).getCurrentScreen()
+				.getOverlayRenderer().getComponentByInstance(FloatingDamageComponent.class);
+		return (FloatingDamageComponent)component;
 	}
 
 	/**

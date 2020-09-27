@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import deco2800.thomas.renderers.components.*;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class OverlayRenderer implements Renderer {
         this.getComponents().add(new CurrencyComponent(this));
         this.getComponents().add(new QuestTrackerComponent(this));
         this.getComponents().add(new GuidelineComponent(this));
+        this.getComponents().add(new FloatingDamageComponent(this));
     }
 
     @Override
@@ -82,5 +84,19 @@ public class OverlayRenderer implements Renderer {
 
     public List<OverlayComponent> getComponents() {
         return this.components;
+    }
+
+    /**
+     * Returns a particular component based on class.
+     * @param type Class to return
+     * @return OverlayComponent of type, or null
+     */
+    public OverlayComponent getComponentByInstance(Class type) {
+        for (OverlayComponent component : this.components) {
+            if (type.isInstance(component)) {
+                return component;
+            }
+        }
+        return null;
     }
 }
