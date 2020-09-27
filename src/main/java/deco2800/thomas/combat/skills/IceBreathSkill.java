@@ -14,17 +14,19 @@ public class IceBreathSkill implements Skill, Tickable {
     Multiplies the peon base damage value. */
     private static final float damageMultiplier = 0.4f;
 
-    private static final float speedMultiplier = 0.2f;
+    private final float speedMultiplier;
 
-    private static final int slowDuration = 4;
+    private final int slowDuration;
 
     /* Cooldown tracker */
     private int cooldownRemaining = 0;
     /* Reference to parent entity */
     private final Peon entity;
 
-    public IceBreathSkill(Peon entity) {
+    public IceBreathSkill(Peon entity, float speedMultiplier, int slowDuration) {
         this.entity = entity;
+        this.speedMultiplier = speedMultiplier;
+        this.slowDuration = slowDuration;
     }
 
     @Override
