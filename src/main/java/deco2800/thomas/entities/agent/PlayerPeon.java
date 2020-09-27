@@ -425,7 +425,6 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
     public void death() {
         GameManager.get().getWorld().removeEntity(this);
         GameManager.get().getWorld().disposeEntity(this.getEntityID());
-        QuestTracker.resetOrbs();
         GameManager.gameOver();
     }
 

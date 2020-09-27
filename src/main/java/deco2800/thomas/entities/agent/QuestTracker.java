@@ -18,10 +18,7 @@ import java.util.List;
 public class QuestTracker{
 
     //Orbs tracker
-    private static List<Orb> orbs = new ArrayList<Orb>();
-
-    public QuestTracker() {
-    }
+    private static List<Orb> orbs = new ArrayList<>();
 
     /**
      * Orb Tracker function that tracks the orbs the user currently has
@@ -40,7 +37,6 @@ public class QuestTracker{
      */
     public static int resetOrbs() {
         orbs.clear();
-        GameManager.resetWorldOrder();
         return orbs.size();
     }
 
@@ -50,14 +46,16 @@ public class QuestTracker{
      * To be used on when player picks up an orb
      * @return returns the number of orbs currently in orbs list
      */
-    public static <Orb> int increaseOrbs(deco2800.thomas.entities.Orb orb) {
-        if (orbs.size() < 4) {
+    public static int increaseOrbs(deco2800.thomas.entities.Orb orb) {
+        int orbCount = orbs.size();
+        if (orbCount < 4) {
             orbs.add(orb);
+            orbCount = orbs.size();
         }
-        if(orbs.size() == 4){
+        if(orbCount == 4){
             GameManager.victory();
         }
-        return orbs.size();
+        return orbCount;
     }
 
     /**
@@ -67,7 +65,7 @@ public class QuestTracker{
      * @return return the number of orbs currently in orbs list
      */
     public static int decreaseOrbs() {
-        if (orbs.size() != 0) {
+        if (!orbs.isEmpty()) {
             orbs.remove(orbs.size()-1);
         }
         return orbs.size();
