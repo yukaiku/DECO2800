@@ -62,7 +62,7 @@ public class IceballSkillTest extends BaseGDXTest {
     public void testValidConstructor() {
         IceballSkill testSkill = new IceballSkill(mockedEntity);
 
-        assertEquals(0, testSkill.getCooldown());
+        assertEquals(0, testSkill.getCooldownRemaining());
         assertEquals(50, testSkill.getCooldownMax());
         assertNotNull(testSkill.getTexture());
     }
@@ -102,9 +102,9 @@ public class IceballSkillTest extends BaseGDXTest {
             IceballSkill testSkill = new IceballSkill(mockedEntity);
             testSkill.getNewSkillTask(10f, 10f);
 
-            assertEquals(testSkill.getCooldownMax(), testSkill.getCooldown());
+            assertEquals(testSkill.getCooldownMax(), testSkill.getCooldownRemaining());
             testSkill.onTick(0);
-            assertEquals(testSkill.getCooldownMax() - 1, testSkill.getCooldown());
+            assertEquals(testSkill.getCooldownMax() - 1, testSkill.getCooldownRemaining());
         } catch (SkillOnCooldownException e) {
             fail("Unexpected SkillOnCooldownException.");
         }

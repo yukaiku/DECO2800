@@ -12,16 +12,16 @@ import deco2800.thomas.tasks.combat.FireballAttackTask;
  */
 public class FireballSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private static final int MAX_COOLDOWN = 20;
+    private static final int cooldown = 20;
     /* Damage to apply from fireball */
-    private static final int DAMAGE = 10;
+    private static final int damage = 10;
     /* Speed of fireball */
-    private static final float SPEED = 0.5f;
+    private static final float speed = 0.5f;
     /* Lifetime of fireball */
-    private static final int LIFETIME = 60;
+    private static final int lifetime = 60;
 
     /* Cooldown tracker */
-    private int cooldown = 0;
+    private int cooldownRemaining = 0;
     /* Reference to parent entity */
     private final AbstractEntity entity;
 
@@ -43,8 +43,8 @@ public class FireballSkill implements Skill, Tickable {
      */
     @Override
     public void onTick(long tick) {
-        if (cooldown > 0) {
-            cooldown--;
+        if (cooldownRemaining > 0) {
+            cooldownRemaining--;
         }
     }
 
@@ -54,8 +54,8 @@ public class FireballSkill implements Skill, Tickable {
      * @return Cooldown remaining.
      */
     @Override
-    public int getCooldown() {
-        return cooldown;
+    public int getCooldownRemaining() {
+        return cooldownRemaining;
     }
 
     /**
@@ -65,7 +65,7 @@ public class FireballSkill implements Skill, Tickable {
      */
     @Override
     public int getCooldownMax() {
-        return MAX_COOLDOWN;
+        return cooldown;
     }
 
     /**
@@ -89,9 +89,9 @@ public class FireballSkill implements Skill, Tickable {
      */
     @Override
     public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
-        if (cooldown <= 0) {
-            AbstractTask task = new FireballAttackTask(entity, targetX, targetY, DAMAGE, SPEED, LIFETIME);
-            cooldown = MAX_COOLDOWN;
+        if (cooldownRemaining <= 0) {
+            AbstractTask task = new FireballAttackTask(entity, targetX, targetY, damage, speed, lifetime);
+            cooldownRemaining = cooldown;
             return task;
         } else {
             throw new SkillOnCooldownException();

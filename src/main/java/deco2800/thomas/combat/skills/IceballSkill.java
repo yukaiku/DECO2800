@@ -17,6 +17,10 @@ public class IceballSkill implements Skill, Tickable {
     /* Lifetime of projectile */
     private static final int LIFETIME = 60;
 
+    private static final float speedMultiplier = 0.5f;
+
+    private static final int slowDuration = 2;
+
     /* Cooldown tracker */
     private int cooldown = 0;
     /* Reference to parent entity */
@@ -37,7 +41,7 @@ public class IceballSkill implements Skill, Tickable {
     }
 
     @Override
-    public int getCooldown() {
+    public int getCooldownRemaining() {
         return cooldown;
     }
 
@@ -54,7 +58,8 @@ public class IceballSkill implements Skill, Tickable {
     @Override
     public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
         if (cooldown <= 0) {
-            AbstractTask task = new IceballAttackTask(entity, targetX, targetY, DAMAGE, SPEED, LIFETIME);
+            AbstractTask task = new IceballAttackTask(entity, targetX, targetY,
+                    DAMAGE, SPEED, LIFETIME, speedMultiplier, slowDuration);
             cooldown = MAX_COOLDOWN;
             return task;
         } else {

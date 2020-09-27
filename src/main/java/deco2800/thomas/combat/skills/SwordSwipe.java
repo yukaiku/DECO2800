@@ -52,7 +52,7 @@ public class SwordSwipe implements Skill, Tickable {
      * @return Cooldown remaining.
      */
     @Override
-    public int getCooldown() {
+    public int getCooldownRemaining() {
         return cooldown;
     }
 

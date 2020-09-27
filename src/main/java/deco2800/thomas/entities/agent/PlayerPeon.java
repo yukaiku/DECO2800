@@ -267,7 +267,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
             try {
                 //Set combat task to fireball task
                 Skill wizardSkill = wizardSkills.get(activeWizardSkill);
-                if (wizardSkill.getCooldown() <= 0) {
+                if (wizardSkill.getCooldownRemaining() <= 0) {
                     this.setCombatTask(wizardSkill.getNewSkillTask(clickedPosition[0], clickedPosition[1]));
                 }
             } catch (SkillOnCooldownException e) {
@@ -276,7 +276,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
             }
         } else if (button == Input.Buttons.RIGHT) {
             try {
-                if (mechSkill.getCooldown() <= 0) {
+                if (mechSkill.getCooldownRemaining() <= 0) {
                     this.setCombatTask(mechSkill.getNewSkillTask(clickedPosition[0], clickedPosition[1]));
                 }
             } catch (SkillOnCooldownException e) {
