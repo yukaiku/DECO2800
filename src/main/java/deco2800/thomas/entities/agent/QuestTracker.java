@@ -19,9 +19,6 @@ public class QuestTracker{
     //Orbs tracker
     private static List<Orb> orbs = new ArrayList<>();
 
-    public QuestTracker (){
-
-    }
     /**
      * Orb Tracker function that tracks the orbs the user currently has
      *

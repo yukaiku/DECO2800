@@ -21,7 +21,7 @@ import java.util.List;
 
 public class GameManager {
 	//debug values stored here
-	public int entitiesRendered, entitiesCount, tilesRendered, tilesCount;
+	public static int entitiesRendered, entitiesCount, tilesRendered, tilesCount;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GameManager.class);
 
@@ -43,27 +43,27 @@ public class GameManager {
 	private Skin skin;
 
 
-	public float fps = 0;
+	public static float fps = 0;
 
-	public boolean debugMode = false;
+	public static boolean debugMode = false;
 
-	public boolean tutorial = true;
+	public static boolean tutorial = true;
 
 	// Whether or not the player has moved to the next Zone
-	public boolean movedToNextWorld;
+	public static boolean movedToNextWorld;
 	/**
 	 * Whether or not we render info over the tiles.
 	 */
 	// Whether or not we render the movement path for Players.
-	public boolean showCoords = false;
+	public static boolean showCoords = false;
 
 	// The game screen for a game that's currently running.
-	public boolean showPath = false;
+	public static boolean showPath = false;
 
 	/**
 	 * Whether or not we render info over the entities
 	 */
-	public boolean showCoordsEntity = false;
+	public static boolean showCoordsEntity = false;
 
 	private enum WorldType {
 		SWAMP_WORLD,
@@ -73,7 +73,7 @@ public class GameManager {
 	}
 	private ArrayList<WorldType> worldOrder;
 
-	public State state = State.RUN;
+	public static State state = State.RUN;
 	public enum State
 	{
 		PAUSED,
