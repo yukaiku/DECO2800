@@ -21,7 +21,10 @@ import java.util.List;
 
 public class GameManager {
 	//debug values stored here
-	public static int entitiesRendered, entitiesCount, tilesRendered, tilesCount;
+	public int entitiesRendered;
+	public int entitiesCount;
+	public int tilesRendered;
+	public int tilesCount;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GameManager.class);
 
@@ -50,7 +53,7 @@ public class GameManager {
 	public static boolean tutorial = true;
 
 	// Whether or not the player has moved to the next Zone
-	public static boolean movedToNextWorld;
+	public boolean movedToNextWorld;
 	/**
 	 * Whether or not we render info over the tiles.
 	 */
@@ -73,7 +76,7 @@ public class GameManager {
 	}
 	private ArrayList<WorldType> worldOrder;
 
-	public static State state = State.RUN;
+	public State state = State.RUN;
 	public enum State
 	{
 		PAUSED,
