@@ -85,7 +85,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
      */
     public EnemyManager(AbstractWorld world, int wildEnemyCap, List<EnemyPeon> wildEnemyConfigs) {
         this(world);
-        this.wildSpawning = wildEnemyConfigs.size() > 0;
+        this.wildSpawning = !wildEnemyConfigs.isEmpty();
         this.wildEnemyCap = wildEnemyCap;
         this.wildEnemyConfigs.addAll(wildEnemyConfigs);
     }
@@ -135,7 +135,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
      * @return the number of enemies alive.
      */
     public int getEnemyCount() {
-        return wildEnemiesAlive.size() + specialEnemiesAlive.size() + (boss == null ? 0 : boss.isDead() ? 0 : 1);
+        return wildEnemiesAlive.size() + specialEnemiesAlive.size() + ((boss == null || boss.isDead()) ? 0 : 1);
     }
 
     /** Get the current wild enemies alive in the map. */
@@ -262,23 +262,22 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
      */
     @Override
     public void notifyKeyDown(int keycode) {
-        if (GameManager.get().debugMode) {
-            if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT)) {
-                if (keycode == Input.Keys.P) {
-                    // Ctrl + P: Toggle wild enemy spawning
-                    wildSpawning = !wildSpawning;
-                } else if (keycode == Input.Keys.K) {
-                    // Ctrl + K: kill all wild and special enemies (excludes boss)
-                    new ArrayList<>(wildEnemiesAlive).forEach(this::removeWildEnemy);
-                    new ArrayList<>(specialEnemiesAlive).forEach(this::removeSpecialEnemy);
-                    // Ctrl + L: Kill the dragon
-                } else if (keycode == Input.Keys.L && boss != null) {
-                    boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
-                } else if (keycode == Input.Keys.S) {
-                    // Ctrl + S: Spawn a special enemy
-                    Goblin goblin = new Goblin(Variation.SWAMP, 50, 0.05f);
-                    spawnSpecialEnemy(goblin, 0, 0);
-                }
+        if (GameManager.get().debugMode && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
+            Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
+            if (keycode == Input.Keys.P) {
+                // Ctrl + P: Toggle wild enemy spawning
+                wildSpawning = !wildSpawning;
+            } else if (keycode == Input.Keys.K) {
+                // Ctrl + K: kill all wild and special enemies (excludes boss)
+                new ArrayList<>(wildEnemiesAlive).forEach(this::removeWildEnemy);
+                new ArrayList<>(specialEnemiesAlive).forEach(this::removeSpecialEnemy);
+                // Ctrl + L: Kill the dragon
+            } else if (keycode == Input.Keys.L && boss != null) {
+                boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
+            } else if (keycode == Input.Keys.S) {
+                // Ctrl + S: Spawn a special enemy
+                Goblin goblin = new Goblin(Variation.SWAMP, 50, 0.05f);
+                spawnSpecialEnemy(goblin, 0, 0);
             }
         }
     }

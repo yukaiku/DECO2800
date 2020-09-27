@@ -22,9 +22,6 @@ public class BurnStatus extends StatusEffect {
     // whether the first tick of this effect has been applied
     private boolean applied = false;
 
-    // the health tracker of the entity this effect applies to
-//    private HealthTracker healthTracker;
-
     /**
      * Creates a new BurnStatus with default damage and ticks (1 dmg, 1 tick).
      *
@@ -35,7 +32,6 @@ public class BurnStatus extends StatusEffect {
         timeLastTick = System.nanoTime();
         burnDamage = 1;
         ticks = 1;
-//        healthTracker = getAffectedEntity().getHealthTracker();
     }
 
     /**
@@ -50,10 +46,6 @@ public class BurnStatus extends StatusEffect {
         this.burnDamage = burnDamage;
         timeLastTick = System.nanoTime();
         this.ticks = ticks;
-
-//        if (entity != null) {
-//            healthTracker = getAffectedEntity().getHealthTracker();
-//        }
     }
 
     /**
@@ -96,8 +88,6 @@ public class BurnStatus extends StatusEffect {
         if (!ticksReady()) return;
 
         getAffectedEntity().applyDamage(burnDamage, DamageType.FIRE);
-//        int health = healthTracker.getCurrentHealthValue();
-//        healthTracker.setCurrentHealthValue(health - burnDamage);
 
         // if all ticks are done, we set to inactive
         if (ticks == 0) {

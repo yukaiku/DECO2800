@@ -40,11 +40,11 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
     private int tickDetecting = 15;
 
     // Range at which the orc will begin to chase the player
-    private final int detectRadius = 8;
+    private final static int detectRadius = 8;
     // Range at which the orc will stop chasing the player
-    private final int discardRadius = 12;
+    private final static int discardRadius = 12;
     // Range at which the orc will attempt to melee attack the player
-    private final int attackRange = 2;
+    private final static int attackRange = 2;
 
     /**
      * Initialise an orc with different variations

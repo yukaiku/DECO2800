@@ -33,8 +33,8 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         IDLE, WALK, ATTACK_MELEE, ATTACK_RANGE, INCAPACITATED
     }
 
-    public State currentState;
-    public State previousState;
+    private State currentState;
+    private State previousState;
     private MovementTask.Direction facingDirection;
     private final Animation<TextureRegion> playerIdle;
     private final Animation<TextureRegion> playerMeleeAttack;
