@@ -1,10 +1,9 @@
-package deco2800.thomas.entities.enemies.dragons;
+package deco2800.thomas.entities.enemies.bosses;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.DesertFireball;
-import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Variation;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import deco2800.thomas.entities.agent.Peon;
-import deco2800.thomas.entities.enemies.Boss;
+import deco2800.thomas.entities.enemies.bosses.Boss;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.OnScreenMessageManager;

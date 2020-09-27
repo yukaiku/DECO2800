@@ -1,4 +1,6 @@
-package deco2800.thomas.entities.enemies;
+package deco2800.thomas.entities.enemies.minions;
+
+import deco2800.thomas.entities.enemies.EnemyPeon;
 
 /**
  * A class that defines a subcategory of enemy called a Minion.

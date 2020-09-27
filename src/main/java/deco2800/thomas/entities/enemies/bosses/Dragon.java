@@ -1,4 +1,4 @@
-package deco2800.thomas.entities.enemies;
+package deco2800.thomas.entities.enemies.bosses;
 
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
@@ -9,6 +9,9 @@ import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.Fireball;
+import deco2800.thomas.entities.enemies.minions.Goblin;
+import deco2800.thomas.entities.enemies.PassiveEnemy;
+import deco2800.thomas.entities.enemies.Variation;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;

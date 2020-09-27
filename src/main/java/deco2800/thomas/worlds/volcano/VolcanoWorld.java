@@ -2,6 +2,7 @@ package deco2800.thomas.worlds.volcano;
 
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.enemies.monsters.Orc;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.VolcanoNPC;
 import deco2800.thomas.entities.enemies.*;
@@ -15,7 +16,7 @@ import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.entities.environment.volcano.*;
-import deco2800.thomas.entities.enemies.dragons.VolcanoDragon;
+import deco2800.thomas.entities.enemies.bosses.VolcanoDragon;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
