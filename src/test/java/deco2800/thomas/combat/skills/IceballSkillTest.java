@@ -60,7 +60,7 @@ public class IceballSkillTest extends BaseGDXTest {
      */
     @Test
     public void testValidConstructor() {
-        IceballSkill testSkill = new IceballSkill(mockedEntity);
+        IceballSkill testSkill = new IceballSkill(mockedEntity, 0.4f, 4);
 
         assertEquals(0, testSkill.getCooldownRemaining());
         assertEquals(50, testSkill.getCooldownMax());
@@ -72,7 +72,7 @@ public class IceballSkillTest extends BaseGDXTest {
      */
     @Test (expected = NullPointerException.class)
     public void testInvalidConstructor() {
-        new IceballSkill(null);
+        new IceballSkill(null, 0,0);
     }
 
     /**
@@ -82,7 +82,7 @@ public class IceballSkillTest extends BaseGDXTest {
     public void testValidCombatTask() {
         try {
             // Create skill, and create new task
-            IceballSkill testSkill = new IceballSkill(mockedEntity);
+            IceballSkill testSkill = new IceballSkill(mockedEntity, 0, 0);
             AbstractTask task = testSkill.getNewSkillTask(10f, 10f);
 
             assertTrue(task instanceof IceballAttackTask);
@@ -99,7 +99,7 @@ public class IceballSkillTest extends BaseGDXTest {
     public void testCooldown() {
         try {
             // Create skill, and create new task
-            IceballSkill testSkill = new IceballSkill(mockedEntity);
+            IceballSkill testSkill = new IceballSkill(mockedEntity,0,0);
             testSkill.getNewSkillTask(10f, 10f);
 
             assertEquals(testSkill.getCooldownMax(), testSkill.getCooldownRemaining());
@@ -117,7 +117,7 @@ public class IceballSkillTest extends BaseGDXTest {
     @Test (expected = SkillOnCooldownException.class)
     public void testSkillOnCooldownNewTaskException() throws SkillOnCooldownException {
         // Create skill, and create new task, perform a tick
-        IceballSkill testSkill = new IceballSkill(mockedEntity);
+        IceballSkill testSkill = new IceballSkill(mockedEntity, 0, 0);
         testSkill.getNewSkillTask(10f, 10f);
         testSkill.onTick(0);
 

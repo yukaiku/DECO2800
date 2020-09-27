@@ -77,7 +77,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         wizardSkills = new ArrayList<>();
         wizardSkills.add(new FireballSkill(this));
         wizardSkills.add(new ScorpionStingSkill(this));
-        wizardSkills.add(new IceballSkill(this));
+        wizardSkills.add(new IceballSkill(this, 0.4f, 4));
         activeWizardSkill = 0;
         mechSkill = new FireBombSkill(this);
 

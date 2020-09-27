@@ -19,20 +19,22 @@ public class IceballSkill implements Skill, Tickable {
     /* Lifetime of projectile */
     private static final int LIFETIME = 60;
 
-    private static final float speedMultiplier = 0.5f;
+    private final float speedMultiplier;
 
-    private static final int slowDuration = 2;
+    private final int slowDuration;
 
     /* Cooldown tracker */
     private int cooldown = 0;
     /* Reference to parent entity */
     private final Peon entity;
 
-    public IceballSkill(Peon parent) {
+    public IceballSkill(Peon parent, float speedMultiplier, int slowDuration) {
         if (parent == null) {
             throw new NullPointerException();
         }
         this.entity = parent;
+        this.speedMultiplier = speedMultiplier;
+        this.slowDuration = slowDuration;
     }
 
     @Override
