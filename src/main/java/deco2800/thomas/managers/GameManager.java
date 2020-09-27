@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 //import deco2800.thomas.managers.Manager;
 
+import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.worlds.AbstractWorld;
 
 import deco2800.thomas.worlds.desert.DesertWorld;
@@ -103,7 +104,6 @@ public class GameManager {
 	private GameManager() {
 		//Loads the order of the worlds
 		worldOrder = new ArrayList<>(EnumSet.allOf(WorldType.class));
-		resetWorldOrder();
 	}
 
 	/**
@@ -260,13 +260,6 @@ public class GameManager {
 	}
 
 	/**
-	 * Resets the World Order when new game is played
-	 */
-	public static void resetWorldOrder(){
-		currentWorld = 0;
-	}
-
-	/**
 	 * Gets the current game world
 	 *
 	 * @return the current game world
@@ -283,7 +276,7 @@ public class GameManager {
 		// removes the previous enemy manager
 		managers.removeIf(manager -> manager instanceof EnemyManager);
 		this.getWorld().dispose(); // Dispose world
-		switch (worldOrder.get(currentWorld)) {
+		switch (worldOrder.get(QuestTracker.orbTracker().size())) {
 			//SWAMP , TUNDRA, DESERT, VOLCANO
 			case SWAMP_WORLD:
 				this.setWorld(new SwampWorld());
@@ -298,8 +291,6 @@ public class GameManager {
 				this.setWorld(new VolcanoWorld());
 				break;
 		}
-		currentWorld += 1;
-		//currentWorld = (currentWorld + 1) % worldOrder.size();
 		movedToNextWorld = true;
 		GameManager.get().state = State.TRANSITION;
 	}

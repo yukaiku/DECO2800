@@ -173,8 +173,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 				GameManager.resume();
 				// Reset quest tracker
 				QuestTracker.resetOrbs();
-				// Resets the world order
-				GameManager.resetWorldOrder();
 				// Remove enemies
 				GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
 				// Dispose the screen
@@ -196,8 +194,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 				GameManager.resume();
 				// Reset quest tracker
 				QuestTracker.resetOrbs();
-				// Resets the world order
-				GameManager.resetWorldOrder();
 				// Remove enemies
 				GameManager.get().removeManager(GameManager.get().getManager(EnemyManager.class));
 				// Dispose the screen
