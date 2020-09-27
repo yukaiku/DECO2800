@@ -7,6 +7,7 @@ import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.InvalidEnemyException;
 import deco2800.thomas.entities.enemies.bosses.Boss;
+import deco2800.thomas.entities.enemies.monsters.Monster;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.worlds.AbstractWorld;
 
@@ -22,8 +23,6 @@ import java.util.*;
  * Special enemies do not randomly spawn and need to be manually placed at the given position.
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/enemy-manager
- *
- * todo: store special enemy blueprints
  */
 public class EnemyManager extends TickableManager implements KeyDownObserver {
     // the target world
@@ -35,9 +34,11 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
     // the maximum number of enemies allowed being alive at one time (will change in the future depending on types)
     private int wildEnemyCap;
 
-    // list of configured enemies allowed to spawn
+    // list of wild enemies allowed to spawn
     private final List<String> wildEnemyIndexes;
-    private final Map<String, EnemyPeon> wildEnemyConfigs;
+
+    // blueprints of wild and special enemies (excludes boss)
+    private final Map<String, EnemyPeon> enemyConfigs;
 
     // current wild enemies alive (excludes boss)
     private final List<EnemyPeon> wildEnemiesAlive;
@@ -68,13 +69,13 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
         this.wildSpawning = wildEnemyCap > 0;
         this.wildEnemyCap = wildEnemyCap;
         this.wildEnemyIndexes = new ArrayList<>();
-        this.wildEnemyConfigs = new HashMap<>();
+        this.enemyConfigs = new HashMap<>();
 
         // wild enemy blueprints
         Collections.addAll(this.wildEnemyIndexes, wildEnemyIndexes);
         for (String index : wildEnemyIndexes) {
             try {
-                wildEnemyConfigs.put(index, EnemyIndex.getEnemy(index));
+                enemyConfigs.put(index, EnemyIndex.getEnemy(index));
             } catch (InvalidEnemyException ignored) {
             }
         }
@@ -110,6 +111,39 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
      */
     public EnemyManager(AbstractWorld world) {
         this(world, null, 0);
+    }
+
+    /**
+     * Get the blueprint of the wild and special enemies. (excludes boss, for boss use getBoss())
+     * @param enemyIndex The enemy id string shown in EnemyIndex
+     * @return The blueprint of the enemy of given index
+     */
+    public EnemyPeon getEnemyConfig(String enemyIndex) {
+        return enemyConfigs.get(enemyIndex);
+    }
+
+    /**
+     * Add one or more blueprints to the manager.
+     * If the blueprint is an Monster, it will automatically become a wild enemy and spawn automatically.
+     * @param enemyIndex The enemy id string(s) shown in EnemyIndex
+     * @throws InvalidEnemyException If the enemy index is not listed in EnemyIndex
+     */
+    public void addEnemyConfigs(String ...enemyIndex) throws InvalidEnemyException {
+        for (String index : enemyIndex) {
+            EnemyPeon config = EnemyIndex.getEnemy(index);
+            if (config instanceof Monster) {
+                wildEnemyIndexes.add(index);
+            }
+            enemyConfigs.put(index, EnemyIndex.getEnemy(index));
+        }
+    }
+
+    /** Removes the enemy blueprints */
+    public void removeEnemyConfigs(String ...enemyIndex) {
+        for (String index : enemyIndex) {
+            wildEnemyIndexes.remove(index);
+            enemyConfigs.remove(index);
+        }
     }
 
     /**
@@ -179,19 +213,27 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
 
     /**
      * Spawn the special enemies (e.g. minions, dummies) at the given position.
+     * If the given index is not in the config list, it will automatically create a blueprint.
      * Special Enemies will bypass the wild enemy limits and configs.
      * @param enemyIndex The enemy index of the special enemy
      * @param x The x position on the map.
      * @param y The y position on the map.
      */
     public void spawnSpecialEnemy(String enemyIndex, float x, float y) {
-        try {
-            EnemyPeon enemy = EnemyIndex.getEnemy(enemyIndex);
-            enemy.setPosition(x, y);
-            world.addEntity(enemy);
-            specialEnemiesAlive.add(enemy);
-        } catch (InvalidEnemyException ignored) {
+        EnemyPeon enemy;
+        if (enemyConfigs.containsKey(enemyIndex)) {
+            enemy = enemyConfigs.get(enemyIndex).deepCopy();
+        } else {
+            try {
+                enemy = EnemyIndex.getEnemy(enemyIndex);
+            } catch (InvalidEnemyException ignored) {
+                return;
+            }
+            enemyConfigs.put(enemyIndex, enemy.deepCopy());
         }
+        enemy.setPosition(x, y);
+        world.addEntity(enemy);
+        specialEnemiesAlive.add(enemy);
     }
 
     /**

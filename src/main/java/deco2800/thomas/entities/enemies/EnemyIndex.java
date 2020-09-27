@@ -9,9 +9,10 @@ import deco2800.thomas.entities.enemies.monsters.Dummy;
 import deco2800.thomas.entities.enemies.monsters.Orc;
 
 /**
- * Here lists all available enemies and their variations for convenience.
- * Each variation of enemies will now has an index (e.g. "swampOrc").
- * Some params are initial values and can be changed later in EnemyManager.
+ * Here lists all available enemies and their variations for convenient configurations.
+ * Each variation of enemies will now has an index (e.g. "swampOrc"). You need to provide the index when
+ * initialising the enemy manager. The index will also be used for special enemy spawning and blueprint retrieving.
+ * The params below are initial values and can be changed later in EnemyManager by getting blueprints.
  *
  * Adding a different variation example:
  *     case "speedySwampOrc": return new Orc(Variation.SWAMP, 50, 0.15f);
