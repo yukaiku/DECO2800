@@ -2,8 +2,8 @@ package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.AbstractTask;
@@ -26,7 +26,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(GameManager.class)
 public class IceballSkillTest extends BaseGDXTest {
-    private AbstractEntity mockedEntity;
+    private Peon mockedEntity;
     private GameManager mockedGameManager;
     private TextureManager textureManager;
 
@@ -36,7 +36,7 @@ public class IceballSkillTest extends BaseGDXTest {
     @Before
     public void setup() {
         // Mocks an abstract entity
-        mockedEntity = mock(AbstractEntity.class);
+        mockedEntity = mock(Peon.class);
         when(mockedEntity.getCol()).thenReturn(0f);
         when(mockedEntity.getRow()).thenReturn(0f);
         when(mockedEntity.getFaction()).thenReturn(EntityFaction.ALLY);
@@ -60,9 +60,9 @@ public class IceballSkillTest extends BaseGDXTest {
      */
     @Test
     public void testValidConstructor() {
-        IceballSkill testSkill = new IceballSkill(mockedEntity);
+        IceballSkill testSkill = new IceballSkill(mockedEntity, 0.4f, 4);
 
-        assertEquals(0, testSkill.getCooldown());
+        assertEquals(0, testSkill.getCooldownRemaining());
         assertEquals(50, testSkill.getCooldownMax());
         assertNotNull(testSkill.getTexture());
     }
@@ -72,7 +72,7 @@ public class IceballSkillTest extends BaseGDXTest {
      */
     @Test (expected = NullPointerException.class)
     public void testInvalidConstructor() {
-        new IceballSkill(null);
+        new IceballSkill(null, 0,0);
     }
 
     /**
@@ -82,7 +82,7 @@ public class IceballSkillTest extends BaseGDXTest {
     public void testValidCombatTask() {
         try {
             // Create skill, and create new task
-            IceballSkill testSkill = new IceballSkill(mockedEntity);
+            IceballSkill testSkill = new IceballSkill(mockedEntity, 0, 0);
             AbstractTask task = testSkill.getNewSkillTask(10f, 10f);
 
             assertTrue(task instanceof IceballAttackTask);
@@ -99,12 +99,12 @@ public class IceballSkillTest extends BaseGDXTest {
     public void testCooldown() {
         try {
             // Create skill, and create new task
-            IceballSkill testSkill = new IceballSkill(mockedEntity);
+            IceballSkill testSkill = new IceballSkill(mockedEntity,0,0);
             testSkill.getNewSkillTask(10f, 10f);
 
-            assertEquals(testSkill.getCooldownMax(), testSkill.getCooldown());
+            assertEquals(testSkill.getCooldownMax(), testSkill.getCooldownRemaining());
             testSkill.onTick(0);
-            assertEquals(testSkill.getCooldownMax() - 1, testSkill.getCooldown());
+            assertEquals(testSkill.getCooldownMax() - 1, testSkill.getCooldownRemaining());
         } catch (SkillOnCooldownException e) {
             fail("Unexpected SkillOnCooldownException.");
         }
@@ -117,7 +117,7 @@ public class IceballSkillTest extends BaseGDXTest {
     @Test (expected = SkillOnCooldownException.class)
     public void testSkillOnCooldownNewTaskException() throws SkillOnCooldownException {
         // Create skill, and create new task, perform a tick
-        IceballSkill testSkill = new IceballSkill(mockedEntity);
+        IceballSkill testSkill = new IceballSkill(mockedEntity, 0, 0);
         testSkill.getNewSkillTask(10f, 10f);
         testSkill.onTick(0);
 

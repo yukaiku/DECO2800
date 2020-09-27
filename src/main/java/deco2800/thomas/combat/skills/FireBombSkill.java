@@ -3,7 +3,7 @@ package deco2800.thomas.combat.skills;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
 
@@ -13,8 +13,10 @@ import deco2800.thomas.tasks.combat.FireBombAttackTask;
 public class FireBombSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
     private static final int MAX_COOLDOWN = 160;
-    /* Damage to apply from explosion */
-    private static final int DAMAGE = 20;
+
+    /* Damage multiplier to apply to the explosion.
+    Multiplies the peon base damage value. */
+    private static final float damageMultiplier = 0.4f;
     /* Lifetime of explosion */
     private static final int LIFETIME = 60;
     /* Tick period of explosion */
@@ -27,18 +29,18 @@ public class FireBombSkill implements Skill, Tickable {
     /* Cooldown tracker */
     private int cooldown = 0;
     /* Reference to parent entity */
-    private final AbstractEntity entity;
+    private final Peon entity;
 
     /**
      * Creates a new FireBombSkill and binds it to the Entity.
      * @param parent Parent entity of skill.
      * @throws NullPointerException when parent is null
      */
-    public FireBombSkill(AbstractEntity parent) {
+    public FireBombSkill(Peon parent) {
         if (parent == null) {
             throw new NullPointerException();
         }
-        this.entity = parent;
+        this.entity = (Peon) parent;
     }
 
     /**
@@ -58,7 +60,7 @@ public class FireBombSkill implements Skill, Tickable {
      * @return Cooldown remaining.
      */
     @Override
-    public int getCooldown() {
+    public int getCooldownRemaining() {
         return cooldown;
     }
 
@@ -93,8 +95,9 @@ public class FireBombSkill implements Skill, Tickable {
      */
     @Override
     public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
+        int damage = (int) (entity.getDamage() * damageMultiplier);
         if (cooldown <= 0) {
-            AbstractTask task = new FireBombAttackTask(entity, DAMAGE, LIFETIME, TICK_PERIOD, HEIGHT, WIDTH);
+            AbstractTask task = new FireBombAttackTask(entity, damage, LIFETIME, TICK_PERIOD, HEIGHT, WIDTH);
             cooldown = MAX_COOLDOWN;
             return task;
         } else {

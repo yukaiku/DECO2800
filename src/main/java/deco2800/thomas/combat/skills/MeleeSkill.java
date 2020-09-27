@@ -3,7 +3,7 @@ package deco2800.thomas.combat.skills;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.util.SquareVector;
@@ -14,20 +14,21 @@ import deco2800.thomas.util.SquareVector;
 public class MeleeSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
     private static final int MAX_COOLDOWN = 10;
-    /* Damage to apply from attack */
-    private static final int DAMAGE = 10;
+    /* Damage multiplier to apply to the ice tile.
+    Multiplies the peon base damage value. */
+    private static final float damageMultiplier = 0.4f;
 
     /* Cooldown tracker */
     private int cooldown = 0;
     /* Reference to parent entity */
-    private final AbstractEntity entity;
+    private final Peon entity;
 
     /**
      * Creates a new MeleeSkill and binds it to the Entity.
      * @param parent Parent entity of skill.
      * @throws NullPointerException when parent is null
      */
-    public MeleeSkill(AbstractEntity parent) {
+    public MeleeSkill(Peon parent) {
         if (parent == null) {
             throw new NullPointerException();
         }
@@ -51,7 +52,7 @@ public class MeleeSkill implements Skill, Tickable {
      * @return Cooldown remaining.
      */
     @Override
-    public int getCooldown() {
+    public int getCooldownRemaining() {
         return cooldown;
     }
 
@@ -86,6 +87,7 @@ public class MeleeSkill implements Skill, Tickable {
      */
     @Override
     public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
+        int damage = (int) (entity.getDamage() * damageMultiplier);
         if (cooldown <= 0) {
             AbstractTask task;
             SquareVector origin;
@@ -93,22 +95,22 @@ public class MeleeSkill implements Skill, Tickable {
             if (angle > -45 && angle < 45) {
                 // Spawn above entity
                 origin = new SquareVector(entity.getCol(), entity.getRow() + 1);
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
+                task = new MeleeAttackTask(entity, origin, 2, 2, damage);
 
             } else if (angle >= -135 && angle <= -45) {
                 // Spawn to left of player
                 origin = new SquareVector(entity.getCol() - 1, entity.getRow());
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
+                task = new MeleeAttackTask(entity, origin, 2, 2, damage);
 
             } else if (angle < -135 || angle > 135) {
                 // Spawn below player
                 origin = new SquareVector(entity.getCol(), entity.getRow() - 1);
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
+                task = new MeleeAttackTask(entity, origin, 2, 2, damage);
 
             } else {
                 // Spawn right of player
                 origin = new SquareVector(entity.getCol() + 1, entity.getRow());
-                task = new MeleeAttackTask(entity, origin, 2, 2, DAMAGE);
+                task = new MeleeAttackTask(entity, origin, 2, 2, damage);
             }
             cooldown = MAX_COOLDOWN;
             return task;

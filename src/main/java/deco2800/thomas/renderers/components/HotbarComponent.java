@@ -3,9 +3,6 @@ package deco2800.thomas.renderers.components;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -108,7 +105,7 @@ public class HotbarComponent extends OverlayComponent {
         skillIcon.setPosition(skillIconX, skillIconY);
         skillIcon.draw(batch);
 
-        if (skill.getCooldown() > 0) {
+        if (skill.getCooldownRemaining() > 0) {
             batch.end();
             renderCoolDownBox(batch, skill, skillIconX, skillIconY, skillIcon.getWidth(), skillIcon.getHeight());
             batch.begin();
@@ -128,7 +125,7 @@ public class HotbarComponent extends OverlayComponent {
      * @param maxHeight the maximum height of the black box
      */
     private void renderCoolDownBox(SpriteBatch batch, Skill skill, float x, float y, float width, float maxHeight) {
-        float height = (float) skill.getCooldown() / skill.getCooldownMax() * maxHeight;
+        float height = (float) skill.getCooldownRemaining() / skill.getCooldownMax() * maxHeight;
 
         coolDownBox.setProjectionMatrix(batch.getProjectionMatrix());
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);

@@ -70,10 +70,10 @@ public class GameManager {
 	private static enum WorldType {
 		SWAMP_WORLD,
 		TUNDRA_WORLD,
-		VOLCANO_WORLD,
-		DESERT_WORLD
+		DESERT_WORLD,
+		VOLCANO_WORLD
 	}
-	private int currentWorld = 0;
+	private static int currentWorld = 0;
 	private ArrayList<WorldType> worldOrder;
 
 	public State state = State.RUN;
@@ -101,8 +101,9 @@ public class GameManager {
 	 * Private constructor to enforce use of get()
 	 */
 	private GameManager() {
+		//Loads the order of the worlds
 		worldOrder = new ArrayList<>(EnumSet.allOf(WorldType.class));
-		Collections.shuffle(worldOrder);
+		resetWorldOrder();
 	}
 
 	/**
@@ -259,6 +260,15 @@ public class GameManager {
 	}
 
 	/**
+	 * Resets the World Order when new game is played
+	 */
+	public static void resetWorldOrder(){
+		currentWorld = 0;
+		//randomise the worldOrder
+		//Collections.shuffle(worldOrder);
+	}
+
+	/**
 	 * Gets the current game world
 	 *
 	 * @return the current game world
@@ -276,11 +286,12 @@ public class GameManager {
 		managers.removeIf(manager -> manager instanceof EnemyManager);
 		this.getWorld().dispose(); // Dispose world
 		switch (worldOrder.get(currentWorld)) {
-			case TUNDRA_WORLD:
-				this.setWorld(new TundraWorld());
-				break;
+			//SWAMP , TUNDRA, DESERT, VOLCANO
 			case SWAMP_WORLD:
 				this.setWorld(new SwampWorld());
+				break;
+			case TUNDRA_WORLD:
+				this.setWorld(new TundraWorld());
 				break;
 			case DESERT_WORLD:
 				this.setWorld(new DesertWorld());
@@ -289,7 +300,8 @@ public class GameManager {
 				this.setWorld(new VolcanoWorld());
 				break;
 		}
-		currentWorld = (currentWorld + 1) % worldOrder.size();
+		currentWorld += 1;
+		//currentWorld = (currentWorld + 1) % worldOrder.size();
 		movedToNextWorld = true;
 		GameManager.get().state = State.TRANSITION;
 	}

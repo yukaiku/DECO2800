@@ -16,6 +16,8 @@ public class ApplySlowOnCollisionTask extends AbstractTask {
     private AbstractWorld world;
     // Lifetime of task
     private long lifetime, currentLifetime;
+    private float speedMultiplier;
+    private int slowTime;
 
     // Task state
     private boolean taskAlive = true;
@@ -28,8 +30,13 @@ public class ApplySlowOnCollisionTask extends AbstractTask {
     /**
      * Creates an instance of the task.
      * @param entity Parent entity
+     * @param lifetime Time for the slow to last
+     * @param speedMultiplier Multiple value to change speed by. Less than 0
+     *                        will result in slowing
+     * @param slowTime How long to apply the slow for
      */
-    public ApplySlowOnCollisionTask(CombatEntity entity, long lifetime) {
+    public ApplySlowOnCollisionTask(CombatEntity entity, long lifetime,
+                                    float speedMultiplier, int slowTime) {
         super(entity);
 
         //this.entity = entity;
@@ -38,6 +45,9 @@ public class ApplySlowOnCollisionTask extends AbstractTask {
 
         this.lifetime = lifetime;
         this.currentLifetime = 0;
+
+        this.speedMultiplier = speedMultiplier;
+        this.slowTime = slowTime;
     }
 
     @Override
@@ -74,7 +84,7 @@ public class ApplySlowOnCollisionTask extends AbstractTask {
         if (e instanceof Peon) {
             Peon peon = (Peon) e;
 
-            peon.addEffect(new SpeedStatus(peon, 0.1f, 5));
+            peon.addEffect(new SpeedStatus(peon, speedMultiplier, slowTime));
             this.taskComplete = true;
             if (peon.isDead()) {
                 peon.death();

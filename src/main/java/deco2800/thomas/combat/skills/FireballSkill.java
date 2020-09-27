@@ -3,7 +3,7 @@ package deco2800.thomas.combat.skills;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireballAttackTask;
 
@@ -12,25 +12,26 @@ import deco2800.thomas.tasks.combat.FireballAttackTask;
  */
 public class FireballSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private static final int MAX_COOLDOWN = 20;
-    /* Damage to apply from fireball */
-    private static final int DAMAGE = 10;
+    private static final int cooldown = 20;
+    /* Damage multiplier to apply to the fireball.
+    Multiplies the peon base damage value. */
+    private static final float damageMultiplier = 0.4f;
     /* Speed of fireball */
-    private static final float SPEED = 0.5f;
+    private static final float speed = 0.5f;
     /* Lifetime of fireball */
-    private static final int LIFETIME = 60;
+    private static final int lifetime = 60;
 
     /* Cooldown tracker */
-    private int cooldown = 0;
+    private int cooldownRemaining = 0;
     /* Reference to parent entity */
-    private final AbstractEntity entity;
+    private final Peon entity;
 
     /**
      * Creates a new FireballSkill and binds it to the Entity.
      * @param parent Parent entity of skill.
      * @throws NullPointerException when parent is null
      */
-    public FireballSkill(AbstractEntity parent) {
+    public FireballSkill(Peon parent) {
         if (parent == null) {
             throw new NullPointerException();
         }
@@ -43,8 +44,8 @@ public class FireballSkill implements Skill, Tickable {
      */
     @Override
     public void onTick(long tick) {
-        if (cooldown > 0) {
-            cooldown--;
+        if (cooldownRemaining > 0) {
+            cooldownRemaining--;
         }
     }
 
@@ -54,8 +55,8 @@ public class FireballSkill implements Skill, Tickable {
      * @return Cooldown remaining.
      */
     @Override
-    public int getCooldown() {
-        return cooldown;
+    public int getCooldownRemaining() {
+        return cooldownRemaining;
     }
 
     /**
@@ -65,7 +66,7 @@ public class FireballSkill implements Skill, Tickable {
      */
     @Override
     public int getCooldownMax() {
-        return MAX_COOLDOWN;
+        return cooldown;
     }
 
     /**
@@ -89,9 +90,10 @@ public class FireballSkill implements Skill, Tickable {
      */
     @Override
     public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
-        if (cooldown <= 0) {
-            AbstractTask task = new FireballAttackTask(entity, targetX, targetY, DAMAGE, SPEED, LIFETIME);
-            cooldown = MAX_COOLDOWN;
+        int damage = (int) (entity.getDamage() * damageMultiplier);
+        if (cooldownRemaining <= 0) {
+            AbstractTask task = new FireballAttackTask(entity, targetX, targetY, damage, speed, lifetime);
+            cooldownRemaining = cooldown;
             return task;
         } else {
             throw new SkillOnCooldownException();

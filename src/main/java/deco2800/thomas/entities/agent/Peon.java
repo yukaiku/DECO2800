@@ -275,6 +275,22 @@ public class Peon extends AgentEntity implements Tickable {
 	}
 
 	/**
+	 * Gets the current base damage of the Peon
+	 * @return damage
+	 */
+	public float getDamage() {
+		return damage;
+	}
+
+	/**
+	 * Set sets the current base damage of the Peon
+	 * @param damage
+	 */
+	public void setDamage(float damage) {
+		this.damage = damage;
+	}
+
+	/**
 	 * Increases the health of this AgentEntity. by the given amount.
 	 * @param regen The amount of health this AgentEntity.is to be healed by.
 	 */

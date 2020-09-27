@@ -5,70 +5,62 @@ import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.tasks.AbstractTask;
-import deco2800.thomas.tasks.combat.IceballAttackTask;
+import deco2800.thomas.tasks.combat.IceBreathTask;
 
-public class IceballSkill implements Skill, Tickable {
+public class IceBreathSkill implements Skill, Tickable {
     /* Maximum time of cooldown in ticks */
-    private static final int MAX_COOLDOWN = 50;
-    /* Damage multiplier to apply to the iceball.
+    private static final int cooldown = 20;
+    /* Damage multiplier to apply to the ice tile.
     Multiplies the peon base damage value. */
     private static final float damageMultiplier = 0.4f;
-    /* Lifetime of explosion */
-    /* Speed of projectile */
-    private static final float SPEED = 0.5f;
-    /* Lifetime of projectile */
-    private static final int LIFETIME = 60;
 
     private final float speedMultiplier;
 
     private final int slowDuration;
 
     /* Cooldown tracker */
-    private int cooldown = 0;
+    private int cooldownRemaining = 0;
     /* Reference to parent entity */
     private final Peon entity;
 
-    public IceballSkill(Peon parent, float speedMultiplier, int slowDuration) {
-        if (parent == null) {
-            throw new NullPointerException();
-        }
-        this.entity = parent;
+    public IceBreathSkill(Peon entity, float speedMultiplier, int slowDuration) {
+        this.entity = entity;
         this.speedMultiplier = speedMultiplier;
         this.slowDuration = slowDuration;
     }
 
     @Override
-    public void onTick(long tick) {
-        if (cooldown > 0) {
-            cooldown--;
-        }
-    }
-
-    @Override
     public int getCooldownRemaining() {
-        return cooldown;
+        return cooldownRemaining;
     }
 
     @Override
     public int getCooldownMax() {
-        return MAX_COOLDOWN;
+        return cooldown;
     }
 
     @Override
     public String getTexture() {
-        return "iceballIcon";
+        return null;
     }
 
     @Override
     public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
         int damage = (int) (entity.getDamage() * damageMultiplier);
-        if (cooldown <= 0) {
-            AbstractTask task = new IceballAttackTask(entity, targetX, targetY,
-                    damage, SPEED, LIFETIME, speedMultiplier, slowDuration);
-            cooldown = MAX_COOLDOWN;
+        if (cooldownRemaining <= 0) {
+            AbstractTask task = new IceBreathTask(entity, targetX, targetY,
+                    damage, speedMultiplier, slowDuration);
+            cooldownRemaining = cooldown;
             return task;
         } else {
             throw new SkillOnCooldownException();
+        }
+    }
+
+    @Override
+    public void onTick(long tick) {
+        if (cooldownRemaining > 0) {
+            cooldownRemaining--;
         }
     }
 }

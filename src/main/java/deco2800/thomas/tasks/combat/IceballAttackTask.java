@@ -9,6 +9,8 @@ import deco2800.thomas.util.SquareVector;
 
 public class IceballAttackTask extends RangedAttackTask {
 
+    private float speedMultiplier;
+    private int slowDuration;
     /**
      * Spawns a projectile with specified parameters.
      *
@@ -19,8 +21,11 @@ public class IceballAttackTask extends RangedAttackTask {
      * @param speed     Speed to move at
      * @param lifetime  Lifetime of projectile
      */
-    public IceballAttackTask(AbstractEntity entity, float targetCol, float targetRow, int damage, float speed, int lifetime) {
+    public IceballAttackTask(AbstractEntity entity, float targetCol, float targetRow,
+                             int damage, float speed, int lifetime, float speedMultiplier, int slowDuration) {
         super(entity, targetCol, targetRow, damage, speed, lifetime);
+        this.speedMultiplier = speedMultiplier;
+        this.slowDuration = slowDuration;
     }
 
     @Override
@@ -28,7 +33,7 @@ public class IceballAttackTask extends RangedAttackTask {
         Iceball iceball = new Iceball(col, row, damage, speed, faction);
         iceball.setMovementTask(new DirectProjectileMovementTask(iceball,
                 new SquareVector(targetCol, targetRow), lifetime));
-        iceball.setCombatTask(new ApplySlowOnCollisionTask(iceball, lifetime));
+        iceball.setCombatTask(new ApplySlowOnCollisionTask(iceball, lifetime, speedMultiplier, slowDuration));
         GameManager.get().getWorld().addEntity(iceball);
     }
 }

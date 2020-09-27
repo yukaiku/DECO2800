@@ -12,7 +12,7 @@ public interface Skill extends Tickable {
      * Returns (in ticks) how long is remaining on the cooldown.
      * @return Cooldown remaining.
      */
-    int getCooldown();
+    int getCooldownRemaining();
 
     /**
      * Returns (in ticks) how long the full cooldown of this skill is.
@@ -30,10 +30,10 @@ public interface Skill extends Tickable {
     /**
      * Creates and returns a new skill task for this skill that is executed by the
      * entity executing the skill.
-     * @param mouseX X position of mouse in ColRow coordinates
-     * @param mouseY Y position of mouse in ColRow coordinates
+     * @param targetX X position of mouse in ColRow coordinates
+     * @param targetY Y position of mouse in ColRow coordinates
      * @return New AbstractTask to execute.
      * @throws SkillOnCooldownException when cooldown > 0
      */
-    AbstractTask getNewSkillTask(float mouseX, float mouseY) throws SkillOnCooldownException;
+    AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException;
 }
