@@ -40,6 +40,7 @@ public class QuestTracker{
      */
     public static int resetOrbs() {
         orbs.clear();
+        GameManager.resetWorldOrder();
         return orbs.size();
     }
 
@@ -54,7 +55,7 @@ public class QuestTracker{
             orbs.add(orb);
         }
         if(orbs.size() == 4){
-            GameManager.get().state = GameManager.State.VICTORY;
+            GameManager.victory();
         }
         return orbs.size();
     }
