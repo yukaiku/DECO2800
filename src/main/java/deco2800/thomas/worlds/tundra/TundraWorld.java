@@ -4,7 +4,6 @@ import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.TundraNPC;
-import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Orc;
 import deco2800.thomas.entities.enemies.Variation;
 import deco2800.thomas.entities.enemies.dragons.TundraDragon;

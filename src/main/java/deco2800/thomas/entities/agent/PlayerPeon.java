@@ -43,7 +43,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
     private float stateTimer;
     private int duration = 0;
 
-    public static int DEFAULT_HEALTH = 100;
+    public static final int DEFAULT_HEALTH = 100;
 
     // Player dialogue
     private static final Map<String, String> dialogues = new HashMap<>();

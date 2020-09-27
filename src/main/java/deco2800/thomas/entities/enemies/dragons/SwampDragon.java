@@ -3,7 +3,6 @@ package deco2800.thomas.entities.enemies.dragons;
 import deco2800.thomas.entities.enemies.Dragon;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
-import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Variation;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
