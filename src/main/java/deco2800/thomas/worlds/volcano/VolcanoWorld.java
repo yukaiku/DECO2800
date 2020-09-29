@@ -11,7 +11,7 @@ import deco2800.thomas.entities.environment.volcano.VolcanoRuins;
 import deco2800.thomas.entities.environment.volcano.VolcanoBurningTree;
 import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
-import deco2800.thomas.entities.items.Shield;
+import deco2800.thomas.entities.items.IronArmour;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.entities.environment.volcano.*;
@@ -182,10 +182,10 @@ public class VolcanoWorld extends AbstractWorld {
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
             if (Integer.parseInt(tile.getTextureName().split("_")[1]) < 5
                     && !tile.hasParent()) {
-                Shield shield = new Shield(tile, false,
+                IronArmour ironArmour = new IronArmour(tile, false,
                         (PlayerPeon) getPlayerEntity(),"volcano");
-                entities.add(shield);
-                this.allVolcanoDialogues.add(shield.getDisplay());
+                entities.add(ironArmour);
+                this.allVolcanoDialogues.add(ironArmour.getDisplay());
             } else {
                 i--;
             }

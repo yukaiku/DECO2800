@@ -3,6 +3,7 @@ package deco2800.thomas.worlds.desert;
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.items.IronArmour;
 import deco2800.thomas.entities.npc.DesertNPC;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.enemies.Orc;
@@ -10,7 +11,6 @@ import deco2800.thomas.entities.enemies.Variation;
 import deco2800.thomas.entities.environment.desert.*;
 import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
-import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.entities.enemies.dragons.DesertDragon;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
@@ -191,10 +191,10 @@ public class DesertWorld extends AbstractWorld {
         for (int i = 0; i < NUM_SHIELDS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            Shield shield = new Shield(tile, false,
+            IronArmour ironArmour = new IronArmour(tile, false,
                     (PlayerPeon) getPlayerEntity(),"desert");
-            entities.add(shield);
-            this.allDesertDialogues.add(shield.getDisplay());
+            entities.add(ironArmour);
+            this.allDesertDialogues.add(ironArmour.getDisplay());
         }
 
         for (int i = 0; i < NUM_CHESTS; i++) {

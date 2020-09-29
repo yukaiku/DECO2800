@@ -2,10 +2,10 @@ package deco2800.thomas.worlds.swamp;
 
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.items.IronArmour;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.SwampNPC;
 import deco2800.thomas.entities.enemies.*;
-import deco2800.thomas.entities.enemies.dragons.DesertDragon;
 import deco2800.thomas.entities.environment.swamp.SwampDeadTree;
 import deco2800.thomas.entities.environment.swamp.SwampFallenTree;
 import deco2800.thomas.entities.environment.swamp.SwampPond;
@@ -13,7 +13,6 @@ import deco2800.thomas.entities.environment.swamp.SwampTreeLog;
 import deco2800.thomas.entities.environment.swamp.SwampTreeStub;
 import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
-import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
@@ -222,10 +221,10 @@ public class SwampWorld extends AbstractWorld {
         for (int i = 0; i < NUM_SHIELDS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            Shield shield = new Shield(tile, false,
+            IronArmour ironArmour = new IronArmour(tile, false,
                     (PlayerPeon) getPlayerEntity(),"swamp");
-            entities.add(shield);
-            this.allSwampDialogues.add(shield.getDisplay());
+            entities.add(ironArmour);
+            this.allSwampDialogues.add(ironArmour.getDisplay());
         }
 
         for (int i = 0; i < NUM_CHESTS; i++) {

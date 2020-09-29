@@ -2,6 +2,7 @@ package deco2800.thomas.worlds.tundra;
 
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.items.IronArmour;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.TundraNPC;
 import deco2800.thomas.entities.enemies.Orc;
@@ -12,7 +13,6 @@ import deco2800.thomas.entities.environment.tundra.TundraRock;
 import deco2800.thomas.entities.environment.tundra.TundraTreeLog;
 import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
-import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
@@ -158,10 +158,10 @@ public class TundraWorld extends AbstractWorld {
 			Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
 					Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
 
-				Shield shield = new Shield(tile, false,
+				IronArmour ironArmour = new IronArmour(tile, false,
 						(PlayerPeon) getPlayerEntity(), "tundra");
-				entities.add(shield);
-				this.allTundraDialogues.add(shield.getDisplay());
+				entities.add(ironArmour);
+				this.allTundraDialogues.add(ironArmour.getDisplay());
 
 		}
 

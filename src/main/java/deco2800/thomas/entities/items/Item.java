@@ -64,7 +64,7 @@ public class Item extends StaticEntity implements TouchDownObserver {
             if (this.getItemName().equals("Health Potion")) {
                 this.player.regenerateHealth(40);
             }
-            if (this.getItemName().equals("Iron Shield") && this.player.getArmour() < 2000) {
+            if (this.getItemName().equals("Iron IronArmour") && this.player.getArmour() < 2000) {
                 this.player.addArmour(1000);
             }
         }

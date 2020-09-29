@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import deco2800.thomas.entities.agent.LoadedPeon;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.npc.*;
 
@@ -32,6 +33,13 @@ public class NPCDialog extends AbstractDialogBox {
 		box.add(str).expand().center();
 		button = new TextButton("Next", skin);
 		box.add(button).expand().center();
+		box.pack();
+	}
+
+	public void addHealer(){
+		TextButton button2 = new TextButton("Heal", skin);
+		button2.addListener(c);
+		box.add(button2).expand().center();
 		box.pack();
 	}
 
@@ -111,5 +119,26 @@ public class NPCDialog extends AbstractDialogBox {
 			TundraNPC.setIsActive(false);
 		}
 	};
-	
+
+	ChangeListener c = new ChangeListener() {
+		@Override
+		public void changed(ChangeEvent event, Actor actor) {
+			LoadedPeon.healPlayer(100);
+			LoadedPeon.debit(100);
+			setShowing(false);
+			box.reset();
+			box.remove();
+		}
+	};
+
+	ChangeListener d = new ChangeListener() {
+		@Override
+		public void changed(ChangeEvent event, Actor actor) {
+			LoadedPeon.healPlayer(100);
+			LoadedPeon.debit(100);
+			setShowing(false);
+			box.reset();
+			box.remove();
+		}
+	};
 }
