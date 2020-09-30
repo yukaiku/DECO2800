@@ -248,7 +248,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
      *
      * @param screenX the x position the mouse was pressed at
      * @param screenY the y position the mouse was pressed at
-     * @param pointer
+     * @param pointer not used
      * @param button  the button which was pressed
      */
     @Override
