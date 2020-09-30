@@ -1,6 +1,7 @@
-package deco2800.thomas.combat;
+package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.Tickable;
+import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.tasks.AbstractTask;
 
 /**
@@ -35,7 +36,7 @@ public abstract class AbstractSkill implements Tickable {
     /**
      * Returns a string containing the name of the texture that is used to represent
      * this skill on the skill bar.
-     * @return
+     * @return Texture id
      */
     public abstract String getTexture();
 
