@@ -1,11 +1,14 @@
 package deco2800.thomas.entities.agent;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.combat.AbstractSkill;
+import deco2800.thomas.combat.KnightSkills;
 import deco2800.thomas.combat.SkillOnCooldownException;
+import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.combat.skills.FireBombSkill;
 import deco2800.thomas.combat.skills.FireballSkill;
 import deco2800.thomas.combat.skills.IceballSkill;
@@ -14,6 +17,7 @@ import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
+import deco2800.thomas.managers.PlayerManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
@@ -75,6 +79,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
 
         // Initialise skills
         wizardSkills = new ArrayList<>();
+
         wizardSkills.add(new FireballSkill(this));
         wizardSkills.add(new ScorpionStingSkill(this));
         wizardSkills.add(new IceballSkill(this, 0.4f, 4));
@@ -322,6 +327,16 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
                 keycode == Input.Keys.A || keycode == Input.Keys.D) {
             this.stopMovementTask(keycode);
         }
+    }
+
+    /**
+     * Gets player skills from the PlayerManager.
+     */
+    private void getPlayerSkills() {
+        // Get player skills
+        PlayerManager playerManager = GameManager.getManagerFromInstance(PlayerManager.class);
+        List<WizardSkills> wizardSkills = playerManager.getCurrentWizardSkills();
+        KnightSkills knightSkill = playerManager.getCurrentKnightSkill();
     }
 
     /**

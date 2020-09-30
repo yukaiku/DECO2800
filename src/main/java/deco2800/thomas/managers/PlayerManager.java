@@ -1,5 +1,7 @@
 package deco2800.thomas.managers;
 
+import deco2800.thomas.combat.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -14,53 +16,9 @@ public class PlayerManager extends AbstractManager {
      */
     public final static int MAX_WIZARD_SKILLS = 5;
 
-    /**
-     * Possible skills the player can acquire as a Wizard.
-     */
-    public enum WizardSkills {
-        FIREBALL,
-        ICEBALL,
-        STING
-    }
-
-    /**
-     * Possible wizards the player can choose from. Each grants
-     * a unique skill.
-     */
-    public enum Wizard {
-        FIRE,
-        WATER
-    }
-
-    /**
-     * Possible skills the player can acquire as a Knight.
-     */
-    public enum KnightSkills {
-        FIREBOMB
-    }
-
-    /**
-     * Possible knights the player can choose from. Each grants
-     * a unique skill.
-     */
-    public enum Knight {
-        FIRE
-    }
-
     /* Current skills the player has access to. */
     private final List<WizardSkills> currentWizardSkills;
     private KnightSkills currentKnightSkill;
-
-    /* Map default skills of Wizards */
-    private final static HashMap<Wizard, WizardSkills> DEFAULT_WIZARD_SKILLS = new HashMap<>() {{
-        put(Wizard.FIRE, WizardSkills.FIREBALL);
-        put(Wizard.WATER, WizardSkills.ICEBALL);
-    }};
-
-    /* Map default skills of Knights */
-    private final static HashMap<Knight, KnightSkills> DEFAULT_KNIGHT_SKILLS = new HashMap<>() {{
-        put(Knight.FIRE, KnightSkills.FIREBOMB);
-    }};
 
     /**
      * Creates a new instance of the PlayerManager, where the player
@@ -68,6 +26,10 @@ public class PlayerManager extends AbstractManager {
      */
     public PlayerManager() {
         currentWizardSkills = new CopyOnWriteArrayList<>();
+
+        // TEMPORARY Default to fire wizard and fire knight
+        setWizard(Wizard.FIRE);
+        setKnight(Knight.FIRE);
     }
 
     /**
@@ -79,18 +41,18 @@ public class PlayerManager extends AbstractManager {
 
     /**
      * Sets the player's wizard, and grants the default skill for that wizard.
-     * @param wizard Wizard to set. Cannot be Wizard.NONE.
+     * @param wizard Wizard to set.
      */
     public void setWizard(Wizard wizard) {
-        currentWizardSkills.add(DEFAULT_WIZARD_SKILLS.get(wizard));
+        currentWizardSkills.add(PlayerSkills.getDefaultWizardSkill(wizard));
     }
 
     /**
      * Sets the player's knight, and grants the default skill for that knight.
-     * @param knight Knight to set. Cannot be Knight.NONE.
+     * @param knight Knight to set.
      */
     public void setKnight(Knight knight) {
-        currentKnightSkill = DEFAULT_KNIGHT_SKILLS.get(knight);
+        currentKnightSkill = PlayerSkills.getDefaultKnightSkill(knight);
     }
 
     /**
