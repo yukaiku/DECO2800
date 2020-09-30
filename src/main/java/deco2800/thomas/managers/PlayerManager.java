@@ -1,6 +1,5 @@
 package deco2800.thomas.managers;
 
-import com.badlogic.gdx.Game;
 import deco2800.thomas.combat.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 
