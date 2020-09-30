@@ -216,15 +216,18 @@ public class VolcanoWorld extends AbstractWorld {
         Tile t;
         String tileTexture;
         Random random = new Random();
+        SquareVector playerPos = getPlayerEntity().getPosition();
         int tileCount = GameManager.get().getWorld().getTiles().size();
         AbstractWorld world = GameManager.get().getWorld();
         int randIndex;
 
         for (int i = 0; i < 20; i++) {
-            randIndex = random.nextInt(tileCount);
-
             //Get respective volcano tile (5 <= Lava tiles Index <= 8
-            t = world.getTile(randIndex);
+            do {
+                randIndex = random.nextInt(tileCount);
+                t = world.getTile(randIndex);
+            } while (t.getCoordinates().isCloseEnoughToBeTheSame(playerPos));
+
             tileTexture = t.getTextureName();
             tileNumber = Integer.parseInt(tileTexture.split("_")[1]);
 
