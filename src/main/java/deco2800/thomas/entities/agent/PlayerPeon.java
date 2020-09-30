@@ -332,12 +332,14 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
     private void getPlayerSkills() {
         // Get player skills
         PlayerManager playerManager = GameManager.getManagerFromInstance(PlayerManager.class);
-        List<WizardSkills> wizardSkillList = playerManager.getCurrentWizardSkills();
-        KnightSkills knightSkill = playerManager.getCurrentKnightSkill();
-        for (WizardSkills skill : wizardSkillList) {
-            wizardSkills.add(PlayerSkills.getNewWizardSkill(this, skill));
+        if (playerManager != null) {
+            List<WizardSkills> wizardSkillList = playerManager.getCurrentWizardSkills();
+            KnightSkills knightSkill = playerManager.getCurrentKnightSkill();
+            for (WizardSkills skill : wizardSkillList) {
+                wizardSkills.add(PlayerSkills.getNewWizardSkill(this, skill));
+            }
+            mechSkill = PlayerSkills.getNewKnightSkill(this, knightSkill);
         }
-        mechSkill = PlayerSkills.getNewKnightSkill(this, knightSkill);
     }
 
     /**

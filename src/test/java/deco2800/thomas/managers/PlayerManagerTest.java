@@ -35,7 +35,7 @@ public class PlayerManagerTest {
 
         GameManager mockedGameManager = mock(GameManager.class);
         when(mockedGameManager.getWorld()).thenReturn(mockedWorld);
-        
+
         PowerMockito.mockStatic(GameManager.class);
         when(GameManager.get()).thenReturn(mockedGameManager);
     }
