@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.combat.*;
+import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.managers.GameManager;
