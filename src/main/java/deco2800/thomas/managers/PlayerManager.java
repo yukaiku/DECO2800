@@ -1,6 +1,8 @@
 package deco2800.thomas.managers;
 
+import com.badlogic.gdx.Game;
 import deco2800.thomas.combat.*;
+import deco2800.thomas.entities.agent.PlayerPeon;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -24,7 +26,6 @@ public class PlayerManager extends AbstractManager {
      * is not configured.
      */
     public PlayerManager() {
-        System.out.println("PlayerManager goes boom.");
         currentWizardSkills = new CopyOnWriteArrayList<>();
 
         // TEMPORARY Default to fire wizard and fire knight
@@ -63,6 +64,7 @@ public class PlayerManager extends AbstractManager {
     public void grantWizardSkill(WizardSkills skill) {
         if (currentWizardSkills.size() < MAX_WIZARD_SKILLS) {
             currentWizardSkills.add(skill);
+            ((PlayerPeon)GameManager.get().getWorld().getPlayerEntity()).updatePlayerSkills();
         }
     }
 

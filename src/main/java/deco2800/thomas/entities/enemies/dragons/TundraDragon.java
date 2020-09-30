@@ -2,11 +2,13 @@ package deco2800.thomas.entities.enemies.dragons;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 
+import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.Iceball;
 import deco2800.thomas.entities.enemies.Dragon;
 import deco2800.thomas.entities.enemies.Variation;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.PlayerManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.IceBreathTask;
 
@@ -30,5 +32,14 @@ public class TundraDragon extends Dragon {
     public void breathAttack() {
         Iceball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
                 getTarget().getRow(), 10, 0.1f, 60, EntityFaction.EVIL);
+    }
+
+    /**
+     * On death, perform super death, but also grant the player the Iceball skill.
+     */
+    @Override
+    public void death() {
+        super.death();
+        GameManager.getManagerFromInstance(PlayerManager.class).grantWizardSkill(WizardSkills.ICEBALL);
     }
 }

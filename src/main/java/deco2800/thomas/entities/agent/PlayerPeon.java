@@ -1,15 +1,10 @@
 package deco2800.thomas.entities.agent;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.combat.*;
-import deco2800.thomas.combat.skills.FireBombSkill;
-import deco2800.thomas.combat.skills.FireballSkill;
-import deco2800.thomas.combat.skills.IceballSkill;
-import deco2800.thomas.combat.skills.ScorpionStingSkill;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.managers.GameManager;
@@ -320,6 +315,14 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
                 keycode == Input.Keys.A || keycode == Input.Keys.D) {
             this.stopMovementTask(keycode);
         }
+    }
+
+    /**
+     * Update the list of player skills usable to the player.
+     */
+    public void updatePlayerSkills() {
+        wizardSkills.clear();
+        getPlayerSkills();
     }
 
     /**
