@@ -5,10 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import deco2800.thomas.combat.AbstractSkill;
-import deco2800.thomas.combat.KnightSkills;
-import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.combat.WizardSkills;
+import deco2800.thomas.combat.*;
 import deco2800.thomas.combat.skills.FireBombSkill;
 import deco2800.thomas.combat.skills.FireballSkill;
 import deco2800.thomas.combat.skills.IceballSkill;
@@ -79,12 +76,8 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
 
         // Initialise skills
         wizardSkills = new ArrayList<>();
-
-        wizardSkills.add(new FireballSkill(this));
-        wizardSkills.add(new ScorpionStingSkill(this));
-        wizardSkills.add(new IceballSkill(this, 0.4f, 4));
+        getPlayerSkills();
         activeWizardSkill = 0;
-        mechSkill = new FireBombSkill(this);
 
         // Animation Testing
         facingDirection = MovementTask.Direction.RIGHT;
@@ -335,8 +328,12 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
     private void getPlayerSkills() {
         // Get player skills
         PlayerManager playerManager = GameManager.getManagerFromInstance(PlayerManager.class);
-        List<WizardSkills> wizardSkills = playerManager.getCurrentWizardSkills();
+        List<WizardSkills> wizardSkillList = playerManager.getCurrentWizardSkills();
         KnightSkills knightSkill = playerManager.getCurrentKnightSkill();
+        for (WizardSkills skill : wizardSkillList) {
+            wizardSkills.add(PlayerSkills.getNewWizardSkill(this, skill));
+        }
+        mechSkill = PlayerSkills.getNewKnightSkill(this, knightSkill);
     }
 
     /**

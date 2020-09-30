@@ -2,7 +2,6 @@ package deco2800.thomas.managers;
 
 import deco2800.thomas.combat.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -25,6 +24,7 @@ public class PlayerManager extends AbstractManager {
      * is not configured.
      */
     public PlayerManager() {
+        System.out.println("PlayerManager goes boom.");
         currentWizardSkills = new CopyOnWriteArrayList<>();
 
         // TEMPORARY Default to fire wizard and fire knight

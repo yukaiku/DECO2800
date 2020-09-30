@@ -1,5 +1,6 @@
 package deco2800.thomas.combat;
 
+import deco2800.thomas.combat.skills.FireBombSkill;
 import deco2800.thomas.combat.skills.FireballSkill;
 import deco2800.thomas.combat.skills.IceballSkill;
 import deco2800.thomas.combat.skills.ScorpionStingSkill;
@@ -49,6 +50,7 @@ public class PlayerSkills {
      * @param parent PlayerPeon.
      * @param skill WizardSkill to get skill class from.
      * @return AbstractSkill for this skill.
+     * @throws IllegalArgumentException If there exists no mapping from a WizardSkill to an AbstractSkill.
      */
     public static AbstractSkill getNewWizardSkill(Peon parent, WizardSkills skill) {
         switch (skill) {
@@ -58,6 +60,22 @@ public class PlayerSkills {
                 return new ScorpionStingSkill(parent);
             case ICEBALL:
                 return new IceballSkill(parent, ICEBALL_SLOW_MODIFIER, ICEBALL_SLOW_DURATION);
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    /**
+     * Gets a new AbstractSkill for the player from a given KnightSkill.
+     * @param parent PlayerPeon.
+     * @param skill KnightSkill to get skill class from.
+     * @return AbstractSkill for this skill.
+     * @throws IllegalArgumentException if there exists no mapping from a KnightSkill to an AbstractSkill.
+     */
+    public static AbstractSkill getNewKnightSkill(Peon parent, KnightSkills skill) {
+        switch(skill) {
+            case FIREBOMB:
+                return new FireBombSkill(parent);
             default:
                 throw new IllegalArgumentException();
         }
