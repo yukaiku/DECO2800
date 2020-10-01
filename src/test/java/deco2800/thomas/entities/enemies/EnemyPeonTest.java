@@ -121,12 +121,8 @@ public class EnemyPeonTest extends BaseGDXTest {
     }
 
     @Test(expected = InvalidEnemyException.class)
-    public void testEnemyIndexException() {
-        try {
-            EnemyPeon enemy = EnemyIndex.getEnemy("testWizard");
-        } catch (InvalidEnemyException e) {
-            // expected
-        }
+    public void testEnemyIndexException() throws InvalidEnemyException {
+        EnemyPeon enemy = EnemyIndex.getEnemy("testWizard");
     }
     // Need some formal way of testing that it approaches the player? For now
     // in-game testing has confirmed it
