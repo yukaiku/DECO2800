@@ -9,23 +9,23 @@ import deco2800.thomas.entities.enemies.monsters.Dummy;
 import deco2800.thomas.entities.enemies.monsters.Orc;
 
 /**
- * Here lists all available enemies and their variations for convenient configurations.
- * Each variation of enemies will now has an index (e.g. "swampOrc"). You need to provide the index when
- * initialising the enemy manager. The index will also be used for special enemy spawning and blueprint retrieving.
- * The params below are initial values and can be changed later in EnemyManager by getting blueprints.
+ * Here lists all available enemies and their variations for convenient configuration. i.e. blueprints
+ * Each variation of enemies will now has an index (e.g. "swampOrc").
+ * You need to provide the enemy index when initialising the enemy manager.
+ * The blueprint params like speed, damage, etc. are initial values and can be changed later
+ * inside of EnemyManager by getting blueprints using enemyManager.getEnemyConfig(enemyIndex).
  *
- * Adding a different variation example:
+ * Example of creating a blueprint:
  *     case "speedySwampOrc": return new Orc(Variation.SWAMP, 50, 0.15f);
  *
- * Usage for spawning:
+ * Usage of blueprints:
  *     For wild enemies (auto-spawn) and bosses, provide their enemyIds when initialising the enemy manager.
  *     For special enemies (manual-spawn), use EnemyManager.spawnSpecialEnemy(String enemyIndex, float x, float y)
  *
- * Wiki:
- * todo: doc, wiki, testing
+ * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/blueprints
  */
 public class EnemyIndex {
-    /** World Variations */
+    /** World variations, just used for textures and names */
     public enum Variation { DESERT, SWAMP, TUNDRA, VOLCANO }
 
     /**

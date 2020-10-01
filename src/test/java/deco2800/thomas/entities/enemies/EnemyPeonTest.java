@@ -16,6 +16,8 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.endsWith;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -105,6 +107,26 @@ public class EnemyPeonTest extends BaseGDXTest {
         EnemyPeon enemy =  new Orc(EnemyIndex.Variation.SWAMP, 100, 1, 1, 1, 1, 1);
         enemy.setPosition(10, 10);
         assertEquals(enemy.getPosition(), new SquareVector(10, 10));
+    }
+
+    @Test
+    public void testEnemyIndex() {
+        try {
+            EnemyPeon enemy = EnemyIndex.getEnemy("testOrc");
+            assertEquals(100, enemy.getMaxHealth());
+            assertEquals(1, enemy.getDamage());
+        } catch (InvalidEnemyException e) {
+            fail();
+        }
+    }
+
+    @Test(expected = InvalidEnemyException.class)
+    public void testEnemyIndexException() {
+        try {
+            EnemyPeon enemy = EnemyIndex.getEnemy("testWizard");
+        } catch (InvalidEnemyException e) {
+            // expected
+        }
     }
     // Need some formal way of testing that it approaches the player? For now
     // in-game testing has confirmed it
