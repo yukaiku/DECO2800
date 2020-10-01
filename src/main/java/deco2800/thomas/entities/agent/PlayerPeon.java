@@ -4,16 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import deco2800.thomas.combat.AbstractSkill;
-import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.combat.skills.FireBombSkill;
-import deco2800.thomas.combat.skills.FireballSkill;
-import deco2800.thomas.combat.skills.IceballSkill;
-import deco2800.thomas.combat.skills.ScorpionStingSkill;
+import deco2800.thomas.combat.*;
+import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
+import deco2800.thomas.managers.PlayerManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
@@ -75,11 +72,8 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
 
         // Initialise skills
         wizardSkills = new ArrayList<>();
-        wizardSkills.add(new FireballSkill(this));
-        wizardSkills.add(new ScorpionStingSkill(this));
-        wizardSkills.add(new IceballSkill(this, 0.4f, 4));
+        getPlayerSkills();
         activeWizardSkill = 0;
-        mechSkill = new FireBombSkill(this);
 
         // Animation Testing
         facingDirection = MovementTask.Direction.RIGHT;
@@ -186,7 +180,6 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         if (isDead()) {
             death();
         }
-
         if (--duration < 0) {
             duration = 0;
             currentState = State.IDLE;
@@ -255,7 +248,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
      *
      * @param screenX the x position the mouse was pressed at
      * @param screenY the y position the mouse was pressed at
-     * @param pointer
+     * @param pointer not used
      * @param button  the button which was pressed
      */
     @Override
@@ -321,6 +314,30 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         if (keycode == Input.Keys.W || keycode == Input.Keys.S ||
                 keycode == Input.Keys.A || keycode == Input.Keys.D) {
             this.stopMovementTask(keycode);
+        }
+    }
+
+    /**
+     * Update the list of player skills usable to the player.
+     */
+    public void updatePlayerSkills() {
+        wizardSkills.clear();
+        getPlayerSkills();
+    }
+
+    /**
+     * Gets player skills from the PlayerManager.
+     */
+    private void getPlayerSkills() {
+        // Get player skills
+        PlayerManager playerManager = GameManager.getManagerFromInstance(PlayerManager.class);
+        if (playerManager != null) {
+            List<WizardSkills> wizardSkillList = playerManager.getCurrentWizardSkills();
+            KnightSkills knightSkill = playerManager.getCurrentKnightSkill();
+            for (WizardSkills skill : wizardSkillList) {
+                wizardSkills.add(PlayerSkills.getNewWizardSkill(this, skill));
+            }
+            mechSkill = PlayerSkills.getNewKnightSkill(this, knightSkill);
         }
     }
 

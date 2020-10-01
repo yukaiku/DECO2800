@@ -43,12 +43,12 @@ public class TundraWorld extends AbstractWorld {
 
 	public TundraWorld(int width, int height) {
 		DatabaseManager.loadWorld(this, MAP_FILE_TILES_ONLY);
-		generateStaticEntities();
 		this.allTundraDialogues = new ArrayList<>();
 
 		// PlayerPeon
 		this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.15f));
 		addEntity(this.getPlayerEntity());
+		generateStaticEntities();
 		generateItemEntities();
 
 		// Provide enemies
@@ -83,6 +83,8 @@ public class TundraWorld extends AbstractWorld {
 		final int NUM_TREE_LOGS = 60;
 		final int NUM_ROCKS = 60;
 
+		SquareVector playerPos = getPlayerEntity().getPosition();
+
 		int numTiles = getTiles().size();
 		List<Integer> tileIDs = new ArrayList<>();
 
@@ -101,7 +103,7 @@ public class TundraWorld extends AbstractWorld {
 
 			Tile tile = null;
 
-			while (tile == null || tile.hasParent()) {
+			while (tile == null || tile.hasParent() || tile.getCoordinates().isCloseEnoughToBeTheSame(playerPos)) {
 				int tileID = tileIDs.get(counter++);
 				tile = getTile(tileID);
 			}
