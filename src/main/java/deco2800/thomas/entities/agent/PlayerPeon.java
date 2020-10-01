@@ -180,7 +180,6 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         if (isDead()) {
             death();
         }
-
         if (--duration < 0) {
             duration = 0;
             currentState = State.IDLE;
