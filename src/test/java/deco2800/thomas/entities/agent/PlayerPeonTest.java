@@ -1,16 +1,41 @@
-package deco2800.thomas.entities;
+package deco2800.thomas.entities.agent;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.combat.KnightSkills;
+import deco2800.thomas.combat.WizardSkills;
+import deco2800.thomas.combat.skills.AbstractSkill;
+import deco2800.thomas.combat.skills.FireBombSkill;
 import deco2800.thomas.combat.skills.FireballSkill;
+import deco2800.thomas.combat.skills.IceballSkill;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.InputManager;
+import deco2800.thomas.managers.PlayerManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.movement.MovementTask;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(GameManager.class)
 public class PlayerPeonTest extends BaseGDXTest {
     @Test
     public void testPlayerSet() {
@@ -133,5 +158,49 @@ public class PlayerPeonTest extends BaseGDXTest {
     @Test
     public void testGetDialogue() {
         assertEquals(PlayerPeon.getDialogue("roar"), "Roar!!!");
+    }
+
+    /**
+     * Tests that PlayerPeon updatePlayerSkills() creates a list of WizardSkills
+     * that match correctly to the list supplied from PlayerManager.
+     */
+    @Test
+    public void testUpdatePlayerSkills() {
+        // Mock PlayerManager to return 2 wizard skills and a knight skill
+        PlayerManager playerManager = mock(PlayerManager.class);
+        PowerMockito.mockStatic(GameManager.class);
+        when(GameManager.getManagerFromInstance(PlayerManager.class)).thenReturn(playerManager);
+        when(playerManager.getCurrentWizardSkills()).thenReturn(new CopyOnWriteArrayList<>() {{
+            add(WizardSkills.FIREBALL);
+            add(WizardSkills.ICEBALL);
+        }});
+        when(playerManager.getCurrentKnightSkill()).thenReturn(KnightSkills.FIREBOMB);
+
+        // Mock texture manager to prevent null reference
+        TextureManager textureManager = mock(TextureManager.class);
+        Texture mockedTexture = mock(Texture.class);
+        when(mockedTexture.getWidth()).thenReturn(1);
+        when(mockedTexture.getHeight()).thenReturn(1);
+        Array<TextureRegion> playerStand = new Array<>();
+        playerStand.add(new TextureRegion(new Texture("resources/combat/move_right.png"), 262, 256));
+        when(textureManager.getAnimationFrames(anyString())).thenReturn(playerStand);
+        when(textureManager.getTexture(anyString())).thenReturn(mockedTexture);
+        when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
+
+        // Mock input manager to prevent null reference
+        InputManager inputManager = mock(InputManager.class);
+        when(GameManager.getManagerFromInstance(InputManager.class)).thenReturn(inputManager);
+
+        // Create PlayerPeon and update skills
+        PlayerPeon peon = new PlayerPeon(10f, 10f, 0.15f, 10);
+        peon.updatePlayerSkills();
+        List<AbstractSkill> wizardSkills = peon.getWizardSkills();
+        AbstractSkill knightSkill = peon.getMechSkill();
+
+        // Check that all skills correctly match their respective abstract skill class
+        assertEquals(2, wizardSkills.size());
+        assertTrue(wizardSkills.get(0) instanceof FireballSkill);
+        assertTrue(wizardSkills.get(1) instanceof IceballSkill);
+        assertTrue(knightSkill instanceof FireBombSkill);
     }
 }
