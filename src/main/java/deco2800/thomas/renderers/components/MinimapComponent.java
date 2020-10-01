@@ -1,18 +1,16 @@
 package deco2800.thomas.renderers.components;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.entities.enemies.Boss;
+import deco2800.thomas.entities.enemies.bosses.Boss;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.OverlayComponent;
 import deco2800.thomas.renderers.OverlayRenderer;
-import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
 
 import java.util.List;
