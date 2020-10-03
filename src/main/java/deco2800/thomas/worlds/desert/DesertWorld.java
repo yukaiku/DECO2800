@@ -95,6 +95,12 @@ public class DesertWorld extends AbstractWorld {
         DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
                 this.allDesertDialogues);
         GameManager.get().addManager(dialog);
+
+        //Updates difficulty manager
+        DifficultyManager difficultyManager = GameManager.getManagerFromInstance(DifficultyManager.class);
+        difficultyManager.setPlayerEntity((PlayerPeon) this.getPlayerEntity());
+        difficultyManager.setDifficultyLevel(getType());
+
     }
 
     /**
