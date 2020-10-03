@@ -10,7 +10,7 @@ public class CurrencyComponent extends OverlayComponent {
 
     BitmapFont font;
 
-    public CurrencyComponent(OverlayRenderer overlayRenderer) {
+    public  CurrencyComponent(OverlayRenderer overlayRenderer) {
         super(overlayRenderer);
     }
 

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.enemies.monsters.Orc;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.worlds.AbstractWorld;
@@ -65,10 +66,10 @@ public class OrcTest extends BaseGDXTest {
         when(GameManager.get().getWorld()).thenReturn(world);
         when(GameManager.get().getWorld().getPlayerEntity()).thenReturn(playerPeon);
 
-        volcanoOrc = new Orc(Variation.VOLCANO, 100, 0.1f);
-        desertOrc = new Orc(Variation.DESERT, 100, 0.1f);
-        swampOrc = new Orc(Variation.SWAMP, 100, 0.1f);
-        tundraOrc = new Orc(Variation.TUNDRA, 100, 0.1f);
+        volcanoOrc = new Orc(EnemyIndex.Variation.VOLCANO, 100, 0.1f, 1, 1, 1, 1);
+        desertOrc = new Orc(EnemyIndex.Variation.DESERT, 100, 0.1f, 1, 1, 1, 1);
+        swampOrc = new Orc(EnemyIndex.Variation.SWAMP, 100, 0.1f, 1, 1, 1, 1);
+        tundraOrc = new Orc(EnemyIndex.Variation.TUNDRA, 100, 0.1f, 1, 1, 1, 1);
     }
 
     @Test

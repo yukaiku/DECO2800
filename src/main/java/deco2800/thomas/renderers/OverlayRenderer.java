@@ -17,7 +17,7 @@ public class OverlayRenderer implements Renderer {
     private float y;
     private float width;
     private float height;
-    private List<OverlayComponent> components;
+    private final List<OverlayComponent> components;
 
     public OverlayRenderer() {
         this.components = new ArrayList<>();
@@ -34,6 +34,8 @@ public class OverlayRenderer implements Renderer {
         this.getComponents().add(new CurrencyComponent(this));
         this.getComponents().add(new QuestTrackerComponent(this));
         this.getComponents().add(new GuidelineComponent(this));
+        this.getComponents().add(new FloatingDamageComponent(this));
+        this.getComponents().add(new MinimapComponent(this));
     }
 
     @Override
@@ -82,5 +84,19 @@ public class OverlayRenderer implements Renderer {
 
     public List<OverlayComponent> getComponents() {
         return this.components;
+    }
+
+    /**
+     * Returns a particular component based on class.
+     * @param type Class to return
+     * @return OverlayComponent of type, or null
+     */
+    public <T extends OverlayComponent> T getComponentByInstance(Class<T> type) {
+        for (OverlayComponent component : this.components) {
+            if (component.getClass() == type) {
+                return type.cast(component);
+            }
+        }
+        return null;
     }
 }

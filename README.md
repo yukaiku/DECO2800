@@ -1,5 +1,7 @@
 `game.getTitle();`
 
+[SonarQube](https://deco2800-sonarqube.uqcloud.net/dashboard?id=henry2)
+
 [![Build Status](http://deco2800.uqcloud.net/jenkins/job/deco2800-2018-thomas/badge/icon)](http://deco2800.uqcloud.net/jenkins/job/deco2800-2018-thomas/)
 
 `Description of the game...` 

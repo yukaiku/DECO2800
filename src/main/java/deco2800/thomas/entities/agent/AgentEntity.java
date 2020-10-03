@@ -5,9 +5,6 @@ import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.SquareVector;
 
-import java.util.HashMap;
-import java.util.List;
-
 public abstract class AgentEntity extends AbstractEntity {
 	@Expose
 	protected float speed;
@@ -32,7 +29,6 @@ public abstract class AgentEntity extends AbstractEntity {
 
 	public void setSpeed(float speed) {
 		this.speed = speed;
-//		System.out.println(speed);
 	}
 
 	public MovementTask.Direction getMovingDirection() {

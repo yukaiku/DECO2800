@@ -4,16 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import deco2800.thomas.combat.Skill;
-import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.combat.skills.FireBombSkill;
-import deco2800.thomas.combat.skills.FireballSkill;
-import deco2800.thomas.combat.skills.IceballSkill;
-import deco2800.thomas.combat.skills.ScorpionStingSkill;
+import deco2800.thomas.combat.*;
+import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
+import deco2800.thomas.managers.PlayerManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
@@ -33,8 +30,8 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         IDLE, WALK, ATTACK_MELEE, ATTACK_RANGE, INCAPACITATED
     }
 
-    public State currentState;
-    public State previousState;
+    private State currentState;
+    private State previousState;
     private MovementTask.Direction facingDirection;
     private final Animation<TextureRegion> playerIdle;
     private final Animation<TextureRegion> playerMeleeAttack;
@@ -49,11 +46,11 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
     private static final Map<String, String> dialogues = new HashMap<>();
 
     // Wizard skills
-    private List<Skill> wizardSkills;
+    private List<AbstractSkill> wizardSkills;
     private int activeWizardSkill;
 
     // Mech skill
-    private Skill mechSkill;
+    private AbstractSkill mechSkill;
 
     public PlayerPeon(float row, float col, float speed) {
         this(row, col, speed, DEFAULT_HEALTH);
@@ -75,11 +72,8 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
 
         // Initialise skills
         wizardSkills = new ArrayList<>();
-        wizardSkills.add(new FireballSkill(this));
-        wizardSkills.add(new ScorpionStingSkill(this));
-        wizardSkills.add(new IceballSkill(this));
+        getPlayerSkills();
         activeWizardSkill = 0;
-        mechSkill = new FireBombSkill(this);
 
         // Animation Testing
         facingDirection = MovementTask.Direction.RIGHT;
@@ -186,7 +180,6 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         if (isDead()) {
             death();
         }
-
         if (--duration < 0) {
             duration = 0;
             currentState = State.IDLE;
@@ -197,7 +190,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         }
 
         // Update skills
-        for (Skill s : wizardSkills) {
+        for (AbstractSkill s : wizardSkills) {
             if (s != null) {
                 s.onTick(i);
             }
@@ -255,7 +248,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
      *
      * @param screenX the x position the mouse was pressed at
      * @param screenY the y position the mouse was pressed at
-     * @param pointer
+     * @param pointer not used
      * @param button  the button which was pressed
      */
     @Override
@@ -266,8 +259,8 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         if (button == Input.Buttons.LEFT) {
             try {
                 //Set combat task to fireball task
-                Skill wizardSkill = wizardSkills.get(activeWizardSkill);
-                if (wizardSkill.getCooldown() <= 0) {
+                AbstractSkill wizardSkill = wizardSkills.get(activeWizardSkill);
+                if (wizardSkill.getCooldownRemaining() <= 0) {
                     this.setCombatTask(wizardSkill.getNewSkillTask(clickedPosition[0], clickedPosition[1]));
                 }
             } catch (SkillOnCooldownException e) {
@@ -276,7 +269,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
             }
         } else if (button == Input.Buttons.RIGHT) {
             try {
-                if (mechSkill.getCooldown() <= 0) {
+                if (mechSkill.getCooldownRemaining() <= 0) {
                     this.setCombatTask(mechSkill.getNewSkillTask(clickedPosition[0], clickedPosition[1]));
                 }
             } catch (SkillOnCooldownException e) {
@@ -321,6 +314,30 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         if (keycode == Input.Keys.W || keycode == Input.Keys.S ||
                 keycode == Input.Keys.A || keycode == Input.Keys.D) {
             this.stopMovementTask(keycode);
+        }
+    }
+
+    /**
+     * Update the list of player skills usable to the player.
+     */
+    public void updatePlayerSkills() {
+        wizardSkills.clear();
+        getPlayerSkills();
+    }
+
+    /**
+     * Gets player skills from the PlayerManager.
+     */
+    private void getPlayerSkills() {
+        // Get player skills
+        PlayerManager playerManager = GameManager.getManagerFromInstance(PlayerManager.class);
+        if (playerManager != null) {
+            List<WizardSkills> wizardSkillList = playerManager.getCurrentWizardSkills();
+            KnightSkills knightSkill = playerManager.getCurrentKnightSkill();
+            for (WizardSkills skill : wizardSkillList) {
+                wizardSkills.add(PlayerSkills.getNewWizardSkill(this, skill));
+            }
+            mechSkill = PlayerSkills.getNewKnightSkill(this, knightSkill);
         }
     }
 
@@ -405,7 +422,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         }
     }
 
-    public List<Skill> getWizardSkills() {
+    public List<AbstractSkill> getWizardSkills() {
         return this.wizardSkills;
     }
 
@@ -413,7 +430,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         return this.activeWizardSkill;
     }
 
-    public Skill getMechSkill() {
+    public AbstractSkill getMechSkill() {
         return this.mechSkill;
     }
 

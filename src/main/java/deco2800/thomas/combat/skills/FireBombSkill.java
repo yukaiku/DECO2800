@@ -1,20 +1,19 @@
 package deco2800.thomas.combat.skills;
 
-import deco2800.thomas.Tickable;
-import deco2800.thomas.combat.Skill;
 import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
 
 /**
  * Launches a fireball that deals damage when it hits a target.
  */
-public class FireBombSkill implements Skill, Tickable {
+public class FireBombSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
     private static final int MAX_COOLDOWN = 160;
-    /* Damage to apply from explosion */
-    private static final int DAMAGE = 20;
+    /* Damage multiplier to apply to the explosion.
+    Multiplies the peon base damage value. */
+    private static final float DAMAGE_MULTIPLIER = 0.4f;
     /* Lifetime of explosion */
     private static final int LIFETIME = 60;
     /* Tick period of explosion */
@@ -24,42 +23,19 @@ public class FireBombSkill implements Skill, Tickable {
     /* Width of explosion */
     private static final int WIDTH = 3;
 
-    /* Cooldown tracker */
-    private int cooldown = 0;
     /* Reference to parent entity */
-    private final AbstractEntity entity;
+    private final Peon entity;
 
     /**
      * Creates a new FireBombSkill and binds it to the Entity.
      * @param parent Parent entity of skill.
      * @throws NullPointerException when parent is null
      */
-    public FireBombSkill(AbstractEntity parent) {
+    public FireBombSkill(Peon parent) {
         if (parent == null) {
             throw new NullPointerException();
         }
         this.entity = parent;
-    }
-
-    /**
-     * On tick is called periodically (time dependant on the world settings).
-     * @param tick Current game tick
-     */
-    @Override
-    public void onTick(long tick) {
-        if (cooldown > 0) {
-            cooldown--;
-        }
-    }
-
-    /**
-     * Returns (in ticks) how long is remaining on the cooldown.
-     *
-     * @return Cooldown remaining.
-     */
-    @Override
-    public int getCooldown() {
-        return cooldown;
     }
 
     /**
@@ -92,13 +68,8 @@ public class FireBombSkill implements Skill, Tickable {
      * @throws SkillOnCooldownException when cooldown > 0
      */
     @Override
-    public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
-        if (cooldown <= 0) {
-            AbstractTask task = new FireBombAttackTask(entity, DAMAGE, LIFETIME, TICK_PERIOD, HEIGHT, WIDTH);
-            cooldown = MAX_COOLDOWN;
-            return task;
-        } else {
-            throw new SkillOnCooldownException();
-        }
+    protected AbstractTask getTask(float targetX, float targetY) {
+        int damage = (int) (entity.getDamage() * DAMAGE_MULTIPLIER);
+        return new FireBombAttackTask(entity, damage, LIFETIME, TICK_PERIOD, HEIGHT, WIDTH);
     }
 }

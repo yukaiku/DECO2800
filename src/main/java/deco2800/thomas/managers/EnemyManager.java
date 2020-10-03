@@ -3,16 +3,15 @@ package deco2800.thomas.managers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import deco2800.thomas.combat.DamageType;
+import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.enemies.EnemyPeon;
-import deco2800.thomas.entities.enemies.Boss;
-import deco2800.thomas.entities.enemies.Goblin;
-import deco2800.thomas.entities.enemies.Variation;
+import deco2800.thomas.entities.enemies.InvalidEnemyException;
+import deco2800.thomas.entities.enemies.bosses.Boss;
+import deco2800.thomas.entities.enemies.monsters.Monster;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.worlds.AbstractWorld;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * EnemyManager handles the spawning mechanism of the enemies.
@@ -35,8 +34,11 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
     // the maximum number of enemies allowed being alive at one time (will change in the future depending on types)
     private int wildEnemyCap;
 
-    // list of configured enemies allowed to spawn
-    private final List<EnemyPeon> wildEnemyConfigs;
+    // list of wild enemies allowed to spawn
+    private final List<String> wildEnemyIndexes;
+
+    // blueprints of wild and special enemies (excludes boss)
+    private final Map<String, EnemyPeon> enemyConfigs;
 
     // current wild enemies alive (excludes boss)
     private final List<EnemyPeon> wildEnemiesAlive;
@@ -55,21 +57,36 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
     private int nextTick = 60;
 
     /**
-     * Initialise an enemy manager without wild enemies. (e.g. for tutorial maps)
-     * This constructor is intended for manually spawning special enemies (e.g. dummies) later on the map,
-     * if the world does not have enemies at all, you don't need an EnemyManager.
+     * Initialise an enemy manager with wild enemies and boss configured.
      * @param world The world where the manager will operate on.
+     * @param bossIndex The enemy index of the boss. Bosses need to be later manually placed
+     *                  using the spawnBoss() method.
+     * @param wildEnemyCap The maximum number of wild enemies allowed to exist at one time.
+     * @param wildEnemyIndexes The enemy indexes of the wild enemies.
      */
-    public EnemyManager(AbstractWorld world) {
+    public EnemyManager(AbstractWorld world, String bossIndex, int wildEnemyCap, String ...wildEnemyIndexes) {
         this.world = world;
+        this.wildSpawning = wildEnemyCap > 0;
+        this.wildEnemyCap = wildEnemyCap;
+        this.wildEnemyIndexes = new ArrayList<>();
+        this.enemyConfigs = new HashMap<>();
 
-        this.wildSpawning = false;
-        this.wildEnemyCap = 0;
-        this.wildEnemyConfigs = new ArrayList<>();
+        // wild enemy blueprints
+        Collections.addAll(this.wildEnemyIndexes, wildEnemyIndexes);
+        for (String index : wildEnemyIndexes) {
+            try {
+                enemyConfigs.put(index, EnemyIndex.getEnemy(index));
+            } catch (InvalidEnemyException ignored) {
+            }
+        }
         this.wildEnemiesAlive = new ArrayList<>();
-        this.specialEnemiesAlive = new ArrayList<>();
-        this.boss = null;
 
+        this.specialEnemiesAlive = new ArrayList<>();
+        try {
+            this.boss = bossIndex == null ? null : (Boss) EnemyIndex.getEnemy(bossIndex);
+        } catch (InvalidEnemyException e) {
+            this.boss = null;
+        }
         this.spawnRangeMin = 8;
         this.spawnRangeMax = 14;
         this.random = new Random();
@@ -80,26 +97,53 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
      * Initialise an enemy manager with wild enemies configured.
      * @param world The world where the manager will operate on.
      * @param wildEnemyCap The maximum number of wild enemies allowed to exist at one time.
-     * @param wildEnemyConfigs Blueprints of enemies (one for each type) the manager will automatically spawn.
-     * The wildEnemyConfigs should not contain bosses, otherwise they will be randomly placed and generated.
+     * @param wildEnemyIndexes The enemy indexes of the wild enemies.
      */
-    public EnemyManager(AbstractWorld world, int wildEnemyCap, List<EnemyPeon> wildEnemyConfigs) {
-        this(world);
-        this.wildSpawning = wildEnemyConfigs.size() > 0;
-        this.wildEnemyCap = wildEnemyCap;
-        this.wildEnemyConfigs.addAll(wildEnemyConfigs);
+    public EnemyManager(AbstractWorld world, int wildEnemyCap, String ...wildEnemyIndexes) {
+        this(world, null, wildEnemyCap, wildEnemyIndexes);
     }
 
     /**
-     * Initialise an enemy manager with a boss configured.
+     Initialise an enemy manager without wild enemies and bosses. (e.g. for tutorial maps)
+     * This constructor is intended for manually spawning special enemies (e.g. dummies) later on the map,
+     * if the world does not have enemies at all, you don't need an EnemyManager.
      * @param world The world where the manager will operate on.
-     * @param wildEnemyCap The maximum number of wild enemies allowed to exist at one time.
-     * @param wildEnemyConfigs Blueprints of enemies (one for each type) the manager will automatically spawn.
-     * @param boss The boss enemy in the map. Bosses need to be later manually placed using the spawnBoss() method.
      */
-    public EnemyManager(AbstractWorld world, int wildEnemyCap, List<EnemyPeon> wildEnemyConfigs, Boss boss) {
-        this(world, wildEnemyCap, wildEnemyConfigs);
-        this.boss = boss;
+    public EnemyManager(AbstractWorld world) {
+        this(world, null, 0);
+    }
+
+    /**
+     * Get the blueprint of the wild and special enemies. (excludes boss, for boss use getBoss())
+     * @param enemyIndex The enemy id string shown in EnemyIndex
+     * @return The blueprint of the enemy of given index
+     */
+    public EnemyPeon getEnemyConfig(String enemyIndex) {
+        return enemyConfigs.get(enemyIndex);
+    }
+
+    /**
+     * Add one or more blueprints to the manager.
+     * If the blueprint is an Monster, it will automatically become a wild enemy and spawn automatically.
+     * @param enemyIndex The enemy id string(s) shown in EnemyIndex
+     * @throws InvalidEnemyException If the enemy index is not listed in EnemyIndex
+     */
+    public void addEnemyConfigs(String ...enemyIndex) throws InvalidEnemyException {
+        for (String index : enemyIndex) {
+            EnemyPeon config = EnemyIndex.getEnemy(index);
+            if (config instanceof Monster) {
+                wildEnemyIndexes.add(index);
+            }
+            enemyConfigs.put(index, EnemyIndex.getEnemy(index));
+        }
+    }
+
+    /** Removes the enemy blueprints */
+    public void removeEnemyConfigs(String ...enemyIndex) {
+        for (String index : enemyIndex) {
+            wildEnemyIndexes.remove(index);
+            enemyConfigs.remove(index);
+        }
     }
 
     /**
@@ -169,12 +213,24 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
 
     /**
      * Spawn the special enemies (e.g. minions, dummies) at the given position.
+     * If the given index is not in the config list, it will automatically create a blueprint.
      * Special Enemies will bypass the wild enemy limits and configs.
-     * @param enemy The special EnemyPeon to spawn.
+     * @param enemyIndex The enemy index of the special enemy
      * @param x The x position on the map.
      * @param y The y position on the map.
      */
-    public void spawnSpecialEnemy(EnemyPeon enemy, float x, float y) {
+    public void spawnSpecialEnemy(String enemyIndex, float x, float y) {
+        EnemyPeon enemy;
+        if (enemyConfigs.containsKey(enemyIndex)) {
+            enemy = enemyConfigs.get(enemyIndex).deepCopy();
+        } else {
+            try {
+                enemy = EnemyIndex.getEnemy(enemyIndex);
+            } catch (InvalidEnemyException ignored) {
+                return;
+            }
+            enemyConfigs.put(enemyIndex, enemy.deepCopy());
+        }
         enemy.setPosition(x, y);
         world.addEntity(enemy);
         specialEnemiesAlive.add(enemy);
@@ -206,9 +262,14 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
                     tileY > -world.getHeight() + 1 && tileY < world.getHeight() - 1 &&
                     world.getTile(tileX, tileY) != null && !world.getTile(tileX, tileY).isObstructed() &&
                     !world.getTile(tileX, tileY).getType().equals("BurnTile")) {
-                // choose a random enemy blueprint
-                EnemyPeon enemy = wildEnemyConfigs.get(random.nextInt(wildEnemyConfigs.size())).deepCopy();
-                spawnWildEnemy(enemy, tileX, tileY);
+                // choose a random enemy
+                try {
+                    // todo: spawn rates
+                    EnemyPeon enemy = EnemyIndex.getEnemy(wildEnemyIndexes.get(random.nextInt(wildEnemyIndexes.size())));
+                    spawnWildEnemy(enemy, tileX, tileY);
+                } catch (InvalidEnemyException e) {
+                    break;
+                }
                 break;
             }
         }
@@ -236,21 +297,6 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
         }
     }
 
-    /** Automatically detects the enemy type and remove from the world. (Not recommended since it takes some time) */
-    public void removeEnemyAuto(EnemyPeon enemy) {
-        if (wildEnemiesAlive.contains(enemy)) {
-            removeWildEnemy(enemy);
-            return;
-        }
-        if (specialEnemiesAlive.contains(enemy)) {
-            removeSpecialEnemy(enemy);
-            return;
-        }
-        if (boss == enemy) {
-            removeBoss();
-        }
-    }
-
     /** Get the world name the manager is operating on */
     public String getWorldName() {
         return world.toString().substring(world.toString().lastIndexOf('.') + 1);
@@ -262,23 +308,21 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
      */
     @Override
     public void notifyKeyDown(int keycode) {
-        if (GameManager.get().debugMode) {
-            if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT)) {
-                if (keycode == Input.Keys.P) {
-                    // Ctrl + P: Toggle wild enemy spawning
-                    wildSpawning = !wildSpawning;
-                } else if (keycode == Input.Keys.K) {
-                    // Ctrl + K: kill all wild and special enemies (excludes boss)
-                    new ArrayList<>(wildEnemiesAlive).forEach(this::removeWildEnemy);
-                    new ArrayList<>(specialEnemiesAlive).forEach(this::removeSpecialEnemy);
-                    // Ctrl + L: Kill the dragon
-                } else if (keycode == Input.Keys.L && boss != null) {
-                    boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
-                } else if (keycode == Input.Keys.S) {
-                    // Ctrl + S: Spawn a special enemy
-                    Goblin goblin = new Goblin(Variation.SWAMP, 50, 0.05f);
-                    spawnSpecialEnemy(goblin, 0, 0);
-                }
+        if (GameManager.get().debugMode && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
+                Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
+            if (keycode == Input.Keys.P) {
+                // Ctrl + P: Toggle wild enemy spawning
+                wildSpawning = !wildSpawning;
+            } else if (keycode == Input.Keys.K) {
+                // Ctrl + K: kill all wild and special enemies (excludes boss)
+                new ArrayList<>(wildEnemiesAlive).forEach(this::removeWildEnemy);
+                new ArrayList<>(specialEnemiesAlive).forEach(this::removeSpecialEnemy);
+                // Ctrl + L: Kill the dragon
+            } else if (keycode == Input.Keys.L && boss != null) {
+                boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
+            } else if (keycode == Input.Keys.S) {
+                // Ctrl + S: Spawn a special enemy
+                spawnSpecialEnemy("swampGoblin", 0, 0);
             }
         }
     }
