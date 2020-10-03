@@ -9,8 +9,8 @@ import java.util.List;
 
 public class DifficultyManager extends TickableManager{
     private PlayerPeon playerPeon;
-    private String type;
-
+    private String type = "";
+    private int enemiesMaxHealth;
     /***
      * Constructs a DifficultyManager manager.
      */
@@ -35,28 +35,35 @@ public class DifficultyManager extends TickableManager{
 
     /***
      * Sets the difficulty of the game based off the current world
-     * @param type
      */
     public void setDifficultyLevel(String type) {
         EnemyManager enemyManager = GameManager.getManagerFromInstance(EnemyManager.class);
         List<EnemyPeon> wildEnemiesAlive = enemyManager.getWildEnemiesAlive();
         int wildEnemyCap = enemyManager.getWildEnemyCap();
-        this.type=type;
         switch (type) {
             // Difficulty Settings for each world
             //TODO: Update with more difficulty
             case "Swamp":
+                enemiesMaxHealth = enemyManager.getEnemyConfig("swampOrc").getMaxHealth();
                 break;
             case "Tundra":
+                enemiesMaxHealth = enemyManager.getEnemyConfig("tundraOrc").getMaxHealth();
                 break;
             case "Desert":
+                enemiesMaxHealth = enemyManager.getEnemyConfig("desertOrc").getMaxHealth();
                 break;
             case "Volcano":
+                enemiesMaxHealth = enemyManager.getEnemyConfig("volcanoOrc").getMaxHealth();
                 break;
         }
+        enemiesMaxHealth = enemiesMaxHealth/(5-getDifficultyLevel());
+        this.type=type;
         //Adjusts Enemy Health based on stage at
         for (EnemyPeon wildEnemies: wildEnemiesAlive) {
-            wildEnemies.setCurrentHealthValue(wildEnemies.getCurrentHealth()/(5-getDifficultyLevel()));
+            if(wildEnemies.getCurrentHealth() > enemiesMaxHealth){
+                wildEnemies.setCurrentHealthValue(enemiesMaxHealth);
+                wildEnemies.setMaxHealth(enemiesMaxHealth);
+            }
         }
         //Sets max health based off number of orbs starting from 25 to 100
         playerPeon.setCurrentHealthValue((100/4)*(getDifficultyLevel()));
