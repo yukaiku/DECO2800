@@ -71,6 +71,12 @@ public class TundraWorld extends AbstractWorld {
 		DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
 				this.allTundraDialogues);
 		GameManager.get().addManager(dialog);
+
+		//Updates difficulty manager
+		DifficultyManager difficultyManager = GameManager.getManagerFromInstance(DifficultyManager.class);
+		difficultyManager.setPlayerEntity((PlayerPeon) this.getPlayerEntity());
+		difficultyManager.setDifficultyLevel(getType());
+
 	}
 
 	@Override

@@ -89,6 +89,12 @@ public class VolcanoWorld extends AbstractWorld {
 
         //Add local Event to this world
         this.setWorldEvent(new VolcanoEvent(this));
+
+        //Updates difficulty manager
+        DifficultyManager difficultyManager = GameManager.getManagerFromInstance(DifficultyManager.class);
+        difficultyManager.setPlayerEntity((PlayerPeon) this.getPlayerEntity());
+        difficultyManager.setDifficultyLevel(getType());
+
     }
 
     @Override
