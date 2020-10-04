@@ -3,7 +3,6 @@ package deco2800.thomas.managers;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.entities.enemies.EnemyPeon;
-import org.lwjgl.Sys;
 
 import java.util.List;
 
@@ -11,6 +10,7 @@ public class DifficultyManager extends TickableManager{
     private PlayerPeon playerPeon;
     private String type = "";
     private int enemiesMaxHealth;
+    private int playerMaxHealth = 0;
     /***
      * Constructs a DifficultyManager manager.
      */
@@ -65,9 +65,13 @@ public class DifficultyManager extends TickableManager{
                 wildEnemies.setMaxHealth(enemiesMaxHealth);
             }
         }
-        //Sets max health based off number of orbs starting from 25 to 100
-        playerPeon.setCurrentHealthValue((100/4)*(getDifficultyLevel()));
         playerPeon.setMaxHealth((100/4)*(getDifficultyLevel()));
+        playerMaxHealth = playerPeon.getMaxHealth();
+        if(playerPeon.getCurrentHealth() > playerMaxHealth){
+            //Sets max health based off number of orbs starting from 25 to 100
+            playerPeon.setCurrentHealthValue(playerMaxHealth);
+        }
+
     }
 
     /***
