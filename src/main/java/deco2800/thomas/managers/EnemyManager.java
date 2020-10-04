@@ -263,13 +263,10 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
                     world.getTile(tileX, tileY) != null && !world.getTile(tileX, tileY).isObstructed() &&
                     !world.getTile(tileX, tileY).getType().equals("BurnTile")) {
                 // choose a random enemy
-                try {
-                    // todo: spawn rates
-                    EnemyPeon enemy = EnemyIndex.getEnemy(wildEnemyIndexes.get(random.nextInt(wildEnemyIndexes.size())));
-                    spawnWildEnemy(enemy, tileX, tileY);
-                } catch (InvalidEnemyException e) {
-                    break;
-                }
+                // todo: spawn rates
+                EnemyPeon enemy =
+                        enemyConfigs.get(wildEnemyIndexes.get(random.nextInt(wildEnemyIndexes.size()))).deepCopy();
+                spawnWildEnemy(enemy, tileX, tileY);
                 break;
             }
         }
