@@ -2,15 +2,13 @@ package deco2800.thomas.managers;
 
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
-import deco2800.thomas.entities.enemies.EnemyPeon;
-
-import java.util.List;
 
 public class DifficultyManager extends TickableManager{
     private PlayerPeon playerPeon;
     private String type = "";
-    private int enemiesMaxHealth;
+    private int enemiesMaxHealth = 0;
     private int playerMaxHealth = 0;
+    private EnemyManager enemyManager;
     /***
      * Constructs a DifficultyManager manager.
      */
@@ -34,42 +32,55 @@ public class DifficultyManager extends TickableManager{
     }
 
     /***
+     * Sets the WildSpawnMaxHealth
+     */
+    public void setWildSpawnMaxHealth(int health){
+        enemiesMaxHealth = health;
+        enemyManager.getEnemyConfig(this.type+"Orc").setMaxHealth(enemiesMaxHealth);
+    }
+
+    /***
+     * Getter for Wild Spawn Max Health
+     * @return wildSpawnMaxHealth
+     */
+    public int getWildSpawnMaxHealth(){
+        return enemyManager.getEnemyConfig(this.type+"Orc").getMaxHealth();
+    }
+
+    /***
      * Sets the difficulty of the game based off the current world
      */
     public void setDifficultyLevel(String type) {
-        EnemyManager enemyManager = GameManager.getManagerFromInstance(EnemyManager.class);
-        List<EnemyPeon> wildEnemiesAlive = enemyManager.getWildEnemiesAlive();
-        int wildEnemyCap = enemyManager.getWildEnemyCap();
+        enemyManager = GameManager.getManagerFromInstance(EnemyManager.class);
+        if(!this.type.equals(type)){
+            this.type = type.toLowerCase();
+            int wildEnemyCap = enemyManager.getWildEnemyCap();
+
+            //Set Wild Enemy Cap
+            enemyManager.setWildEnemyCap(wildEnemyCap*getDifficultyLevel());
+            //Set Wild Enemy Health
+            setWildSpawnMaxHealth(enemyManager.getEnemyConfig(this.type+"Orc").getMaxHealth()/(5-getDifficultyLevel()));
+            System.out.println(getWildSpawnMaxHealth());
+            //Sets the player max health
+            playerPeon.setMaxHealth((100/4)*(getDifficultyLevel()));
+            playerMaxHealth = playerPeon.getMaxHealth();
+            if(playerPeon.getCurrentHealth() > playerMaxHealth){
+                //Sets max health based off number of orbs starting from 25 to 100
+                playerPeon.setCurrentHealthValue(playerMaxHealth);
+            }
+        }
+
         switch (type) {
             // Difficulty Settings for each world
             //TODO: Update with more difficulty
-            case "Swamp":
-                enemiesMaxHealth = enemyManager.getEnemyConfig("swampOrc").getMaxHealth();
+            case "swamp":
                 break;
-            case "Tundra":
-                enemiesMaxHealth = enemyManager.getEnemyConfig("tundraOrc").getMaxHealth();
+            case "tundra":
                 break;
-            case "Desert":
-                enemiesMaxHealth = enemyManager.getEnemyConfig("desertOrc").getMaxHealth();
+            case "desert":
                 break;
-            case "Volcano":
-                enemiesMaxHealth = enemyManager.getEnemyConfig("volcanoOrc").getMaxHealth();
+            case "volcano":
                 break;
-        }
-        enemiesMaxHealth = enemiesMaxHealth/(5-getDifficultyLevel());
-        this.type=type;
-        //Adjusts Enemy Health based on stage at
-        for (EnemyPeon wildEnemies: wildEnemiesAlive) {
-            if(wildEnemies.getCurrentHealth() > enemiesMaxHealth){
-                wildEnemies.setCurrentHealthValue(enemiesMaxHealth);
-                wildEnemies.setMaxHealth(enemiesMaxHealth);
-            }
-        }
-        playerPeon.setMaxHealth((100/4)*(getDifficultyLevel()));
-        playerMaxHealth = playerPeon.getMaxHealth();
-        if(playerPeon.getCurrentHealth() > playerMaxHealth){
-            //Sets max health based off number of orbs starting from 25 to 100
-            playerPeon.setCurrentHealthValue(playerMaxHealth);
         }
 
     }
