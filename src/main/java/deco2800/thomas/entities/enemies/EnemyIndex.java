@@ -10,17 +10,19 @@ import deco2800.thomas.entities.enemies.monsters.Orc;
 
 /**
  * Here lists all available enemies and their variations for convenient configuration. i.e. blueprints
- * Each variation of enemies will now has an index (e.g. "swampOrc").
- * You need to provide the enemy index when initialising the enemy manager.
- * The blueprint params like speed, damage, etc. are initial values and can be changed later
- * inside of EnemyManager by getting blueprints using enemyManager.getEnemyConfig(enemyIndex).
- *
+ * Each variation of enemies will now has an index (e.g. "swampOrc"), you only need to provide the enemy index
+ *     when initialising the enemy manager.
  * Example of creating a blueprint:
  *     case "speedySwampOrc": return new Orc(Variation.SWAMP, 50, 0.15f);
  *
- * Usage of blueprints:
- *     For wild enemies (auto-spawn) and bosses, provide their enemyIds when initialising the enemy manager.
+ * Submit blueprints to the spawning pool:
+ *     For wild enemies (auto-spawn) and bosses, provide their enemyIds when initialising the enemy manager; or use
+ *         EnemyManager.addEnemyConfigs(String enemyIndex1, String enemyIndex2, ...) if the enemy manager has already
+ *         been initialised.
  *     For special enemies (manual-spawn), use EnemyManager.spawnSpecialEnemy(String enemyIndex, float x, float y)
+ *
+ * The blueprint params listed here like speed, damage, etc. are all initial values and can be changed later
+ * inside of enemy manager by getting blueprints using EnemyManager.getEnemyConfig(enemyIndex).
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/blueprints
  */
