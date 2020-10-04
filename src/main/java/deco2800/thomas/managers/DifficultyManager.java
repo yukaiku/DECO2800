@@ -3,6 +3,17 @@ package deco2800.thomas.managers;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
 
+/**
+ * DifficultyManager handles the difficulty curve of the game
+ * DifficultyManager is intialised once and the instance is get every time a new world is
+ * made to update the variables
+ *
+ * It handles the manipulation of:
+ * Wildspawn health
+ * Player health
+ *
+ * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/Difficulty%20Curve
+ */
 public class DifficultyManager extends TickableManager{
     private PlayerPeon playerPeon;
     private String type = "";
@@ -48,19 +59,33 @@ public class DifficultyManager extends TickableManager{
     }
 
     /***
+     * Sets the world type
+     * @param type
+     */
+    public void setWorldType(String type){
+        this.type = type.toLowerCase();
+    }
+
+    /***
+     * Returns world type
+     * @return world type
+     */
+    public String getWorldType(){
+        return this.type;
+    }
+    /***
      * Sets the difficulty of the game based off the current world
      */
     public void setDifficultyLevel(String type) {
         enemyManager = GameManager.getManagerFromInstance(EnemyManager.class);
-        if(!this.type.equals(type)){
-            this.type = type.toLowerCase();
+        if(!getWorldType().equals(type)){
+            setWorldType(type);
             int wildEnemyCap = enemyManager.getWildEnemyCap();
-
+            String orcType = getWorldType()+"Orc";
             //Set Wild Enemy Cap
             enemyManager.setWildEnemyCap(wildEnemyCap*getDifficultyLevel());
             //Set Wild Enemy Health
-            setWildSpawnMaxHealth(enemyManager.getEnemyConfig(this.type+"Orc").getMaxHealth()/(5-getDifficultyLevel()));
-            System.out.println(getWildSpawnMaxHealth());
+            setWildSpawnMaxHealth(enemyManager.getEnemyConfig(orcType).getMaxHealth() /(5-getDifficultyLevel()));
             //Sets the player max health
             playerPeon.setMaxHealth((100/4)*(getDifficultyLevel()));
             playerMaxHealth = playerPeon.getMaxHealth();
@@ -70,7 +95,7 @@ public class DifficultyManager extends TickableManager{
             }
         }
 
-        switch (type) {
+        switch (getWorldType()) {
             // Difficulty Settings for each world
             //TODO: Update with more difficulty
             case "swamp":
@@ -91,6 +116,5 @@ public class DifficultyManager extends TickableManager{
      */
     @Override
     public void onTick(long i) {
-        setDifficultyLevel(type);
     }
 }

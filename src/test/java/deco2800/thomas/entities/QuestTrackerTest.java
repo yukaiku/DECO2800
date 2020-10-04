@@ -23,19 +23,19 @@ public class QuestTrackerTest extends BaseGDXTest {
         Tile t = new Tile("stone-1", 1, 1);
         Orb o = new Orb(t, "orb_1" );
         //Testing increase orb function
-        assertEquals(QuestTracker.increaseOrbs(o),1);
-        assertEquals(QuestTracker.increaseOrbs(o),2);
-        assertEquals(QuestTracker.increaseOrbs(o),3);
-        assertEquals(QuestTracker.increaseOrbs(o),4);
+        assertEquals(q.increaseOrbs(o),1);
+        assertEquals(q.increaseOrbs(o),2);
+        assertEquals(q.increaseOrbs(o),3);
+        assertEquals(q.increaseOrbs(o),4);
         //Testing to see if value will go over 4
-        assertEquals(QuestTracker.increaseOrbs(o),4);
+        assertEquals(q.increaseOrbs(o),4);
         //Testing the orb storing
-        assertEquals(QuestTracker.orbTracker().size(),4);
-        assertEquals(QuestTracker.orbTracker().get(0).getTexture(),"orb_1");
+        assertEquals(q.orbTracker().size(),4);
+        assertEquals(q.orbTracker().get(0).getTexture(),"orb_1");
         //Testing decrease orb function
-        assertEquals(QuestTracker.decreaseOrbs(),3);
+        assertEquals(q.decreaseOrbs(),3);
         //Testing reset orb function
-        assertEquals(QuestTracker.resetOrbs(),0);
+        assertEquals(q.resetOrbs(),0);
     }
 
 }
