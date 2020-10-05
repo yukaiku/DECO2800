@@ -89,7 +89,8 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("fenceS-E", new Texture("resources/fence_S-E.png"));
 			textureMap.put("projectile", new Texture("resources/rocks.png"));
 
-			// storyline
+			// Storyline
+			// tutorial_world
 			textureMap.put("stone-1", new Texture("resources/storyline/tile/tile1.png"));
 			textureMap.put("stone-2", new Texture("resources/storyline/tile/tile2.png"));
 			textureMap.put("stone-3", new Texture("resources/storyline/tile/tile3.png"));
@@ -98,17 +99,26 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("stash", new Texture("resources/storyline/object/stash.png"));
 			textureMap.put("barrel", new Texture("resources/storyline/object/barrel.png"));
 			textureMap.put("chest", new Texture("resources/storyline/object/chest.png"));
+			textureMap.put("leave", new Texture("resources/storyline/object/leave-message.png"));
 			textureMap.put("dialog-box", new Texture("resources/storyline/story-intro.png"));
+			textureMap.put("control", new Texture("resources/storyline/control.png"));
 			textureMap.put("orb", new Texture("resources/orb.png"));
+			// main_world
 			textureMap.put("victory", new Texture("resources/storyline/victory-screen.png"));
 			textureMap.put("defeat", new Texture("resources/storyline/defeat-screen.png"));
 			textureMap.put("pause", new Texture("resources/storyline/pause-menu.png"));
-			textureMap.put("trs-desert", new Texture("resources/storyline/transition/transition-desert.png"));
-			textureMap.put("trs-swamp", new Texture("resources/storyline/transition/transition-swamp.png"));
-			textureMap.put("trs-tundra", new Texture("resources/storyline/transition/transition-tundra.png"));
-			textureMap.put("trs-volcano", new Texture("resources/storyline/transition/transition-volcano.png"));
-			textureMap.put("control", new Texture("resources/storyline/control.png"));
-			textureMap.put("leave", new Texture("resources/storyline/leave-message.png"));
+			// zone_intro
+			textureMap.put("trs-desert", new Texture("resources/storyline/zone_intro/transition_desert.png"));
+			textureMap.put("trs-swamp", new Texture("resources/storyline/zone_intro/transition_swamp.png"));
+			textureMap.put("trs-tundra", new Texture("resources/storyline/zone_intro/transition_tundra.png"));
+			textureMap.put("trs-volcano", new Texture("resources/storyline/zone_intro/transition_volcano.png"));
+			// team_selection
+			textureMap.put("air|water", new Texture("resources/storyline/team_selection/air|water.png"));
+			textureMap.put("earth|air", new Texture("resources/storyline/team_selection/earth|air.png"));
+			textureMap.put("earth|water", new Texture("resources/storyline/team_selection/earth|water.png"));
+			textureMap.put("fire|air", new Texture("resources/storyline/team_selection/fire|air.png"));
+			textureMap.put("fire|earth", new Texture("resources/storyline/team_selection/fire|earth.png"));
+			textureMap.put("fire|water", new Texture("resources/storyline/team_selection/fire|water.png"));
 
 			// NPCs
 			textureMap.put("tutorial_npc", new Texture("resources/npcs/tutorial_npc.png"));
