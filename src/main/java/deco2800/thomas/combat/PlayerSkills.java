@@ -4,25 +4,38 @@ import deco2800.thomas.combat.skills.*;
 import deco2800.thomas.entities.agent.Peon;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A utility class for mapping Player skill names to Skill Classes.
  */
-public class PlayerSkills {
+public final class PlayerSkills {
     /* Constants for skill specific parameters */
-    private final static float ICEBALL_SLOW_MODIFIER = 0.5f;
-    private final static int ICEBALL_SLOW_DURATION = 2;
+    private static final float ICEBALL_SLOW_MODIFIER = 0.5f;
+    private static final int ICEBALL_SLOW_DURATION = 2;
 
-    /* Map default skills of Wizards */
-    private final static HashMap<Wizard, WizardSkills> DEFAULT_WIZARD_SKILLS = new HashMap<>() {{
-        put(Wizard.FIRE, WizardSkills.FIREBALL);
-        put(Wizard.WATER, WizardSkills.ICEBALL);
-    }};
+    /* Map of default skills for Wizards */
+    private static final Map<Wizard, WizardSkills> DEFAULT_WIZARD_SKILLS = new HashMap<>();
 
-    /* Map default skills of Knights */
-    private final static HashMap<Knight, KnightSkills> DEFAULT_KNIGHT_SKILLS = new HashMap<>() {{
-        put(Knight.FIRE, KnightSkills.FIREBOMB);
-    }};
+    /* Map of default skills for Knights */
+    private static final Map<Knight, KnightSkills> DEFAULT_KNIGHT_SKILLS = new HashMap<>();
+
+    /* Map default skills */
+    static {
+        // Map default Wizard skills
+        DEFAULT_WIZARD_SKILLS.put(Wizard.FIRE, WizardSkills.FIREBALL);
+        DEFAULT_WIZARD_SKILLS.put(Wizard.WATER, WizardSkills.FIREBALL);
+
+        // Map default Knight skills
+        DEFAULT_KNIGHT_SKILLS.put(Knight.FIRE, KnightSkills.FIREBOMB);
+    }
+
+    /**
+     * Private constructor for utility class.
+     */
+    private PlayerSkills() {
+        // Not called
+    }
 
     /**
      * Returns the default WizardSkill for a given wizard.

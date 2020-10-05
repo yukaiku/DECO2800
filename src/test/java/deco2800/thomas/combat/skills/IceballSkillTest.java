@@ -1,7 +1,11 @@
 package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.tasks.AbstractTask;
+import deco2800.thomas.tasks.combat.IceballAttackTask;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -30,5 +34,17 @@ public class IceballSkillTest extends BaseGDXTest {
     @Test (expected = NullPointerException.class)
     public void testInvalidConstructor() {
         new IceballSkill(null, 0,0);
+    }
+
+    /**
+     * Tests that a IceballAttackTask is returned by the IceballSkill.
+     */
+    @Test
+    public void testGetTask() throws SkillOnCooldownException {
+        PlayerPeon mockedPlayer = mock(PlayerPeon.class);
+        IceballSkill testSkill = new IceballSkill(mockedPlayer, 1, 1);
+
+        AbstractTask task = testSkill.getNewSkillTask(0, 0);
+        assertTrue(task instanceof IceballAttackTask);
     }
 }
