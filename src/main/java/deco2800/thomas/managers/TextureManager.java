@@ -180,6 +180,7 @@ public class TextureManager extends AbstractManager {
 	private void addEnvironmentTextures() {
 		addDesertTextures();
 		addSwampTextures();
+		addSwampDungeonTextures();
 		addTundraTextures();
 		addVolcanoTextures();
 		addOrbTextures();
@@ -259,6 +260,18 @@ public class TextureManager extends AbstractManager {
 					new Texture("resources/environment/swamp/entities/swamp_tree_log.png"));
 			textureMap.put("swamp_tree_stub",
 					new Texture("resources/environment/swamp/entities/swamp_tree_stub.png"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void addSwampDungeonTextures() {
+		try {
+			textureMap.put("dungeon-black", new Texture("resources/environment/swamp_dungeon/tile/dungeon-black.png"));
+			textureMap.put("dungeon-light-black", new Texture("resources/environment/swamp_dungeon/tile/dungeon-light-black.png"));
+			textureMap.put("dungeon-grey", new Texture("resources/environment/swamp_dungeon/tile/dungeon-grey.png"));
+			textureMap.put("dungeon-green", new Texture("resources/environment/swamp_dungeon/tile/dungeon-green.png"));
+			textureMap.put("dungeon-yellow", new Texture("resources/environment/swamp_dungeon/tile/dungeon-yellow.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
