@@ -86,8 +86,6 @@ public abstract class AbstractWorld implements Tickable {
 	 */
 	private WorldEvent worldEvent;
 
-	private AbstractWorld dungeon;
-
 	/**
 	 * Constructor that creates a world with given width and height
 	 *
