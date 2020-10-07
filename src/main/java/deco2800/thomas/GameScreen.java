@@ -210,7 +210,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 				// Dispose the screen
 				dispose();
 				// Set main menu screen
-				game.setScreen(new GameScreen(game, gameType.NEW_GAME));
+				game.setScreen(new CharactersScreen(game));
 			}
 		});
 
