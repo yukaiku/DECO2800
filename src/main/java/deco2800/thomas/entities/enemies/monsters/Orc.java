@@ -32,6 +32,7 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
     private final Variation variation;
     private final Animation<TextureRegion> orcIdle;
     private final Animation<TextureRegion> orcAttacking;
+    private final Animation<TextureRegion> orcWalking;
     private float stateTimer;
     private int duration = 0;
     private MovementTask.Direction facingDirection;
@@ -95,6 +96,8 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
         this.orcAttacking = new Animation<> (0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
+        this.orcWalking = new Animation<> (0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Walk"));
     }
 
     /**
@@ -145,7 +148,8 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
             duration = 0;
             currentState = State.IDLE;
         }
-
+        currentState = State.IDLE;
+        currentState = State.WALK;
         // update target following path every 1 second (60 ticks)
         if (++tickFollowing > 60) {
             if (super.getTarget() != null) {
@@ -190,6 +194,9 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
         switch (currentState) {
             case ATTACK_MELEE:
                 region = orcAttacking.getKeyFrame(stateTimer);
+                break;
+            case WALK:
+                region = orcWalking.getKeyFrame(stateTimer);
                 break;
             case IDLE:
             default:

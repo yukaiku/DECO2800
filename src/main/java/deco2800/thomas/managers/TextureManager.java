@@ -394,6 +394,10 @@ public class TextureManager extends AbstractManager {
 					3, 257, 324, false);
 			addAnimationFramesSprite("orcSwampAttack", "resources/enemies/orc_swamp_sprite_sheet.png",
 					3, 257, 324, false);
+
+			addAnimationFramesSprite("orcSwampWalk", "resources/enemies/orc_desert_walk.png",
+					8, 162, 192, true);
+
 			addAnimationFramesSprite("orcTundraAttack", "resources/enemies/orc_tundra_sprite_sheet.png",
 					3, 257, 324, false);
 			addAnimationFramesSprite("orcVolcanoAttack", "resources/enemies/orc_volcano_sprite_sheet.png",
