@@ -185,6 +185,7 @@ public class TextureManager extends AbstractManager {
 		}
 		addEnvironmentTextures();
 		addAnimationFrames();
+		addMinimapIcons();
 	}
 
 	private void addEnvironmentTextures() {
@@ -313,6 +314,10 @@ public class TextureManager extends AbstractManager {
 		textureMap.put("explosionIcon", new Texture("resources/combat/explosive_fireball3.png"));
 	}
 
+	private void addMinimapIcons() {
+		textureMap.put("iconDefault", new Texture("resources/enemies/orc_volcano_icon.png"));
+	}
+
 	/* ------------------------------------------------------------------------
 	 * 				               ANIMATION FRAMES
 	 * ------------------------------------------------------------------------ */
@@ -404,9 +409,6 @@ public class TextureManager extends AbstractManager {
 					3, 257, 324, false);
 			addAnimationFramesSprite("orcSwampAttack", "resources/enemies/orc_swamp_sprite_sheet.png",
 					3, 257, 324, false);
-
-			addAnimationFramesSprite("orcSwampWalk", "resources/enemies/orc_desert_walk.png",
-					8, 162, 192, true);
 
 			addAnimationFramesSprite("orcTundraAttack", "resources/enemies/orc_tundra_sprite_sheet.png",
 					3, 257, 324, false);
