@@ -30,7 +30,9 @@ public class MinimapComponent extends OverlayComponent {
         int width = 0;
         int height = 0;
         tileMap = GameManager.get().getWorld().getTiles();
+
         batch.begin();
+
         for (Tile t : tileMap) {
             if (width > 49) {
                 height++;
@@ -39,22 +41,29 @@ public class MinimapComponent extends OverlayComponent {
             renderTile(batch, t, height, width);
             width++;
         }
-        enemyList = GameManager.getManagerFromInstance(EnemyManager.class).getWildEnemiesAlive();
-        specialEnemyList = GameManager.getManagerFromInstance(EnemyManager.class).getSpecialEnemiesAlive();
-        for (EnemyPeon e : enemyList) {
-            renderEnemy(batch, e);
+
+        if (GameManager.getManagerFromInstance(EnemyManager.class) != null) {
+            enemyList = GameManager.getManagerFromInstance(EnemyManager.class).getWildEnemiesAlive();
+            specialEnemyList = GameManager.getManagerFromInstance(EnemyManager.class).getSpecialEnemiesAlive();
+
+            for (EnemyPeon e : enemyList) {
+                renderEnemy(batch, e);
+            }
+            for (EnemyPeon e : specialEnemyList) {
+                renderEnemy(batch, e);
+            }
+
+            Boss boss = GameManager.getManagerFromInstance(EnemyManager.class).getBoss();
+            if (boss != null) {
+                renderBoss(batch, boss);
+            }
         }
-        for (EnemyPeon e : specialEnemyList) {
-            renderEnemy(batch, e);
-        }
+
         PlayerPeon playerPeon = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
         if (playerPeon != null) {
             renderPlayer(batch, playerPeon);
         }
-        Boss boss = GameManager.getManagerFromInstance(EnemyManager.class).getBoss();
-        if (boss != null) {
-            renderBoss(batch, boss);
-        }
+
         batch.end();
     }
 
