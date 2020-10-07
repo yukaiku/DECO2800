@@ -12,8 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import deco2800.thomas.combat.Wizard;
+import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.managers.PlayerManager;
 
 public class CharactersScreen implements Screen {
     static float width = 1920;
@@ -21,7 +24,7 @@ public class CharactersScreen implements Screen {
     final ThomasGame game;
     private Stage stage;
     private Button fireButton;
-    private Button earthButton;
+    private Button waterButton;
 
     /**
      * Constructor of the MainMenuScreen.
@@ -33,30 +36,34 @@ public class CharactersScreen implements Screen {
 
         stage = new Stage(new ExtendViewport(1920, 1000), game.batch);
 
-        Image background = new Image(GameManager.get().getManager(TextureManager.class).getTexture("fire|earth"));
+        Image background = new Image(GameManager.get().getManager(TextureManager.class).getTexture("fire-water"));
         background.setFillParent(true);
         stage.addActor(background);
 
         fireButton = new TextButton("SELECT", GameManager.get().getSkin(), "fire");
         fireButton.setPosition(width/4 - fireButton.getWidth()/2, 0);
-        fireButton.addAction(Actions.moveTo(width/4 - fireButton.getWidth()/2, 30, 0.6f,
+        fireButton.addAction(Actions.moveTo(width/4 - fireButton.getWidth()/2, 50, 0.6f,
                 Interpolation.PowOut.pow4Out));
         stage.addActor(fireButton);
         fireButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                GameManager.getManagerFromInstance(PlayerManager.class).resetPlayer();
+                GameManager.getManagerFromInstance(PlayerManager.class).setWizard(Wizard.FIRE);
                 switchGameScreen(GameScreen.gameType.NEW_GAME);
             }
         });
 
-        earthButton = new TextButton("SELECT", GameManager.get().getSkin(), "earth");
-        earthButton.setPosition(3*width/4 - earthButton.getWidth()/2, 0);
-        earthButton.addAction(Actions.moveTo(3*width/4 - earthButton.getWidth()/2, 30, 0.6f,
+        waterButton = new TextButton("SELECT", GameManager.get().getSkin(), "water");
+        waterButton.setPosition(3*width/4 - waterButton.getWidth()/2, 0);
+        waterButton.addAction(Actions.moveTo(3*width/4 - waterButton.getWidth()/2, 50, 0.6f,
                 Interpolation.PowOut.pow4Out));
-        stage.addActor(earthButton);
-        earthButton.addListener(new ClickListener() {
+        stage.addActor(waterButton);
+        waterButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                GameManager.getManagerFromInstance(PlayerManager.class).resetPlayer();
+                GameManager.getManagerFromInstance(PlayerManager.class).setWizard(Wizard.WATER);
                 switchGameScreen(GameScreen.gameType.NEW_GAME);
             }
         });
