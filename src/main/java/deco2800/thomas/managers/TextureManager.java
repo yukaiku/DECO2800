@@ -113,12 +113,12 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("trs-tundra", new Texture("resources/storyline/zone_intro/transition_tundra.png"));
 			textureMap.put("trs-volcano", new Texture("resources/storyline/zone_intro/transition_volcano.png"));
 			// team_selection
-			textureMap.put("air|water", new Texture("resources/storyline/team_selection/air|water.png"));
-			textureMap.put("earth|air", new Texture("resources/storyline/team_selection/earth|air.png"));
-			textureMap.put("earth|water", new Texture("resources/storyline/team_selection/earth|water.png"));
-			textureMap.put("fire|air", new Texture("resources/storyline/team_selection/fire|air.png"));
-			textureMap.put("fire|earth", new Texture("resources/storyline/team_selection/fire|earth.png"));
-			textureMap.put("fire|water", new Texture("resources/storyline/team_selection/fire|water.png"));
+			textureMap.put("air|water", new Texture("resources/storyline/team_selection/air-water.png"));
+			textureMap.put("earth|air", new Texture("resources/storyline/team_selection/earth-air.png"));
+			textureMap.put("earth|water", new Texture("resources/storyline/team_selection/earth-water.png"));
+			textureMap.put("fire|air", new Texture("resources/storyline/team_selection/fire-air.png"));
+			textureMap.put("fire|earth", new Texture("resources/storyline/team_selection/fire-earth.png"));
+			textureMap.put("fire|water", new Texture("resources/storyline/team_selection/fire-water.png"));
 
 			// NPCs
 			textureMap.put("tutorial_npc", new Texture("resources/npcs/tutorial_npc.png"));
