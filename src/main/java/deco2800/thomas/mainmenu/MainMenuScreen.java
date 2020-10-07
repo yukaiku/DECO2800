@@ -34,7 +34,7 @@ public class MainMenuScreen implements Screen {
 	public MainMenuScreen(final ThomasGame game) {
 		this.game = game;
 
-		stage = new Stage(new ExtendViewport(1280, 720), game.batch);
+		stage = new Stage(new ExtendViewport(1920, 1000), game.batch);
 		skin = GameManager.get().getSkin();
 
 		Image background = new Image(GameManager.get().getManager(TextureManager.class).getTexture("background"));

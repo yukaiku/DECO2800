@@ -16,6 +16,8 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 
 public class CharactersScreen implements Screen {
+    static float width = 1920;
+    static float height = 1000;
     final ThomasGame game;
     private Stage stage;
     private Button fireButton;
@@ -29,15 +31,15 @@ public class CharactersScreen implements Screen {
     public CharactersScreen(ThomasGame game) {
         this.game = game;
 
-        stage = new Stage(new ExtendViewport(1280, 720), game.batch);
+        stage = new Stage(new ExtendViewport(1920, 1000), game.batch);
 
         Image background = new Image(GameManager.get().getManager(TextureManager.class).getTexture("fire|earth"));
         background.setFillParent(true);
         stage.addActor(background);
 
         fireButton = new TextButton("SELECT", GameManager.get().getSkin(), "fire");
-        fireButton.setPosition(stage.getWidth()/4 - fireButton.getWidth()/2, 0);
-        fireButton.addAction(Actions.moveTo(stage.getWidth()/4 - fireButton.getWidth()/2, 30, 0.6f,
+        fireButton.setPosition(width/4 - fireButton.getWidth()/2, 0);
+        fireButton.addAction(Actions.moveTo(width/4 - fireButton.getWidth()/2, 30, 0.6f,
                 Interpolation.PowOut.pow4Out));
         stage.addActor(fireButton);
         fireButton.addListener(new ClickListener() {
@@ -48,8 +50,8 @@ public class CharactersScreen implements Screen {
         });
 
         earthButton = new TextButton("SELECT", GameManager.get().getSkin(), "earth");
-        earthButton.setPosition(3*stage.getWidth()/4 - earthButton.getWidth()/2, 0);
-        earthButton.addAction(Actions.moveTo(3*stage.getWidth()/4 - earthButton.getWidth()/2, 30, 0.6f,
+        earthButton.setPosition(3*width/4 - earthButton.getWidth()/2, 0);
+        earthButton.addAction(Actions.moveTo(3*width/4 - earthButton.getWidth()/2, 30, 0.6f,
                 Interpolation.PowOut.pow4Out));
         stage.addActor(earthButton);
         earthButton.addListener(new ClickListener() {
@@ -84,8 +86,6 @@ public class CharactersScreen implements Screen {
 
     @Override
     public void render(float v) {
-        fireButton.setPosition(stage.getWidth()/4 - fireButton.getWidth()/2, 30);
-        earthButton.setPosition(3*stage.getWidth()/4 - earthButton.getWidth()/2, 30);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(v);
         stage.draw();
