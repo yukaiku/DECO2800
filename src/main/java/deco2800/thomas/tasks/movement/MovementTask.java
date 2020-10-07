@@ -5,6 +5,7 @@ import java.util.List;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PathFindingService;
 import deco2800.thomas.managers.StatusEffectManager;
@@ -15,6 +16,7 @@ import deco2800.thomas.tasks.status.SpeedStatus;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
+import deco2800.thomas.worlds.dungeons.VolcanoDungeon;
 
 
 public class MovementTask extends AbstractTask {
@@ -77,6 +79,7 @@ public class MovementTask extends AbstractTask {
 
 		// if we have moved to the new tile, check for statuses
 		if (entity.getPosition().tileEquals(destination)) {
+			checkForValidPortal(destination);
 			checkForTileStatus(destination);
 		}
 
@@ -110,6 +113,7 @@ public class MovementTask extends AbstractTask {
 				entity.moveTowards(path.get(0).getCoordinates());
 				// This is a bit of a hack.
 				if (entity.getPosition().isCloseEnoughToBeTheSame(path.get(0).getCoordinates())) {
+					checkForValidPortal(path.get(0).getCoordinates());
 					checkForTileStatus(path.get(0).getCoordinates());
 					path.remove(0);
 				}
@@ -161,6 +165,7 @@ public class MovementTask extends AbstractTask {
 	public void stopTask() {
 		complete = true;
 	}
+
 	/**
 	 * Checks if the tile at a position has an associated status effect.
 	 * If it does, a new status effect is added to the StatusEffectManager for the entity.
@@ -203,6 +208,24 @@ public class MovementTask extends AbstractTask {
 				break;
 
 			}
+		}
+	}
+
+	/**
+	 * Checks if a portal is at the new position or if a portal is below the new
+	 * position (Portal Spans across two tiles) & teleports the play to the
+	 * zones respective dungeon.
+	 *
+	 * @param position - Square Vector of upcoming position of the entity.
+	 */
+	private void checkForValidPortal(SquareVector position) {
+		// get the next tile
+		Tile tile = gameManager.getWorld().getTile(position);
+
+		if (tile != null && tile.getParent() instanceof Portal) {
+			Portal portal = (Portal) tile.getParent();
+			String type = portal.getObjectName();
+			gameManager.enterDungeon(type);
 		}
 	}
 }

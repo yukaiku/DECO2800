@@ -4,10 +4,17 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.StaticEntity;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
+import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.worlds.AbstractWorld;
 
+import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.desert.DesertWorld;
+import deco2800.thomas.worlds.dungeons.VolcanoDungeon;
 import deco2800.thomas.worlds.swamp.SwampWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
@@ -44,6 +51,12 @@ public class GameManager {
 
 	// The UI skin being used by the game for libGDX elements.
 	private Skin skin;
+
+	private AbstractWorld worldOutsideDungeon;
+
+	private EnemyManager enemyManagerOutSideWorld;
+
+	private String currentDungeon;
 
 
 	public static float fps = 0;
@@ -294,6 +307,70 @@ public class GameManager {
 		movedToNextWorld = true;
 		GameManager.get().state = State.TRANSITION;
 	}
+
+	/**
+	 * Void that places the player in the zone's respective dungeon while
+	 * storing the main world to be returned to
+	 *
+	 * @param dungeon
+	 */
+	public void enterDungeon(String dungeon){
+
+		if (dungeon.equals("ExitPortal")) {
+			this.exitDungeon();
+			return;
+		}
+
+		this.currentDungeon = dungeon;
+		this.worldOutsideDungeon = this.getWorld();
+		this.enemyManagerOutSideWorld = this.getManager(EnemyManager.class);
+		// removes the previous enemy manager
+		managers.removeIf(manager -> manager instanceof EnemyManager);
+		switch(dungeon) {
+			case "VolcanoDungeonPortal":
+				this.setWorld(new VolcanoDungeon());
+				break;
+			case "TundraDungeonPortal":
+				this.setWorld(new VolcanoDungeon());
+				break;
+			case "SwampDungeonPortal":
+				this.setWorld(new VolcanoDungeon());
+				break;
+			case "DesertDungeonPortal":
+				this.setWorld(new VolcanoDungeon());
+				break;
+		}
+	}
+
+	/**
+	 * Method to handle returning to existing world upon exiting a dungeon that
+	 * returns the player & removes the original dungeon portal from the world.
+	 */
+	public void exitDungeon() {
+
+		//Remove the tiles parent
+		for (Tile tile : worldOutsideDungeon.getTiles()) {
+			if (tile.hasParent() && tile.getParent().getObjectName().equals(this.currentDungeon)) {
+				tile.setParent(null);
+			}
+		}
+		//Remove the portal from the entities list.
+		for (AbstractEntity entity : worldOutsideDungeon.getEntities()) {
+			if (entity.getObjectName().equals(this.currentDungeon)) {
+				worldOutsideDungeon.removeEntity(entity);
+			}
+		}
+		//Keep the same player
+		AgentEntity player = this.getWorld().getPlayerEntity();
+		// Dispose Dungeon & reset manager
+		this.getWorld().dispose();
+		managers.removeIf(manager -> manager instanceof EnemyManager);
+		//Add existing world & enemy manager
+		this.addManager(enemyManagerOutSideWorld);
+		this.setWorld(worldOutsideDungeon);
+		this.worldOutsideDungeon = null;
+	}
+
 
 	public static void resume() {
 		GameManager.get().state = GameManager.State.RUN;
