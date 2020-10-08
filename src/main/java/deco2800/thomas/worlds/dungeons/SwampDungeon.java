@@ -2,6 +2,7 @@ package deco2800.thomas.worlds.dungeons;
 
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.SwampDungeonNPC;
 import deco2800.thomas.managers.*;
@@ -10,6 +11,7 @@ import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.TestWorld;
+import deco2800.thomas.worlds.Tile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,9 @@ public class SwampDungeon extends AbstractWorld {
 
     private SquareVector midTrap;
     private boolean midTrapActivated = false;
+
+    private SquareVector correctTile;
+    private boolean correctTileActivated = false;
 
     private List<AbstractDialogBox> allSwampDungeonDialogues;
 
@@ -77,6 +82,7 @@ public class SwampDungeon extends AbstractWorld {
 
         topTrap = new SquareVector(7, 1);
         midTrap = new SquareVector(7, -1);
+        correctTile = new SquareVector(7, -3);
     }
 
     @Override
@@ -114,9 +120,23 @@ public class SwampDungeon extends AbstractWorld {
         }
     }
 
+    private void spawnExitPortal() {
+        Tile portalTile = getTile(-9, -1);
+        entities.add(new Portal(portalTile, false, "portal", "ExitPortal"));
+    }
+
+    private void activateReward() {
+        if (this.getPlayerEntity().getPosition().isCloseEnoughToBeTheSame(correctTile) && !correctTileActivated) {
+            this.getTile(correctTile).setTexture("dungeon-light-black");
+            spawnExitPortal();
+            correctTileActivated = true;
+        }
+    }
+
     @Override
     public void onTick(long i) {
         activateTrap();
+        activateReward();
         super.onTick(i);
         for (AbstractEntity e : this.getEntities()) {
             e.onTick(0);
