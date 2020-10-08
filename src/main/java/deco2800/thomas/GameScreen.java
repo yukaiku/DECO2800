@@ -29,6 +29,7 @@ import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.TutorialWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 
+import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,7 +100,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		ENV_TEAM_GAME {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new TundraWorld();
+				AbstractWorld world = new VolcanoWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}

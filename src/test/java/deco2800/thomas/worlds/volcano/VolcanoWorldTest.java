@@ -580,6 +580,6 @@ public class VolcanoWorldTest extends BaseGDXTest {
 
         spyWorld.createStaticEntities();
 
-        Assert.assertEquals(26, spyWorld.getEntities().size());
+        Assert.assertEquals(27, spyWorld.getEntities().size());
     }
 }
