@@ -5,5 +5,6 @@ package deco2800.thomas.combat;
  * a unique skill.
  */
 public enum Knight {
-    FIRE
+    FIRE,
+    WATER
 }

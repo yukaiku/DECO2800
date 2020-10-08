@@ -86,6 +86,12 @@ public class AbstractSkillTest extends BaseGDXTest {
         testSkill.onTick(0);
 
         assertEquals(testSkill.getCooldownMax() - 1, testSkill.getCooldownRemaining());
+
+        for (int i = 0; i < 11; i++) {
+            testSkill.onTick(0);
+        }
+
+        assertEquals(0, testSkill.getCooldownRemaining());
     }
 
     /**

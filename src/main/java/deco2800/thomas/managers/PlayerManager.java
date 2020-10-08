@@ -14,7 +14,7 @@ public class PlayerManager extends AbstractManager {
     /**
      * Maximum number of skills the wizard can use at a time.
      */
-    public final static int MAX_WIZARD_SKILLS = 5;
+    public static final int MAX_WIZARD_SKILLS = 5;
 
     /* Current skills the player has access to. */
     private final List<WizardSkills> currentWizardSkills;
@@ -29,7 +29,7 @@ public class PlayerManager extends AbstractManager {
 
         // TEMPORARY Default to fire wizard and fire knight
         setWizard(Wizard.FIRE);
-        setKnight(Knight.FIRE);
+        setKnight(Knight.WATER);
     }
 
     /**

@@ -1,7 +1,11 @@
 package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.tasks.AbstractTask;
+import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -30,5 +34,17 @@ public class ScorpionStingSkillTest extends BaseGDXTest {
     @Test (expected = NullPointerException.class)
     public void testInvalidConstructor() {
         new ScorpionStingSkill(null);
+    }
+
+    /**
+     * Tests that a ScorpionStingAttackTask is returned by the ScorpionStingSkill.
+     */
+    @Test
+    public void testGetTask() throws SkillOnCooldownException {
+        PlayerPeon mockedPlayer = mock(PlayerPeon.class);
+        ScorpionStingSkill testSkill = new ScorpionStingSkill(mockedPlayer);
+
+        AbstractTask task = testSkill.getNewSkillTask(0, 0);
+        assertTrue(task instanceof ScorpionStingAttackTask);
     }
 }
