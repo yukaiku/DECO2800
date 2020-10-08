@@ -30,7 +30,9 @@ public class MinimapComponent extends OverlayComponent {
         int width = 0;
         int height = 0;
         tileMap = GameManager.get().getWorld().getTiles();
+
         batch.begin();
+
         for (Tile t : tileMap) {
             if (width > 49) {
                 height++;
@@ -39,49 +41,56 @@ public class MinimapComponent extends OverlayComponent {
             renderTile(batch, t, height, width);
             width++;
         }
-        enemyList = GameManager.getManagerFromInstance(EnemyManager.class).getWildEnemiesAlive();
-        specialEnemyList = GameManager.getManagerFromInstance(EnemyManager.class).getSpecialEnemiesAlive();
-        for (EnemyPeon e : enemyList) {
-            renderEnemy(batch, e);
+
+        if (GameManager.getManagerFromInstance(EnemyManager.class) != null) {
+            enemyList = GameManager.getManagerFromInstance(EnemyManager.class).getWildEnemiesAlive();
+            specialEnemyList = GameManager.getManagerFromInstance(EnemyManager.class).getSpecialEnemiesAlive();
+
+            for (EnemyPeon e : enemyList) {
+                renderEnemy(batch, e);
+            }
+            for (EnemyPeon e : specialEnemyList) {
+                renderEnemy(batch, e);
+            }
+
+            Boss boss = GameManager.getManagerFromInstance(EnemyManager.class).getBoss();
+            if (boss != null) {
+                renderBoss(batch, boss);
+            }
         }
-        for (EnemyPeon e : specialEnemyList) {
-            renderEnemy(batch, e);
-        }
+
         PlayerPeon playerPeon = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
         if (playerPeon != null) {
             renderPlayer(batch, playerPeon);
         }
-        Boss boss = GameManager.getManagerFromInstance(EnemyManager.class).getBoss();
-        if (boss != null) {
-            renderBoss(batch, boss);
-        }
+
         batch.end();
     }
 
     private void renderEnemy(SpriteBatch batch, EnemyPeon enemy) {
         Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(enemy.getTexture());
         batch.draw(tex, overlayRenderer.getX() + overlayRenderer.getWidth() - 310 + 6.3f * (enemy.getCol() + 25),
-                overlayRenderer.getY() + overlayRenderer.getHeight() - 745 +  6.3f * (enemy.getRow() - 24), tex.getWidth() * 0.075f,
+                overlayRenderer.getY() + overlayRenderer.getHeight() - 775 +  6.3f * (enemy.getRow() - 24), tex.getWidth() * 0.075f,
                 tex.getHeight() * 0.075f);
     }
 
     private void renderTile(SpriteBatch batch, Tile tile, int height, int width) {
         Texture tex = tile.getTexture();
         batch.draw(tex, overlayRenderer.getX() + overlayRenderer.getWidth() - 310 + 6.3f * width,
-                overlayRenderer.getY() + overlayRenderer.getHeight() - 745 - 6.3f * height, tex.getWidth() * 0.02f,
+                overlayRenderer.getY() + overlayRenderer.getHeight() - 775 - 6.3f * height, tex.getWidth() * 0.02f,
                 tex.getHeight() * 0.02f);
     }
 
     private void renderPlayer(SpriteBatch batch, PlayerPeon player) {
         Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(player.getTexture());
         batch.draw(tex, overlayRenderer.getX() + overlayRenderer.getWidth() - 310 + 6.3f * (player.getCol() + 25),
-                overlayRenderer.getY() + overlayRenderer.getHeight() - 745 +  6.3f * (player.getRow() - 24), tex.getWidth() * 0.1f,
+                overlayRenderer.getY() + overlayRenderer.getHeight() - 775 +  6.3f * (player.getRow() - 24), tex.getWidth() * 0.1f,
                 tex.getHeight() * 0.1f);
     }
     private void renderBoss(SpriteBatch batch, EnemyPeon boss) {
         Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(boss.getTexture());
         batch.draw(tex, overlayRenderer.getX() + overlayRenderer.getWidth() - 310 + 6.3f * (boss.getCol() + 25),
-                overlayRenderer.getY() + overlayRenderer.getHeight() - 745 +  6.3f * (boss.getRow() - 24), tex.getWidth() * 0.035f,
+                overlayRenderer.getY() + overlayRenderer.getHeight() - 775 +  6.3f * (boss.getRow() - 24), tex.getWidth() * 0.035f,
                 tex.getHeight() * 0.035f);
     }
 }
