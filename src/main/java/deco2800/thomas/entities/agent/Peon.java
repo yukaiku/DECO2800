@@ -27,6 +27,7 @@ public class Peon extends AgentEntity implements Tickable {
 	private float armour; // Reduces incoming damage
 	private int damage; // Base outgoing damage value
 	private DamageType vulnerability; // Peon takes extra damage from this damage type
+	public boolean isHealthLocked = false; // Lock the health for Watershield skill
 
 	/* Combat status of this entity */
 	protected boolean isAttacked = false;
@@ -67,7 +68,7 @@ public class Peon extends AgentEntity implements Tickable {
 	 * @param i Ticks since game start
 	 */
 	@Override
-	public void onTick(long i) {	
+	public void onTick(long i) {
 		// Update movement task
 		if (movementTask != null && movementTask.isAlive()) {
 			movementTask.onTick(i);
@@ -112,18 +113,21 @@ public class Peon extends AgentEntity implements Tickable {
 		if (damageType == vulnerability && vulnerability != DamageType.NONE) {
 			damageApplied *= 1.5f;
 		}
-		if (damageApplied > 0) {
-			// Reduce health
-			health.reduceHealth(damageApplied);
 
-			// Create floating damage text
-			WorldUtil.getFloatingDamageComponent().add(damageApplied, Color.RED,
-					WorldUtil.colRowToWorldCords(this.getCol() + 0.5f, this.getRow() + 2), 60);
-
-			// Update is attack status
-			isAttacked = true;
-			isAttackedCoolDown = 5;
+		if (isHealthLocked) {
+			damageApplied = 0;
 		}
+
+		// Reduce health
+		health.reduceHealth(damageApplied);
+
+		// Create floating damage text
+		WorldUtil.getFloatingDamageComponent().add(damageApplied, Color.RED,
+				WorldUtil.colRowToWorldCords(this.getCol() + 0.5f, this.getRow() + 2), 60);
+
+		// Update is attack status
+		isAttacked = true;
+		isAttackedCoolDown = 5;
 
 		return damageApplied;
 	}
@@ -308,6 +312,20 @@ public class Peon extends AgentEntity implements Tickable {
 
 	public HealthTracker getHealthTracker() {
 		return this.health;
+	}
+
+	/**
+	 * Lock the health for WaterShield skill
+	 */
+	public void lockHealth() {
+		this.isHealthLocked = true;
+	}
+
+	/**
+	 * Unlock the health for WaterShield skill
+	 */
+	public void unlockHealth() {
+		this.isHealthLocked = false;
 	}
 
 	/**

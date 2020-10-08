@@ -24,10 +24,11 @@ public final class PlayerSkills {
     static {
         // Map default Wizard skills
         DEFAULT_WIZARD_SKILLS.put(Wizard.FIRE, WizardSkills.FIREBALL);
-        DEFAULT_WIZARD_SKILLS.put(Wizard.WATER, WizardSkills.FIREBALL);
+        DEFAULT_WIZARD_SKILLS.put(Wizard.WATER, WizardSkills.ICEBALL);
 
         // Map default Knight skills
         DEFAULT_KNIGHT_SKILLS.put(Knight.FIRE, KnightSkills.FIREBOMB);
+        DEFAULT_KNIGHT_SKILLS.put(Knight.WATER, KnightSkills.WATERSHIELD);
     }
 
     /**
@@ -86,6 +87,8 @@ public final class PlayerSkills {
         switch(skill) {
             case FIREBOMB:
                 return new FireBombSkill(parent);
+            case WATERSHIELD:
+                return new WaterShieldSkill(parent);
             default:
                 throw new IllegalArgumentException();
         }
