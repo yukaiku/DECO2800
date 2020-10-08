@@ -4,6 +4,10 @@ import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.HealTask;
 
+/**
+ * Heal the entity for a specific ratio based on
+ * the max health
+ */
 public class HealSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
     private static final int MAX_COOLDOWN = 200;
@@ -26,7 +30,7 @@ public class HealSkill extends AbstractSkill {
 
     @Override
     public String getTexture() {
-        return "watershieldIcon";
+        return "healIcon";
     }
 
     @Override

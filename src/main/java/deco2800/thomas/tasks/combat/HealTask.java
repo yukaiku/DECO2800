@@ -3,21 +3,20 @@ package deco2800.thomas.tasks.combat;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.attacks.HealEffect;
-import deco2800.thomas.entities.attacks.WaterShield;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.AbstractTask;
 
 public class HealTask extends AbstractTask {
-    /* Lifetime of the effect */
+    /* The amount of restoreHealth */
     private final int restoreHealth;
     private boolean complete = false;
 
     /**
-     * Creates an instance of the WaterShieldTask which spawns the WaterShield entity
+     * Creates an instance of the HealTask which spawns the HealEffect entity
      * for the parent entity.
      *
      * @param entity   Parent entity of shield
-     * @param restoreHealth The life time of the effect
+     * @param restoreHealth The amount of restoreHealth
      */
     public HealTask(AbstractEntity entity, int restoreHealth) {
         super(entity);
@@ -25,11 +24,11 @@ public class HealTask extends AbstractTask {
     }
 
     /**
-     * Spawns a watershield into the game world.
+     * Spawns a HealEffect into the game world.
      */
     private void spawn() {
-        HealEffect waterShield = new HealEffect((Peon) entity, this.restoreHealth);
-        GameManager.get().getWorld().addEntity(waterShield);
+        HealEffect healEffect = new HealEffect((Peon) entity, this.restoreHealth);
+        GameManager.get().getWorld().addEntity(healEffect);
     }
 
     @Override
@@ -43,7 +42,7 @@ public class HealTask extends AbstractTask {
     }
 
     /**
-     * On tick is called one time to spawn the WaterShield.
+     * On tick is called one time to spawn the HealEffect.
      *
      * @param tick Current game tick
      */
