@@ -133,6 +133,12 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("merchant_npc1", new Texture("resources/npcs/npc3.png"));
 			textureMap.put("merchant_npc2", new Texture("resources/npcs/npc4.png"));
 			textureMap.put("merchant_npc3", new Texture("resources/npcs/npc5.png"));
+			textureMap.put("npc_swamp_dungeon_green", new Texture("resources/npcs/npc_swamp_dungeon_green.png"));
+			textureMap.put("npc_swamp_dungeon_blue", new Texture("resources/npcs/npc_swamp_dungeon_blue.png"));
+			textureMap.put("npc_swamp_dungeon_red", new Texture("resources/npcs/npc_swamp_dungeon_red.png"));
+			textureMap.put("npc_swamp_dungeon_orange", new Texture("resources/npcs/npc_swamp_dungeon_orange.png"));
+			textureMap.put("npc_swamp_dungeon_white", new Texture("resources/npcs/npc_swamp_dungeon_white.png"));
+			textureMap.put("npc_swamp_dungeon_yellow", new Texture("resources/npcs/npc_swamp_dungeon_yellow.png"));
 
 			// health & game over screen
 			textureMap.put("health0", new Texture("resources/healthResources/health-bar-0.png"));
@@ -190,6 +196,7 @@ public class TextureManager extends AbstractManager {
 	private void addEnvironmentTextures() {
 		addDesertTextures();
 		addSwampTextures();
+		addSwampDungeonTextures();
 		addTundraTextures();
 		addVolcanoTextures();
 		addOrbTextures();
@@ -269,6 +276,18 @@ public class TextureManager extends AbstractManager {
 					new Texture("resources/environment/swamp/entities/swamp_tree_log.png"));
 			textureMap.put("swamp_tree_stub",
 					new Texture("resources/environment/swamp/entities/swamp_tree_stub.png"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void addSwampDungeonTextures() {
+		try {
+			textureMap.put("dungeon-black", new Texture("resources/environment/swamp_dungeon/tile/dungeon-black.png"));
+			textureMap.put("dungeon-light-black", new Texture("resources/environment/swamp_dungeon/tile/dungeon-light-black.png"));
+			textureMap.put("dungeon-grey", new Texture("resources/environment/swamp_dungeon/tile/dungeon-grey.png"));
+			textureMap.put("dungeon-green", new Texture("resources/environment/swamp_dungeon/tile/dungeon-green.png"));
+			textureMap.put("dungeon-yellow", new Texture("resources/environment/swamp_dungeon/tile/dungeon-yellow.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
