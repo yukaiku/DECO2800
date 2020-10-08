@@ -31,7 +31,7 @@ public class WaterShieldSkill extends AbstractSkill {
 
     @Override
     public String getTexture() {
-        return "iceballIcon";
+        return "watershieldIcon";
     }
 
     @Override
