@@ -301,7 +301,7 @@ public class TextureManager extends AbstractManager {
         textureMap.put("stingIcon", new Texture("resources/combat/fireball_left.png"));
         textureMap.put("iceballIcon", new Texture("resources/combat/iceball_small.png"));
         textureMap.put("explosionIcon", new Texture("resources/combat/explosive_fireball3.png"));
-        textureMap.put("watershieldIcon", new Texture("resources/combat/tundra_skill_icon.png"));
+        textureMap.put("watershieldIcon", new Texture("resources/combat/tundra_skill3.png"));
     }
 
     /* ------------------------------------------------------------------------

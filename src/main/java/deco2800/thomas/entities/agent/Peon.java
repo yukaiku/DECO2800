@@ -27,7 +27,7 @@ public class Peon extends AgentEntity implements Tickable {
 	private float armour; // Reduces incoming damage
 	private int damage; // Base outgoing damage value
 	private DamageType vulnerability; // Peon takes extra damage from this damage type
-	public boolean isHealthLocked = false; // Lock the health for Watershield skill
+	private boolean isHealthLocked = false; // Lock the health for Watershield skill
 
 	/* Combat status of this entity */
 	protected boolean isAttacked = false;
