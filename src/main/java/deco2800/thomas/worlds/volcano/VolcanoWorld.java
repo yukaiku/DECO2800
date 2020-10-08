@@ -4,7 +4,6 @@ import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.VolcanoNPC;
-import deco2800.thomas.entities.enemies.*;
 import deco2800.thomas.entities.environment.volcano.VolcanoDragonSkull;
 import deco2800.thomas.entities.environment.volcano.VolcanoGraveYard;
 import deco2800.thomas.entities.environment.volcano.VolcanoRuins;
@@ -15,7 +14,6 @@ import deco2800.thomas.entities.items.IronArmour;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.entities.environment.volcano.*;
-import deco2800.thomas.entities.enemies.dragons.VolcanoDragon;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -65,10 +63,8 @@ public class VolcanoWorld extends AbstractWorld {
 
         this.allVolcanoDialogues = new ArrayList<>();
 
-        // Provide available enemies to the EnemyManager
-        Orc volcanoOrc = new Orc(Variation.VOLCANO, 50, 0.09f);
-        VolcanoDragon boss = new VolcanoDragon(1000, 0.03f, 1);
-        EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(volcanoOrc), boss);
+        // Provide enemies
+        EnemyManager enemyManager = new EnemyManager(this, "volcanoDragon", 7, "volcanoOrc");
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(16, 20);
 
@@ -93,6 +89,12 @@ public class VolcanoWorld extends AbstractWorld {
 
         //Add local Event to this world
         this.setWorldEvent(new VolcanoEvent(this));
+
+        //Updates difficulty manager
+        DifficultyManager difficultyManager = GameManager.getManagerFromInstance(DifficultyManager.class);
+        difficultyManager.setPlayerEntity((PlayerPeon) this.getPlayerEntity());
+        difficultyManager.setDifficultyLevel(getType());
+
     }
 
     @Override
@@ -216,15 +218,18 @@ public class VolcanoWorld extends AbstractWorld {
         Tile t;
         String tileTexture;
         Random random = new Random();
+        SquareVector playerPos = getPlayerEntity().getPosition();
         int tileCount = GameManager.get().getWorld().getTiles().size();
         AbstractWorld world = GameManager.get().getWorld();
         int randIndex;
 
         for (int i = 0; i < 20; i++) {
-            randIndex = random.nextInt(tileCount);
-
             //Get respective volcano tile (5 <= Lava tiles Index <= 8
-            t = world.getTile(randIndex);
+            do {
+                randIndex = random.nextInt(tileCount);
+                t = world.getTile(randIndex);
+            } while (t.getCoordinates().isCloseEnoughToBeTheSame(playerPos));
+
             tileTexture = t.getTextureName();
             tileNumber = Integer.parseInt(tileTexture.split("_")[1]);
 

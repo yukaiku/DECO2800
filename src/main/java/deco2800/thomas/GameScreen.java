@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public class GameScreen implements Screen, KeyDownObserver {
 	static float width = 1280;
 	static float height = 1000;
-	private final Logger LOG = LoggerFactory.getLogger(GameScreen.class);
+	private static final Logger LOG = LoggerFactory.getLogger(GameScreen.class);
 	@SuppressWarnings("unused")
 	private final ThomasGame game;
 
@@ -58,10 +58,11 @@ public class GameScreen implements Screen, KeyDownObserver {
 	TransitionScreen transitionScreen = new TransitionScreen();
 
 	// Buttons in the pause menu
-	Button resumeButton = new TextButton("RESUME", GameManager.get().getSkin(), "in_game");
-	Button quitButton = new TextButton("RETURN TO MAIN MENU", GameManager.get().getSkin(), "in_game");
-	Button enterButton = new TextButton("ENTER THE ZONE", GameManager.get().getSkin(), "in_game");
-	Button playAgainButton = new TextButton("PLAY AGAIN", GameManager.get().getSkin(), "in_game");
+	String style = "in_game";
+	Button resumeButton = new TextButton("RESUME", GameManager.get().getSkin(), style);
+	Button quitButton = new TextButton("RETURN TO MAIN MENU", GameManager.get().getSkin(), style);
+	Button enterButton = new TextButton("ENTER THE ZONE", GameManager.get().getSkin(), style);
+	Button playAgainButton = new TextButton("PLAY AGAIN", GameManager.get().getSkin(), style);
 	AbstractWorld world;
 
 	static Skin skin = new Skin(Gdx.files.internal("resources/uiskin.skin"));
@@ -70,13 +71,15 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * Create a camera for panning and zooming.
 	 * Camera must be updated every render cycle.
 	 */
-	OrthographicCamera camera, cameraOverlay, cameraEvent;
+	OrthographicCamera camera;
+	OrthographicCamera cameraOverlay;
+	OrthographicCamera cameraEvent;
 
 	public Stage stage = new Stage(new ExtendViewport(1280, 720));
 
 	long lastGameTick = 0;
 
-	static public enum gameType {
+	public enum gameType {
 		NEW_GAME {
 			@Override
 			public AbstractWorld method() {
@@ -359,7 +362,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	@Override
 	public void show() {
-
+		// do nothing
 	}
 
 	/**
@@ -402,7 +405,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void dispose() {
 		GameManager.getManagerFromInstance(InputManager.class).removeKeyDownListener(this);
 		stage.dispose();
-//		System.exit(0);
 	}
 
 	@Override

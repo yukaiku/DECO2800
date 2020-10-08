@@ -16,7 +16,6 @@ import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
-import deco2800.thomas.entities.enemies.dragons.SwampDragon;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.worlds.AbstractWorld;
@@ -51,13 +50,11 @@ public class SwampWorld extends AbstractWorld {
         this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
 
-        //Creates Items
+        // Creates Items
         this.generateItemEntities();
 
-        // Provide available enemies to the EnemyManager
-        Orc swampOrc = new Orc(Variation.SWAMP, 50, 0.09f);
-        SwampDragon boss = new SwampDragon(1050, 0.03f, 2);
-        EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(swampOrc), boss);
+        // Provide enemies
+        EnemyManager enemyManager = new EnemyManager(this, "swampDragon", 7, "swampOrc");
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(19, -24);
 
@@ -76,6 +73,12 @@ public class SwampWorld extends AbstractWorld {
         DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
                 this.allSwampDialogues);
         GameManager.get().addManager(dialog);
+
+        //Updates difficulty manager
+        DifficultyManager difficultyManager = GameManager.getManagerFromInstance(DifficultyManager.class);
+        difficultyManager.setPlayerEntity((PlayerPeon) this.getPlayerEntity());
+        difficultyManager.setDifficultyLevel(getType());
+
     }
 
     @Override

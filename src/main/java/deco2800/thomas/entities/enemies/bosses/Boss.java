@@ -1,4 +1,6 @@
-package deco2800.thomas.entities.enemies;
+package deco2800.thomas.entities.enemies.bosses;
+
+import deco2800.thomas.entities.enemies.EnemyPeon;
 
 /**
  * A class that defines a specific type enemy called a boss.

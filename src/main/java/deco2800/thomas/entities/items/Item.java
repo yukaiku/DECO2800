@@ -63,9 +63,11 @@ public class Item extends StaticEntity implements TouchDownObserver {
 
             if (this.getItemName().equals("Health Potion")) {
                 this.player.regenerateHealth(40);
+                ((AbstractEntity) this).dispose();
             }
             if (this.getItemName().equals("Iron IronArmour") && this.player.getArmour() < 2000) {
                 this.player.addArmour(1000);
+                ((AbstractEntity) this).dispose();
             }
         }
     }
@@ -79,6 +81,7 @@ public class Item extends StaticEntity implements TouchDownObserver {
         if (this.display.isShowing()) {
             this.display.setVisibleTime(display.getVisibleTime() + 1);
         }
+
     }
     
     public void interact() {
@@ -124,8 +127,8 @@ public class Item extends StaticEntity implements TouchDownObserver {
     /**
      * Remove touch down listener.
      */
-    @Override
+    /*@Override
     public void dispose() {
         GameManager.getManagerFromInstance(InputManager.class).removeTouchDownListener(this);
-    }
+    }*/
 }

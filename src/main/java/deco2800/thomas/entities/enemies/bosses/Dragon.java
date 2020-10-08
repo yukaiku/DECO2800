@@ -1,4 +1,4 @@
-package deco2800.thomas.entities.enemies;
+package deco2800.thomas.entities.enemies.bosses;
 
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
@@ -9,6 +9,8 @@ import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.Fireball;
+import deco2800.thomas.entities.enemies.EnemyIndex;
+import deco2800.thomas.entities.enemies.PassiveEnemy;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
@@ -30,7 +32,7 @@ import java.util.Random;
 public abstract class Dragon extends Boss implements PassiveEnemy {
     private MovementTask.Direction facingDirection;
     protected Animation<TextureRegion> dragonIdle;
-    protected Variation variation;
+    protected EnemyIndex.Variation variation;
     protected int duration = 0;
     private int tickFollowing = 60;
     // Range at which the dragon will attempt to melee attack the player
@@ -42,7 +44,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     public Dragon(int health, float speed, int orbNumber) {
         super(health, speed);
         this.orbNumber = orbNumber;
-        this.variation = Variation.SWAMP; // default
+        this.variation = EnemyIndex.Variation.SWAMP; // default
         this.identifier = "dragonSwamp";
         this.setTexture("dragonSwamp");
     }
@@ -53,8 +55,8 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
      */
     public void summonGoblin() {
         if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() < 10) {
-            Goblin goblin = new Goblin(variation, 20, 0.1f);
-            GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(goblin, this.getCol() + 1, this.getRow() + 2);
+            GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(
+                    variation.name().toLowerCase() + "Goblin", this.getCol() + 1, this.getRow() + 2);
         }
     }
 

@@ -5,9 +5,6 @@ import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.items.IronArmour;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.TundraNPC;
-import deco2800.thomas.entities.enemies.Orc;
-import deco2800.thomas.entities.enemies.Variation;
-import deco2800.thomas.entities.enemies.dragons.TundraDragon;
 import deco2800.thomas.entities.environment.tundra.TundraCampfire;
 import deco2800.thomas.entities.environment.tundra.TundraRock;
 import deco2800.thomas.entities.environment.tundra.TundraTreeLog;
@@ -46,22 +43,20 @@ public class TundraWorld extends AbstractWorld {
 
 	public TundraWorld(int width, int height) {
 		DatabaseManager.loadWorld(this, MAP_FILE_TILES_ONLY);
-		generateStaticEntities();
 		this.allTundraDialogues = new ArrayList<>();
 
 		// PlayerPeon
 		this.setPlayerEntity(new PlayerPeon(-3f, -24f, 0.15f));
 		addEntity(this.getPlayerEntity());
+		generateStaticEntities();
 		generateItemEntities();
 
-		// Provide available enemies to the EnemyManager
-		Orc tundraOrc = new Orc(Variation.TUNDRA, 100, 0.05f);
-		TundraDragon boss = new TundraDragon(950, 0.03f, 3);
-		EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(tundraOrc), boss);
+		// Provide enemies
+		EnemyManager enemyManager = new EnemyManager(this, "tundraDragon", 7, "tundraOrc");
 		GameManager.get().addManager(enemyManager);
 		enemyManager.spawnBoss(0, 0);
 
-		//Creates Tundra NPCs
+		// Creates Tundra NPCs
 		List<NonPlayablePeon> npnSpawns = new ArrayList<>();
 		TundraNPC tundraNpc1 = new TundraNPC("TundraQuestNPC1", new SquareVector(-8, -24),"tundra_npc1");
 		TundraNPC tundraNpc2 = new TundraNPC("TundraQuestNPC2", new SquareVector(-22, -9),"tundra_npc2");
@@ -76,6 +71,12 @@ public class TundraWorld extends AbstractWorld {
 		DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
 				this.allTundraDialogues);
 		GameManager.get().addManager(dialog);
+
+		//Updates difficulty manager
+		DifficultyManager difficultyManager = GameManager.getManagerFromInstance(DifficultyManager.class);
+		difficultyManager.setPlayerEntity((PlayerPeon) this.getPlayerEntity());
+		difficultyManager.setDifficultyLevel(getType());
+
 	}
 
 	@Override
@@ -87,6 +88,8 @@ public class TundraWorld extends AbstractWorld {
 		final int NUM_CAMPFIRES = 20;
 		final int NUM_TREE_LOGS = 60;
 		final int NUM_ROCKS = 60;
+
+		SquareVector playerPos = getPlayerEntity().getPosition();
 
 		int numTiles = getTiles().size();
 		List<Integer> tileIDs = new ArrayList<>();
@@ -106,7 +109,7 @@ public class TundraWorld extends AbstractWorld {
 
 			Tile tile = null;
 
-			while (tile == null || tile.hasParent()) {
+			while (tile == null || tile.hasParent() || tile.getCoordinates().isCloseEnoughToBeTheSame(playerPos)) {
 				int tileID = tileIDs.get(counter++);
 				tile = getTile(tileID);
 			}

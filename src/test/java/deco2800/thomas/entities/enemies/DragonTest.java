@@ -8,10 +8,11 @@ import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.*;
-import deco2800.thomas.entities.enemies.dragons.DesertDragon;
-import deco2800.thomas.entities.enemies.dragons.SwampDragon;
-import deco2800.thomas.entities.enemies.dragons.TundraDragon;
-import deco2800.thomas.entities.enemies.dragons.VolcanoDragon;
+import deco2800.thomas.entities.enemies.bosses.DesertDragon;
+import deco2800.thomas.entities.enemies.bosses.SwampDragon;
+import deco2800.thomas.entities.enemies.bosses.TundraDragon;
+import deco2800.thomas.entities.enemies.bosses.VolcanoDragon;
+import deco2800.thomas.entities.enemies.minions.Goblin;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.renderers.components.FloatingDamageComponent;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
@@ -105,7 +106,7 @@ public class DragonTest extends BaseGDXTest {
     @Test
     public void testSummonGoblin() {
         swampDragon.summonGoblin();
-        verify(enemyManager, times(1)).spawnSpecialEnemy(any(Goblin.class), anyFloat(), anyFloat());
+        verify(enemyManager, times(1)).spawnSpecialEnemy(eq("swampGoblin"), anyFloat(), anyFloat());
     }
 
     @Test

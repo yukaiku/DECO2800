@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import deco2800.thomas.combat.AbstractSkill;
+import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
@@ -47,7 +47,7 @@ public class HotbarComponent extends OverlayComponent {
 
         batch.begin();
 
-        wizardIcon.setPosition(overlayRenderer.getX() + 0.15f * overlayRenderer.getWidth(), overlayRenderer.getY());
+        wizardIcon.setPosition(overlayRenderer.getX() + 0.05f * overlayRenderer.getWidth(), overlayRenderer.getY());
         wizardIcon.draw(batch);
         lastRenderedSprite = wizardIcon;
 

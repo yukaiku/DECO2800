@@ -13,7 +13,7 @@ import deco2800.thomas.entities.environment.tutorial.Stash;
 import deco2800.thomas.entities.environment.tutorial.Target;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.TutorialNPC;
-import deco2800.thomas.entities.enemies.Dummy;
+import deco2800.thomas.entities.enemies.monsters.Dummy;
 import deco2800.thomas.entities.environment.tutorial.*;
 import deco2800.thomas.managers.DialogManager;
 import deco2800.thomas.managers.EnemyManager;
@@ -66,13 +66,9 @@ public class TutorialWorld extends AbstractWorld{
         this.setPlayerEntity(player);
         addEntity(this.getPlayerEntity());
 
-        // Create an enemy manager without wild enemy spawning.
+        // Spawn dummy
         EnemyManager enemyManager = new EnemyManager(this);
-
-        Dummy dummy = new Dummy(100, 0);
-        // Spawn a dummy
-        enemyManager.spawnSpecialEnemy(dummy, 5, 0);
-
+        enemyManager.spawnSpecialEnemy("dummy", 5, 0);
         GameManager.get().addManager(enemyManager);
 
         // Add NPC
@@ -101,7 +97,7 @@ public class TutorialWorld extends AbstractWorld{
         }
         // Add targets
         for (int i = -6; i < 6 + 1; i = i + 2) {
-            if (i == 0 | i == -2 | i == 2) {
+            if (i == 0 || i == -2 || i == 2) {
                 continue;
             }
             Tile t = GameManager.get().getWorld().getTile(i, -TUTORIAL_WORLD_HEIGHT);
