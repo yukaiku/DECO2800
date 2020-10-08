@@ -179,6 +179,7 @@ public class MovementTask extends AbstractTask {
 
 		// check if the tile has an effect, apply the effect if so
 		Tile tile = gameManager.getWorld().getTile(position);
+
 		if (tile != null && tile.hasStatusEffect() && entity instanceof Peon) {
 			switch(tile.getType()) {
 				// burn tiles damage over time

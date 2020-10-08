@@ -18,7 +18,7 @@ import java.util.List;
 
 public class VolcanoDungeon extends AbstractWorld {
     private final Logger logger = LoggerFactory.getLogger(VolcanoWorld.class);
-    public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/swamp/swamp-game-map.json";
+    public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/dungeons/VolcanoDungeonMaze.json";
 
 
     private boolean notGenerated = true;
@@ -33,12 +33,12 @@ public class VolcanoDungeon extends AbstractWorld {
     public VolcanoDungeon(int width, int height){
         super(width, height);
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
-        this.setPlayerEntity(new PlayerPeon(-0f, -24f, 0.15f));
+        this.setPlayerEntity(new PlayerPeon(-0f, -0f, 0.15f));
         addEntity(this.getPlayerEntity());
 
         GameManager.get().addManager(new EnemyManager(this));
 
-        Tile exitTile = this.getTile(-5, -20f);
+        Tile exitTile = this.getTile(-24f, 23f);
         addEntity(new ExitPortal(exitTile, false, "portal", "ExitPortal"));
     }
 
