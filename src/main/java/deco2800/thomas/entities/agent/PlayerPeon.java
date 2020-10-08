@@ -131,6 +131,18 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         dialogues.put("swamp", "Welcome adventure to Swamp Zone , to complete this stage, " +
                 "\nyou will have to locate the orb of muck. The monsters here are vulnerable to air");
 
+        dialogues.put("npc_swamp_dungeon_blue", "Step in the top gold tile to get the treasure ");
+
+        dialogues.put("npc_swamp_dungeon_green", "Yellow always speaks the truth ");
+
+        dialogues.put("npc_swamp_dungeon_orange", "White is the only truth-speaker ");
+
+        dialogues.put("npc_swamp_dungeon_red", "Step in the bottom gold tile to get the treasure ");
+
+        dialogues.put("npc_swamp_dungeon_white", "I totally agree with Blue ");
+
+        dialogues.put("npc_swamp_dungeon_yellow", "Step in the middle gold tile to get the treasure ");
+
         dialogues.put("volcano", "Welcome adventure to Volcano Zone , to complete this stage, " +
                 "\nyou will have to locate the orb of lava. The monsters here are vulnerable to earth");
 

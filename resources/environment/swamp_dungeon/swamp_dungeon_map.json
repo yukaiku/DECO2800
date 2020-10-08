@@ -733,7 +733,7 @@
         },
         {
             "tileID": 91,
-            "texture": "dungeon-yellow",
+            "texture": "dungeon-green",
             "obstructed": false,
             "index": -6,
             "rowPos": 3.0,
@@ -2269,7 +2269,7 @@
         },
         {
             "tileID": 283,
-            "texture": "dungeon-yellow",
+            "texture": "dungeon-green",
             "obstructed": false,
             "index": -6,
             "rowPos": -5.0,
