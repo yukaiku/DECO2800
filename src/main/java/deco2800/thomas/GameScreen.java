@@ -37,7 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class GameScreen implements Screen, KeyDownObserver {
-	static float width = 1280;
+	static float width = 1920;
 	static float height = 1000;
 	private static final Logger LOG = LoggerFactory.getLogger(GameScreen.class);
 	@SuppressWarnings("unused")
@@ -79,7 +79,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	OrthographicCamera cameraOverlay;
 	OrthographicCamera cameraEvent;
 
-	public Stage stage = new Stage(new ExtendViewport(1280, 720));
+	public Stage stage = new Stage(new ExtendViewport(1920, 1000));
 
 	long lastGameTick = 0;
 
@@ -214,7 +214,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 				// Dispose the screen
 				dispose();
 				// Set main menu screen
-				game.setScreen(new GameScreen(game, gameType.NEW_GAME));
+				game.setScreen(new CharactersScreen(game));
 			}
 		});
 
@@ -264,10 +264,10 @@ public class GameScreen implements Screen, KeyDownObserver {
 		spriteBatch.setProjectionMatrix(cameraOverlay.combined);
 
 		// Hide the buttons when the game is running
-		resumeButton.setPosition(-100, -100);
-		quitButton.setPosition(-100, -100);
-		enterButton.setPosition(-100, -100);
-		playAgainButton.setPosition(-100, -100);
+		resumeButton.setPosition(-1000, -1000);
+		quitButton.setPosition(-1000, -1000);
+		enterButton.setPosition(-1000, -1000);
+		playAgainButton.setPosition(-1000, -1000);
 
 		/* Refresh the experience UI for if information was updated */
 		stage.act(delta);
@@ -284,9 +284,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 		pauseModal.render(spriteBatch, cameraOverlay);
 
 		// Display the buttons
-		resumeButton.setPosition(width / 2 - resumeButton.getWidth() / 2,
+		resumeButton.setPosition(stage.getWidth() / 2 - resumeButton.getWidth() / 2,
 				height / 2);
-		quitButton.setPosition(width / 2 - quitButton.getWidth() / 2,
+		quitButton.setPosition(stage.getWidth() / 2 - quitButton.getWidth() / 2,
 				height / 2 - 100);
 		stage.act(delta);
 		stage.draw();
@@ -315,9 +315,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 		transitionScreen.render(spriteBatch, cameraOverlay);
 
 		//Hide the other buttons
-		resumeButton.setPosition(-100, -100);
-		quitButton.setPosition(-100, -100);
-		playAgainButton.setPosition(-100, -100);
+		resumeButton.setPosition(-1000, -1000);
+		quitButton.setPosition(-1000, -1000);
+		playAgainButton.setPosition(-1000, -1000);
 		// Display the button
 		enterButton.setPosition(width / 2 - enterButton.getWidth() / 2, 150);
 		stage.act(delta);
