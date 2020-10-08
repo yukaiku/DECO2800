@@ -29,7 +29,7 @@ public class PlayerManager extends AbstractManager {
 
         // TEMPORARY Default to fire wizard and fire knight
         setWizard(Wizard.FIRE);
-        setKnight(Knight.FIRE);
+        setKnight(Knight.WATER);
     }
 
     /**
