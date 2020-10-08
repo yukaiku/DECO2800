@@ -104,7 +104,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 			@Override
 			public AbstractWorld method() {
 
-				AbstractWorld world = new SwampDungeon();
+				AbstractWorld world = new VolcanoWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
@@ -236,7 +236,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void renderGame(float delta ) {
 		handleRenderables();
 
-		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta);
+		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta, GameManager.get().getWorld().getWorldZoomable());
 		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
 
 		cameraEvent.position.set(camera.position);

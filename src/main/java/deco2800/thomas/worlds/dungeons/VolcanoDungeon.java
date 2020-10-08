@@ -33,10 +33,18 @@ public class VolcanoDungeon extends AbstractWorld {
     public VolcanoDungeon(int width, int height){
         super(width, height);
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
+
         this.setPlayerEntity(new PlayerPeon(-0f, -0f, 0.15f));
         addEntity(this.getPlayerEntity());
 
+        this.setWorldZoomable(false);
+
         GameManager.get().addManager(new EnemyManager(this));
+
+        Tile teleportTile = getTile(-22f, -22f);
+        teleportTile.setType("TeleportToMiddle");
+
+        this.updateEntity(this.getPlayerEntity());
 
         Tile exitTile = this.getTile(-24f, 23f);
         addEntity(new ExitPortal(exitTile, false, "portal", "ExitPortal"));
@@ -47,8 +55,8 @@ public class VolcanoDungeon extends AbstractWorld {
      */
     @Override
     protected void generateTiles() {
-
-    }
+        //Set Teleport Tile as one of the incorrect items
+        }
 
     /**
      * Manages actions taking place for volcano world every tick.

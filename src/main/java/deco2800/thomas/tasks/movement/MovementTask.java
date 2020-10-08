@@ -81,6 +81,7 @@ public class MovementTask extends AbstractTask {
 		if (entity.getPosition().tileEquals(destination)) {
 			checkForValidPortal(destination);
 			checkForTileStatus(destination);
+			checkForTeleportTile(destination);
 		}
 
 		if (entity.getPosition().isCloseEnoughToBeTheSame(destination)) {
@@ -227,6 +228,18 @@ public class MovementTask extends AbstractTask {
 			Portal portal = (Portal) tile.getParent();
 			String type = portal.getObjectName();
 			gameManager.enterDungeon(type);
+		}
+	}
+
+	private void checkForTeleportTile(SquareVector position) {
+		// get the next tile
+		Tile tile = gameManager.getWorld().getTile(position);
+
+		if (tile != null && tile.getType().matches("TeleportToMiddle")) {
+			path = null;
+			destination.setCol(0);
+			destination.setRow(0);
+			gameManager.getWorld().getPlayerEntity().setPosition(0, 0, 1);
 		}
 	}
 }

@@ -86,6 +86,8 @@ public abstract class AbstractWorld implements Tickable {
 	 */
 	private WorldEvent worldEvent;
 
+	private boolean zoomable = true;
+
 	/**
 	 * Constructor that creates a world with given width and height
 	 *
@@ -469,6 +471,15 @@ public abstract class AbstractWorld implements Tickable {
 
 	public void setWorldEvent(WorldEvent event) {
 		this.worldEvent = event;
+	}
+
+	public void setWorldZoomable(boolean allowed) {
+		this.zoomable = allowed;
+	}
+
+
+	public boolean getWorldZoomable() {
+		return this.zoomable;
 	}
 
 	/**
