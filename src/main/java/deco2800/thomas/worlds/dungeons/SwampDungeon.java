@@ -1,5 +1,6 @@
 package deco2800.thomas.worlds.dungeons;
 
+import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.environment.Portal;
@@ -128,6 +129,7 @@ public class SwampDungeon extends AbstractWorld {
     private void activateReward() {
         if (this.getPlayerEntity().getPosition().isCloseEnoughToBeTheSame(correctTile) && !correctTileActivated) {
             this.getTile(correctTile).setTexture("dungeon-light-black");
+            GameManager.getManagerFromInstance(PlayerManager.class).grantWizardSkill(WizardSkills.HEAL);
             spawnExitPortal();
             correctTileActivated = true;
         }

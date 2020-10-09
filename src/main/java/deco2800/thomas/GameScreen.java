@@ -29,6 +29,7 @@ import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.TutorialWorld;
 import deco2800.thomas.worlds.desert.DesertWorld;
 import deco2800.thomas.worlds.dungeons.SwampDungeon;
+import deco2800.thomas.worlds.dungeons.VolcanoDungeon;
 import deco2800.thomas.worlds.swamp.SwampWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 
