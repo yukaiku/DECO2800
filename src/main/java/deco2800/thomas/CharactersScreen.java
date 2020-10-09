@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import deco2800.thomas.combat.Knight;
 import deco2800.thomas.combat.Wizard;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PlayerManager;
@@ -72,6 +73,7 @@ public class CharactersScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 GameManager.getManagerFromInstance(PlayerManager.class).resetPlayer();
                 GameManager.getManagerFromInstance(PlayerManager.class).setWizard(Wizard.FIRE);
+                GameManager.getManagerFromInstance(PlayerManager.class).setKnight(Knight.FIRE);
                 switchGameScreen(GameScreen.gameType.NEW_GAME);
             }
         });
@@ -103,6 +105,7 @@ public class CharactersScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 GameManager.getManagerFromInstance(PlayerManager.class).resetPlayer();
                 GameManager.getManagerFromInstance(PlayerManager.class).setWizard(Wizard.WATER);
+                GameManager.getManagerFromInstance(PlayerManager.class).setKnight(Knight.WATER);
                 switchGameScreen(GameScreen.gameType.NEW_GAME);
             }
         });

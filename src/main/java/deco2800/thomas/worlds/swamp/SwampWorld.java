@@ -24,7 +24,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -89,7 +88,7 @@ public class SwampWorld extends AbstractWorld {
     protected void generateTiles() {
     }
 
-    public void generateDeadTree() {
+    public void createDeadTree() {
         // South Forest
         entities.add(new SwampDeadTree(this.getTile(-5, -24), true));
         entities.add(new SwampDeadTree(this.getTile(-6, -23), true));
@@ -192,7 +191,7 @@ public class SwampWorld extends AbstractWorld {
 
     public void generateStaticEntities() {
         this.createPond();
-        this.generateDeadTree();
+        this.createDeadTree();
         this.createTreeStub();
         this.createFallenTree();
         this.createTreeLog();

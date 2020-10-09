@@ -1,5 +1,6 @@
 package deco2800.thomas.entities.enemies;
 
+import com.badlogic.gdx.graphics.Texture;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.agent.Peon;
@@ -71,6 +72,10 @@ public abstract class EnemyPeon extends Peon implements Animatable {
      */
     public void setTarget(AgentEntity target) {
         this.target = target;
+    }
+
+    public Texture getIcon() {
+        return GameManager.getManagerFromInstance(TextureManager.class).getTexture("iconDefault");
     }
 
     public void attackPlayer() {

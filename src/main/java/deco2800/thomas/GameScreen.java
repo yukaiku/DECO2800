@@ -27,8 +27,12 @@ import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.TutorialWorld;
+import deco2800.thomas.worlds.desert.DesertWorld;
+import deco2800.thomas.worlds.dungeons.SwampDungeon;
+import deco2800.thomas.worlds.swamp.SwampWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 
+import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,7 +103,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 		ENV_TEAM_GAME {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new TundraWorld();
+
+				AbstractWorld world = new VolcanoWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
@@ -230,7 +235,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void renderGame(float delta ) {
 		handleRenderables();
 
-		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta);
+		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta, GameManager.get().getWorld().getWorldZoomable());
 		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
 
 		cameraEvent.position.set(camera.position);
@@ -255,7 +260,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 		rerenderMapObjects(batch, camera);
 		overlayRenderer.render(batchOverlay, cameraOverlay);
 		rendererEvent.render(batchEvent, cameraEvent);
-
 
 		spriteBatch.setProjectionMatrix(cameraOverlay.combined);
 

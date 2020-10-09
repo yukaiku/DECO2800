@@ -27,6 +27,21 @@ public class NPCDialog extends AbstractDialogBox {
 		box.setPosition((Gdx.graphics.getWidth() - box.getWidth())/2,(Gdx.graphics.getHeight() - box.getHeight())/2 );
 	}
 
+	public NPCDialog(Object entity, String string, String boxName) {
+		super(entity, boxName, "tutorial");
+		// add first dialogue.
+		box.add(string).expand().center();
+		box.row();
+		box.setKeepWithinStage(true);
+		button = new TextButton("Next",skin);
+		box.add(button).expand().center();
+		box.addListener(b);
+		time = 0;
+		setShowing(false);
+		box.pack();
+		box.setPosition((Gdx.graphics.getWidth() - box.getWidth())/2,(Gdx.graphics.getHeight() - box.getHeight())/2 );
+	}
+
 	public void setString(String str) {
 		box.reset();
 		box.add(str).expand().center();
@@ -88,6 +103,13 @@ public class NPCDialog extends AbstractDialogBox {
 				}
 			}
 
+			if (SwampDungeonNPC.getIsActive()) {
+				if (SwampDungeonNPC.speechStage >= 1) {
+					box.removeListener(this);
+					box.addListener(b);
+				}
+			}
+
 			if (DesertNPC.getIsActive()){
 				if (DesertNPC.speechStage >= 1) {
 					setString(PlayerPeon.getDialogue("desert"));
@@ -108,6 +130,7 @@ public class NPCDialog extends AbstractDialogBox {
 			TundraNPC.setIsActive(false);
 			VolcanoNPC.setIsActive(false);
 			SwampNPC.setIsActive(false);
+			SwampDungeonNPC.setIsActive(false);
 			TundraNPC.setIsActive(false);
 		}
 	};

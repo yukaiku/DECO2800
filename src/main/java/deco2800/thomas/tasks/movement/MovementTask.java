@@ -5,6 +5,7 @@ import java.util.List;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PathFindingService;
 import deco2800.thomas.managers.StatusEffectManager;
@@ -15,6 +16,7 @@ import deco2800.thomas.tasks.status.SpeedStatus;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
+import deco2800.thomas.worlds.dungeons.VolcanoDungeon;
 
 
 public class MovementTask extends AbstractTask {
@@ -77,7 +79,11 @@ public class MovementTask extends AbstractTask {
 
 		// if we have moved to the new tile, check for statuses
 		if (entity.getPosition().tileEquals(destination)) {
+			checkForValidPortal(destination);
 			checkForTileStatus(destination);
+			checkForTeleportTile(destination);
+			checkForTrapTile(destination);
+			checkForRewardTile(destination);
 		}
 
 		if (entity.getPosition().isCloseEnoughToBeTheSame(destination)) {
@@ -161,6 +167,7 @@ public class MovementTask extends AbstractTask {
 	public void stopTask() {
 		complete = true;
 	}
+
 	/**
 	 * Checks if the tile at a position has an associated status effect.
 	 * If it does, a new status effect is added to the StatusEffectManager for the entity.
@@ -174,6 +181,7 @@ public class MovementTask extends AbstractTask {
 
 		// check if the tile has an effect, apply the effect if so
 		Tile tile = gameManager.getWorld().getTile(position);
+
 		if (tile != null && tile.hasStatusEffect() && entity instanceof Peon) {
 			switch(tile.getType()) {
 				// burn tiles damage over time
@@ -203,6 +211,74 @@ public class MovementTask extends AbstractTask {
 				break;
 
 			}
+		}
+	}
+
+	/**
+	 * Checks if a portal is at the new position or if a portal is below the new
+	 * position (Portal Spans across two tiles) & teleports the play to the
+	 * zones respective dungeon.
+	 *
+	 * @param position - Square Vector of upcoming position of the entity.
+	 */
+	private void checkForValidPortal(SquareVector position) {
+		// get the next tile
+		Tile tile = gameManager.getWorld().getTile(position);
+
+		if (tile != null && tile.getParent() instanceof Portal) {
+			Portal portal = (Portal) tile.getParent();
+			String type = portal.getObjectName();
+			gameManager.enterDungeon(type);
+		}
+	}
+
+	private void checkForTeleportTile(SquareVector position) {
+		// get the next tile
+		Tile tile = gameManager.getWorld().getTile(position);
+
+		if (tile != null && tile.isTeleportTile()) {
+			path = null;
+
+
+			//Remove Trap Entity HERE
+
+			float newCol = tile.getTeleportCol();
+			float newRow = tile.getTeleportRow();
+
+			destination.setCol(newCol);
+			destination.setRow(newRow);
+			gameManager.getWorld().getPlayerEntity().setPosition(newCol, newRow, 1);
+		}
+	}
+
+	private void checkForTrapTile(SquareVector position) {
+		// get the next tile
+		Tile tile = gameManager.getWorld().getTile(position);
+
+		if (tile != null && tile.isTrapTile() && !tile.getTrapActivated()) {
+
+			//Remove Trap Entity HERE
+			gameManager.getWorld().removeEntity(tile.getParent());
+			tile.setParent(null);
+
+			tile.setTrapActivated(true);
+			gameManager.getWorld().activateTrapTile(tile);
+		}
+	}
+
+	private void checkForRewardTile(SquareVector position) {
+		// get the next tile
+		Tile tile = gameManager.getWorld().getTile(position);
+
+		if (tile != null && tile.isRewardTile() && !tile.getRewardActivated()) {
+
+			//Remove Reward Entity HERE
+			gameManager.getWorld().removeEntity(tile.getParent());
+			tile.setParent(null);
+
+			//Update trap to be triggered & activate outcome
+			tile.setRewardActivated(true);
+			gameManager.getWorld().activateRewardTile(tile);
 		}
 	}
 }

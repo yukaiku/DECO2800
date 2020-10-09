@@ -159,7 +159,10 @@ public class EventRenderer implements Renderer {
             resetEventForNewWorld();
             GameManager.get().movedToNextWorld = false;
         }
-        if (this.allowRendering) {
+        if (this.allowRendering && (GameManager.get().getWorld() instanceof SwampWorld ||
+                GameManager.get().getWorld() instanceof DesertWorld ||
+                GameManager.get().getWorld() instanceof TundraWorld ||
+                GameManager.get().getWorld() instanceof VolcanoWorld)) {
             particleEffect.getEmitters().first().setPosition(camera.position.x - camera.viewportWidth / 2,
                     camera.position.y + camera.viewportHeight / 2);
 

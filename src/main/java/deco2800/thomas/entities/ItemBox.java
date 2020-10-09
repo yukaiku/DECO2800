@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import deco2800.thomas.entities.agent.LoadedPeon;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.entities.items.Treasure;

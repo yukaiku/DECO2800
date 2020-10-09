@@ -86,6 +86,8 @@ public abstract class AbstractWorld implements Tickable {
 	 */
 	private WorldEvent worldEvent;
 
+	private boolean zoomable = true;
+
 	/**
 	 * Constructor that creates a world with given width and height
 	 *
@@ -469,6 +471,34 @@ public abstract class AbstractWorld implements Tickable {
 
 	public void setWorldEvent(WorldEvent event) {
 		this.worldEvent = event;
+	}
+
+	public void setWorldZoomable(boolean allowed) {
+		this.zoomable = allowed;
+	}
+
+
+	public boolean getWorldZoomable() {
+		return this.zoomable;
+	}
+
+	/**
+	 * Skeleton method for activating a trap tile.
+	 *
+	 * @param tile the tile of the trap tile.
+	 */
+	public void activateTrapTile(Tile tile){
+
+	}
+
+
+	/**
+	 * Skeleton method for activating a reward tile.
+	 *
+	 * @param tile the tile of the trap tile.
+	 */
+	public void activateRewardTile(Tile tile){
+
 	}
 
 	/**
