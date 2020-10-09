@@ -74,7 +74,6 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         wizardSkills = new ArrayList<>();
         getPlayerSkills();
         activeWizardSkill = 0;
-        setDamage(1000);
 
         // Animation Testing
         facingDirection = MovementTask.Direction.RIGHT;
