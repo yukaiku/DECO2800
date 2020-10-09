@@ -1,8 +1,5 @@
 package deco2800.thomas.entities;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 /**
  * Contains the current and maximum health value for a given character
  * (player, enemy or NPC) as well as methods for tracking and controlling the
