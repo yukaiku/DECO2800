@@ -21,6 +21,8 @@ import deco2800.thomas.renderers.CharacterInfo;
 import deco2800.thomas.renderers.EffectRenderer;
 
 public class CharactersScreen implements Screen {
+    private static final String WATER = "water";
+    private static final String FIRE = "fire";
     static float width = 1920;
     static float height = 1000;
     final ThomasGame game;
@@ -40,10 +42,10 @@ public class CharactersScreen implements Screen {
     Image background = new Image(GameManager.get().getManager(TextureManager.class).getTexture("fire-water"));
 
     // Buttons
-    Button fireButton = new TextButton("SELECT", GameManager.get().getSkin(), "fire");
-    Button fireInfoButton = new TextButton("MORE INFO...", GameManager.get().getSkin(), "fire");
-    Button waterButton = new TextButton("SELECT", GameManager.get().getSkin(), "water");
-    Button waterInfoButton = new TextButton("MORE INFO...", GameManager.get().getSkin(), "water");
+    Button fireButton = new TextButton("SELECT", GameManager.get().getSkin(), FIRE);
+    Button fireInfoButton = new TextButton("MORE INFO...", GameManager.get().getSkin(), FIRE);
+    Button waterButton = new TextButton("SELECT", GameManager.get().getSkin(), WATER);
+    Button waterInfoButton = new TextButton("MORE INFO...", GameManager.get().getSkin(), WATER);
     Button backButton = new TextButton("BACK", GameManager.get().getSkin(), "in_game");
 
 
@@ -88,10 +90,10 @@ public class CharactersScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 showSkillsInfo = true;
                 characterInfo.setTexture("fire-team");
-                effectRenderer.setEffect("fire");
+                effectRenderer.setEffect(FIRE);
                 effectRenderer.loadParticleFile();
                 Skin skin = GameManager.get().getSkin();
-                backButton.setStyle(skin.get("fire", TextButton.TextButtonStyle.class));
+                backButton.setStyle(skin.get(FIRE, TextButton.TextButtonStyle.class));
             }
         });
 
@@ -120,10 +122,10 @@ public class CharactersScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 showSkillsInfo = true;
                 characterInfo.setTexture("water-team");
-                effectRenderer.setEffect("water");
+                effectRenderer.setEffect(WATER);
                 effectRenderer.loadParticleFile();
                 Skin skin = GameManager.get().getSkin();
-                backButton.setStyle(skin.get("water", TextButton.TextButtonStyle.class));
+                backButton.setStyle(skin.get(WATER, TextButton.TextButtonStyle.class));
             }
         });
 

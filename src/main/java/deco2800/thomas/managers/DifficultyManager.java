@@ -60,7 +60,7 @@ public class DifficultyManager extends TickableManager{
 
     /***
      * Sets the world type
-     * @param type
+     * @param type type of the world to be set
      */
     public void setWorldType(String type){
         this.type = type.toLowerCase();
@@ -73,38 +73,57 @@ public class DifficultyManager extends TickableManager{
     public String getWorldType(){
         return this.type;
     }
+
+    /***
+     * Changes the player max health based on difficulty
+     * @param playerPeon    PlayerEntity
+     */
+    public void playerHealth(PlayerPeon playerPeon, int difficulty) {
+        //Sets the player max health
+        playerPeon.setMaxHealth(25*difficulty);
+        playerMaxHealth = playerPeon.getMaxHealth();
+        if(playerPeon.getCurrentHealth() > playerMaxHealth){
+            //Sets max health based off number of orbs starting from 25 to 100
+            playerPeon.setCurrentHealthValue(playerMaxHealth);
+        }
+    }
+
     /***
      * Sets the difficulty of the game based off the current world
      */
     public void setDifficultyLevel(String type) {
         enemyManager = GameManager.getManagerFromInstance(EnemyManager.class);
+
         if(!getWorldType().equals(type)){
             setWorldType(type);
             int wildEnemyCap = enemyManager.getWildEnemyCap();
             String orcType = getWorldType()+"Orc";
+
             //Set Wild Enemy Cap
-            enemyManager.setWildEnemyCap(wildEnemyCap*getDifficultyLevel());
+            enemyManager.setWildEnemyCap(wildEnemyCap+getDifficultyLevel());
+
             //Set Wild Enemy Health
             setWildSpawnMaxHealth(enemyManager.getEnemyConfig(orcType).getMaxHealth() /(5-getDifficultyLevel()));
-            //Sets the player max health
-            playerPeon.setMaxHealth((100/4)*(getDifficultyLevel()));
-            playerMaxHealth = playerPeon.getMaxHealth();
-            if(playerPeon.getCurrentHealth() > playerMaxHealth){
-                //Sets max health based off number of orbs starting from 25 to 100
-                playerPeon.setCurrentHealthValue(playerMaxHealth);
-            }
         }
 
         switch (getWorldType()) {
             // Difficulty Settings for each world
             //TODO: Update with more difficulty
             case "swamp":
+                playerHealth(playerPeon, 2);
+                enemyManager.getBoss().setMaxHealth(100);
                 break;
             case "tundra":
+                playerHealth(playerPeon, 3);
+                enemyManager.getBoss().setMaxHealth(150);
                 break;
             case "desert":
+                playerHealth(playerPeon, 4);
+                enemyManager.getBoss().setMaxHealth(300);
                 break;
             case "volcano":
+                playerHealth(playerPeon, 5);
+                enemyManager.getBoss().setMaxHealth(750);
                 break;
         }
 
