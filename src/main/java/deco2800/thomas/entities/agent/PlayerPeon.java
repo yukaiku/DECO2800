@@ -74,6 +74,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         wizardSkills = new ArrayList<>();
         getPlayerSkills();
         activeWizardSkill = 0;
+        setDamage(1000);
 
         // Animation Testing
         facingDirection = MovementTask.Direction.RIGHT;
@@ -194,10 +195,6 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
      */
     @Override
     public void onTick(long i) {
-        // Check death condition
-        if (isDead()) {
-            death();
-        }
         if (--duration < 0) {
             duration = 0;
             currentState = State.IDLE;
