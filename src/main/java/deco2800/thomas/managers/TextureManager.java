@@ -188,6 +188,21 @@ public class TextureManager extends AbstractManager {
 			//Inventory Menu
 			textureMap.put("inventory_menu", new Texture("resources/inventory_menu.png"));
 
+            textureMap.put("iconDefault", new Texture("resources/enemies/orc_swamp_icon.png"));
+            textureMap.put("orcSwampIcon", new Texture("resources/enemies/orc_swamp_icon.png"));
+            textureMap.put("orcVolcanoIcon", new Texture("resources/enemies/orc_volcano_icon.png"));
+            textureMap.put("orcTundraIcon", new Texture("resources/enemies/orc_tundra_icon.png"));
+            textureMap.put("orcDesertIcon", new Texture("resources/enemies/orc_desert_icon.png"));
+
+            textureMap.put("goblinSwampIcon", new Texture("resources/enemies/goblin_swamp_icon.png"));
+            textureMap.put("goblinVolcanoIcon", new Texture("resources/enemies/goblin_volcano_icon.png"));
+            textureMap.put("goblinTundraIcon", new Texture("resources/enemies/goblin_tundra_icon.png"));
+            textureMap.put("goblinDesertIcon", new Texture("resources/enemies/goblin_desert_icon.png"));
+
+            textureMap.put("dragonSwampIcon", new Texture("resources/enemies/dragon_swamp_icon.png"));
+            textureMap.put("dragonVolcanoIcon", new Texture("resources/enemies/dragon_volcano_icon.png"));
+            textureMap.put("dragonTundraIcon", new Texture("resources/enemies/dragon_tundra_icon.png"));
+            textureMap.put("dragonDesertIcon", new Texture("resources/enemies/dragon_desert_icon.png"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -341,8 +356,6 @@ public class TextureManager extends AbstractManager {
     }
 
 	private void addMinimapIcons() {
-		textureMap.put("iconDefault", new Texture("resources/enemies/orc_volcano_icon.png"));
-
 	}
 
 	/* ------------------------------------------------------------------------
