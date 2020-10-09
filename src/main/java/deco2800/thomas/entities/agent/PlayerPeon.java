@@ -317,7 +317,8 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
                 keycode == Input.Keys.A || keycode == Input.Keys.D) {
             this.startMovementTask(keycode);
         } else if (keycode == Input.Keys.NUM_1 || keycode == Input.Keys.NUM_2 ||
-                keycode == Input.Keys.NUM_3 || keycode == Input.Keys.NUM_4) {
+                keycode == Input.Keys.NUM_3 || keycode == Input.Keys.NUM_4 ||
+                keycode == Input.Keys.NUM_5) {
             this.swapSkill(keycode);
         }
     }

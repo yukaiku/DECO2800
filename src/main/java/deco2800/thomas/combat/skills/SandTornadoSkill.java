@@ -32,7 +32,7 @@ public class SandTornadoSkill extends AbstractSkill {
 
     @Override
     public String getTexture() {
-        return null;
+        return "sandTornadoIcon";
     }
 
     @Override

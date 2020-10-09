@@ -334,7 +334,10 @@ public class TextureManager extends AbstractManager {
         textureMap.put("stingIcon", new Texture("resources/combat/fireball_left.png"));
         textureMap.put("iceballIcon", new Texture("resources/combat/iceball_small.png"));
         textureMap.put("explosionIcon", new Texture("resources/combat/explosive_fireball3.png"));
-        textureMap.put("watershieldIcon", new Texture("resources/combat/tundra_skill3.png"));
+        textureMap.put("watershieldIcon", new Texture("resources/combat/watershield_icon.png"));
+        textureMap.put("healIcon", new Texture("resources/combat/health_skill_icon.png"));
+        textureMap.put("sandTornadoIcon", new Texture("resources/combat/desert_skill_icon.png"));
+        textureMap.put("iceBreathIcon", new Texture("resources/combat/ice-wave4.png"));
     }
 
 	private void addMinimapIcons() {
@@ -407,6 +410,11 @@ public class TextureManager extends AbstractManager {
             addAnimationFramesCollection("waterShield", "resources/combat/tundra_skill2.png",
                     "resources/combat/tundra_skill3.png", "resources/combat/tundra_skill4.png",
                     "resources/combat/tundra_skill5.png");
+
+            // Heal effect
+            addAnimationFramesCollection("healEffect", "resources/combat/health_skill1.png",
+                    "resources/combat/health_skill2.png", "resources/combat/health_skill3.png",
+                    "resources/combat/health_skill4.png");
 
             // enemies
             addAnimationFramesCollection("dummyIdle", "resources/enemies/dummy.png");

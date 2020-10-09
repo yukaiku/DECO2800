@@ -71,6 +71,12 @@ public final class PlayerSkills {
                 return new ScorpionStingSkill(parent);
             case ICEBALL:
                 return new IceballSkill(parent, ICEBALL_SLOW_MODIFIER, ICEBALL_SLOW_DURATION);
+            case HEAL:
+                return new HealSkill(parent);
+            case SANDTORNADO:
+                return new SandTornadoSkill(parent);
+            case ICEBREATH:
+                return new IceBreathSkill(parent, ICEBALL_SLOW_MODIFIER, ICEBALL_SLOW_DURATION);
             default:
                 throw new IllegalArgumentException();
         }
