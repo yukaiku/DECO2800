@@ -168,7 +168,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 		Gdx.input.setInputProcessor(multiplexer);
 
 		GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
-//		GameManager.get().getManager(KeyboardManager.class).registerForKeyDown(this);
 
 		// Add listener to the buttons in the pause menu
 		resumeButton.addListener(new ClickListener() {
@@ -341,6 +340,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 			case GAMEOVER:
 			case VICTORY:
 				renderGameResult(delta);
+				break;
 			default:
 				break;
 		}

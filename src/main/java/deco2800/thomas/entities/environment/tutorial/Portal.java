@@ -14,6 +14,5 @@ public class Portal extends StaticEntity implements Tickable {
 
     @Override
     public void onTick(long i) {
-
     }
 }
