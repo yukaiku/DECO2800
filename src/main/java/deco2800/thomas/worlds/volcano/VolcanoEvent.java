@@ -39,6 +39,7 @@ public class VolcanoEvent extends WorldEvent {
                     int textureNumber = random.nextInt(4) + 5;
                     getWorld().getTile(vector).setType("BurnTile");
                     getWorld().getTile(vector).setTexture("Volcano_" + textureNumber);
+                    getWorld().getTile(vector).setStatusEffect(true);
                 }
             }
         }
@@ -58,6 +59,7 @@ public class VolcanoEvent extends WorldEvent {
                     int textureNumber = random.nextInt(4) + 1;
                     getWorld().getTile(vector).setType("Tile");
                     getWorld().getTile(vector).setTexture("Volcano_" + textureNumber);
+                    getWorld().getTile(vector).setStatusEffect(false);
                 }
             }
         }

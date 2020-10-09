@@ -12,12 +12,11 @@ public class Target extends StaticEntity implements Tickable {
     }
 
     public Target(Tile tile, boolean obstructed) {
-        super(tile, RenderConstants.TARGET_RENDER, "target", obstructed);
+        super(tile, RenderConstants.TARGET_RENDER, ENTITY_ID_STRING, obstructed);
         this.setObjectName(ENTITY_ID_STRING);
     }
 
     @Override
     public void onTick(long i) {
-
     }
 }

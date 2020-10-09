@@ -1,0 +1,2695 @@
+{
+    "entities": [
+
+    ],
+    "tiles": [
+        {
+            "tileID": 0,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 13,
+            "rowPos": 6.0,
+            "colPos": -12.0
+        },
+        {
+            "tileID": 1,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 12,
+            "rowPos": 6.0,
+            "colPos": -11.0
+        },
+        {
+            "tileID": 2,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 11,
+            "rowPos": 6.0,
+            "colPos": -10.0
+        },
+        {
+            "tileID": 3,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 10,
+            "rowPos": 6.0,
+            "colPos": -9.0
+        },
+        {
+            "tileID": 4,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 9,
+            "rowPos": 6.0,
+            "colPos": -8.0
+        },
+        {
+            "tileID": 5,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 8,
+            "rowPos": 6.0,
+            "colPos": -7.0
+        },
+        {
+            "tileID": 6,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 7,
+            "rowPos": 6.0,
+            "colPos": -6.0
+        },
+        {
+            "tileID": 7,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 6,
+            "rowPos": 6.0,
+            "colPos": -5.0
+        },
+        {
+            "tileID": 8,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 5,
+            "rowPos": 6.0,
+            "colPos": -4.0
+        },
+        {
+            "tileID": 9,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 4,
+            "rowPos": 6.0,
+            "colPos": -3.0
+        },
+        {
+            "tileID": 10,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 3,
+            "rowPos": 6.0,
+            "colPos": -2.0
+        },
+        {
+            "tileID": 11,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 2,
+            "rowPos": 6.0,
+            "colPos": -1.0
+        },
+        {
+            "tileID": 12,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 1,
+            "rowPos": 6.0,
+            "colPos": 0.0
+        },
+        {
+            "tileID": 13,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 0,
+            "rowPos": 6.0,
+            "colPos": 1.0
+        },
+        {
+            "tileID": 14,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -1,
+            "rowPos": 6.0,
+            "colPos": 2.0
+        },
+        {
+            "tileID": 15,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -2,
+            "rowPos": 6.0,
+            "colPos": 3.0
+        },
+        {
+            "tileID": 16,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -3,
+            "rowPos": 6.0,
+            "colPos": 4.0
+        },
+        {
+            "tileID": 17,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -4,
+            "rowPos": 6.0,
+            "colPos": 5.0
+        },
+        {
+            "tileID": 18,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -5,
+            "rowPos": 6.0,
+            "colPos": 6.0
+        },
+        {
+            "tileID": 19,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -6,
+            "rowPos": 6.0,
+            "colPos": 7.0
+        },
+        {
+            "tileID": 20,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -7,
+            "rowPos": 6.0,
+            "colPos": 8.0
+        },
+        {
+            "tileID": 21,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -8,
+            "rowPos": 6.0,
+            "colPos": 9.0
+        },
+        {
+            "tileID": 22,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -9,
+            "rowPos": 6.0,
+            "colPos": 10.0
+        },
+        {
+            "tileID": 23,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -10,
+            "rowPos": 6.0,
+            "colPos": 11.0
+        },
+        {
+            "tileID": 24,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 13,
+            "rowPos": 5.0,
+            "colPos": -12.0
+        },
+        {
+            "tileID": 25,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 12,
+            "rowPos": 5.0,
+            "colPos": -11.0
+        },
+        {
+            "tileID": 26,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 11,
+            "rowPos": 5.0,
+            "colPos": -10.0
+        },
+        {
+            "tileID": 27,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 10,
+            "rowPos": 5.0,
+            "colPos": -9.0
+        },
+        {
+            "tileID": 28,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 9,
+            "rowPos": 5.0,
+            "colPos": -8.0
+        },
+        {
+            "tileID": 29,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 8,
+            "rowPos": 5.0,
+            "colPos": -7.0
+        },
+        {
+            "tileID": 30,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 7,
+            "rowPos": 5.0,
+            "colPos": -6.0
+        },
+        {
+            "tileID": 31,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 6,
+            "rowPos": 5.0,
+            "colPos": -5.0
+        },
+        {
+            "tileID": 32,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 5,
+            "rowPos": 5.0,
+            "colPos": -4.0
+        },
+        {
+            "tileID": 33,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 4,
+            "rowPos": 5.0,
+            "colPos": -3.0
+        },
+        {
+            "tileID": 34,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 3,
+            "rowPos": 5.0,
+            "colPos": -2.0
+        },
+        {
+            "tileID": 35,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 2,
+            "rowPos": 5.0,
+            "colPos": -1.0
+        },
+        {
+            "tileID": 36,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 1,
+            "rowPos": 5.0,
+            "colPos": 0.0
+        },
+        {
+            "tileID": 37,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 0,
+            "rowPos": 5.0,
+            "colPos": 1.0
+        },
+        {
+            "tileID": 38,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -1,
+            "rowPos": 5.0,
+            "colPos": 2.0
+        },
+        {
+            "tileID": 39,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -2,
+            "rowPos": 5.0,
+            "colPos": 3.0
+        },
+        {
+            "tileID": 40,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -3,
+            "rowPos": 5.0,
+            "colPos": 4.0
+        },
+        {
+            "tileID": 41,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": -4,
+            "rowPos": 5.0,
+            "colPos": 5.0
+        },
+        {
+            "tileID": 42,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -5,
+            "rowPos": 5.0,
+            "colPos": 6.0
+        },
+        {
+            "tileID": 43,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -6,
+            "rowPos": 5.0,
+            "colPos": 7.0
+        },
+        {
+            "tileID": 44,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -7,
+            "rowPos": 5.0,
+            "colPos": 8.0
+        },
+        {
+            "tileID": 45,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -8,
+            "rowPos": 5.0,
+            "colPos": 9.0
+        },
+        {
+            "tileID": 46,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -9,
+            "rowPos": 5.0,
+            "colPos": 10.0
+        },
+        {
+            "tileID": 47,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -10,
+            "rowPos": 5.0,
+            "colPos": 11.0
+        },
+        {
+            "tileID": 48,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 13,
+            "rowPos": 4.0,
+            "colPos": -12.0
+        },
+        {
+            "tileID": 49,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 12,
+            "rowPos": 4.0,
+            "colPos": -11.0
+        },
+        {
+            "tileID": 50,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 11,
+            "rowPos": 4.0,
+            "colPos": -10.0
+        },
+        {
+            "tileID": 51,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 10,
+            "rowPos": 4.0,
+            "colPos": -9.0
+        },
+        {
+            "tileID": 52,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 9,
+            "rowPos": 4.0,
+            "colPos": -8.0
+        },
+        {
+            "tileID": 53,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 8,
+            "rowPos": 4.0,
+            "colPos": -7.0
+        },
+        {
+            "tileID": 54,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 7,
+            "rowPos": 4.0,
+            "colPos": -6.0
+        },
+        {
+            "tileID": 55,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 6,
+            "rowPos": 4.0,
+            "colPos": -5.0
+        },
+        {
+            "tileID": 56,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 5,
+            "rowPos": 4.0,
+            "colPos": -4.0
+        },
+        {
+            "tileID": 57,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 4,
+            "rowPos": 4.0,
+            "colPos": -3.0
+        },
+        {
+            "tileID": 58,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 3,
+            "rowPos": 4.0,
+            "colPos": -2.0
+        },
+        {
+            "tileID": 59,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 2,
+            "rowPos": 4.0,
+            "colPos": -1.0
+        },
+        {
+            "tileID": 60,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 1,
+            "rowPos": 4.0,
+            "colPos": 0.0
+        },
+        {
+            "tileID": 61,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 0,
+            "rowPos": 4.0,
+            "colPos": 1.0
+        },
+        {
+            "tileID": 62,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -1,
+            "rowPos": 4.0,
+            "colPos": 2.0
+        },
+        {
+            "tileID": 63,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -2,
+            "rowPos": 4.0,
+            "colPos": 3.0
+        },
+        {
+            "tileID": 64,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -3,
+            "rowPos": 4.0,
+            "colPos": 4.0
+        },
+        {
+            "tileID": 65,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -4,
+            "rowPos": 4.0,
+            "colPos": 5.0
+        },
+        {
+            "tileID": 66,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -5,
+            "rowPos": 4.0,
+            "colPos": 6.0
+        },
+        {
+            "tileID": 67,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -6,
+            "rowPos": 4.0,
+            "colPos": 7.0
+        },
+        {
+            "tileID": 68,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -7,
+            "rowPos": 4.0,
+            "colPos": 8.0
+        },
+        {
+            "tileID": 69,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -8,
+            "rowPos": 4.0,
+            "colPos": 9.0
+        },
+        {
+            "tileID": 70,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": -9,
+            "rowPos": 4.0,
+            "colPos": 10.0
+        },
+        {
+            "tileID": 71,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -10,
+            "rowPos": 4.0,
+            "colPos": 11.0
+        },
+        {
+            "tileID": 72,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 13,
+            "rowPos": 3.0,
+            "colPos": -12.0
+        },
+        {
+            "tileID": 73,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 12,
+            "rowPos": 3.0,
+            "colPos": -11.0
+        },
+        {
+            "tileID": 74,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 11,
+            "rowPos": 3.0,
+            "colPos": -10.0
+        },
+        {
+            "tileID": 75,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 10,
+            "rowPos": 3.0,
+            "colPos": -9.0
+        },
+        {
+            "tileID": 76,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 9,
+            "rowPos": 3.0,
+            "colPos": -8.0
+        },
+        {
+            "tileID": 77,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 8,
+            "rowPos": 3.0,
+            "colPos": -7.0
+        },
+        {
+            "tileID": 78,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 7,
+            "rowPos": 3.0,
+            "colPos": -6.0
+        },
+        {
+            "tileID": 79,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 6,
+            "rowPos": 3.0,
+            "colPos": -5.0
+        },
+        {
+            "tileID": 80,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 5,
+            "rowPos": 3.0,
+            "colPos": -4.0
+        },
+        {
+            "tileID": 81,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 4,
+            "rowPos": 3.0,
+            "colPos": -3.0
+        },
+        {
+            "tileID": 82,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 3,
+            "rowPos": 3.0,
+            "colPos": -2.0
+        },
+        {
+            "tileID": 83,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 2,
+            "rowPos": 3.0,
+            "colPos": -1.0
+        },
+        {
+            "tileID": 84,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 1,
+            "rowPos": 3.0,
+            "colPos": 0.0
+        },
+        {
+            "tileID": 85,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 0,
+            "rowPos": 3.0,
+            "colPos": 1.0
+        },
+        {
+            "tileID": 86,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -1,
+            "rowPos": 3.0,
+            "colPos": 2.0
+        },
+        {
+            "tileID": 87,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -2,
+            "rowPos": 3.0,
+            "colPos": 3.0
+        },
+        {
+            "tileID": 88,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -3,
+            "rowPos": 3.0,
+            "colPos": 4.0
+        },
+        {
+            "tileID": 89,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -4,
+            "rowPos": 3.0,
+            "colPos": 5.0
+        },
+        {
+            "tileID": 90,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -5,
+            "rowPos": 3.0,
+            "colPos": 6.0
+        },
+        {
+            "tileID": 91,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -6,
+            "rowPos": 3.0,
+            "colPos": 7.0
+        },
+        {
+            "tileID": 92,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -7,
+            "rowPos": 3.0,
+            "colPos": 8.0
+        },
+        {
+            "tileID": 93,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -8,
+            "rowPos": 3.0,
+            "colPos": 9.0
+        },
+        {
+            "tileID": 94,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -9,
+            "rowPos": 3.0,
+            "colPos": 10.0
+        },
+        {
+            "tileID": 95,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -10,
+            "rowPos": 3.0,
+            "colPos": 11.0
+        },
+        {
+            "tileID": 96,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 13,
+            "rowPos": 2.0,
+            "colPos": -12.0
+        },
+        {
+            "tileID": 97,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 12,
+            "rowPos": 2.0,
+            "colPos": -11.0
+        },
+        {
+            "tileID": 98,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 11,
+            "rowPos": 2.0,
+            "colPos": -10.0
+        },
+        {
+            "tileID": 99,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 10,
+            "rowPos": 2.0,
+            "colPos": -9.0
+        },
+        {
+            "tileID": 100,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 9,
+            "rowPos": 2.0,
+            "colPos": -8.0
+        },
+        {
+            "tileID": 101,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 8,
+            "rowPos": 2.0,
+            "colPos": -7.0
+        },
+        {
+            "tileID": 102,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 7,
+            "rowPos": 2.0,
+            "colPos": -6.0
+        },
+        {
+            "tileID": 103,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 6,
+            "rowPos": 2.0,
+            "colPos": -5.0
+        },
+        {
+            "tileID": 104,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 5,
+            "rowPos": 2.0,
+            "colPos": -4.0
+        },
+        {
+            "tileID": 105,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 4,
+            "rowPos": 2.0,
+            "colPos": -3.0
+        },
+        {
+            "tileID": 106,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 3,
+            "rowPos": 2.0,
+            "colPos": -2.0
+        },
+        {
+            "tileID": 107,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 2,
+            "rowPos": 2.0,
+            "colPos": -1.0
+        },
+        {
+            "tileID": 108,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 1,
+            "rowPos": 2.0,
+            "colPos": 0.0
+        },
+        {
+            "tileID": 109,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 0,
+            "rowPos": 2.0,
+            "colPos": 1.0
+        },
+        {
+            "tileID": 110,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -1,
+            "rowPos": 2.0,
+            "colPos": 2.0
+        },
+        {
+            "tileID": 111,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -2,
+            "rowPos": 2.0,
+            "colPos": 3.0
+        },
+        {
+            "tileID": 112,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -3,
+            "rowPos": 2.0,
+            "colPos": 4.0
+        },
+        {
+            "tileID": 113,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -4,
+            "rowPos": 2.0,
+            "colPos": 5.0
+        },
+        {
+            "tileID": 114,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -5,
+            "rowPos": 2.0,
+            "colPos": 6.0
+        },
+        {
+            "tileID": 115,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -6,
+            "rowPos": 2.0,
+            "colPos": 7.0
+        },
+        {
+            "tileID": 116,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": -7,
+            "rowPos": 2.0,
+            "colPos": 8.0
+        },
+        {
+            "tileID": 117,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -8,
+            "rowPos": 2.0,
+            "colPos": 9.0
+        },
+        {
+            "tileID": 118,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": -9,
+            "rowPos": 2.0,
+            "colPos": 10.0
+        },
+        {
+            "tileID": 119,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -10,
+            "rowPos": 2.0,
+            "colPos": 11.0
+        },
+        {
+            "tileID": 120,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 13,
+            "rowPos": 1.0,
+            "colPos": -12.0
+        },
+        {
+            "tileID": 121,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 12,
+            "rowPos": 1.0,
+            "colPos": -11.0
+        },
+        {
+            "tileID": 122,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 11,
+            "rowPos": 1.0,
+            "colPos": -10.0
+        },
+        {
+            "tileID": 123,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 10,
+            "rowPos": 1.0,
+            "colPos": -9.0
+        },
+        {
+            "tileID": 124,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 9,
+            "rowPos": 1.0,
+            "colPos": -8.0
+        },
+        {
+            "tileID": 125,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 8,
+            "rowPos": 1.0,
+            "colPos": -7.0
+        },
+        {
+            "tileID": 126,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 7,
+            "rowPos": 1.0,
+            "colPos": -6.0
+        },
+        {
+            "tileID": 127,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 6,
+            "rowPos": 1.0,
+            "colPos": -5.0
+        },
+        {
+            "tileID": 128,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 5,
+            "rowPos": 1.0,
+            "colPos": -4.0
+        },
+        {
+            "tileID": 129,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 4,
+            "rowPos": 1.0,
+            "colPos": -3.0
+        },
+        {
+            "tileID": 130,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 3,
+            "rowPos": 1.0,
+            "colPos": -2.0
+        },
+        {
+            "tileID": 131,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 2,
+            "rowPos": 1.0,
+            "colPos": -1.0
+        },
+        {
+            "tileID": 132,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 1,
+            "rowPos": 1.0,
+            "colPos": 0.0
+        },
+        {
+            "tileID": 133,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 0,
+            "rowPos": 1.0,
+            "colPos": 1.0
+        },
+        {
+            "tileID": 134,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -1,
+            "rowPos": 1.0,
+            "colPos": 2.0
+        },
+        {
+            "tileID": 135,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -2,
+            "rowPos": 1.0,
+            "colPos": 3.0
+        },
+        {
+            "tileID": 136,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -3,
+            "rowPos": 1.0,
+            "colPos": 4.0
+        },
+        {
+            "tileID": 137,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -4,
+            "rowPos": 1.0,
+            "colPos": 5.0
+        },
+        {
+            "tileID": 138,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -5,
+            "rowPos": 1.0,
+            "colPos": 6.0
+        },
+        {
+            "tileID": 139,
+            "texture": "dungeon-yellow",
+            "obstructed": false,
+            "index": -6,
+            "rowPos": 1.0,
+            "colPos": 7.0
+        },
+        {
+            "tileID": 140,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": -7,
+            "rowPos": 1.0,
+            "colPos": 8.0
+        },
+        {
+            "tileID": 141,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": -8,
+            "rowPos": 1.0,
+            "colPos": 9.0
+        },
+        {
+            "tileID": 142,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -9,
+            "rowPos": 1.0,
+            "colPos": 10.0
+        },
+        {
+            "tileID": 143,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -10,
+            "rowPos": 1.0,
+            "colPos": 11.0
+        },
+        {
+            "tileID": 144,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 13,
+            "rowPos": 0.0,
+            "colPos": -12.0
+        },
+        {
+            "tileID": 145,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 12,
+            "rowPos": 0.0,
+            "colPos": -11.0
+        },
+        {
+            "tileID": 146,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 11,
+            "rowPos": 0.0,
+            "colPos": -10.0
+        },
+        {
+            "tileID": 147,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 10,
+            "rowPos": 0.0,
+            "colPos": -9.0
+        },
+        {
+            "tileID": 148,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 9,
+            "rowPos": 0.0,
+            "colPos": -8.0
+        },
+        {
+            "tileID": 149,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 8,
+            "rowPos": 0.0,
+            "colPos": -7.0
+        },
+        {
+            "tileID": 150,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 7,
+            "rowPos": 0.0,
+            "colPos": -6.0
+        },
+        {
+            "tileID": 151,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 6,
+            "rowPos": 0.0,
+            "colPos": -5.0
+        },
+        {
+            "tileID": 152,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 5,
+            "rowPos": 0.0,
+            "colPos": -4.0
+        },
+        {
+            "tileID": 153,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 4,
+            "rowPos": 0.0,
+            "colPos": -3.0
+        },
+        {
+            "tileID": 154,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 3,
+            "rowPos": 0.0,
+            "colPos": -2.0
+        },
+        {
+            "tileID": 155,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 2,
+            "rowPos": 0.0,
+            "colPos": -1.0
+        },
+        {
+            "tileID": 156,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 1,
+            "rowPos": 0.0,
+            "colPos": 0.0
+        },
+        {
+            "tileID": 157,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 0,
+            "rowPos": 0.0,
+            "colPos": 1.0
+        },
+        {
+            "tileID": 158,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -1,
+            "rowPos": 0.0,
+            "colPos": 2.0
+        },
+        {
+            "tileID": 159,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -2,
+            "rowPos": 0.0,
+            "colPos": 3.0
+        },
+        {
+            "tileID": 160,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -3,
+            "rowPos": 0.0,
+            "colPos": 4.0
+        },
+        {
+            "tileID": 161,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -4,
+            "rowPos": 0.0,
+            "colPos": 5.0
+        },
+        {
+            "tileID": 162,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -5,
+            "rowPos": 0.0,
+            "colPos": 6.0
+        },
+        {
+            "tileID": 163,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -6,
+            "rowPos": 0.0,
+            "colPos": 7.0
+        },
+        {
+            "tileID": 164,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -7,
+            "rowPos": 0.0,
+            "colPos": 8.0
+        },
+        {
+            "tileID": 165,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -8,
+            "rowPos": 0.0,
+            "colPos": 9.0
+        },
+        {
+            "tileID": 166,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -9,
+            "rowPos": 0.0,
+            "colPos": 10.0
+        },
+        {
+            "tileID": 167,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -10,
+            "rowPos": 0.0,
+            "colPos": 11.0
+        },
+        {
+            "tileID": 168,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 13,
+            "rowPos": -1.0,
+            "colPos": -12.0
+        },
+        {
+            "tileID": 169,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 12,
+            "rowPos": -1.0,
+            "colPos": -11.0
+        },
+        {
+            "tileID": 170,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 11,
+            "rowPos": -1.0,
+            "colPos": -10.0
+        },
+        {
+            "tileID": 171,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 10,
+            "rowPos": -1.0,
+            "colPos": -9.0
+        },
+        {
+            "tileID": 172,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 9,
+            "rowPos": -1.0,
+            "colPos": -8.0
+        },
+        {
+            "tileID": 173,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 8,
+            "rowPos": -1.0,
+            "colPos": -7.0
+        },
+        {
+            "tileID": 174,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 7,
+            "rowPos": -1.0,
+            "colPos": -6.0
+        },
+        {
+            "tileID": 175,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 6,
+            "rowPos": -1.0,
+            "colPos": -5.0
+        },
+        {
+            "tileID": 176,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 5,
+            "rowPos": -1.0,
+            "colPos": -4.0
+        },
+        {
+            "tileID": 177,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 4,
+            "rowPos": -1.0,
+            "colPos": -3.0
+        },
+        {
+            "tileID": 178,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 3,
+            "rowPos": -1.0,
+            "colPos": -2.0
+        },
+        {
+            "tileID": 179,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 2,
+            "rowPos": -1.0,
+            "colPos": -1.0
+        },
+        {
+            "tileID": 180,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 1,
+            "rowPos": -1.0,
+            "colPos": 0.0
+        },
+        {
+            "tileID": 181,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 0,
+            "rowPos": -1.0,
+            "colPos": 1.0
+        },
+        {
+            "tileID": 182,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -1,
+            "rowPos": -1.0,
+            "colPos": 2.0
+        },
+        {
+            "tileID": 183,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -2,
+            "rowPos": -1.0,
+            "colPos": 3.0
+        },
+        {
+            "tileID": 184,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -3,
+            "rowPos": -1.0,
+            "colPos": 4.0
+        },
+        {
+            "tileID": 185,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -4,
+            "rowPos": -1.0,
+            "colPos": 5.0
+        },
+        {
+            "tileID": 186,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -5,
+            "rowPos": -1.0,
+            "colPos": 6.0
+        },
+        {
+            "tileID": 187,
+            "texture": "dungeon-yellow",
+            "obstructed": false,
+            "index": -6,
+            "rowPos": -1.0,
+            "colPos": 7.0
+        },
+        {
+            "tileID": 188,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -7,
+            "rowPos": -1.0,
+            "colPos": 8.0
+        },
+        {
+            "tileID": 189,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -8,
+            "rowPos": -1.0,
+            "colPos": 9.0
+        },
+        {
+            "tileID": 190,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -9,
+            "rowPos": -1.0,
+            "colPos": 10.0
+        },
+        {
+            "tileID": 191,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -10,
+            "rowPos": -1.0,
+            "colPos": 11.0
+        },
+        {
+            "tileID": 192,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 13,
+            "rowPos": -2.0,
+            "colPos": -12.0
+        },
+        {
+            "tileID": 193,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 12,
+            "rowPos": -2.0,
+            "colPos": -11.0
+        },
+        {
+            "tileID": 194,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 11,
+            "rowPos": -2.0,
+            "colPos": -10.0
+        },
+        {
+            "tileID": 195,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 10,
+            "rowPos": -2.0,
+            "colPos": -9.0
+        },
+        {
+            "tileID": 196,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 9,
+            "rowPos": -2.0,
+            "colPos": -8.0
+        },
+        {
+            "tileID": 197,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 8,
+            "rowPos": -2.0,
+            "colPos": -7.0
+        },
+        {
+            "tileID": 198,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 7,
+            "rowPos": -2.0,
+            "colPos": -6.0
+        },
+        {
+            "tileID": 199,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 6,
+            "rowPos": -2.0,
+            "colPos": -5.0
+        },
+        {
+            "tileID": 200,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 5,
+            "rowPos": -2.0,
+            "colPos": -4.0
+        },
+        {
+            "tileID": 201,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 4,
+            "rowPos": -2.0,
+            "colPos": -3.0
+        },
+        {
+            "tileID": 202,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 3,
+            "rowPos": -2.0,
+            "colPos": -2.0
+        },
+        {
+            "tileID": 203,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 2,
+            "rowPos": -2.0,
+            "colPos": -1.0
+        },
+        {
+            "tileID": 204,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 1,
+            "rowPos": -2.0,
+            "colPos": 0.0
+        },
+        {
+            "tileID": 205,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 0,
+            "rowPos": -2.0,
+            "colPos": 1.0
+        },
+        {
+            "tileID": 206,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -1,
+            "rowPos": -2.0,
+            "colPos": 2.0
+        },
+        {
+            "tileID": 207,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -2,
+            "rowPos": -2.0,
+            "colPos": 3.0
+        },
+        {
+            "tileID": 208,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -3,
+            "rowPos": -2.0,
+            "colPos": 4.0
+        },
+        {
+            "tileID": 209,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -4,
+            "rowPos": -2.0,
+            "colPos": 5.0
+        },
+        {
+            "tileID": 210,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -5,
+            "rowPos": -2.0,
+            "colPos": 6.0
+        },
+        {
+            "tileID": 211,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -6,
+            "rowPos": -2.0,
+            "colPos": 7.0
+        },
+        {
+            "tileID": 212,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -7,
+            "rowPos": -2.0,
+            "colPos": 8.0
+        },
+        {
+            "tileID": 213,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -8,
+            "rowPos": -2.0,
+            "colPos": 9.0
+        },
+        {
+            "tileID": 214,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -9,
+            "rowPos": -2.0,
+            "colPos": 10.0
+        },
+        {
+            "tileID": 215,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -10,
+            "rowPos": -2.0,
+            "colPos": 11.0
+        },
+        {
+            "tileID": 216,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 13,
+            "rowPos": -3.0,
+            "colPos": -12.0
+        },
+        {
+            "tileID": 217,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 12,
+            "rowPos": -3.0,
+            "colPos": -11.0
+        },
+        {
+            "tileID": 218,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 11,
+            "rowPos": -3.0,
+            "colPos": -10.0
+        },
+        {
+            "tileID": 219,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 10,
+            "rowPos": -3.0,
+            "colPos": -9.0
+        },
+        {
+            "tileID": 220,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 9,
+            "rowPos": -3.0,
+            "colPos": -8.0
+        },
+        {
+            "tileID": 221,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 8,
+            "rowPos": -3.0,
+            "colPos": -7.0
+        },
+        {
+            "tileID": 222,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 7,
+            "rowPos": -3.0,
+            "colPos": -6.0
+        },
+        {
+            "tileID": 223,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 6,
+            "rowPos": -3.0,
+            "colPos": -5.0
+        },
+        {
+            "tileID": 224,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 5,
+            "rowPos": -3.0,
+            "colPos": -4.0
+        },
+        {
+            "tileID": 225,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 4,
+            "rowPos": -3.0,
+            "colPos": -3.0
+        },
+        {
+            "tileID": 226,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 3,
+            "rowPos": -3.0,
+            "colPos": -2.0
+        },
+        {
+            "tileID": 227,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 2,
+            "rowPos": -3.0,
+            "colPos": -1.0
+        },
+        {
+            "tileID": 228,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 1,
+            "rowPos": -3.0,
+            "colPos": 0.0
+        },
+        {
+            "tileID": 229,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 0,
+            "rowPos": -3.0,
+            "colPos": 1.0
+        },
+        {
+            "tileID": 230,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -1,
+            "rowPos": -3.0,
+            "colPos": 2.0
+        },
+        {
+            "tileID": 231,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -2,
+            "rowPos": -3.0,
+            "colPos": 3.0
+        },
+        {
+            "tileID": 232,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -3,
+            "rowPos": -3.0,
+            "colPos": 4.0
+        },
+        {
+            "tileID": 233,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -4,
+            "rowPos": -3.0,
+            "colPos": 5.0
+        },
+        {
+            "tileID": 234,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -5,
+            "rowPos": -3.0,
+            "colPos": 6.0
+        },
+        {
+            "tileID": 235,
+            "texture": "dungeon-yellow",
+            "obstructed": false,
+            "index": -6,
+            "rowPos": -3.0,
+            "colPos": 7.0
+        },
+        {
+            "tileID": 236,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -7,
+            "rowPos": -3.0,
+            "colPos": 8.0
+        },
+        {
+            "tileID": 237,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -8,
+            "rowPos": -3.0,
+            "colPos": 9.0
+        },
+        {
+            "tileID": 238,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -9,
+            "rowPos": -3.0,
+            "colPos": 10.0
+        },
+        {
+            "tileID": 239,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -10,
+            "rowPos": -3.0,
+            "colPos": 11.0
+        },
+        {
+            "tileID": 240,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 13,
+            "rowPos": -4.0,
+            "colPos": -12.0
+        },
+        {
+            "tileID": 241,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 12,
+            "rowPos": -4.0,
+            "colPos": -11.0
+        },
+        {
+            "tileID": 242,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 11,
+            "rowPos": -4.0,
+            "colPos": -10.0
+        },
+        {
+            "tileID": 243,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 10,
+            "rowPos": -4.0,
+            "colPos": -9.0
+        },
+        {
+            "tileID": 244,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 9,
+            "rowPos": -4.0,
+            "colPos": -8.0
+        },
+        {
+            "tileID": 245,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 8,
+            "rowPos": -4.0,
+            "colPos": -7.0
+        },
+        {
+            "tileID": 246,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 7,
+            "rowPos": -4.0,
+            "colPos": -6.0
+        },
+        {
+            "tileID": 247,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 6,
+            "rowPos": -4.0,
+            "colPos": -5.0
+        },
+        {
+            "tileID": 248,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 5,
+            "rowPos": -4.0,
+            "colPos": -4.0
+        },
+        {
+            "tileID": 249,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 4,
+            "rowPos": -4.0,
+            "colPos": -3.0
+        },
+        {
+            "tileID": 250,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 3,
+            "rowPos": -4.0,
+            "colPos": -2.0
+        },
+        {
+            "tileID": 251,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 2,
+            "rowPos": -4.0,
+            "colPos": -1.0
+        },
+        {
+            "tileID": 252,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 1,
+            "rowPos": -4.0,
+            "colPos": 0.0
+        },
+        {
+            "tileID": 253,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 0,
+            "rowPos": -4.0,
+            "colPos": 1.0
+        },
+        {
+            "tileID": 254,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -1,
+            "rowPos": -4.0,
+            "colPos": 2.0
+        },
+        {
+            "tileID": 255,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -2,
+            "rowPos": -4.0,
+            "colPos": 3.0
+        },
+        {
+            "tileID": 256,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -3,
+            "rowPos": -4.0,
+            "colPos": 4.0
+        },
+        {
+            "tileID": 257,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -4,
+            "rowPos": -4.0,
+            "colPos": 5.0
+        },
+        {
+            "tileID": 258,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -5,
+            "rowPos": -4.0,
+            "colPos": 6.0
+        },
+        {
+            "tileID": 259,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -6,
+            "rowPos": -4.0,
+            "colPos": 7.0
+        },
+        {
+            "tileID": 260,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -7,
+            "rowPos": -4.0,
+            "colPos": 8.0
+        },
+        {
+            "tileID": 261,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": -8,
+            "rowPos": -4.0,
+            "colPos": 9.0
+        },
+        {
+            "tileID": 262,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -9,
+            "rowPos": -4.0,
+            "colPos": 10.0
+        },
+        {
+            "tileID": 263,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -10,
+            "rowPos": -4.0,
+            "colPos": 11.0
+        },
+        {
+            "tileID": 264,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 13,
+            "rowPos": -5.0,
+            "colPos": -12.0
+        },
+        {
+            "tileID": 265,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 12,
+            "rowPos": -5.0,
+            "colPos": -11.0
+        },
+        {
+            "tileID": 266,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 11,
+            "rowPos": -5.0,
+            "colPos": -10.0
+        },
+        {
+            "tileID": 267,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 10,
+            "rowPos": -5.0,
+            "colPos": -9.0
+        },
+        {
+            "tileID": 268,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 9,
+            "rowPos": -5.0,
+            "colPos": -8.0
+        },
+        {
+            "tileID": 269,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 8,
+            "rowPos": -5.0,
+            "colPos": -7.0
+        },
+        {
+            "tileID": 270,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 7,
+            "rowPos": -5.0,
+            "colPos": -6.0
+        },
+        {
+            "tileID": 271,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 6,
+            "rowPos": -5.0,
+            "colPos": -5.0
+        },
+        {
+            "tileID": 272,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 5,
+            "rowPos": -5.0,
+            "colPos": -4.0
+        },
+        {
+            "tileID": 273,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 4,
+            "rowPos": -5.0,
+            "colPos": -3.0
+        },
+        {
+            "tileID": 274,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 3,
+            "rowPos": -5.0,
+            "colPos": -2.0
+        },
+        {
+            "tileID": 275,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 2,
+            "rowPos": -5.0,
+            "colPos": -1.0
+        },
+        {
+            "tileID": 276,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 1,
+            "rowPos": -5.0,
+            "colPos": 0.0
+        },
+        {
+            "tileID": 277,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 0,
+            "rowPos": -5.0,
+            "colPos": 1.0
+        },
+        {
+            "tileID": 278,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -1,
+            "rowPos": -5.0,
+            "colPos": 2.0
+        },
+        {
+            "tileID": 279,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -2,
+            "rowPos": -5.0,
+            "colPos": 3.0
+        },
+        {
+            "tileID": 280,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -3,
+            "rowPos": -5.0,
+            "colPos": 4.0
+        },
+        {
+            "tileID": 281,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -4,
+            "rowPos": -5.0,
+            "colPos": 5.0
+        },
+        {
+            "tileID": 282,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -5,
+            "rowPos": -5.0,
+            "colPos": 6.0
+        },
+        {
+            "tileID": 283,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -6,
+            "rowPos": -5.0,
+            "colPos": 7.0
+        },
+        {
+            "tileID": 284,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -7,
+            "rowPos": -5.0,
+            "colPos": 8.0
+        },
+        {
+            "tileID": 285,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -8,
+            "rowPos": -5.0,
+            "colPos": 9.0
+        },
+        {
+            "tileID": 286,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -9,
+            "rowPos": -5.0,
+            "colPos": 10.0
+        },
+        {
+            "tileID": 287,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -10,
+            "rowPos": -5.0,
+            "colPos": 11.0
+        },
+        {
+            "tileID": 288,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 13,
+            "rowPos": -6.0,
+            "colPos": -12.0
+        },
+        {
+            "tileID": 289,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 12,
+            "rowPos": -6.0,
+            "colPos": -11.0
+        },
+        {
+            "tileID": 290,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 11,
+            "rowPos": -6.0,
+            "colPos": -10.0
+        },
+        {
+            "tileID": 291,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 10,
+            "rowPos": -6.0,
+            "colPos": -9.0
+        },
+        {
+            "tileID": 292,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 9,
+            "rowPos": -6.0,
+            "colPos": -8.0
+        },
+        {
+            "tileID": 293,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 8,
+            "rowPos": -6.0,
+            "colPos": -7.0
+        },
+        {
+            "tileID": 294,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 7,
+            "rowPos": -6.0,
+            "colPos": -6.0
+        },
+        {
+            "tileID": 295,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 6,
+            "rowPos": -6.0,
+            "colPos": -5.0
+        },
+        {
+            "tileID": 296,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 5,
+            "rowPos": -6.0,
+            "colPos": -4.0
+        },
+        {
+            "tileID": 297,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 4,
+            "rowPos": -6.0,
+            "colPos": -3.0
+        },
+        {
+            "tileID": 298,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 3,
+            "rowPos": -6.0,
+            "colPos": -2.0
+        },
+        {
+            "tileID": 299,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 2,
+            "rowPos": -6.0,
+            "colPos": -1.0
+        },
+        {
+            "tileID": 300,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": 1,
+            "rowPos": -6.0,
+            "colPos": 0.0
+        },
+        {
+            "tileID": 301,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 0,
+            "rowPos": -6.0,
+            "colPos": 1.0
+        },
+        {
+            "tileID": 302,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": -1,
+            "rowPos": -6.0,
+            "colPos": 2.0
+        },
+        {
+            "tileID": 303,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": -2,
+            "rowPos": -6.0,
+            "colPos": 3.0
+        },
+        {
+            "tileID": 304,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -3,
+            "rowPos": -6.0,
+            "colPos": 4.0
+        },
+        {
+            "tileID": 305,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": -4,
+            "rowPos": -6.0,
+            "colPos": 5.0
+        },
+        {
+            "tileID": 306,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -5,
+            "rowPos": -6.0,
+            "colPos": 6.0
+        },
+        {
+            "tileID": 307,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -6,
+            "rowPos": -6.0,
+            "colPos": 7.0
+        },
+        {
+            "tileID": 308,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": -7,
+            "rowPos": -6.0,
+            "colPos": 8.0
+        },
+        {
+            "tileID": 309,
+            "texture": "dungeon-black",
+            "obstructed": false,
+            "index": -8,
+            "rowPos": -6.0,
+            "colPos": 9.0
+        },
+        {
+            "tileID": 310,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -9,
+            "rowPos": -6.0,
+            "colPos": 10.0
+        },
+        {
+            "tileID": 311,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -10,
+            "rowPos": -6.0,
+            "colPos": 11.0
+        },
+        {
+            "tileID": 312,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 13,
+            "rowPos": -7.0,
+            "colPos": -12.0
+        },
+        {
+            "tileID": 313,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 12,
+            "rowPos": -7.0,
+            "colPos": -11.0
+        },
+        {
+            "tileID": 314,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 11,
+            "rowPos": -7.0,
+            "colPos": -10.0
+        },
+        {
+            "tileID": 315,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 10,
+            "rowPos": -7.0,
+            "colPos": -9.0
+        },
+        {
+            "tileID": 316,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 9,
+            "rowPos": -7.0,
+            "colPos": -8.0
+        },
+        {
+            "tileID": 317,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 8,
+            "rowPos": -7.0,
+            "colPos": -7.0
+        },
+        {
+            "tileID": 318,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 7,
+            "rowPos": -7.0,
+            "colPos": -6.0
+        },
+        {
+            "tileID": 319,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 6,
+            "rowPos": -7.0,
+            "colPos": -5.0
+        },
+        {
+            "tileID": 320,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": 5,
+            "rowPos": -7.0,
+            "colPos": -4.0
+        },
+        {
+            "tileID": 321,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 4,
+            "rowPos": -7.0,
+            "colPos": -3.0
+        },
+        {
+            "tileID": 322,
+            "texture": "dungeon-grey",
+            "obstructed": false,
+            "index": 3,
+            "rowPos": -7.0,
+            "colPos": -2.0
+        },
+        {
+            "tileID": 323,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 2,
+            "rowPos": -7.0,
+            "colPos": -1.0
+        },
+        {
+            "tileID": 324,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 1,
+            "rowPos": -7.0,
+            "colPos": 0.0
+        },
+        {
+            "tileID": 325,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": 0,
+            "rowPos": -7.0,
+            "colPos": 1.0
+        },
+        {
+            "tileID": 326,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -1,
+            "rowPos": -7.0,
+            "colPos": 2.0
+        },
+        {
+            "tileID": 327,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -2,
+            "rowPos": -7.0,
+            "colPos": 3.0
+        },
+        {
+            "tileID": 328,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -3,
+            "rowPos": -7.0,
+            "colPos": 4.0
+        },
+        {
+            "tileID": 329,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -4,
+            "rowPos": -7.0,
+            "colPos": 5.0
+        },
+        {
+            "tileID": 330,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -5,
+            "rowPos": -7.0,
+            "colPos": 6.0
+        },
+        {
+            "tileID": 331,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -6,
+            "rowPos": -7.0,
+            "colPos": 7.0
+        },
+        {
+            "tileID": 332,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -7,
+            "rowPos": -7.0,
+            "colPos": 8.0
+        },
+        {
+            "tileID": 333,
+            "texture": "dungeon-green",
+            "obstructed": false,
+            "index": -8,
+            "rowPos": -7.0,
+            "colPos": 9.0
+        },
+        {
+            "tileID": 334,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -9,
+            "rowPos": -7.0,
+            "colPos": 10.0
+        },
+        {
+            "tileID": 335,
+            "texture": "dungeon-light-black",
+            "obstructed": false,
+            "index": -10,
+            "rowPos": -7.0,
+            "colPos": 11.0
+        }
+    ]
+}
