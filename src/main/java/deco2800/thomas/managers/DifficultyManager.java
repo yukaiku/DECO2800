@@ -110,19 +110,19 @@ public class DifficultyManager extends TickableManager{
             // Difficulty Settings for each world
             //TODO: Update with more difficulty
             case "swamp":
-                playerHealth(playerPeon, 2);
+                playerHealth(playerPeon, 1);
                 enemyManager.getBoss().setMaxHealth(100);
                 break;
             case "tundra":
-                playerHealth(playerPeon, 3);
+                playerHealth(playerPeon, 2);
                 enemyManager.getBoss().setMaxHealth(150);
                 break;
             case "desert":
-                playerHealth(playerPeon, 4);
+                playerHealth(playerPeon, 3);
                 enemyManager.getBoss().setMaxHealth(300);
                 break;
             case "volcano":
-                playerHealth(playerPeon, 5);
+                playerHealth(playerPeon, 4);
                 enemyManager.getBoss().setMaxHealth(750);
                 break;
         }

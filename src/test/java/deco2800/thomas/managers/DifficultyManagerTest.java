@@ -50,7 +50,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         difficultyManager.setDifficultyLevel("Swamp");
         difficultyManager.setWildSpawnMaxHealth(0);
         assertEquals(0,difficultyManager.getWildSpawnMaxHealth());
-        assertEquals(50,playerPeon.getMaxHealth());
+        assertEquals(25,playerPeon.getMaxHealth());
     }
 
     /***
