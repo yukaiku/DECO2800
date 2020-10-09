@@ -82,6 +82,8 @@ public class MovementTask extends AbstractTask {
 			checkForValidPortal(destination);
 			checkForTileStatus(destination);
 			checkForTeleportTile(destination);
+			checkForTrapTile(destination);
+			checkForRewardTile(destination);
 		}
 
 		if (entity.getPosition().isCloseEnoughToBeTheSame(destination)) {
@@ -114,7 +116,6 @@ public class MovementTask extends AbstractTask {
 				entity.moveTowards(path.get(0).getCoordinates());
 				// This is a bit of a hack.
 				if (entity.getPosition().isCloseEnoughToBeTheSame(path.get(0).getCoordinates())) {
-					checkForValidPortal(path.get(0).getCoordinates());
 					checkForTileStatus(path.get(0).getCoordinates());
 					path.remove(0);
 				}
@@ -235,11 +236,49 @@ public class MovementTask extends AbstractTask {
 		// get the next tile
 		Tile tile = gameManager.getWorld().getTile(position);
 
-		if (tile != null && tile.getType().matches("TeleportToMiddle")) {
+		if (tile != null && tile.isTeleportTile()) {
 			path = null;
-			destination.setCol(0);
-			destination.setRow(0);
-			gameManager.getWorld().getPlayerEntity().setPosition(0, 0, 1);
+
+
+			//Remove Trap Entity HERE
+
+			float newCol = tile.getTeleportCol();
+			float newRow = tile.getTeleportRow();
+
+			destination.setCol(newCol);
+			destination.setRow(newRow);
+			gameManager.getWorld().getPlayerEntity().setPosition(newCol, newRow, 1);
+		}
+	}
+
+	private void checkForTrapTile(SquareVector position) {
+		// get the next tile
+		Tile tile = gameManager.getWorld().getTile(position);
+
+		if (tile != null && tile.isTrapTile() && !tile.getTrapActivated()) {
+
+			//Remove Trap Entity HERE
+			gameManager.getWorld().removeEntity(tile.getParent());
+			tile.setParent(null);
+
+			tile.setTrapActivated(true);
+			gameManager.getWorld().activateTrapTile(tile);
+		}
+	}
+
+	private void checkForRewardTile(SquareVector position) {
+		// get the next tile
+		Tile tile = gameManager.getWorld().getTile(position);
+
+		if (tile != null && tile.isRewardTile() && !tile.getRewardActivated()) {
+
+			//Remove Reward Entity HERE
+			gameManager.getWorld().removeEntity(tile.getParent());
+			tile.setParent(null);
+
+			//Update trap to be triggered & activate outcome
+			tile.setRewardActivated(true);
+			gameManager.getWorld().activateRewardTile(tile);
 		}
 	}
 }

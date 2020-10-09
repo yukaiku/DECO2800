@@ -483,6 +483,25 @@ public abstract class AbstractWorld implements Tickable {
 	}
 
 	/**
+	 * Skeleton method for activating a trap tile.
+	 *
+	 * @param tile the tile of the trap tile.
+	 */
+	public void activateTrapTile(Tile tile){
+
+	}
+
+
+	/**
+	 * Skeleton method for activating a reward tile.
+	 *
+	 * @param tile the tile of the trap tile.
+	 */
+	public void activateRewardTile(Tile tile){
+
+	}
+
+	/**
 	 * Disposes the World, clearing all entities and tiles from memory.
 	 */
 	public void dispose() {
