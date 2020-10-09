@@ -17,6 +17,7 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PlayerManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.CharacterInfo;
+import deco2800.thomas.renderers.EffectRenderer;
 
 public class CharactersScreen implements Screen {
     static float width = 1920;
@@ -24,6 +25,8 @@ public class CharactersScreen implements Screen {
     final ThomasGame game;
     private Stage stage;
     private boolean showSkillsInfo = false;
+
+    EffectRenderer effectRenderer = new EffectRenderer();
 
     // Character info modal
     CharacterInfo characterInfo = new CharacterInfo();
@@ -83,6 +86,10 @@ public class CharactersScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 showSkillsInfo = true;
                 characterInfo.setTexture("fire-team");
+                effectRenderer.setEffect("fire");
+                effectRenderer.loadParticleFile();
+                Skin skin = GameManager.get().getSkin();
+                backButton.setStyle(skin.get("fire", TextButton.TextButtonStyle.class));
             }
         });
 
@@ -110,6 +117,10 @@ public class CharactersScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 showSkillsInfo = true;
                 characterInfo.setTexture("water-team");
+                effectRenderer.setEffect("water");
+                effectRenderer.loadParticleFile();
+                Skin skin = GameManager.get().getSkin();
+                backButton.setStyle(skin.get("water", TextButton.TextButtonStyle.class));
             }
         });
 
@@ -153,6 +164,7 @@ public class CharactersScreen implements Screen {
         // Render the character info modal
         spriteBatch.setProjectionMatrix(cameraOverlay.combined);
         characterInfo.render(spriteBatch, cameraOverlay);
+        effectRenderer.render(spriteBatch, cameraOverlay);
         // Hide background and buttons
         background.remove();
         fireButton.remove();
