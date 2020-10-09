@@ -336,6 +336,8 @@ public class TextureManager extends AbstractManager {
         textureMap.put("explosionIcon", new Texture("resources/combat/explosive_fireball3.png"));
         textureMap.put("watershieldIcon", new Texture("resources/combat/watershield_icon.png"));
         textureMap.put("healIcon", new Texture("resources/combat/health_skill_icon.png"));
+        textureMap.put("sandTornadoIcon", new Texture("resources/combat/desert_skill_icon.png"));
+        textureMap.put("iceBreathIcon", new Texture("resources/combat/ice-wave4.png"));
     }
 
 	private void addMinimapIcons() {
