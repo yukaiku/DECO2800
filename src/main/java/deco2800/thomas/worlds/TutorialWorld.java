@@ -29,8 +29,8 @@ public class TutorialWorld extends AbstractWorld{
     boolean notGenerated = true;
     static final int TUTORIAL_WORLD_WIDTH = 10; // Height and width vars for the map size; constrains tile gen
     static final int TUTORIAL_WORLD_HEIGHT = 6; // Note the map will double these numbers (bounds are +/- these limits)
-    private final int PORTAL_COL = 0;
-    private final int PORTAL_ROW = -TUTORIAL_WORLD_HEIGHT;
+    private static final int PORTAL_COL = 0;
+    private static final int PORTAL_ROW = -TUTORIAL_WORLD_HEIGHT;
 
 
     public TutorialWorld() {

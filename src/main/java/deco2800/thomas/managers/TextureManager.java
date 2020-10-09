@@ -119,6 +119,8 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("fire-air", new Texture("resources/storyline/team_selection/fire-air.png"));
 			textureMap.put("fire-earth", new Texture("resources/storyline/team_selection/fire-earth.png"));
 			textureMap.put("fire-water", new Texture("resources/storyline/team_selection/fire-water.png"));
+			textureMap.put("fire-team", new Texture("resources/storyline/team_selection/fire_team.png"));
+			textureMap.put("water-team", new Texture("resources/storyline/team_selection/water_team.png"));
 
 			// NPCs
 			textureMap.put("tutorial_npc", new Texture("resources/npcs/tutorial_npc.png"));
