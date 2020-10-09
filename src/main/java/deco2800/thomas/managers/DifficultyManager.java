@@ -60,7 +60,7 @@ public class DifficultyManager extends TickableManager{
 
     /***
      * Sets the world type
-     * @param type
+     * @param type type of the world to be set
      */
     public void setWorldType(String type){
         this.type = type.toLowerCase();
@@ -93,6 +93,7 @@ public class DifficultyManager extends TickableManager{
      */
     public void setDifficultyLevel(String type) {
         enemyManager = GameManager.getManagerFromInstance(EnemyManager.class);
+
         if(!getWorldType().equals(type)){
             setWorldType(type);
             int wildEnemyCap = enemyManager.getWildEnemyCap();
@@ -110,15 +111,19 @@ public class DifficultyManager extends TickableManager{
             //TODO: Update with more difficulty
             case "swamp":
                 playerHealth(playerPeon, 2);
+                enemyManager.getBoss().setMaxHealth(100);
                 break;
             case "tundra":
                 playerHealth(playerPeon, 3);
+                enemyManager.getBoss().setMaxHealth(150);
                 break;
             case "desert":
                 playerHealth(playerPeon, 4);
+                enemyManager.getBoss().setMaxHealth(300);
                 break;
             case "volcano":
                 playerHealth(playerPeon, 5);
+                enemyManager.getBoss().setMaxHealth(750);
                 break;
         }
 
