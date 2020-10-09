@@ -31,7 +31,7 @@ public class IceBreathSkill extends AbstractSkill {
 
     @Override
     public String getTexture() {
-        return null;
+        return "iceBreathIcon";
     }
 
     @Override

@@ -146,6 +146,12 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         dialogues.put("volcano", "Welcome adventure to Volcano Zone , to complete this stage, " +
                 "\nyou will have to locate the orb of lava. The monsters here are vulnerable to earth");
 
+        dialogues.put("npc_lava_maze", "Welcome (N)ew comer to the legendary lava maze! Those" +
+                " who know their directions will know the (W)ay home. \n Those" +
+                " who enjoy a risk will find a reward in one corner of this" +
+                " deadly maze. \n \n Good luck Adventurer & don't forget" +
+                " to avoid the lava!");
+
         dialogues.put("tundra", "Welcome adventure to Tundra Zone , to complete this stage, " +
                 "\nyou will have to locate the orb of ice. The monsters here are vulnerable to fire");
 
@@ -311,7 +317,8 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
                 keycode == Input.Keys.A || keycode == Input.Keys.D) {
             this.startMovementTask(keycode);
         } else if (keycode == Input.Keys.NUM_1 || keycode == Input.Keys.NUM_2 ||
-                keycode == Input.Keys.NUM_3 || keycode == Input.Keys.NUM_4) {
+                keycode == Input.Keys.NUM_3 || keycode == Input.Keys.NUM_4 ||
+                keycode == Input.Keys.NUM_5) {
             this.swapSkill(keycode);
         }
     }

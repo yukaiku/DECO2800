@@ -6,5 +6,8 @@ package deco2800.thomas.combat;
 public enum WizardSkills {
     FIREBALL,
     ICEBALL,
-    STING
+    STING,
+    HEAL,
+    SANDTORNADO,
+    ICEBREATH
 }

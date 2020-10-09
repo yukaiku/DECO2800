@@ -172,7 +172,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 		Gdx.input.setInputProcessor(multiplexer);
 
 		GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
-//		GameManager.get().getManager(KeyboardManager.class).registerForKeyDown(this);
 
 		// Add listener to the buttons in the pause menu
 		resumeButton.addListener(new ClickListener() {
@@ -235,7 +234,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void renderGame(float delta ) {
 		handleRenderables();
 
-		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta);
+		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta, GameManager.get().getWorld().getWorldZoomable());
 		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
 
 		cameraEvent.position.set(camera.position);
@@ -344,6 +343,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 			case GAMEOVER:
 			case VICTORY:
 				renderGameResult(delta);
+				break;
 			default:
 				break;
 		}
