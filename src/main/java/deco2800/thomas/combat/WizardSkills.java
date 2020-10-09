@@ -7,5 +7,7 @@ public enum WizardSkills {
     FIREBALL,
     ICEBALL,
     STING,
-    HEAL
+    HEAL,
+    SANDTORNADO,
+    ICEBREATH
 }
