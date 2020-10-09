@@ -1,6 +1,7 @@
 package deco2800.thomas.entities.items;
 
 import com.badlogic.gdx.Gdx;
+import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
@@ -63,11 +64,23 @@ public class Item extends StaticEntity implements TouchDownObserver {
 
             if (this.getItemName().equals("Health Potion")) {
                 this.player.regenerateHealth(40);
-                ((AbstractEntity) this).dispose();
+                this.dispose();
             }
-            if (this.getItemName().equals("Iron IronArmour") && this.player.getArmour() < 2000) {
+            if (this.getItemName().equals("Iron Armour") && this.player.getArmour() < 2000) {
                 this.player.addArmour(1000);
-                ((AbstractEntity) this).dispose();
+                this.dispose();
+            }
+            if (this.getItemName().equals("Attack Amulet")){
+                this.player.addDamage(((Amulet) this).getAttackDamage());
+                PlayerPeon.buffDamageTotal += ((Amulet) this).getAttackDamage();
+                this.dispose();
+            }
+            if (this.getItemName().equals("Cooldown Ring")){
+                for (AbstractSkill s: this.player.getWizardSkills()) {
+                    s.reduceCooldownMax(((CooldownRing) this).getReductionvalue());
+                }
+                this.player.getMechSkill().reduceCooldownMax(((CooldownRing) this).getReductionvalue());
+                this.dispose();
             }
         }
     }
@@ -81,7 +94,6 @@ public class Item extends StaticEntity implements TouchDownObserver {
         if (this.display.isShowing()) {
             this.display.setVisibleTime(display.getVisibleTime() + 1);
         }
-
     }
     
     public void interact() {
@@ -122,6 +134,10 @@ public class Item extends StaticEntity implements TouchDownObserver {
                 interact();
             }
         }
+    }
+
+    public static void dropRandomItem(){
+
     }
 
     /**

@@ -2,18 +2,14 @@ package deco2800.thomas.worlds.swamp;
 
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.entities.items.IronArmour;
+import deco2800.thomas.entities.items.*;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.SwampNPC;
-import deco2800.thomas.entities.enemies.*;
 import deco2800.thomas.entities.environment.swamp.SwampDeadTree;
 import deco2800.thomas.entities.environment.swamp.SwampFallenTree;
 import deco2800.thomas.entities.environment.swamp.SwampPond;
 import deco2800.thomas.entities.environment.swamp.SwampTreeLog;
 import deco2800.thomas.entities.environment.swamp.SwampTreeStub;
-import deco2800.thomas.entities.items.HealthPotion;
-import deco2800.thomas.entities.items.Item;
-import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.managers.DatabaseManager;
@@ -25,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @SuppressWarnings("unused")

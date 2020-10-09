@@ -33,6 +33,8 @@ public abstract class AbstractSkill implements Tickable {
      */
     public abstract int getCooldownMax();
 
+    public abstract void reduceCooldownMax(float percent);
+
     /**
      * Returns a string containing the name of the texture that is used to represent
      * this skill on the skill bar.

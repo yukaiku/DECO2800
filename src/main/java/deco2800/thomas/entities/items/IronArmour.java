@@ -10,7 +10,7 @@ public class IronArmour extends Item {
 
     public IronArmour(Tile tile, boolean obstructed, PlayerPeon player,
                       String styleType){
-        super("Iron IronArmour",80, tile, RenderConstants.ITEM_RENDER,
+        super("Iron Armour",80, tile, RenderConstants.ITEM_RENDER,
                 "armour_iron", obstructed, player);
         this.setObjectName(ENTITY_ID_STRING);
         super.display = new ItemBox(this, name, "80", "Protects " +

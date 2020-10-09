@@ -13,7 +13,6 @@ import deco2800.thomas.entities.environment.tutorial.Stash;
 import deco2800.thomas.entities.environment.tutorial.Target;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.TutorialNPC;
-import deco2800.thomas.entities.enemies.monsters.Dummy;
 import deco2800.thomas.entities.environment.tutorial.*;
 import deco2800.thomas.managers.DialogManager;
 import deco2800.thomas.managers.EnemyManager;
@@ -130,7 +129,6 @@ public class TutorialWorld extends AbstractWorld{
         // Add portal
         t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW);
         entities.add(new Portal(t, false));
-
 
         // Add message on how to leave tutorial (temporary)
         t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW + 2);

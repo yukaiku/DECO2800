@@ -33,6 +33,13 @@ public class AbstractSkillTest extends BaseGDXTest {
             return MAX_COOLDOWN;
         }
 
+        @Override
+        public void reduceCooldownMax(float percent){
+            if (MAX_COOLDOWN > 5){
+                Math.round(MAX_COOLDOWN * (1.0f-percent));
+            }
+        }
+
         /**
          * Returns a string containing the name of the texture that is used to represent
          * this skill on the skill bar.

@@ -6,7 +6,7 @@ import deco2800.thomas.tasks.combat.SandTornadoAttackTask;
 
 public class SandTornadoSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static final int COOLDOWN = 30;
+    private static int COOLDOWN = 30;
     /* Damage multiplier to apply to the ice tile.
     Multiplies the peon base damage value. */
     private static final float DAMAGE_MULTIPLIER = 0.4f;
@@ -28,6 +28,13 @@ public class SandTornadoSkill extends AbstractSkill {
     @Override
     public int getCooldownMax() {
         return COOLDOWN;
+    }
+
+    @Override
+    public void reduceCooldownMax(float percent){
+        if (COOLDOWN > 15) {
+            COOLDOWN = Math.round(COOLDOWN * (1.0f - percent));
+        }
     }
 
     @Override

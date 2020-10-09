@@ -6,7 +6,7 @@ import deco2800.thomas.tasks.combat.IceballAttackTask;
 
 public class IceballSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static final int MAX_COOLDOWN = 50;
+    private static int MAX_COOLDOWN = 50;
     /* Damage multiplier to apply to the iceball.
     Multiplies the peon base damage value. */
     private static final float DAMAGE_MULTIPLIER = 0.4f;
@@ -35,6 +35,13 @@ public class IceballSkill extends AbstractSkill {
     @Override
     public int getCooldownMax() {
         return MAX_COOLDOWN;
+    }
+
+    @Override
+    public void reduceCooldownMax(float percent){
+        if (MAX_COOLDOWN > 25) {
+            MAX_COOLDOWN = Math.round(MAX_COOLDOWN * (1.0f - percent));
+        }
     }
 
     @Override
