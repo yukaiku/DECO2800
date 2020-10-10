@@ -139,7 +139,7 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("npc_swamp_dungeon_blue", new Texture("resources/npcs/npc_swamp_dungeon_blue.png"));
 			textureMap.put("npc_swamp_dungeon_red", new Texture("resources/npcs/npc_swamp_dungeon_red.png"));
 			textureMap.put("npc_swamp_dungeon_orange", new Texture("resources/npcs/npc_swamp_dungeon_orange.png"));
-			textureMap.put("npc_swamp_dungeon_white", new Texture("resources/npcs/npc_swamp_dungeon_white.png"));
+			textureMap.put("npc_swamp_dungeon_white", new Texture("resources/npcs/npc_swamp_dungeon_white.jpg"));
 			textureMap.put("npc_swamp_dungeon_yellow", new Texture("resources/npcs/npc_swamp_dungeon_yellow.png"));
 
 			// health & game over screen
