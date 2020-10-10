@@ -24,7 +24,7 @@ public class CurrencyComponent extends OverlayComponent {
             font = new BitmapFont();
             font.getData().setScale(2f);
         }
-        font.draw(batch, String.format("Bank: $%d", wallet),overlayRenderer.getX() + overlayRenderer.getWidth() - 300,
+        font.draw(batch, String.format("Wallet: %d gp", wallet),overlayRenderer.getX() + overlayRenderer.getWidth() - 300,
                         overlayRenderer.getY() + overlayRenderer.getHeight() - 60);
         batch.end();
     }
