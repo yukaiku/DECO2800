@@ -368,6 +368,7 @@ public class GameManager {
 		//Add existing world & enemy manager
 		this.addManager(enemyManagerOutSideWorld);
 		this.setWorld(worldOutsideDungeon);
+		((PlayerPeon)this.worldOutsideDungeon.getPlayerEntity()).updatePlayerSkills();
 		this.worldOutsideDungeon = null;
 	}
 
