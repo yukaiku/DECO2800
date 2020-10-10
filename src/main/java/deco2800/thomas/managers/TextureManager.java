@@ -411,10 +411,10 @@ public class TextureManager extends AbstractManager {
                     "resources/combat/explosive_fireball8.png", "resources/combat/explosive_fireball9.png");
 
             // Iceballs
-            addAnimationFramesCollection("iceballDefault", "resources/combat/iceball_small.png");
-            addAnimationFramesCollection("iceballExplosion", "resources/combat/water_skill1_1.png",
-                    "resources/combat/water_skill1_2.png", "resources/combat/water_skill1_3.png",
-                    "resources/combat/water_skill1_4.png");
+            addAnimationFramesCollection("iceballDefault", "resources/combat/right_tundra_skill1.png");
+            addAnimationFramesCollection("iceballExplosion", "resources/combat/tundra_skill2.png",
+                    "resources/combat/tundra_skill3.png", "resources/combat/tundra_skill4.png",
+                    "resources/combat/tundra_skill5.png");
 
             // Icebreath attack
             addAnimationFramesCollection("freezeTile", "resources/combat/ice-wave0.png",
@@ -441,6 +441,12 @@ public class TextureManager extends AbstractManager {
             addAnimationFramesCollection("healEffect", "resources/combat/health_skill1.png",
                     "resources/combat/health_skill2.png", "resources/combat/health_skill3.png",
                     "resources/combat/health_skill4.png");
+
+            // Sting skill projectile and effect
+            addAnimationFramesCollection("stingProjectile", "resources/combat/right_swamp_skill1.png");
+            addAnimationFramesCollection("stingEffect", "resources/combat/swamp_skill2.png",
+                    "resources/combat/swamp_skill3.png", "resources/combat/swamp_skill4.png",
+                    "resources/combat/swamp_skill5.png");
 
             // enemies
             addAnimationFramesCollection("dummyIdle", "resources/enemies/dummy.png");
