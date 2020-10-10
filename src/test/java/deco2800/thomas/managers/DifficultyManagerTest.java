@@ -1,6 +1,10 @@
 package deco2800.thomas.managers;
 
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.combat.Knight;
+import deco2800.thomas.combat.skills.AbstractSkill;
+import deco2800.thomas.combat.skills.FireBombSkill;
+import deco2800.thomas.combat.skills.WaterShieldSkill;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.InvalidEnemyException;
@@ -15,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 public class DifficultyManagerTest extends BaseGDXTest {
     private DifficultyManager difficultyManager;
     private EnemyManager enemyManager;
+    private PlayerManager playerManager;
     private SwampWorld swampWorld;
     private PlayerPeon playerPeon;
 
@@ -25,6 +30,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
     @Before
     public void setUp() throws InvalidEnemyException {
         difficultyManager = new DifficultyManager();
+        playerManager = GameManager.getManagerFromInstance(PlayerManager.class);
         playerPeon = new PlayerPeon(10f,5f,0.15f);
         swampWorld = new SwampWorld();
         swampWorld.setPlayerEntity(playerPeon);
@@ -67,6 +73,48 @@ public class DifficultyManagerTest extends BaseGDXTest {
         assertEquals(50, playerPeon.getMaxHealth());
         assertEquals(playerPeon.getCurrentHealth(), playerPeon.getMaxHealth());
     }
+
+    /***
+     * Test mech skills
+     */
+    @Test
+    public void testMechSkills(){
+        playerManager.setKnight(Knight.WATER);
+        difficultyManager.setDifficultyLevel("Swamp");
+        AbstractSkill mechSkill = playerPeon.getMechSkill();
+        ((WaterShieldSkill) mechSkill).setMaxCooldown(0);
+        assertEquals(0, ((WaterShieldSkill) mechSkill).getCooldownMax());
+        playerManager.setKnight(Knight.FIRE);
+        playerPeon.updatePlayerSkills();
+        AbstractSkill mechSkill2 = playerPeon.getMechSkill();
+        ((FireBombSkill) mechSkill2).setMaxCooldown(0);
+        assertEquals(0, ((FireBombSkill) mechSkill2).getCooldownMax());
+    }
+
+    /***
+     * Test wizard skills
+     */
+//    @Test
+//    public void testWizardSkills(){
+//        difficultyManager.setDifficultyLevel("Swamp");
+//        playerManager.resetPlayer();
+//        playerManager.grantWizardSkill(WizardSkills.FIREBALL);
+//        playerManager.grantWizardSkill(WizardSkills.ICEBALL);
+//        playerManager.grantWizardSkill(WizardSkills.STING);
+//        difficultyManager.setWizardSkillCoolDown(1);
+//        List<AbstractSkill> wizardSkills = playerPeon.getWizardSkills();
+//        for(AbstractSkill wizardSkill : wizardSkills){
+//            switch (wizardSkill.getTexture()){
+//                case "iceballIcon": // Default 50
+//                    assertEquals(2,((IceballSkill) wizardSkill).getCooldownMax());
+//                case "fireballIcon": //Default 20
+//                    assertEquals(1,((FireballSkill) wizardSkill).getCooldownMax());
+//                case "stingIcon": //Default 50
+//                    assertEquals(2,((ScorpionStingSkill) wizardSkill).getCooldownMax());
+//
+//            }
+//        }
+//    }
 
     /***
      * Testing swamp difficulty settings
