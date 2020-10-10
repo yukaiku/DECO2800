@@ -17,14 +17,14 @@ public class CurrencyComponent extends OverlayComponent {
     @Override
     public void render(SpriteBatch batch) {
         // get quest progress
-        float wallet = PlayerPeon.checkBalance();
+        int wallet = PlayerPeon.checkBalance();
 
         batch.begin();
         if (font == null) {
             font = new BitmapFont();
             font.getData().setScale(2f);
         }
-        font.draw(batch, String.format("Bank: $%.2f", wallet),overlayRenderer.getX() + overlayRenderer.getWidth() - 300,
+        font.draw(batch, String.format("Bank: $%d", wallet),overlayRenderer.getX() + overlayRenderer.getWidth() - 300,
                         overlayRenderer.getY() + overlayRenderer.getHeight() - 60);
         batch.end();
     }
