@@ -435,6 +435,4 @@ public class GameManager {
 		}
 		gameWorld.onTick(0);
 	}
-
-
 }

@@ -160,7 +160,6 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
             duration = 0;
             currentState = State.IDLE;
         }
-
         // update target following path every 1 second (60 ticks)
         if (++tickFollowing > 60) {
             if (super.getTarget() != null) {
@@ -214,7 +213,7 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
             case IDLE:
             default:
                 stateTimer = 0;
-                region = orcIdle.getKeyFrame(stateTimer);
+                region = orcAttacking.getKeyFrame(stateTimer);
         }
         if ((getMovingDirection() == MovementTask.Direction.LEFT ||
                 facingDirection == MovementTask.Direction.LEFT) && !region.isFlipX()) {

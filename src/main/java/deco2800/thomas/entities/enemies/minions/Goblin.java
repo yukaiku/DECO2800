@@ -85,7 +85,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
         this.goblinAttacking = new Animation<> (0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
-        this.goblinWalking = new Animation<> (0.05f,
+        this.goblinWalking = new Animation<> (0.07f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Walk"));
         this.icon = GameManager.getManagerFromInstance(TextureManager.class).getTexture(identifier + "Icon");
         this.stateTimer = 0;
@@ -126,7 +126,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
             SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
             currentState = State.ATTACK_MELEE;
             duration = 12;
-            setCombatTask(new MeleeAttackTask(this, origin, 1, 1, (int) getDamage()));
+            setCombatTask(new MeleeAttackTask(this, origin, 1.5f, 1.5f, getDamage()));
             setMovementTask(null);
         }
     }

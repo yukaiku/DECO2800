@@ -460,16 +460,17 @@ public class TextureManager extends AbstractManager {
 
             // goblin attack sprites
             addAnimationFramesSprite("goblinDesertAttack", "resources/enemies/goblin_desert_sprite_sheet_ext.png",
-                    6, 176, 326, true);
+                    6, 176, 236, true);
             addAnimationFramesSprite("goblinSwampAttack", "resources/enemies/goblin_swamp_sprite_sheet_ext.png",
                     6, 176, 236, true);
             addAnimationFramesSprite("goblinTundraAttack", "resources/enemies/goblin_tundra_sprite_sheet_ext.png",
                     6, 176, 236, true);
             addAnimationFramesSprite("goblinVolcanoAttack", "resources/enemies/goblin_volcano_sprite_sheet_ext.png",
-                    6, 176, 326, true);
+                    6, 176, 236, true);
+
             // goblin walking sprites
-            //addAnimationFramesSprite("goblinDesertWalk", "resources/enemies/goblin_desert_walking_sprites.png",
-                    //9, 147, 188, true);
+            addAnimationFramesSprite("goblinDesertWalk", "resources/enemies/goblin_desert_walking_sprites.png",
+                    9, 147, 188, false);
             addAnimationFramesSprite("goblinSwampWalk", "resources/enemies/goblin_swamp_walking_sprites.png",
                     9, 147, 188, false);
             addAnimationFramesSprite("goblinTundraWalk", "resources/enemies/goblin_tundra_walking_sprites.png",
