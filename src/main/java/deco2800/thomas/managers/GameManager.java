@@ -15,6 +15,7 @@ import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.desert.DesertWorld;
 import deco2800.thomas.worlds.dungeons.SwampDungeon;
+import deco2800.thomas.worlds.dungeons.TundraDungeon;
 import deco2800.thomas.worlds.dungeons.VolcanoDungeon;
 import deco2800.thomas.worlds.swamp.SwampWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
@@ -332,7 +333,7 @@ public class GameManager {
 				this.setWorld(new VolcanoDungeon());
 				break;
 			case "TundraDungeonPortal":
-				this.setWorld(new VolcanoDungeon());
+				this.setWorld(new TundraDungeon());
 				break;
 			case "SwampDungeonPortal":
 				this.setWorld(new SwampDungeon());
