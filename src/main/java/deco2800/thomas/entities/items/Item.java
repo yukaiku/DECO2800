@@ -122,16 +122,16 @@ public class Item extends StaticEntity implements TouchDownObserver {
             float playerRow = this.player.getPosition().getRow();
             float itemCol = this.getPosition().getCol();
             float itemRow = this.getPosition().getRow();
-            if (((itemCol + 0.25) <= playerCol) && ((itemRow + 0.25) <= playerRow)) {
+            if (((itemCol + 0.5) <= playerCol) && ((itemRow + 0.5) <= playerRow)) {
                 interact();
             }
-            if ((itemCol - 0.25) <= playerCol && ((itemRow - 0.25) <= playerRow)) {
+            if ((itemCol - 0.5) <= playerCol && ((itemRow - 0.5) <= playerRow)) {
                 interact();
             }
-            if ((itemCol - 0.25) <= playerCol && ((itemRow + 0.25) <= playerRow)) {
+            if ((itemCol - 0.5) <= playerCol && ((itemRow + 0.5) <= playerRow)) {
                 interact();
             }
-            if ((itemCol + 0.25) <= playerCol && ((itemRow - 0.25) <= playerRow)) {
+            if ((itemCol + 0.5) <= playerCol && ((itemRow - 0.5) <= playerRow)) {
                 interact();
             }
         }
