@@ -262,6 +262,7 @@ public class TextureManager extends AbstractManager {
             textureMap.put("LavaPool", new Texture("resources/environment/transparent_tiletexture.png"));
             textureMap.put("BurningTree", new Texture("resources/environment/volcano/entities/BurningTreePlaceholder.png"));
             textureMap.put("DragonSkull", new Texture("resources/environment/volcano/entities/DragonSkull2.png"));
+            textureMap.put("VolcanoPortal", new Texture("resources/environment/portals/volcano_portal.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }

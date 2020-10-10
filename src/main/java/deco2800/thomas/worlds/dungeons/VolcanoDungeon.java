@@ -104,7 +104,7 @@ public class VolcanoDungeon extends AbstractWorld {
     public void setupIncorrectTreasure1() {
         //Add
         Tile teleportTile = getTile(-23f, -23f);
-        TripWire teleportTrap = new TripWire(teleportTile, false, "portal");
+        TripWire teleportTrap = new TripWire(teleportTile, false, "VolcanoPortal");
 
         teleportTile.setParent(teleportTrap);
         this.addEntity(teleportTrap);
@@ -123,7 +123,7 @@ public class VolcanoDungeon extends AbstractWorld {
 
 
         Tile trapTile = getTile(22f, -23f);
-        TripWire enemyTrap = new TripWire(trapTile, false, "portal");
+        TripWire enemyTrap = new TripWire(trapTile, false, "VolcanoPortal");
 
         trapTile.setParent(enemyTrap);
         this.addEntity(enemyTrap);
@@ -139,7 +139,7 @@ public class VolcanoDungeon extends AbstractWorld {
      */
     public void setupReward() {
         Tile rewardTile = getTile(22f, 23f);
-        TripWire powerUpReward = new TripWire(rewardTile, false, "portal");
+        TripWire powerUpReward = new TripWire(rewardTile, false, "VolcanoPortal");
 
                 rewardTile.setParent(powerUpReward);
         this.addEntity(powerUpReward);

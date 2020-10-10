@@ -491,7 +491,7 @@ public class VolcanoWorld extends AbstractWorld {
 
     public VolcanoPortal createDungeonPortal(float col, float row){
         Tile portalTile = getTile(col, row);
-        VolcanoPortal VolcanoPortal = new VolcanoPortal(portalTile, false, "portal", "VolcanoDungeonPortal" );
+        VolcanoPortal VolcanoPortal = new VolcanoPortal(portalTile, false, "VolcanoPortal", "VolcanoDungeonPortal" );
         return VolcanoPortal;
     }
 }
