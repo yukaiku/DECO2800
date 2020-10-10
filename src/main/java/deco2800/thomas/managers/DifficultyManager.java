@@ -1,9 +1,12 @@
 package deco2800.thomas.managers;
 
+import deco2800.thomas.combat.skills.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.monsters.Orc;
+
+import java.util.List;
 
 /**
  * DifficultyManager handles the difficulty curve of the game
@@ -92,6 +95,40 @@ public class DifficultyManager extends TickableManager{
         }
     }
 
+    public void setWizardSkillCoolDown(int coolDown){
+        List<AbstractSkill> wizardSkills = playerPeon.getWizardSkills();
+        for(AbstractSkill wizardSkill : wizardSkills){
+            switch (wizardSkill.getTexture()){
+                case "iceballIcon": // Default 50
+                    ((IceballSkill) wizardSkill).setMaxCooldown(coolDown*2);
+                    if(getWorldType() == "desert"){
+                        //More damage to desert with water skill
+                        ((IceballSkill)wizardSkill).setDamageMultiplier(((IceballSkill) wizardSkill).getDamageMultiplier()*2);
+                    }
+                    return;
+                case "fireballIcon": //Default 20
+                    ((FireballSkill) wizardSkill).setMaxCooldown(coolDown);
+                    if(getWorldType() == "tundra"){
+                        //More damage to tundra with fire skill
+                        ((FireballSkill)wizardSkill).setDamageMultiplier(((FireballSkill) wizardSkill).getDamageMultiplier()*2);
+                    }
+                    return;
+                case "stingIcon": //Default 50
+                    ((ScorpionStingSkill) wizardSkill).setMaxCooldown(coolDown*2);
+                    return;
+
+            }
+        }
+    }
+    public void setMechSkillCoolDown(int coolDown){
+        AbstractSkill mechSkill = playerPeon.getMechSkill();
+        if(mechSkill.getTexture() == "explosionIcon"){ //Default 160
+            ((FireBombSkill) mechSkill).setMaxCooldown(coolDown);
+        }else{ //default 200
+            ((WaterShieldSkill) mechSkill).setMaxCooldown(coolDown*2);
+        }
+    }
+
     /***
      * Sets the difficulty of the game based off the current world
      */
@@ -115,21 +152,28 @@ public class DifficultyManager extends TickableManager{
                 setPlayerHealth(1);
                 setWildSpawnRate(0.0001f);
                 enemyManager.getBoss().setMaxHealth(100);
+                setWizardSkillCoolDown(15);
                 break;
             case "tundra":
                 setPlayerHealth(2);
                 setWildSpawnRate(0.0001f);
                 enemyManager.getBoss().setMaxHealth(150);
+                setWizardSkillCoolDown(15);
+                setMechSkillCoolDown(150);
                 break;
             case "desert":
                 setPlayerHealth(3);
                 setWildSpawnRate(0.0001f);
                 enemyManager.getBoss().setMaxHealth(300);
+                setWizardSkillCoolDown(15);
+                setMechSkillCoolDown(50);
                 break;
             case "volcano":
                 setPlayerHealth(4);
                 setWildSpawnRate(0.0001f);
                 enemyManager.getBoss().setMaxHealth(750);
+                setWizardSkillCoolDown(15);
+                setMechSkillCoolDown(50);
                 break;
         }
 

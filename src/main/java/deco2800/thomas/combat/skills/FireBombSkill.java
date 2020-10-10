@@ -10,10 +10,10 @@ import deco2800.thomas.tasks.combat.FireBombAttackTask;
  */
 public class FireBombSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static final int MAX_COOLDOWN = 160;
+    private static int MAX_COOLDOWN = 160;
     /* Damage multiplier to apply to the explosion.
     Multiplies the peon base damage value. */
-    private static final float DAMAGE_MULTIPLIER = 0.4f;
+    private static float DAMAGE_MULTIPLIER = 0.4f;
     /* Lifetime of explosion */
     private static final int LIFETIME = 60;
     /* Tick period of explosion */
@@ -46,6 +46,32 @@ public class FireBombSkill extends AbstractSkill {
     @Override
     public int getCooldownMax() {
         return MAX_COOLDOWN;
+    }
+
+    /***
+     * Sets coooldown of skill
+     * @param maxCooldown cooldown of skill
+     */
+    public void setMaxCooldown(int maxCooldown){
+        MAX_COOLDOWN = maxCooldown;
+    }
+
+    /**
+     * Returns multiplier of skill
+     *
+     * @return Multiplier of skill.
+     */
+    public float getDamageMultiplier(){
+        return DAMAGE_MULTIPLIER;
+    }
+
+    /***
+     * Set multiplier of skill
+     *
+     * @param damageMultiplier multiplier of skill
+     */
+    public void setDamageMultiplier(float damageMultiplier){
+        this.DAMAGE_MULTIPLIER = damageMultiplier;
     }
 
     /**
