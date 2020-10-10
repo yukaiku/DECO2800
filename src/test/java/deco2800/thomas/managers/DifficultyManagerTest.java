@@ -17,7 +17,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
 
     /***
      * Sets up the entities and info needed for testing the manager
-     * @throws InvalidEnemyException
+     * @throws InvalidEnemyException when invalid enemy is created
      */
     @Before
     public void setUp() throws InvalidEnemyException {
@@ -50,7 +50,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         difficultyManager.setDifficultyLevel("Swamp");
         difficultyManager.setWildSpawnMaxHealth(0);
         assertEquals(0,difficultyManager.getWildSpawnMaxHealth());
-        assertEquals(25,playerPeon.getMaxHealth());
+        assertEquals(50,playerPeon.getMaxHealth());
     }
 
     /***
@@ -91,6 +91,13 @@ public class DifficultyManagerTest extends BaseGDXTest {
         difficultyManager.setDifficultyLevel("Volcano");
         assertEquals("volcano",difficultyManager.getWorldType());
         assertEquals(12,difficultyManager.getWildSpawnMaxHealth());
+    }
+
+    @Test
+    public void testPlayerHealth(){
+        difficultyManager.playerHealth(playerPeon, 2);
+        assertEquals(playerPeon.getMaxHealth(), 25*2);
+        assertEquals(playerPeon.getCurrentHealth(), playerPeon.getMaxHealth());
     }
 
     @After

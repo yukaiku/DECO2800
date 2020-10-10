@@ -14,7 +14,6 @@ public class EffectRenderer implements Renderer {
 
     public EffectRenderer() {
         particleEffect = new ParticleEffect();
-//        loadParticleFile();
         particleEffect.start();
     }
 
