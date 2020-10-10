@@ -10,11 +10,11 @@ import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
  */
 public class ScorpionStingSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static int MAX_COOLDOWN = 50;
-    private static int original_MAX_COOLDOWN = 50;
+    private static int maxCoolDown = 50;
+    private static int original_maxCoolDown = 50;
     /* Damage multiplier to apply to the ice tile.
     Multiplies the peon base damage value. */
-    private static float DAMAGE_MULTIPLIER = 0.4f;
+    private static float damageMultiplier = 0.4f;
     /* Speed of projectile */
     private static final float SPEED = 0.5f;
     /* Lifetime of projectile */
@@ -42,15 +42,15 @@ public class ScorpionStingSkill extends AbstractSkill {
      */
     @Override
     public int getCooldownMax() {
-        return MAX_COOLDOWN;
+        return maxCoolDown;
     }
 
     /***
      * Sets coooldown of skill
-     * @param maxCooldown cooldown of skill
+     * @param maxCoolDown cooldown of skill
      */
-    public void setMaxCooldown(int maxCooldown){
-        MAX_COOLDOWN = maxCooldown;
+    public static void setMaxCoolDown(int maxCoolDown){
+        ScorpionStingSkill.maxCoolDown = maxCoolDown;
     }
 
     /**
@@ -59,7 +59,7 @@ public class ScorpionStingSkill extends AbstractSkill {
      * @return Multiplier of skill.
      */
     public float getDamageMultiplier(){
-        return DAMAGE_MULTIPLIER;
+        return damageMultiplier;
     }
 
     /***
@@ -67,19 +67,19 @@ public class ScorpionStingSkill extends AbstractSkill {
      *
      * @param damageMultiplier multiplier of skill
      */
-    public void setDamageMultiplier(float damageMultiplier){
-        this.DAMAGE_MULTIPLIER = damageMultiplier;
+    public static void setDamageMultiplier(float damageMultiplier){
+        ScorpionStingSkill.damageMultiplier = damageMultiplier;
     }
 
     @Override
     public void reduceCooldownMax(float percent){
-        if (MAX_COOLDOWN > 25) {
-            MAX_COOLDOWN = Math.round(MAX_COOLDOWN * (1.0f - percent));
+        if (maxCoolDown > 25) {
+            maxCoolDown = Math.round(maxCoolDown * (1.0f - percent));
         }
     }
 
     @Override
-    public void setCooldownMax(){ MAX_COOLDOWN = original_MAX_COOLDOWN; }
+    public void setCooldownMax(){ maxCoolDown = original_maxCoolDown; }
 
 
     /**
@@ -102,7 +102,7 @@ public class ScorpionStingSkill extends AbstractSkill {
      */
     @Override
     protected AbstractTask getTask(float targetX, float targetY) {
-        int damage = (int) (entity.getDamage() * DAMAGE_MULTIPLIER);
+        int damage = (int) (entity.getDamage() * damageMultiplier);
         return new ScorpionStingAttackTask(entity, targetX, targetY, damage, SPEED, LIFETIME);
     }
 }

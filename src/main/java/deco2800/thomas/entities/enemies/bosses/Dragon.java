@@ -134,7 +134,6 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
         AbstractWorld world = GameManager.get().getWorld();
         Tile tile = world.getTile((float) Math.ceil((this.getCol())),
                 (float) Math.ceil((this.getRow())));
-        //GameManager.getManagerFromInstance(EnemyManager.class).removeBoss();
         WorldUtil.removeEntity(this);
         //Generate the correct orb texture to initialise the dragon's dropped orb
         world.setOrbEntity(new Orb(tile, "orb_" + orbNumber));
