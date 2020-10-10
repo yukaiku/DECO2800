@@ -1,19 +1,18 @@
 package deco2800.thomas.entities.items;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
-import deco2800.thomas.observers.KeyDownObserver;
+import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
 
 import java.util.Random;
 
-public class Item extends StaticEntity implements KeyDownObserver {
+public class Item extends StaticEntity implements TouchDownObserver {
 
     public static final String ENTITY_ID_STRING = "item";
     protected String name;
@@ -90,7 +89,7 @@ public class Item extends StaticEntity implements KeyDownObserver {
     public void onTick(long i) {
         if (GameManager.get().getWorld() != null && !ready) {
             ready = true;
-            GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
+            GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
         }
         if (this.display.isShowing()) {
             this.display.setVisibleTime(display.getVisibleTime() + 1);
@@ -98,49 +97,51 @@ public class Item extends StaticEntity implements KeyDownObserver {
     }
     
     public void interact() {
+        this.display.getBox().setVisible(true);
         this.display.setVisibleTime(0);
         this.display.setShowing(true);
     }
-
+    
     @Override
-    public void notifyKeyDown(int keycode) {
-        if (!(keycode == Input.Keys.F)){
-            return; 
-        }
-        // item and player position - should be near each other. 
-        float playerCol = this.player.getPosition().getCol();
-        float playerRow = this.player.getPosition().getRow();
-        float itemCol = this.getPosition().getCol();
-        float itemRow = this.getPosition().getRow();
-        
-            if (((itemCol + 1) <= playerCol) && ((itemRow+1) <= playerRow)) {
-                interact();
-            }
-            if ((itemCol - 1) <= playerCol && ((itemRow -1) <= playerRow)) {
-                interact();
-            }
-            if ((itemCol - 1) <= playerCol && ((itemRow + 1) <= playerRow)) {
-                interact();
-            }
-            if ((itemCol + 1) <= playerCol && ((itemRow - 1) <= playerRow)) {
-                interact();
-            }
-    }
-    
-    
     public void notifyTouchDown(int screenX, int screenY, int pointer, int button) {
         float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(),
                 Gdx.input.getY());
         float[] clickedPosition = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
+        boolean isCloseCol =
+                (clickedPosition[0] == this.getCol()
+                        || clickedPosition[0] == this.getRow() - 1
+                        || clickedPosition[0] == this.getRow() + 1);
+
+        boolean isCloseRow = (clickedPosition[1] == this.getRow() ||
+                clickedPosition[1] == this.getRow() - 1 ||
+                clickedPosition[1] == this.getRow() + 1);
         
+        if (isCloseCol && isCloseRow) {
+            // item and player position - should be near each other. 
+            float playerCol = this.player.getPosition().getCol();
+            float playerRow = this.player.getPosition().getRow();
+            float itemCol = this.getPosition().getCol();
+            float itemRow = this.getPosition().getRow();
+            if (((itemCol + 0.25) <= playerCol) && ((itemRow + 0.25) <= playerRow)) {
+                interact();
+            }
+            if ((itemCol - 0.25) <= playerCol && ((itemRow - 0.25) <= playerRow)) {
+                interact();
+            }
+            if ((itemCol - 0.25) <= playerCol && ((itemRow + 0.25) <= playerRow)) {
+                interact();
+            }
+            if ((itemCol + 0.25) <= playerCol && ((itemRow - 0.25) <= playerRow)) {
+                interact();
+            }
+        }
     }
 
     public static void dropRandomItem(){
 
     }
 
-   
-
+    
     /**
      * Remove touch down listener.
      */
