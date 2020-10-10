@@ -365,6 +365,7 @@ public class TextureManager extends AbstractManager {
     }
 
 	private void addMinimapIcons() {
+		textureMap.put("iconDefault", new Texture("resources/enemies/orc_volcano_icon.png"));
 	}
 
 	/* ------------------------------------------------------------------------
