@@ -101,7 +101,7 @@
         },
         {
             "tileID": 12,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 37,
             "rowPos": 24.0,
@@ -109,7 +109,7 @@
         },
         {
             "tileID": 13,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 36,
             "rowPos": 24.0,
@@ -117,7 +117,7 @@
         },
         {
             "tileID": 14,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 35,
             "rowPos": 24.0,
@@ -125,7 +125,7 @@
         },
         {
             "tileID": 15,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 34,
             "rowPos": 24.0,
@@ -133,7 +133,7 @@
         },
         {
             "tileID": 16,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 33,
             "rowPos": 24.0,
@@ -141,7 +141,7 @@
         },
         {
             "tileID": 17,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 32,
             "rowPos": 24.0,
@@ -149,7 +149,7 @@
         },
         {
             "tileID": 18,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 31,
             "rowPos": 24.0,
@@ -157,7 +157,7 @@
         },
         {
             "tileID": 19,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 30,
             "rowPos": 24.0,
@@ -165,7 +165,7 @@
         },
         {
             "tileID": 20,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 29,
             "rowPos": 24.0,
@@ -173,7 +173,7 @@
         },
         {
             "tileID": 21,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 28,
             "rowPos": 24.0,
@@ -181,7 +181,7 @@
         },
         {
             "tileID": 22,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 27,
             "rowPos": 24.0,
@@ -189,7 +189,7 @@
         },
         {
             "tileID": 23,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 26,
             "rowPos": 24.0,
@@ -197,7 +197,7 @@
         },
         {
             "tileID": 24,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 25,
             "rowPos": 24.0,
@@ -205,7 +205,7 @@
         },
         {
             "tileID": 25,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 24,
             "rowPos": 24.0,
@@ -213,7 +213,7 @@
         },
         {
             "tileID": 26,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 23,
             "rowPos": 24.0,
@@ -221,7 +221,7 @@
         },
         {
             "tileID": 27,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 22,
             "rowPos": 24.0,
@@ -229,7 +229,7 @@
         },
         {
             "tileID": 28,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 21,
             "rowPos": 24.0,
@@ -237,7 +237,7 @@
         },
         {
             "tileID": 29,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 20,
             "rowPos": 24.0,
@@ -245,7 +245,7 @@
         },
         {
             "tileID": 30,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 19,
             "rowPos": 24.0,
@@ -253,7 +253,7 @@
         },
         {
             "tileID": 31,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 18,
             "rowPos": 24.0,
@@ -261,7 +261,7 @@
         },
         {
             "tileID": 32,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 17,
             "rowPos": 24.0,
@@ -493,7 +493,7 @@
         },
         {
             "tileID": 61,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 38,
             "rowPos": 23.0,
@@ -501,7 +501,7 @@
         },
         {
             "tileID": 62,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 37,
             "rowPos": 23.0,
@@ -509,7 +509,7 @@
         },
         {
             "tileID": 63,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 36,
             "rowPos": 23.0,
@@ -517,7 +517,7 @@
         },
         {
             "tileID": 64,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 35,
             "rowPos": 23.0,
@@ -661,7 +661,7 @@
         },
         {
             "tileID": 82,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 17,
             "rowPos": 23.0,
@@ -909,7 +909,7 @@
         },
         {
             "tileID": 113,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 36,
             "rowPos": 22.0,
@@ -917,7 +917,7 @@
         },
         {
             "tileID": 114,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 35,
             "rowPos": 22.0,
@@ -925,7 +925,7 @@
         },
         {
             "tileID": 115,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 34,
             "rowPos": 22.0,
@@ -1061,7 +1061,7 @@
         },
         {
             "tileID": 132,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 17,
             "rowPos": 22.0,
@@ -1317,7 +1317,7 @@
         },
         {
             "tileID": 164,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 35,
             "rowPos": 21.0,
@@ -1325,7 +1325,7 @@
         },
         {
             "tileID": 165,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 34,
             "rowPos": 21.0,
@@ -1333,7 +1333,7 @@
         },
         {
             "tileID": 166,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 33,
             "rowPos": 21.0,
@@ -1461,7 +1461,7 @@
         },
         {
             "tileID": 182,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 17,
             "rowPos": 21.0,
@@ -1725,7 +1725,7 @@
         },
         {
             "tileID": 215,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 34,
             "rowPos": 20.0,
@@ -1733,7 +1733,7 @@
         },
         {
             "tileID": 216,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 33,
             "rowPos": 20.0,
@@ -1741,7 +1741,7 @@
         },
         {
             "tileID": 217,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 32,
             "rowPos": 20.0,
@@ -1861,7 +1861,7 @@
         },
         {
             "tileID": 232,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 17,
             "rowPos": 20.0,
@@ -2133,7 +2133,7 @@
         },
         {
             "tileID": 266,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 33,
             "rowPos": 19.0,
@@ -2141,7 +2141,7 @@
         },
         {
             "tileID": 267,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 32,
             "rowPos": 19.0,
@@ -2149,7 +2149,7 @@
         },
         {
             "tileID": 268,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 31,
             "rowPos": 19.0,
@@ -2261,7 +2261,7 @@
         },
         {
             "tileID": 282,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 17,
             "rowPos": 19.0,
@@ -2541,7 +2541,7 @@
         },
         {
             "tileID": 317,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 32,
             "rowPos": 18.0,
@@ -2549,7 +2549,7 @@
         },
         {
             "tileID": 318,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 31,
             "rowPos": 18.0,
@@ -2557,7 +2557,7 @@
         },
         {
             "tileID": 319,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 30,
             "rowPos": 18.0,
@@ -2629,7 +2629,7 @@
         },
         {
             "tileID": 328,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 21,
             "rowPos": 18.0,
@@ -2637,7 +2637,7 @@
         },
         {
             "tileID": 329,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 20,
             "rowPos": 18.0,
@@ -2949,7 +2949,7 @@
         },
         {
             "tileID": 368,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 31,
             "rowPos": 17.0,
@@ -2957,7 +2957,7 @@
         },
         {
             "tileID": 369,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 30,
             "rowPos": 17.0,
@@ -2965,7 +2965,7 @@
         },
         {
             "tileID": 370,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 29,
             "rowPos": 17.0,
@@ -3021,7 +3021,7 @@
         },
         {
             "tileID": 377,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 22,
             "rowPos": 17.0,
@@ -3029,7 +3029,7 @@
         },
         {
             "tileID": 378,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 21,
             "rowPos": 17.0,
@@ -3357,7 +3357,7 @@
         },
         {
             "tileID": 419,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 30,
             "rowPos": 16.0,
@@ -3365,7 +3365,7 @@
         },
         {
             "tileID": 420,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 29,
             "rowPos": 16.0,
@@ -3373,7 +3373,7 @@
         },
         {
             "tileID": 421,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 28,
             "rowPos": 16.0,
@@ -3413,7 +3413,7 @@
         },
         {
             "tileID": 426,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 23,
             "rowPos": 16.0,
@@ -3421,7 +3421,7 @@
         },
         {
             "tileID": 427,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 22,
             "rowPos": 16.0,
@@ -3429,7 +3429,7 @@
         },
         {
             "tileID": 428,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 21,
             "rowPos": 16.0,
@@ -3437,7 +3437,7 @@
         },
         {
             "tileID": 429,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 20,
             "rowPos": 16.0,
@@ -3765,7 +3765,7 @@
         },
         {
             "tileID": 470,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 29,
             "rowPos": 15.0,
@@ -3773,7 +3773,7 @@
         },
         {
             "tileID": 471,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 28,
             "rowPos": 15.0,
@@ -3781,7 +3781,7 @@
         },
         {
             "tileID": 472,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 27,
             "rowPos": 15.0,
@@ -3805,7 +3805,7 @@
         },
         {
             "tileID": 475,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 24,
             "rowPos": 15.0,
@@ -3813,7 +3813,7 @@
         },
         {
             "tileID": 476,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 23,
             "rowPos": 15.0,
@@ -3821,7 +3821,7 @@
         },
         {
             "tileID": 477,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 22,
             "rowPos": 15.0,
@@ -3829,7 +3829,7 @@
         },
         {
             "tileID": 478,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 21,
             "rowPos": 15.0,
@@ -3837,7 +3837,7 @@
         },
         {
             "tileID": 479,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 20,
             "rowPos": 15.0,
@@ -3853,7 +3853,7 @@
         },
         {
             "tileID": 481,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 18,
             "rowPos": 15.0,
@@ -3861,7 +3861,7 @@
         },
         {
             "tileID": 482,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 17,
             "rowPos": 15.0,
@@ -4173,7 +4173,7 @@
         },
         {
             "tileID": 521,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 28,
             "rowPos": 14.0,
@@ -4181,7 +4181,7 @@
         },
         {
             "tileID": 522,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 27,
             "rowPos": 14.0,
@@ -4189,7 +4189,7 @@
         },
         {
             "tileID": 523,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 26,
             "rowPos": 14.0,
@@ -4197,7 +4197,7 @@
         },
         {
             "tileID": 524,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 25,
             "rowPos": 14.0,
@@ -4205,7 +4205,7 @@
         },
         {
             "tileID": 525,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 24,
             "rowPos": 14.0,
@@ -4229,7 +4229,7 @@
         },
         {
             "tileID": 528,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 21,
             "rowPos": 14.0,
@@ -4581,7 +4581,7 @@
         },
         {
             "tileID": 572,
-            "texture": "Volcano_6",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 27,
             "rowPos": 13.0,
@@ -4981,7 +4981,7 @@
         },
         {
             "tileID": 622,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 27,
             "rowPos": 12.0,
@@ -5381,7 +5381,7 @@
         },
         {
             "tileID": 672,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 27,
             "rowPos": 11.0,
@@ -5389,7 +5389,7 @@
         },
         {
             "tileID": 673,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 26,
             "rowPos": 11.0,
@@ -5405,7 +5405,7 @@
         },
         {
             "tileID": 675,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 24,
             "rowPos": 11.0,
@@ -5781,7 +5781,7 @@
         },
         {
             "tileID": 722,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 27,
             "rowPos": 10.0,
@@ -6589,7 +6589,7 @@
         },
         {
             "tileID": 823,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 26,
             "rowPos": 8.0,
@@ -6597,7 +6597,7 @@
         },
         {
             "tileID": 824,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 25,
             "rowPos": 8.0,
@@ -6997,7 +6997,7 @@
         },
         {
             "tileID": 874,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 25,
             "rowPos": 7.0,
@@ -7781,7 +7781,7 @@
         },
         {
             "tileID": 972,
-            "texture": "Volcano_2",
+            "texture": "Volcano_6",
             "obstructed": false,
             "index": 27,
             "rowPos": 5.0,
@@ -8589,7 +8589,7 @@
         },
         {
             "tileID": 1073,
-            "texture": "Volcano_1",
+            "texture": "Volcano_2",
             "obstructed": false,
             "index": 26,
             "rowPos": 3.0,
@@ -10973,7 +10973,7 @@
         },
         {
             "tileID": 1371,
-            "texture": "Volcano_3",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 28,
             "rowPos": -3.0,
@@ -11373,7 +11373,7 @@
         },
         {
             "tileID": 1421,
-            "texture": "Volcano_3",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 28,
             "rowPos": -4.0,
@@ -12197,7 +12197,7 @@
         },
         {
             "tileID": 1524,
-            "texture": "Volcano_3",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 25,
             "rowPos": -6.0,
@@ -12973,7 +12973,7 @@
         },
         {
             "tileID": 1621,
-            "texture": "Volcano_3",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 28,
             "rowPos": -8.0,
@@ -13765,7 +13765,7 @@
         },
         {
             "tileID": 1720,
-            "texture": "Volcano_4",
+            "texture": "Volcano_3",
             "obstructed": false,
             "index": 29,
             "rowPos": -10.0,
@@ -13797,7 +13797,7 @@
         },
         {
             "tileID": 1724,
-            "texture": "Volcano_3",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 25,
             "rowPos": -10.0,
@@ -14165,7 +14165,7 @@
         },
         {
             "tileID": 1770,
-            "texture": "Volcano_4",
+            "texture": "Volcano_3",
             "obstructed": false,
             "index": 29,
             "rowPos": -11.0,
@@ -14197,7 +14197,7 @@
         },
         {
             "tileID": 1774,
-            "texture": "Volcano_3",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 25,
             "rowPos": -11.0,
@@ -15373,7 +15373,7 @@
         },
         {
             "tileID": 1921,
-            "texture": "Volcano_3",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 28,
             "rowPos": -14.0,
@@ -15861,7 +15861,7 @@
         },
         {
             "tileID": 1982,
-            "texture": "Volcano_2",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 17,
             "rowPos": -15.0,
@@ -15965,7 +15965,7 @@
         },
         {
             "tileID": 1995,
-            "texture": "Volcano_2",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 4,
             "rowPos": -15.0,
@@ -16165,7 +16165,7 @@
         },
         {
             "tileID": 2020,
-            "texture": "Volcano_4",
+            "texture": "Volcano_3",
             "obstructed": false,
             "index": 29,
             "rowPos": -16.0,
@@ -16565,7 +16565,7 @@
         },
         {
             "tileID": 2070,
-            "texture": "Volcano_4",
+            "texture": "Volcano_3",
             "obstructed": false,
             "index": 29,
             "rowPos": -17.0,
@@ -17109,7 +17109,7 @@
         },
         {
             "tileID": 2138,
-            "texture": "Volcano_3",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 11,
             "rowPos": -18.0,
@@ -17117,7 +17117,7 @@
         },
         {
             "tileID": 2139,
-            "texture": "Volcano_3",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 10,
             "rowPos": -18.0,
@@ -17373,7 +17373,7 @@
         },
         {
             "tileID": 2171,
-            "texture": "Volcano_3",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 28,
             "rowPos": -19.0,
@@ -17381,7 +17381,7 @@
         },
         {
             "tileID": 2172,
-            "texture": "Volcano_3",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 27,
             "rowPos": -19.0,
@@ -17509,7 +17509,7 @@
         },
         {
             "tileID": 2188,
-            "texture": "Volcano_3",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 11,
             "rowPos": -19.0,
@@ -17517,7 +17517,7 @@
         },
         {
             "tileID": 2189,
-            "texture": "Volcano_3",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 10,
             "rowPos": -19.0,
@@ -18573,7 +18573,7 @@
         },
         {
             "tileID": 2321,
-            "texture": "Volcano_3",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 28,
             "rowPos": -22.0,
@@ -18661,7 +18661,7 @@
         },
         {
             "tileID": 2332,
-            "texture": "Volcano_2",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 17,
             "rowPos": -22.0,
@@ -18765,7 +18765,7 @@
         },
         {
             "tileID": 2345,
-            "texture": "Volcano_2",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 4,
             "rowPos": -22.0,
@@ -18973,7 +18973,7 @@
         },
         {
             "tileID": 2371,
-            "texture": "Volcano_3",
+            "texture": "Volcano_4",
             "obstructed": false,
             "index": 28,
             "rowPos": -23.0,

@@ -2,6 +2,7 @@ package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
 
@@ -11,6 +12,7 @@ import deco2800.thomas.tasks.combat.FireBombAttackTask;
 public class FireBombSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
     private static int MAX_COOLDOWN = 160;
+    private static final int original_MAX_COOLDOWN = 160;
     /* Damage multiplier to apply to the explosion.
     Multiplies the peon base damage value. */
     private static final float DAMAGE_MULTIPLIER = 0.4f;
@@ -54,6 +56,9 @@ public class FireBombSkill extends AbstractSkill {
             MAX_COOLDOWN = Math.round(MAX_COOLDOWN * (1.0f - percent));
         }
     }
+
+    @Override
+    public void setCooldownMax(){ MAX_COOLDOWN = original_MAX_COOLDOWN;}
 
     /**
      * Returns a string containing the name of the texture that is used to represent

@@ -40,6 +40,9 @@ public class AbstractSkillTest extends BaseGDXTest {
             }
         }
 
+        @Override
+        public void setCooldownMax(){}
+
         /**
          * Returns a string containing the name of the texture that is used to represent
          * this skill on the skill bar.
@@ -93,6 +96,12 @@ public class AbstractSkillTest extends BaseGDXTest {
         testSkill.onTick(0);
 
         assertEquals(testSkill.getCooldownMax() - 1, testSkill.getCooldownRemaining());
+
+        for (int i = 0; i < 11; i++) {
+            testSkill.onTick(0);
+        }
+
+        assertEquals(0, testSkill.getCooldownRemaining());
     }
 
     /**

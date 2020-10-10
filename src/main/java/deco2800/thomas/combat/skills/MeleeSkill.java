@@ -41,7 +41,10 @@ public class MeleeSkill extends AbstractSkill {
     }
 
     @Override
-    public void reduceCooldownMax(float percent){}
+    public void reduceCooldownMax(float percent){/*Currently does nothing for game balance purposes*/}
+
+    @Override
+    public void setCooldownMax(){/*Currently does nothing for game balance purposes*/}
 
     /**
      * Returns a string containing the name of the texture that is used to represent

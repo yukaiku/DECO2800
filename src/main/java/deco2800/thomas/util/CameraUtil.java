@@ -36,19 +36,23 @@ public class CameraUtil {
      * @param zoomInKey  the key that we listen to zoom in
      * @param zoomOutKey the key that we listen to zoom out
      * @param speed      the zoom speed
+     * @param allowed    Whether or not player can zoom on the current world.
      */
-    public static void zoomableCamera(OrthographicCamera camera, int zoomInKey, int zoomOutKey, float speed) {
-        if (Gdx.input.isKeyPressed(zoomInKey)) {
-            camera.zoom -= speed;
-            if (camera.zoom < minimumZoom) {
-                camera.zoom = minimumZoom;
-            }
-        } else if (Gdx.input.isKeyPressed(zoomOutKey)) {
-            camera.zoom += speed;
-            if (camera.zoom > maximumZoom) {
-                camera.zoom = maximumZoom;
+    public static void zoomableCamera(OrthographicCamera camera, int zoomInKey, int zoomOutKey, float speed, boolean allowed) {
+        if (allowed) {
+            if (Gdx.input.isKeyPressed(zoomInKey)) {
+                camera.zoom -= speed;
+                if (camera.zoom < minimumZoom) {
+                    camera.zoom = minimumZoom;
+                }
+            } else if (Gdx.input.isKeyPressed(zoomOutKey)) {
+                camera.zoom += speed;
+                if (camera.zoom > maximumZoom) {
+                    camera.zoom = maximumZoom;
+                }
             }
         }
+
         camera.update();
     }
 }

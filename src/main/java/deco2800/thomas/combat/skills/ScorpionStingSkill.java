@@ -1,6 +1,7 @@
 package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
 
@@ -11,6 +12,7 @@ import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
 public class ScorpionStingSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
     private static int MAX_COOLDOWN = 50;
+    private static int original_MAX_COOLDOWN = 50;
     /* Damage multiplier to apply to the ice tile.
     Multiplies the peon base damage value. */
     private static final float DAMAGE_MULTIPLIER = 0.4f;
@@ -50,6 +52,9 @@ public class ScorpionStingSkill extends AbstractSkill {
             MAX_COOLDOWN = Math.round(MAX_COOLDOWN * (1.0f - percent));
         }
     }
+
+    @Override
+    public void setCooldownMax(){ MAX_COOLDOWN = original_MAX_COOLDOWN; }
 
     /**
      * Returns a string containing the name of the texture that is used to represent

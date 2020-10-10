@@ -12,7 +12,7 @@ public class Amulet extends Item{
     public Amulet(Tile tile, boolean obstructed, PlayerPeon player,
                         String styleType, int attackDamage){
         super("Attack Amulet",20, tile, RenderConstants.ITEM_RENDER,
-                "potion_small", obstructed, player);
+                "attack_buff", obstructed, player);
         this.setObjectName(ENTITY_ID_STRING);
         this.attackDamage = attackDamage;
         super.display = new ItemBox(this, name, "200",

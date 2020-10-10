@@ -173,8 +173,19 @@ public class TundraWorld extends AbstractWorld {
 						(PlayerPeon) getPlayerEntity(), "tundra");
 				entities.add(chest);
 				this.allTundraDialogues.add(chest.getDisplay());
-
 		}
+
+		Tile cooldownring = getTile(18,17);
+		CooldownRing cdring = new CooldownRing(cooldownring, false,
+				(PlayerPeon) this.getPlayerEntity(), "tundra",0.5f);
+		entities.add(cdring);
+		this.allTundraDialogues.add(cdring.getDisplay());
+
+		Tile attackAmuletTile = getTile(-19,14);
+		Amulet attackAmulet = new Amulet(attackAmuletTile, false,
+				(PlayerPeon) this.getPlayerEntity(), "tundra",10);
+		entities.add(attackAmulet);
+		this.allTundraDialogues.add(attackAmulet.getDisplay());
 	}
 
 

@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import deco2800.thomas.GameScreen;
+import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.environment.tutorial.Barrel;
-import deco2800.thomas.entities.environment.tutorial.Portal;
+import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.entities.environment.tutorial.Stash;
 import deco2800.thomas.entities.environment.tutorial.Target;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
@@ -29,8 +30,8 @@ public class TutorialWorld extends AbstractWorld{
     boolean notGenerated = true;
     static final int TUTORIAL_WORLD_WIDTH = 10; // Height and width vars for the map size; constrains tile gen
     static final int TUTORIAL_WORLD_HEIGHT = 6; // Note the map will double these numbers (bounds are +/- these limits)
-    private final int PORTAL_COL = 0;
-    private final int PORTAL_ROW = -TUTORIAL_WORLD_HEIGHT;
+    private static final int PORTAL_COL = 0;
+    private static final int PORTAL_ROW = -TUTORIAL_WORLD_HEIGHT;
 
 
     public TutorialWorld() {
@@ -60,10 +61,17 @@ public class TutorialWorld extends AbstractWorld{
             }
         }
 
+        PlayerPeon.buffDamageTotal = 0;
         PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f, 50);
             addEntity(player);
         this.setPlayerEntity(player);
         addEntity(this.getPlayerEntity());
+
+        for (AbstractSkill s :((PlayerPeon) this.getPlayerEntity()).getWizardSkills()){
+            s.setCooldownMax();
+        }
+        ((PlayerPeon) this.getPlayerEntity()).getMechSkill().setCooldownMax();
+
 
         // Spawn dummy
         EnemyManager enemyManager = new EnemyManager(this);

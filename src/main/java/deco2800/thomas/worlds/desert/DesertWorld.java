@@ -201,6 +201,18 @@ public class DesertWorld extends AbstractWorld {
             entities.add(chest);
             this.allDesertDialogues.add(chest.getDisplay());
         }
+
+        Tile attackAmuletTile = getTile(4,-9);
+        Amulet attackAmulet = new Amulet(attackAmuletTile, false,
+                (PlayerPeon) this.getPlayerEntity(), "desert",10);
+        entities.add(attackAmulet);
+        this.allDesertDialogues.add(attackAmulet.getDisplay());
+
+        Tile cooldownring = getTile(23,-24);
+        CooldownRing cdring = new CooldownRing(cooldownring, false,
+                (PlayerPeon) this.getPlayerEntity(), "desert",0.5f);
+        entities.add(cdring);
+        this.allDesertDialogues.add(cdring.getDisplay());
     }
 
     /**

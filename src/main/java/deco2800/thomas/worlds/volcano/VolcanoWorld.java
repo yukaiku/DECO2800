@@ -18,6 +18,7 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
+import deco2800.thomas.worlds.dungeons.VolcanoDungeon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,7 +69,7 @@ public class VolcanoWorld extends AbstractWorld {
 
         //Create Volcano NPCs
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
-        VolcanoNPC volcanoNpc1 = new VolcanoNPC("VolcanoQuestNPC1", new SquareVector(-24, -13),"volcano_npc1");
+        VolcanoNPC volcanoNpc1 = new VolcanoNPC("VolcanoQuestNPC1", new SquareVector(-20, -13),"volcano_npc1");
         VolcanoNPC volcanoNpc2 = new VolcanoNPC("VolcanoQuestNPC2", new SquareVector(-21, 22),"volcano_npc2");
         npnSpawns.add(volcanoNpc2);
         npnSpawns.add(volcanoNpc1);
@@ -77,7 +78,7 @@ public class VolcanoWorld extends AbstractWorld {
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
         GameManager.get().addManager(npcManager);
 
-
+        //Add items to game
         generateItemEntities();
 
         //Creates dialogue manager
@@ -143,6 +144,7 @@ public class VolcanoWorld extends AbstractWorld {
         entities.add(createLavaPool(-12, -20)); //Left Lava Pool
         entities.add(createLavaPool(5, -10)); //Middle Lava Pool
         entities.add(createLavaPool(19, -7)); //Right Lava Pool
+        entities.add(createDungeonPortal(-24, -13));
         //For objects that are added randomly & require more specific addition
         //entities, their methodology will follow add()
         addRandoms();
@@ -204,6 +206,18 @@ public class VolcanoWorld extends AbstractWorld {
                 i--;
             }
         }
+
+        Tile cooldownring = getTile(20,-7);
+        CooldownRing cdring = new CooldownRing(cooldownring, false,
+                (PlayerPeon) this.getPlayerEntity(), "volcano",0.5f);
+        entities.add(cdring);
+        this.allVolcanoDialogues.add(cdring.getDisplay());
+
+        Tile attackAmuletTile = getTile(2,14);
+        Amulet attackAmulet = new Amulet(attackAmuletTile, false,
+                (PlayerPeon) this.getPlayerEntity(), "volcano",10);
+        entities.add(attackAmulet);
+        this.allVolcanoDialogues.add(attackAmulet.getDisplay());
     }
 
     /**
@@ -473,8 +487,12 @@ public class VolcanoWorld extends AbstractWorld {
         for (SquareVector coord : lavaPool.getChildrenPositions()) {
             getTile(coord).setTexture("Volcano_1");
         }
-
-        System.out.println(lavaPool.getChildrenPositions());
         return lavaPool;
+    }
+
+    public VolcanoPortal createDungeonPortal(float col, float row){
+        Tile portalTile = getTile(col, row);
+        VolcanoPortal VolcanoPortal = new VolcanoPortal(portalTile, false, "portal", "VolcanoDungeonPortal" );
+        return VolcanoPortal;
     }
 }

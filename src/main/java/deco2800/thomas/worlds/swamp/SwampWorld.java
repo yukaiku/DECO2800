@@ -1,5 +1,6 @@
 package deco2800.thomas.worlds.swamp;
 
+import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.items.*;
@@ -42,8 +43,14 @@ public class SwampWorld extends AbstractWorld {
         this.allSwampDialogues = new ArrayList<>();
 
         // Create the player entity
+        PlayerPeon.buffDamageTotal = 0;
         this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
+
+        for (AbstractSkill s :((PlayerPeon) this.getPlayerEntity()).getWizardSkills()){
+            s.setCooldownMax();
+        }
+        ((PlayerPeon) this.getPlayerEntity()).getMechSkill().setCooldownMax();
 
         // Creates Items
         this.generateItemEntities();
@@ -85,7 +92,7 @@ public class SwampWorld extends AbstractWorld {
     protected void generateTiles() {
     }
 
-    public void generateDeadTree() {
+    public void createDeadTree() {
         // South Forest
         entities.add(new SwampDeadTree(this.getTile(-5, -24), true));
         entities.add(new SwampDeadTree(this.getTile(-6, -23), true));
@@ -188,7 +195,7 @@ public class SwampWorld extends AbstractWorld {
 
     public void generateStaticEntities() {
         this.createPond();
-        this.generateDeadTree();
+        this.createDeadTree();
         this.createTreeStub();
         this.createFallenTree();
         this.createTreeLog();
@@ -233,6 +240,18 @@ public class SwampWorld extends AbstractWorld {
             entities.add(chest);
             this.allSwampDialogues.add(chest.getDisplay());
         }
+
+        Tile attackAmuletTile = getTile(23,14);
+        Amulet attackAmulet = new Amulet(attackAmuletTile, false,
+                (PlayerPeon) this.getPlayerEntity(), "swamp",10);
+        entities.add(attackAmulet);
+        this.allSwampDialogues.add(attackAmulet.getDisplay());
+
+        Tile cooldownring = getTile(15,-25);
+        CooldownRing cdring = new CooldownRing(cooldownring, false,
+                (PlayerPeon) this.getPlayerEntity(), "swamp",0.5f);
+        entities.add(cdring);
+        this.allSwampDialogues.add(cdring.getDisplay());
     }
 
     @Override
