@@ -47,10 +47,10 @@ public class SwampWorld extends AbstractWorld {
         this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
 
-        for (AbstractSkill s :((PlayerPeon) this.getPlayerEntity()).getWizardSkills()){
+        /*for (AbstractSkill s :((PlayerPeon) this.getPlayerEntity()).getWizardSkills()){
             s.setCooldownMax();
         }
-        ((PlayerPeon) this.getPlayerEntity()).getMechSkill().setCooldownMax();
+        ((PlayerPeon) this.getPlayerEntity()).getMechSkill().setCooldownMax();*/
 
         // Creates Items
         this.generateItemEntities();
