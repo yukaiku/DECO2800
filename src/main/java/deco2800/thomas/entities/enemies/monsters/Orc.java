@@ -1,5 +1,6 @@
 package deco2800.thomas.entities.enemies.monsters;
 
+import com.badlogic.gdx.graphics.Texture;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.AggressiveEnemy;
@@ -33,6 +34,7 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
     private final Animation<TextureRegion> orcIdle;
     private final Animation<TextureRegion> orcAttacking;
     //private final Animation<TextureRegion> orcWalking;
+    private final Texture icon;
     private float stateTimer;
     private int duration = 0;
     private MovementTask.Direction facingDirection;
@@ -98,6 +100,7 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
         //this.orcWalking = new Animation<> (0.1f,
                 //GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Walk"));
+        this.icon = GameManager.getManagerFromInstance(TextureManager.class).getTexture(identifier + "Icon");
     }
 
     /**
@@ -111,6 +114,11 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
             setMovementTask(new MovementTask(this,
                     super.getTarget().getPosition()));
         }
+    }
+
+    @Override
+    public Texture getIcon() {
+        return icon;
     }
 
     /**

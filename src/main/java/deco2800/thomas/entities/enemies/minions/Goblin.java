@@ -1,5 +1,6 @@
 package deco2800.thomas.entities.enemies.minions;
 
+import com.badlogic.gdx.graphics.Texture;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.AggressiveEnemy;
@@ -36,7 +37,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
 
     private int duration = 0;
     private int tickFollowing = 30;
-    private int tickDetecting = 15;
+    private final Texture icon;
 
     // Range at which the goblin will begin to chase the player
     private final int followRange;
@@ -82,6 +83,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
         this.goblinAttacking = new Animation<> (0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
+        this.icon = GameManager.getManagerFromInstance(TextureManager.class).getTexture(identifier + "Icon");
         this.stateTimer = 0;
         currentState = State.IDLE;
         previousState = State.IDLE;
@@ -107,6 +109,11 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
     public void death() {
         GameManager.getManagerFromInstance(EnemyManager.class).removeSpecialEnemy(this);
         PlayerPeon.credit(2);
+    }
+
+    @Override
+    public Texture getIcon() {
+        return icon;
     }
 
     @Override

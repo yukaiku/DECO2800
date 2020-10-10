@@ -212,7 +212,6 @@ public class TextureManager extends AbstractManager {
             textureMap.put("dragonVolcanoIcon", new Texture("resources/enemies/dragon_volcano_icon.png"));
             textureMap.put("dragonTundraIcon", new Texture("resources/enemies/dragon_tundra_icon.png"));
             textureMap.put("dragonDesertIcon", new Texture("resources/enemies/dragon_desert_icon.png"));
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -460,8 +459,8 @@ public class TextureManager extends AbstractManager {
             addAnimationFramesCollection("dragonVolcanoIdle", "resources/enemies/dragon_volcano.png");
 
             // goblin attack sprites
-            addAnimationFramesSprite("goblinDesertAttack", "resources/enemies/goblin_desert_sprite_sheet.png",
-                    3, 350, 486, true);
+            addAnimationFramesSprite("goblinDesertAttack", "resources/enemies/goblin_desert_sprite_sheet_ext.png",
+                    6, 176, 326, true);
             addAnimationFramesSprite("goblinSwampAttack", "resources/enemies/goblin_swamp_sprite_sheet.png",
                     3, 350, 486, true);
             addAnimationFramesSprite("goblinTundraAttack", "resources/enemies/goblin_tundra_sprite_sheet.png",
