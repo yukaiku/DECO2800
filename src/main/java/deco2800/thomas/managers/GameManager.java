@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.desert.DesertWorld;
@@ -82,7 +83,6 @@ public class GameManager {
 		VOLCANO_WORLD
 	}
 	private ArrayList<WorldType> worldOrder;
-	private static int worldOrderNumber = 0;
 	public State state = State.RUN;
 	public enum State
 	{
@@ -282,7 +282,7 @@ public class GameManager {
 		// removes the previous enemy manager
 		managers.removeIf(manager -> manager instanceof EnemyManager);
 		this.getWorld().dispose(); // Dispose world
-		WorldType worldType = worldOrder.get(worldOrderNumber);
+		WorldType worldType = worldOrder.get(QuestTracker.orbTracker().size());
 		switch (worldType) {
 			//SWAMP , TUNDRA, DESERT, VOLCANO
 			case SWAMP_WORLD:
@@ -300,11 +300,6 @@ public class GameManager {
 		}
 		movedToNextWorld = true;
 		GameManager.get().state = State.TRANSITION;
-		if(worldOrderNumber < 4){
-			worldOrderNumber ++;
-		}else{
-			worldOrderNumber = 0;
-		}
 	}
 
 	/**

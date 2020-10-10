@@ -138,8 +138,11 @@ public abstract class AbstractWorld implements Tickable {
 		if (orbEntity != null) {
 			if (playerEntity.getPosition().equals(orbEntity.getPosition())) {
 				QuestTracker.increaseOrbs(orbEntity);
-				this.removeEntity(playerEntity);
-				GameManager.get().setNextWorld();
+				if(QuestTracker.orbTracker().size() != 4){
+					this.removeEntity(playerEntity);
+					GameManager.get().setNextWorld();
+				}
+
 			}
 		}
 	}

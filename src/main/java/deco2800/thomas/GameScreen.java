@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.entities.enemies.bosses.Boss;
 import deco2800.thomas.handlers.KeyboardManager;
@@ -412,14 +413,13 @@ public class GameScreen implements Screen, KeyDownObserver {
 		if (keycode == Input.Keys.F12 && GameManager.get().state == GameManager.State.RUN) {
 			GameManager.get().debugMode = !GameManager.get().debugMode;
 		}
-		if (GameManager.get().debugMode && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
+		if (GameManager.get().debugMode && !GameManager.get().getWorld().getType().equals("World") && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
 				Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
-			if (keycode == Input.Keys.P) {
+			if (keycode == Input.Keys.N) {
 				Boss boss = GameManager.getManagerFromInstance(EnemyManager.class).getBoss();
+				PlayerPeon playerPeon = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
+				playerPeon.setPosition(boss.getPosition().getCol(),boss.getPosition().getRow(),boss.getHeight());
 				boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
-				GameManager.get().getWorld().removeEntity(world.getPlayerEntity());
-				GameManager.get().setNextWorld();
-
 			}
 		}
 		if (keycode == Input.Keys.ESCAPE) {
