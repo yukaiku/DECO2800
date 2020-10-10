@@ -197,7 +197,7 @@ public class SwampWorld extends AbstractWorld {
 
     public void createDungeonPortal(float col, float row){
         Tile portalTile = getTile(col, row);
-        entities.add(new Portal(portalTile, false, "portal", "SwampDungeonPortal"));
+        entities.add(new Portal(portalTile, false, "swamp_portal", "SwampDungeonPortal"));
     }
 
     public void generateStaticEntities() {
