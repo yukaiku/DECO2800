@@ -27,6 +27,7 @@ public class Peon extends AgentEntity implements Tickable {
 	private float armour; // Reduces incoming damage
 	private int damage; // Base outgoing damage value
 	private DamageType vulnerability; // Peon takes extra damage from this damage type
+	private boolean isHealthLocked = false; // Lock the health for Watershield skill
 
 	/* Combat status of this entity */
 	protected boolean isAttacked = false;
@@ -56,7 +57,7 @@ public class Peon extends AgentEntity implements Tickable {
 		super(row, col, RenderConstants.PEON_RENDER, speed);
 		this.setTexture("spacman_ded");
 		this.effects = new CopyOnWriteArrayList<>();
-		this.damage = 10;
+		this.damage = 20;
 		this.armour = ARMOUR_CONSTANT; // No damage reduction
 		this.vulnerability = DamageType.NONE;
 		this.health = new HealthTracker(health);
@@ -67,7 +68,7 @@ public class Peon extends AgentEntity implements Tickable {
 	 * @param i Ticks since game start
 	 */
 	@Override
-	public void onTick(long i) {	
+	public void onTick(long i) {
 		// Update movement task
 		if (movementTask != null && movementTask.isAlive()) {
 			movementTask.onTick(i);
@@ -105,25 +106,28 @@ public class Peon extends AgentEntity implements Tickable {
 	 * Applies damage to the peon according to damage calculation algorithm.
 	 * @param damage The amount of damage to be taken by this AgentEntity.
 	 * @param damageType The type of damage to apply from DamageType enum.
-	 * @returns Damage dealt.
+	 * @return Damage dealt.
 	 */
 	public int applyDamage(int damage, DamageType damageType) {
 		int damageApplied = (int)(damage * (ARMOUR_CONSTANT / getArmour()));
 		if (damageType == vulnerability && vulnerability != DamageType.NONE) {
 			damageApplied *= 1.5f;
 		}
-		if (damageApplied > 0) {
-			// Reduce health
-			health.reduceHealth(damageApplied);
 
-			// Create floating damage text
-			WorldUtil.getFloatingDamageComponent().add(damageApplied, Color.RED,
-					WorldUtil.colRowToWorldCords(this.getCol() + 0.5f, this.getRow() + 2), 60);
-
-			// Update is attack status
-			isAttacked = true;
-			isAttackedCoolDown = 5;
+		if (isHealthLocked) {
+			damageApplied = 0;
 		}
+
+		// Reduce health
+		health.reduceHealth(damageApplied);
+
+		// Create floating damage text
+		WorldUtil.getFloatingDamageComponent().add(damageApplied, Color.RED,
+				WorldUtil.colRowToWorldCords(this.getCol() + 0.5f, this.getRow() + 2), 60);
+
+		// Update is attack status
+		isAttacked = true;
+		isAttackedCoolDown = 5;
 
 		return damageApplied;
 	}
@@ -240,7 +244,7 @@ public class Peon extends AgentEntity implements Tickable {
 
 	/**
 	 * Adds an amount of armour to the Peon
-	 * @param armour
+	 * @param armour additional armor value for peon
 	 */
 	public void addArmour(float armour) { this.armour += armour; }
 
@@ -284,11 +288,17 @@ public class Peon extends AgentEntity implements Tickable {
 
 	/**
 	 * Set sets the current base damage of the Peon
-	 * @param damage
+	 * @param damage new damage value for Peon
 	 */
 	public void setDamage(int damage) {
 		this.damage = damage;
 	}
+
+	/**
+	 * Increases an amount of Peon's damage
+	 * @param damage
+	 */
+	public void addDamage(int damage) { this.damage += damage;}
 
 	/**
 	 * Increases the health of this AgentEntity. by the given amount.
@@ -308,6 +318,20 @@ public class Peon extends AgentEntity implements Tickable {
 
 	public HealthTracker getHealthTracker() {
 		return this.health;
+	}
+
+	/**
+	 * Lock the health for WaterShield skill
+	 */
+	public void lockHealth() {
+		this.isHealthLocked = true;
+	}
+
+	/**
+	 * Unlock the health for WaterShield skill
+	 */
+	public void unlockHealth() {
+		this.isHealthLocked = false;
 	}
 
 	/**

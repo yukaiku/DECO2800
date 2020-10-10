@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.agent.QuestTracker;
@@ -29,7 +28,6 @@ import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.TutorialWorld;
 import deco2800.thomas.worlds.dungeons.DesertDungeon;
 import deco2800.thomas.worlds.tundra.TundraWorld;
-
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -170,7 +168,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 		Gdx.input.setInputProcessor(multiplexer);
 
 		GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
-//		GameManager.get().getManager(KeyboardManager.class).registerForKeyDown(this);
 
 		// Add listener to the buttons in the pause menu
 		resumeButton.addListener(new ClickListener() {
@@ -233,7 +230,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void renderGame(float delta ) {
 		handleRenderables();
 
-		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta);
+		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta, GameManager.get().getWorld().getWorldZoomable());
 		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
 
 		cameraEvent.position.set(camera.position);
@@ -258,7 +255,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 		rerenderMapObjects(batch, camera);
 		overlayRenderer.render(batchOverlay, cameraOverlay);
 		rendererEvent.render(batchEvent, cameraEvent);
-
 
 		spriteBatch.setProjectionMatrix(cameraOverlay.combined);
 
@@ -343,6 +339,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 			case GAMEOVER:
 			case VICTORY:
 				renderGameResult(delta);
+				break;
 			default:
 				break;
 		}

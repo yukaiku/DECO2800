@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.Rock;
+import deco2800.thomas.managers.GameManager;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;
@@ -72,7 +73,7 @@ public class CameraUtilTest {
         when(Gdx.input.isKeyPressed(zoomInKey)).thenReturn(true);
         doNothing().when(spyCamera).update();
 
-        CameraUtil.zoomableCamera(spyCamera, zoomInKey, zoomOutKey, 0.5f);
+        CameraUtil.zoomableCamera(spyCamera, zoomInKey, zoomOutKey, 0.5f, true);
 
         assertEquals(0.5f, spyCamera.zoom, 0.1f);
     }
@@ -91,7 +92,7 @@ public class CameraUtilTest {
         when(Gdx.input.isKeyPressed(zoomInKey)).thenReturn(true);
         doNothing().when(spyCamera).update();
 
-        CameraUtil.zoomableCamera(spyCamera, zoomInKey, zoomOutKey, 0.6f);
+        CameraUtil.zoomableCamera(spyCamera, zoomInKey, zoomOutKey, 0.6f, true);
 
         assertEquals(0.5f, spyCamera.zoom, 0.1f);
     }
@@ -110,7 +111,7 @@ public class CameraUtilTest {
         when(Gdx.input.isKeyPressed(zoomOutKey)).thenReturn(true);
         doNothing().when(spyCamera).update();
 
-        CameraUtil.zoomableCamera(spyCamera, zoomInKey, zoomOutKey, 0.5f);
+        CameraUtil.zoomableCamera(spyCamera, zoomInKey, zoomOutKey, 0.5f, true);
 
         assertEquals(1.5f, spyCamera.zoom, 0.1f);
     }
@@ -129,7 +130,7 @@ public class CameraUtilTest {
         when(Gdx.input.isKeyPressed(zoomOutKey)).thenReturn(true);
         doNothing().when(spyCamera).update();
 
-        CameraUtil.zoomableCamera(spyCamera, zoomInKey, zoomOutKey, 30f);
+        CameraUtil.zoomableCamera(spyCamera, zoomInKey, zoomOutKey, 30f, true);
 
         assertEquals(10f, spyCamera.zoom, 0.1f);
     }

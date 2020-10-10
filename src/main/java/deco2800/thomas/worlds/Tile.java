@@ -58,6 +58,17 @@ public class Tile {
 	@Expose
 	private boolean obstructed = false;
 
+	//Default Teleport attributes for Tile
+	private float teleportRow = 0;
+	private float teleportCol = 0;
+	private boolean teleportTile = false;
+
+	private boolean trapTile = false;
+	private boolean trapActivated = false;
+
+	private boolean rewardTile = false;
+	private boolean rewardActivated = false;
+
 	/**
 	 * Neighbours
 	 */
@@ -253,6 +264,64 @@ public class Tile {
 	public void setRow(float row) {
 		this.coords.setRow(row);
 	}
+
+	public void setTeleportRow(float row){
+		this.teleportRow = row;
+	}
+
+	public void setTeleportCol(float col){
+		this.teleportCol = col;
+	}
+
+	public void setTeleportTile(boolean teleport) {
+		this.teleportTile = teleport;
+	}
+
+	public float getTeleportRow() {
+		return this.teleportRow;
+	}
+
+	public float getTeleportCol() {
+		return this.teleportCol;
+	}
+
+	public boolean isTeleportTile() {
+		return this.teleportTile;
+	}
+
+	public void setTrapTile(boolean trap){
+		this.trapTile = trap;
+	}
+
+	public boolean isTrapTile() {
+		return this.trapTile;
+	}
+
+	public void setTrapActivated(boolean activated){
+		this.trapActivated = activated;
+	}
+
+	public boolean getTrapActivated() {
+		return this.trapActivated;
+	}
+
+	public void setRewardTile(boolean reward){
+		this.rewardTile = reward;
+	}
+
+	public boolean isRewardTile() {
+		return this.rewardTile;
+	}
+
+	public void setRewardActivated(boolean activated){
+		this.rewardActivated = activated;
+	}
+
+	public boolean getRewardActivated() {
+		return this.rewardActivated;
+	}
+
+
 
 
 }

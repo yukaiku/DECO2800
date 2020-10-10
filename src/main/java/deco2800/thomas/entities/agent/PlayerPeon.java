@@ -41,6 +41,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
     private int duration = 0;
 
     public static final int DEFAULT_HEALTH = 100;
+    public static int buffDamageTotal;
 
     // Player dialogue
     private static final Map<String, String> dialogues = new HashMap<>();
@@ -64,7 +65,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         this.setColRenderLength(1.4f);
         this.setRowRenderLength(1.8f);
         this.setFaction(EntityFaction.ALLY);
-
+        this.addDamage(buffDamageTotal);
         // Subscribe listeners
         GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
@@ -131,8 +132,26 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         dialogues.put("swamp", "Welcome adventure to Swamp Zone , to complete this stage, " +
                 "\nyou will have to locate the orb of muck. The monsters here are vulnerable to air");
 
+        dialogues.put("npc_swamp_dungeon_blue", "Step in the top gold tile to get the treasure ");
+
+        dialogues.put("npc_swamp_dungeon_green", "Yellow always speaks the truth ");
+
+        dialogues.put("npc_swamp_dungeon_orange", "White is the only truth-speaker ");
+
+        dialogues.put("npc_swamp_dungeon_red", "Step in the bottom gold tile to get the treasure ");
+
+        dialogues.put("npc_swamp_dungeon_white", "I totally agree with Blue ");
+
+        dialogues.put("npc_swamp_dungeon_yellow", "Step in the middle gold tile to get the treasure ");
+
         dialogues.put("volcano", "Welcome adventure to Volcano Zone , to complete this stage, " +
                 "\nyou will have to locate the orb of lava. The monsters here are vulnerable to earth");
+
+        dialogues.put("npc_lava_maze", "Welcome (N)ew comer to the legendary lava maze! Those" +
+                " who know their directions will know the (W)ay home. \n Those" +
+                " who enjoy a risk will find a reward in one corner of this" +
+                " deadly maze. \n \n Good luck Adventurer & don't forget" +
+                " to avoid the lava!");
 
         dialogues.put("tundra", "Welcome adventure to Tundra Zone , to complete this stage, " +
                 "\nyou will have to locate the orb of ice. The monsters here are vulnerable to fire");
@@ -299,7 +318,8 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
                 keycode == Input.Keys.A || keycode == Input.Keys.D) {
             this.startMovementTask(keycode);
         } else if (keycode == Input.Keys.NUM_1 || keycode == Input.Keys.NUM_2 ||
-                keycode == Input.Keys.NUM_3 || keycode == Input.Keys.NUM_4) {
+                keycode == Input.Keys.NUM_3 || keycode == Input.Keys.NUM_4 ||
+                keycode == Input.Keys.NUM_5) {
             this.swapSkill(keycode);
         }
     }
@@ -440,6 +460,11 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
      */
     @Override
     public void death() {
+        PlayerPeon.buffDamageTotal = 0;
+        for (AbstractSkill s : this.getWizardSkills()){
+            s.setCooldownMax();
+        }
+        this.getMechSkill().setCooldownMax();
         GameManager.get().getWorld().removeEntity(this);
         GameManager.get().getWorld().disposeEntity(this.getEntityID());
         GameManager.gameOver();
