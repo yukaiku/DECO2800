@@ -14,9 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.agent.QuestTracker;
+import deco2800.thomas.entities.enemies.bosses.Boss;
 import deco2800.thomas.handlers.KeyboardManager;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
@@ -410,7 +412,16 @@ public class GameScreen implements Screen, KeyDownObserver {
 		if (keycode == Input.Keys.F12 && GameManager.get().state == GameManager.State.RUN) {
 			GameManager.get().debugMode = !GameManager.get().debugMode;
 		}
+		if (GameManager.get().debugMode && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
+				Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
+			if (keycode == Input.Keys.P) {
+				Boss boss = GameManager.getManagerFromInstance(EnemyManager.class).getBoss();
+				boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
+				GameManager.get().getWorld().removeEntity(world.getPlayerEntity());
+				GameManager.get().setNextWorld();
 
+			}
+		}
 		if (keycode == Input.Keys.ESCAPE) {
 			if (GameManager.get().state == GameManager.State.RUN) {
 				GameManager.pause();
