@@ -139,7 +139,7 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("npc_swamp_dungeon_blue", new Texture("resources/npcs/npc_swamp_dungeon_blue.png"));
 			textureMap.put("npc_swamp_dungeon_red", new Texture("resources/npcs/npc_swamp_dungeon_red.png"));
 			textureMap.put("npc_swamp_dungeon_orange", new Texture("resources/npcs/npc_swamp_dungeon_orange.png"));
-			textureMap.put("npc_swamp_dungeon_white", new Texture("resources/npcs/npc_swamp_dungeon_white.png"));
+			textureMap.put("npc_swamp_dungeon_white", new Texture("resources/npcs/npc_swamp_dungeon_white.jpg"));
 			textureMap.put("npc_swamp_dungeon_yellow", new Texture("resources/npcs/npc_swamp_dungeon_yellow.png"));
 
 			//Health
@@ -305,6 +305,7 @@ public class TextureManager extends AbstractManager {
                     new Texture("resources/environment/swamp/entities/swamp_tree_log.png"));
             textureMap.put("swamp_tree_stub",
                     new Texture("resources/environment/swamp/entities/swamp_tree_stub.png"));
+            textureMap.put("swamp_portal", new Texture("resources/environment/portals/swamp_portal.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
