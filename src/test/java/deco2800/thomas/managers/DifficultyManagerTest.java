@@ -2,12 +2,15 @@ package deco2800.thomas.managers;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.InvalidEnemyException;
+import deco2800.thomas.entities.enemies.monsters.Orc;
 import deco2800.thomas.worlds.swamp.SwampWorld;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class DifficultyManagerTest extends BaseGDXTest {
     private DifficultyManager difficultyManager;
@@ -49,8 +52,20 @@ public class DifficultyManagerTest extends BaseGDXTest {
     public void testSetMaxHealth(){
         difficultyManager.setDifficultyLevel("Swamp");
         difficultyManager.setWildSpawnMaxHealth(0);
-        assertEquals(0,difficultyManager.getWildSpawnMaxHealth());
+        assertEquals(0,enemyManager.getEnemyConfig("swampOrc").getMaxHealth());
         assertEquals(25,playerPeon.getMaxHealth());
+        assertEquals(25,playerPeon.getCurrentHealth());
+    }
+
+    /***
+     * Testing the method of setting player health
+     */
+    @Test
+    public void testPlayerHealth(){
+        assertEquals(100, playerPeon.getCurrentHealth()); //Checking health before modifying
+        difficultyManager.setPlayerHealth(2);
+        assertEquals(50, playerPeon.getMaxHealth());
+        assertEquals(playerPeon.getCurrentHealth(), playerPeon.getMaxHealth());
     }
 
     /***
@@ -60,7 +75,10 @@ public class DifficultyManagerTest extends BaseGDXTest {
     public void testSwampDifficulty(){
         difficultyManager.setDifficultyLevel("Swamp");
         assertEquals("swamp",difficultyManager.getWorldType());
-        assertEquals(12,difficultyManager.getWildSpawnMaxHealth());
+        assertEquals(12,enemyManager.getEnemyConfig("swampOrc").getMaxHealth());
+        EnemyPeon orc = enemyManager.getEnemyConfig("swampOrc");
+        Orc orc1 = (Orc)orc;
+        assertEquals(0.0001f,orc1.getSpawnRate(), 0D);
     }
 
     /***
@@ -70,7 +88,10 @@ public class DifficultyManagerTest extends BaseGDXTest {
     public void testTundraDifficulty(){
         difficultyManager.setDifficultyLevel("Tundra");
         assertEquals("tundra",difficultyManager.getWorldType());
-        assertEquals(25,difficultyManager.getWildSpawnMaxHealth());
+        assertEquals(25,enemyManager.getEnemyConfig("tundraOrc").getMaxHealth());
+        EnemyPeon orc = enemyManager.getEnemyConfig("tundraOrc");
+        Orc orc1 = (Orc)orc;
+        assertEquals(0.0001f,orc1.getSpawnRate(), 0D);
     }
 
     /***
@@ -80,7 +101,10 @@ public class DifficultyManagerTest extends BaseGDXTest {
     public void testDesertDifficulty(){
         difficultyManager.setDifficultyLevel("Desert");
         assertEquals("desert",difficultyManager.getWorldType());
-        assertEquals(12,difficultyManager.getWildSpawnMaxHealth());
+        assertEquals(12,enemyManager.getEnemyConfig("desertOrc").getMaxHealth());
+        EnemyPeon orc = enemyManager.getEnemyConfig("desertOrc");
+        Orc orc1 = (Orc)orc;
+        assertEquals(0.0001f,orc1.getSpawnRate(), 0D);
     }
 
     /***
@@ -90,18 +114,15 @@ public class DifficultyManagerTest extends BaseGDXTest {
     public void testVolcanoDifficulty(){
         difficultyManager.setDifficultyLevel("Volcano");
         assertEquals("volcano",difficultyManager.getWorldType());
-        assertEquals(12,difficultyManager.getWildSpawnMaxHealth());
-    }
-
-    @Test
-    public void testPlayerHealth(){
-        difficultyManager.playerHealth(playerPeon, 2);
-        assertEquals(playerPeon.getMaxHealth(), 25*2);
-        assertEquals(playerPeon.getCurrentHealth(), playerPeon.getMaxHealth());
+        assertEquals(12,enemyManager.getEnemyConfig("volcanoOrc").getMaxHealth());
+        EnemyPeon orc = enemyManager.getEnemyConfig("volcanoOrc");
+        Orc orc1 = (Orc)orc;
+        assertEquals(0.0001f,orc1.getSpawnRate(), 0D);
     }
 
     @After
     public void tearDown() {
         difficultyManager = null;
+        enemyManager = null;
     }
 }

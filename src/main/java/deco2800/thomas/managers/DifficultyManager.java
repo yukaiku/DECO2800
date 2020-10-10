@@ -1,7 +1,12 @@
 package deco2800.thomas.managers;
 
+import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
+import deco2800.thomas.entities.enemies.EnemyPeon;
+import deco2800.thomas.entities.enemies.monsters.Orc;
+
+import java.util.List;
 
 /**
  * DifficultyManager handles the difficulty curve of the game
@@ -51,16 +56,17 @@ public class DifficultyManager extends TickableManager{
     }
 
     /***
-     * Getter for Wild Spawn Max Health
-     * @return wildSpawnMaxHealth
+     * Sets the wild spawn spawn rate
      */
-    public int getWildSpawnMaxHealth(){
-        return enemyManager.getEnemyConfig(this.type+"Orc").getMaxHealth();
+    public void setWildSpawnRate(float spawnRate){
+        EnemyPeon orc = enemyManager.getEnemyConfig(this.type+"Orc");
+        Orc orc1 = (Orc)orc;
+        orc1.setSpawnRate(spawnRate);
     }
 
     /***
      * Sets the world type
-     * @param type type of the world to be set
+     * @param type String of the world to be set
      */
     public void setWorldType(String type){
         this.type = type.toLowerCase();
@@ -76,9 +82,9 @@ public class DifficultyManager extends TickableManager{
 
     /***
      * Changes the player max health based on difficulty
-     * @param playerPeon    PlayerEntity
+     * @param difficulty int
      */
-    public void playerHealth(PlayerPeon playerPeon, int difficulty) {
+    public void setPlayerHealth(int difficulty) {
         //Sets the player max health
         playerPeon.setMaxHealth(25*difficulty);
         playerMaxHealth = playerPeon.getMaxHealth();
@@ -88,12 +94,18 @@ public class DifficultyManager extends TickableManager{
         }
     }
 
+    public void setPlayerSkillsCooldown(int difficulty){
+        List<AbstractSkill> wizardSkills = playerPeon.getWizardSkills();
+        for(AbstractSkill wizardSkill : wizardSkills){
+            wizardSkill.getCooldownMax();
+        }
+    }
+
     /***
      * Sets the difficulty of the game based off the current world
      */
     public void setDifficultyLevel(String type) {
         enemyManager = GameManager.getManagerFromInstance(EnemyManager.class);
-
         if(!getWorldType().equals(type)){
             setWorldType(type);
             int wildEnemyCap = enemyManager.getWildEnemyCap();
@@ -108,21 +120,24 @@ public class DifficultyManager extends TickableManager{
 
         switch (getWorldType()) {
             // Difficulty Settings for each world
-            //TODO: Update with more difficulty
             case "swamp":
-                playerHealth(playerPeon, 1);
+                setPlayerHealth(1);
+                setWildSpawnRate(0.0001f);
                 enemyManager.getBoss().setMaxHealth(100);
                 break;
             case "tundra":
-                playerHealth(playerPeon, 2);
+                setPlayerHealth(2);
+                setWildSpawnRate(0.0001f);
                 enemyManager.getBoss().setMaxHealth(150);
                 break;
             case "desert":
-                playerHealth(playerPeon, 3);
+                setPlayerHealth(3);
+                setWildSpawnRate(0.0001f);
                 enemyManager.getBoss().setMaxHealth(300);
                 break;
             case "volcano":
-                playerHealth(playerPeon, 4);
+                setPlayerHealth(4);
+                setWildSpawnRate(0.0001f);
                 enemyManager.getBoss().setMaxHealth(750);
                 break;
         }
@@ -135,5 +150,6 @@ public class DifficultyManager extends TickableManager{
      */
     @Override
     public void onTick(long i) {
+        //No on tick methods needed for now
     }
 }
