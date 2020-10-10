@@ -3,20 +3,16 @@ package deco2800.thomas.worlds.desert;
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.items.*;
 import deco2800.thomas.entities.npc.DesertNPC;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.environment.desert.*;
-import deco2800.thomas.entities.items.HealthPotion;
-import deco2800.thomas.entities.items.Item;
-import deco2800.thomas.entities.items.Shield;
-import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -191,10 +187,10 @@ public class DesertWorld extends AbstractWorld {
         for (int i = 0; i < NUM_SHIELDS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            Shield shield = new Shield(tile, false,
+            IronArmour ironArmour = new IronArmour(tile, false,
                     (PlayerPeon) getPlayerEntity(),"desert");
-            entities.add(shield);
-            this.allDesertDialogues.add(shield.getDisplay());
+            entities.add(ironArmour);
+            this.allDesertDialogues.add(ironArmour.getDisplay());
         }
 
         for (int i = 0; i < NUM_CHESTS; i++) {
@@ -205,6 +201,18 @@ public class DesertWorld extends AbstractWorld {
             entities.add(chest);
             this.allDesertDialogues.add(chest.getDisplay());
         }
+
+        Tile attackAmuletTile = getTile(4,-9);
+        Amulet attackAmulet = new Amulet(attackAmuletTile, false,
+                (PlayerPeon) this.getPlayerEntity(), "desert",10);
+        entities.add(attackAmulet);
+        this.allDesertDialogues.add(attackAmulet.getDisplay());
+
+        Tile cooldownring = getTile(23,-24);
+        CooldownRing cdring = new CooldownRing(cooldownring, false,
+                (PlayerPeon) this.getPlayerEntity(), "desert",0.5f);
+        entities.add(cdring);
+        this.allDesertDialogues.add(cdring.getDisplay());
     }
 
     /**

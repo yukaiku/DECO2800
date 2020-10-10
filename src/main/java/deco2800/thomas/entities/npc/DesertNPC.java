@@ -34,6 +34,7 @@ public class DesertNPC extends NonPlayablePeon implements Interactable {
         setIsActive(true);
         if ((this.getName().equals("DesertQuestNPC1") || this.getName().equals("DesertQuestNPC2")) && speechStage >= 1) {
             ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("desert"));
+            ((NPCDialog) tutorialDialogueBox).addHealer();
             tutorialDialogueBox.setShowing(true);
         }
     }

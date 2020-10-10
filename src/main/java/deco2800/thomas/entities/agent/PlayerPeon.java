@@ -41,6 +41,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
     private int duration = 0;
 
     public static final int DEFAULT_HEALTH = 100;
+    public static int buffDamageTotal;
 
     // Player dialogue
     private static final Map<String, String> dialogues = new HashMap<>();
@@ -64,7 +65,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         this.setColRenderLength(1.4f);
         this.setRowRenderLength(1.8f);
         this.setFaction(EntityFaction.ALLY);
-
+        this.addDamage(buffDamageTotal);
         // Subscribe listeners
         GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
@@ -459,6 +460,11 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
      */
     @Override
     public void death() {
+        PlayerPeon.buffDamageTotal = 0;
+        for (AbstractSkill s : this.getWizardSkills()){
+            s.setCooldownMax();
+        }
+        this.getMechSkill().setCooldownMax();
         GameManager.get().getWorld().removeEntity(this);
         GameManager.get().getWorld().disposeEntity(this.getEntityID());
         GameManager.gameOver();

@@ -6,10 +6,11 @@ import deco2800.thomas.tasks.combat.IceballAttackTask;
 
 public class IceballSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static final int MAX_COOLDOWN = 50;
+    private static int MAX_COOLDOWN = 50;
+    private static int original_MAX_COOLDOWN = 50;
     /* Damage multiplier to apply to the iceball.
     Multiplies the peon base damage value. */
-    private static final float DAMAGE_MULTIPLIER = 0.4f;
+    private static float DAMAGE_MULTIPLIER = 0.4f;
     /* Lifetime of explosion */
     /* Speed of projectile */
     private static final float SPEED = 0.5f;
@@ -36,6 +37,42 @@ public class IceballSkill extends AbstractSkill {
     public int getCooldownMax() {
         return MAX_COOLDOWN;
     }
+
+    /***
+     * Sets coooldown of skill
+     * @param maxCooldown cooldown of skill
+     */
+    public void setMaxCooldown(int maxCooldown){
+        MAX_COOLDOWN = maxCooldown;
+    }
+
+    /**
+     * Returns multiplier of skill
+     *
+     * @return Multiplier of skill.
+     */
+    public float getDamageMultiplier(){
+        return DAMAGE_MULTIPLIER;
+    }
+
+    /***
+     * Set multiplier of skill
+     *
+     * @param damageMultiplier multiplier of skill
+     */
+    public void setDamageMultiplier(float damageMultiplier){
+        this.DAMAGE_MULTIPLIER = damageMultiplier;
+    }
+
+    @Override
+    public void reduceCooldownMax(float percent){
+        if (MAX_COOLDOWN > 25) {
+            MAX_COOLDOWN = Math.round(MAX_COOLDOWN * (1.0f - percent));
+        }
+    }
+
+    @Override
+    public void setCooldownMax(){ MAX_COOLDOWN = original_MAX_COOLDOWN; }
 
     @Override
     public String getTexture() {

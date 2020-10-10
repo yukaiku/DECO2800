@@ -1,17 +1,25 @@
 package deco2800.thomas.managers;
 
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.combat.Knight;
+import deco2800.thomas.combat.skills.AbstractSkill;
+import deco2800.thomas.combat.skills.FireBombSkill;
+import deco2800.thomas.combat.skills.WaterShieldSkill;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.InvalidEnemyException;
+import deco2800.thomas.entities.enemies.monsters.Orc;
 import deco2800.thomas.worlds.swamp.SwampWorld;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class DifficultyManagerTest extends BaseGDXTest {
     private DifficultyManager difficultyManager;
     private EnemyManager enemyManager;
+    private PlayerManager playerManager;
     private SwampWorld swampWorld;
     private PlayerPeon playerPeon;
 
@@ -22,6 +30,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
     @Before
     public void setUp() throws InvalidEnemyException {
         difficultyManager = new DifficultyManager();
+        playerManager = GameManager.getManagerFromInstance(PlayerManager.class);
         playerPeon = new PlayerPeon(10f,5f,0.15f);
         swampWorld = new SwampWorld();
         swampWorld.setPlayerEntity(playerPeon);
@@ -49,9 +58,63 @@ public class DifficultyManagerTest extends BaseGDXTest {
     public void testSetMaxHealth(){
         difficultyManager.setDifficultyLevel("Swamp");
         difficultyManager.setWildSpawnMaxHealth(0);
-        assertEquals(0,difficultyManager.getWildSpawnMaxHealth());
-        assertEquals(50,playerPeon.getMaxHealth());
+        assertEquals(0,enemyManager.getEnemyConfig("swampOrc").getMaxHealth());
+        assertEquals(25,playerPeon.getMaxHealth());
+        assertEquals(25,playerPeon.getCurrentHealth());
     }
+
+    /***
+     * Testing the method of setting player health
+     */
+    @Test
+    public void testPlayerHealth(){
+        assertEquals(100, playerPeon.getCurrentHealth()); //Checking health before modifying
+        difficultyManager.setPlayerHealth(2);
+        assertEquals(50, playerPeon.getMaxHealth());
+        assertEquals(playerPeon.getCurrentHealth(), playerPeon.getMaxHealth());
+    }
+
+    /***
+     * Test mech skills
+     */
+    @Test
+    public void testMechSkills(){
+        playerManager.setKnight(Knight.WATER);
+        difficultyManager.setDifficultyLevel("Swamp");
+        AbstractSkill mechSkill = playerPeon.getMechSkill();
+        ((WaterShieldSkill) mechSkill).setMaxCooldown(0);
+        assertEquals(0, ((WaterShieldSkill) mechSkill).getCooldownMax());
+        playerManager.setKnight(Knight.FIRE);
+        playerPeon.updatePlayerSkills();
+        AbstractSkill mechSkill2 = playerPeon.getMechSkill();
+        ((FireBombSkill) mechSkill2).setMaxCooldown(0);
+        assertEquals(0, ((FireBombSkill) mechSkill2).getCooldownMax());
+    }
+
+    /***
+     * Test wizard skills
+     */
+//    @Test
+//    public void testWizardSkills(){
+//        difficultyManager.setDifficultyLevel("Swamp");
+//        playerManager.resetPlayer();
+//        playerManager.grantWizardSkill(WizardSkills.FIREBALL);
+//        playerManager.grantWizardSkill(WizardSkills.ICEBALL);
+//        playerManager.grantWizardSkill(WizardSkills.STING);
+//        difficultyManager.setWizardSkillCoolDown(1);
+//        List<AbstractSkill> wizardSkills = playerPeon.getWizardSkills();
+//        for(AbstractSkill wizardSkill : wizardSkills){
+//            switch (wizardSkill.getTexture()){
+//                case "iceballIcon": // Default 50
+//                    assertEquals(2,((IceballSkill) wizardSkill).getCooldownMax());
+//                case "fireballIcon": //Default 20
+//                    assertEquals(1,((FireballSkill) wizardSkill).getCooldownMax());
+//                case "stingIcon": //Default 50
+//                    assertEquals(2,((ScorpionStingSkill) wizardSkill).getCooldownMax());
+//
+//            }
+//        }
+//    }
 
     /***
      * Testing swamp difficulty settings
@@ -60,7 +123,10 @@ public class DifficultyManagerTest extends BaseGDXTest {
     public void testSwampDifficulty(){
         difficultyManager.setDifficultyLevel("Swamp");
         assertEquals("swamp",difficultyManager.getWorldType());
-        assertEquals(12,difficultyManager.getWildSpawnMaxHealth());
+        assertEquals(12,enemyManager.getEnemyConfig("swampOrc").getMaxHealth());
+        EnemyPeon orc = enemyManager.getEnemyConfig("swampOrc");
+        Orc orc1 = (Orc)orc;
+        assertEquals(0.0001f,orc1.getSpawnRate(), 0D);
     }
 
     /***
@@ -70,7 +136,10 @@ public class DifficultyManagerTest extends BaseGDXTest {
     public void testTundraDifficulty(){
         difficultyManager.setDifficultyLevel("Tundra");
         assertEquals("tundra",difficultyManager.getWorldType());
-        assertEquals(25,difficultyManager.getWildSpawnMaxHealth());
+        assertEquals(25,enemyManager.getEnemyConfig("tundraOrc").getMaxHealth());
+        EnemyPeon orc = enemyManager.getEnemyConfig("tundraOrc");
+        Orc orc1 = (Orc)orc;
+        assertEquals(0.0001f,orc1.getSpawnRate(), 0D);
     }
 
     /***
@@ -80,7 +149,10 @@ public class DifficultyManagerTest extends BaseGDXTest {
     public void testDesertDifficulty(){
         difficultyManager.setDifficultyLevel("Desert");
         assertEquals("desert",difficultyManager.getWorldType());
-        assertEquals(12,difficultyManager.getWildSpawnMaxHealth());
+        assertEquals(12,enemyManager.getEnemyConfig("desertOrc").getMaxHealth());
+        EnemyPeon orc = enemyManager.getEnemyConfig("desertOrc");
+        Orc orc1 = (Orc)orc;
+        assertEquals(0.0001f,orc1.getSpawnRate(), 0D);
     }
 
     /***
@@ -90,18 +162,16 @@ public class DifficultyManagerTest extends BaseGDXTest {
     public void testVolcanoDifficulty(){
         difficultyManager.setDifficultyLevel("Volcano");
         assertEquals("volcano",difficultyManager.getWorldType());
-        assertEquals(12,difficultyManager.getWildSpawnMaxHealth());
-    }
-
-    @Test
-    public void testPlayerHealth(){
-        difficultyManager.playerHealth(playerPeon, 2);
-        assertEquals(playerPeon.getMaxHealth(), 25*2);
-        assertEquals(playerPeon.getCurrentHealth(), playerPeon.getMaxHealth());
+        assertEquals(12,enemyManager.getEnemyConfig("volcanoOrc").getMaxHealth());
+        EnemyPeon orc = enemyManager.getEnemyConfig("volcanoOrc");
+        Orc orc1 = (Orc)orc;
+        assertEquals(0.0001f,orc1.getSpawnRate(), 0D);
     }
 
     @After
     public void tearDown() {
         difficultyManager = null;
+        enemyManager = null;
+        playerManager = null;
     }
 }

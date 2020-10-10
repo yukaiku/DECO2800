@@ -142,7 +142,8 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("npc_swamp_dungeon_white", new Texture("resources/npcs/npc_swamp_dungeon_white.png"));
 			textureMap.put("npc_swamp_dungeon_yellow", new Texture("resources/npcs/npc_swamp_dungeon_yellow.png"));
 
-			// health & game over screen
+			//Health
+			// Player health & game over screen
 			textureMap.put("health0", new Texture("resources/healthResources/health-bar-0.png"));
 			textureMap.put("health5", new Texture("resources/healthResources/health-bar-5.png"));
 			textureMap.put("health10", new Texture("resources/healthResources/health-bar-10.png"));
@@ -166,6 +167,12 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("health100", new Texture("resources/healthResources/health-bar-100.png"));
 			textureMap.put("game-over", new Texture("resources/healthResources/game-over.png"));
 
+			//boss health
+			textureMap.put("bossHealth-desert", new Texture("resources/healthResources/bossHealthBar-desert2.png"));
+			textureMap.put("bossHealth-volcano", new Texture("resources/healthResources/bossHealthBar-fire2.png"));
+			textureMap.put("bossHealth-tundra", new Texture("resources/healthResources/bossHealthBar-ice2.png"));
+			textureMap.put("bossHealth-swamp", new Texture("resources/healthResources/bossHealthBar-swamp2.png"));
+
 			// Attacks
 			textureMap.put("fireball_right", new Texture("resources/combat/fireball_right.png"));
 			textureMap.put("explosion", new Texture("resources/combat/explosive_fireball3.png"));
@@ -178,16 +185,33 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("player_left", new Texture("resources/player/leftmech1_move.png"));
 			textureMap.put("player_right", new Texture("resources/player/rightmech1_move.png"));
 
-			// Inventory
+			// Items
 			textureMap.put("potion_small", new Texture("resources/inventory/potion-small.png"));
 			textureMap.put("potion_large", new Texture("resources/inventory/potion-large.png"));
 			textureMap.put("armour_iron", new Texture("resources/inventory/armour-iron.png"));
 			textureMap.put("armour_wood", new Texture("resources/inventory/armour-wood.png"));
 			textureMap.put("treasure_box", new Texture("resources/inventory/treasure-box.png"));
+			textureMap.put("cdreduction_buff", new Texture("resources/inventory/cdreduction_buff.png"));
+			textureMap.put("attack_buff", new Texture("resources/inventory/attack_buff.png"));
 
 			//Inventory Menu
 			textureMap.put("inventory_menu", new Texture("resources/inventory_menu.png"));
 
+            textureMap.put("iconDefault", new Texture("resources/enemies/orc_swamp_icon.png"));
+            textureMap.put("orcSwampIcon", new Texture("resources/enemies/orc_swamp_icon.png"));
+            textureMap.put("orcVolcanoIcon", new Texture("resources/enemies/orc_volcano_icon.png"));
+            textureMap.put("orcTundraIcon", new Texture("resources/enemies/orc_tundra_icon.png"));
+            textureMap.put("orcDesertIcon", new Texture("resources/enemies/orc_desert_icon.png"));
+
+            textureMap.put("goblinSwampIcon", new Texture("resources/enemies/goblin_swamp_icon.png"));
+            textureMap.put("goblinVolcanoIcon", new Texture("resources/enemies/goblin_volcano_icon.png"));
+            textureMap.put("goblinTundraIcon", new Texture("resources/enemies/goblin_tundra_icon.png"));
+            textureMap.put("goblinDesertIcon", new Texture("resources/enemies/goblin_desert_icon.png"));
+
+            textureMap.put("dragonSwampIcon", new Texture("resources/enemies/dragon_swamp_icon.png"));
+            textureMap.put("dragonVolcanoIcon", new Texture("resources/enemies/dragon_volcano_icon.png"));
+            textureMap.put("dragonTundraIcon", new Texture("resources/enemies/dragon_tundra_icon.png"));
+            textureMap.put("dragonDesertIcon", new Texture("resources/enemies/dragon_desert_icon.png"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -341,8 +365,6 @@ public class TextureManager extends AbstractManager {
     }
 
 	private void addMinimapIcons() {
-		textureMap.put("iconDefault", new Texture("resources/enemies/orc_volcano_icon.png"));
-
 	}
 
 	/* ------------------------------------------------------------------------
