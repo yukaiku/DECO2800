@@ -68,14 +68,10 @@ public class DialogManager extends TickableManager {
 					showDialog(a);
 					numShowing++;
 				}
-				if (a.isShowing() && a.getVisibleTime() >= 750) {
-					a.setShowing(false);
-					hideDialog(a);
-				}
 				if (a.getRemove()){
+					a.getBox().setVisible(false);
 					ItemBox b = (ItemBox) a;
 					world.removeEntity(b.getItem());
-					a.setRemove(false);
 					hideDialog(a);
 				}
 			}
