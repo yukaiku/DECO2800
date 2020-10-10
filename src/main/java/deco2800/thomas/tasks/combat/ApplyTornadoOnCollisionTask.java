@@ -75,9 +75,6 @@ public class ApplyTornadoOnCollisionTask extends AbstractTask {
             Peon peon = (Peon) e;
             taskAlive = false;
             peon.applyDamage(((CombatEntity) entity).getDamage(), DamageType.COMMON);
-            if (peon.isDead()) {
-                peon.death();
-            }
         }
     }
 
