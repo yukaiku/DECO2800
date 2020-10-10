@@ -94,6 +94,10 @@ public class ItemBox extends AbstractDialogBox {
 		return secondary;
 	}
 
+	public Item getItem(){
+		return this.item;
+	}
+
 	/**
 	 * ChangeListener for the primary button which displays "Buy" or "Open"
 	 */

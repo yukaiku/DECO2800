@@ -10,6 +10,8 @@ import deco2800.thomas.tasks.combat.FireballAttackTask;
 public class FireballSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
     private static int MAX_COOLDOWN = 20;
+    private static int cooldown = 20;
+    private static final int originalCooldown = 20;
     /* Damage multiplier to apply to the fireball.
     Multiplies the peon base damage value. */
     private static float DAMAGE_MULTIPLIER = 0.4f;
@@ -68,6 +70,16 @@ public class FireballSkill extends AbstractSkill {
     public void setDamageMultiplier(float damageMultiplier){
         this.DAMAGE_MULTIPLIER = damageMultiplier;
     }
+
+    @Override
+    public void reduceCooldownMax(float percent){
+        if (cooldown > 10) {
+            cooldown = Math.round(cooldown * (1.0f - percent));
+        }
+    }
+
+    @Override
+    public void setCooldownMax(){ cooldown = originalCooldown; }
 
     /**
      * Returns a string containing the name of the texture that is used to represent

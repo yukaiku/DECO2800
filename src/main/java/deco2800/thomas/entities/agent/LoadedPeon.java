@@ -41,6 +41,13 @@ public class LoadedPeon extends Peon {
         }
     }
 
+    public static void healPlayer(int amount){
+        PlayerPeon player = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
+        if (!player.isDead() && player.getWallet() > 0) {
+            player.regenerateHealth(amount);
+        }
+    }
+
     public void takeMoney(float amount) {
         wallet -= amount;
     }

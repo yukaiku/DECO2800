@@ -178,12 +178,14 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("player_left", new Texture("resources/player/leftmech1_move.png"));
 			textureMap.put("player_right", new Texture("resources/player/rightmech1_move.png"));
 
-			// Inventory
+			// Items
 			textureMap.put("potion_small", new Texture("resources/inventory/potion-small.png"));
 			textureMap.put("potion_large", new Texture("resources/inventory/potion-large.png"));
 			textureMap.put("armour_iron", new Texture("resources/inventory/armour-iron.png"));
 			textureMap.put("armour_wood", new Texture("resources/inventory/armour-wood.png"));
 			textureMap.put("treasure_box", new Texture("resources/inventory/treasure-box.png"));
+			textureMap.put("cdreduction_buff", new Texture("resources/inventory/cdreduction_buff.png"));
+			textureMap.put("attack_buff", new Texture("resources/inventory/attack_buff.png"));
 
 			//Inventory Menu
 			textureMap.put("inventory_menu", new Texture("resources/inventory_menu.png"));
