@@ -35,6 +35,7 @@ public class TundraNPC extends NonPlayablePeon implements Interactable {
         setIsActive(true);
         if ((this.getName().equals("TundraQuestNPC1") || this.getName().equals("TundraQuestNPC2")) && speechStage >= 1) {
             ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("tundra"));
+            ((NPCDialog) tutorialDialogueBox).addHealer();
             tutorialDialogueBox.setShowing(true);
         }
     }

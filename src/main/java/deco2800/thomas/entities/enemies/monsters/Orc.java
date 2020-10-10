@@ -129,7 +129,7 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
     public void death() {
         GameManager.getManagerFromInstance(EnemyManager.class).
                 removeWildEnemy(this);
-        PlayerPeon.credit(40);
+        PlayerPeon.credit(5);
     }
 
     @Override

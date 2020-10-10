@@ -9,10 +9,12 @@ import deco2800.thomas.tasks.combat.FireballAttackTask;
  */
 public class FireballSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static final int cooldown = 20;
+    private static int MAX_COOLDOWN = 20;
+    private static int cooldown = 20;
+    private static final int originalCooldown = 20;
     /* Damage multiplier to apply to the fireball.
     Multiplies the peon base damage value. */
-    private static final float damageMultiplier = 0.4f;
+    private static float DAMAGE_MULTIPLIER = 0.4f;
     /* Speed of fireball */
     private static final float speed = 0.5f;
     /* Lifetime of fireball */
@@ -40,8 +42,44 @@ public class FireballSkill extends AbstractSkill {
      */
     @Override
     public int getCooldownMax() {
-        return cooldown;
+        return MAX_COOLDOWN;
     }
+
+    /***
+     * Sets coooldown of skill
+     * @param maxCooldown cooldown of skill
+     */
+    public void setMaxCooldown(int maxCooldown){
+        MAX_COOLDOWN = maxCooldown;
+    }
+
+    /**
+     * Returns multiplier of skill
+     *
+     * @return Multiplier of skill.
+     */
+    public float getDamageMultiplier(){
+        return DAMAGE_MULTIPLIER;
+    }
+
+    /***
+     * Set multiplier of skill
+     *
+     * @param damageMultiplier multiplier of skill
+     */
+    public void setDamageMultiplier(float damageMultiplier){
+        this.DAMAGE_MULTIPLIER = damageMultiplier;
+    }
+
+    @Override
+    public void reduceCooldownMax(float percent){
+        if (cooldown > 10) {
+            cooldown = Math.round(cooldown * (1.0f - percent));
+        }
+    }
+
+    @Override
+    public void setCooldownMax(){ cooldown = originalCooldown; }
 
     /**
      * Returns a string containing the name of the texture that is used to represent
@@ -63,7 +101,7 @@ public class FireballSkill extends AbstractSkill {
      */
     @Override
     protected AbstractTask getTask(float targetX, float targetY) {
-        int damage = (int) (entity.getDamage() * damageMultiplier);
+        int damage = (int) (entity.getDamage() * DAMAGE_MULTIPLIER);
         return new FireballAttackTask(entity, targetX, targetY, damage, speed, lifetime);
     }
 }

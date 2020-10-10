@@ -10,7 +10,8 @@ import deco2800.thomas.tasks.combat.HealTask;
  */
 public class HealSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static final int MAX_COOLDOWN = 200;
+    private static int MAX_COOLDOWN = 200;
+    private static final int original_MAX_COOLDOWN = 200;
     /* The health ratio based on the max health of the entity */
     private static final float HEALTH_RATIO = 0.3f;
     /* Reference to parent entity */
@@ -27,6 +28,16 @@ public class HealSkill extends AbstractSkill {
     public int getCooldownMax() {
         return MAX_COOLDOWN;
     }
+
+    @Override
+    public void reduceCooldownMax(float percent){
+        if (MAX_COOLDOWN > 100) {
+            MAX_COOLDOWN = Math.round(MAX_COOLDOWN * (1.0f - percent));
+        }
+    }
+
+    @Override
+    public void setCooldownMax(){ MAX_COOLDOWN = original_MAX_COOLDOWN;}
 
     @Override
     public String getTexture() {

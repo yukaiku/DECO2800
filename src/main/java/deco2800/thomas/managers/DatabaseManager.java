@@ -309,7 +309,7 @@ public final class DatabaseManager extends AbstractManager {
                     reader.endObject();
                     return entity;
                 case WALLETSTRING:
-                    ((PlayerPeon) entity).credit((float) reader.nextDouble());
+                    ((PlayerPeon) entity).credit((int) reader.nextDouble());
                     return entity;
                 case "entityID":
                     entity.setEntityID(reader.nextInt());
