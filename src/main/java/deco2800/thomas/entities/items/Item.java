@@ -136,7 +136,7 @@ public class Item extends StaticEntity implements KeyDownObserver {
     }
 
     public static void dropRandomItem(){
-
+        /* Currently not implemented */
     }
 
    

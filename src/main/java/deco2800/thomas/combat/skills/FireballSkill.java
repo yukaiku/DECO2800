@@ -9,12 +9,12 @@ import deco2800.thomas.tasks.combat.FireballAttackTask;
  */
 public class FireballSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static int MAX_COOLDOWN = 20;
+    private static int maxCoolDown = 20;
     private static int cooldown = 20;
-    private static final int originalCooldown = 20;
+    private static final int ORIGINAL_COOLDOWN = 20;
     /* Damage multiplier to apply to the fireball.
     Multiplies the peon base damage value. */
-    private static float DAMAGE_MULTIPLIER = 0.4f;
+    private static float damageMultiplier = 0.4f;
     /* Speed of fireball */
     private static final float speed = 0.5f;
     /* Lifetime of fireball */
@@ -42,15 +42,15 @@ public class FireballSkill extends AbstractSkill {
      */
     @Override
     public int getCooldownMax() {
-        return MAX_COOLDOWN;
+        return maxCoolDown;
     }
 
     /***
      * Sets coooldown of skill
-     * @param maxCooldown cooldown of skill
+     * @param maxCoolDown cooldown of skill
      */
-    public void setMaxCooldown(int maxCooldown){
-        MAX_COOLDOWN = maxCooldown;
+    public static void setMaxCooldown(int maxCoolDown){
+        FireballSkill.maxCoolDown = maxCoolDown;
     }
 
     /**
@@ -59,7 +59,7 @@ public class FireballSkill extends AbstractSkill {
      * @return Multiplier of skill.
      */
     public float getDamageMultiplier(){
-        return DAMAGE_MULTIPLIER;
+        return damageMultiplier;
     }
 
     /***
@@ -67,8 +67,8 @@ public class FireballSkill extends AbstractSkill {
      *
      * @param damageMultiplier multiplier of skill
      */
-    public void setDamageMultiplier(float damageMultiplier){
-        this.DAMAGE_MULTIPLIER = damageMultiplier;
+    public static void setDamageMultiplier(float damageMultiplier){
+        FireballSkill.damageMultiplier = damageMultiplier;
     }
 
     @Override
@@ -79,7 +79,7 @@ public class FireballSkill extends AbstractSkill {
     }
 
     @Override
-    public void setCooldownMax(){ cooldown = originalCooldown; }
+    public void setCooldownMax(){ cooldown = ORIGINAL_COOLDOWN; }
 
     /**
      * Returns a string containing the name of the texture that is used to represent
@@ -101,7 +101,7 @@ public class FireballSkill extends AbstractSkill {
      */
     @Override
     protected AbstractTask getTask(float targetX, float targetY) {
-        int damage = (int) (entity.getDamage() * DAMAGE_MULTIPLIER);
+        int damage = (int) (entity.getDamage() * damageMultiplier);
         return new FireballAttackTask(entity, targetX, targetY, damage, speed, lifetime);
     }
 }

@@ -232,6 +232,12 @@ public class MovementTask extends AbstractTask {
 		}
 	}
 
+	/**
+	 * Checks whether the tile at the new position is a teleport tile &
+	 * teleports the player to the tile's respective teleport coordinates.
+	 *
+	 * @param position - Square Vector of upcoming position of the entity.
+	 */
 	private void checkForTeleportTile(SquareVector position) {
 		// get the next tile
 		Tile tile = gameManager.getWorld().getTile(position);
@@ -239,9 +245,7 @@ public class MovementTask extends AbstractTask {
 		if (tile != null && tile.isTeleportTile()) {
 			path = null;
 
-
-			//Remove Trap Entity HERE
-
+			//Remove Teleport trigger Entity HERE
 			float newCol = tile.getTeleportCol();
 			float newRow = tile.getTeleportRow();
 
@@ -251,6 +255,12 @@ public class MovementTask extends AbstractTask {
 		}
 	}
 
+	/**
+	 * Checks whether the tile at the new position is a trap tile &
+	 * initiates the tile's respective trap should there be one.
+	 *
+	 * @param position - Square Vector of upcoming position of the entity.
+	 */
 	private void checkForTrapTile(SquareVector position) {
 		// get the next tile
 		Tile tile = gameManager.getWorld().getTile(position);
@@ -266,6 +276,12 @@ public class MovementTask extends AbstractTask {
 		}
 	}
 
+	/**
+	 * Checks whether the tile at the new position is a reward tile &
+	 * initiates the tile's respective reward should there be one.
+	 *
+	 * @param position - Square Vector of upcoming position of the entity.
+	 */
 	private void checkForRewardTile(SquareVector position) {
 		// get the next tile
 		Tile tile = gameManager.getWorld().getTile(position);

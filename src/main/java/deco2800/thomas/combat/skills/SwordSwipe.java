@@ -11,8 +11,8 @@ import deco2800.thomas.util.SquareVector;
  */
 public class SwordSwipe extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static int MAX_COOLDOWN = 10 * 50; // 50 is a magic number ):
-    private static int original_MAX_COOLDOWN = 10 * 50;
+    private static int maxCoolDown = 10 * 50; // 50 is a magic number ):
+    private static final int ORIGINAL_MAXCOOLDOWN = 10 * 50;
     /* Damage multiplier to apply to the ice tile.
     Multiplies the peon base damage value. */
     private static final float DAMAGE_MULTIPLIER = 0.4f;
@@ -39,18 +39,18 @@ public class SwordSwipe extends AbstractSkill {
      */
     @Override
     public int getCooldownMax() {
-        return MAX_COOLDOWN;
+        return maxCoolDown;
     }
 
     @Override
     public void reduceCooldownMax(float percent){
-        if (MAX_COOLDOWN > 250) {
-            MAX_COOLDOWN = Math.round(MAX_COOLDOWN * (1.0f - percent));
+        if (maxCoolDown > 250) {
+            maxCoolDown = Math.round(maxCoolDown * (1.0f - percent));
         }
     }
 
     @Override
-    public void setCooldownMax(){ MAX_COOLDOWN = original_MAX_COOLDOWN; }
+    public void setCooldownMax(){ maxCoolDown = ORIGINAL_MAXCOOLDOWN; }
 
     /**
      * Returns a string containing the name of the texture that is used to represent

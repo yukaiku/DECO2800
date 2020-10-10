@@ -82,12 +82,12 @@ public class DifficultyManagerTest extends BaseGDXTest {
         playerManager.setKnight(Knight.WATER);
         difficultyManager.setDifficultyLevel("Swamp");
         AbstractSkill mechSkill = playerPeon.getMechSkill();
-        ((WaterShieldSkill) mechSkill).setMaxCooldown(0);
+        ((WaterShieldSkill) mechSkill).setMaxCoolDown(0);
         assertEquals(0, ((WaterShieldSkill) mechSkill).getCooldownMax());
         playerManager.setKnight(Knight.FIRE);
         playerPeon.updatePlayerSkills();
         AbstractSkill mechSkill2 = playerPeon.getMechSkill();
-        ((FireBombSkill) mechSkill2).setMaxCooldown(0);
+        ((FireBombSkill) mechSkill2).setMaxCoolDown(0);
         assertEquals(0, ((FireBombSkill) mechSkill2).getCooldownMax());
     }
 

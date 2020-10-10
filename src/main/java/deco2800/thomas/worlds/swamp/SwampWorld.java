@@ -3,6 +3,8 @@ package deco2800.thomas.worlds.swamp;
 import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.environment.Portal;
+import deco2800.thomas.entities.environment.volcano.VolcanoPortal;
 import deco2800.thomas.entities.items.*;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.SwampNPC;
@@ -193,12 +195,18 @@ public class SwampWorld extends AbstractWorld {
         entities.add(new SwampFallenTree((this.getTile(23, 13)), true));
     }
 
+    public void createDungeonPortal(float col, float row){
+        Tile portalTile = getTile(col, row);
+        entities.add(new Portal(portalTile, false, "swamp_portal", "SwampDungeonPortal"));
+    }
+
     public void generateStaticEntities() {
         this.createPond();
         this.createDeadTree();
         this.createTreeStub();
         this.createFallenTree();
         this.createTreeLog();
+        this.createDungeonPortal(-7, 9);
     }
 
     /**
