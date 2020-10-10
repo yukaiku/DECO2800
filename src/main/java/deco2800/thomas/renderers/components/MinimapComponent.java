@@ -1,5 +1,6 @@
 package deco2800.thomas.renderers.components;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -30,6 +31,11 @@ public class MinimapComponent extends OverlayComponent {
         int width = 0;
         int height = 0;
         tileMap = GameManager.get().getWorld().getTiles();
+        String worldType = GameManager.get().getWorld().getType();
+        if (!(worldType.equals("Desert") || worldType.equals("Tundra") ||
+                worldType.equals("Volcano") || worldType.equals("Swamp"))) {
+            return;
+        }
 
         batch.begin();
 
@@ -68,10 +74,11 @@ public class MinimapComponent extends OverlayComponent {
     }
 
     private void renderEnemy(SpriteBatch batch, EnemyPeon enemy) {
-        Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(enemy.getTexture());
-        batch.draw(tex, overlayRenderer.getX() + overlayRenderer.getWidth() - 310 + 6.3f * (enemy.getCol() + 25),
-                overlayRenderer.getY() + overlayRenderer.getHeight() - 775 +  6.3f * (enemy.getRow() - 24), tex.getWidth() * 0.075f,
-                tex.getHeight() * 0.075f);
+        Texture tex = enemy.getIcon();
+        //Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(enemy.getTexture());
+        batch.draw(tex, overlayRenderer.getX() + overlayRenderer.getWidth() - 350 + 6.3f * (enemy.getCol() + 25),
+                overlayRenderer.getY() + overlayRenderer.getHeight() - 795 +  6.3f * (enemy.getRow() - 24), tex.getWidth() * 0.2f,
+                tex.getHeight() * 0.2f);
     }
 
     private void renderTile(SpriteBatch batch, Tile tile, int height, int width) {
@@ -88,7 +95,8 @@ public class MinimapComponent extends OverlayComponent {
                 tex.getHeight() * 0.1f);
     }
     private void renderBoss(SpriteBatch batch, EnemyPeon boss) {
-        Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(boss.getTexture());
+        Texture tex = boss.getIcon();
+        //Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(boss.getTexture());
         batch.draw(tex, overlayRenderer.getX() + overlayRenderer.getWidth() - 310 + 6.3f * (boss.getCol() + 25),
                 overlayRenderer.getY() + overlayRenderer.getHeight() - 775 +  6.3f * (boss.getRow() - 24), tex.getWidth() * 0.035f,
                 tex.getHeight() * 0.035f);
