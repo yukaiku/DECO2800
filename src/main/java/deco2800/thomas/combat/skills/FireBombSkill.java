@@ -10,8 +10,8 @@ import deco2800.thomas.tasks.combat.FireBombAttackTask;
  */
 public class FireBombSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static int MAX_COOLDOWN = 160;
-    private static final int original_MAX_COOLDOWN = 160;
+    private static int maxCoolDown = 160;
+    private static final int ORIGINAL_MAXCOOLDOWN = 160;
 
     /* Damage multiplier to apply to the explosion.
     Multiplies the peon base damage value. */
@@ -47,7 +47,7 @@ public class FireBombSkill extends AbstractSkill {
      */
     @Override
     public int getCooldownMax() {
-        return MAX_COOLDOWN;
+        return maxCoolDown;
     }
 
     /***
@@ -55,7 +55,7 @@ public class FireBombSkill extends AbstractSkill {
      * @param maxCooldown cooldown of skill
      */
     public static void setMaxCoolDown(int maxCooldown){
-        MAX_COOLDOWN = maxCooldown;
+        FireBombSkill.maxCoolDown = maxCooldown;
     }
 
     /**
@@ -78,13 +78,13 @@ public class FireBombSkill extends AbstractSkill {
 
     @Override
     public void reduceCooldownMax(float percent){
-        if (MAX_COOLDOWN > 80) {
-            MAX_COOLDOWN = Math.round(MAX_COOLDOWN * (1.0f - percent));
+        if (maxCoolDown > 80) {
+            maxCoolDown = Math.round(maxCoolDown * (1.0f - percent));
         }
     }
 
     @Override
-    public void setCooldownMax(){ MAX_COOLDOWN = original_MAX_COOLDOWN;}
+    public void setCooldownMax(){ maxCoolDown = ORIGINAL_MAXCOOLDOWN;}
 
 
     /**
