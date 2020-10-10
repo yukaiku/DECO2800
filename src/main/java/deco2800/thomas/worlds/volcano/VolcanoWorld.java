@@ -159,6 +159,7 @@ public class VolcanoWorld extends AbstractWorld {
         final int NUM_POTIONS = 6;
         final int NUM_SHIELDS = 4;
         final int NUM_CHESTS = 3;
+        final String ITEM_BOX_STYLE = "volcano";
 
 
         for (int i = 0; i < NUM_POTIONS; i++) {
@@ -167,7 +168,7 @@ public class VolcanoWorld extends AbstractWorld {
             if (Integer.parseInt(tile.getTextureName().split("_")[1]) < 5
             && !tile.hasParent()) {
                 HealthPotion potion = new HealthPotion(tile,false,
-                        (PlayerPeon) getPlayerEntity(), "volcano");
+                        (PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
                 entities.add(potion);
                 this.allVolcanoDialogues.add(potion.getDisplay());
 
@@ -184,7 +185,7 @@ public class VolcanoWorld extends AbstractWorld {
             if (Integer.parseInt(tile.getTextureName().split("_")[1]) < 5
                     && !tile.hasParent()) {
                 IronArmour ironArmour = new IronArmour(tile, false,
-                        (PlayerPeon) getPlayerEntity(),"volcano");
+                        (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
                 entities.add(ironArmour);
                 this.allVolcanoDialogues.add(ironArmour.getDisplay());
             } else {
@@ -198,7 +199,7 @@ public class VolcanoWorld extends AbstractWorld {
             if (Integer.parseInt(tile.getTextureName().split("_")[1]) < 5
                     && !tile.hasParent()) {
                 Treasure chest = new Treasure(tile, false,
-                        (PlayerPeon) getPlayerEntity(),"volcano");
+                        (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
                 entities.add(chest);
                 this.allVolcanoDialogues.add(chest.getDisplay());
             } else {
@@ -208,13 +209,13 @@ public class VolcanoWorld extends AbstractWorld {
 
         Tile cooldownring = getTile(20,-7);
         CooldownRing cdring = new CooldownRing(cooldownring, false,
-                (PlayerPeon) this.getPlayerEntity(), "volcano",0.5f);
+                (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,0.5f);
         entities.add(cdring);
         this.allVolcanoDialogues.add(cdring.getDisplay());
 
         Tile attackAmuletTile = getTile(2,14);
         Amulet attackAmulet = new Amulet(attackAmuletTile, false,
-                (PlayerPeon) this.getPlayerEntity(), "volcano",10);
+                (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,10);
         entities.add(attackAmulet);
         this.allVolcanoDialogues.add(attackAmulet.getDisplay());
     }
