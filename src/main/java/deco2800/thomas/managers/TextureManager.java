@@ -384,6 +384,9 @@ public class TextureManager extends AbstractManager {
         try {
             // players
             addAnimationFramesCollection("playerIdle", "resources/player/rightmech1_move.png");
+            addAnimationFramesCollection("playerWalk", "resources/player/rightmech1_walk1.png",
+                    "resources/player/rightmech1_walk2.png", "resources/player/rightmech1_walk3.png",
+                    "resources/player/rightmech1_walk4.png");
             addAnimationFramesCollection("playerMelee", "resources/player/rightmech1_melee3.png",
                     "resources/player/rightmech1_melee1.png", "resources/player/rightmech1_melee2.png",
                     "resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee1.png",
@@ -397,6 +400,7 @@ public class TextureManager extends AbstractManager {
             addAnimationFramesCollection("playerFireballDefault", "resources/combat/right_skill1_fire1.png");
             addAnimationFramesCollection("playerSpin", "resources/player/rightmech1_move.png",
                     "resources/player/leftmech1_move.png");
+
 
             // fireballs
             addAnimationFramesCollection("fireballDefault", "resources/combat/fireball_right.png");
