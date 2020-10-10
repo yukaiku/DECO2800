@@ -4,7 +4,7 @@ import deco2800.thomas.managers.GameManager;
 
 public class LoadedPeon extends Peon {
 
-    private float wallet = 0f;
+    private int wallet = 0;
 
     public LoadedPeon(){
         this.wallet = 0;
@@ -15,26 +15,26 @@ public class LoadedPeon extends Peon {
         super(row, col, speed, health);
     }
 
-    public float getWallet() {
+    public int getWallet() {
         return wallet;
     }
 
-    public static float checkBalance() {
+    public static int checkBalance() {
         PlayerPeon player = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
         if (!player.isDead()) {
             return player.getWallet();
         }
-        return 0f;
+        return 0;
     }
 
-    public static void debit(float amount) {
+    public static void debit(int amount) {
         PlayerPeon player = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
         if (!player.isDead() && amount > 0) {
             player.takeMoney(amount);
         }
     }
 
-    public static void credit(float amount) {
+    public static void credit(int amount) {
         PlayerPeon player = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
         if (!player.isDead() && amount > 0) {
             player.addMoney(amount);
@@ -48,11 +48,11 @@ public class LoadedPeon extends Peon {
         }
     }
 
-    public void takeMoney(float amount) {
+    public void takeMoney(int amount) {
         wallet -= amount;
     }
 
-    public void addMoney(float amount) {
+    public void addMoney(int amount) {
         wallet += amount;
     }
 }
