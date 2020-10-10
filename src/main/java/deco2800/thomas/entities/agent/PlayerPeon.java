@@ -282,10 +282,12 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
 
         if (button == Input.Buttons.LEFT) {
             try {
-                //Set combat task to fireball task
-                AbstractSkill wizardSkill = wizardSkills.get(activeWizardSkill);
-                if (wizardSkill.getCooldownRemaining() <= 0) {
-                    this.setCombatTask(wizardSkill.getNewSkillTask(clickedPosition[0], clickedPosition[1]));
+                // Set combat task
+                if (clickedPosition[0] != getCol() || clickedPosition[1] != getRow()) {
+                    AbstractSkill wizardSkill = wizardSkills.get(activeWizardSkill);
+                    if (wizardSkill.getCooldownRemaining() <= 0) {
+                        this.setCombatTask(wizardSkill.getNewSkillTask(clickedPosition[0], clickedPosition[1]));
+                    }
                 }
             } catch (SkillOnCooldownException e) {
                 // Won't occur because I'm handling it.
