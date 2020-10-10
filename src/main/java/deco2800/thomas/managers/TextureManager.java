@@ -142,7 +142,8 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("npc_swamp_dungeon_white", new Texture("resources/npcs/npc_swamp_dungeon_white.png"));
 			textureMap.put("npc_swamp_dungeon_yellow", new Texture("resources/npcs/npc_swamp_dungeon_yellow.png"));
 
-			// health & game over screen
+			//Health
+			// Player health & game over screen
 			textureMap.put("health0", new Texture("resources/healthResources/health-bar-0.png"));
 			textureMap.put("health5", new Texture("resources/healthResources/health-bar-5.png"));
 			textureMap.put("health10", new Texture("resources/healthResources/health-bar-10.png"));
@@ -165,6 +166,12 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("health95", new Texture("resources/healthResources/health-bar-95.png"));
 			textureMap.put("health100", new Texture("resources/healthResources/health-bar-100.png"));
 			textureMap.put("game-over", new Texture("resources/healthResources/game-over.png"));
+
+			//boss health
+			textureMap.put("bossHealth-desert", new Texture("resources/healthResources/bossHealthBar-desert2.png"));
+			textureMap.put("bossHealth-volcano", new Texture("resources/healthResources/bossHealthBar-fire2.png"));
+			textureMap.put("bossHealth-tundra", new Texture("resources/healthResources/bossHealthBar-ice2.png"));
+			textureMap.put("bossHealth-swamp", new Texture("resources/healthResources/bossHealthBar-swamp2.png"));
 
 			// Attacks
 			textureMap.put("fireball_right", new Texture("resources/combat/fireball_right.png"));
