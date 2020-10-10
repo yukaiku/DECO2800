@@ -466,13 +466,18 @@ public final class DatabaseManager extends AbstractManager {
             return;
         }
 
-        if (saveLocationAndFilename.equals("resources/environment/desert/desert_map.json")) {
-            newTiles = setDesertTiles(newTiles);
-        } else if (saveLocationAndFilename.equals("resources/environment/volcano/VolcanoZone.json")) {
-            newTiles = setVolcanoTiles(newTiles);
-        } else if (saveLocationAndFilename.equals("resources/environment/tundra/tundra-map.json")
-                || saveLocationAndFilename.equals("resources/environment/tundra/tundra-map-tiles-only.json")) {
-            newTiles = setTundraTiles(newTiles);
+        switch (saveLocationAndFilename) {
+            case "resources/environment/desert/desert_map.json":
+            case "resources/environment/desert/desert_dungeon_map.json":
+                newTiles = setDesertTiles(newTiles);
+                break;
+            case "resources/environment/volcano/VolcanoZone.json":
+                newTiles = setVolcanoTiles(newTiles);
+                break;
+            case "resources/environment/tundra/tundra-map.json":
+            case "resources/environment/tundra/tundra-map-tiles-only.json":
+                newTiles = setTundraTiles(newTiles);
+                break;
         }
 
         world.setTiles(newTiles);

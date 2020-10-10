@@ -27,6 +27,7 @@ import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.TutorialWorld;
+import deco2800.thomas.worlds.dungeons.DesertDungeon;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
@@ -100,7 +101,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		ENV_TEAM_GAME {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new VolcanoWorld();
+				AbstractWorld world = new DesertDungeon();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
