@@ -1,12 +1,9 @@
 package deco2800.thomas.managers;
 
-import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.monsters.Orc;
-
-import java.util.List;
 
 /**
  * DifficultyManager handles the difficulty curve of the game
@@ -19,6 +16,7 @@ import java.util.List;
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/Difficulty%20Curve
  */
+//:todo Update player damage, and skill cooldown. Update spawnrate.
 public class DifficultyManager extends TickableManager{
     private PlayerPeon playerPeon;
     private String type = "";
@@ -91,13 +89,6 @@ public class DifficultyManager extends TickableManager{
         if(playerPeon.getCurrentHealth() > playerMaxHealth){
             //Sets max health based off number of orbs starting from 25 to 100
             playerPeon.setCurrentHealthValue(playerMaxHealth);
-        }
-    }
-
-    public void setPlayerSkillsCooldown(int difficulty){
-        List<AbstractSkill> wizardSkills = playerPeon.getWizardSkills();
-        for(AbstractSkill wizardSkill : wizardSkills){
-            wizardSkill.getCooldownMax();
         }
     }
 
