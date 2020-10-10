@@ -10,10 +10,11 @@ import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
  */
 public class ScorpionStingSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static final int MAX_COOLDOWN = 50;
+    private static int maxCoolDown = 50;
+    private static final int ORIGINAL_MAXCOOLDOWN = 50;
     /* Damage multiplier to apply to the ice tile.
     Multiplies the peon base damage value. */
-    private static final float DAMAGE_MULTIPLIER = 0.4f;
+    private static float damageMultiplier = 0.4f;
     /* Speed of projectile */
     private static final float SPEED = 0.5f;
     /* Lifetime of projectile */
@@ -41,8 +42,45 @@ public class ScorpionStingSkill extends AbstractSkill {
      */
     @Override
     public int getCooldownMax() {
-        return MAX_COOLDOWN;
+        return maxCoolDown;
     }
+
+    /***
+     * Sets coooldown of skill
+     * @param maxCoolDown cooldown of skill
+     */
+    public static void setMaxCoolDown(int maxCoolDown){
+        ScorpionStingSkill.maxCoolDown = maxCoolDown;
+    }
+
+    /**
+     * Returns multiplier of skill
+     *
+     * @return Multiplier of skill.
+     */
+    public float getDamageMultiplier(){
+        return damageMultiplier;
+    }
+
+    /***
+     * Set multiplier of skill
+     *
+     * @param damageMultiplier multiplier of skill
+     */
+    public static void setDamageMultiplier(float damageMultiplier){
+        ScorpionStingSkill.damageMultiplier = damageMultiplier;
+    }
+
+    @Override
+    public void reduceCooldownMax(float percent){
+        if (maxCoolDown > 25) {
+            maxCoolDown = Math.round(maxCoolDown * (1.0f - percent));
+        }
+    }
+
+    @Override
+    public void setCooldownMax(){ maxCoolDown = ORIGINAL_MAXCOOLDOWN; }
+
 
     /**
      * Returns a string containing the name of the texture that is used to represent
@@ -64,7 +102,7 @@ public class ScorpionStingSkill extends AbstractSkill {
      */
     @Override
     protected AbstractTask getTask(float targetX, float targetY) {
-        int damage = (int) (entity.getDamage() * DAMAGE_MULTIPLIER);
+        int damage = (int) (entity.getDamage() * damageMultiplier);
         return new ScorpionStingAttackTask(entity, targetX, targetY, damage, SPEED, LIFETIME);
     }
 }

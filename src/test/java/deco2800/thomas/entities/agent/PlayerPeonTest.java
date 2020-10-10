@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.KnightSkills;
+import deco2800.thomas.combat.Wizard;
 import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.combat.skills.FireBombSkill;
@@ -170,7 +171,7 @@ public class PlayerPeonTest extends BaseGDXTest {
         PlayerManager playerManager = mock(PlayerManager.class);
         PowerMockito.mockStatic(GameManager.class);
         when(GameManager.getManagerFromInstance(PlayerManager.class)).thenReturn(playerManager);
-        when(playerManager.getCurrentWizardSkills()).thenReturn(new CopyOnWriteArrayList<>() {{
+        when(playerManager.getCurrentWizardSkills()).thenReturn(new CopyOnWriteArrayList<WizardSkills>() {{
             add(WizardSkills.FIREBALL);
             add(WizardSkills.ICEBALL);
         }});
