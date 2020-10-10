@@ -12,7 +12,7 @@ import deco2800.thomas.tasks.combat.WaterShieldTask;
 public class WaterShieldSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
     private static int maxCoolDown = 200;
-    private static int original_MAX_COOLDOWN = 200;
+    private static final int ORIGINAL_MAXCOOLDOWN = 200;
     /* Lifetime of the shield */
     private static final int LIFETIME = 100;
     /* Reference to parent entity */
@@ -43,7 +43,7 @@ public class WaterShieldSkill extends AbstractSkill {
     }
 
     @Override
-    public void setCooldownMax(){ maxCoolDown = original_MAX_COOLDOWN; }
+    public void setCooldownMax(){ maxCoolDown = ORIGINAL_MAXCOOLDOWN; }
 
     @Override
     public String getTexture() {
