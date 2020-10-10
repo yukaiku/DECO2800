@@ -11,10 +11,7 @@ import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
 public class ScorpionStingSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
     private static int MAX_COOLDOWN = 50;
-<<<<<<< HEAD
-=======
     private static int original_MAX_COOLDOWN = 50;
->>>>>>> master
     /* Damage multiplier to apply to the ice tile.
     Multiplies the peon base damage value. */
     private static float DAMAGE_MULTIPLIER = 0.4f;
