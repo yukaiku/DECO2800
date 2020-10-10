@@ -4,8 +4,8 @@ import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.attacks.Fireball;
-import deco2800.thomas.entities.enemies.Dragon;
-import deco2800.thomas.entities.enemies.dragons.SwampDragon;
+import deco2800.thomas.entities.enemies.bosses.Dragon;
+import deco2800.thomas.entities.enemies.bosses.SwampDragon;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.util.SquareVector;
@@ -468,7 +468,8 @@ public final class DatabaseManager extends AbstractManager {
 
         if (saveLocationAndFilename.equals("resources/environment/desert/desert_map.json")) {
             newTiles = setDesertTiles(newTiles);
-        } else if (saveLocationAndFilename.equals("resources/environment/volcano/VolcanoZone.json")) {
+        } else if (saveLocationAndFilename.equals("resources/environment/volcano/VolcanoZone.json") ||
+                saveLocationAndFilename.equals("resources/environment/dungeons/VolcanoDungeonMaze.json")) {
             newTiles = setVolcanoTiles(newTiles);
         } else if (saveLocationAndFilename.equals("resources/environment/tundra/tundra-map.json")
                 || saveLocationAndFilename.equals("resources/environment/tundra/tundra-map-tiles-only.json")) {

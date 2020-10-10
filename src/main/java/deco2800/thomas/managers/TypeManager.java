@@ -2,8 +2,8 @@ package deco2800.thomas.managers;
 
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.attacks.Fireball;
-import deco2800.thomas.entities.enemies.Dragon;
-import deco2800.thomas.entities.enemies.Orc;
+import deco2800.thomas.entities.enemies.bosses.Dragon;
+import deco2800.thomas.entities.enemies.monsters.Orc;
 import deco2800.thomas.entities.environment.tundra.TundraCampfire;
 import deco2800.thomas.entities.environment.tundra.TundraRock;
 import deco2800.thomas.entities.environment.tundra.TundraTreeLog;

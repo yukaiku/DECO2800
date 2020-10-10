@@ -1,5 +1,6 @@
 package deco2800.thomas.entities.enemies;
 
+import com.badlogic.gdx.graphics.Texture;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.agent.Peon;
@@ -15,7 +16,8 @@ import deco2800.thomas.managers.TextureManager;
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies
  */
 public abstract class EnemyPeon extends Peon implements Animatable {
-    // "orcDesert", "orcSwamp"...
+    // This is for getting the textures and animation frames, not to confused with enemy index.
+    // e.g. "orcDesert", "orcSwamp"...
     protected String identifier;
 
     // The target to follow and attack. This can be players or even enemies, or null for passive enemies.
@@ -70,6 +72,10 @@ public abstract class EnemyPeon extends Peon implements Animatable {
      */
     public void setTarget(AgentEntity target) {
         this.target = target;
+    }
+
+    public Texture getIcon() {
+        return GameManager.getManagerFromInstance(TextureManager.class).getTexture("iconDefault");
     }
 
     public void attackPlayer() {

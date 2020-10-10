@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.enemies.minions.Goblin;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.worlds.AbstractWorld;
@@ -65,10 +66,10 @@ public class GoblinTest extends BaseGDXTest {
         when(GameManager.get().getWorld()).thenReturn(world);
         when(GameManager.get().getWorld().getPlayerEntity()).thenReturn(playerPeon);
 
-        volcanoGoblin = new Goblin(Variation.VOLCANO, 100, 0.1f);
-        desertGoblin = new Goblin(Variation.DESERT, 100, 0.1f);
-        swampGoblin = new Goblin(Variation.SWAMP, 100, 0.1f);
-        tundraGoblin = new Goblin(Variation.TUNDRA, 100, 0.1f);
+        volcanoGoblin = new Goblin(EnemyIndex.Variation.VOLCANO, 100, 0.1f, 1, 1, 1);
+        desertGoblin = new Goblin(EnemyIndex.Variation.DESERT, 100, 0.1f, 1, 1, 1);
+        swampGoblin = new Goblin(EnemyIndex.Variation.SWAMP, 100, 0.1f, 1, 1, 1);
+        tundraGoblin = new Goblin(EnemyIndex.Variation.TUNDRA, 100, 0.1f, 1, 1, 1);
     }
 
     @Test

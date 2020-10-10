@@ -1,29 +1,13 @@
 package deco2800.thomas.entities.items;
 
-import deco2800.thomas.entities.agent.LoadedPeon;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.worlds.TestWorld;
-import deco2800.thomas.worlds.Tile;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.util.SquareVector;
 
-import deco2800.thomas.entities.enemies.EnemyPeon;
-import deco2800.thomas.entities.enemies.Goblin;
-import deco2800.thomas.entities.enemies.Orc;
-import org.junit.Test;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.StringBuilder;
-import deco2800.thomas.BaseGDXTest;
-import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.entities.items.Item;
-import deco2800.thomas.entities.items.Treasure;
-import deco2800.thomas.observers.TouchDownObserver;
-import deco2800.thomas.worlds.Tile;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
@@ -36,7 +20,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(PowerMockRunner.class)

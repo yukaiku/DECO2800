@@ -8,19 +8,12 @@ import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.environment.tutorial.Barrel;
-import deco2800.thomas.entities.environment.tutorial.Portal;
+import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.entities.environment.tutorial.Stash;
 import deco2800.thomas.entities.environment.tutorial.Target;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.TutorialNPC;
-import deco2800.thomas.entities.enemies.Dummy;
 import deco2800.thomas.entities.environment.tutorial.*;
-import deco2800.thomas.entities.enemies.Orc;
-import deco2800.thomas.entities.environment.*;
-import deco2800.thomas.entities.items.HealthPotion;
-import deco2800.thomas.entities.items.Item;
-import deco2800.thomas.entities.items.Shield;
-import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.DialogManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.NonPlayablePeonManager;
@@ -36,8 +29,8 @@ public class TutorialWorld extends AbstractWorld{
     boolean notGenerated = true;
     static final int TUTORIAL_WORLD_WIDTH = 10; // Height and width vars for the map size; constrains tile gen
     static final int TUTORIAL_WORLD_HEIGHT = 6; // Note the map will double these numbers (bounds are +/- these limits)
-    private final int PORTAL_COL = 0;
-    private final int PORTAL_ROW = -TUTORIAL_WORLD_HEIGHT;
+    private static final int PORTAL_COL = 0;
+    private static final int PORTAL_ROW = -TUTORIAL_WORLD_HEIGHT;
 
 
     public TutorialWorld() {
@@ -72,13 +65,9 @@ public class TutorialWorld extends AbstractWorld{
         this.setPlayerEntity(player);
         addEntity(this.getPlayerEntity());
 
-        // Create an enemy manager without wild enemy spawning.
+        // Spawn dummy
         EnemyManager enemyManager = new EnemyManager(this);
-
-        Dummy dummy = new Dummy(100, 0);
-        // Spawn a dummy
-        enemyManager.spawnSpecialEnemy(dummy, 5, 0);
-
+        enemyManager.spawnSpecialEnemy("dummy", 5, 0);
         GameManager.get().addManager(enemyManager);
 
         // Add NPC
@@ -107,7 +96,7 @@ public class TutorialWorld extends AbstractWorld{
         }
         // Add targets
         for (int i = -6; i < 6 + 1; i = i + 2) {
-            if (i == 0 | i == -2 | i == 2) {
+            if (i == 0 || i == -2 || i == 2) {
                 continue;
             }
             Tile t = GameManager.get().getWorld().getTile(i, -TUTORIAL_WORLD_HEIGHT);

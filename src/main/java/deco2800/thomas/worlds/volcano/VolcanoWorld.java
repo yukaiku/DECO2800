@@ -4,7 +4,6 @@ import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.VolcanoNPC;
-import deco2800.thomas.entities.enemies.*;
 import deco2800.thomas.entities.environment.volcano.VolcanoDragonSkull;
 import deco2800.thomas.entities.environment.volcano.VolcanoGraveYard;
 import deco2800.thomas.entities.environment.volcano.VolcanoRuins;
@@ -15,13 +14,13 @@ import deco2800.thomas.entities.items.Shield;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.entities.environment.volcano.*;
-import deco2800.thomas.entities.enemies.dragons.VolcanoDragon;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
+import deco2800.thomas.worlds.dungeons.VolcanoDungeon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,16 +64,14 @@ public class VolcanoWorld extends AbstractWorld {
 
         this.allVolcanoDialogues = new ArrayList<>();
 
-        // Provide available enemies to the EnemyManager
-        Orc volcanoOrc = new Orc(Variation.VOLCANO, 50, 0.09f);
-        VolcanoDragon boss = new VolcanoDragon(1000, 0.03f, 1);
-        EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(volcanoOrc), boss);
+        // Provide enemies
+        EnemyManager enemyManager = new EnemyManager(this, "volcanoDragon", 7, "volcanoOrc");
         GameManager.get().addManager(enemyManager);
         enemyManager.spawnBoss(16, 20);
 
         //Create Volcano NPCs
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
-        VolcanoNPC volcanoNpc1 = new VolcanoNPC("VolcanoQuestNPC1", new SquareVector(-24, -13),"volcano_npc1");
+        VolcanoNPC volcanoNpc1 = new VolcanoNPC("VolcanoQuestNPC1", new SquareVector(-20, -13),"volcano_npc1");
         VolcanoNPC volcanoNpc2 = new VolcanoNPC("VolcanoQuestNPC2", new SquareVector(-21, 22),"volcano_npc2");
         npnSpawns.add(volcanoNpc2);
         npnSpawns.add(volcanoNpc1);
@@ -83,7 +80,7 @@ public class VolcanoWorld extends AbstractWorld {
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
         GameManager.get().addManager(npcManager);
 
-
+        //Add items to game
         generateItemEntities();
 
         //Creates dialogue manager
@@ -93,6 +90,12 @@ public class VolcanoWorld extends AbstractWorld {
 
         //Add local Event to this world
         this.setWorldEvent(new VolcanoEvent(this));
+
+        //Updates difficulty manager
+        DifficultyManager difficultyManager = GameManager.getManagerFromInstance(DifficultyManager.class);
+        difficultyManager.setPlayerEntity((PlayerPeon) this.getPlayerEntity());
+        difficultyManager.setDifficultyLevel(getType());
+
     }
 
     @Override
@@ -143,6 +146,7 @@ public class VolcanoWorld extends AbstractWorld {
         entities.add(createLavaPool(-12, -20)); //Left Lava Pool
         entities.add(createLavaPool(5, -10)); //Middle Lava Pool
         entities.add(createLavaPool(19, -7)); //Right Lava Pool
+        entities.add(createDungeonPortal(-24, -13));
         //For objects that are added randomly & require more specific addition
         //entities, their methodology will follow add()
         addRandoms();
@@ -473,8 +477,12 @@ public class VolcanoWorld extends AbstractWorld {
         for (SquareVector coord : lavaPool.getChildrenPositions()) {
             getTile(coord).setTexture("Volcano_1");
         }
-
-        System.out.println(lavaPool.getChildrenPositions());
         return lavaPool;
+    }
+
+    public VolcanoPortal createDungeonPortal(float col, float row){
+        Tile portalTile = getTile(col, row);
+        VolcanoPortal VolcanoPortal = new VolcanoPortal(portalTile, false, "portal", "VolcanoDungeonPortal" );
+        return VolcanoPortal;
     }
 }

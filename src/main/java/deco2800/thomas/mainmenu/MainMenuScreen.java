@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
+import deco2800.thomas.CharactersScreen;
 import deco2800.thomas.GameScreen;
 import deco2800.thomas.ThomasGame;
 import deco2800.thomas.managers.GameManager;
@@ -33,7 +34,7 @@ public class MainMenuScreen implements Screen {
 	public MainMenuScreen(final ThomasGame game) {
 		this.game = game;
 
-		stage = new Stage(new ExtendViewport(1280, 720), game.batch);
+		stage = new Stage(new ExtendViewport(1920, 1000), game.batch);
 		skin = GameManager.get().getSkin();
 
 		Image background = new Image(GameManager.get().getManager(TextureManager.class).getTexture("background"));
@@ -120,7 +121,12 @@ public class MainMenuScreen implements Screen {
 		stage.getRoot().getColor().a = 1;
 		SequenceAction sequenceAction = new SequenceAction();
 		sequenceAction.addAction(Actions.fadeOut(0.3f));
-		sequenceAction.addAction(Actions.run(() -> game.setScreen(new GameScreen(game, gameType))));
+		if (gameType == GameScreen.gameType.NEW_GAME) {
+			sequenceAction.addAction(Actions.run(() -> game.setScreen(new CharactersScreen(game))));
+		}
+		else {
+			sequenceAction.addAction(Actions.run(() -> game.setScreen(new GameScreen(game, gameType))));
+		}
 		stage.getRoot().addAction(sequenceAction);
 	}
 

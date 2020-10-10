@@ -1,10 +1,6 @@
 package deco2800.thomas.worlds;
 import deco2800.thomas.entities.*;
 
-import deco2800.thomas.entities.enemies.Dragon;
-import deco2800.thomas.entities.enemies.Orc;
-import deco2800.thomas.entities.enemies.Variation;
-import deco2800.thomas.entities.enemies.dragons.SwampDragon;
 import deco2800.thomas.entities.environment.Tree;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -23,8 +19,6 @@ import org.slf4j.LoggerFactory;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Part;
 import deco2800.thomas.entities.StaticEntity;
-
-import java.util.*;
 
 @SuppressWarnings("unused")
 public class TestWorld extends AbstractWorld {
@@ -142,10 +136,8 @@ public class TestWorld extends AbstractWorld {
 		this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f, 50));
 		addEntity(this.getPlayerEntity());
 
-		// Provide available enemies to the EnemyManager
-		Orc swampOrc = new Orc(Variation.SWAMP, 100, 0.05f);
-		Dragon boss = new SwampDragon(1000, 0.03f, 1);
-		EnemyManager enemyManager = new EnemyManager(this, 5, Arrays.asList(swampOrc), boss);
+		// Provide enemies
+		EnemyManager enemyManager = new EnemyManager(this, "swampDragon", 5, "swampOrc");
 		GameManager.get().addManager(enemyManager);
 		enemyManager.spawnBoss(-2, 0);
 	}

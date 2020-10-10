@@ -6,7 +6,7 @@ import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.worlds.Tile;
 
 public class Notify extends StaticEntity implements Tickable {
-    public static final String ENTITY_ID_STRING = "leave";
+    public static final String ENTITY_ID_STRING = "target";
 
     public Notify(Tile tile, boolean obstructed) {
         super(tile, RenderConstants.CHEST_RENDER, "leave", obstructed);

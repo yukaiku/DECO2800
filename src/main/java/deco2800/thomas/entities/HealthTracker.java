@@ -1,8 +1,5 @@
 package deco2800.thomas.entities;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 /**
  * Contains the current and maximum health value for a given character
  * (player, enemy or NPC) as well as methods for tracking and controlling the
@@ -20,7 +17,6 @@ public class HealthTracker {
     private boolean isDead;
 
     public HealthTracker(int maxHealthValue) {
-
         this.maxHealthValue = maxHealthValue;
         this.currentHealthValue = this.maxHealthValue;
         this.isDead = false;
@@ -44,6 +40,8 @@ public class HealthTracker {
      */
     public void setMaxHealthValue(int healthValue) {
         this.maxHealthValue = Math.max(healthValue, 0);
+        // the current health value should not exceed the new max health value
+        this.currentHealthValue = Math.min(this.currentHealthValue, this.maxHealthValue);
     }
 
     /**
@@ -67,7 +65,7 @@ public class HealthTracker {
      * @param healthValue new value to which currentHealthValue is set.
      */
     public void setCurrentHealthValue(int healthValue) {
-        if(healthValue <= 0) {
+        if (healthValue <= 0) {
             this.currentHealthValue = 0;
         } else
             this.currentHealthValue = Math.min(healthValue, maxHealthValue);
@@ -84,7 +82,6 @@ public class HealthTracker {
      */
 
     public void reduceHealth(int damage) {
-
         int newHealth = this.currentHealthValue;
         newHealth -= damage;
         this.currentHealthValue = Math.max(newHealth, 0);
@@ -119,4 +116,3 @@ public class HealthTracker {
         return isDead;
     }
 }
-

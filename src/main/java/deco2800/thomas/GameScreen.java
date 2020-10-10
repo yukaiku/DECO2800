@@ -27,15 +27,19 @@ import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.TutorialWorld;
+import deco2800.thomas.worlds.desert.DesertWorld;
+import deco2800.thomas.worlds.dungeons.SwampDungeon;
+import deco2800.thomas.worlds.swamp.SwampWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 
+import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class GameScreen implements Screen, KeyDownObserver {
-	static float width = 1280;
+	static float width = 1920;
 	static float height = 1000;
-	private final Logger LOG = LoggerFactory.getLogger(GameScreen.class);
+	private static final Logger LOG = LoggerFactory.getLogger(GameScreen.class);
 	@SuppressWarnings("unused")
 	private final ThomasGame game;
 
@@ -58,10 +62,11 @@ public class GameScreen implements Screen, KeyDownObserver {
 	TransitionScreen transitionScreen = new TransitionScreen();
 
 	// Buttons in the pause menu
-	Button resumeButton = new TextButton("RESUME", GameManager.get().getSkin(), "in_game");
-	Button quitButton = new TextButton("RETURN TO MAIN MENU", GameManager.get().getSkin(), "in_game");
-	Button enterButton = new TextButton("ENTER THE ZONE", GameManager.get().getSkin(), "in_game");
-	Button playAgainButton = new TextButton("PLAY AGAIN", GameManager.get().getSkin(), "in_game");
+	String style = "in_game";
+	Button resumeButton = new TextButton("RESUME", GameManager.get().getSkin(), style);
+	Button quitButton = new TextButton("RETURN TO MAIN MENU", GameManager.get().getSkin(), style);
+	Button enterButton = new TextButton("ENTER THE ZONE", GameManager.get().getSkin(), style);
+	Button playAgainButton = new TextButton("PLAY AGAIN", GameManager.get().getSkin(), style);
 	AbstractWorld world;
 
 	static Skin skin = new Skin(Gdx.files.internal("resources/uiskin.skin"));
@@ -70,13 +75,15 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 * Create a camera for panning and zooming.
 	 * Camera must be updated every render cycle.
 	 */
-	OrthographicCamera camera, cameraOverlay, cameraEvent;
+	OrthographicCamera camera;
+	OrthographicCamera cameraOverlay;
+	OrthographicCamera cameraEvent;
 
-	public Stage stage = new Stage(new ExtendViewport(1280, 720));
+	public Stage stage = new Stage(new ExtendViewport(1920, 1000));
 
 	long lastGameTick = 0;
 
-	static public enum gameType {
+	public enum gameType {
 		NEW_GAME {
 			@Override
 			public AbstractWorld method() {
@@ -96,7 +103,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 		ENV_TEAM_GAME {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new TundraWorld();
+
+				AbstractWorld world = new VolcanoWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
@@ -165,7 +173,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 		Gdx.input.setInputProcessor(multiplexer);
 
 		GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
-//		GameManager.get().getManager(KeyboardManager.class).registerForKeyDown(this);
 
 		// Add listener to the buttons in the pause menu
 		resumeButton.addListener(new ClickListener() {
@@ -207,7 +214,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 				// Dispose the screen
 				dispose();
 				// Set main menu screen
-				game.setScreen(new GameScreen(game, gameType.NEW_GAME));
+				game.setScreen(new CharactersScreen(game));
 			}
 		});
 
@@ -228,7 +235,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void renderGame(float delta ) {
 		handleRenderables();
 
-		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta);
+		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta, GameManager.get().getWorld().getWorldZoomable());
 		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
 
 		cameraEvent.position.set(camera.position);
@@ -254,14 +261,13 @@ public class GameScreen implements Screen, KeyDownObserver {
 		overlayRenderer.render(batchOverlay, cameraOverlay);
 		rendererEvent.render(batchEvent, cameraEvent);
 
-
 		spriteBatch.setProjectionMatrix(cameraOverlay.combined);
 
 		// Hide the buttons when the game is running
-		resumeButton.setPosition(-100, -100);
-		quitButton.setPosition(-100, -100);
-		enterButton.setPosition(-100, -100);
-		playAgainButton.setPosition(-100, -100);
+		resumeButton.setPosition(-1000, -1000);
+		quitButton.setPosition(-1000, -1000);
+		enterButton.setPosition(-1000, -1000);
+		playAgainButton.setPosition(-1000, -1000);
 
 		/* Refresh the experience UI for if information was updated */
 		stage.act(delta);
@@ -278,9 +284,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 		pauseModal.render(spriteBatch, cameraOverlay);
 
 		// Display the buttons
-		resumeButton.setPosition(width / 2 - resumeButton.getWidth() / 2,
+		resumeButton.setPosition(stage.getWidth() / 2 - resumeButton.getWidth() / 2,
 				height / 2);
-		quitButton.setPosition(width / 2 - quitButton.getWidth() / 2,
+		quitButton.setPosition(stage.getWidth() / 2 - quitButton.getWidth() / 2,
 				height / 2 - 100);
 		stage.act(delta);
 		stage.draw();
@@ -309,9 +315,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 		transitionScreen.render(spriteBatch, cameraOverlay);
 
 		//Hide the other buttons
-		resumeButton.setPosition(-100, -100);
-		quitButton.setPosition(-100, -100);
-		playAgainButton.setPosition(-100, -100);
+		resumeButton.setPosition(-1000, -1000);
+		quitButton.setPosition(-1000, -1000);
+		playAgainButton.setPosition(-1000, -1000);
 		// Display the button
 		enterButton.setPosition(width / 2 - enterButton.getWidth() / 2, 150);
 		stage.act(delta);
@@ -338,6 +344,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 			case GAMEOVER:
 			case VICTORY:
 				renderGameResult(delta);
+				break;
 			default:
 				break;
 		}
@@ -359,7 +366,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	@Override
 	public void show() {
-
+		// do nothing
 	}
 
 	/**
@@ -402,7 +409,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void dispose() {
 		GameManager.getManagerFromInstance(InputManager.class).removeKeyDownListener(this);
 		stage.dispose();
-//		System.exit(0);
 	}
 
 	@Override

@@ -5,13 +5,10 @@ import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.npc.DesertNPC;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
-import deco2800.thomas.entities.enemies.Orc;
-import deco2800.thomas.entities.enemies.Variation;
 import deco2800.thomas.entities.environment.desert.*;
 import deco2800.thomas.entities.items.HealthPotion;
 import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.entities.items.Shield;
-import deco2800.thomas.entities.enemies.dragons.DesertDragon;
 import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
@@ -77,12 +74,10 @@ public class DesertWorld extends AbstractWorld {
         addEntity(this.getPlayerEntity());
         this.allDesertDialogues = new ArrayList<>();
 
-        // Provide available enemies to the EnemyManager
-        Orc desertOrc = new Orc(Variation.DESERT, 50, 0.09f);
-        DesertDragon boss = new DesertDragon(850, 0.03f, 4);
-        EnemyManager enemyManager = new EnemyManager(this, 7, Arrays.asList(desertOrc), boss);
+        // Provide enemies
+        EnemyManager enemyManager = new EnemyManager(this, "desertDragon", 7, "desertOrc");
         GameManager.get().addManager(enemyManager);
-        enemyManager.spawnBoss(21, 6);
+        enemyManager.spawnBoss(16, 6);
 
         //Creates Desert NPCs
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
@@ -100,7 +95,12 @@ public class DesertWorld extends AbstractWorld {
         DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
                 this.allDesertDialogues);
         GameManager.get().addManager(dialog);
-        enemyManager.spawnBoss(16, 6);
+
+        //Updates difficulty manager
+        DifficultyManager difficultyManager = GameManager.getManagerFromInstance(DifficultyManager.class);
+        difficultyManager.setPlayerEntity((PlayerPeon) this.getPlayerEntity());
+        difficultyManager.setDifficultyLevel(getType());
+
     }
 
     /**

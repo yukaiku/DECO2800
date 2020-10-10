@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import deco2800.thomas.entities.agent.Peon;
-import deco2800.thomas.entities.enemies.Boss;
+import deco2800.thomas.entities.enemies.bosses.Boss;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.OnScreenMessageManager;
@@ -105,29 +105,38 @@ public class DebugComponent extends OverlayComponent {
 //		debugLine(batch, ++line,
 //				String.format("Username: %s", GameManager.get().getManager(NetworkManager.class).getUsername()));
         line++;
-        debugLine(batch, ++line, "== Health ==");
-        debugLine(batch, ++line, String.format("Health: %d",
-                ((Peon)GameManager.get().getWorld().getPlayerEntity()).getCurrentHealth()));
-        line++;
-        debugLine(batch, ++line, "== Speed ==");
-        debugLine(batch, ++line, String.format("Speed: %f", GameManager.get().getWorld().getPlayerEntity().getSpeed()));
-        line++;
-        EnemyManager enemyManager = GameManager.get().getManager(EnemyManager.class);
-        debugLine(batch, ++line, "== Enemies ==");
-        debugLine(batch, ++line, String.format("World: %s", enemyManager.getWorldName()));
-        debugLine(batch, ++line, String.format("Wild Spawning: %s",
-                enemyManager.checkWildEnemySpawning() ? "active" : "disabled"));
-        debugLine(batch, ++line, String.format("Current Enemies: %d", enemyManager.getEnemyCount()));
-        if (enemyManager.getEnemyCount() - (enemyManager.getBoss() == null ? 0 : enemyManager.getBoss().isDead() ? 0 : 1) > 0) {
-            debugLine(batch, ++line, String.format("(%s%s%s)",
-                    enemyManager.getWildEnemiesAlive().size() > 0 ? String.format("%d/%d wild",
-                            enemyManager.getWildEnemiesAlive().size(), enemyManager.getWildEnemyCap()) : "",
-                    enemyManager.getWildEnemiesAlive().size() > 0 && enemyManager.getSpecialEnemiesAlive().size() > 0 ? ", " : "",
-                    enemyManager.getSpecialEnemiesAlive().size() > 0 ? String.format("%d special",
-                            enemyManager.getSpecialEnemiesAlive().size()) : ""));
+
+        // PlayerEntity
+        if (GameManager.get().getWorld().getPlayerEntity() != null) {
+            debugLine(batch, ++line, "== Health ==");
+            debugLine(batch, ++line, String.format("Health: %d",
+                    ((Peon)GameManager.get().getWorld().getPlayerEntity()).getCurrentHealth()));
+            line++;
+
+            debugLine(batch, ++line, "== Speed ==");
+            debugLine(batch, ++line, String.format("Speed: %f", GameManager.get().getWorld().getPlayerEntity().getSpeed()));
+            line++;
         }
-        Boss boss = enemyManager.getBoss();
-        debugLine(batch, ++line, String.format("Boss: %s%s", boss == null ? "n/a" : boss.getObjectName(),
-                boss == null ? "" : String.format(" (%d/%d)", boss.getCurrentHealth(), boss.getMaxHealth())));
+
+        EnemyManager enemyManager = GameManager.get().getManager(EnemyManager.class);
+
+        if (enemyManager != null) {
+            debugLine(batch, ++line, "== Enemies ==");
+            debugLine(batch, ++line, String.format("World: %s", enemyManager.getWorldName()));
+            debugLine(batch, ++line, String.format("Wild Spawning: %s",
+                    enemyManager.checkWildEnemySpawning() ? "active" : "disabled"));
+            debugLine(batch, ++line, String.format("Current Enemies: %d", enemyManager.getEnemyCount()));
+            if (enemyManager.getEnemyCount() - (enemyManager.getBoss() == null ? 0 : enemyManager.getBoss().isDead() ? 0 : 1) > 0) {
+                debugLine(batch, ++line, String.format("(%s%s%s)",
+                        enemyManager.getWildEnemiesAlive().size() > 0 ? String.format("%d/%d wild",
+                                enemyManager.getWildEnemiesAlive().size(), enemyManager.getWildEnemyCap()) : "",
+                        enemyManager.getWildEnemiesAlive().size() > 0 && enemyManager.getSpecialEnemiesAlive().size() > 0 ? ", " : "",
+                        enemyManager.getSpecialEnemiesAlive().size() > 0 ? String.format("%d special",
+                                enemyManager.getSpecialEnemiesAlive().size()) : ""));
+                Boss boss = enemyManager.getBoss();
+                debugLine(batch, ++line, String.format("Boss: %s%s", boss == null ? "n/a" : boss.getObjectName(),
+                        boss == null ? "" : String.format(" (%d/%d)", boss.getCurrentHealth(), boss.getMaxHealth())));
+            }
+        }
     }
 }
