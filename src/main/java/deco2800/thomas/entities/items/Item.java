@@ -8,7 +8,6 @@ import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.observers.KeyDownObserver;
-import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
 

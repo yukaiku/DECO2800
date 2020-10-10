@@ -1,6 +1,5 @@
 package deco2800.thomas.worlds.volcano;
 
-import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.items.*;
