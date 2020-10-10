@@ -1,7 +1,12 @@
 package deco2800.thomas.managers;
 
+import deco2800.thomas.combat.skills.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
+import deco2800.thomas.entities.enemies.EnemyPeon;
+import deco2800.thomas.entities.enemies.monsters.Orc;
+
+import java.util.List;
 
 /**
  * DifficultyManager handles the difficulty curve of the game
@@ -14,6 +19,7 @@ import deco2800.thomas.entities.agent.QuestTracker;
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/Difficulty%20Curve
  */
+//:todo Update player damage, and skill cooldown. Update spawnrate.
 public class DifficultyManager extends TickableManager{
     private PlayerPeon playerPeon;
     private String type = "";
@@ -51,16 +57,17 @@ public class DifficultyManager extends TickableManager{
     }
 
     /***
-     * Getter for Wild Spawn Max Health
-     * @return wildSpawnMaxHealth
+     * Sets the wild spawn spawn rate
      */
-    public int getWildSpawnMaxHealth(){
-        return enemyManager.getEnemyConfig(this.type+"Orc").getMaxHealth();
+    public void setWildSpawnRate(float spawnRate){
+        EnemyPeon orc = enemyManager.getEnemyConfig(this.type+"Orc");
+        Orc orc1 = (Orc)orc;
+        orc1.setSpawnRate(spawnRate);
     }
 
     /***
      * Sets the world type
-     * @param type type of the world to be set
+     * @param type String of the world to be set
      */
     public void setWorldType(String type){
         this.type = type.toLowerCase();
@@ -76,9 +83,9 @@ public class DifficultyManager extends TickableManager{
 
     /***
      * Changes the player max health based on difficulty
-     * @param playerPeon    PlayerEntity
+     * @param difficulty int
      */
-    public void playerHealth(PlayerPeon playerPeon, int difficulty) {
+    public void setPlayerHealth(int difficulty) {
         //Sets the player max health
         playerPeon.setMaxHealth(25*difficulty);
         playerMaxHealth = playerPeon.getMaxHealth();
@@ -89,11 +96,53 @@ public class DifficultyManager extends TickableManager{
     }
 
     /***
+     * Changes the wizard skill cooldown and damage
+     * @param coolDown cooldown time of skills
+     */
+    public void setWizardSkillCoolDown(int coolDown){
+        List<AbstractSkill> wizardSkills = playerPeon.getWizardSkills();
+        for(AbstractSkill wizardSkill : wizardSkills){
+            switch (wizardSkill.getTexture()){
+                case "iceballIcon": // Default 50
+                    ((IceballSkill) wizardSkill).setMaxCooldown(coolDown*2);
+                    if(getWorldType().equals("desert")){
+                        //More damage to desert with water skill
+                        ((IceballSkill)wizardSkill).setDamageMultiplier(((IceballSkill) wizardSkill).getDamageMultiplier()*2);
+                    }
+                    return;
+                case "fireballIcon": //Default 20
+                    ((FireballSkill) wizardSkill).setMaxCooldown(coolDown);
+                    if(getWorldType().equals("tundra")){
+                        //More damage to tundra with fire skill
+                        ((FireballSkill)wizardSkill).setDamageMultiplier(((FireballSkill) wizardSkill).getDamageMultiplier()*2);
+                    }
+                    return;
+                case "stingIcon": //Default 50
+                    ((ScorpionStingSkill) wizardSkill).setMaxCooldown(coolDown*2);
+                    return;
+
+            }
+        }
+    }
+
+    /***
+     * Changes the mech cooldown time
+     * @param coolDown cooldown time of skill
+     */
+    public void setMechSkillCoolDown(int coolDown){
+        AbstractSkill mechSkill = playerPeon.getMechSkill();
+        if(mechSkill.getTexture() == "explosionIcon"){ //Default 160
+            ((FireBombSkill) mechSkill).setMaxCooldown(coolDown);
+        }else{ //default 200
+            ((WaterShieldSkill) mechSkill).setMaxCooldown(coolDown*2);
+        }
+    }
+
+    /***
      * Sets the difficulty of the game based off the current world
      */
     public void setDifficultyLevel(String type) {
         enemyManager = GameManager.getManagerFromInstance(EnemyManager.class);
-
         if(!getWorldType().equals(type)){
             setWorldType(type);
             int wildEnemyCap = enemyManager.getWildEnemyCap();
@@ -108,22 +157,32 @@ public class DifficultyManager extends TickableManager{
 
         switch (getWorldType()) {
             // Difficulty Settings for each world
-            //TODO: Update with more difficulty
             case "swamp":
-                playerHealth(playerPeon, 2);
+                setPlayerHealth(1);
+                setWildSpawnRate(0.0001f);
                 enemyManager.getBoss().setMaxHealth(100);
+                setWizardSkillCoolDown(15);
                 break;
             case "tundra":
-                playerHealth(playerPeon, 3);
+                setPlayerHealth(2);
+                setWildSpawnRate(0.0001f);
                 enemyManager.getBoss().setMaxHealth(150);
+                setWizardSkillCoolDown(15);
+                setMechSkillCoolDown(150);
                 break;
             case "desert":
-                playerHealth(playerPeon, 4);
+                setPlayerHealth(3);
+                setWildSpawnRate(0.0001f);
                 enemyManager.getBoss().setMaxHealth(300);
+                setWizardSkillCoolDown(15);
+                setMechSkillCoolDown(50);
                 break;
             case "volcano":
-                playerHealth(playerPeon, 5);
+                setPlayerHealth(4);
+                setWildSpawnRate(0.0001f);
                 enemyManager.getBoss().setMaxHealth(750);
+                setWizardSkillCoolDown(15);
+                setMechSkillCoolDown(50);
                 break;
         }
 
@@ -135,5 +194,6 @@ public class DifficultyManager extends TickableManager{
      */
     @Override
     public void onTick(long i) {
+        //No on tick methods needed for now
     }
 }

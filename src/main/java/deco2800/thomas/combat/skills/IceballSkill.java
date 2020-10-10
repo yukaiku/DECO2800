@@ -10,7 +10,7 @@ public class IceballSkill extends AbstractSkill {
     private static int original_MAX_COOLDOWN = 50;
     /* Damage multiplier to apply to the iceball.
     Multiplies the peon base damage value. */
-    private static final float DAMAGE_MULTIPLIER = 0.4f;
+    private static float DAMAGE_MULTIPLIER = 0.4f;
     /* Lifetime of explosion */
     /* Speed of projectile */
     private static final float SPEED = 0.5f;
@@ -36,6 +36,32 @@ public class IceballSkill extends AbstractSkill {
     @Override
     public int getCooldownMax() {
         return MAX_COOLDOWN;
+    }
+
+    /***
+     * Sets coooldown of skill
+     * @param maxCooldown cooldown of skill
+     */
+    public void setMaxCooldown(int maxCooldown){
+        MAX_COOLDOWN = maxCooldown;
+    }
+
+    /**
+     * Returns multiplier of skill
+     *
+     * @return Multiplier of skill.
+     */
+    public float getDamageMultiplier(){
+        return DAMAGE_MULTIPLIER;
+    }
+
+    /***
+     * Set multiplier of skill
+     *
+     * @param damageMultiplier multiplier of skill
+     */
+    public void setDamageMultiplier(float damageMultiplier){
+        this.DAMAGE_MULTIPLIER = damageMultiplier;
     }
 
     @Override

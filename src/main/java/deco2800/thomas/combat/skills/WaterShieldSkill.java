@@ -30,6 +30,11 @@ public class WaterShieldSkill extends AbstractSkill {
         return MAX_COOLDOWN;
     }
 
+    //Sets the maximum skill cooldown
+    public void setMaxCooldown(int maxCooldown){
+        MAX_COOLDOWN = maxCooldown;
+    }
+
     @Override
     public void reduceCooldownMax(float percent){
         if (MAX_COOLDOWN > 100) {
