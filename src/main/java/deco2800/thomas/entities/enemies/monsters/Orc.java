@@ -33,7 +33,7 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
     private final Variation variation;
     private final Animation<TextureRegion> orcIdle;
     private final Animation<TextureRegion> orcAttacking;
-    //private final Animation<TextureRegion> orcWalking;
+    private final Animation<TextureRegion> orcWalking;
     private final Texture icon;
     private float stateTimer;
     private int duration = 0;
@@ -96,10 +96,10 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
         facingDirection = MovementTask.Direction.RIGHT;
         this.orcIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
-        this.orcAttacking = new Animation<> (0.1f,
+        this.orcAttacking = new Animation<> (0.02f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
-        //this.orcWalking = new Animation<> (0.1f,
-                //GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Walk"));
+        this.orcWalking = new Animation<> (0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Walk"));
         this.icon = GameManager.getManagerFromInstance(TextureManager.class).getTexture(identifier + "Icon");
     }
 
@@ -145,19 +145,22 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
         if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), meleeRange)) {
             SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
             currentState = State.ATTACK_MELEE;
-            duration = 12;
+            duration = 8;
             setCombatTask(new MeleeAttackTask(this, origin, 2, 2, getDamage()));
+            setMovementTask(null);
         }
     }
 
     @Override
     public void onTick(long i) {
-        if (--duration < 0) {
+        if (getMovementTask() != null) {
+            duration = 0;
+            currentState = State.WALK;
+        } else if (--duration < 0) {
             duration = 0;
             currentState = State.IDLE;
         }
-        currentState = State.IDLE;
-        currentState = State.WALK;
+
         // update target following path every 1 second (60 ticks)
         if (++tickFollowing > 60) {
             if (super.getTarget() != null) {
@@ -181,7 +184,6 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
             }
             tickDetecting = 0;
         }
-
         // Update tasks and effects
         super.onTick(i);
     }
@@ -203,9 +205,12 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
             case ATTACK_MELEE:
                 region = orcAttacking.getKeyFrame(stateTimer);
                 break;
-//            case WALK:
-//                region = orcWalking.getKeyFrame(stateTimer);
-//                break;
+            case WALK:
+                if (stateTimer >= orcWalking.getAnimationDuration()) {
+                    stateTimer = 0;
+                }
+                region = orcWalking.getKeyFrame(stateTimer);
+                break;
             case IDLE:
             default:
                 stateTimer = 0;

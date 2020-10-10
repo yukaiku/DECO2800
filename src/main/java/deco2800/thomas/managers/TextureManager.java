@@ -461,23 +461,41 @@ public class TextureManager extends AbstractManager {
             // goblin attack sprites
             addAnimationFramesSprite("goblinDesertAttack", "resources/enemies/goblin_desert_sprite_sheet_ext.png",
                     6, 176, 326, true);
-            addAnimationFramesSprite("goblinSwampAttack", "resources/enemies/goblin_swamp_sprite_sheet.png",
-                    3, 350, 486, true);
-            addAnimationFramesSprite("goblinTundraAttack", "resources/enemies/goblin_tundra_sprite_sheet.png",
-                    3, 350, 486, true);
-            addAnimationFramesSprite("goblinVolcanoAttack", "resources/enemies/goblin_volcano_sprite_sheet.png",
-                    3, 350, 486, true);
+            addAnimationFramesSprite("goblinSwampAttack", "resources/enemies/goblin_swamp_sprite_sheet_ext.png",
+                    6, 176, 236, true);
+            addAnimationFramesSprite("goblinTundraAttack", "resources/enemies/goblin_tundra_sprite_sheet_ext.png",
+                    6, 176, 236, true);
+            addAnimationFramesSprite("goblinVolcanoAttack", "resources/enemies/goblin_volcano_sprite_sheet_ext.png",
+                    6, 176, 326, true);
+            // goblin walking sprites
+            //addAnimationFramesSprite("goblinDesertWalk", "resources/enemies/goblin_desert_walking_sprites.png",
+                    //9, 147, 188, true);
+            addAnimationFramesSprite("goblinSwampWalk", "resources/enemies/goblin_swamp_walking_sprites.png",
+                    9, 147, 188, false);
+            addAnimationFramesSprite("goblinTundraWalk", "resources/enemies/goblin_tundra_walking_sprites.png",
+                    9, 147, 188, false);
+            addAnimationFramesSprite("goblinVolcanoWalk", "resources/enemies/goblin_volcano_walking_sprites.png",
+                    9, 147, 188, false);
 
 			// orc attack sprites
-			addAnimationFramesSprite("orcDesertAttack", "resources/enemies/orc_desert_sprite_sheet.png",
-					3, 257, 324, false);
-			addAnimationFramesSprite("orcSwampAttack", "resources/enemies/orc_swamp_sprite_sheet.png",
-					3, 257, 324, false);
+			addAnimationFramesSprite("orcDesertAttack", "resources/enemies/orc_desert_sprite_sheet_ext.png",
+					10, 145, 172, true);
+			addAnimationFramesSprite("orcSwampAttack", "resources/enemies/orc_swamp_sprite_sheet_ext.png",
+					10, 145, 172, true);
+			addAnimationFramesSprite("orcTundraAttack", "resources/enemies/orc_tundra_sprite_sheet_ext.png",
+					10, 145, 172, true);
+			addAnimationFramesSprite("orcVolcanoAttack", "resources/enemies/orc_volcano_sprite_sheet_ext.png",
+					10, 145, 172, true);
 
-			addAnimationFramesSprite("orcTundraAttack", "resources/enemies/orc_tundra_sprite_sheet.png",
-					3, 257, 324, false);
-			addAnimationFramesSprite("orcVolcanoAttack", "resources/enemies/orc_volcano_sprite_sheet.png",
-					3, 257, 324, false);
+			//orc walking sprites
+            addAnimationFramesSprite("orcDesertWalk", "resources/enemies/orc_desert_walking_sprites.png",
+                    8, 162, 192, true);
+            addAnimationFramesSprite("orcSwampWalk", "resources/enemies/orc_swamp_walking_sprites.png",
+                    8, 162, 192, true);
+            addAnimationFramesSprite("orcTundraWalk", "resources/enemies/orc_tundra_walking_sprites.png",
+                    8, 162, 192, true);
+            addAnimationFramesSprite("orcVolcanoWalk", "resources/enemies/orc_volcano_walking_sprites.png",
+                    8, 162, 192, true);
 
             // dragon attack sprites
             addAnimationFramesSprite("dragonDesertAttack", "resources/enemies/dragon_desert_sprite_sheet.png",

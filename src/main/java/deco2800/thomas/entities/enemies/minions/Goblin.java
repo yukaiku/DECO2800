@@ -5,6 +5,7 @@ import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.AggressiveEnemy;
 import deco2800.thomas.entities.enemies.EnemyIndex.Variation;
+import deco2800.thomas.entities.enemies.monsters.Orc;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -33,6 +34,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
     private final Animation<TextureRegion> goblinIdle;
     private float stateTimer;
     private final Animation<TextureRegion> goblinAttacking;
+    private final Animation<TextureRegion> goblinWalking;
     private MovementTask.Direction facingDirection;
 
     private int duration = 0;
@@ -83,10 +85,12 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
         this.goblinAttacking = new Animation<> (0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
+        this.goblinWalking = new Animation<> (0.05f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Walk"));
         this.icon = GameManager.getManagerFromInstance(TextureManager.class).getTexture(identifier + "Icon");
         this.stateTimer = 0;
-        currentState = State.IDLE;
-        previousState = State.IDLE;
+        currentState = State.WALK;
+        previousState = State.WALK;
         facingDirection = MovementTask.Direction.RIGHT;
         detectTarget();
     }
@@ -123,17 +127,17 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
             currentState = State.ATTACK_MELEE;
             duration = 12;
             setCombatTask(new MeleeAttackTask(this, origin, 1, 1, (int) getDamage()));
+            setMovementTask(null);
         }
     }
 
     @Override
-    public void onTick(long i){
+    public void onTick(long i) {
         // update target following path every 0.5 second (30 ticks)
         if (--duration < 0) {
             duration = 0;
-            currentState = State.IDLE;
+            currentState = State.WALK;
         }
-
         if (++tickFollowing > 30) {
             if (getTarget() != null) {
                 if (getTarget().getCol() < this.getCol()) {
@@ -157,6 +161,12 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
         switch (currentState) {
             case ATTACK_MELEE:
                 region = goblinAttacking.getKeyFrame(stateTimer);
+                break;
+            case WALK:
+                if (stateTimer >= goblinWalking.getAnimationDuration()) {
+                    stateTimer = 0;
+                }
+                region = goblinWalking.getKeyFrame(stateTimer);
                 break;
             case IDLE:
             default:
