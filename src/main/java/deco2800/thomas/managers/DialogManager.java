@@ -45,7 +45,7 @@ public class DialogManager extends TickableManager {
 	public void hideDialog(AbstractDialogBox dialogBox) {
 		dialogBox.getBox().remove();
 	}
-
+	
 	/**
 	 * Returns whether the DialogManager is ready to show AbstractDialogBoxes.
 	 */
