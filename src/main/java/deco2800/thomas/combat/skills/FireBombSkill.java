@@ -15,7 +15,7 @@ public class FireBombSkill extends AbstractSkill {
 
     /* Damage multiplier to apply to the explosion.
     Multiplies the peon base damage value. */
-    private static float DAMAGE_MULTIPLIER = 0.4f;
+    private static float damageMultiplier = 0.4f;
     /* Lifetime of explosion */
     private static final int LIFETIME = 60;
     /* Tick period of explosion */
@@ -54,7 +54,7 @@ public class FireBombSkill extends AbstractSkill {
      * Sets coooldown of skill
      * @param maxCooldown cooldown of skill
      */
-    public void setMaxCooldown(int maxCooldown){
+    public static void setMaxCoolDown(int maxCooldown){
         MAX_COOLDOWN = maxCooldown;
     }
 
@@ -64,7 +64,7 @@ public class FireBombSkill extends AbstractSkill {
      * @return Multiplier of skill.
      */
     public float getDamageMultiplier(){
-        return DAMAGE_MULTIPLIER;
+        return damageMultiplier;
     }
 
     /***
@@ -72,8 +72,8 @@ public class FireBombSkill extends AbstractSkill {
      *
      * @param damageMultiplier multiplier of skill
      */
-    public void setDamageMultiplier(float damageMultiplier){
-        this.DAMAGE_MULTIPLIER = damageMultiplier;
+    public static void setDamageMultiplier(float damageMultiplier){
+        FireBombSkill.damageMultiplier = damageMultiplier;
     }
 
     @Override
@@ -108,7 +108,7 @@ public class FireBombSkill extends AbstractSkill {
      */
     @Override
     protected AbstractTask getTask(float targetX, float targetY) {
-        int damage = (int) (entity.getDamage() * DAMAGE_MULTIPLIER);
+        int damage = (int) (entity.getDamage() * damageMultiplier);
         return new FireBombAttackTask(entity, damage, LIFETIME, TICK_PERIOD, HEIGHT, WIDTH);
     }
 }

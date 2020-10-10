@@ -1,5 +1,6 @@
 package deco2800.thomas.worlds.dungeons;
 
+import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
@@ -19,6 +20,14 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implemented subclass of Abstract world for bonus dungeon within the Volcano
+ * Zone within Polyhedron.This class generates & manages all objects related to
+ * the Volcano Dungeon environment in the game including * relevant StaticEntities,
+ * Tiles, traps, rewards & Textures.
+ *
+ *  * @author Arthur Mitchell (Gitlab: @ArthurM99115)
+ */
 public class VolcanoDungeon extends AbstractWorld {
     private final Logger logger = LoggerFactory.getLogger(VolcanoWorld.class);
     public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/dungeons/VolcanoDungeonMaze.json";
@@ -33,6 +42,11 @@ public class VolcanoDungeon extends AbstractWorld {
         this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
+    /**
+     * Primary constructor for volcano world.
+     * @param width width of the world in terms of tiles
+     * @param height height of the world in terms of tiles
+     */
     public VolcanoDungeon(int width, int height){
         super(width, height);
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
@@ -48,6 +62,9 @@ public class VolcanoDungeon extends AbstractWorld {
 
     }
 
+    /**
+     * Sets up the puzzle of of lava Maze.
+     */
     public void setupPuzzle(){
         setupNpc();
         setupIncorrectTreasure1();
@@ -58,6 +75,9 @@ public class VolcanoDungeon extends AbstractWorld {
         addEntity(new ExitPortal(exitTile, false, "portal", "ExitPortal"));
     }
 
+    /**
+     * Sets up the NPC guide that spawns at the start of the lava maze.
+     */
     public void setupNpc() {
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
 
@@ -77,10 +97,14 @@ public class VolcanoDungeon extends AbstractWorld {
 
     }
 
+    /**
+     * Sets up the first teleport tripwire that executes upon the player
+     * stepping on the bottom left corner portal (an incorrect portal).
+     */
     public void setupIncorrectTreasure1() {
         //Add
         Tile teleportTile = getTile(-23f, -23f);
-        TripWire teleportTrap = new TripWire(teleportTile, false, "portal");
+        TripWire teleportTrap = new TripWire(teleportTile, false, "VolcanoPortal");
 
         teleportTile.setParent(teleportTrap);
         this.addEntity(teleportTrap);
@@ -90,11 +114,16 @@ public class VolcanoDungeon extends AbstractWorld {
         teleportTile.setTeleportRow(0);
     }
 
+
+    /**
+     * Sets up the second tripwire that spawns enemies upon the player
+     * stepping on the bottom right corner portal (an incorrect portal).
+     */
     public void setupIncorrectTreasure2() {
 
 
         Tile trapTile = getTile(22f, -23f);
-        TripWire enemyTrap = new TripWire(trapTile, false, "portal");
+        TripWire enemyTrap = new TripWire(trapTile, false, "VolcanoPortal");
 
         trapTile.setParent(enemyTrap);
         this.addEntity(enemyTrap);
@@ -103,18 +132,23 @@ public class VolcanoDungeon extends AbstractWorld {
 
     }
 
+    /**
+     * Sets up the only reward tripwire that spawns a treasurebox & grants a skill
+     * upon the player stepping on the top right corner portal
+     * (an incorrect portal).
+     */
     public void setupReward() {
         Tile rewardTile = getTile(22f, 23f);
-        TripWire powerUpReward = new TripWire(rewardTile, false, "portal");
+        TripWire powerUpReward = new TripWire(rewardTile, false, "VolcanoPortal");
 
-        rewardTile.setParent(powerUpReward);
+                rewardTile.setParent(powerUpReward);
         this.addEntity(powerUpReward);
 
         rewardTile.setRewardTile(true);
     }
 
     /**
-     *
+     * Spawns enemies around the player after triggering the South Eastern trap.
      * @param tile of the trap tile.
      */
     @Override
@@ -130,7 +164,7 @@ public class VolcanoDungeon extends AbstractWorld {
     }
 
     /**
-     *
+     * Spawns a loot box & grants the player a Fireball skill.
      * @param tile of the trap tile.
      */
     @Override
@@ -141,6 +175,7 @@ public class VolcanoDungeon extends AbstractWorld {
             tile.setParent(rewardBox);
             entities.add(rewardBox);
             VolcanoDungeonDialogue.add(rewardBox.getDisplay());
+            GameManager.getManagerFromInstance(PlayerManager.class).grantWizardSkill(WizardSkills.FIREBALL);
 
         }
     }
@@ -162,15 +197,14 @@ public class VolcanoDungeon extends AbstractWorld {
         for (AbstractEntity e : this.getEntities()) {
             e.onTick(0);
         }
-
-
-
         if (notGenerated) {
             notGenerated = false;
         }
-
-
-
         super.onTick(i);
+    }
+
+    @Override
+    public String getType() {
+        return "VolcanoDungeon";
     }
 }

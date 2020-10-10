@@ -262,6 +262,7 @@ public class TextureManager extends AbstractManager {
             textureMap.put("LavaPool", new Texture("resources/environment/transparent_tiletexture.png"));
             textureMap.put("BurningTree", new Texture("resources/environment/volcano/entities/BurningTreePlaceholder.png"));
             textureMap.put("DragonSkull", new Texture("resources/environment/volcano/entities/DragonSkull2.png"));
+            textureMap.put("VolcanoPortal", new Texture("resources/environment/portals/volcano_portal.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -354,9 +355,9 @@ public class TextureManager extends AbstractManager {
 
         // Attacks
         textureMap.put("fireball_right", new Texture("resources/combat/fireball_right.png"));
-        textureMap.put("fireballIcon", new Texture("resources/combat/fireball_right.png"));
-        textureMap.put("stingIcon", new Texture("resources/combat/fireball_left.png"));
-        textureMap.put("iceballIcon", new Texture("resources/combat/iceball_small.png"));
+        textureMap.put("fireballIcon", new Texture("resources/combat/firewizard_skill_icon.png"));
+        textureMap.put("stingIcon", new Texture("resources/combat/right_swamp_skill1.png"));
+        textureMap.put("iceballIcon", new Texture("resources/combat/tundra_skill_icon.png"));
         textureMap.put("explosionIcon", new Texture("resources/combat/explosive_fireball3.png"));
         textureMap.put("watershieldIcon", new Texture("resources/combat/watershield_icon.png"));
         textureMap.put("healIcon", new Texture("resources/combat/health_skill_icon.png"));
@@ -365,6 +366,7 @@ public class TextureManager extends AbstractManager {
     }
 
 	private void addMinimapIcons() {
+		textureMap.put("iconDefault", new Texture("resources/enemies/orc_volcano_icon.png"));
 	}
 
 	/* ------------------------------------------------------------------------
@@ -384,6 +386,9 @@ public class TextureManager extends AbstractManager {
         try {
             // players
             addAnimationFramesCollection("playerIdle", "resources/player/rightmech1_move.png");
+            addAnimationFramesCollection("playerWalk", "resources/player/rightmech1_walk1.png",
+                    "resources/player/rightmech1_walk2.png", "resources/player/rightmech1_walk3.png",
+                    "resources/player/rightmech1_walk4.png");
             addAnimationFramesCollection("playerMelee", "resources/player/rightmech1_melee3.png",
                     "resources/player/rightmech1_melee1.png", "resources/player/rightmech1_melee2.png",
                     "resources/player/rightmech1_melee2.png", "resources/player/rightmech1_melee1.png",
@@ -397,6 +402,7 @@ public class TextureManager extends AbstractManager {
             addAnimationFramesCollection("playerFireballDefault", "resources/combat/right_skill1_fire1.png");
             addAnimationFramesCollection("playerSpin", "resources/player/rightmech1_move.png",
                     "resources/player/leftmech1_move.png");
+
 
             // fireballs
             addAnimationFramesCollection("fireballDefault", "resources/combat/fireball_right.png");

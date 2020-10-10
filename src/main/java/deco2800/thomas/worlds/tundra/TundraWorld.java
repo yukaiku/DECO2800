@@ -2,6 +2,7 @@ package deco2800.thomas.worlds.tundra;
 
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.environment.tundra.TundraDungeonPortal;
 import deco2800.thomas.entities.items.*;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.TundraNPC;
@@ -130,6 +131,8 @@ public class TundraWorld extends AbstractWorld {
 				}
 			}
 		}
+
+		entities.add(new TundraDungeonPortal(this, -23, -23));
 	}
 
 	/**
