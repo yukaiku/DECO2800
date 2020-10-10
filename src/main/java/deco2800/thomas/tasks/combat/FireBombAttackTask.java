@@ -89,9 +89,6 @@ public class FireBombAttackTask extends AbstractTask {
             Peon peon = (Peon) e;
 
             peon.applyDamage(damage, DamageType.FIRE);
-            if (peon.isDead()) {
-                peon.death();
-            }
         }
     }
 

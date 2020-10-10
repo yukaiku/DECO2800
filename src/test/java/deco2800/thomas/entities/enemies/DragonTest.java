@@ -2,9 +2,11 @@ package deco2800.thomas.entities.enemies;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.DamageType;
+import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.attacks.*;
@@ -178,7 +180,8 @@ public class DragonTest extends BaseGDXTest {
     @Test
     public void testDeath() {
         volcanoDragon.death();
-        verify(enemyManager, times(1)).removeBoss();
+        PowerMockito.verifyStatic(WorldUtil.class);
+        WorldUtil.removeEntity(any(AbstractEntity.class));
         verify(world, times(1)).setOrbEntity(any(Orb.class));
     }
 }
