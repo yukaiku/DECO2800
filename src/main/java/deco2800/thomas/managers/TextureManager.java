@@ -304,6 +304,7 @@ public class TextureManager extends AbstractManager {
                     new Texture("resources/environment/swamp/entities/swamp_tree_log.png"));
             textureMap.put("swamp_tree_stub",
                     new Texture("resources/environment/swamp/entities/swamp_tree_stub.png"));
+            textureMap.put("swamp_portal", new Texture("resources/environment/portals/swamp_portal.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
