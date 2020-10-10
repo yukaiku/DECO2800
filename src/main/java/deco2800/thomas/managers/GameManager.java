@@ -61,7 +61,7 @@ public class GameManager {
 
 	public static float fps = 0;
 
-	public static boolean debugMode = false;
+	public boolean debugMode;
 
 	public static boolean tutorial = true;
 
@@ -116,6 +116,7 @@ public class GameManager {
 	private GameManager() {
 		//Loads the order of the worlds
 		worldOrder = new ArrayList<>(EnumSet.allOf(WorldType.class));
+		debugMode = false;
 	}
 
 	/**
