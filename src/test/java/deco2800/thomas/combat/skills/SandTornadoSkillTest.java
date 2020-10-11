@@ -56,7 +56,7 @@ public class SandTornadoSkillTest extends BaseGDXTest {
 
         assertEquals(0, testSkill.getCooldownRemaining());
         assertEquals(30, testSkill.getCooldownMax());
-        assertEquals(null,testSkill.getTexture());
+        assertEquals("sandTornadoIcon",testSkill.getTexture());
     }
 
     /**
