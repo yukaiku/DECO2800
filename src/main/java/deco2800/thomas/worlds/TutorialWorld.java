@@ -80,11 +80,11 @@ public class TutorialWorld extends AbstractWorld{
 
         // Add NPC
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
-        TutorialNPC NPC = new TutorialNPC("Master", new SquareVector(0,
+        TutorialNPC npc = new TutorialNPC("Master", new SquareVector(0,
                 2),"tutorial_npc");
-        npnSpawns.add(NPC);
+        npnSpawns.add(npc);
         this.allDialogBoxes = new ArrayList<>();
-        this.allDialogBoxes.add(NPC.getBox());
+        this.allDialogBoxes.add(npc.getBox());
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, player, npnSpawns);
         GameManager.get().addManager(npcManager);
 
