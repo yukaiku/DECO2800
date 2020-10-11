@@ -1,7 +1,7 @@
 package deco2800.thomas.entities.attacks;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.Animatable;
@@ -10,7 +10,6 @@ import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.status.BurnStatus;
-import deco2800.thomas.util.WorldUtil;
 
 import java.util.List;
 
@@ -21,35 +20,7 @@ import java.util.List;
  * c) its lifetime expires.
  */
 public class StingProjectile extends Projectile implements Animatable {
-    private final Animation<TextureRegion> animation;
-    /**
-     * Default constructor, sets texture and object name.
-     */
-    /* Enum containing the possible states of this class*/
-    public enum State {
-        DEFAULT, EXPLODING
-    }
-    /* The current state of this entity*/
-    public Fireball.State currentState;
-    /* Animation for when this entity is exploding */
-    private final Animation<TextureRegion> explosion;
-    /* Default animation */
-    private final Animation<TextureRegion> defaultState;
-    /* The current timer on this class */
-    private float stateTimer = 0;
-
-    public StingProjectile() {
-        super();
-        this.setTexture("fireball_right"); // Used for collisions only
-        this.setObjectName("combatStingProjectile");
-        animation = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("stingProjectile"));
-        explosion = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("stingEffect"));
-        defaultState = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("stingProjectile"));
-        currentState = Fireball.State.DEFAULT;
-    }
+    private boolean poisonApplied = false;
 
     /**
      * Parametric constructor, that sets the initial conditions of the projectile
@@ -64,36 +35,24 @@ public class StingProjectile extends Projectile implements Animatable {
         super(col, row, RenderConstants.PROJECTILE_RENDER, damage, speed, faction);
         this.setTexture("fireball_right");
         this.setObjectName("combatStingProjectile");
-        animation = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("stingProjectile"));
-        explosion = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("stingEffect"));
-        defaultState = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("stingProjectile"));
-        currentState = Fireball.State.DEFAULT;
+        this.setDamageType(DamageType.SWAMPY_WATER);
+        this.setDefaultState(new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("stingProjectile")));
+        this.setExplosion(new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("stingEffect")));
     }
 
+    /**
+     * Runs the projectile update code, and applies a poison if required.
+     * @param i current game tick
+     */
     @Override
     public void onTick(long i) {
-        // Update movement task
-        if (movementTask != null) {
-            if(movementTask.isComplete() && stateTimer > 9) {
-                WorldUtil.removeEntity(this);
-            }
-            movementTask.onTick(i);
-        } else {
-            WorldUtil.removeEntity(this);
-        }
-        // Update combat task
-        if (combatTask != null) {
-            if (combatTask.isComplete()) {
-                if (!movementTask.isComplete()) {
-                    applyPoison();
-                }
-                currentState = Fireball.State.EXPLODING;
-                movementTask.stopTask();
-            }
-            combatTask.onTick(i);
+        super.onTick(i);
+
+        if (combatTask != null && combatTask.isComplete() && !poisonApplied) {
+            applyPoison();
+            poisonApplied = true;
         }
     }
 
@@ -114,25 +73,5 @@ public class StingProjectile extends Projectile implements Animatable {
                 }
             }
         }
-    }
-
-    /**
-     * Get the texture region of current animation keyframe (this will be called in Renderer3D.java).
-     *
-     * @param delta the interval of the ticks
-     * @return the current texture region in animation
-     */
-    @Override
-    public TextureRegion getFrame(float delta) {
-        TextureRegion region;
-        // Get the animation frame based on the current state
-        if (currentState == Fireball.State.EXPLODING) {
-            region = explosion.getKeyFrame(stateTimer);
-        } else {
-            stateTimer = 0;
-            region = defaultState.getKeyFrame(stateTimer);
-        }
-        stateTimer = stateTimer + delta;
-        return region;
     }
 }
