@@ -94,6 +94,10 @@ public class ItemBox extends AbstractDialogBox {
 		return secondary;
 	}
 
+	public Item getItem(){
+		return this.item;
+	}
+
 	/**
 	 * ChangeListener for the primary button which displays "Buy" or "Open"
 	 */
@@ -108,14 +112,12 @@ public class ItemBox extends AbstractDialogBox {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
 			if ((PlayerPeon.checkBalance() > 0) && (PlayerPeon.checkBalance() > item.getCurrencyValue())) {
-				System.out.print(ItemBox.super.getEntity());
 				ItemBox.super.setShowing(false);
 				ItemBox.super.setRemove(true);
 				box.remove();
 				item.chargePlayer();
 			}
 			if (item.getClass() == Treasure.class){
-				System.out.print(ItemBox.super.getEntity());
 				ItemBox.super.setShowing(false);
 				ItemBox.super.setRemove(true);
 				box.remove();

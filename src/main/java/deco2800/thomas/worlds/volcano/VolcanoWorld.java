@@ -2,16 +2,13 @@ package deco2800.thomas.worlds.volcano;
 
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.items.*;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.VolcanoNPC;
 import deco2800.thomas.entities.environment.volcano.VolcanoDragonSkull;
 import deco2800.thomas.entities.environment.volcano.VolcanoGraveYard;
 import deco2800.thomas.entities.environment.volcano.VolcanoRuins;
 import deco2800.thomas.entities.environment.volcano.VolcanoBurningTree;
-import deco2800.thomas.entities.items.HealthPotion;
-import deco2800.thomas.entities.items.Item;
-import deco2800.thomas.entities.items.Shield;
-import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.entities.environment.volcano.*;
 import deco2800.thomas.managers.DatabaseManager;
@@ -186,10 +183,10 @@ public class VolcanoWorld extends AbstractWorld {
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
             if (Integer.parseInt(tile.getTextureName().split("_")[1]) < 5
                     && !tile.hasParent()) {
-                Shield shield = new Shield(tile, false,
+                IronArmour ironArmour = new IronArmour(tile, false,
                         (PlayerPeon) getPlayerEntity(),"volcano");
-                entities.add(shield);
-                this.allVolcanoDialogues.add(shield.getDisplay());
+                entities.add(ironArmour);
+                this.allVolcanoDialogues.add(ironArmour.getDisplay());
             } else {
                 i--;
             }
@@ -208,6 +205,18 @@ public class VolcanoWorld extends AbstractWorld {
                 i--;
             }
         }
+
+        Tile cooldownring = getTile(20,-7);
+        CooldownRing cdring = new CooldownRing(cooldownring, false,
+                (PlayerPeon) this.getPlayerEntity(), "volcano",0.5f);
+        entities.add(cdring);
+        this.allVolcanoDialogues.add(cdring.getDisplay());
+
+        Tile attackAmuletTile = getTile(2,14);
+        Amulet attackAmulet = new Amulet(attackAmuletTile, false,
+                (PlayerPeon) this.getPlayerEntity(), "volcano",10);
+        entities.add(attackAmulet);
+        this.allVolcanoDialogues.add(attackAmulet.getDisplay());
     }
 
     /**
@@ -482,7 +491,7 @@ public class VolcanoWorld extends AbstractWorld {
 
     public VolcanoPortal createDungeonPortal(float col, float row){
         Tile portalTile = getTile(col, row);
-        VolcanoPortal VolcanoPortal = new VolcanoPortal(portalTile, false, "portal", "VolcanoDungeonPortal" );
+        VolcanoPortal VolcanoPortal = new VolcanoPortal(portalTile, false, "VolcanoPortal", "VolcanoDungeonPortal" );
         return VolcanoPortal;
     }
 }

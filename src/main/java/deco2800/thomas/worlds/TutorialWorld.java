@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import deco2800.thomas.GameScreen;
+import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
@@ -60,10 +61,17 @@ public class TutorialWorld extends AbstractWorld{
             }
         }
 
+        PlayerPeon.buffDamageTotal = 0;
         PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f, 50);
             addEntity(player);
         this.setPlayerEntity(player);
         addEntity(this.getPlayerEntity());
+
+        for (AbstractSkill s :((PlayerPeon) this.getPlayerEntity()).getWizardSkills()){
+            s.setCooldownMax();
+        }
+        ((PlayerPeon) this.getPlayerEntity()).getMechSkill().setCooldownMax();
+
 
         // Spawn dummy
         EnemyManager enemyManager = new EnemyManager(this);
@@ -129,7 +137,6 @@ public class TutorialWorld extends AbstractWorld{
         // Add portal
         t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW);
         entities.add(new Portal(t, false));
-
 
         // Add message on how to leave tutorial (temporary)
         t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW + 2);

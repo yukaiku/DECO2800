@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import deco2800.thomas.entities.agent.LoadedPeon;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.npc.*;
 
@@ -50,6 +51,13 @@ public class NPCDialog extends AbstractDialogBox {
 		box.pack();
 	}
 
+	public void addHealer(){
+		TextButton button2 = new TextButton("Heal", skin);
+		button2.addListener(c);
+		box.add(button2).expand().center();
+		box.pack();
+	}
+
 	ChangeListener a = new ChangeListener() {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
@@ -79,43 +87,33 @@ public class NPCDialog extends AbstractDialogBox {
 				}
 			}
 
-			if (TundraNPC.getIsActive()) {
-				if (TundraNPC.speechStage >= 1) {
-					setString(PlayerPeon.getDialogue("tundra"));
-					box.removeListener(this);
-					box.addListener(b);
-				}
+			if (TundraNPC.getIsActive() && TundraNPC.speechStage >= 1) {
+				setString(PlayerPeon.getDialogue("tundra"));
+				box.removeListener(this);
+				box.addListener(b);
 			}
 
-			if (VolcanoNPC.getIsActive()){
-				if (VolcanoNPC.speechStage >= 1) {
-					setString(PlayerPeon.getDialogue("volcano"));
-					box.removeListener(this);
-					box.addListener(b);
-				}
+			if (VolcanoNPC.getIsActive() && VolcanoNPC.speechStage >= 1){
+				setString(PlayerPeon.getDialogue("volcano"));
+				box.removeListener(this);
+				box.addListener(b);
 			}
 
-			if (SwampNPC.getIsActive()){
-				if (SwampNPC.speechStage >= 1) {
-					setString(PlayerPeon.getDialogue("swamp"));
-					box.removeListener(this);
-					box.addListener(b);
-				}
+			if (SwampNPC.getIsActive() && SwampNPC.speechStage >= 1){
+				setString(PlayerPeon.getDialogue("swamp"));
+				box.removeListener(this);
+				box.addListener(b);
 			}
 
-			if (SwampDungeonNPC.getIsActive()) {
-				if (SwampDungeonNPC.speechStage >= 1) {
-					box.removeListener(this);
-					box.addListener(b);
-				}
+			if (SwampDungeonNPC.getIsActive() && SwampDungeonNPC.speechStage >= 1) {
+				box.removeListener(this);
+				box.addListener(b);
 			}
 
-			if (DesertNPC.getIsActive()){
-				if (DesertNPC.speechStage >= 1) {
-					setString(PlayerPeon.getDialogue("desert"));
-					box.removeListener(this);
-					box.addListener(b);
-				}
+			if (DesertNPC.getIsActive() && DesertNPC.speechStage >= 1){
+				setString(PlayerPeon.getDialogue("desert"));
+				box.removeListener(this);
+				box.addListener(b);
 			}
 		}
 	};
@@ -134,5 +132,26 @@ public class NPCDialog extends AbstractDialogBox {
 			TundraNPC.setIsActive(false);
 		}
 	};
-	
+
+	ChangeListener c = new ChangeListener() {
+		@Override
+		public void changed(ChangeEvent event, Actor actor) {
+			LoadedPeon.healPlayer(100);
+			LoadedPeon.debit(100);
+			setShowing(false);
+			box.reset();
+			box.remove();
+		}
+	};
+
+	ChangeListener d = new ChangeListener() {
+		@Override
+		public void changed(ChangeEvent event, Actor actor) {
+			LoadedPeon.healPlayer(100);
+			LoadedPeon.debit(100);
+			setShowing(false);
+			box.reset();
+			box.remove();
+		}
+	};
 }

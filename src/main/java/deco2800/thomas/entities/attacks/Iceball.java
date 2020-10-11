@@ -74,7 +74,7 @@ public class Iceball extends Projectile implements Animatable {
     public void onTick(long i) {
         // Update movement task
         if (movementTask != null) {
-            if(movementTask.isComplete() && stateTimer > 9) {
+            if(movementTask.isComplete() && stateTimer > explosion.getAnimationDuration()) {
                 WorldUtil.removeEntity(this);
             }
             movementTask.onTick(i);

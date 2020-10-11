@@ -40,14 +40,14 @@ public class StingProjectile extends Projectile implements Animatable {
 
     public StingProjectile() {
         super();
-        this.setTexture("fireball_right");
+        this.setTexture("fireball_right"); // Used for collisions only
         this.setObjectName("combatStingProjectile");
         animation = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("stingProjectile"));
         explosion = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("stingEffect"));
         defaultState = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("stingProjectile"));
         currentState = Fireball.State.DEFAULT;
     }
 
@@ -65,11 +65,11 @@ public class StingProjectile extends Projectile implements Animatable {
         this.setTexture("fireball_right");
         this.setObjectName("combatStingProjectile");
         animation = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("stingProjectile"));
         explosion = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("stingEffect"));
         defaultState = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("stingProjectile"));
         currentState = Fireball.State.DEFAULT;
     }
 

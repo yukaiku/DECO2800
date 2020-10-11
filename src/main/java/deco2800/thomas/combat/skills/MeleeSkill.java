@@ -10,7 +10,7 @@ import deco2800.thomas.util.SquareVector;
  */
 public class MeleeSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static final int MAX_COOLDOWN = 10;
+    private static int maxCoolDown = 10;
     /* Damage multiplier to apply to the ice tile.
     Multiplies the peon base damage value. */
     private static final float DAMAGE_MULTIPLIER = 0.4f;
@@ -37,8 +37,14 @@ public class MeleeSkill extends AbstractSkill {
      */
     @Override
     public int getCooldownMax() {
-        return MAX_COOLDOWN;
+        return maxCoolDown;
     }
+
+    @Override
+    public void reduceCooldownMax(float percent){/*Currently does nothing for game balance purposes*/}
+
+    @Override
+    public void setCooldownMax(){/*Currently does nothing for game balance purposes*/}
 
     /**
      * Returns a string containing the name of the texture that is used to represent

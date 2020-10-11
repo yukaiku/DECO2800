@@ -300,6 +300,12 @@ public class Peon extends AgentEntity implements Tickable {
 	}
 
 	/**
+	 * Increases an amount of Peon's damage
+	 * @param damage
+	 */
+	public void addDamage(int damage) { this.damage += damage;}
+
+	/**
 	 * Increases the health of this AgentEntity. by the given amount.
 	 * @param regen The amount of health this AgentEntity.is to be healed by.
 	 */

@@ -1,7 +1,11 @@
 package deco2800.thomas.worlds.swamp;
 
+import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.environment.Portal;
+import deco2800.thomas.entities.environment.volcano.VolcanoPortal;
+import deco2800.thomas.entities.items.*;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.SwampNPC;
 import deco2800.thomas.entities.environment.swamp.SwampDeadTree;
@@ -9,10 +13,6 @@ import deco2800.thomas.entities.environment.swamp.SwampFallenTree;
 import deco2800.thomas.entities.environment.swamp.SwampPond;
 import deco2800.thomas.entities.environment.swamp.SwampTreeLog;
 import deco2800.thomas.entities.environment.swamp.SwampTreeStub;
-import deco2800.thomas.entities.items.HealthPotion;
-import deco2800.thomas.entities.items.Item;
-import deco2800.thomas.entities.items.Shield;
-import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.managers.DatabaseManager;
@@ -45,8 +45,14 @@ public class SwampWorld extends AbstractWorld {
         this.allSwampDialogues = new ArrayList<>();
 
         // Create the player entity
+        PlayerPeon.buffDamageTotal = 0;
         this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
+
+        /*for (AbstractSkill s :((PlayerPeon) this.getPlayerEntity()).getWizardSkills()){
+            s.setCooldownMax();
+        }
+        ((PlayerPeon) this.getPlayerEntity()).getMechSkill().setCooldownMax();*/
 
         // Creates Items
         this.generateItemEntities();
@@ -189,12 +195,18 @@ public class SwampWorld extends AbstractWorld {
         entities.add(new SwampFallenTree((this.getTile(23, 13)), true));
     }
 
+    public void createDungeonPortal(float col, float row){
+        Tile portalTile = getTile(col, row);
+        entities.add(new Portal(portalTile, false, "swamp_portal", "SwampDungeonPortal"));
+    }
+
     public void generateStaticEntities() {
         this.createPond();
         this.createDeadTree();
         this.createTreeStub();
         this.createFallenTree();
         this.createTreeLog();
+        this.createDungeonPortal(-7, 9);
     }
 
     /**
@@ -222,10 +234,10 @@ public class SwampWorld extends AbstractWorld {
         for (int i = 0; i < NUM_SHIELDS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            Shield shield = new Shield(tile, false,
+            IronArmour ironArmour = new IronArmour(tile, false,
                     (PlayerPeon) getPlayerEntity(),"swamp");
-            entities.add(shield);
-            this.allSwampDialogues.add(shield.getDisplay());
+            entities.add(ironArmour);
+            this.allSwampDialogues.add(ironArmour.getDisplay());
         }
 
         for (int i = 0; i < NUM_CHESTS; i++) {
@@ -236,6 +248,18 @@ public class SwampWorld extends AbstractWorld {
             entities.add(chest);
             this.allSwampDialogues.add(chest.getDisplay());
         }
+
+        Tile attackAmuletTile = getTile(23,14);
+        Amulet attackAmulet = new Amulet(attackAmuletTile, false,
+                (PlayerPeon) this.getPlayerEntity(), "swamp",10);
+        entities.add(attackAmulet);
+        this.allSwampDialogues.add(attackAmulet.getDisplay());
+
+        Tile cooldownring = getTile(15,-25);
+        CooldownRing cdring = new CooldownRing(cooldownring, false,
+                (PlayerPeon) this.getPlayerEntity(), "swamp",0.5f);
+        entities.add(cdring);
+        this.allSwampDialogues.add(cdring.getDisplay());
     }
 
     @Override

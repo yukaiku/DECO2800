@@ -3,17 +3,15 @@ package deco2800.thomas.managers;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
-import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.worlds.AbstractWorld;
-
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.desert.DesertWorld;
+import deco2800.thomas.worlds.dungeons.SwampDungeon;
+import deco2800.thomas.worlds.dungeons.TundraDungeon;
 import deco2800.thomas.worlds.dungeons.VolcanoDungeon;
 import deco2800.thomas.worlds.swamp.SwampWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
@@ -88,7 +86,6 @@ public class GameManager {
 		VOLCANO_WORLD
 	}
 	private ArrayList<WorldType> worldOrder;
-
 	public State state = State.RUN;
 	public enum State
 	{
@@ -331,10 +328,10 @@ public class GameManager {
 				this.setWorld(new VolcanoDungeon());
 				break;
 			case "TundraDungeonPortal":
-				this.setWorld(new VolcanoDungeon());
+				this.setWorld(new TundraDungeon());
 				break;
 			case "SwampDungeonPortal":
-				this.setWorld(new VolcanoDungeon());
+				this.setWorld(new SwampDungeon());
 				break;
 			case "DesertDungeonPortal":
 				this.setWorld(new VolcanoDungeon());
@@ -368,6 +365,7 @@ public class GameManager {
 		//Add existing world & enemy manager
 		this.addManager(enemyManagerOutSideWorld);
 		this.setWorld(worldOutsideDungeon);
+		((PlayerPeon)this.worldOutsideDungeon.getPlayerEntity()).updatePlayerSkills();
 		this.worldOutsideDungeon = null;
 	}
 
@@ -437,6 +435,4 @@ public class GameManager {
 		}
 		gameWorld.onTick(0);
 	}
-
-
 }
