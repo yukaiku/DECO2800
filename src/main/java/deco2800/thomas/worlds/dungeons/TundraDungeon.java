@@ -143,8 +143,7 @@ public class TundraDungeon extends AbstractWorld {
 		ArrayList<String> words = new ArrayList<>();
 		String filePath = "resources/environment/tundra/tundra-dungeon-words.txt";
 
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(filePath));
+		try(BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
 			String line = reader.readLine();
 
 			while (line != null) {

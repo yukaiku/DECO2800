@@ -100,9 +100,6 @@ public class ApplyDamageOverTimeTask extends AbstractTask {
 
             peon.applyDamage(((CombatEntity) entity).getDamage(), DamageType.COMMON);
             this.taskComplete = true;
-            if (peon.isDead()) {
-                peon.death();
-            }
         }
     }
 }

@@ -2,6 +2,7 @@ package deco2800.thomas.entities.attacks;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.RenderConstants;
@@ -39,7 +40,7 @@ public class Explosion extends CombatEntity implements Animatable {
      * @param faction EntityFaction of the explosion
      */
     public Explosion (float col, float row, int damage, EntityFaction faction) {
-        super(col, row, RenderConstants.PROJECTILE_RENDER, damage, faction);
+        super(col, row, RenderConstants.PROJECTILE_RENDER, damage, faction, DamageType.COMMON);
         this.setTexture("explosion");
         this.setObjectName("combatExplosion");
         animationFrames = new Animation<>(0.1f,

@@ -1,5 +1,6 @@
 package deco2800.thomas.entities.enemies.bosses;
 
+import com.badlogic.gdx.graphics.Texture;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -13,10 +14,12 @@ import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.enemies.PassiveEnemy;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
 import deco2800.thomas.util.SquareVector;
+import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 
@@ -70,9 +73,6 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     public int applyDamage(int damage, DamageType damageType) {
         int damageDealt = super.applyDamage(damage, damageType);
         hitByTarget();
-        if (isDead()) {
-            death();
-        }
         return damageDealt;
     }
 
@@ -136,7 +136,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
         AbstractWorld world = GameManager.get().getWorld();
         Tile tile = world.getTile((float) Math.ceil((this.getCol())),
                 (float) Math.ceil((this.getRow())));
-        GameManager.getManagerFromInstance(EnemyManager.class).removeBoss();
+        WorldUtil.removeEntity(this);
         //Generate the correct orb texture to initialise the dragon's dropped orb
         world.setOrbEntity(new Orb(tile, "orb_" + orbNumber));
 

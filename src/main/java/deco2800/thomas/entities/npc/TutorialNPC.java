@@ -23,7 +23,7 @@ public class TutorialNPC extends NonPlayablePeon implements Interactable {
     }
     
     public void onTick(){
-
+        // tick tick tick 
     }
 
     public static boolean getIsActive(){

@@ -2,6 +2,7 @@ package deco2800.thomas.entities.attacks;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.entities.agent.Peon;
@@ -22,7 +23,7 @@ public class WaterShield extends CombatEntity implements Animatable {
     private float stateTimer = 0f;
 
     public WaterShield(Peon entity, long lifeTime) {
-        super(entity.getCol(), entity.getRow(), RenderConstants.PEON_EFFECT_RENDER, 0, entity.getFaction());
+        super(entity.getCol(), entity.getRow(), RenderConstants.PEON_EFFECT_RENDER, 0, entity.getFaction(), DamageType.COMMON);
         this.entity = entity;
         this.setColRenderLength(this.entity.getColRenderLength());
         this.setRowRenderLength(this.entity.getRowRenderLength());

@@ -52,7 +52,7 @@ public class QuestTracker{
             orbCount = orbs.size();
         }
         if(orbCount == 4){
-            GameManager.victory();
+            GameManager.get().victory();
         }
         return orbCount;
     }

@@ -3,15 +3,11 @@ package deco2800.thomas.managers;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
-import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.worlds.AbstractWorld;
-
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.desert.DesertWorld;
 import deco2800.thomas.worlds.dungeons.DesertDungeon;
@@ -64,7 +60,7 @@ public class GameManager {
 
 	public static float fps = 0;
 
-	public static boolean debugMode = false;
+	public boolean debugMode;
 
 	public static boolean tutorial = true;
 
@@ -91,7 +87,6 @@ public class GameManager {
 		VOLCANO_WORLD
 	}
 	private ArrayList<WorldType> worldOrder;
-
 	public State state = State.RUN;
 	public enum State
 	{
@@ -119,6 +114,7 @@ public class GameManager {
 	private GameManager() {
 		//Loads the order of the worlds
 		worldOrder = new ArrayList<>(EnumSet.allOf(WorldType.class));
+		debugMode = false;
 	}
 
 	/**
@@ -441,6 +437,4 @@ public class GameManager {
 		}
 		gameWorld.onTick(0);
 	}
-
-
 }

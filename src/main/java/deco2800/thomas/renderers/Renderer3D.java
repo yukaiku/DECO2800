@@ -243,8 +243,6 @@ public class Renderer3D implements Renderer {
 
 		if (entity instanceof VolcanoFireball) {
 			batch.setColor(102, 0, 0, 1);
-		} else if (entity instanceof StingProjectile){
-			batch.setColor(0, 102, 0, 1);
 		}
 		batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width / 2,
 				height / 2, width, height, 2, 2, ((Projectile) entity).getDirection());

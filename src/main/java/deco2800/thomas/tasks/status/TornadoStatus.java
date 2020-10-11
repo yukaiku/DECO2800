@@ -69,11 +69,7 @@ public class TornadoStatus extends StatusEffect {
         if (getAffectedEntity() instanceof PlayerPeon) {
             PlayerPeon peon = (PlayerPeon) getAffectedEntity();
             peon.setCurrentState(PlayerPeon.State.INCAPACITATED);
-            System.out.println("applied");
         }
-
-//        int health = healthTracker.getCurrentHealthValue();
-//        healthTracker.setCurrentHealthValue(health - burnDamage);
 
         // if all ticks are done, we set to inactive
         if (ticks == 0) {

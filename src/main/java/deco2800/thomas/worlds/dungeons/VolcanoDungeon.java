@@ -54,8 +54,6 @@ public class VolcanoDungeon extends AbstractWorld {
         this.setPlayerEntity(new PlayerPeon(-0f, -0f, 0.15f));
         addEntity(this.getPlayerEntity());
 
-        this.setWorldZoomable(false);
-
         GameManager.get().addManager(new EnemyManager(this));
         this.VolcanoDungeonDialogue = new ArrayList<>();
         setupPuzzle();
