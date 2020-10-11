@@ -1,5 +1,8 @@
 package deco2800.thomas.worlds.dungeons;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.monsters.ImmuneOrc;
@@ -10,12 +13,19 @@ import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
+import deco2800.thomas.worlds.dungeons.desert.DesertDungeonDialog;
+import deco2800.thomas.worlds.dungeons.desert.DesertDungeonOpeningDialog;
+import deco2800.thomas.worlds.dungeons.tundra.TundraDungeonAnnouncementDialog;
+import deco2800.thomas.worlds.dungeons.tundra.TundraDungeonDialog;
 
 import java.util.Random;
 
 public class DesertDungeon extends AbstractWorld {
     public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/desert/desert_dungeon_map.json";
     private boolean notGenerated = true;
+
+
+    private final Skin skin = new Skin(Gdx.files.internal("resources/uiskin.skin"));
 
     /**
      * Default Constructor for volcano world.
@@ -32,7 +42,15 @@ public class DesertDungeon extends AbstractWorld {
 
         GameManager.get().addManager(new EnemyManager(this));
         EnemyManager enemyManager = GameManager.getManagerFromInstance(EnemyManager.class);
-        enemyManager.spawnSpecialEnemy("immuneOrc", 0, 0);
+        enemyManager.spawnSpecialEnemy("immuneOrc", -2f, 8f);
+
+
+        // Set up all types of dialogs
+        Stage stage = GameManager.get().getStage();
+        DesertDungeonDialog.setup(stage, skin);
+
+        DesertDungeonOpeningDialog announcementDialog = new DesertDungeonOpeningDialog("The Desert Dungeon", skin);
+        announcementDialog.show();
     }
 
     @Override

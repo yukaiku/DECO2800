@@ -13,7 +13,7 @@ import deco2800.thomas.worlds.Tile;
 
 public class ImmuneOrc extends Orc {
     public ImmuneOrc() {
-        super(EnemyIndex.Variation.DESERT, 100, 0.2f, 10, 100, 2, 0);
+        super(EnemyIndex.Variation.DESERT, 100, 0.2f, 30, 100, 2, 0);
         this.setObjectName("ImmuneOrc");
     }
 
