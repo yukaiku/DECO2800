@@ -33,6 +33,7 @@ public class FireballSkill extends AbstractSkill {
             throw new NullPointerException();
         }
         this.entity = parent;
+        setMaxCooldown(ORIGINAL_COOLDOWN);
     }
 
     /**

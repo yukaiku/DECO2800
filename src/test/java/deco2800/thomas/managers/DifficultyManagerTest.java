@@ -126,7 +126,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         assertEquals(12,enemyManager.getEnemyConfig("swampOrc").getMaxHealth());
         EnemyPeon orc = enemyManager.getEnemyConfig("swampOrc");
         Orc orc1 = (Orc)orc;
-        assertEquals(0.0001f,orc1.getSpawnRate(), 0D);
+        assertEquals(0.05f,orc1.getSpawnRate(), 0.01);
     }
 
     /***
@@ -139,7 +139,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         assertEquals(25,enemyManager.getEnemyConfig("tundraOrc").getMaxHealth());
         EnemyPeon orc = enemyManager.getEnemyConfig("tundraOrc");
         Orc orc1 = (Orc)orc;
-        assertEquals(0.0001f,orc1.getSpawnRate(), 0D);
+        assertEquals(0.05f,orc1.getSpawnRate(), 0.01);
     }
 
     /***
@@ -152,7 +152,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         assertEquals(12,enemyManager.getEnemyConfig("desertOrc").getMaxHealth());
         EnemyPeon orc = enemyManager.getEnemyConfig("desertOrc");
         Orc orc1 = (Orc)orc;
-        assertEquals(0.0001f,orc1.getSpawnRate(), 0D);
+        assertEquals(0.05f,orc1.getSpawnRate(), 0.01);
     }
 
     /***
@@ -165,7 +165,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         assertEquals(12,enemyManager.getEnemyConfig("volcanoOrc").getMaxHealth());
         EnemyPeon orc = enemyManager.getEnemyConfig("volcanoOrc");
         Orc orc1 = (Orc)orc;
-        assertEquals(0.0001f,orc1.getSpawnRate(), 0D);
+        assertEquals(0.05f,orc1.getSpawnRate(), 0.01);
     }
 
     @After
