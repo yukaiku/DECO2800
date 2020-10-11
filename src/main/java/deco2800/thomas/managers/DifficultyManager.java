@@ -95,20 +95,24 @@ public class DifficultyManager extends TickableManager{
         }
     }
 
+    /***
+     * Changes the wizard skill cooldown and damage
+     * @param coolDown cooldown time of skills
+     */
     public void setWizardSkillCoolDown(int coolDown){
         List<AbstractSkill> wizardSkills = playerPeon.getWizardSkills();
         for(AbstractSkill wizardSkill : wizardSkills){
             switch (wizardSkill.getTexture()){
                 case "iceballIcon": // Default 50
                     ((IceballSkill) wizardSkill).setMaxCooldown(coolDown*2);
-                    if(getWorldType() == "desert"){
+                    if(getWorldType().equals("desert")){
                         //More damage to desert with water skill
                         ((IceballSkill)wizardSkill).setDamageMultiplier(((IceballSkill) wizardSkill).getDamageMultiplier()*2);
                     }
                     return;
                 case "fireballIcon": //Default 20
                     ((FireballSkill) wizardSkill).setMaxCooldown(coolDown);
-                    if(getWorldType() == "tundra"){
+                    if(getWorldType().equals("tundra")){
                         //More damage to tundra with fire skill
                         ((FireballSkill)wizardSkill).setDamageMultiplier(((FireballSkill) wizardSkill).getDamageMultiplier()*2);
                     }
@@ -120,6 +124,11 @@ public class DifficultyManager extends TickableManager{
             }
         }
     }
+
+    /***
+     * Changes the mech cooldown time
+     * @param coolDown cooldown time of skill
+     */
     public void setMechSkillCoolDown(int coolDown){
         AbstractSkill mechSkill = playerPeon.getMechSkill();
         if(mechSkill.getTexture() == "explosionIcon"){ //Default 160

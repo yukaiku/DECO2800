@@ -172,5 +172,6 @@ public class DifficultyManagerTest extends BaseGDXTest {
     public void tearDown() {
         difficultyManager = null;
         enemyManager = null;
+        playerManager = null;
     }
 }
