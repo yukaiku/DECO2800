@@ -14,7 +14,7 @@ public class Treasure extends Item{
 				obstructed, player);
 		this.setObjectName(ENTITY_ID_STRING);
 		
-		super.display = new ItemBox(this, "treasure", "0", "Treasure Box",
+		super.display = new ItemBox(this, ENTITY_ID_STRING, "0", "Treasure Box",
 				styleType);
 	}
 }

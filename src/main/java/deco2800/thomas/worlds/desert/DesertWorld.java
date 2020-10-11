@@ -174,12 +174,13 @@ public class DesertWorld extends AbstractWorld {
         final int NUM_POTIONS = 6;
         final int NUM_SHIELDS = 4;
         final int NUM_CHESTS = 3;
+        final String ITEM_BOX_STYLE = "desert";
 
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
             HealthPotion potion = new HealthPotion(tile,false,
-                    (PlayerPeon) getPlayerEntity(),"desert");
+                    (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
             entities.add(potion);
             this.allDesertDialogues.add(potion.getDisplay());
         }
@@ -188,7 +189,7 @@ public class DesertWorld extends AbstractWorld {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
             IronArmour ironArmour = new IronArmour(tile, false,
-                    (PlayerPeon) getPlayerEntity(),"desert");
+                    (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
             entities.add(ironArmour);
             this.allDesertDialogues.add(ironArmour.getDisplay());
         }
@@ -197,20 +198,20 @@ public class DesertWorld extends AbstractWorld {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
             Treasure chest = new Treasure(tile, false,
-                    (PlayerPeon) getPlayerEntity(),"desert");
+                    (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
             entities.add(chest);
             this.allDesertDialogues.add(chest.getDisplay());
         }
 
         Tile attackAmuletTile = getTile(4,-9);
         Amulet attackAmulet = new Amulet(attackAmuletTile, false,
-                (PlayerPeon) this.getPlayerEntity(), "desert",10);
+                (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,10);
         entities.add(attackAmulet);
         this.allDesertDialogues.add(attackAmulet.getDisplay());
 
         Tile cooldownring = getTile(23,-24);
         CooldownRing cdring = new CooldownRing(cooldownring, false,
-                (PlayerPeon) this.getPlayerEntity(), "desert",0.5f);
+                (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,0.5f);
         entities.add(cdring);
         this.allDesertDialogues.add(cdring.getDisplay());
     }
