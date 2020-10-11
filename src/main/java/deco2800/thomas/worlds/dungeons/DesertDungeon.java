@@ -33,9 +33,6 @@ public class DesertDungeon extends AbstractWorld {
         GameManager.get().addManager(new EnemyManager(this));
         EnemyManager enemyManager = GameManager.getManagerFromInstance(EnemyManager.class);
         enemyManager.spawnSpecialEnemy("immuneOrc", 0, 0);
-
-        Tile exitTile = this.getTile(-2, 8f);
-        addEntity(new ExitPortal(exitTile, false, "portal", "ExitPortal"));
     }
 
     @Override
