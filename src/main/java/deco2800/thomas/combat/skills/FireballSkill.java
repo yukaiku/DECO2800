@@ -16,9 +16,9 @@ public class FireballSkill extends AbstractSkill {
     Multiplies the peon base damage value. */
     private static float damageMultiplier = 0.4f;
     /* Speed of fireball */
-    private static final float speed = 0.5f;
+    private static final float SPEED = 0.5f;
     /* Lifetime of fireball */
-    private static final int lifetime = 60;
+    private static final int LIFETIME = 60;
 
     /* Reference to parent entity */
     private final Peon entity;
@@ -102,6 +102,6 @@ public class FireballSkill extends AbstractSkill {
     @Override
     protected AbstractTask getTask(float targetX, float targetY) {
         int damage = (int) (entity.getDamage() * damageMultiplier);
-        return new FireballAttackTask(entity, targetX, targetY, damage, speed, lifetime);
+        return new FireballAttackTask(entity, targetX, targetY, damage, SPEED, LIFETIME);
     }
 }

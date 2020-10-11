@@ -20,7 +20,6 @@ import java.util.List;
 
 public class Iceball extends Projectile implements Animatable {
 
-    private final Animation<TextureRegion> animation;
     /* Enum containing the possible states of this class*/
     public enum State {
         DEFAULT, EXPLODING
@@ -39,8 +38,6 @@ public class Iceball extends Projectile implements Animatable {
         super();
         this.setTexture("fireball_right");
         this.setObjectName("combatIceballProjectile");
-        animation = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballDefault"));
         explosion = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballExplosion"));
         defaultState = new Animation<>(0.1f,
@@ -61,11 +58,9 @@ public class Iceball extends Projectile implements Animatable {
         super(col, row, RenderConstants.PROJECTILE_RENDER, damage, speed, faction);
         this.setTexture("fireball_right");
         this.setObjectName("combatIceballProjectile");
-        animation = new Animation<TextureRegion>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballDefault"));
-        explosion = new Animation<TextureRegion>(0.1f,
+        explosion = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballExplosion"));
-        defaultState = new Animation<TextureRegion>(0.1f,
+        defaultState = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballDefault"));
         currentState = Fireball.State.DEFAULT;
     }
@@ -134,14 +129,11 @@ public class Iceball extends Projectile implements Animatable {
     public TextureRegion getFrame(float delta) {
         TextureRegion region;
         // Get the animation frame based on the current state
-        switch (currentState) {
-            case EXPLODING:
-                region = explosion.getKeyFrame(stateTimer);
-                break;
-            default:
-                stateTimer = 0;
-                region = defaultState.getKeyFrame(stateTimer);
-                break;
+        if (currentState == Fireball.State.EXPLODING) {
+            region = explosion.getKeyFrame(stateTimer);
+        } else {
+            stateTimer = 0;
+            region = defaultState.getKeyFrame(stateTimer);
         }
         stateTimer = stateTimer + delta;
         return region;

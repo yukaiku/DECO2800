@@ -10,7 +10,7 @@ import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.util.WorldUtil;
 
 public class Freeze extends Projectile implements Animatable {
-    private final Animation<TextureRegion> freeze;
+    private final Animation<TextureRegion> freezeAnimaton;
     private float stateTimer = 0f;
     private float direction = 0f;
 
@@ -23,8 +23,8 @@ public class Freeze extends Projectile implements Animatable {
         this.setRowRenderLength(1.0f);
         this.setTexture("explosion");
         this.setObjectName("freezeWave");
-        freeze = new Animation<>(0.02f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
+        freezeAnimaton = new Animation<>(0.02f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("freezeTile"));
     }
 
     /**
@@ -42,7 +42,7 @@ public class Freeze extends Projectile implements Animatable {
         this.setColRenderLength(0.3f);
         this.setRowRenderLength(1.0f);
         this.setTexture("explosion");
-        freeze = new Animation<>(0.02f,
+        freezeAnimaton = new Animation<>(0.02f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("freezeTile"));
     }
 
@@ -65,7 +65,7 @@ public class Freeze extends Projectile implements Animatable {
             }
         } else {
             // Remove entity after animation completes
-            if (stateTimer >= freeze.getAnimationDuration()) {
+            if (stateTimer >= freezeAnimaton.getAnimationDuration()) {
                 WorldUtil.removeEntity(this);
             }
         }
@@ -74,6 +74,6 @@ public class Freeze extends Projectile implements Animatable {
     @Override
     public TextureRegion getFrame(float delta) {
         stateTimer += delta;
-        return freeze.getKeyFrame(stateTimer);
+        return freezeAnimaton.getKeyFrame(stateTimer);
     }
 }
