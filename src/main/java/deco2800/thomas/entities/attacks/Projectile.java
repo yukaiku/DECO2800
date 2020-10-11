@@ -1,6 +1,13 @@
 package deco2800.thomas.entities.attacks;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import deco2800.thomas.Tickable;
+import deco2800.thomas.combat.DamageType;
+import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
@@ -9,11 +16,26 @@ import deco2800.thomas.util.WorldUtil;
  * damage when it reaches its destination. This is a base class that should be extended
  * for use in game. See Fireball as an example.
  */
-public class Projectile extends CombatEntity {
+public class Projectile extends CombatEntity implements Animatable, Tickable {
+    /* Enum containing the possible states of this class for animations. */
+    public enum State {
+        DEFAULT, EXPLODING
+    }
+
     // Speed projectile moves at
     private float speed;
     // Direction (in degrees) projectile is moving
     private float direction;
+
+    /* The current state of this entity*/
+    protected Projectile.State currentState;
+    /* Animation for when this entity is exploding */
+    protected Animation<TextureRegion> explosion;
+
+    /* Default animation */
+    protected Animation<TextureRegion> defaultState;
+    /* The current timer on this class */
+    protected float stateTimer = 0;
 
     /**
      * Default constructor, just an empty projectile.
@@ -32,9 +54,35 @@ public class Projectile extends CombatEntity {
      * @param faction EntityFaction of the projectile
      */
     public Projectile(float col, float row, int renderOrder, int damage, float speed, EntityFaction faction) {
-        super(col, row, renderOrder, damage, faction);
+        super(col, row, renderOrder, damage, faction, DamageType.COMMON);
         this.speed = speed;
         this.direction = 0;
+
+        // Default animations to fireball
+        this.setObjectName("combatProjectile");
+        this.setTexture("fireball_right");
+
+        explosion = new Animation<TextureRegion>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
+        defaultState = new Animation<TextureRegion>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
+        currentState = Projectile.State.DEFAULT;
+    }
+
+    /**
+     * Sets the explosion animation for this projectile.
+     * @param explosion Animation to use for explosion.
+     */
+    public void setExplosion(Animation<TextureRegion> explosion) {
+        this.explosion = explosion;
+    }
+
+    /**
+     * Sets the defaultState animation for this projectile.
+     * @param defaultState Animation to use for default state.
+     */
+    public void setDefaultState(Animation<TextureRegion> defaultState) {
+        this.defaultState = defaultState;
     }
 
     /**
@@ -90,22 +138,45 @@ public class Projectile extends CombatEntity {
     public void onTick(long i) {
         // Update movement task
         if (movementTask != null) {
-            if( movementTask.isComplete()) {
-                WorldUtil.removeEntity(this);
+            if(!movementTask.isComplete()) {
+                movementTask.onTick(i);
             }
-            movementTask.onTick(i);
-        } else {
-            WorldUtil.removeEntity(this);
         }
-
         // Update combat task
         if (combatTask != null) {
-            if (combatTask.isComplete()) {
+            if (combatTask.isComplete() && currentState == State.DEFAULT) {
+                currentState = Projectile.State.EXPLODING;
+                stateTimer = 0;
+                if (movementTask != null) {
+                    movementTask.stopTask();
+                }
+                combatTask.stopTask();
+            } else if (currentState == State.EXPLODING && stateTimer > 9) {
                 WorldUtil.removeEntity(this);
+            } else {
+                combatTask.onTick(i);
             }
-            combatTask.onTick(i);
-        } else {
-            WorldUtil.removeEntity(this);
         }
+    }
+
+    /**
+     * Returns the current animation frame to draw representing this projectile.
+     * @param delta the interval of the ticks
+     * @return TextureRegion to draw.
+     */
+    @Override
+    public TextureRegion getFrame(float delta) {
+        TextureRegion region;
+        // Get the animation frame based on the current state
+        if (currentState == Projectile.State.EXPLODING) {
+            region = explosion.getKeyFrame(stateTimer);
+        } else {
+            if (stateTimer >= defaultState.getAnimationDuration()) {
+                stateTimer = 0;
+            }
+            region = defaultState.getKeyFrame(stateTimer);
+        }
+        stateTimer = stateTimer + delta;
+        return region;
     }
 }

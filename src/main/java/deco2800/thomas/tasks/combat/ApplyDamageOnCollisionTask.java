@@ -19,7 +19,8 @@ public class ApplyDamageOnCollisionTask extends AbstractTask {
     // Reference to current game world
     private AbstractWorld world;
     // Lifetime of task
-    private long lifetime, currentLifetime;
+    private long lifetime;
+    private long currentLifetime;
 
     // Task state
     private boolean taskAlive = true;
@@ -91,9 +92,6 @@ public class ApplyDamageOnCollisionTask extends AbstractTask {
 
             peon.applyDamage(((CombatEntity) entity).getDamage(), DamageType.COMMON);
             this.taskComplete = true;
-            if (peon.isDead()) {
-                peon.death();
-            }
         }
     }
 
