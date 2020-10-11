@@ -68,7 +68,7 @@ public class DesertWorld extends AbstractWorld {
     @Override
     protected void generateTiles() {
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
-        this.setPlayerEntity(new PlayerPeon(-20f, -20f, 0.15f));
+        this.setPlayerEntity(new PlayerPeon(6f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
         this.allDesertDialogues = new ArrayList<>();
 
@@ -165,6 +165,7 @@ public class DesertWorld extends AbstractWorld {
             }
         }
 
+        // adds the portal to the Desert Dungeon
         entities.add(new DesertDungeonPortal(this, -22, -22));
     }
 
