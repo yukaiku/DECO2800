@@ -9,14 +9,12 @@ import deco2800.thomas.combat.*;
 import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.InputManager;
-import deco2800.thomas.managers.PlayerManager;
-import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.tasks.movement.MovementTask;
+import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
@@ -475,6 +473,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         this.getMechSkill().setCooldownMax();
         GameManager.get().getWorld().removeEntity(this);
         GameManager.get().getWorld().disposeEntity(this.getEntityID());
+        GameManager.getManagerFromInstance(StatusEffectManager.class).getCurrentStatusEffects().clear();
         GameManager.gameOver();
     }
 
