@@ -3,6 +3,8 @@ package deco2800.thomas.worlds.desert;
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.environment.Portal;
+import deco2800.thomas.entities.environment.tundra.TundraDungeonPortal;
 import deco2800.thomas.entities.items.*;
 import deco2800.thomas.entities.npc.DesertNPC;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
@@ -66,7 +68,7 @@ public class DesertWorld extends AbstractWorld {
     @Override
     protected void generateTiles() {
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
-        this.setPlayerEntity(new PlayerPeon(6f, 5f, 0.15f));
+        this.setPlayerEntity(new PlayerPeon(-20f, -20f, 0.15f));
         addEntity(this.getPlayerEntity());
         this.allDesertDialogues = new ArrayList<>();
 
@@ -162,6 +164,8 @@ public class DesertWorld extends AbstractWorld {
                     break;
             }
         }
+
+        entities.add(new DesertDungeonPortal(this, -22, -22));
     }
 
     /**

@@ -2,6 +2,7 @@ package deco2800.thomas.worlds.dungeons;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.enemies.monsters.ImmuneOrc;
 import deco2800.thomas.entities.environment.ExitPortal;
 import deco2800.thomas.entities.environment.desert.*;
 import deco2800.thomas.managers.DatabaseManager;
@@ -30,6 +31,8 @@ public class DesertDungeon extends AbstractWorld {
         addEntity(this.getPlayerEntity());
 
         GameManager.get().addManager(new EnemyManager(this));
+        EnemyManager enemyManager = GameManager.getManagerFromInstance(EnemyManager.class);
+        enemyManager.spawnSpecialEnemy("immuneOrc", 0, 0);
 
         Tile exitTile = this.getTile(-2, 8f);
         addEntity(new ExitPortal(exitTile, false, "portal", "ExitPortal"));
