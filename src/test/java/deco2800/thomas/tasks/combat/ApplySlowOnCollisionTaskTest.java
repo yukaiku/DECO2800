@@ -1,5 +1,6 @@
 package deco2800.thomas.tasks.combat;
 
+import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.attacks.CombatEntity;
@@ -24,7 +25,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(GameManager.class)
-public class ApplySlowOnCollisionTaskTest {
+public class ApplySlowOnCollisionTaskTest extends BaseGDXTest {
     // Used to verify task execution
     private GameManager gameManager;
     private CombatEntity combatEntity;
