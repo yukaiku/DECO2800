@@ -15,5 +15,6 @@ public class Barrel extends StaticEntity implements Tickable {
 
     @Override
     public void onTick(long i) {
+        // do nothing
     }
 }

@@ -15,5 +15,6 @@ public class Stash extends StaticEntity implements Tickable {
 
     @Override
     public void onTick(long i) {
+        // do nothing
     }
 }
