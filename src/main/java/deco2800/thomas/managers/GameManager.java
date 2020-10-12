@@ -5,10 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.desert.DesertWorld;
+import deco2800.thomas.worlds.dungeons.DesertDungeon;
 import deco2800.thomas.worlds.dungeons.SwampDungeon;
 import deco2800.thomas.worlds.dungeons.TundraDungeon;
 import deco2800.thomas.worlds.dungeons.VolcanoDungeon;
@@ -58,7 +60,7 @@ public class GameManager {
 
 	public static float fps = 0;
 
-	public static boolean debugMode = false;
+	public boolean debugMode;
 
 	public static boolean tutorial = true;
 
@@ -112,6 +114,7 @@ public class GameManager {
 	private GameManager() {
 		//Loads the order of the worlds
 		worldOrder = new ArrayList<>(EnumSet.allOf(WorldType.class));
+		debugMode = false;
 	}
 
 	/**
@@ -333,7 +336,7 @@ public class GameManager {
 				this.setWorld(new SwampDungeon());
 				break;
 			case "DesertDungeonPortal":
-				this.setWorld(new VolcanoDungeon());
+				this.setWorld(new DesertDungeon());
 				break;
 		}
 	}
@@ -434,6 +437,4 @@ public class GameManager {
 		}
 		gameWorld.onTick(0);
 	}
-
-
 }

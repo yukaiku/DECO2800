@@ -1,7 +1,7 @@
 package deco2800.thomas.entities.attacks;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.Peon;
@@ -18,36 +18,11 @@ import deco2800.thomas.util.WorldUtil;
 
 import java.util.List;
 
-public class Iceball extends Projectile implements Animatable {
-
-    private final Animation<TextureRegion> animation;
-    /* Enum containing the possible states of this class*/
-    public enum State {
-        DEFAULT, EXPLODING
-    }
-
-    /* The current state of this entity*/
-    public Fireball.State currentState;
-    /* Animation for when this entity is exploding */
-    private final Animation<TextureRegion> explosion;
-    /* Default animation */
-    private final Animation<TextureRegion> defaultState;
-    /* The current timer on this class */
-    private float stateTimer = 0;
-
-    public Iceball() {
-        super();
-        this.setTexture("fireball_right");
-        this.setObjectName("combatIceballProjectile");
-        animation = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballDefault"));
-        explosion = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballExplosion"));
-        defaultState = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballDefault"));
-        currentState = Fireball.State.DEFAULT;
-    }
-
+/**
+ * An iceball projectile that applies a slow on collision with an enemy.
+ */
+public class Iceball extends Projectile implements Animatable, Tickable {
+    private boolean slowApplied = false;
     /**
      * Parametric constructor, that sets the initial conditions of the projectile
      * as well as texture and name.
@@ -61,39 +36,43 @@ public class Iceball extends Projectile implements Animatable {
         super(col, row, RenderConstants.PROJECTILE_RENDER, damage, speed, faction);
         this.setTexture("fireball_right");
         this.setObjectName("combatIceballProjectile");
-        animation = new Animation<TextureRegion>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballDefault"));
-        explosion = new Animation<TextureRegion>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballExplosion"));
-        defaultState = new Animation<TextureRegion>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballDefault"));
-        currentState = Fireball.State.DEFAULT;
+        this.setDamageType(DamageType.ICE);
+        this.setDefaultState(new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballDefault")));
+        this.setExplosion(new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("iceballExplosion")));
     }
 
+    /**
+     * Updates the projectile, and removes it from world if the explosion is over.
+     * @param i current game tick
+     */
     @Override
     public void onTick(long i) {
-        // Update movement task
-        if (movementTask != null) {
-            if(movementTask.isComplete() && stateTimer > 9) {
+        super.onTick(i);
+
+        if (combatTask.isComplete()) {
+            if (!slowApplied) {
+                applySlow();
+                slowApplied = true;
+            }
+            if (stateTimer > explosion.getAnimationDuration()) {
                 WorldUtil.removeEntity(this);
             }
-            movementTask.onTick(i);
-        } else {
-            WorldUtil.removeEntity(this);
-        }
-        // Update combat task
-        if (combatTask != null) {
-            if (combatTask.isComplete()) {
-                if (!movementTask.isComplete()) {
-                    applySlow();
-                }
-                currentState = Fireball.State.EXPLODING;
-                movementTask.stopTask();
-            }
-            combatTask.onTick(i);
         }
     }
 
+    /**
+     * Spawns a new iceball.
+     * @param col Initial x position
+     * @param row Initial y position
+     * @param targetCol Target x position
+     * @param targetRow Target y position
+     * @param damage Damage to apply
+     * @param speed Speed of projectile
+     * @param lifetime Lifetime of projectile
+     * @param faction Faction of projectile
+     */
     public static void spawn(float col, float row, float targetCol, float targetRow,
                              int damage, float speed, long lifetime, EntityFaction faction) {
         Iceball iceball = new Iceball(col, row, damage, speed, faction);
@@ -123,28 +102,4 @@ public class Iceball extends Projectile implements Animatable {
             }
         }
     }
-
-    /**
-     * Get the texture region of current animation keyframe (this will be called in Renderer3D.java).
-     *
-     * @param delta the interval of the ticks
-     * @return the current texture region in animation
-     */
-    @Override
-    public TextureRegion getFrame(float delta) {
-        TextureRegion region;
-        // Get the animation frame based on the current state
-        switch (currentState) {
-            case EXPLODING:
-                region = explosion.getKeyFrame(stateTimer);
-                break;
-            default:
-                stateTimer = 0;
-                region = defaultState.getKeyFrame(stateTimer);
-                break;
-        }
-        stateTimer = stateTimer + delta;
-        return region;
-    }
-
 }

@@ -123,7 +123,7 @@ public class SwampDungeon extends AbstractWorld {
 
     private void spawnExitPortal() {
         Tile portalTile = getTile(-9, -1);
-        entities.add(new Portal(portalTile, false, "portal", "ExitPortal"));
+        entities.add(new Portal(portalTile, false, "swamp_portal", "ExitPortal"));
     }
 
     private void activateReward() {

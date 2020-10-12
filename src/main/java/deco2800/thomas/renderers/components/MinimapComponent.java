@@ -1,7 +1,6 @@
 package deco2800.thomas.renderers.components;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.bosses.Boss;
@@ -16,10 +15,29 @@ import deco2800.thomas.worlds.Tile;
 import java.util.List;
 
 public class MinimapComponent extends OverlayComponent {
-    BitmapFont font;
-    List<Tile> tileMap;
-    List<EnemyPeon> enemyList;
-    List<EnemyPeon> specialEnemyList;
+    private List<Tile> tileMap;
+    private List<EnemyPeon> enemyList;
+    private List<EnemyPeon> specialEnemyList;
+    private static final int MAP_WIDTH = 49;
+    // The column offsets to render each entity at on the x coordinate
+    private static final int COLUMN_OFFSET = 310;
+    private static final int ENEMY_COLUMN_OFFSET = 350;
+    // The number of positive columns and rows
+    private static final int POSITIVE_COLUMN_NUMBER = 25;
+    private static final int POSITIVE_ROW_NUMBER = 24;
+    // THe row offsets to render each entity at on the y coordinate
+    private static final int ROW_OFFSET = 775;
+    private static final int ENEMY_ROW_OFFSET = 795;
+    // The scalar to render each entity at relative to its position on the map
+    private static final float ENTITY_POSITION_SCALAR = 6.3F;
+    // Scalars to reduce the size of each entity texture by to fit each
+    // texture onto the minimap
+    private static final float ENEMY_SIZE_SCALAR = 0.2f;
+    private static final float TILE_SIZE_SCALAR = 0.02f;
+    private static final float PLAYER_SIZE_SCALAR = 0.1f;
+    private static final float BOSS_SIZE_SCALAR = 0.035f;
+
+
 
     public MinimapComponent(OverlayRenderer overlayRenderer) {
         super(overlayRenderer);
@@ -29,12 +47,17 @@ public class MinimapComponent extends OverlayComponent {
     public void render(SpriteBatch batch) {
         int width = 0;
         int height = 0;
+        String worldType = GameManager.get().getWorld().getType();
+        // The minimap is only to be rendered in the four main worlds
+        if (!(worldType.equals("Desert") || worldType.equals("Tundra") ||
+                worldType.equals("Volcano") || worldType.equals("Swamp"))) {
+            return;
+        }
         tileMap = GameManager.get().getWorld().getTiles();
-
         batch.begin();
 
         for (Tile t : tileMap) {
-            if (width > 49) {
+            if (width > MAP_WIDTH) {
                 height++;
                 width = 0;
             }
@@ -52,9 +75,8 @@ public class MinimapComponent extends OverlayComponent {
             for (EnemyPeon e : specialEnemyList) {
                 renderEnemy(batch, e);
             }
-
             Boss boss = GameManager.getManagerFromInstance(EnemyManager.class).getBoss();
-            if (boss != null) {
+            if (boss != null && boss.getCurrentHealth() > 0) {
                 renderBoss(batch, boss);
             }
         }
@@ -63,34 +85,56 @@ public class MinimapComponent extends OverlayComponent {
         if (playerPeon != null) {
             renderPlayer(batch, playerPeon);
         }
-
         batch.end();
     }
 
+    // Renders an enemy onto the minimap
     private void renderEnemy(SpriteBatch batch, EnemyPeon enemy) {
-        Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(enemy.getTexture());
-        batch.draw(tex, overlayRenderer.getX() + overlayRenderer.getWidth() - 310 + 6.3f * (enemy.getCol() + 25),
-                overlayRenderer.getY() + overlayRenderer.getHeight() - 775 +  6.3f * (enemy.getRow() - 24), tex.getWidth() * 0.075f,
-                tex.getHeight() * 0.075f);
+        Texture tex = enemy.getIcon();
+        //Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(enemy.getTexture());
+        float x = overlayRenderer.getX() + overlayRenderer.getWidth() -
+                ENEMY_COLUMN_OFFSET + ENTITY_POSITION_SCALAR * (enemy.getCol() + POSITIVE_COLUMN_NUMBER);
+        float y =  overlayRenderer.getY() + overlayRenderer.getHeight() - ENEMY_ROW_OFFSET +
+                ENTITY_POSITION_SCALAR * (enemy.getRow() - POSITIVE_ROW_NUMBER);
+
+        batch.draw(tex, x, y,
+                tex.getWidth() * ENEMY_SIZE_SCALAR,
+                tex.getHeight() * ENEMY_SIZE_SCALAR);
     }
 
+    // Renders a tile onto the minimap
     private void renderTile(SpriteBatch batch, Tile tile, int height, int width) {
         Texture tex = tile.getTexture();
-        batch.draw(tex, overlayRenderer.getX() + overlayRenderer.getWidth() - 310 + 6.3f * width,
-                overlayRenderer.getY() + overlayRenderer.getHeight() - 775 - 6.3f * height, tex.getWidth() * 0.02f,
-                tex.getHeight() * 0.02f);
+        float x = overlayRenderer.getX() + overlayRenderer.getWidth()
+                - COLUMN_OFFSET + ENTITY_POSITION_SCALAR * width;
+        float y =  overlayRenderer.getY() + overlayRenderer.getHeight()
+                - ROW_OFFSET - ENTITY_POSITION_SCALAR * height;
+
+        batch.draw(tex, x, y, tex.getWidth() * TILE_SIZE_SCALAR,
+                tex.getHeight() * TILE_SIZE_SCALAR);
     }
 
+    // Renders the player onto the minimap
     private void renderPlayer(SpriteBatch batch, PlayerPeon player) {
         Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(player.getTexture());
-        batch.draw(tex, overlayRenderer.getX() + overlayRenderer.getWidth() - 310 + 6.3f * (player.getCol() + 25),
-                overlayRenderer.getY() + overlayRenderer.getHeight() - 775 +  6.3f * (player.getRow() - 24), tex.getWidth() * 0.1f,
-                tex.getHeight() * 0.1f);
+        float x = overlayRenderer.getX() + overlayRenderer.getWidth() -
+                COLUMN_OFFSET + ENTITY_POSITION_SCALAR * (player.getCol() + POSITIVE_COLUMN_NUMBER);
+        float y = overlayRenderer.getY() + overlayRenderer.getHeight() -
+                ROW_OFFSET +  ENTITY_POSITION_SCALAR * (player.getRow() - POSITIVE_ROW_NUMBER);
+
+        batch.draw(tex, x, y, tex.getWidth() * PLAYER_SIZE_SCALAR,
+                tex.getHeight() * PLAYER_SIZE_SCALAR);
     }
+
     private void renderBoss(SpriteBatch batch, EnemyPeon boss) {
         Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(boss.getTexture());
-        batch.draw(tex, overlayRenderer.getX() + overlayRenderer.getWidth() - 310 + 6.3f * (boss.getCol() + 25),
-                overlayRenderer.getY() + overlayRenderer.getHeight() - 775 +  6.3f * (boss.getRow() - 24), tex.getWidth() * 0.035f,
-                tex.getHeight() * 0.035f);
+        float x = overlayRenderer.getX() + overlayRenderer.getWidth() -
+                COLUMN_OFFSET + ENTITY_POSITION_SCALAR * (boss.getCol() + POSITIVE_COLUMN_NUMBER);
+        float y =               overlayRenderer.getY() + overlayRenderer.getHeight() -
+                ROW_OFFSET +  ENTITY_POSITION_SCALAR * (boss.getRow() - POSITIVE_ROW_NUMBER);
+
+        batch.draw(tex, x, y,
+                tex.getWidth() * BOSS_SIZE_SCALAR,
+                tex.getHeight() * BOSS_SIZE_SCALAR);
     }
 }

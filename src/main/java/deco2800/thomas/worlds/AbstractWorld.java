@@ -476,13 +476,8 @@ public abstract class AbstractWorld implements Tickable {
 		this.worldEvent = event;
 	}
 
-	public void setWorldZoomable(boolean allowed) {
-		this.zoomable = allowed;
-	}
-
-
 	public boolean getWorldZoomable() {
-		return this.zoomable;
+		return false;
 	}
 
 	/**
