@@ -9,7 +9,7 @@ import deco2800.thomas.util.SquareVector;
 public class TundraNPC extends NonPlayablePeon implements Interactable {
 
     AbstractDialogBox tutorialDialogueBox;
-    public static final int speechStage = 1;
+    public static final int SPEECH_STAGE = 1;
     static boolean isActive = false;
 
     public TundraNPC(String name, SquareVector position, String texture) {
@@ -33,7 +33,7 @@ public class TundraNPC extends NonPlayablePeon implements Interactable {
     @Override
     public void interact() {
         setIsActive(true);
-        if ((this.getName().equals("TundraQuestNPC1") || this.getName().equals("TundraQuestNPC2")) && speechStage >= 1) {
+        if ((this.getName().equals("TundraQuestNPC1") || this.getName().equals("TundraQuestNPC2")) && SPEECH_STAGE >= 1) {
             ((NPCDialog) tutorialDialogueBox).setString(PlayerPeon.getDialogue("tundra"));
             ((NPCDialog) tutorialDialogueBox).addHealer();
             tutorialDialogueBox.setShowing(true);
