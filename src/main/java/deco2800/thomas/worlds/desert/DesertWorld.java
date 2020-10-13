@@ -99,6 +99,8 @@ public class DesertWorld extends AbstractWorld {
         difficultyManager.setPlayerEntity((PlayerPeon) this.getPlayerEntity());
         difficultyManager.setDifficultyLevel(getType());
 
+        // Start ambience
+        GameManager.getManagerFromInstance(SoundManager.class).setAmbience("desertAmbience");
     }
 
     /**

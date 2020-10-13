@@ -83,6 +83,9 @@ public class SwampWorld extends AbstractWorld {
         difficultyManager.setPlayerEntity((PlayerPeon) this.getPlayerEntity());
         difficultyManager.setDifficultyLevel(getType());
 
+        // Starts ambience
+        logger.info("Starting ambience.");
+        GameManager.getManagerFromInstance(SoundManager.class).setAmbience("swampAmbience");
     }
 
     @Override
