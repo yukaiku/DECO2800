@@ -81,41 +81,10 @@ public class NonPlayablePeon extends Peon implements Interactable {
 
         // Test if the
         boolean isCloseCol = clickedPosition[0] == this.getCol();
-        boolean isCloseRow = clickedPosition[1] == this.getRow() ||
-                             clickedPosition[1] == this.getRow() - 1 ||
-                             clickedPosition[1] == this.getRow() + 1;
+        boolean isCloseRow = clickedPosition[1] == this.getRow();
 
-        if (isCloseCol && isCloseRow) {
-            if ((this.getPosition().getCol()+1== this.player.getPosition().getCol())
-                    && (this.getPosition().getRow() == this.player.getPosition().getRow())) {
-                interact();
-            }
-            if ((this.getPosition().getCol()-1 == this.player.getPosition().getCol())
-                    && (this.getPosition().getRow() == this.player.getPosition().getRow())) {
-                interact();
-            }
-            if ((this.getPosition().getCol()+1 == this.player.getPosition().getCol())
-                    && (this.getPosition().getRow()-1 == this.player.getPosition().getRow())) {
-                interact();
-            }
-            if ((this.getPosition().getCol()+1 == this.player.getPosition().getCol())
-                    && (this.getPosition().getRow()+1 == this.player.getPosition().getRow())) {
-                interact();
-            }
-            if ((this.getPosition().getCol()-1 == this.player.getPosition().getCol())
-                    && (this.getPosition().getRow()+1 == this.player.getPosition().getRow())) {
-                interact();
-            }
-            if ((this.getPosition().getCol()-1 == this.player.getPosition().getCol())
-                    && (this.getPosition().getRow()-1 == this.player.getPosition().getRow())) {
-                interact();
-            }
-            if ((this.getPosition().getCol() == this.player.getPosition().getCol())
-                    && (this.getPosition().getRow()-1 == this.player.getPosition().getRow())) {
-                interact();
-            }
-            if ((this.getPosition().getCol() == this.player.getPosition().getCol())
-                    && (this.getPosition().getRow()+1 == this.player.getPosition().getRow())) {
+        if (isCloseCol && isCloseRow){
+            if (this.player.getPosition().isCloseEnoughToBeTheSame(this.getPosition(), 2.0f)){
                 interact();
             }
         }
