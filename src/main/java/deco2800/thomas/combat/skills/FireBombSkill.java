@@ -38,6 +38,7 @@ public class FireBombSkill extends AbstractSkill {
             throw new NullPointerException();
         }
         this.entity = parent;
+        setMaxCoolDown(ORIGINAL_MAXCOOLDOWN);
     }
 
     /**

@@ -30,11 +30,7 @@ import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.TutorialWorld;
 import deco2800.thomas.worlds.desert.DesertWorld;
-import deco2800.thomas.worlds.dungeons.SwampDungeon;
-import deco2800.thomas.worlds.dungeons.VolcanoDungeon;
-import deco2800.thomas.worlds.swamp.SwampWorld;
-import deco2800.thomas.worlds.tundra.TundraWorld;
-
+import deco2800.thomas.worlds.dungeons.DesertDungeon;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,7 +102,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 		ENV_TEAM_GAME {
 			@Override
 			public AbstractWorld method() {
-				AbstractWorld world = new TundraWorld();
+				AbstractWorld world = new DesertWorld();
 				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}

@@ -9,5 +9,6 @@ public enum DamageType {
     FIRE,
     SWAMPY_WATER,
     SAND_I_GUESS,
-    ICE
+    ICE,
+    NOT_IMMUNE
 }

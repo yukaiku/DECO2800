@@ -22,6 +22,8 @@ public class BurnStatus extends StatusEffect {
     // whether the first tick of this effect has been applied
     private boolean applied = false;
 
+    private DamageType damageType;
+
     /**
      * Creates a new BurnStatus with default damage and ticks (1 dmg, 1 tick).
      *
@@ -32,6 +34,7 @@ public class BurnStatus extends StatusEffect {
         timeLastTick = System.nanoTime();
         burnDamage = 1;
         ticks = 1;
+        damageType = DamageType.FIRE;
     }
 
     /**
@@ -46,6 +49,22 @@ public class BurnStatus extends StatusEffect {
         this.burnDamage = burnDamage;
         timeLastTick = System.nanoTime();
         this.ticks = ticks;
+        damageType = DamageType.FIRE;
+    }
+
+    /**
+     * Creates a new BurnStatus with a set damage and number of ticks.
+     *
+     * @param entity The entity this status is being applied to.
+     * @param burnDamage The damage inflicted by each tick.
+     * @param ticks The number of damage ticks in this effect.
+     */
+    public BurnStatus(Peon entity, int burnDamage, int ticks, DamageType damageType) {
+        super(entity);
+        this.burnDamage = burnDamage;
+        timeLastTick = System.nanoTime();
+        this.ticks = ticks;
+        this.damageType = damageType;
     }
 
     /**
@@ -87,7 +106,10 @@ public class BurnStatus extends StatusEffect {
         // we skip application if the next tick is not ready
         if (!ticksReady()) return;
 
-        getAffectedEntity().applyDamage(burnDamage, DamageType.FIRE);
+        getAffectedEntity().applyDamage(burnDamage, damageType);
+        if (getAffectedEntity().isDead()) {
+            getAffectedEntity().death();
+        }
 
         // if all ticks are done, we set to inactive
         if (ticks == 0) {

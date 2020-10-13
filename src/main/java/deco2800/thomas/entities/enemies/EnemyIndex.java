@@ -6,6 +6,7 @@ import deco2800.thomas.entities.enemies.bosses.TundraDragon;
 import deco2800.thomas.entities.enemies.bosses.VolcanoDragon;
 import deco2800.thomas.entities.enemies.minions.Goblin;
 import deco2800.thomas.entities.enemies.monsters.Dummy;
+import deco2800.thomas.entities.enemies.monsters.ImmuneOrc;
 import deco2800.thomas.entities.enemies.monsters.Orc;
 
 /**
@@ -49,6 +50,7 @@ public class EnemyIndex {
             case "desertOrc": return new Orc(Variation.DESERT, 50, 0.09f, 5, 8, 2, 0.05f);
             case "desertGoblin": return new Goblin(Variation.DESERT, 20, 0.1f, 5, 10, 2);
             case "desertDragon": return new DesertDragon(850, 0.03f, 4);
+            case "immuneOrc": return new ImmuneOrc();
 
             // volcano world
             case "volcanoOrc": return new Orc(Variation.VOLCANO, 50, 0.09f, 5, 8, 2, 0.05f);
