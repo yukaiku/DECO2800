@@ -22,6 +22,14 @@ public class ThomasGame extends Game {
 	private MainMenuScreen mainMenuScreen;
 	public GameScreen gameScreen;
 
+	public SpriteBatch getBatch() {
+		return batch;
+	}
+
+	public void setBatch(SpriteBatch batch) {
+		this.batch = batch;
+	}
+
 	/**
 	 * Creates the main menu screen.
 	 */

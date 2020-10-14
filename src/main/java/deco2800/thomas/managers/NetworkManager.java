@@ -160,16 +160,16 @@ public class NetworkManager extends TickableManager {
 			public void received(Connection connection, Object object) {
 				messagesReceived++;
 				if (object instanceof TileUpdateMessage) {
-					GameManager.get().getWorld().updateTile(((TileUpdateMessage) object).tile);
+					GameManager.get().getWorld().updateTile(((TileUpdateMessage) object).getTile());
 					GameManager.get().getWorld().assignTileNeighbours();
 				} else if (object instanceof ChatMessage) {
 					GameManager.get().getManager(OnScreenMessageManager.class).addMessage(object.toString());
 				} else if (object instanceof SingleEntityUpdateMessage) {
-					GameManager.get().getWorld().updateEntity(((SingleEntityUpdateMessage) object).entity);
+					GameManager.get().getWorld().updateEntity(((SingleEntityUpdateMessage) object).getEntity());
 				} else if (object instanceof TileDeleteMessage) {
-					GameManager.get().getWorld().disposeTile(((TileDeleteMessage) object).tileID);
+					GameManager.get().getWorld().disposeTile(((TileDeleteMessage) object).getTileID());
 				} else if (object instanceof EntityDeleteMessage) {
-					GameManager.get().getWorld().disposeEntity(((EntityDeleteMessage) object).entityID);
+					GameManager.get().getWorld().disposeEntity(((EntityDeleteMessage) object).getEntityID());
 				}
 			}
 		});
@@ -235,7 +235,7 @@ public class NetworkManager extends TickableManager {
 
 					System.out.println(message);
 
-					GameManager.get().getWorld().updateEntity(((SingleEntityUpdateMessage) object).entity);
+					GameManager.get().getWorld().updateEntity(((SingleEntityUpdateMessage) object).getEntity());
 				}
 
 				if (object instanceof ChatMessage) {
@@ -250,13 +250,13 @@ public class NetworkManager extends TickableManager {
 					TileUpdateMessage message = new TileUpdateMessage();
 					List<Tile> tiles = GameManager.get().getWorld().getTiles();
 					for (Tile t : tiles) {
-						message.tile = t;
+						message.setTile(t);
 						server.sendToTCP(connection.getID(), message);
 					}
 				}
 
 				if (object instanceof TileDeleteMessage) {
-					GameManager.get().getWorld().disposeTile(((TileDeleteMessage) object).tileID);
+					GameManager.get().getWorld().disposeTile(((TileDeleteMessage) object).getTileID());
 				}
 			}
 		});
@@ -286,7 +286,7 @@ public class NetworkManager extends TickableManager {
 		//Only send messages if there are clients
 		for (AbstractEntity e : GameManager.get().getWorld().getEntities()) {
 			SingleEntityUpdateMessage message = new SingleEntityUpdateMessage();
-			message.entity = e;
+			message.setEntity(e);
 			server.sendToAllTCP(message);
 		}
 
@@ -344,7 +344,7 @@ public class NetworkManager extends TickableManager {
 	 */
 	public void deleteTile(Tile t) {
 		TileDeleteMessage msg = new TileDeleteMessage();
-		msg.tileID = t.getTileID();
+		msg.setTileID(t.getTileID());
 		if (isHosting) {
 			server.sendToAllTCP(msg);
 		} else {
@@ -366,7 +366,7 @@ public class NetworkManager extends TickableManager {
 	 */
 	public void deleteEntity(AbstractEntity e) {
 		EntityDeleteMessage msg = new EntityDeleteMessage();
-		msg.entityID = e.getEntityID();
+		msg.setEntityID(e.getEntityID());
 		if (isHosting) {
 			server.sendToAllTCP(msg);
 		} else {
