@@ -273,8 +273,8 @@ public class GameManager {
 	 * Sets the FPS
 	 * @param fps float
 	 */
-	public void setFps(float fps) {
-		this.fps = fps;
+	public static void setFps(float fps) {
+		GameManager.fps = fps;
 	}
 
 	/***
@@ -297,8 +297,8 @@ public class GameManager {
 		return tutorial;
 	}
 
-	public void setTutorial(boolean tutorial){
-		this.tutorial = tutorial;
+	public static void setTutorial(boolean tutorial){
+		GameManager.tutorial = tutorial;
 	}
 
 	public boolean getMovedToNextWorld() {
@@ -311,22 +311,22 @@ public class GameManager {
 	public boolean getShowCoords() {
 		return showCoords;
 	}
-	public void setShowCoords(boolean showCoords) {
-		this.showCoords = showCoords;
+	public static void setShowCoords(boolean showCoords) {
+		GameManager.showCoords = showCoords;
 	}
 
 	public boolean getShowPath() {
 		return showPath;
 	}
-	public void setShowPath(boolean showPath) {
-		this.showPath = showPath;
+	public static void setShowPath(boolean showPath) {
+		GameManager.showPath = showPath;
 	}
 
 	public boolean getShowCoordsEntity() {
 		return showCoordsEntity;
 	}
-	public void setShowCoordsEntity(boolean showCoordsEntity) {
-		this.showCoordsEntity = showCoordsEntity;
+	public static void setShowCoordsEntity(boolean showCoordsEntity) {
+		GameManager.showCoordsEntity = showCoordsEntity;
 	}
 
 	public State getState(){

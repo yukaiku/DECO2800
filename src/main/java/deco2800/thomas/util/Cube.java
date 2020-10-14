@@ -47,7 +47,7 @@ public class Cube {
 		return (Math.abs(ax - bx) + Math.abs(ay - by) + Math.abs(az - bz)) / 2.0f;
 	}
 
-	static public Cube oddqToCube(float q, float r) {
+	public static Cube oddqToCube(float q, float r) {
 		float x = q;
 		float y = r - (q - Math.abs(q % 2)) / 2f;
 		float z = -x - y;

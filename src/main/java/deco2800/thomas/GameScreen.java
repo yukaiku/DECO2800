@@ -414,18 +414,17 @@ public class GameScreen implements Screen, KeyDownObserver {
 		}
 		if (keycode == Input.Keys.N && GameManager.get().getDebugMode() && !GameManager.get().getWorld().getType().equals("World") && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
 				Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
-				Boss boss = GameManager.getManagerFromInstance(EnemyManager.class).getBoss();
-				PlayerPeon playerPeon = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
-				playerPeon.setPosition(boss.getPosition().getCol(),boss.getPosition().getRow(),boss.getHeight());
-				boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
+			Boss boss = GameManager.getManagerFromInstance(EnemyManager.class).getBoss();
+			PlayerPeon playerPeon = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
+			playerPeon.setPosition(boss.getPosition().getCol(),boss.getPosition().getRow(),boss.getHeight());
+			boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
 		}
-		if (keycode == Input.Keys.ESCAPE) {
-			if (GameManager.get().getState() == GameManager.State.RUN) {
-				GameManager.pause();
-			} else if (GameManager.get().getState() == GameManager.State.PAUSED) {
-				GameManager.resume();
-			}
+		if (keycode == Input.Keys.ESCAPE && GameManager.get().getState() == GameManager.State.RUN ) {
+			GameManager.pause();
+		} else if (keycode == Input.Keys.ESCAPE && GameManager.get().getState() == GameManager.State.PAUSED) {
+			GameManager.resume();
 		}
+
 
 		if (keycode == Input.Keys.F9) {
 			GameManager.get().setTutorial(!GameManager.get().getTutorial());
