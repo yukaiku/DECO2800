@@ -30,8 +30,6 @@ import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.TutorialWorld;
 import deco2800.thomas.worlds.desert.DesertWorld;
-import deco2800.thomas.worlds.dungeons.DesertDungeon;
-import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +76,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	OrthographicCamera cameraOverlay;
 	OrthographicCamera cameraEvent;
 
-	public Stage stage = new Stage(new ExtendViewport(1920, 1000));
+	private Stage stage = new Stage(new ExtendViewport(1920, 1000));
 
 	long lastGameTick = 0;
 
@@ -416,18 +414,17 @@ public class GameScreen implements Screen, KeyDownObserver {
 		}
 		if (keycode == Input.Keys.N && GameManager.get().getDebugMode() && !GameManager.get().getWorld().getType().equals("World") && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
 				Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
-				Boss boss = GameManager.getManagerFromInstance(EnemyManager.class).getBoss();
-				PlayerPeon playerPeon = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
-				playerPeon.setPosition(boss.getPosition().getCol(),boss.getPosition().getRow(),boss.getHeight());
-				boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
+			Boss boss = GameManager.getManagerFromInstance(EnemyManager.class).getBoss();
+			PlayerPeon playerPeon = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
+			playerPeon.setPosition(boss.getPosition().getCol(),boss.getPosition().getRow(),boss.getHeight());
+			boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
 		}
-		if (keycode == Input.Keys.ESCAPE) {
-			if (GameManager.get().getState() == GameManager.State.RUN) {
-				GameManager.pause();
-			} else if (GameManager.get().getState() == GameManager.State.PAUSED) {
-				GameManager.resume();
-			}
+		if (keycode == Input.Keys.ESCAPE && GameManager.get().getState() == GameManager.State.RUN ) {
+			GameManager.pause();
+		} else if (keycode == Input.Keys.ESCAPE && GameManager.get().getState() == GameManager.State.PAUSED) {
+			GameManager.resume();
 		}
+
 
 		if (keycode == Input.Keys.F9) {
 			GameManager.get().setTutorial(!GameManager.get().getTutorial());

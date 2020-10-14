@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class Tree extends StaticEntity implements Tickable {
 	public static final String ENTITY_ID_STRING = "Tree";
-	private final Logger LOG = LoggerFactory.getLogger(Tree.class);
+	private final Logger log = LoggerFactory.getLogger(Tree.class);
 
 	AbstractWorld world;
 
@@ -24,7 +24,7 @@ public class Tree extends StaticEntity implements Tickable {
 
 	public Tree(float col, float row, int renderOrder, List<Part> parts) {
 		super(col, row, renderOrder, parts);
-		LOG.info("Making a tree at {}, {}", col, row);
+		log.info("Making a tree at {}, {}", col, row);
 		this.setTexture("tree");
 		this.setObjectName(ENTITY_ID_STRING);
 	}
