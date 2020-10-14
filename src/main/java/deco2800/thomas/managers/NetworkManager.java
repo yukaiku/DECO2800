@@ -178,7 +178,7 @@ public class NetworkManager extends TickableManager {
 		logger.info("Sending initial connect message to host, requesting initial information to be sent to this client.");
 
 		ConnectMessage request = new ConnectMessage();
-		request.username = username;
+		request.setUsername(username);
 		client.sendTCP(request);
 
 		// Broadcast to the host in-game that this client has connected.
