@@ -155,9 +155,9 @@ public class EventRenderer implements Renderer {
     @Override
     public void render(SpriteBatch batch, OrthographicCamera camera) {
         // movedToNextWorld is a Boolean in GameManager, set to true whenever a World/Zone is set
-        if (GameManager.get().movedToNextWorld) {
+        if (GameManager.get().getMovedToNextWorld()) {
             resetEventForNewWorld();
-            GameManager.get().movedToNextWorld = false;
+            GameManager.get().setMovedToNextWorld(false);
         }
         if (this.allowRendering && (GameManager.get().getWorld() instanceof SwampWorld ||
                 GameManager.get().getWorld() instanceof DesertWorld ||

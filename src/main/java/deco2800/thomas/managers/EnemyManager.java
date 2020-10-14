@@ -311,7 +311,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
      */
     @Override
     public void notifyKeyDown(int keycode) {
-        if (GameManager.get().debugMode && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
+        if (GameManager.get().getDebugMode() && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
                 Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
             if (keycode == Input.Keys.P) {
                 // Ctrl + P: Toggle wild enemy spawning

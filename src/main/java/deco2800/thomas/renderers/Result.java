@@ -17,7 +17,7 @@ public class Result implements Renderer{
         // Render the modal
         batch.begin();
         Texture img;
-        if (GameManager.get().state == GameManager.State.GAMEOVER) {
+        if (GameManager.get().getState() == GameManager.State.GAMEOVER) {
             img = GameManager.get().getManager(TextureManager.class).getTexture("defeat");
         } else {
             img = GameManager.get().getManager(TextureManager.class).getTexture("victory");

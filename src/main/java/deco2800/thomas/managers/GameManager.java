@@ -27,10 +27,10 @@ import java.util.List;
 
 public class GameManager {
 	//debug values stored here
-	public int entitiesRendered;
-	public int entitiesCount;
-	public int tilesRendered;
-	public int tilesCount;
+	private int entitiesRendered;
+	private int entitiesCount;
+	private int tilesRendered;
+	private int tilesCount;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GameManager.class);
 
@@ -58,27 +58,27 @@ public class GameManager {
 	private String currentDungeon;
 
 
-	public static float fps = 0;
+	private static float fps = 0;
 
-	public boolean debugMode;
+	private boolean debugMode;
 
-	public static boolean tutorial = true;
+	private static boolean tutorial = true;
 
 	// Whether or not the player has moved to the next Zone
-	public boolean movedToNextWorld;
+	private boolean movedToNextWorld;
 	/**
 	 * Whether or not we render info over the tiles.
 	 */
 	// Whether or not we render the movement path for Players.
-	public static boolean showCoords = false;
+	private static boolean showCoords = false;
 
 	// The game screen for a game that's currently running.
-	public static boolean showPath = false;
+	private static boolean showPath = false;
 
 	/**
 	 * Whether or not we render info over the entities
 	 */
-	public static boolean showCoordsEntity = false;
+	private static boolean showCoordsEntity = false;
 
 	private enum WorldType {
 		SWAMP_WORLD,
@@ -87,7 +87,7 @@ public class GameManager {
 		VOLCANO_WORLD
 	}
 	private ArrayList<WorldType> worldOrder;
-	public State state = State.RUN;
+	private State state = State.RUN;
 	public enum State
 	{
 		PAUSED,
@@ -259,6 +259,82 @@ public class GameManager {
 	 */
 	public void setTilesCount(int tilesCount) {
 		this.tilesCount = tilesCount;
+	}
+
+	/***
+	 * Get the FPS
+	 * @return fps
+	 */
+	public float getFps() {
+		return fps;
+	}
+
+	/***
+	 * Sets the FPS
+	 * @param fps float
+	 */
+	public void setFps(float fps) {
+		this.fps = fps;
+	}
+
+	/***
+	 * Gets the debugMode
+	 * @return debugMode boolean
+	 */
+	public boolean getDebugMode() {
+		return debugMode;
+	}
+
+	/***
+	 * Sets the debugMode
+	 * @param debugMode boolean
+	 */
+	public void setDebugMode(boolean debugMode) {
+		this.debugMode = debugMode;
+	}
+
+	public boolean getTutorial(){
+		return tutorial;
+	}
+
+	public void setTutorial(boolean tutorial){
+		this.tutorial = tutorial;
+	}
+
+	public boolean getMovedToNextWorld() {
+		return movedToNextWorld;
+	}
+	public void setMovedToNextWorld(boolean movedToNextWorld) {
+		this.movedToNextWorld = movedToNextWorld;
+	}
+
+	public boolean getShowCoords() {
+		return showCoords;
+	}
+	public void setShowCoords(boolean showCoords) {
+		this.showCoords = showCoords;
+	}
+
+	public boolean getShowPath() {
+		return showPath;
+	}
+	public void setShowPath(boolean showPath) {
+		this.showPath = showPath;
+	}
+
+	public boolean getShowCoordsEntity() {
+		return showCoordsEntity;
+	}
+	public void setShowCoordsEntity(boolean showCoordsEntity) {
+		this.showCoordsEntity = showCoordsEntity;
+	}
+
+	public State getState(){
+		return state;
+	}
+
+	public void setState(State state){
+		this.state = state;
 	}
 
 	/**
