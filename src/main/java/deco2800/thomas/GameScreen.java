@@ -124,21 +124,21 @@ public class GameScreen implements Screen, KeyDownObserver {
 		switch (startType) {
 			// start new game without debug mode
 			case NEW_GAME:
-				GameManager.get().debugMode = false;
-				GameManager.get().state = GameManager.State.TRANSITION;
-				GameManager.get().tutorial = true;
+				GameManager.get().setDebugMode(false);
+				GameManager.get().setState(GameManager.State.TRANSITION);
+				GameManager.get().setTutorial(true);
 				GameManager.get().setWorld(startType.method());
 				break;
 			// enter environment maps with debugging
 			case ENV_TEAM_GAME:
-				GameManager.get().debugMode = true;
+				GameManager.get().setDebugMode(true);
 				GameManager.get().setWorld(startType.method());
 				break;
 			// start new game with debugging
 			case TEST_WORLD:
-				GameManager.get().debugMode = true;
-				GameManager.get().state = GameManager.State.TRANSITION;
-				GameManager.get().tutorial = true;
+				GameManager.get().setDebugMode(true);
+				GameManager.get().setState(GameManager.State.TRANSITION);
+				GameManager.get().setTutorial(true);
 				GameManager.get().setWorld(startType.method());
 				break;
 			default:
@@ -328,7 +328,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	@Override
 	public void render(float delta) {
-		switch (GameManager.get().state)
+		switch (GameManager.get().getState())
 		{
 			case TRANSITION:
 				renderTransitionScreen(delta);
@@ -411,28 +411,26 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	@Override
 	public void notifyKeyDown(int keycode) {
-		if (keycode == Input.Keys.F12 && GameManager.get().state == GameManager.State.RUN) {
-			GameManager.get().debugMode = !GameManager.get().debugMode;
+		if (keycode == Input.Keys.F12 && GameManager.get().getState() == GameManager.State.RUN) {
+			GameManager.get().setDebugMode(!GameManager.get().getDebugMode());
 		}
-		if (GameManager.get().debugMode && !GameManager.get().getWorld().getType().equals("World") && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
+		if (keycode == Input.Keys.N && GameManager.get().getDebugMode() && !GameManager.get().getWorld().getType().equals("World") && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
 				Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
-			if (keycode == Input.Keys.N) {
 				Boss boss = GameManager.getManagerFromInstance(EnemyManager.class).getBoss();
 				PlayerPeon playerPeon = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
 				playerPeon.setPosition(boss.getPosition().getCol(),boss.getPosition().getRow(),boss.getHeight());
 				boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
-			}
 		}
 		if (keycode == Input.Keys.ESCAPE) {
-			if (GameManager.get().state == GameManager.State.RUN) {
+			if (GameManager.get().getState() == GameManager.State.RUN) {
 				GameManager.pause();
-			} else if (GameManager.get().state == GameManager.State.PAUSED) {
+			} else if (GameManager.get().getState() == GameManager.State.PAUSED) {
 				GameManager.resume();
 			}
 		}
 
 		if (keycode == Input.Keys.F9) {
-			GameManager.get().tutorial = !GameManager.get().tutorial;
+			GameManager.get().setTutorial(!GameManager.get().getTutorial());
 		}
 
 		if (keycode == Input.Keys.F5) {
@@ -447,19 +445,19 @@ public class GameScreen implements Screen, KeyDownObserver {
 		}
 
 		if (keycode == Input.Keys.F11) { // F11
-			GameManager.get().showCoords = !GameManager.get().showCoords;
-			LOG.info("Show coords is now {}", GameManager.get().showCoords);
+			GameManager.get().setShowCoords(!GameManager.get().getShowCoords());
+			LOG.info("Show coords is now {}", GameManager.get().getShowCoords());
 		}
 
 
 		if (keycode == Input.Keys.C) { // F11
-			GameManager.get().showCoords = !GameManager.get().showCoords;
-			LOG.info("Show coords is now {}", GameManager.get().showCoords);
+			GameManager.get().setShowCoords(!GameManager.get().getShowCoords());
+			LOG.info("Show coords is now {}", GameManager.get().getShowCoords());
 		}
 
 		if (keycode == Input.Keys.F10) { // F10
-			GameManager.get().showPath = !GameManager.get().showPath;
-			LOG.info("Show Path is now {}", GameManager.get().showPath);
+			GameManager.get().setShowPath(!GameManager.get().getShowPath());
+			LOG.info("Show Path is now {}", GameManager.get().getShowPath());
 		}
 
 		if (keycode == Input.Keys.F3) { // F3

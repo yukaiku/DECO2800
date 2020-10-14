@@ -42,7 +42,7 @@ public class DebugComponent extends OverlayComponent {
         // Debug Info and Chat Message Overlay
         batch.begin();
 
-        if (GameManager.get().debugMode) {
+        if (GameManager.get().getDebugMode()) {
             renderDebugText(batch);
         }
 
@@ -76,9 +76,9 @@ public class DebugComponent extends OverlayComponent {
         int line = 0; // Set this to set the line number you want to debug message to
         debugLine(batch, line, "== Game Info ==");
         debugLine(batch, ++line,
-                String.format("Rendered: %d/%d entities, %d/%d tiles", GameManager.get().entitiesRendered,
-                        GameManager.get().entitiesCount, GameManager.get().tilesRendered,
-                        GameManager.get().tilesCount));
+                String.format("Rendered: %d/%d entities, %d/%d tiles", GameManager.get().getEntitiesRendered(),
+                        GameManager.get().getEntitiesCount(), GameManager.get().getTilesRendered(),
+                        GameManager.get().getTilesCount()));
         debugLine(batch, ++line, String.format("FPS: %d", Gdx.graphics.getFramesPerSecond()));
         debugLine(batch, ++line,
                 String.format("RAM: %dMB PEAK: %dMB", Gdx.app.getJavaHeap() / 1000000, peakRAM / 1000000));

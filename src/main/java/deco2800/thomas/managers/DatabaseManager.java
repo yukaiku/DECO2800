@@ -484,7 +484,7 @@ public final class DatabaseManager extends AbstractManager {
         world.assignTileNeighbours();
         world.setEntities(new ArrayList<AbstractEntity>(newEntities.values()));
         logger.info("Load succeeded");
-        if (GameManager.get().debugMode) {
+        if (GameManager.get().getDebugMode()) {
             GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Loaded game from the database.");
         }
     }
