@@ -22,7 +22,7 @@ public class GuidelineComponent extends OverlayComponent {
 
     @Override
     public void render(SpriteBatch batch) {
-        if (GameManager.get().tutorial) {
+        if (GameManager.get().getTutorial()) {
             if (shapeRenderer == null) {
                 shapeRenderer = new ShapeRenderer();
             }
