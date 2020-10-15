@@ -15,9 +15,6 @@ import deco2800.thomas.worlds.Tile;
 import java.util.List;
 
 public class MinimapComponent extends OverlayComponent {
-    private List<Tile> tileMap;
-    private List<EnemyPeon> enemyList;
-    private List<EnemyPeon> specialEnemyList;
     private static final int MAP_WIDTH = 49;
     // The column offsets to render each entity at on the x coordinate
     private static final int COLUMN_OFFSET = 310;
@@ -53,7 +50,7 @@ public class MinimapComponent extends OverlayComponent {
                 worldType.equals("Volcano") || worldType.equals("Swamp"))) {
             return;
         }
-        tileMap = GameManager.get().getWorld().getTiles();
+        List<Tile> tileMap = GameManager.get().getWorld().getTiles();
         batch.begin();
 
         for (Tile t : tileMap) {
@@ -66,9 +63,8 @@ public class MinimapComponent extends OverlayComponent {
         }
 
         if (GameManager.getManagerFromInstance(EnemyManager.class) != null) {
-            enemyList = GameManager.getManagerFromInstance(EnemyManager.class).getWildEnemiesAlive();
-            specialEnemyList = GameManager.getManagerFromInstance(EnemyManager.class).getSpecialEnemiesAlive();
-
+            List<EnemyPeon> enemyList = GameManager.getManagerFromInstance(EnemyManager.class).getWildEnemiesAlive();
+            List<EnemyPeon> specialEnemyList = GameManager.getManagerFromInstance(EnemyManager.class).getSpecialEnemiesAlive();
             for (EnemyPeon e : enemyList) {
                 renderEnemy(batch, e);
             }
@@ -91,7 +87,6 @@ public class MinimapComponent extends OverlayComponent {
     // Renders an enemy onto the minimap
     private void renderEnemy(SpriteBatch batch, EnemyPeon enemy) {
         Texture tex = enemy.getIcon();
-        //Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(enemy.getTexture());
         float x = overlayRenderer.getX() + overlayRenderer.getWidth() -
                 ENEMY_COLUMN_OFFSET + ENTITY_POSITION_SCALAR * (enemy.getCol() + POSITIVE_COLUMN_NUMBER);
         float y =  overlayRenderer.getY() + overlayRenderer.getHeight() - ENEMY_ROW_OFFSET +

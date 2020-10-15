@@ -1,6 +1,4 @@
 package deco2800.thomas.entities.enemies.bosses;
-
-import com.badlogic.gdx.graphics.Texture;
 import deco2800.thomas.combat.WizardSkills;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
