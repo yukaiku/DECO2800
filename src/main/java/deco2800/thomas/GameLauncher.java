@@ -25,7 +25,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 1920;
 		config.height = 1000;
-//		config.fullscreen = true;
+		config.fullscreen = true;
+		config.resizable = false;
 		config.title = "DECO2800 2020: Polyhedron";
 		LwjglApplication app = new LwjglApplication(new ThomasGame(), config);
 	}
