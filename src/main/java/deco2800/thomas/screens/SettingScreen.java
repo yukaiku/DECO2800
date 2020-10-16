@@ -35,6 +35,10 @@ public class SettingScreen implements Screen {
     //spriteBatch for renderers
     SpriteBatch spriteBatch = new SpriteBatch();
 
+    //Buttons
+    Button windowButton;
+    Button fullScreenButton;
+
     /**
      * Constructor of the MainMenuScreen.
      *
@@ -61,11 +65,12 @@ public class SettingScreen implements Screen {
         clickedButtonStyle.font = font;
         clickedButtonStyle.fontColor = Color.valueOf("#ff1100");
 
-        Button windowButton = new TextButton("WINDOW", buttonStyle);
+        // Initialize buttons
+        windowButton = new TextButton("WINDOW", buttonStyle);
         windowButton.setPosition(width/5 + 400, height/2 + 100);
         stage.addActor(windowButton);
 
-        Button fullScreenButton = new TextButton("FULLSCREEN", buttonStyle);
+        fullScreenButton = new TextButton("FULLSCREEN", buttonStyle);
         fullScreenButton.setPosition(width/5 + 800, height/2 + 100);
         stage.addActor(fullScreenButton);
 
@@ -79,26 +84,18 @@ public class SettingScreen implements Screen {
             windowButton.setChecked(true);
         }
 
+        // Add click listener to buttons
         windowButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.graphics.setWindowedMode( (int)(0.8*Gdx.graphics.getDisplayMode().width),
-                        (int)(0.8*Gdx.graphics.getDisplayMode().height));
-                fullScreenButton.setChecked(false);
-                if (!Gdx.graphics.isFullscreen()) {
-                    windowButton.setChecked(true);
-                }
+                setWindowedScreen();
             }
         });
 
         fullScreenButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-                windowButton.setChecked(false);
-                if (Gdx.graphics.isFullscreen()) {
-                    fullScreenButton.setChecked(true);
-                }
+                setFullScreen();
             }
         });
 
@@ -110,6 +107,32 @@ public class SettingScreen implements Screen {
         });
     }
 
+    /**
+     * Set the game to windowed mode
+     */
+    private void setWindowedScreen() {
+        Gdx.graphics.setWindowedMode( (int)(0.8*Gdx.graphics.getDisplayMode().width),
+                (int)(0.8*Gdx.graphics.getDisplayMode().height));
+        fullScreenButton.setChecked(false);
+        if (!Gdx.graphics.isFullscreen()) {
+            windowButton.setChecked(true);
+        }
+    }
+
+    /**
+     * Set the game to full-screen mode
+     */
+    private void setFullScreen() {
+        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+        windowButton.setChecked(false);
+        if (Gdx.graphics.isFullscreen()) {
+            fullScreenButton.setChecked(true);
+        }
+    }
+
+    /**
+     * Begins things that need to begin when shown.
+     */
     @Override
     public void show() {
         stage.getRoot().getColor().a = 0;
@@ -117,6 +140,11 @@ public class SettingScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
+    /**
+     * Renders the screen.
+     *
+     * @param delta
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -129,26 +157,44 @@ public class SettingScreen implements Screen {
         spriteBatch.end();
     }
 
+    /**
+     * Resizes the stage to a new width and height.
+     *
+     * @param width  the new width for the stage
+     * @param height the new width for the stage
+     */
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
     }
 
+    /**
+     * Pauses the screen.
+     */
     @Override
     public void pause() {
-
+        //do nothing
     }
 
+    /**
+     * Resumes the screen.
+     */
     @Override
     public void resume() {
-
+        //do nothing
     }
 
+    /**
+     * Hides the screen.
+     */
     @Override
     public void hide() {
-
+        //do nothing
     }
 
+    /**
+     * Disposes of the stage that the screen is on.
+     */
     @Override
     public void dispose() {
         stage.dispose();
