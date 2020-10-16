@@ -294,7 +294,7 @@ public final class DatabaseManager extends AbstractManager {
                 case ROWPOSSTRING:
                     entity.setRow((float) reader.nextDouble());
                     return entity;
-                case "texture":
+                case TEXTURESTRING:
                     entity.setTexture(reader.nextString());
                     return entity;
                 case "children":
