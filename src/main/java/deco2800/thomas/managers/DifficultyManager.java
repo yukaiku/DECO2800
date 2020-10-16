@@ -86,11 +86,7 @@ public class DifficultyManager extends TickableManager{
     public void setPlayerHealth(int difficulty) {
         //Sets the player max health
         playerPeon.setMaxHealth(25*difficulty);
-        int playerMaxHealth = playerPeon.getMaxHealth();
-        if(playerPeon.getCurrentHealth() > playerMaxHealth){
-            //Sets max health based off number of orbs starting from 25 to 100
-            playerPeon.setCurrentHealthValue(playerMaxHealth);
-        }
+        playerPeon.setCurrentHealthValue(25*difficulty);
     }
 
     /***
@@ -163,21 +159,21 @@ public class DifficultyManager extends TickableManager{
                 break;
             case "tundra":
                 setPlayerHealth(2);
-                setWildSpawnRate(0.05f);
+                setWildSpawnRate(0.06f);
                 enemyManager.getBoss().setMaxHealth(150);
                 setWizardSkillCoolDown(15);
                 setMechSkillCoolDown(150);
                 break;
             case "desert":
                 setPlayerHealth(3);
-                setWildSpawnRate(0.05f);
+                setWildSpawnRate(0.07f);
                 enemyManager.getBoss().setMaxHealth(300);
                 setWizardSkillCoolDown(15);
                 setMechSkillCoolDown(50);
                 break;
             case "volcano":
                 setPlayerHealth(4);
-                setWildSpawnRate(0.05f);
+                setWildSpawnRate(0.08f);
                 enemyManager.getBoss().setMaxHealth(750);
                 setWizardSkillCoolDown(15);
                 setMechSkillCoolDown(50);

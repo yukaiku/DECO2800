@@ -3,7 +3,7 @@ package deco2800.thomas.worlds;
 import java.util.ArrayList;
 import java.util.List;
 
-import deco2800.thomas.GameScreen;
+import deco2800.thomas.screens.GameScreen;
 import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.agent.AgentEntity;
