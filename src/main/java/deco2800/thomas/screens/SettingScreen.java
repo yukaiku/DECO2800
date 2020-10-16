@@ -47,7 +47,7 @@ public class SettingScreen implements Screen {
     public SettingScreen(final ThomasGame game) {
         this.game = game;
 
-        stage = new Stage(new ExtendViewport(1920, 1000), game.batch);
+        stage = new Stage(new ExtendViewport(1920, 1000), game.getBatch());
         screenWidth = stage.getViewport().getScreenWidth();
         screenHeight = stage.getViewport().getScreenHeight();
 
