@@ -52,8 +52,10 @@ public class NPCDialog extends AbstractDialogBox {
 	}
 
 	public void addHealer(){
-		TextButton button2 = new TextButton("Heal", skin);
-		button2.addListener(c);
+		TextButton button2 = new TextButton("Heal: 100 Gold", skin);
+		if (PlayerPeon.checkBalance() >= 100) {
+			button2.addListener(c);
+		}
 		box.add(button2).expand().center();
 		box.pack();
 	}
@@ -87,43 +89,33 @@ public class NPCDialog extends AbstractDialogBox {
 				}
 			}
 
-			if (TundraNPC.getIsActive()) {
-				if (TundraNPC.speechStage >= 1) {
-					setString(PlayerPeon.getDialogue("tundra"));
-					box.removeListener(this);
-					box.addListener(b);
-				}
+			if (TundraNPC.getIsActive() && TundraNPC.SPEECH_STAGE >= 1) {
+				setString(PlayerPeon.getDialogue("tundra"));
+				box.removeListener(this);
+				box.addListener(b);
 			}
 
-			if (VolcanoNPC.getIsActive()){
-				if (VolcanoNPC.speechStage >= 1) {
-					setString(PlayerPeon.getDialogue("volcano"));
-					box.removeListener(this);
-					box.addListener(b);
-				}
+			if (VolcanoNPC.getIsActive() && VolcanoNPC.SPEECH_STAGE >= 1){
+				setString(PlayerPeon.getDialogue("volcano"));
+				box.removeListener(this);
+				box.addListener(b);
 			}
 
-			if (SwampNPC.getIsActive()){
-				if (SwampNPC.speechStage >= 1) {
-					setString(PlayerPeon.getDialogue("swamp"));
-					box.removeListener(this);
-					box.addListener(b);
-				}
+			if (SwampNPC.getIsActive() && SwampNPC.SPEECH_STAGE >= 1){
+				setString(PlayerPeon.getDialogue("swamp"));
+				box.removeListener(this);
+				box.addListener(b);
 			}
 
-			if (SwampDungeonNPC.getIsActive()) {
-				if (SwampDungeonNPC.speechStage >= 1) {
-					box.removeListener(this);
-					box.addListener(b);
-				}
+			if (SwampDungeonNPC.getIsActive() && SwampDungeonNPC.SPEECH_STAGE >= 1) {
+				box.removeListener(this);
+				box.addListener(b);
 			}
 
-			if (DesertNPC.getIsActive()){
-				if (DesertNPC.speechStage >= 1) {
-					setString(PlayerPeon.getDialogue("desert"));
-					box.removeListener(this);
-					box.addListener(b);
-				}
+			if (DesertNPC.getIsActive() && DesertNPC.SPEECH_STAGE >= 1){
+				setString(PlayerPeon.getDialogue("desert"));
+				box.removeListener(this);
+				box.addListener(b);
 			}
 		}
 	};
@@ -146,22 +138,13 @@ public class NPCDialog extends AbstractDialogBox {
 	ChangeListener c = new ChangeListener() {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			LoadedPeon.healPlayer(100);
-			LoadedPeon.debit(100);
-			setShowing(false);
-			box.reset();
-			box.remove();
-		}
-	};
-
-	ChangeListener d = new ChangeListener() {
-		@Override
-		public void changed(ChangeEvent event, Actor actor) {
-			LoadedPeon.healPlayer(100);
-			LoadedPeon.debit(100);
-			setShowing(false);
-			box.reset();
-			box.remove();
+			if (PlayerPeon.checkBalance() >= 100) {
+				LoadedPeon.healPlayer(100);
+				LoadedPeon.debit(100);
+				setShowing(false);
+				box.reset();
+				box.remove();
+			}
 		}
 	};
 }

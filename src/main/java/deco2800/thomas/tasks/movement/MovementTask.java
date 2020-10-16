@@ -2,6 +2,7 @@ package deco2800.thomas.tasks.movement;
 
 import java.util.List;
 
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.Peon;
@@ -191,13 +192,21 @@ public class MovementTask extends AbstractTask {
 
 				// quicksand damages over time and slows
 				case "Quicksand":
+					if (entity.getObjectName().equals("ImmuneOrc")) {
+						gameManager.getManager(StatusEffectManager.class).addStatus(new QuicksandBurnStatus((Peon)entity, 5, 100, position, DamageType.NOT_IMMUNE));
+					} else {
+						gameManager.getManager(StatusEffectManager.class).addStatus(new QuicksandBurnStatus((Peon)entity, 5, 100, position));
+					}
 					gameManager.getManager(StatusEffectManager.class).addStatus(new SpeedStatus((Peon)entity, 0.25f, 3));
-					gameManager.getManager(StatusEffectManager.class).addStatus(new QuicksandBurnStatus((Peon)entity, 5, 100, position));
 				break;
 
 				// neighbours of cactus plants damage once when the player first arrives
 				case "CactusNeighbour":
-					gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus((Peon)entity, 10, 1));
+					if (entity.getObjectName().equals("ImmuneOrc")) {
+						gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus((Peon) entity, 10, 1, DamageType.NOT_IMMUNE));
+					} else {
+						gameManager.getManager(StatusEffectManager.class).addStatus(new BurnStatus((Peon) entity, 10, 1));
+					}
 				break;
 
 				// ice tiles speed up the player temporarily
@@ -232,6 +241,12 @@ public class MovementTask extends AbstractTask {
 		}
 	}
 
+	/**
+	 * Checks whether the tile at the new position is a teleport tile &
+	 * teleports the player to the tile's respective teleport coordinates.
+	 *
+	 * @param position - Square Vector of upcoming position of the entity.
+	 */
 	private void checkForTeleportTile(SquareVector position) {
 		// get the next tile
 		Tile tile = gameManager.getWorld().getTile(position);
@@ -239,9 +254,7 @@ public class MovementTask extends AbstractTask {
 		if (tile != null && tile.isTeleportTile()) {
 			path = null;
 
-
-			//Remove Trap Entity HERE
-
+			//Remove Teleport trigger Entity HERE
 			float newCol = tile.getTeleportCol();
 			float newRow = tile.getTeleportRow();
 
@@ -251,6 +264,12 @@ public class MovementTask extends AbstractTask {
 		}
 	}
 
+	/**
+	 * Checks whether the tile at the new position is a trap tile &
+	 * initiates the tile's respective trap should there be one.
+	 *
+	 * @param position - Square Vector of upcoming position of the entity.
+	 */
 	private void checkForTrapTile(SquareVector position) {
 		// get the next tile
 		Tile tile = gameManager.getWorld().getTile(position);
@@ -266,6 +285,12 @@ public class MovementTask extends AbstractTask {
 		}
 	}
 
+	/**
+	 * Checks whether the tile at the new position is a reward tile &
+	 * initiates the tile's respective reward should there be one.
+	 *
+	 * @param position - Square Vector of upcoming position of the entity.
+	 */
 	private void checkForRewardTile(SquareVector position) {
 		// get the next tile
 		Tile tile = gameManager.getWorld().getTile(position);

@@ -1,13 +1,37 @@
 package deco2800.thomas.util;
 
 public class Cube {
-	public float x = 0;
-	public float y = 0;
-	public float z = 0;
+	private float x = 0;
+	private float y = 0;
+	private float z = 0;
 
 	public Cube(float x, float y, float z) {
 		this.x = x;
 		this.y = y;
+		this.z = z;
+	}
+
+	public float getX() {
+		return x;
+	}
+
+	public float getY() {
+		return y;
+	}
+
+	public float getZ() {
+		return z;
+	}
+
+	public void setX(float x) {
+		this.x = x;
+	}
+
+	public void setY(float y) {
+		this.y = y;
+	}
+
+	public void setZ(float z) {
 		this.z = z;
 	}
 
@@ -23,7 +47,7 @@ public class Cube {
 		return (Math.abs(ax - bx) + Math.abs(ay - by) + Math.abs(az - bz)) / 2.0f;
 	}
 
-	static public Cube oddqToCube(float q, float r) {
+	public static Cube oddqToCube(float q, float r) {
 		float x = q;
 		float y = r - (q - Math.abs(q % 2)) / 2f;
 		float z = -x - y;

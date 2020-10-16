@@ -129,6 +129,11 @@ public class Peon extends AgentEntity implements Tickable {
 		isAttacked = true;
 		isAttackedCoolDown = 5;
 
+		// Check for death
+		if (isDead()) {
+			death();
+		}
+
 		return damageApplied;
 	}
 

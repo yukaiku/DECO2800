@@ -3,7 +3,7 @@ package deco2800.thomas.worlds;
 import java.util.ArrayList;
 import java.util.List;
 
-import deco2800.thomas.GameScreen;
+import deco2800.thomas.screens.GameScreen;
 import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.agent.AgentEntity;
@@ -80,11 +80,11 @@ public class TutorialWorld extends AbstractWorld{
 
         // Add NPC
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
-        TutorialNPC NPC = new TutorialNPC("Master", new SquareVector(0,
+        TutorialNPC npc = new TutorialNPC("Master", new SquareVector(0,
                 2),"tutorial_npc");
-        npnSpawns.add(NPC);
+        npnSpawns.add(npc);
         this.allDialogBoxes = new ArrayList<>();
-        this.allDialogBoxes.add(NPC.getBox());
+        this.allDialogBoxes.add(npc.getBox());
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, player, npnSpawns);
         GameManager.get().addManager(npcManager);
 

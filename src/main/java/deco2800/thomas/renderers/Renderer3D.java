@@ -170,7 +170,7 @@ public class Renderer3D implements Renderer {
 			/* Draw Peon */
 			// Place movement tiles
 			if (entity instanceof Peon) {
-				if (GameManager.get().showPath) {
+				if (GameManager.get().getShowPath()) {
 					renderPeonMovementTiles(batch, camera, entity, entityWorldCoord);
 				}
 				renderAbstractEntity(batch, entity, entityWorldCoord, tex);
@@ -243,8 +243,6 @@ public class Renderer3D implements Renderer {
 
 		if (entity instanceof VolcanoFireball) {
 			batch.setColor(102, 0, 0, 1);
-		} else if (entity instanceof StingProjectile){
-			batch.setColor(0, 102, 0, 1);
 		}
 		batch.draw(((Animatable) entity).getFrame(Gdx.graphics.getDeltaTime()), x, y, width / 2,
 				height / 2, width, height, 2, 2, ((Projectile) entity).getDirection());
@@ -285,7 +283,7 @@ public class Renderer3D implements Renderer {
 
 	private void debugRender(SpriteBatch batch, OrthographicCamera camera) {
 
-		if (GameManager.get().showCoords) {
+		if (GameManager.get().getShowCoords()) {
 			List<Tile> tileMap = GameManager.get().getWorld().getTiles();
 			for (Tile tile : tileMap) {
 				float[] tileWorldCord = WorldUtil.colRowToWorldCords(tile.getCol(), tile.getRow());
@@ -301,7 +299,7 @@ public class Renderer3D implements Renderer {
 			}
 		}
 
-		if (GameManager.get().showCoordsEntity) {
+		if (GameManager.get().getShowCoordsEntity()) {
 			List<AbstractEntity> entities = GameManager.get().getWorld().getEntities();
 			for (AbstractEntity entity : entities) {
 				float[] tileWorldCord = WorldUtil.colRowToWorldCords(entity.getCol(), entity.getRow());

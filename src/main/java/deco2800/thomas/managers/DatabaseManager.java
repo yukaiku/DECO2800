@@ -43,6 +43,9 @@ public final class DatabaseManager extends AbstractManager {
 	private static final String WALLETSTRING = "wallet";
 	private static String saveName = "";
 	private static List<String> saveNameList = new ArrayList<>();
+	private static String readTitleJsonArrayError = "Cannot read the title json array";
+	private static String fileErrorMessage = "Load attempted, but no save file found";
+	private static String couldNotOverWritePreviousSaveError = "Could not overwrite previous save.";
 
 	private DatabaseManager() {
         /*
@@ -184,23 +187,23 @@ public final class DatabaseManager extends AbstractManager {
             reader.endArray();
             reader.endObject();
         } catch (IOException e) {
-            logger.error("Cannot read the tile json array");
+            logger.error(readTitleJsonArrayError);
         }
     }
 
     private static boolean checkBasicTileSettings(Tile tile, String entityField, JsonReader reader) {
         try {
             switch (entityField) {
-                case "colPos":
+                case COLPOSSTRING:
                     tile.setCol((float) reader.nextDouble());
                     return true;
-                case "rowPos":
+                case ROWPOSSTRING:
                     tile.setRow((float) reader.nextDouble());
                     return true;
                 case "index":
                     tile.setIndex(reader.nextInt());
                     return true;
-                case "texture":
+                case TEXTURESTRING:
                     tile.setTexture(reader.nextString());
                     return true;
                 case "tileID":
@@ -214,7 +217,7 @@ public final class DatabaseManager extends AbstractManager {
                     return false;
             }
         } catch (IOException e) {
-            logger.error("Cannot read the tile json array");
+            logger.error(readTitleJsonArrayError);
         }
         return false;
     }
@@ -291,7 +294,7 @@ public final class DatabaseManager extends AbstractManager {
                 case ROWPOSSTRING:
                     entity.setRow((float) reader.nextDouble());
                     return entity;
-                case "texture":
+                case TEXTURESTRING:
                     entity.setTexture(reader.nextString());
                     return entity;
                 case "children":
@@ -319,7 +322,7 @@ public final class DatabaseManager extends AbstractManager {
                     return null;
             }
         } catch (IOException e) {
-            logger.error("Cannot read the tile json array");
+            logger.error(readTitleJsonArrayError);
         }
         return null;
     }
@@ -356,7 +359,7 @@ public final class DatabaseManager extends AbstractManager {
                 }
             }
         } catch (IOException e) {
-            logger.error("Cannot read the tile json array");
+            logger.error(readTitleJsonArrayError);
         }
 
     }
@@ -446,8 +449,8 @@ public final class DatabaseManager extends AbstractManager {
 		File f = new File(saveLocationAndFilename);
 		if (!f.exists()) {
 			GameManager.get().getManager(OnScreenMessageManager.class).
-					addMessage("Load attempted, but no save file found");
-			logger.info("Load attempted, but no save file found");
+					addMessage(fileErrorMessage);
+			logger.info(fileErrorMessage);
 		}
 
         // Load all entities and tiles from the database
@@ -466,21 +469,25 @@ public final class DatabaseManager extends AbstractManager {
             return;
         }
 
-        if (saveLocationAndFilename.equals("resources/environment/desert/desert_map.json")) {
-            newTiles = setDesertTiles(newTiles);
-        } else if (saveLocationAndFilename.equals("resources/environment/volcano/VolcanoZone.json") ||
-                saveLocationAndFilename.equals("resources/environment/dungeons/VolcanoDungeonMaze.json")) {
-            newTiles = setVolcanoTiles(newTiles);
-        } else if (saveLocationAndFilename.equals("resources/environment/tundra/tundra-map.json")
-                || saveLocationAndFilename.equals("resources/environment/tundra/tundra-map-tiles-only.json")) {
-            newTiles = setTundraTiles(newTiles);
+        switch (saveLocationAndFilename) {
+            case "resources/environment/desert/desert_map.json":
+            case "resources/environment/desert/desert_dungeon_map.json":
+                newTiles = setDesertTiles(newTiles);
+                break;
+            case "resources/environment/volcano/VolcanoZone.json":
+                newTiles = setVolcanoTiles(newTiles);
+                break;
+            case "resources/environment/tundra/tundra-map.json":
+            case "resources/environment/tundra/tundra-map-tiles-only.json":
+                newTiles = setTundraTiles(newTiles);
+                break;
         }
 
         world.setTiles(newTiles);
         world.assignTileNeighbours();
         world.setEntities(new ArrayList<AbstractEntity>(newEntities.values()));
         logger.info("Load succeeded");
-        if (GameManager.get().debugMode) {
+        if (GameManager.get().getDebugMode()) {
             GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Loaded game from the database.");
         }
     }
@@ -497,7 +504,7 @@ public final class DatabaseManager extends AbstractManager {
         } catch (FileNotFoundException exception) {
             logger.error("Save could not write to file.");
         } catch (IOException exception) {
-            logger.error("Could not overwrite previous save.");
+            logger.error(couldNotOverWritePreviousSaveError);
         } finally {
             try {
                 if (fileWriter != null){
@@ -506,7 +513,7 @@ public final class DatabaseManager extends AbstractManager {
                     logger.error("Could not close fileWriter as it is null");
                 }
             } catch (IOException exception) {
-                logger.error("Could not overwrite previous save.");
+                logger.error(couldNotOverWritePreviousSaveError);
             } catch (NullPointerException exception) {
                 logger.error("Could not write to the file at all.");
             }
@@ -683,7 +690,7 @@ public final class DatabaseManager extends AbstractManager {
         } catch (FileNotFoundException exception) {
             logger.error("Save could not write to file.");
         } catch (IOException exception) {
-            logger.error("Could not overwrite previous save.");
+            logger.error(couldNotOverWritePreviousSaveError);
         } finally {
             try {
                 if (fileWriter != null){
@@ -692,7 +699,7 @@ public final class DatabaseManager extends AbstractManager {
                     logger.error("Could not close fileWriter as it is null");
                 }
             } catch (IOException exception) {
-                logger.error("Could not overwrite previous save.");
+                logger.error(couldNotOverWritePreviousSaveError);
             } catch (NullPointerException exception) {
                 logger.error("Could not write to the file at all.");
             }
@@ -795,8 +802,8 @@ public final class DatabaseManager extends AbstractManager {
         File f = new File(filepath);
         if (!f.exists()) {
             GameManager.get().getManager(OnScreenMessageManager.class).
-                    addMessage("Load attempted, but no save file found");
-            logger.info("Load attempted, but no save file found");
+                    addMessage(fileErrorMessage);
+            logger.info(fileErrorMessage);
         }
 
         // Delete all tiles and entities

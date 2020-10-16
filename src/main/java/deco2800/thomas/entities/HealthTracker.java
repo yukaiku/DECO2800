@@ -40,8 +40,9 @@ public class HealthTracker {
      */
     public void setMaxHealthValue(int healthValue) {
         this.maxHealthValue = Math.max(healthValue, 0);
-        // the current health value should not exceed the new max health value
-        this.currentHealthValue = Math.min(this.currentHealthValue, this.maxHealthValue);
+        // The current health value should not exceed the new max health value
+        this.currentHealthValue = Math.min(getCurrentHealthValue(),
+                getMaxHealthValue());
     }
 
     /**

@@ -8,6 +8,7 @@ import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.InvalidEnemyException;
 import deco2800.thomas.entities.enemies.bosses.Boss;
 import deco2800.thomas.entities.enemies.monsters.Monster;
+import deco2800.thomas.entities.enemies.monsters.Orc;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.worlds.AbstractWorld;
 
@@ -54,7 +55,8 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
     private final float spawnRangeMax;
     private final Random random;
     private int tick = 0;
-    private int nextTick = 60;
+    private final static int spawnTicks = 3;
+    private final static int packSpawns = 3;
 
     /**
      * Initialise an enemy manager with wild enemies and boss configured.
@@ -250,24 +252,28 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
 
     /** Spawns a random enemy from the configuration list. Normally it will be called automatically by the manager. */
     private void spawnRandomWildEnemy() {
-        for (int i = 0; i < 5; i++) {
-            // generate a random position within radius range
-            float degree = random.nextFloat() * 360;
-            float radius = spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin);
-            float tileX = world.getPlayerEntity().getCol() + Math.round(Math.sin(degree) * radius);
-            float tileY = world.getPlayerEntity().getRow() + Math.round(Math.cos(degree) * radius);
+        EnemyPeon enemyBlueprint = enemyConfigs.get(wildEnemyIndexes.get(random.nextInt(wildEnemyIndexes.size())));
+        // spawn rate of the enemy
+        if (enemyBlueprint instanceof Orc && random.nextFloat() < ((Orc) enemyBlueprint).getSpawnRate()) {
+            int spawnCount = Math.min(random.nextInt(packSpawns - 1),
+                    getWildEnemyCap() - getWildEnemiesAlive().size() - 1);
+            for (int i = 0; i <= spawnCount; i++) {
+                for (int j = 0; j < 5; j++) {
+                    // generate a random position within radius range
+                    float degree = random.nextFloat() * 360;
+                    float radius = spawnRangeMin + random.nextFloat() * (spawnRangeMax - spawnRangeMin);
+                    float tileX = world.getPlayerEntity().getCol() + Math.round(Math.sin(degree) * radius);
+                    float tileY = world.getPlayerEntity().getRow() + Math.round(Math.cos(degree) * radius);
 
-            // prevent spawning outside of the map or tiles with effects
-            if (tileX > -world.getWidth() + 1 && tileX < world.getWidth() - 2 &&
-                    tileY > -world.getHeight() + 1 && tileY < world.getHeight() - 1 &&
-                    world.getTile(tileX, tileY) != null && !world.getTile(tileX, tileY).isObstructed() &&
-                    !world.getTile(tileX, tileY).getType().equals("BurnTile")) {
-                // choose a random enemy
-                // todo: spawn rates
-                EnemyPeon enemy =
-                        enemyConfigs.get(wildEnemyIndexes.get(random.nextInt(wildEnemyIndexes.size()))).deepCopy();
-                spawnWildEnemy(enemy, tileX, tileY);
-                break;
+                    // prevent spawning outside of the map or tiles with effects
+                    if (tileX > -world.getWidth() + 1 && tileX < world.getWidth() - 2 &&
+                            tileY > -world.getHeight() + 1 && tileY < world.getHeight() - 1 &&
+                            world.getTile(tileX, tileY) != null && !world.getTile(tileX, tileY).isObstructed() &&
+                            !world.getTile(tileX, tileY).getType().equals("BurnTile")) {
+                        spawnWildEnemy(enemyBlueprint.deepCopy(), tileX, tileY);
+                        break;
+                    }
+                }
             }
         }
     }
@@ -305,7 +311,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
      */
     @Override
     public void notifyKeyDown(int keycode) {
-        if (GameManager.get().debugMode && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
+        if (GameManager.get().getDebugMode() && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
                 Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
             if (keycode == Input.Keys.P) {
                 // Ctrl + P: Toggle wild enemy spawning
@@ -326,15 +332,9 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
 
     @Override
     public void onTick(long i) {
-        if (++tick > nextTick) {
+        if (++tick > spawnTicks) {
             if (wildSpawning && wildEnemiesAlive.size() < wildEnemyCap) {
                 spawnRandomWildEnemy();
-                if (wildEnemiesAlive.size() == wildEnemyCap) {
-                    // give player a rest
-                    nextTick = 1200 + random.nextInt(90);
-                } else {
-                    nextTick = random.nextInt(90);
-                }
             }
             tick = 0;
         }

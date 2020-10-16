@@ -14,16 +14,6 @@ public final class PlayerSkills {
     private static final float ICEBALL_SLOW_MODIFIER = 0.5f;
     private static final int ICEBALL_SLOW_DURATION = 2;
 
-    /* Map default skills of Wizards */
-    /*private final static HashMap<Wizard, WizardSkills> DEFAULT_WIZARD_SKILLS = new HashMap<Wizard, WizardSkills>() {{
-        put(Wizard.FIRE, WizardSkills.FIREBALL);
-        put(Wizard.WATER, WizardSkills.ICEBALL);
-    }};*/
-
-    /* Map default skills of Knights */
-    /*private final static HashMap<Knight, KnightSkills> DEFAULT_KNIGHT_SKILLS = new HashMap<Knight, KnightSkills>() {{
-        put(Knight.FIRE, KnightSkills.FIREBOMB);
-    }};*/
     /* Map of default skills for Wizards */
     private static final Map<Wizard, WizardSkills> DEFAULT_WIZARD_SKILLS = new HashMap<>();
 

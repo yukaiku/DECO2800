@@ -1,8 +1,13 @@
 package deco2800.thomas.entities.attacks;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.managers.TextureManagerTest;
 import deco2800.thomas.tasks.AbstractTask;
 
 import deco2800.thomas.util.WorldUtil;
@@ -77,12 +82,25 @@ public class ProjectileTest extends BaseGDXTest {
         mockStatic(GameManager.class);
         when(GameManager.get()).thenReturn(gameManager);
 
+        // Mock a texture manager
+        TextureManager textureManager = mock(TextureManager.class);
+        Texture mockedTexture = mock(Texture.class);
+        when(textureManager.getTexture(anyString())).thenReturn(mockedTexture);
+        Array<TextureRegion> playerStand = new Array<>();
+        playerStand.add(new TextureRegion(new Texture("resources/combat/move_right.png"), 262, 256));
+        when(textureManager.getAnimationFrames(anyString())).thenReturn(playerStand);
+        when(mockedTexture.getWidth()).thenReturn(1);
+        when(mockedTexture.getHeight()).thenReturn(1);
+        when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
+
         // Create projectile to test on, and set tasks
         Projectile projectile = new Projectile(0, 10, 0, 10, 5, EntityFaction.ALLY);
         projectile.setMovementTask(movementTask);
         projectile.setCombatTask(combatTask);
 
         // Call on tick, then verify that the entity was remove from the world
+        projectile.onTick(0);
+        projectile.getFrame(20); // Make sure animation runs to completion
         projectile.onTick(0);
         verifyStatic(WorldUtil.class);
         WorldUtil.removeEntity(projectile);

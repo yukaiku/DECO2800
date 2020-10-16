@@ -15,7 +15,8 @@ public class ApplySlowOnCollisionTask extends AbstractTask {
     // Reference to current game world
     private AbstractWorld world;
     // Lifetime of task
-    private long lifetime, currentLifetime;
+    private long lifetime;
+    private long currentLifetime;
     private float speedMultiplier;
     private int slowTime;
 
@@ -39,7 +40,6 @@ public class ApplySlowOnCollisionTask extends AbstractTask {
                                     float speedMultiplier, int slowTime) {
         super(entity);
 
-        //this.entity = entity;
         this.taskComplete = false;
         world = GameManager.get().getWorld();
 
@@ -86,9 +86,6 @@ public class ApplySlowOnCollisionTask extends AbstractTask {
 
             peon.addEffect(new SpeedStatus(peon, speedMultiplier, slowTime));
             this.taskComplete = true;
-            if (peon.isDead()) {
-                peon.death();
-            }
         }
     }
 }

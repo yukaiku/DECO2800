@@ -1,5 +1,6 @@
 package deco2800.thomas.tasks.status;
 
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.util.SquareVector;
@@ -24,6 +25,20 @@ public class QuicksandBurnStatus extends BurnStatus {
      */
     public QuicksandBurnStatus(Peon entity, int burnDamage, int ticks, SquareVector position) {
         super(entity, burnDamage, ticks);
+        this.position = position;
+    }
+
+    /**
+     * Creates a new QuicksandBurnStatus for an entity, with a set damage, number of
+     * ticks and position.
+     *
+     * @param entity The entity this effect applies to.
+     * @param burnDamage The damage taken by this entity each tick.
+     * @param ticks The number of damage ticks for this effect.
+     * @param position The position inflicting this effect.
+     */
+    public QuicksandBurnStatus(Peon entity, int burnDamage, int ticks, SquareVector position, DamageType damageType) {
+        super(entity, burnDamage, ticks, damageType);
         this.position = position;
     }
 

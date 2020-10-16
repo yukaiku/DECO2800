@@ -3,6 +3,7 @@ package deco2800.thomas.renderers.components;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import deco2800.thomas.entities.HealthTracker;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.OverlayComponent;
@@ -19,10 +20,9 @@ public class HealthBarComponent extends OverlayComponent {
     public HealthBarComponent(OverlayRenderer overlayRenderer) {
         super(overlayRenderer);
 
-        // Temporary initialisation a HealthTracker. Will be replaced by an
-        // appropriate reference to the actual player HealthTracker
-        // TODO: Properly integrate with actual player HealthTracker
-        playerHealth = new HealthTracker(100);
+        // Set player HealthTracker
+        playerHealth = ((Peon)GameManager.get().getWorld().getPlayerEntity())
+                .getHealthTracker();
     }
 
     /**
@@ -32,6 +32,7 @@ public class HealthBarComponent extends OverlayComponent {
      */
     @Override
     public void render(SpriteBatch batch) {
+        // Begin Batch
         batch.begin();
 
         // Get sprite using assignHealthTexture
@@ -39,12 +40,17 @@ public class HealthBarComponent extends OverlayComponent {
                 GameManager.get().getManager(TextureManager.class).getTexture(
                         this.assignHealthTexture(playerHealth)));
 
-        // Draw texture to batch
-        // Temporarily using x = 0 and y = 0
-        // TODO: Properly integrate with other UI elements to get appropriate
-        //  x and y coordinates
-        batch.draw(healthTexture, 0, 0);
+        // Updates player Health tracker
+        assignPlayerHealth(((Peon)GameManager.get().getWorld()
+                .getPlayerEntity()).getHealthTracker());
 
+        healthTexture.setPosition(overlayRenderer.getX(),
+                overlayRenderer.getY() + 0.9f * overlayRenderer.getHeight());
+        healthTexture.setSize(0.2f * overlayRenderer.getWidth(),
+                0.1f * overlayRenderer.getHeight());
+        healthTexture.draw(batch);
+
+        // End batch
         batch.end();
     }
 
@@ -64,9 +70,11 @@ public class HealthBarComponent extends OverlayComponent {
     private String assignHealthTexture(HealthTracker playerHealth) {
         StringBuilder textureId = new StringBuilder("health");
 
+        // Get most recent Health Value
+        int health = playerHealth.getCurrentHealthValue();
+
         // Round down to nearest multiple of 5
-        int healthValueRounded = playerHealth.getCurrentHealthValue()
-                - (playerHealth.getCurrentHealthValue() % 5);
+        int healthValueRounded = health - (health % 5);
 
         // Append to textureId
         textureId.append(healthValueRounded);

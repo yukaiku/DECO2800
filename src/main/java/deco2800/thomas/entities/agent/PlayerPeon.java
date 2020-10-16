@@ -1,5 +1,6 @@
 package deco2800.thomas.entities.agent;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -8,14 +9,12 @@ import deco2800.thomas.combat.*;
 import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.InputManager;
-import deco2800.thomas.managers.PlayerManager;
-import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.managers.*;
 import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.tasks.movement.MovementTask;
+import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
@@ -37,6 +36,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
     private final Animation<TextureRegion> playerMeleeAttack;
     private final Animation<TextureRegion> playerRangeAttack;
     private final Animation<TextureRegion> playerSpin;
+    private final Animation<TextureRegion> playerWalk;
     private float stateTimer;
     private int duration = 0;
 
@@ -89,6 +89,8 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerSpin"));
         playerIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerIdle"));
+        playerWalk = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerWalk"));
     }
 
     /**
@@ -150,7 +152,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         dialogues.put("npc_lava_maze", "Welcome (N)ew comer to the legendary lava maze! Those" +
                 " who know their directions will know the (W)ay home. \n Those" +
                 " who enjoy a risk will find a reward in one corner of this" +
-                " deadly maze. \n \n Good luck Adventurer & don't forget" +
+                " deadly maze. \n \n Good luck Adve(n)tur(e)r & don't forget" +
                 " to avoid the lava!");
 
         dialogues.put("tundra", "Welcome adventure to Tundra Zone , to complete this stage, " +
@@ -195,17 +197,13 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
      */
     @Override
     public void onTick(long i) {
-        // Check death condition
-        if (isDead()) {
-            death();
-        }
-        if (--duration < 0) {
-            duration = 0;
-            currentState = State.IDLE;
-        }
-        if (combatTask != null) {
+        if (combatTask != null && --duration > 0) {
             currentState = State.ATTACK_MELEE;
             duration = 12;
+        } else if (getMovementTask() != null) {
+            currentState = State.WALK;
+        } else {
+            currentState = State.IDLE;
         }
 
         // Update skills
@@ -242,6 +240,11 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
                 region = playerSpin.getKeyFrame(stateTimer);
                 break;
             case WALK:
+                if (stateTimer >= playerWalk.getAnimationDuration()) {
+                    stateTimer = 0;
+                }
+                region = playerWalk.getKeyFrame(stateTimer);
+                break;
             case IDLE:
             default:
                 region = playerIdle.getKeyFrame(stateTimer);
@@ -277,10 +280,12 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
 
         if (button == Input.Buttons.LEFT) {
             try {
-                //Set combat task to fireball task
-                AbstractSkill wizardSkill = wizardSkills.get(activeWizardSkill);
-                if (wizardSkill.getCooldownRemaining() <= 0) {
-                    this.setCombatTask(wizardSkill.getNewSkillTask(clickedPosition[0], clickedPosition[1]));
+                // Set combat task
+                if (clickedPosition[0] != getCol() || clickedPosition[1] != getRow()) {
+                    AbstractSkill wizardSkill = wizardSkills.get(activeWizardSkill);
+                    if (wizardSkill.getCooldownRemaining() <= 0) {
+                        this.setCombatTask(wizardSkill.getNewSkillTask(clickedPosition[0], clickedPosition[1]));
+                    }
                 }
             } catch (SkillOnCooldownException e) {
                 // Won't occur because I'm handling it.
@@ -426,6 +431,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
                 return;
         }
         this.setMovingDirection(MovementTask.Direction.NONE);
+        setCurrentState(State.IDLE);
     }
 
     /**
@@ -467,6 +473,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         this.getMechSkill().setCooldownMax();
         GameManager.get().getWorld().removeEntity(this);
         GameManager.get().getWorld().disposeEntity(this.getEntityID());
+        GameManager.getManagerFromInstance(StatusEffectManager.class).getCurrentStatusEffects().clear();
         GameManager.gameOver();
     }
 

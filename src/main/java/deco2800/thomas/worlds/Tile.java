@@ -63,9 +63,11 @@ public class Tile {
 	private float teleportCol = 0;
 	private boolean teleportTile = false;
 
+	//Trap booleans - determine trap functionality.
 	private boolean trapTile = false;
 	private boolean trapActivated = false;
 
+	//Reward booleans - determine reward functionality.
 	private boolean rewardTile = false;
 	private boolean rewardActivated = false;
 
@@ -188,7 +190,6 @@ public class Tile {
 				if (child != null) {
 					child.setParent(null);
 					child.dispose();
-				} else {
 				}
 			}
 		}
@@ -257,66 +258,132 @@ public class Tile {
 		obstructed = b;
 	}
 
+	/**
+	 * Sets the column of the tile
+	 * @param col a column on the map.
+	 */
 	public void setCol(float col) {
 		this.coords.setCol(col);
 	}
 
+	/**
+	 * Sets the row of the tile
+	 * @param row a column on the map.
+	 */
 	public void setRow(float row) {
 		this.coords.setRow(row);
 	}
 
+	/**
+	 * Sets the row that the entity will be teleported to upon a trap/reward trigger event.
+	 * @param row a row on the map.
+	 */
 	public void setTeleportRow(float row){
 		this.teleportRow = row;
 	}
 
+	/**
+	 * Sets the col that the entity will be teleported to upon a trap/reward trigger event.
+	 * @param col a column on the map.
+	 */
 	public void setTeleportCol(float col){
 		this.teleportCol = col;
 	}
 
+	/**
+	 * Declares the state of the tile, whether it can teleport entities or not.
+	 * @param teleport - Whether entity teleportation is allowed.
+	 */
 	public void setTeleportTile(boolean teleport) {
 		this.teleportTile = teleport;
 	}
 
+	/**
+	 * Returns the row an entity would be teleport to.
+	 * @return the row an entity would be teleport to.
+	 */
 	public float getTeleportRow() {
 		return this.teleportRow;
 	}
 
+	/**
+	 * Returns the col an entity would be teleport to.
+	 * @return the col an entity would be teleport to.
+	 */
 	public float getTeleportCol() {
 		return this.teleportCol;
 	}
 
+	/**
+	 * Returns whether current tile has teleport functionality.
+	 * @return current tile's teleport functionality.
+	 */
 	public boolean isTeleportTile() {
 		return this.teleportTile;
 	}
 
+	/**
+	 * Declares the state of the tile, whether it can initiate traps or not.
+	 * @param trap - Whether this tile can trigger traps.
+	 */
 	public void setTrapTile(boolean trap){
 		this.trapTile = trap;
 	}
+
 
 	public boolean isTrapTile() {
 		return this.trapTile;
 	}
 
+	/**
+	 * Determines the current state of the tile's trap, whether it has
+	 * been triggered or not.
+	 * @return current tile's trap state.
+	 */
 	public void setTrapActivated(boolean activated){
 		this.trapActivated = activated;
 	}
 
+	/**
+	 * Returns whether current state of the tile's trap, whether it has
+	 * been triggered or not.
+	 * @return current tile's trap state.
+	 */
 	public boolean getTrapActivated() {
 		return this.trapActivated;
 	}
 
+
+	/**
+	 * Declares the state of the tile, whether it can initiate rewards or not.
+	 * @param reward - Whether this tile can trigger rewards.
+	 */
 	public void setRewardTile(boolean reward){
 		this.rewardTile = reward;
 	}
 
+	/**
+	 * Returns whether current tile has reward functionality.
+	 * @return current tile's reward functionality.
+	 */
 	public boolean isRewardTile() {
 		return this.rewardTile;
 	}
 
+	/**
+	 * Determines the current state of the tile's reward, whether it has
+	 * been triggered or not.
+	 * @return current tile's reward state.
+	 */
 	public void setRewardActivated(boolean activated){
 		this.rewardActivated = activated;
 	}
 
+	/**
+	 * Returns whether current state of the tile's reward, whether it has
+	 * been triggered or not.
+	 * @return current tile's reward state.
+	 */
 	public boolean getRewardActivated() {
 		return this.rewardActivated;
 	}

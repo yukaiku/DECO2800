@@ -3,17 +3,16 @@ package deco2800.thomas.managers;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
-import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.worlds.AbstractWorld;
-
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.desert.DesertWorld;
+import deco2800.thomas.worlds.dungeons.DesertDungeon;
+import deco2800.thomas.worlds.dungeons.SwampDungeon;
+import deco2800.thomas.worlds.dungeons.TundraDungeon;
 import deco2800.thomas.worlds.dungeons.VolcanoDungeon;
 import deco2800.thomas.worlds.swamp.SwampWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
@@ -28,10 +27,10 @@ import java.util.List;
 
 public class GameManager {
 	//debug values stored here
-	public int entitiesRendered;
-	public int entitiesCount;
-	public int tilesRendered;
-	public int tilesCount;
+	private int entitiesRendered;
+	private int entitiesCount;
+	private int tilesRendered;
+	private int tilesCount;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GameManager.class);
 
@@ -59,27 +58,27 @@ public class GameManager {
 	private String currentDungeon;
 
 
-	public static float fps = 0;
+	private static float fps = 0;
 
-	public static boolean debugMode = false;
+	private boolean debugMode;
 
-	public static boolean tutorial = true;
+	private static boolean tutorial = true;
 
 	// Whether or not the player has moved to the next Zone
-	public boolean movedToNextWorld;
+	private boolean movedToNextWorld;
 	/**
 	 * Whether or not we render info over the tiles.
 	 */
 	// Whether or not we render the movement path for Players.
-	public static boolean showCoords = false;
+	private static boolean showCoords = false;
 
 	// The game screen for a game that's currently running.
-	public static boolean showPath = false;
+	private static boolean showPath = false;
 
 	/**
 	 * Whether or not we render info over the entities
 	 */
-	public static boolean showCoordsEntity = false;
+	private static boolean showCoordsEntity = false;
 
 	private enum WorldType {
 		SWAMP_WORLD,
@@ -88,8 +87,7 @@ public class GameManager {
 		VOLCANO_WORLD
 	}
 	private ArrayList<WorldType> worldOrder;
-
-	public State state = State.RUN;
+	private State state = State.RUN;
 	public enum State
 	{
 		PAUSED,
@@ -116,6 +114,7 @@ public class GameManager {
 	private GameManager() {
 		//Loads the order of the worlds
 		worldOrder = new ArrayList<>(EnumSet.allOf(WorldType.class));
+		debugMode = false;
 	}
 
 	/**
@@ -262,6 +261,82 @@ public class GameManager {
 		this.tilesCount = tilesCount;
 	}
 
+	/***
+	 * Get the FPS
+	 * @return fps
+	 */
+	public float getFps() {
+		return fps;
+	}
+
+	/***
+	 * Sets the FPS
+	 * @param fps float
+	 */
+	public static void setFps(float fps) {
+		GameManager.fps = fps;
+	}
+
+	/***
+	 * Gets the debugMode
+	 * @return debugMode boolean
+	 */
+	public boolean getDebugMode() {
+		return debugMode;
+	}
+
+	/***
+	 * Sets the debugMode
+	 * @param debugMode boolean
+	 */
+	public void setDebugMode(boolean debugMode) {
+		this.debugMode = debugMode;
+	}
+
+	public boolean getTutorial(){
+		return tutorial;
+	}
+
+	public static void setTutorial(boolean tutorial){
+		GameManager.tutorial = tutorial;
+	}
+
+	public boolean getMovedToNextWorld() {
+		return movedToNextWorld;
+	}
+	public void setMovedToNextWorld(boolean movedToNextWorld) {
+		this.movedToNextWorld = movedToNextWorld;
+	}
+
+	public boolean getShowCoords() {
+		return showCoords;
+	}
+	public static void setShowCoords(boolean showCoords) {
+		GameManager.showCoords = showCoords;
+	}
+
+	public boolean getShowPath() {
+		return showPath;
+	}
+	public static void setShowPath(boolean showPath) {
+		GameManager.showPath = showPath;
+	}
+
+	public boolean getShowCoordsEntity() {
+		return showCoordsEntity;
+	}
+	public static void setShowCoordsEntity(boolean showCoordsEntity) {
+		GameManager.showCoordsEntity = showCoordsEntity;
+	}
+
+	public State getState(){
+		return state;
+	}
+
+	public void setState(State state){
+		this.state = state;
+	}
+
 	/**
 	 * Sets the current game world
 	 *
@@ -331,13 +406,13 @@ public class GameManager {
 				this.setWorld(new VolcanoDungeon());
 				break;
 			case "TundraDungeonPortal":
-				this.setWorld(new VolcanoDungeon());
+				this.setWorld(new TundraDungeon());
 				break;
 			case "SwampDungeonPortal":
-				this.setWorld(new VolcanoDungeon());
+				this.setWorld(new SwampDungeon());
 				break;
 			case "DesertDungeonPortal":
-				this.setWorld(new VolcanoDungeon());
+				this.setWorld(new DesertDungeon());
 				break;
 		}
 	}
@@ -368,6 +443,7 @@ public class GameManager {
 		//Add existing world & enemy manager
 		this.addManager(enemyManagerOutSideWorld);
 		this.setWorld(worldOutsideDungeon);
+		((PlayerPeon)this.worldOutsideDungeon.getPlayerEntity()).updatePlayerSkills();
 		this.worldOutsideDungeon = null;
 	}
 
@@ -437,6 +513,4 @@ public class GameManager {
 		}
 		gameWorld.onTick(0);
 	}
-
-
 }
