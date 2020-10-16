@@ -15,11 +15,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
-import deco2800.thomas.CharactersScreen;
-import deco2800.thomas.GameScreen;
+import deco2800.thomas.screens.CharactersScreen;
+import deco2800.thomas.screens.GameScreen;
 import deco2800.thomas.ThomasGame;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.screens.SettingScreen;
 
 public class MainMenuScreen implements Screen {
 	final ThomasGame game;
@@ -67,12 +68,12 @@ public class MainMenuScreen implements Screen {
 
 		Button envTeamButton = new TextButton("ENV TEAM", menuStyle);
 		envTeamButton.setPosition(200, 330);
-		envTeamButton.addAction(Actions.moveTo(300, 330, 0.6f, Interpolation.PowOut.pow3Out));
+		envTeamButton.addAction(Actions.moveTo(300, 330, 1f, Interpolation.PowOut.pow3Out));
 		stage.addActor(envTeamButton);
 
 		Button testWorldBtn = new TextButton("DEBUG START", menuStyle);
 		testWorldBtn.setPosition(200, 280);
-		testWorldBtn.addAction(Actions.moveTo(300, 280, 0.8f, Interpolation.PowOut.pow3Out));
+		testWorldBtn.addAction(Actions.moveTo(300, 280, 1f, Interpolation.PowOut.pow3Out));
 		stage.addActor(testWorldBtn);
 
 		Button newGameBtn = new TextButton("NEW GAME", menuStyle);
@@ -80,9 +81,14 @@ public class MainMenuScreen implements Screen {
 		newGameBtn.addAction(Actions.moveTo(300, 210, 1f, Interpolation.PowOut.pow3Out));
 		stage.addActor(newGameBtn);
 
+		Button settingBtn = new TextButton("SETTING", menuStyle);
+		settingBtn.setPosition(200, 160);
+		settingBtn.addAction(Actions.moveTo(300, 160, 1f, Interpolation.PowOut.pow3Out));
+		stage.addActor(settingBtn);
+
 		Button exitBtn = new TextButton("QUIT", menuStyle);
-		exitBtn.setPosition(200, 160);
-		exitBtn.addAction(Actions.moveTo(300, 160, 1.2f, Interpolation.PowOut.pow3Out));
+		exitBtn.setPosition(200, 110);
+		exitBtn.addAction(Actions.moveTo(300, 110, 1f, Interpolation.PowOut.pow3Out));
 		stage.addActor(exitBtn);
 
 		envTeamButton.addListener(new ClickListener() {
@@ -103,6 +109,13 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				switchScreen(GameScreen.gameType.NEW_GAME);
+			}
+		});
+
+		settingBtn.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				game.setScreen(new SettingScreen(game));
 			}
 		});
 

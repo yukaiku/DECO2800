@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import deco2800.thomas.mainmenu.MainMenuScreen;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.screens.GameScreen;
 
 /**
  * The game wrapper into which different screens are plugged.

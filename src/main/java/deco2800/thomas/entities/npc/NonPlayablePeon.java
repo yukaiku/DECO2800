@@ -1,7 +1,7 @@
 package deco2800.thomas.entities.npc;
 
 import com.badlogic.gdx.Gdx;
-import deco2800.thomas.GameScreen;
+import deco2800.thomas.screens.GameScreen;
 import deco2800.thomas.ThomasGame;
 import deco2800.thomas.entities.Interactable;
 import deco2800.thomas.entities.agent.Peon;
