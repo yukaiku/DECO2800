@@ -1,7 +1,6 @@
 package deco2800.thomas.entities.attacks;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Animatable;
@@ -12,7 +11,6 @@ import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.ApplyDamageOnCollisionTask;
 import deco2800.thomas.tasks.movement.DirectProjectileMovementTask;
 import deco2800.thomas.util.SquareVector;
-import deco2800.thomas.util.WorldUtil;
 
 /**
  * A fireball is a projectile that moves in a straight line until it
