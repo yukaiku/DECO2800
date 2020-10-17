@@ -1,6 +1,7 @@
 package deco2800.thomas.renderers.components;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.bosses.Boss;
@@ -87,10 +88,8 @@ public class MinimapComponent extends OverlayComponent {
     // Renders an enemy onto the minimap
     private void renderEnemy(SpriteBatch batch, EnemyPeon enemy) {
         Texture tex = enemy.getIcon();
-        float x = overlayRenderer.getX() + overlayRenderer.getWidth() -
-                ENEMY_COLUMN_OFFSET + ENTITY_POSITION_SCALAR * (enemy.getCol() + POSITIVE_COLUMN_NUMBER);
-        float y =  overlayRenderer.getY() + overlayRenderer.getHeight() - ENEMY_ROW_OFFSET +
-                ENTITY_POSITION_SCALAR * (enemy.getRow() - POSITIVE_ROW_NUMBER);
+        float x = overlayRenderer.getX() - 25 + ENTITY_POSITION_SCALAR * (enemy.getCol() + POSITIVE_COLUMN_NUMBER);
+        float y =  overlayRenderer.getY() + overlayRenderer.getHeight() - 60 + ENTITY_POSITION_SCALAR * (enemy.getRow() - POSITIVE_ROW_NUMBER);
 
         batch.draw(tex, x, y,
                 tex.getWidth() * ENEMY_SIZE_SCALAR,
@@ -100,22 +99,17 @@ public class MinimapComponent extends OverlayComponent {
     // Renders a tile onto the minimap
     private void renderTile(SpriteBatch batch, Tile tile, int height, int width) {
         Texture tex = tile.getTexture();
-        float x = overlayRenderer.getX() + overlayRenderer.getWidth()
-                - COLUMN_OFFSET + ENTITY_POSITION_SCALAR * width;
-        float y =  overlayRenderer.getY() + overlayRenderer.getHeight()
-                - ROW_OFFSET - ENTITY_POSITION_SCALAR * height;
-
-        batch.draw(tex, x, y, tex.getWidth() * TILE_SIZE_SCALAR,
-                tex.getHeight() * TILE_SIZE_SCALAR);
+        float x = overlayRenderer.getX() + ENTITY_POSITION_SCALAR * width;
+        float y =  overlayRenderer.getY() + overlayRenderer.getHeight() - ENTITY_POSITION_SCALAR * height;
+        batch.draw(tex, x, y, tex.getWidth() * TILE_SIZE_SCALAR, tex.getHeight() * TILE_SIZE_SCALAR);
     }
 
     // Renders the player onto the minimap
     private void renderPlayer(SpriteBatch batch, PlayerPeon player) {
         Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(player.getTexture());
-        float x = overlayRenderer.getX() + overlayRenderer.getWidth() -
-                COLUMN_OFFSET + ENTITY_POSITION_SCALAR * (player.getCol() + POSITIVE_COLUMN_NUMBER);
-        float y = overlayRenderer.getY() + overlayRenderer.getHeight() -
-                ROW_OFFSET +  ENTITY_POSITION_SCALAR * (player.getRow() - POSITIVE_ROW_NUMBER);
+        float x = overlayRenderer.getX() + ENTITY_POSITION_SCALAR * (player.getCol() + POSITIVE_COLUMN_NUMBER);
+        System.out.println(x);
+        float y = overlayRenderer.getY() + overlayRenderer.getHeight() + ENTITY_POSITION_SCALAR * (player.getRow() - POSITIVE_ROW_NUMBER);
 
         batch.draw(tex, x, y, tex.getWidth() * PLAYER_SIZE_SCALAR,
                 tex.getHeight() * PLAYER_SIZE_SCALAR);
@@ -123,11 +117,8 @@ public class MinimapComponent extends OverlayComponent {
 
     private void renderBoss(SpriteBatch batch, EnemyPeon boss) {
         Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(boss.getTexture());
-        float x = overlayRenderer.getX() + overlayRenderer.getWidth() -
-                COLUMN_OFFSET + ENTITY_POSITION_SCALAR * (boss.getCol() + POSITIVE_COLUMN_NUMBER);
-        float y =               overlayRenderer.getY() + overlayRenderer.getHeight() -
-                ROW_OFFSET +  ENTITY_POSITION_SCALAR * (boss.getRow() - POSITIVE_ROW_NUMBER);
-
+        float x = overlayRenderer.getX() + ENTITY_POSITION_SCALAR * (boss.getCol() + POSITIVE_COLUMN_NUMBER);
+        float y = overlayRenderer.getY() + overlayRenderer.getHeight() + ENTITY_POSITION_SCALAR * (boss.getRow() - POSITIVE_ROW_NUMBER);
         batch.draw(tex, x, y,
                 tex.getWidth() * BOSS_SIZE_SCALAR,
                 tex.getHeight() * BOSS_SIZE_SCALAR);
