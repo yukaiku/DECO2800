@@ -41,6 +41,8 @@ public class SoundManager extends AbstractManager {
 
 		// Sound effects that are preloaded (short duration)
 		soundEffects = new ConcurrentHashMap<>();
+		soundEffects.put("test", Gdx.audio.newSound(
+				Gdx.files.internal("resources/sounds/ambience/swamp_ambience.ogg")));
 	}
 
 	/**
