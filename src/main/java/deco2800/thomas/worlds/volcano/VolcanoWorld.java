@@ -17,7 +17,6 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
-import deco2800.thomas.worlds.dungeons.VolcanoDungeon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,7 +93,7 @@ public class VolcanoWorld extends AbstractWorld {
         difficultyManager.setDifficultyLevel(getType());
 
         // Start ambience
-        GameManager.getManagerFromInstance(SoundManager.class).setAmbience("volcanoAmbience");
+        GameManager.getManagerFromInstance(SoundManager.class).playAmbience("volcanoAmbience");
     }
 
     @Override

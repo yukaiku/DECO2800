@@ -1,10 +1,8 @@
 package deco2800.thomas.worlds.swamp;
 
-import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.environment.Portal;
-import deco2800.thomas.entities.environment.volcano.VolcanoPortal;
 import deco2800.thomas.entities.items.*;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.SwampNPC;
@@ -85,7 +83,7 @@ public class SwampWorld extends AbstractWorld {
 
         // Starts ambience
         logger.info("Starting ambience.");
-        GameManager.getManagerFromInstance(SoundManager.class).setAmbience("swampAmbience");
+        GameManager.getManagerFromInstance(SoundManager.class).playAmbience("swampAmbience");
     }
 
     @Override
