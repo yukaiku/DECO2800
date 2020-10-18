@@ -15,12 +15,43 @@ public class HealthTrackerTest extends BaseGDXTest {
     }
 
     @Test
+    public void getMaxHealthValue1() {
+        HealthTracker health = new HealthTracker(150);
+        int value = health.getMaxHealthValue();
+        Assert.assertEquals(value,150);
+    }
+
+    @Test
+    public void getMaxHealthValue2() {
+        HealthTracker health = new HealthTracker(200);
+        int value = health.getMaxHealthValue();
+        Assert.assertNotEquals(value,150);
+    }
+
+    @Test
     public void setMaxHealthValue() {
         HealthTracker health = new HealthTracker(100);
         health.setMaxHealthValue(50);
         int value = health.getMaxHealthValue();
         Assert.assertEquals(value,50);
     }
+
+    @Test
+    public void setMaxHealthValue1() {
+        HealthTracker health = new HealthTracker(100);
+        health.setMaxHealthValue(100);
+        int value = health.getMaxHealthValue();
+        Assert.assertEquals(value,100);
+    }
+
+    @Test
+    public void setMaxHealthValue2() {
+        HealthTracker health = new HealthTracker(100);
+        health.setMaxHealthValue(0);
+        int value = health.getMaxHealthValue();
+        Assert.assertEquals(value,0);
+    }
+
     @Test
     public void setMaxHealthValueWithNegative() {
         HealthTracker health = new HealthTracker(100);
@@ -28,6 +59,7 @@ public class HealthTrackerTest extends BaseGDXTest {
         int value = health.getMaxHealthValue();
         Assert.assertEquals(value,0);
     }
+
     @Test
     public void getCurrentHealthValue() {
         HealthTracker health = new HealthTracker(100);
