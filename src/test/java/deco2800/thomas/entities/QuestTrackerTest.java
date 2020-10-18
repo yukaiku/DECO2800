@@ -27,13 +27,13 @@ public class QuestTrackerTest extends BaseGDXTest {
         assertEquals(q.increaseOrbs(o),1);
         assertEquals(q.increaseOrbs(o),2);
         assertEquals(q.increaseOrbs(o),3);
-        assertEquals(GameManager.get().state,GameManager.State.RUN);
+        assertEquals(GameManager.get().getState(),GameManager.State.RUN);
         assertEquals(q.increaseOrbs(o),4);
         //Testing to see if value will go over 4
         assertEquals(q.increaseOrbs(o),4);
         //Testing the orb storing
         assertEquals(q.orbTracker().size(),4);
-        assertEquals(GameManager.get().state,GameManager.State.VICTORY);
+        assertEquals(GameManager.get().getState(),GameManager.State.VICTORY);
         assertEquals(q.orbTracker().get(0).getTexture(),"orb_1");
         //Testing decrease orb function
         assertEquals(q.decreaseOrbs(),3);

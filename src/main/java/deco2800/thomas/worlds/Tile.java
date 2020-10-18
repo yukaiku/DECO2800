@@ -190,7 +190,6 @@ public class Tile {
 				if (child != null) {
 					child.setParent(null);
 					child.dispose();
-				} else {
 				}
 			}
 		}

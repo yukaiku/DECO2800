@@ -1,4 +1,4 @@
-package deco2800.thomas;
+package deco2800.thomas.screens;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import deco2800.thomas.ThomasGame;
 import deco2800.thomas.combat.Knight;
 import deco2800.thomas.combat.Wizard;
 import deco2800.thomas.managers.GameManager;
@@ -19,6 +20,7 @@ import deco2800.thomas.managers.PlayerManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.CharacterInfo;
 import deco2800.thomas.renderers.EffectRenderer;
+import deco2800.thomas.screens.GameScreen;
 
 public class CharactersScreen implements Screen {
     private static final String WATER = "water";
@@ -57,7 +59,7 @@ public class CharactersScreen implements Screen {
     public CharactersScreen(ThomasGame game) {
         this.game = game;
 
-        stage = new Stage(new ExtendViewport(width, height), game.batch);
+        stage = new Stage(new ExtendViewport(width, height), game.getBatch());
 
         cameraOverlay = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
