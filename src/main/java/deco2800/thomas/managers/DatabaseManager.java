@@ -475,6 +475,7 @@ public final class DatabaseManager extends AbstractManager {
                 newTiles = setDesertTiles(newTiles);
                 break;
             case "resources/environment/volcano/VolcanoZone.json":
+            case "resources/environment/dungeons/VolcanoDungeonMaze.json":
                 newTiles = setVolcanoTiles(newTiles);
                 break;
             case "resources/environment/tundra/tundra-map.json":
