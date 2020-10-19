@@ -9,9 +9,7 @@ import com.google.gson.annotations.Expose;
 
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.NetworkManager;
 import deco2800.thomas.managers.TextureManager;
-import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
 
 public class Tile {
@@ -193,8 +191,6 @@ public class Tile {
 				}
 			}
 		}
-
-		GameManager.get().getManager(NetworkManager.class).deleteTile(this);
 
 		this.removeReferenceFromNeighbours();
 		GameManager.get().getWorld().getTiles().remove(this);

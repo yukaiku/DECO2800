@@ -86,7 +86,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new TutorialWorld();
-				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
 		},
@@ -94,7 +93,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new TutorialWorld();
-				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
 		},
@@ -102,7 +100,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new DesertWorld();
-				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
 		};
