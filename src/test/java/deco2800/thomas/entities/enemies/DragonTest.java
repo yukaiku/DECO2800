@@ -1,5 +1,6 @@
 package deco2800.thomas.entities.enemies;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
@@ -61,6 +62,7 @@ public class DragonTest extends BaseGDXTest {
         InputManager inputManager = mock(InputManager.class);
         OnScreenMessageManager onScreenMessageManager = mock(OnScreenMessageManager.class);
         TextureManager textureManager = mock(TextureManager.class);
+        SoundManager soundManager = mock(SoundManager.class);
 
         gameManager = mock(GameManager.class);
         when(GameManager.get()).thenReturn(gameManager);
@@ -68,10 +70,12 @@ public class DragonTest extends BaseGDXTest {
         when(gameManager.getManager(InputManager.class)).thenReturn(inputManager);
         when(gameManager.getManager(EnemyManager.class)).thenReturn(enemyManager);
         when(gameManager.getManager(TextureManager.class)).thenReturn(textureManager);
+        when(gameManager.getManager(SoundManager.class)).thenReturn(soundManager);
         when(GameManager.getManagerFromInstance(OnScreenMessageManager.class)).thenReturn(onScreenMessageManager);
         when(GameManager.getManagerFromInstance(InputManager.class)).thenReturn(inputManager);
         when(GameManager.getManagerFromInstance(EnemyManager.class)).thenReturn(enemyManager);
         when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
+        when(GameManager.getManagerFromInstance(SoundManager.class)).thenReturn(soundManager);
 
         Texture texture = mock(Texture.class);
         when(textureManager.getTexture(anyString())).thenReturn(texture);
