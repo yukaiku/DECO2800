@@ -2,6 +2,8 @@ package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
 
@@ -109,6 +111,7 @@ public class FireBombSkill extends AbstractSkill {
      */
     @Override
     protected AbstractTask getTask(float targetX, float targetY) {
+        GameManager.getManagerFromInstance(SoundManager.class).playSound("explosion");
         int damage = (int) (entity.getDamage() * damageMultiplier);
         return new FireBombAttackTask(entity, damage, LIFETIME, TICK_PERIOD, HEIGHT, WIDTH);
     }

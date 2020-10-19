@@ -90,7 +90,7 @@ public class ApplyDamageOnCollisionTask extends AbstractTask {
         if (e instanceof Peon) {
             Peon peon = (Peon) e;
 
-            peon.applyDamage(((CombatEntity) entity).getDamage(), DamageType.COMMON);
+            peon.applyDamage(((CombatEntity) entity).getDamage(), ((CombatEntity)entity).getDamageType());
             this.taskComplete = true;
         }
     }

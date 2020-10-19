@@ -60,7 +60,7 @@ public class SoundManagerTest extends BaseGDXTest {
 
 		SoundManager s = new SoundManager();
 		/* This sound must exist */
-		s.playSound("test");
+		s.playSound("explosion");
 		verify(sm).play(anyFloat());
 	}
 
