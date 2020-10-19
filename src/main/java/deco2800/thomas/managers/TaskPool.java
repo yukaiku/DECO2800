@@ -17,7 +17,7 @@ public class TaskPool extends AbstractManager {
 	private Random random;
 
 	public TaskPool() {
-		taskPool = new ArrayList<AbstractTask>();
+		taskPool = new ArrayList<>();
 		world = GameManager.get().getWorld();
 		random = new Random();
 	}

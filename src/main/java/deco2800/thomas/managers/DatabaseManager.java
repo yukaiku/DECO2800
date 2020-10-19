@@ -475,6 +475,7 @@ public final class DatabaseManager extends AbstractManager {
                 newTiles = setDesertTiles(newTiles);
                 break;
             case "resources/environment/volcano/VolcanoZone.json":
+            case "resources/environment/dungeons/VolcanoDungeonMaze.json":
                 newTiles = setVolcanoTiles(newTiles);
                 break;
             case "resources/environment/tundra/tundra-map.json":
@@ -555,11 +556,7 @@ public final class DatabaseManager extends AbstractManager {
                 if (i < entityLength - 1) {
                     nextEntity = world.getEntities().get(i + 1);
                 }
-                if (i == entityLength - 1 || (nextEntity != null && !nextEntity.save)) {
-                    generateJsonForEntity(entity, entireJsonAsString, false);
-                } else {
-                    generateJsonForEntity(entity, entireJsonAsString, true);
-                }
+                generateJsonForEntity(entity, entireJsonAsString, i != entityLength - 1 && (nextEntity == null || nextEntity.save));
             }
             entireJsonAsString.append('\n');
         }
@@ -572,11 +569,7 @@ public final class DatabaseManager extends AbstractManager {
 
         for (int i = 0; i < tileLength; i++) {
             Tile tile = world.getTiles().get(i);
-            if (i == world.getTiles().size() - 1) {
-                generateJsonForTile(tile, entireJsonAsString, false);
-            } else {
-                generateJsonForTile(tile, entireJsonAsString, true);
-            }
+            generateJsonForTile(tile, entireJsonAsString, i != world.getTiles().size() - 1);
             entireJsonAsString.append('\n');
         }
 
@@ -595,7 +588,7 @@ public final class DatabaseManager extends AbstractManager {
      *
      * @return The modified tile list, with burn tiles added.
      */
-    static private CopyOnWriteArrayList<Tile> setVolcanoTiles(CopyOnWriteArrayList<Tile> oldTiles) {
+    private static CopyOnWriteArrayList<Tile> setVolcanoTiles(CopyOnWriteArrayList<Tile> oldTiles) {
         CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
         int i = 0;
 
@@ -620,7 +613,7 @@ public final class DatabaseManager extends AbstractManager {
      *
      * @return The modified tile list, with custom tundra tiles added.
      */
-    static private CopyOnWriteArrayList<Tile> setTundraTiles(CopyOnWriteArrayList<Tile> oldTiles) {
+    private static CopyOnWriteArrayList<Tile> setTundraTiles(CopyOnWriteArrayList<Tile> oldTiles) {
         CopyOnWriteArrayList<Tile> newTiles = new CopyOnWriteArrayList<>();
         int i = 0;
         for (Tile tile : oldTiles) {
@@ -819,8 +812,6 @@ public final class DatabaseManager extends AbstractManager {
 
             world.setEntities(entities);
             world.setTiles(tiles);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

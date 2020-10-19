@@ -87,8 +87,8 @@ public class DebugComponent extends OverlayComponent {
         debugLine(batch, ++line, String.format("Mouse: X:%d Y:%d", Gdx.input.getX(), Gdx.input.getY()));
         debugLine(batch, ++line, String.format("World: X:%.0f Y:%.0f", mouse[0], mouse[1]));
 
-        float[] ColRow = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
-        debugLine(batch, ++line, String.format("World: X:%.0f Y:%.0f", ColRow[0], ColRow[1]));
+        float[] colRow = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
+        debugLine(batch, ++line, String.format("World: X:%.0f Y:%.0f", colRow[0], colRow[1]));
 
         line++;
         debugLine(batch, ++line, "PathfindingService");
