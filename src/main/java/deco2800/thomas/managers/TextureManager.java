@@ -235,6 +235,11 @@ public class TextureManager extends AbstractManager {
             textureMap.put("orb_2", new Texture("resources/orbs/orb2.png"));
             textureMap.put("orb_3", new Texture("resources/orbs/orb3.png"));
             textureMap.put("orb_4", new Texture("resources/orbs/orb4.png"));
+            textureMap.put("orb_0qt", new Texture("resources/orbs/orbbar0.png"));
+            textureMap.put("orb_1qt", new Texture("resources/orbs/orbbar1.png"));
+            textureMap.put("orb_2qt", new Texture("resources/orbs/orbbar2.png"));
+            textureMap.put("orb_3qt", new Texture("resources/orbs/orbbar3.png"));
+            textureMap.put("orb_4qt", new Texture("resources/orbs/orbbar4.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
