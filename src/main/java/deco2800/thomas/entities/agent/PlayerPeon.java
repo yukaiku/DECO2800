@@ -1,6 +1,5 @@
 package deco2800.thomas.entities.agent;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -14,7 +13,6 @@ import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.tasks.movement.MovementTask;
-import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
