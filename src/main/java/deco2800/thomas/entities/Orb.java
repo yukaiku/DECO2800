@@ -34,10 +34,7 @@ public class Orb extends StaticEntity implements Tickable {
             return false;
         }
         Orb otherOrb = (Orb) other;
-        if (this.getCol() != otherOrb.getCol() || this.getRow() != otherOrb.getRow() || this.getHeight() != otherOrb.getHeight()) {
-            return false;
-        }
-        return true;
+        return this.getCol() == otherOrb.getCol() && this.getRow() == otherOrb.getRow() && this.getHeight() == otherOrb.getHeight();
     }
     /**
      * Gets the hashCode of the orbs.
