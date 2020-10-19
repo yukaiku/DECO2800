@@ -554,8 +554,12 @@ public class TextureManager extends AbstractManager {
                     2, 492, 264, false);
             addAnimationFramesSprite("dragonTundraAttack", "resources/enemies/dragon_tundra_sprite_sheet.png",
                     2, 492, 264, true);
-            addAnimationFramesSprite("dragonVolcanoAttack", "resources/enemies/dragon_volcano_sprite_sheet.png",
-                    2, 492, 264, false);
+            addAnimationFramesSprite("dragonVolcanoAttack", "resources/enemies/dragon_volcano_fireball_sprites.png",
+                    3, 1190, 1100, false);
+
+            // dragon walk sprites
+            addAnimationFramesSprite("dragonVolcanoWalk", "resources/enemies/dragon_volcano_walking_sprites.png",
+                    8, 1163, 1100, false);
 
         } catch (GdxRuntimeException e) {
             e.printStackTrace();
