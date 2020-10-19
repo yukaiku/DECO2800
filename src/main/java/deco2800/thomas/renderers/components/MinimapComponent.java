@@ -107,7 +107,6 @@ public class MinimapComponent extends OverlayComponent {
     private void renderPlayer(SpriteBatch batch, PlayerPeon player) {
         Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(player.getTexture());
         float x = overlayRenderer.getX() + ENTITY_POSITION_SCALAR * (player.getCol() + POSITIVE_COLUMN_NUMBER);
-        System.out.println(x);
         float y = overlayRenderer.getY() + overlayRenderer.getHeight() + ENTITY_POSITION_SCALAR * (player.getRow() - POSITIVE_ROW_NUMBER);
 
         batch.draw(tex, x, y, tex.getWidth() * PLAYER_SIZE_SCALAR,

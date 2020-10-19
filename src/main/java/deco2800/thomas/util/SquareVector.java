@@ -101,7 +101,6 @@ public class SquareVector {
 
 
 	public void moveToward(SquareVector point, double distance) {
-		//System.out.println(distance(point));
 		if (distanceAsCartesian(point) < distance) {
 			this.col = point.col;
 			this.row = point.row;

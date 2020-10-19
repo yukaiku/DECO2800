@@ -57,9 +57,7 @@ public class Item extends StaticEntity implements TouchDownObserver {
     }
 
     public void chargePlayer() {
-        System.out.println("-- Charge player");
         if (PlayerPeon.checkBalance() > 0) {
-            System.out.println(PlayerPeon.checkBalance());
             PlayerPeon.debit(goldValue);
 
             if (this.getItemName().equals("Health Potion")) {
