@@ -20,7 +20,6 @@ import deco2800.thomas.managers.PlayerManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.CharacterInfo;
 import deco2800.thomas.renderers.EffectRenderer;
-import deco2800.thomas.screens.GameScreen;
 
 public class CharactersScreen implements Screen {
     private static final String WATER = "water";
