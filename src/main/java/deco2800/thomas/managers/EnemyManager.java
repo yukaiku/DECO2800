@@ -55,8 +55,8 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
     private final float spawnRangeMax;
     private final Random random;
     private int tick = 0;
-    private final static int spawnTicks = 3;
-    private final static int packSpawns = 3;
+    private static final int spawnTicks = 3;
+    private static final int packSpawns = 3;
 
     /**
      * Initialise an enemy manager with wild enemies and boss configured.

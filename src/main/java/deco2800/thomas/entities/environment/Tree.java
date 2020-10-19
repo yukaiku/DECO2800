@@ -44,10 +44,7 @@ public class Tree extends StaticEntity implements Tickable {
 			return false;
 		}
 		Tree otherTree = (Tree) other;
-		if (this.getCol() != otherTree.getCol() || this.getRow() != otherTree.getRow() || this.getHeight() != otherTree.getHeight()) {
-			return false;
-		}
-		return true;
+		return this.getCol() == otherTree.getCol() && this.getRow() == otherTree.getRow() && this.getHeight() == otherTree.getHeight();
 	}
 
 

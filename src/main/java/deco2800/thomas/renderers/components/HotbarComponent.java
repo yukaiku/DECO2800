@@ -19,7 +19,9 @@ import java.util.List;
  * A component in overlay renderer to display the skill hotbar for player
  */
 public class HotbarComponent extends OverlayComponent {
-    private Sprite wizardIcon, knightIcon, activeSelector;
+    private Sprite wizardIcon;
+    private Sprite knightIcon;
+    private Sprite activeSelector;
     private Sprite lastRenderedSprite = null;
     private PlayerPeon playerEntity;
     private ShapeRenderer coolDownBox;
