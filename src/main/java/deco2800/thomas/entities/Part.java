@@ -23,7 +23,7 @@ public class Part {
 		this.obstructed = obstructed;
 	}
 
-	public Part(Tile centre, String textureString, Boolean obstructed) {
+	public Part(String textureString, Boolean obstructed) {
 		this(new SquareVector(0, 0), textureString, obstructed);
 	}
 

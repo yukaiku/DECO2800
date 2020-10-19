@@ -98,21 +98,21 @@ public class DifficultyManager extends TickableManager{
         for(AbstractSkill wizardSkill : wizardSkills){
             switch (wizardSkill.getTexture()){
                 case "iceballIcon": // Default 50
-                    ((IceballSkill) wizardSkill).setMaxCooldown(coolDown*2);
+                    IceballSkill.setMaxCooldown(coolDown*2);
                     if(getWorldType().equals("desert")){
                         //More damage to desert with water skill
-                        ((IceballSkill)wizardSkill).setDamageMultiplier(((IceballSkill) wizardSkill).getDamageMultiplier()*2);
+                        IceballSkill.setDamageMultiplier(((IceballSkill) wizardSkill).getDamageMultiplier()*2);
                     }
                     return;
                 case "fireballIcon": //Default 20
-                    ((FireballSkill) wizardSkill).setMaxCooldown(coolDown);
+                    FireballSkill.setMaxCooldown(coolDown);
                     if(getWorldType().equals("tundra")){
                         //More damage to tundra with fire skill
-                        ((FireballSkill)wizardSkill).setDamageMultiplier(((FireballSkill) wizardSkill).getDamageMultiplier()*2);
+                        FireballSkill.setDamageMultiplier(((FireballSkill) wizardSkill).getDamageMultiplier()*2);
                     }
                     return;
                 case "stingIcon": //Default 50
-                    ((ScorpionStingSkill) wizardSkill).setMaxCoolDown(coolDown*2);
+                    ScorpionStingSkill.setMaxCoolDown(coolDown*2);
                     return;
 
             }
@@ -126,9 +126,9 @@ public class DifficultyManager extends TickableManager{
     public void setMechSkillCoolDown(int coolDown){
         AbstractSkill mechSkill = playerPeon.getMechSkill();
         if(mechSkill.getTexture() == "explosionIcon"){ //Default 160
-            ((FireBombSkill) mechSkill).setMaxCoolDown(coolDown);
+            FireBombSkill.setMaxCoolDown(coolDown);
         }else{ //default 200
-            ((WaterShieldSkill) mechSkill).setMaxCoolDown(coolDown*2);
+            WaterShieldSkill.setMaxCoolDown(coolDown*2);
         }
     }
 

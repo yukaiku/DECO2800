@@ -173,12 +173,8 @@ public class Box3D {
 		}
 
 		// z larger
-		if (z > box.z + box.zLength) {
-			return false;
-		}
-
-		return true;
-	}
+        return !(z > box.z + box.zLength);
+    }
 
 	/**
 	 * Gets the diagonal distance of the Box3D.

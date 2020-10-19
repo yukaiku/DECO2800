@@ -57,7 +57,7 @@ public class TundraWorldTest extends BaseGDXTest {
         when(GameManager.getManagerFromInstance(OnScreenMessageManager.class)).thenReturn(onScreenMessageManager);
         when(GameManager.getManagerFromInstance(InputManager.class)).thenReturn(inputManager);
         when(GameManager.getManagerFromInstance(EnemyManager.class)).thenReturn(enemyManager);
-        when(gameManager.getManagerFromInstance(DifficultyManager.class)).thenReturn(difficultyManager);
+        when(GameManager.getManagerFromInstance(DifficultyManager.class)).thenReturn(difficultyManager);
         when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
 
         // sets up some functions for a mock Texture and its manager

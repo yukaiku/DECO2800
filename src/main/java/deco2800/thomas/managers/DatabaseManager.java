@@ -2,6 +2,7 @@ package deco2800.thomas.managers;
 
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.LoadedPeon;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.bosses.Dragon;
@@ -26,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -229,7 +231,7 @@ public final class DatabaseManager extends AbstractManager {
                 if (entityObjectName.startsWith(s)) {
                     Rock create = new Rock();
                     create.setObjectName(entityObjectName);
-                    return (AbstractEntity) create;
+                    return create;
                 }
             }
 
@@ -237,7 +239,7 @@ public final class DatabaseManager extends AbstractManager {
                 if (entityObjectName.startsWith(s)){
                     StaticEntity create = new StaticEntity();
                     create.setObjectName(entityObjectName);
-                    return (AbstractEntity) create;
+                    return create;
                 }
             }
 
@@ -245,7 +247,7 @@ public final class DatabaseManager extends AbstractManager {
                 if (entityObjectName.startsWith(s)){
                      PlayerPeon create = new PlayerPeon(1f,1f,1f, 1);
                      create.setObjectName(entityObjectName);
-                     return (AbstractEntity) create;
+                     return create;
                 }
             }
 
@@ -253,14 +255,14 @@ public final class DatabaseManager extends AbstractManager {
                 if (entityObjectName.startsWith(s)){
                     SquareVector destination = new SquareVector(0f,0f);
                     Fireball create = new Fireball(1f, 5f, 1, 1f, EntityFaction.ALLY);
-                    return (AbstractEntity) create;
+                    return create;
                 }
             }
 
             for (String s : Arrays.asList("Swamp Dragon")) {
                 if (entityObjectName.startsWith(s)){
                     Dragon create = new SwampDragon(2000, 0.3f, 2);
-                    return (AbstractEntity) create;
+                    return create;
                 }
             }
 
@@ -312,7 +314,7 @@ public final class DatabaseManager extends AbstractManager {
                     reader.endObject();
                     return entity;
                 case WALLETSTRING:
-                    ((PlayerPeon) entity).credit((int) reader.nextDouble());
+                    LoadedPeon.credit((int) reader.nextDouble());
                     return entity;
                 case "entityID":
                     entity.setEntityID(reader.nextInt());
@@ -496,7 +498,7 @@ public final class DatabaseManager extends AbstractManager {
     private static void writeToJson(String entireString) {
         BufferedWriter fileWriter = null;
         try {
-            Charset charset = Charset.forName("UTF-8");
+            Charset charset = StandardCharsets.UTF_8;
             Path savePath = FileSystems.getDefault().getPath("resources", saveName);
             java.nio.file.Files.deleteIfExists(savePath);
             fileWriter = Files.newBufferedWriter(savePath, charset);
@@ -551,12 +553,13 @@ public final class DatabaseManager extends AbstractManager {
 
         for (int i = 0; i < entityLength; i++) {
             AbstractEntity entity = world.getEntities().get(i);
-            if (entity.save) {
+            if (entity.isSave()) {
                 AbstractEntity nextEntity = null;
                 if (i < entityLength - 1) {
                     nextEntity = world.getEntities().get(i + 1);
                 }
-                generateJsonForEntity(entity, entireJsonAsString, i != entityLength - 1 && (nextEntity == null || nextEntity.save));
+                generateJsonForEntity(entity, entireJsonAsString, i != entityLength - 1 &&
+                        (nextEntity == null || nextEntity.isSave()));
             }
             entireJsonAsString.append('\n');
         }
@@ -674,7 +677,7 @@ public final class DatabaseManager extends AbstractManager {
     private static void writeToJsonFile(String jsonString, String filepath) {
         BufferedWriter fileWriter = null;
         try {
-            Charset charset = Charset.forName("UTF-8");
+            Charset charset = StandardCharsets.UTF_8;
             Path savePath = FileSystems.getDefault().getPath(filepath);
             java.nio.file.Files.deleteIfExists(savePath);
             fileWriter = Files.newBufferedWriter(savePath, charset);

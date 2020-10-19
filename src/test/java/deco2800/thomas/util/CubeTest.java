@@ -25,7 +25,7 @@ public class CubeTest extends BaseGDXTest {
         assertEquals(1,cube.getX(),0D);
         assertEquals(1,cube.getY(),0D);
         assertEquals(1,cube.getZ(),0D);
-        Cube cube2 = cube.oddqToCube(2,2);
+        Cube cube2 = Cube.oddqToCube(2,2);
         assertEquals(2,cube2.getX(),0D);
         assertEquals(1,cube2.getY(),0D);
         assertEquals(-3,cube2.getZ(),0D);
