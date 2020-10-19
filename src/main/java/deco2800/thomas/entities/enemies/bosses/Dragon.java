@@ -52,6 +52,10 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     private float stateTimer = 0;
     Random random = new Random();
 
+    private int goblinSpawnTick = 0;
+    private final int goblinSpawnCycle = 60;
+    private final int goblinCap = 10;
+
     public Dragon(int health, float speed, int orbNumber) {
         super(health, speed);
         this.orbNumber = orbNumber;
@@ -71,7 +75,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
      * if there is less than 10 goblins spawned
      */
     public void summonGoblin() {
-        if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() < 10) {
+        if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() < goblinCap) {
             GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(
                     variation.name().toLowerCase() + "Goblin", this.getCol() + 1, this.getRow() + 2);
         }
@@ -139,13 +143,22 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
                 // tasks
                 currentState = State.ATTACKING;
                 duration = 12;
-                summonGoblin();
                 breathAttack();
                 elementalAttack();
                 setMovementTask(new MovementTask(this, super.getTarget().
                         getPosition()));
             }
             tickFollowing = 0;
+        }
+
+        if (++goblinSpawnTick > goblinSpawnCycle) {
+            if (random.nextBoolean()) {
+                summonGoblin();
+                if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() >= goblinCap) {
+                    goblinSpawnTick -= 300;
+                }
+                goblinSpawnTick = 0;
+            }
         }
 
         // Update tasks and effects
