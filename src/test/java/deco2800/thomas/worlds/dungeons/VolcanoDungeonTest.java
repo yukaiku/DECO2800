@@ -122,7 +122,7 @@ public class VolcanoDungeonTest extends BaseGDXTest {
         for (AbstractEntity entity : spyWorld.getEntities()) {
             if (entity instanceof VolcanoDungeonNPC &&
                     ((VolcanoDungeonNPC) entity).getName().equals("npc_lava_maze")
-            &&  ((VolcanoDungeonNPC) entity).getPosition().equals(new SquareVector(-2f, 0f)) ) {
+            &&  entity.getPosition().equals(new SquareVector(-2f, 0f)) ) {
                 return;
             }
         }
@@ -135,9 +135,9 @@ public class VolcanoDungeonTest extends BaseGDXTest {
         spyWorld.setupIncorrectTreasure1();
         for (AbstractEntity entity : spyWorld.getEntities()) {
             if (entity instanceof TripWire &&
-                    ((TripWire) entity).getObjectName().equals("tripwire")
-                    &&  ((TripWire) entity).getPosition().equals(new SquareVector(-23f, -23f))
-                    && ((TripWire) entity).getTexture().matches("VolcanoPortal")) {
+                    entity.getObjectName().equals("tripwire")
+                    &&  entity.getPosition().equals(new SquareVector(-23f, -23f))
+                    && entity.getTexture().matches("VolcanoPortal")) {
                 assertTrue(spyWorld.getTile(entity.getPosition()).isTeleportTile());
                 assertFalse(spyWorld.getTile(entity.getPosition()).isTrapTile());
                 return;
@@ -151,9 +151,9 @@ public class VolcanoDungeonTest extends BaseGDXTest {
         spyWorld.setupIncorrectTreasure2();
         for (AbstractEntity entity : spyWorld.getEntities()) {
             if (entity instanceof TripWire &&
-                    ((TripWire) entity).getObjectName().equals("tripwire")
-                    &&  ((TripWire) entity).getPosition().equals(new SquareVector(22f, -23f))
-                    && ((TripWire) entity).getTexture().matches("VolcanoPortal")) {
+                    entity.getObjectName().equals("tripwire")
+                    &&  entity.getPosition().equals(new SquareVector(22f, -23f))
+                    && entity.getTexture().matches("VolcanoPortal")) {
                 assertTrue(spyWorld.getTile(entity.getPosition()).isTrapTile());
                 assertFalse(spyWorld.getTile(entity.getPosition()).isTeleportTile());
                 return;
@@ -167,9 +167,9 @@ public class VolcanoDungeonTest extends BaseGDXTest {
         spyWorld.setupReward();
         for (AbstractEntity entity : spyWorld.getEntities()) {
             if (entity instanceof TripWire &&
-                    ((TripWire) entity).getObjectName().equals("tripwire")
-                    &&  ((TripWire) entity).getPosition().equals(new SquareVector(22f, 23f))
-                    && ((TripWire) entity).getTexture().matches("VolcanoPortal")) {
+                    entity.getObjectName().equals("tripwire")
+                    &&  entity.getPosition().equals(new SquareVector(22f, 23f))
+                    && entity.getTexture().matches("VolcanoPortal")) {
                 assertTrue(spyWorld.getTile(entity.getPosition()).isRewardTile());
                 assertFalse(spyWorld.getTile(entity.getPosition()).isTrapTile());
                 assertFalse(spyWorld.getTile(entity.getPosition()).isTeleportTile());
@@ -193,8 +193,8 @@ public class VolcanoDungeonTest extends BaseGDXTest {
         spyWorld.activateRewardTile(tile);
         for (AbstractEntity entity : spyWorld.getEntities()) {
             if (entity instanceof Treasure &&
-                    ((Treasure) entity).getObjectName().equals("Treasure")
-                    && ((Treasure) entity).getTexture().matches("treasure_box")) {
+                    entity.getObjectName().equals("Treasure")
+                    && entity.getTexture().matches("treasure_box")) {
                 return;
             }
         }

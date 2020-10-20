@@ -108,7 +108,7 @@ public class SaveLoadTest extends BaseGDXTest {
 
         for (int i = 0; i < testEntities.size(); i++) {
             // Entities that aren't saved won't be in the list and therefore will cause an index range exception.
-            if (testEntities.get(i).save) {
+            if (testEntities.get(i).isSave()) {
 //                assertEquals(testEntities.get(i).getEntityID(), worldEntities.get(i).getEntityID(), 1f);
 //                assertEquals(testEntities.get(i).getTexture(), worldEntities.get(i).getTexture());
 //                assertEquals(testEntities.get(i).getPosition(), worldEntities.get(i).getPosition());
