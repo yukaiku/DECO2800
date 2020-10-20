@@ -16,11 +16,6 @@ public class Rock extends StaticEntity implements HasHealth {
     }
 
     @Override
-    public void onTick(long i) {
-
-    }
-
-    @Override
     public int getHealth() {
         return health;
     }

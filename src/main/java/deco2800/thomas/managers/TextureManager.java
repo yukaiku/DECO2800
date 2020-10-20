@@ -168,7 +168,7 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("game-over", new Texture("resources/healthResources/game-over.png"));
 
 			//boss health
-			textureMap.put("bossHealth-desert", new Texture("resources/healthResources/bossHealthBar-desert2.png"));
+			//textureMap.put("bossHealth-desert", new Texture("resources/healthResources/bossHealthBar-desert2.png"));
 			textureMap.put("bossHealth-volcano100", new Texture("resources/healthResources/bossHealthBar-fire2 - 100.png"));
 			textureMap.put("bossHealth-volcano95", new Texture("resources/healthResources/bossHealthBar-fire2 - 95.png"));
 			textureMap.put("bossHealth-volcano90", new Texture("resources/healthResources/bossHealthBar-fire2 - 90.png"));
@@ -213,7 +213,7 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("bossHealth-tundra5", new Texture("resources/healthResources/bossHealthBar-ice2 - 5.png"));
 			textureMap.put("bossHealth-tundra0", new Texture("resources/healthResources/bossHealthBar-ice2 - 0.png"));
 			
-			textureMap.put("bossHealth-swamp", new Texture("resources/healthResources/bossHealthBar-swamp2.png"));
+			//textureMap.put("bossHealth-swamp", new Texture("resources/healthResources/bossHealthBar-swamp2.png"));
 
 			// Attacks
 			textureMap.put("fireball_right", new Texture("resources/combat/fireball_right.png"));

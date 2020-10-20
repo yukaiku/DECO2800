@@ -88,12 +88,12 @@ public class Tile {
 	public Tile(String texture, float col, float row) {
 		this.texture = texture;
 		coords = new SquareVector(col, row);
-		this.neighbours = new HashMap<Integer, Tile>();
+		this.neighbours = new HashMap<>();
 		this.tileID = Tile.getNextID();
 	}
 
 	public Tile() {
-		this.neighbours = new HashMap<Integer, Tile>();
+		this.neighbours = new HashMap<>();
 	}
 
 	/**
