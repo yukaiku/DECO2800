@@ -13,5 +13,5 @@ public interface Interactable extends TouchDownObserver {
      * This allows for creating many different types of NPCs, such as healers,
      * traders, level-restricted access NPCs etc.
      */
-    public void interact();
+    void interact();
 }
