@@ -1,6 +1,5 @@
 package deco2800.thomas.entities.enemies.bosses;
 
-import com.badlogic.gdx.graphics.Texture;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -14,7 +13,6 @@ import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.enemies.PassiveEnemy;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;

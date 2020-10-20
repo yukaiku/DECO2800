@@ -38,11 +38,21 @@ public class SoundManager extends AbstractManager {
 		sounds.put("desertAmbience", "resources/sounds/ambience/desert_ambience.ogg");
 		sounds.put("tundraAmbience", "resources/sounds/ambience/tundra_ambience.ogg");
 		sounds.put("volcanoAmbience", "resources/sounds/ambience/volcano_ambience.ogg");
+		sounds.put("menuMusic", "resources/sounds/music/menu_music.ogg");
+		sounds.put("menuAmbience", "resources/sounds/ambience/menu_ambience.ogg");
 
 		// Sound effects that are preloaded (short duration)
 		soundEffects = new ConcurrentHashMap<>();
-		soundEffects.put("test", Gdx.audio.newSound(
-				Gdx.files.internal("resources/sounds/ambience/swamp_ambience.ogg")));
+		soundEffects.put("explosion", Gdx.audio.newSound(
+				Gdx.files.internal("resources/sounds/sfx/explosion_1.wav")));
+		soundEffects.put("fireball", Gdx.audio.newSound(
+				Gdx.files.internal("resources/sounds/sfx/fireball_5.wav")));
+		soundEffects.put("woodHit", Gdx.audio.newSound(
+				Gdx.files.internal("resources/sounds/sfx/mech_hit_3.wav")));
+		soundEffects.put("fireHit", Gdx.audio.newSound(
+				Gdx.files.internal("resources/sounds/sfx/fireball_hit_3.wav")));
+		soundEffects.put("windAttack", Gdx.audio.newSound(
+				Gdx.files.internal("resources/sounds/sfx/wind_1.wav")));
 	}
 
 	/**

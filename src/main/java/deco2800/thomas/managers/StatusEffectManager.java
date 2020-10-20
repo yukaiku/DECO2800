@@ -3,7 +3,6 @@ package deco2800.thomas.managers;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.tasks.status.StatusEffect;
 
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**

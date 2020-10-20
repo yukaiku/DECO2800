@@ -1,6 +1,8 @@
 package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireballAttackTask;
 
@@ -102,6 +104,7 @@ public class FireballSkill extends AbstractSkill {
      */
     @Override
     protected AbstractTask getTask(float targetX, float targetY) {
+        GameManager.getManagerFromInstance(SoundManager.class).playSound("fireball");
         int damage = (int) (entity.getDamage() * damageMultiplier);
         return new FireballAttackTask(entity, targetX, targetY, damage, SPEED, LIFETIME);
     }

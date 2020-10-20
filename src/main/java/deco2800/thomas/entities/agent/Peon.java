@@ -1,10 +1,13 @@
 package deco2800.thomas.entities.agent;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Color;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.entities.RenderConstants;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.WorldUtil;
@@ -41,8 +44,8 @@ public class Peon extends AgentEntity implements Tickable {
 		this.setTexture("spacman_ded");
 		this.setObjectName("Peon");
 		this.setHeight(1);
+		setSave(true);
 		this.speed = 0.05f;
-		this.save = true;
 		this.effects = new CopyOnWriteArrayList<>();
 		this.damage = 10;
 		this.armour = ARMOUR_CONSTANT; // No damage reduction
@@ -132,6 +135,16 @@ public class Peon extends AgentEntity implements Tickable {
 		// Check for death
 		if (isDead()) {
 			death();
+		}
+
+		// Play hit sound
+		switch (damageType) {
+			case FIRE:
+				GameManager.getManagerFromInstance(SoundManager.class).playSound("fireHit");
+				break;
+			default:
+				GameManager.getManagerFromInstance(SoundManager.class).playSound("woodHit");
+				break;
 		}
 
 		return damageApplied;

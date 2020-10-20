@@ -5,7 +5,6 @@ import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.AggressiveEnemy;
 import deco2800.thomas.entities.enemies.EnemyIndex.Variation;
-import deco2800.thomas.entities.enemies.monsters.Orc;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import com.badlogic.gdx.graphics.g2d.Animation;

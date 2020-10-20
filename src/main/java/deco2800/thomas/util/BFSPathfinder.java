@@ -33,9 +33,9 @@ public class BFSPathfinder extends Pathfinder {
 	}
 
 	private List<Tile> pathfindBFS(AbstractWorld world, Tile origin, Tile destination) {
-		LinkedList<Tile> queue = new LinkedList<Tile>();
-		Set<Tile> closedSet = new HashSet<Tile>();
-		Map<Tile, Tile> path = new HashMap<Tile, Tile>();
+		LinkedList<Tile> queue = new LinkedList<>();
+		Set<Tile> closedSet = new HashSet<>();
+		Map<Tile, Tile> path = new HashMap<>();
 		queue.add(origin);
 
 		Tile root;
@@ -63,7 +63,7 @@ public class BFSPathfinder extends Pathfinder {
 
 	private List<Tile> reconstructPath(Tile destination, Map<Tile, Tile> pathMap) {
 		Tile root = destination;
-		List<Tile> path = new ArrayList<Tile>();
+		List<Tile> path = new ArrayList<>();
 		path.add(root);
 		while (pathMap.get(root) != null) {
 			root = pathMap.get(root);

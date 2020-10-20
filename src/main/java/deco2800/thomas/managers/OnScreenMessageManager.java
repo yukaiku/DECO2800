@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OnScreenMessageManager extends AbstractManager implements KeyTypedObserver {
-	private List<String> messages = new ArrayList<String>();
+	private List<String> messages = new ArrayList<>();
 	boolean isTyping = false;
 	String unsentMessage = "";
 
@@ -64,8 +64,6 @@ public class OnScreenMessageManager extends AbstractManager implements KeyTypedO
 				} else if (unsentMessage.startsWith("/resources")) {
 					// Display resources in the console
 					this.addMessage(String.format("Stone: %s", GameManager.getManagerFromInstance(InventoryManager.class).getStone()));
-				} else {
-					GameManager.get().getManager(NetworkManager.class).sendChatMessage(unsentMessage);
 				}
 				unsentMessage = "";
 			} else {
