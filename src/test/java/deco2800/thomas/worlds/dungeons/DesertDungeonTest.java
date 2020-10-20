@@ -6,6 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.enemies.EnemyPeon;
+import deco2800.thomas.entities.enemies.monsters.ImmuneOrc;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.desert.DesertWorld;
@@ -19,6 +23,8 @@ import org.mockito.Matchers;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -38,6 +44,10 @@ public class DesertDungeonTest extends BaseGDXTest {
     // the DesertWorld instance being tested
     private DesertDungeon spyWorld;
 
+    private EnemyManager enemyManager;
+
+    private GameManager gameManager;
+
     /**
      * Sets up all tests. All managers and features not specifically related
      * to the DesertDungeon and its entities MUST be mocked here.
@@ -48,8 +58,8 @@ public class DesertDungeonTest extends BaseGDXTest {
         PowerMockito.mockStatic(GameManager.class);
         PowerMockito.mockStatic(DesertDungeonDialog.class);
         PowerMockito.mockStatic(DesertDungeonOpeningDialog.class);
-        GameManager gameManager = mock(GameManager.class);
-        EnemyManager enemyManager = mock(EnemyManager.class);
+        gameManager = mock(GameManager.class);
+        enemyManager = mock(EnemyManager.class);
         DifficultyManager difficultyManager = mock(DifficultyManager.class);
         InputManager inputManager = mock(InputManager.class);
         OnScreenMessageManager onScreenMessageManager = mock(OnScreenMessageManager.class);
@@ -140,5 +150,44 @@ public class DesertDungeonTest extends BaseGDXTest {
         }
 
         Assert.assertTrue(allTiles);
+    }
+
+    @Test
+    public void oneImmuneOrcSpawned() {
+        verify(enemyManager, times(1)).spawnSpecialEnemy(eq("immuneOrc"), anyFloat(), anyFloat());
+    }
+
+    @Test
+    public void portalNotSpawnedAtStart() {
+        spyWorld.onTick(anyLong());
+        ArrayList<AbstractEntity> portals = new ArrayList<>();
+
+        for (AbstractEntity entity : spyWorld.getEntities()) {
+            if (entity.getObjectName().equals("ExitPortal")) {
+                portals.add(entity);
+            }
+        }
+
+        Assert.assertEquals(0, portals.size());
+    }
+
+    @Test
+    public void testPortalSpawnsOnOrcDeath() {
+        PlayerManager playerManager = mock(PlayerManager.class);
+        when(GameManager.getManagerFromInstance(PlayerManager.class)).thenReturn(playerManager);
+        when(gameManager.getWorld()).thenReturn(spyWorld);
+        spyWorld.onTick(anyLong());
+        ArrayList<AbstractEntity> portals = new ArrayList<>();
+
+        ImmuneOrc orc = new ImmuneOrc();
+        orc.death();
+
+        for (AbstractEntity entity : spyWorld.getEntities()) {
+            if (entity.getObjectName().equals("ExitPortal")) {
+                portals.add(entity);
+            }
+        }
+
+        Assert.assertEquals(1, portals.size());
     }
 }

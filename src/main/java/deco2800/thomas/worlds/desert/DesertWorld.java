@@ -165,8 +165,10 @@ public class DesertWorld extends AbstractWorld {
             }
         }
 
-        // adds the portal to the Desert Dungeon
-        entities.add(new DesertDungeonPortal(this, -22, -22));
+        if (getType().equals("Desert")) {
+            // adds the portal to the Desert Dungeon
+            entities.add(new DesertDungeonPortal(this, -22, -22));
+        }
     }
 
     /**
