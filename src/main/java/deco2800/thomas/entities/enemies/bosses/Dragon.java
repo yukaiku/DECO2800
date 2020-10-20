@@ -36,8 +36,8 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     public enum State {
         IDLE, WALK, ATTACKING
     }
-    private final Animation<TextureRegion> dragonAttacking;
-    private final Animation<TextureRegion> dragonWalking;
+    protected Animation<TextureRegion> dragonAttacking;
+    protected Animation<TextureRegion> dragonWalking;
     public State currentState;
     public State previousState;
     private MovementTask.Direction facingDirection;
@@ -185,6 +185,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
             default:
                 stateTimer = 0;
                 region = dragonWalking.getKeyFrame(stateTimer);
+                region = dragonIdle.getKeyFrame(stateTimer);
         }
         if ((getMovingDirection() == MovementTask.Direction.LEFT ||
                 facingDirection == MovementTask.Direction.LEFT) && !region.isFlipX()) {

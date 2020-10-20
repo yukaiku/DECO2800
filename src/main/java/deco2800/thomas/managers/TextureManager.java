@@ -64,7 +64,7 @@ public class TextureManager extends AbstractManager {
             textureMap.put("orcTundra", new Texture("resources/enemies/orc_tundra.png"));
             textureMap.put("orcVolcano", new Texture("resources/enemies/orc_volcano.png"));
             textureMap.put("dragonDesert", new Texture("resources/enemies/dragon_desert.png"));
-            textureMap.put("dragonSwamp", new Texture("resources/enemies/dragon_swamp.png"));
+            textureMap.put("dragonSwamp", new Texture("resources/enemies/olddragonswamp.png"));
             textureMap.put("dragonTundra", new Texture("resources/enemies/dragon_tundra.png"));
             textureMap.put("dragonVolcano", new Texture("resources/enemies/dragon_volcano.png"));
 
@@ -598,14 +598,16 @@ public class TextureManager extends AbstractManager {
                     2, 472, 264, true);
             addAnimationFramesSprite("dragonSwampAttack", "resources/enemies/dragon_swamp_sprite_sheet.png",
                     2, 492, 264, false);
-            addAnimationFramesSprite("dragonTundraAttack", "resources/enemies/dragon_tundra_sprite_sheet.png",
-                    2, 492, 264, true);
+            addAnimationFramesSprite("dragonTundraAttack", "resources/enemies/dragon_tundra_attacking_sprites.png",
+                    4, 1363, 1000, true);
             addAnimationFramesSprite("dragonVolcanoAttack", "resources/enemies/dragon_volcano_fireball_sprites.png",
                     3, 1190, 1100, false);
 
             // dragon walk sprites
             addAnimationFramesSprite("dragonVolcanoWalk", "resources/enemies/dragon_volcano_walking_sprites.png",
                     8, 1163, 1100, false);
+            addAnimationFramesSprite("dragonTundraWalk", "resources/enemies/dragon_tundra_walking_sprites.png",
+                    2, 1363, 1000, false);
 
         } catch (GdxRuntimeException e) {
             e.printStackTrace();
