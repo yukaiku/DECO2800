@@ -49,7 +49,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
     private AbstractSkill mechSkill;
 
     // Movement helper
-    public Stack<MovementTask.Direction> movementStack = new Stack<>();
+    private Stack<MovementTask.Direction> movementStack = new Stack<>();
     private boolean[] activeDirectionKeys = {true, false, false, false, false};
 
     public PlayerPeon(float row, float col, float speed) {
@@ -464,6 +464,10 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
 
     public int getActiveWizardSkill() {
         return this.activeWizardSkill;
+    }
+
+    public Stack<MovementTask.Direction> getMovementStack() {
+        return this.movementStack;
     }
 
     public AbstractSkill getMechSkill() {
