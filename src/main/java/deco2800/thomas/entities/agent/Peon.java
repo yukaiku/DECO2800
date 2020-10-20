@@ -41,8 +41,8 @@ public class Peon extends AgentEntity implements Tickable {
 		this.setTexture("spacman_ded");
 		this.setObjectName("Peon");
 		this.setHeight(1);
+		setSave(true);
 		this.speed = 0.05f;
-		this.save = true;
 		this.effects = new CopyOnWriteArrayList<>();
 		this.damage = 10;
 		this.armour = ARMOUR_CONSTANT; // No damage reduction

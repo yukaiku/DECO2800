@@ -477,7 +477,7 @@ public abstract class AbstractWorld implements Tickable {
 	}
 
 	public boolean getWorldZoomable() {
-		return false;
+		return true;
 	}
 
 	/**

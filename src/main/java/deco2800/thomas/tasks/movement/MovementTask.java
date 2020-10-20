@@ -17,7 +17,6 @@ import deco2800.thomas.tasks.status.SpeedStatus;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
-import deco2800.thomas.worlds.dungeons.VolcanoDungeon;
 
 
 public class MovementTask extends AbstractTask {

@@ -1,11 +1,9 @@
 package deco2800.thomas.entities.environment.tundra;
 
-import deco2800.thomas.entities.Part;
 import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.worlds.Tile;
 
-import java.util.List;
 import java.util.Random;
 
 public class TundraRock extends StaticEntity {

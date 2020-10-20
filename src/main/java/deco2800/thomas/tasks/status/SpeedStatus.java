@@ -1,6 +1,5 @@
 package deco2800.thomas.tasks.status;
 
-import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.Peon;
 
 /**
