@@ -30,8 +30,8 @@ public class TestWorld extends AbstractWorld {
 	 * N = 1 + 6 * summation[0 -> N]
 	 */
 	boolean notGenerated = true;
-	private final static int WORLD_WIDTH = 25; // Height and width vars for the map size; constrains tile gen
-	private final static int WORLD_HEIGHT = 25; // Note the map will double these numbers (bounds are +/- these limits)
+	private static final int WORLD_WIDTH = 25; // Height and width vars for the map size; constrains tile gen
+	private static final int WORLD_HEIGHT = 25; // Note the map will double these numbers (bounds are +/- these limits)
 
 	public TestWorld() {
 		super();

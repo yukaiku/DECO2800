@@ -31,8 +31,8 @@ public class VolcanoWorld extends AbstractWorld {
     private final Logger logger = LoggerFactory.getLogger(VolcanoWorld.class);
     public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/volcano/VolcanoZone.json";
 
-    private final static int ORB_COLUMN = 21;
-    private final static int ORB_ROW = 20;
+    private static final int ORB_COLUMN = 21;
+    private static final int ORB_ROW = 20;
 
     private boolean notGenerated = true;
 

@@ -5,7 +5,6 @@ import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.LoadedPeon;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.attacks.Fireball;
-import deco2800.thomas.entities.enemies.bosses.Dragon;
 import deco2800.thomas.entities.enemies.bosses.SwampDragon;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
