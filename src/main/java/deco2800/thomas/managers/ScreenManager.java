@@ -1,6 +1,6 @@
 package deco2800.thomas.managers;
 
-import deco2800.thomas.GameScreen;
+import deco2800.thomas.screens.GameScreen;
 
 public class ScreenManager extends AbstractManager {
 

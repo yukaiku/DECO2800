@@ -1,4 +1,4 @@
-package deco2800.thomas;
+package deco2800.thomas.screens;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import deco2800.thomas.ThomasGame;
 import deco2800.thomas.combat.Knight;
 import deco2800.thomas.combat.Wizard;
 import deco2800.thomas.managers.GameManager;

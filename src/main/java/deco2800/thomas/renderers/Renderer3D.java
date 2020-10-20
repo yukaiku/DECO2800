@@ -12,7 +12,6 @@ import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.entities.attacks.Projectile;
-import deco2800.thomas.entities.attacks.StingProjectile;
 import deco2800.thomas.entities.attacks.VolcanoFireball;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;

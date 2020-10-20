@@ -1,9 +1,7 @@
 package deco2800.thomas.tasks.status;
 
-import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.agent.Peon;
-import deco2800.thomas.entities.HealthTracker;
 
 /**
  * A status effect which inflicts damage over time to an entity.

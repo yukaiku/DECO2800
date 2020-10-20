@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OnScreenMessageManager extends AbstractManager implements KeyTypedObserver {
-	private List<String> messages = new ArrayList<String>();
+	private List<String> messages = new ArrayList<>();
 	boolean isTyping = false;
 	String unsentMessage = "";
 

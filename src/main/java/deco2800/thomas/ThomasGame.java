@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import deco2800.thomas.mainmenu.MainMenuScreen;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.screens.GameScreen;
 
 /**
  * The game wrapper into which different screens are plugged.
@@ -17,10 +18,9 @@ public class ThomasGame extends Game {
 	 * The SpriteBatch for the game.
 	 */
 	private SpriteBatch batch;
-	public static final String SAVE_ROOT_DIR = "thomas-saves";
-	private FileHandle saveRootHandle;
+	//public static final String SAVE_ROOT_DIR = "thomas-saves";
+	//private FileHandle saveRootHandle;
 	private MainMenuScreen mainMenuScreen;
-	public GameScreen gameScreen;
 
 	public SpriteBatch getBatch() {
 		return batch;
@@ -34,7 +34,7 @@ public class ThomasGame extends Game {
 	 * Creates the main menu screen.
 	 */
 	public void create() {
-		saveRootHandle = Gdx.files.local(SAVE_ROOT_DIR);
+		//saveRootHandle = Gdx.files.local(SAVE_ROOT_DIR);
 		batch = new SpriteBatch();
 		initUISkin();
 		mainMenuScreen = new MainMenuScreen(this);
