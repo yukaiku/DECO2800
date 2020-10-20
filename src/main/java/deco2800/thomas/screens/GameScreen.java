@@ -410,6 +410,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	@Override
 	public void notifyKeyDown(int keycode) {
+		if (keycode == Input.Keys.ENTER && GameManager.get().state == GameManager.State.TRANSITION) {
+			GameManager.resume();
+		}
 		if (keycode == Input.Keys.F12 && GameManager.get().state == GameManager.State.RUN) {
 			GameManager.get().debugMode = !GameManager.get().debugMode;
 		}

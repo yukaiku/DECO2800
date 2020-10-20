@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import deco2800.thomas.ThomasGame;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
+import org.lwjgl.Sys;
 
 public class SettingScreen implements Screen {
     final ThomasGame game;
@@ -38,6 +39,10 @@ public class SettingScreen implements Screen {
     //Buttons
     Button windowButton;
     Button fullScreenButton;
+    Button offVolumeButton;
+    Button lowVolumeButton;
+    Button medVolumeButton;
+    Button highVolumeButton;
 
     /**
      * Constructor of the MainMenuScreen.
@@ -78,6 +83,22 @@ public class SettingScreen implements Screen {
         backButton.setPosition(width/2 - backButton.getWidth()/2, 90);
         stage.addActor(backButton);
 
+        offVolumeButton = new TextButton("OFF", buttonStyle);
+        offVolumeButton.setPosition(width/5 + 400, height/2 - 115);
+        stage.addActor(offVolumeButton);
+
+        lowVolumeButton = new TextButton("LOW", buttonStyle);
+        lowVolumeButton.setPosition(width/5 + 600, height/2 - 115);
+        stage.addActor(lowVolumeButton);
+
+        medVolumeButton = new TextButton("MEDIUM", buttonStyle);
+        medVolumeButton.setPosition(width/5 + 800, height/2 - 115);
+        stage.addActor(medVolumeButton);
+
+        highVolumeButton = new TextButton("HIGH", buttonStyle);
+        highVolumeButton.setPosition(width/5 + 1030, height/2 - 115);
+        stage.addActor(highVolumeButton);
+
         if(Gdx.graphics.isFullscreen()) {
             fullScreenButton.setChecked(true);
         } else {
@@ -103,6 +124,34 @@ public class SettingScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setMainMenuScreen();
+            }
+        });
+
+        offVolumeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // turn off the game audio
+            }
+        });
+
+        lowVolumeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // set the volume to low
+            }
+        });
+
+        medVolumeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // set the volume to medium
+            }
+        });
+
+        highVolumeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // set the volume to high
             }
         });
     }
