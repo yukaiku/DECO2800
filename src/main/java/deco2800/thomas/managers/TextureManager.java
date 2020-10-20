@@ -168,7 +168,6 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("game-over", new Texture("resources/healthResources/game-over.png"));
 
 			//boss health
-			//textureMap.put("bossHealth-desert", new Texture("resources/healthResources/bossHealthBar-desert2.png"));
 			textureMap.put("bossHealth-volcano100", new Texture("resources/healthResources/bossHealthBar-fire2 - 100.png"));
 			textureMap.put("bossHealth-volcano95", new Texture("resources/healthResources/bossHealthBar-fire2 - 95.png"));
 			textureMap.put("bossHealth-volcano90", new Texture("resources/healthResources/bossHealthBar-fire2 - 90.png"));
@@ -212,8 +211,50 @@ public class TextureManager extends AbstractManager {
 			textureMap.put("bossHealth-tundra10", new Texture("resources/healthResources/bossHealthBar-ice2 - 10.png"));
 			textureMap.put("bossHealth-tundra5", new Texture("resources/healthResources/bossHealthBar-ice2 - 5.png"));
 			textureMap.put("bossHealth-tundra0", new Texture("resources/healthResources/bossHealthBar-ice2 - 0.png"));
-			
-			//textureMap.put("bossHealth-swamp", new Texture("resources/healthResources/bossHealthBar-swamp2.png"));
+
+			textureMap.put("bossHealth-desert100", new Texture("resources/healthResources/bossHealthBar-Desert-100.png"));
+			textureMap.put("bossHealth-desert95", new Texture("resources/healthResources/bossHealthBar-Desert-95.png"));
+			textureMap.put("bossHealth-desert90", new Texture("resources/healthResources/bossHealthBar-Desert-90.png"));
+			textureMap.put("bossHealth-desert85", new Texture("resources/healthResources/bossHealthBar-Desert-85.png"));
+			textureMap.put("bossHealth-desert80", new Texture("resources/healthResources/bossHealthBar-Desert-80.png"));
+			textureMap.put("bossHealth-desert75", new Texture("resources/healthResources/bossHealthBar-Desert-75.png"));
+			textureMap.put("bossHealth-desert70", new Texture("resources/healthResources/bossHealthBar-Desert-70.png"));
+			textureMap.put("bossHealth-desert65", new Texture("resources/healthResources/bossHealthBar-Desert-65.png"));
+			textureMap.put("bossHealth-desert60", new Texture("resources/healthResources/bossHealthBar-Desert-60.png"));
+			textureMap.put("bossHealth-desert55", new Texture("resources/healthResources/bossHealthBar-Desert-55.png"));
+			textureMap.put("bossHealth-desert50", new Texture("resources/healthResources/bossHealthBar-Desert-50.png"));
+			textureMap.put("bossHealth-desert45", new Texture("resources/healthResources/bossHealthBar-Desert-45.png"));
+			textureMap.put("bossHealth-desert40", new Texture("resources/healthResources/bossHealthBar-Desert-40.png"));
+			textureMap.put("bossHealth-desert35", new Texture("resources/healthResources/bossHealthBar-Desert-35.png"));
+			textureMap.put("bossHealth-desert30", new Texture("resources/healthResources/bossHealthBar-Desert-30.png"));
+			textureMap.put("bossHealth-desert25", new Texture("resources/healthResources/bossHealthBar-Desert-25.png"));
+			textureMap.put("bossHealth-desert20", new Texture("resources/healthResources/bossHealthBar-Desert-20.png"));
+			textureMap.put("bossHealth-desert15", new Texture("resources/healthResources/bossHealthBar-Desert-15.png"));
+			textureMap.put("bossHealth-desert10", new Texture("resources/healthResources/bossHealthBar-Desert-10.png"));
+			textureMap.put("bossHealth-desert5", new Texture("resources/healthResources/bossHealthBar-Desert-5.png"));
+			textureMap.put("bossHealth-desert0", new Texture("resources/healthResources/bossHealthBar-Desert-0.png"));
+
+			textureMap.put("bossHealth-swamp100", new Texture("resources/healthResources/bossHealthBar-Swamp-100.png"));
+			textureMap.put("bossHealth-swamp95", new Texture("resources/healthResources/bossHealthBar-Swamp-95.png"));
+			textureMap.put("bossHealth-swamp90", new Texture("resources/healthResources/bossHealthBar-Swamp-90.png"));
+			textureMap.put("bossHealth-swamp85", new Texture("resources/healthResources/bossHealthBar-Swamp-85.png"));
+			textureMap.put("bossHealth-swamp80", new Texture("resources/healthResources/bossHealthBar-Swamp-80.png"));
+			textureMap.put("bossHealth-swamp75", new Texture("resources/healthResources/bossHealthBar-Swamp-75.png"));
+			textureMap.put("bossHealth-swamp70", new Texture("resources/healthResources/bossHealthBar-Swamp-70.png"));
+			textureMap.put("bossHealth-swamp65", new Texture("resources/healthResources/bossHealthBar-Swamp-65.png"));
+			textureMap.put("bossHealth-swamp60", new Texture("resources/healthResources/bossHealthBar-Swamp-60.png"));
+			textureMap.put("bossHealth-swamp55", new Texture("resources/healthResources/bossHealthBar-Swamp-55.png"));
+			textureMap.put("bossHealth-swamp50", new Texture("resources/healthResources/bossHealthBar-Swamp-50.png"));
+			textureMap.put("bossHealth-swamp45", new Texture("resources/healthResources/bossHealthBar-Swamp-45.png"));
+			textureMap.put("bossHealth-swamp40", new Texture("resources/healthResources/bossHealthBar-Swamp-40.png"));
+			textureMap.put("bossHealth-swamp35", new Texture("resources/healthResources/bossHealthBar-Swamp-35.png"));
+			textureMap.put("bossHealth-swamp30", new Texture("resources/healthResources/bossHealthBar-Swamp-30.png"));
+			textureMap.put("bossHealth-swamp25", new Texture("resources/healthResources/bossHealthBar-Swamp-25.png"));
+			textureMap.put("bossHealth-swamp20", new Texture("resources/healthResources/bossHealthBar-Swamp-20.png"));
+			textureMap.put("bossHealth-swamp15", new Texture("resources/healthResources/bossHealthBar-Swamp-15.png"));
+			textureMap.put("bossHealth-swamp10", new Texture("resources/healthResources/bossHealthBar-Swamp-10.png"));
+			textureMap.put("bossHealth-swamp5", new Texture("resources/healthResources/bossHealthBar-Swamp-5.png"));
+			textureMap.put("bossHealth-swamp0", new Texture("resources/healthResources/bossHealthBar-Swamp-0.png"));
 
 			// Attacks
 			textureMap.put("fireball_right", new Texture("resources/combat/fireball_right.png"));
