@@ -254,15 +254,13 @@ public final class DatabaseManager extends AbstractManager {
             for (String s : Arrays.asList("combat")) {
                 if (entityObjectName.startsWith(s)){
                     SquareVector destination = new SquareVector(0f,0f);
-                    Fireball create = new Fireball(1f, 5f, 1, 1f, EntityFaction.ALLY);
-                    return create;
+                    return new Fireball(1f, 5f, 1, 1f, EntityFaction.ALLY);
                 }
             }
 
             for (String s : Arrays.asList("Swamp Dragon")) {
                 if (entityObjectName.startsWith(s)){
-                    Dragon create = new SwampDragon(2000, 0.3f, 2);
-                    return create;
+                    return new SwampDragon(2000, 0.3f, 2);
                 }
             }
 

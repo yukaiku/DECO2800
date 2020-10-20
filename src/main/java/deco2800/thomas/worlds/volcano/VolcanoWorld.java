@@ -4,7 +4,6 @@ import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.items.*;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
-import deco2800.thomas.entities.npc.TutorialNPC;
 import deco2800.thomas.entities.npc.VolcanoNPC;
 import deco2800.thomas.entities.environment.volcano.VolcanoDragonSkull;
 import deco2800.thomas.entities.environment.volcano.VolcanoGraveYard;
@@ -18,7 +17,6 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
-import deco2800.thomas.worlds.dungeons.VolcanoDungeon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,8 +31,8 @@ public class VolcanoWorld extends AbstractWorld {
     private final Logger logger = LoggerFactory.getLogger(VolcanoWorld.class);
     public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/volcano/VolcanoZone.json";
 
-    private final int ORB_COLUMN = 21;
-    private final int ORB_ROW = 20;
+    private final static int ORB_COLUMN = 21;
+    private final static int ORB_ROW = 20;
 
     private boolean notGenerated = true;
 
@@ -227,7 +225,8 @@ public class VolcanoWorld extends AbstractWorld {
      */
     public void addRandoms() {
     //Add random boulders on tiles that aren't Lava
-        int tileNumber, selector;
+        int tileNumber;
+        int selector;
         Tile t;
         String tileTexture;
         Random random = new Random();
@@ -266,10 +265,9 @@ public class VolcanoWorld extends AbstractWorld {
      * @return A static entity for the Volcano Zone
      */
     public VolcanoDragonSkull createDragonSkull(float col, float row) {
-        List<Part> parts = new ArrayList<Part>();
+        List<Part> parts = new ArrayList<>();
         parts.add(new Part(new SquareVector(0, 0), "DragonSkull", true));
-        VolcanoDragonSkull dragonSkull = new VolcanoDragonSkull(col, row, parts);
-        return dragonSkull;
+        return new VolcanoDragonSkull(col, row, parts);
     }
 
     /**
@@ -281,7 +279,7 @@ public class VolcanoWorld extends AbstractWorld {
      * @return A static entity for the Volcano Zone
      */
     public VolcanoRuins createRuins(float col, float row) {
-        List<Part> parts = new ArrayList<Part>();
+        List<Part> parts = new ArrayList<>();
 
         //Back Wall
         for (int i = 1; i < 16; i++) {
@@ -334,8 +332,7 @@ public class VolcanoWorld extends AbstractWorld {
         parts.add(new Part(new SquareVector(3, -11), "Bones", false));
         parts.add(new Part(new SquareVector(4, -12), "Bones", false));
 
-        VolcanoRuins Ruins = new VolcanoRuins(col, row, parts);
-        return Ruins;
+        return new VolcanoRuins(col, row, parts);
     }
 
     /**
@@ -347,7 +344,7 @@ public class VolcanoWorld extends AbstractWorld {
      * @return  A static entity for the Volcano Zone
      */
     public VolcanoGraveYard createGraveYard(float col, float row) {
-        List<Part> parts = new ArrayList<Part>();
+        List<Part> parts = new ArrayList<>();
         //Top left
         parts.add(new Part(new SquareVector(1, 0), "fenceE-W", true));
         parts.add(new Part(new SquareVector(2, 0), "fenceE-W", true));
@@ -411,9 +408,8 @@ public class VolcanoWorld extends AbstractWorld {
         parts.add(new Part(new SquareVector(8, -2), "Ruins_4", true));
         parts.add(new Part(new SquareVector(5,  -5), "Ruins_4", true));
         parts.add(new Part(new SquareVector(8, -5), "Ruins_4", true));
-        VolcanoGraveYard graveYard = new VolcanoGraveYard(col, row, parts);
 
-        return graveYard;
+        return new VolcanoGraveYard(col, row, parts);
     }
 
     /**
@@ -425,7 +421,7 @@ public class VolcanoWorld extends AbstractWorld {
      * @return  A static entity for the Volcano Zone
      */
     public VolcanoLavaPool createLavaPool(float col, float row) {
-        List<Part> parts = new ArrayList<Part>();
+        List<Part> parts = new ArrayList<>();
 
         //Second layer of edges
         parts.add(new Part(new SquareVector(-3, 0), "LavaPool", false));
@@ -493,7 +489,6 @@ public class VolcanoWorld extends AbstractWorld {
 
     public VolcanoPortal createDungeonPortal(float col, float row){
         Tile portalTile = getTile(col, row);
-        VolcanoPortal VolcanoPortal = new VolcanoPortal(portalTile, false, "VolcanoPortal", "VolcanoDungeonPortal" );
-        return VolcanoPortal;
+        return new VolcanoPortal(portalTile, false, "VolcanoPortal", "VolcanoDungeonPortal" );
     }
 }

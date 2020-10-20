@@ -154,7 +154,8 @@ public class SquareVector {
 		if (!(obj instanceof SquareVector)) {
 			return false;
 		}
-		boolean colTrue, rowTrue;
+		boolean colTrue;
+		boolean rowTrue;
 		SquareVector vector = (SquareVector) obj;
 
 		// round all positions to make comparisons possible

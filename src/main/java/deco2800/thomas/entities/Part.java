@@ -3,7 +3,6 @@ package deco2800.thomas.entities;
 import com.google.gson.annotations.Expose;
 
 import deco2800.thomas.util.SquareVector;
-import deco2800.thomas.worlds.Tile;
 
 public class Part {
 	@Expose
