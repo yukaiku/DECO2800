@@ -30,8 +30,8 @@ import java.util.*;
 
 public class TundraDungeon extends AbstractWorld {
 	private final Logger logger = LoggerFactory.getLogger(TestWorld.class);
-	final static int DEFAULT_WIDTH = 5;
-	final static int DEFAULT_HEIGHT = 5;
+	static final int DEFAULT_WIDTH = 5;
+	static final int DEFAULT_HEIGHT = 5;
 
 	private final Skin skin;
 

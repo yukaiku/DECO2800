@@ -88,7 +88,7 @@ public class SettingScreen implements Screen {
         windowButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                setWindowedScreen();
+//                setWindowedScreen();
             }
         });
 

@@ -62,9 +62,9 @@ public class Projectile extends CombatEntity implements Animatable, Tickable {
         this.setObjectName("combatProjectile");
         this.setTexture("fireball_right");
 
-        explosion = new Animation<TextureRegion>(0.1f,
+        explosion = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
-        defaultState = new Animation<TextureRegion>(0.1f,
+        defaultState = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballDefault"));
         currentState = Projectile.State.DEFAULT;
     }

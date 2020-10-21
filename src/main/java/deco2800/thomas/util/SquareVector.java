@@ -101,7 +101,6 @@ public class SquareVector {
 
 
 	public void moveToward(SquareVector point, double distance) {
-		//System.out.println(distance(point));
 		if (distanceAsCartesian(point) < distance) {
 			this.col = point.col;
 			this.row = point.row;
@@ -155,7 +154,8 @@ public class SquareVector {
 		if (!(obj instanceof SquareVector)) {
 			return false;
 		}
-		boolean colTrue, rowTrue;
+		boolean colTrue;
+		boolean rowTrue;
 		SquareVector vector = (SquareVector) obj;
 
 		// round all positions to make comparisons possible

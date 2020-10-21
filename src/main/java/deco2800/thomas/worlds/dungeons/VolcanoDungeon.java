@@ -32,7 +32,7 @@ public class VolcanoDungeon extends AbstractWorld {
     private final Logger logger = LoggerFactory.getLogger(VolcanoWorld.class);
     public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/dungeons/VolcanoDungeonMaze.json";
 
-    private ArrayList<AbstractDialogBox> VolcanoDungeonDialogue;
+    private ArrayList<AbstractDialogBox> volcanoDungeonDialogue;
     private boolean notGenerated = true;
 
     /**
@@ -55,7 +55,7 @@ public class VolcanoDungeon extends AbstractWorld {
         addEntity(this.getPlayerEntity());
 
         GameManager.get().addManager(new EnemyManager(this));
-        this.VolcanoDungeonDialogue = new ArrayList<>();
+        this.volcanoDungeonDialogue = new ArrayList<>();
         setupPuzzle();
 
     }
@@ -82,14 +82,14 @@ public class VolcanoDungeon extends AbstractWorld {
         //Sets up NPC
         VolcanoDungeonNPC lavaMazeNpc = new VolcanoDungeonNPC("npc_lava_maze", new SquareVector(-2f, 0f),"volcano_npc1");
         npnSpawns.add(lavaMazeNpc);
-        this.VolcanoDungeonDialogue.add(lavaMazeNpc.getBox());
+        this.volcanoDungeonDialogue.add(lavaMazeNpc.getBox());
 
         //Adds Npc manager
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
         GameManager.get().addManager(npcManager);
 
         DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
-                this.VolcanoDungeonDialogue);
+                this.volcanoDungeonDialogue);
         GameManager.get().addManager(dialog);
 
 
@@ -172,7 +172,7 @@ public class VolcanoDungeon extends AbstractWorld {
             Treasure rewardBox = new Treasure(rewardTile, true, (PlayerPeon) getPlayerEntity(), "volcano" );
             tile.setParent(rewardBox);
             entities.add(rewardBox);
-            VolcanoDungeonDialogue.add(rewardBox.getDisplay());
+            volcanoDungeonDialogue.add(rewardBox.getDisplay());
             GameManager.getManagerFromInstance(PlayerManager.class).grantWizardSkill(WizardSkills.FIREBALL);
 
         }

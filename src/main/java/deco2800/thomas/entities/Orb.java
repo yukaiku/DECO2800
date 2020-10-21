@@ -10,13 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Orb extends StaticEntity implements Tickable {
-    private final Logger LOG = LoggerFactory.getLogger(Orb.class);
+    private final Logger logger = LoggerFactory.getLogger(Orb.class);
 
     AbstractWorld world;
 
     public Orb(float col, float row, String texture, int renderOrder, List<Part> parts) {
         super(col, row, renderOrder, parts);
-        LOG.info("Making a orb at {}, {}", col, row);
+        logger.info("Making a orb at {}, {}", col, row);
     }
 
     public Orb(Tile t, String texture) {
@@ -34,10 +34,7 @@ public class Orb extends StaticEntity implements Tickable {
             return false;
         }
         Orb otherOrb = (Orb) other;
-        if (this.getCol() != otherOrb.getCol() || this.getRow() != otherOrb.getRow() || this.getHeight() != otherOrb.getHeight()) {
-            return false;
-        }
-        return true;
+        return this.getCol() == otherOrb.getCol() && this.getRow() == otherOrb.getRow() && this.getHeight() == otherOrb.getHeight();
     }
     /**
      * Gets the hashCode of the orbs.
@@ -54,14 +51,6 @@ public class Orb extends StaticEntity implements Tickable {
         return (int) result;
     }
 
-    /**
-     * Animates the orbs on every game tick.
-
-     * @param tick current game tick
-     */
-    @Override
-    public void onTick(long tick) {
-    }
 
     @Override
     public String toString() {

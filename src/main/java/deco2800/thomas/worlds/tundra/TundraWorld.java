@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import deco2800.thomas.entities.AbstractEntity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
