@@ -131,6 +131,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
      */
     @Override
     public void death() {
+        super.death();
         AbstractWorld world = GameManager.get().getWorld();
         Tile tile = world.getTile((float) Math.ceil((this.getCol())),
                 (float) Math.ceil((this.getRow())));

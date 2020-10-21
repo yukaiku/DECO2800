@@ -63,6 +63,7 @@ public class DragonTest extends BaseGDXTest {
         OnScreenMessageManager onScreenMessageManager = mock(OnScreenMessageManager.class);
         TextureManager textureManager = mock(TextureManager.class);
         SoundManager soundManager = mock(SoundManager.class);
+        StatusEffectManager seManager = mock(StatusEffectManager.class);
 
         gameManager = mock(GameManager.class);
         when(GameManager.get()).thenReturn(gameManager);
@@ -71,11 +72,13 @@ public class DragonTest extends BaseGDXTest {
         when(gameManager.getManager(EnemyManager.class)).thenReturn(enemyManager);
         when(gameManager.getManager(TextureManager.class)).thenReturn(textureManager);
         when(gameManager.getManager(SoundManager.class)).thenReturn(soundManager);
+        when(gameManager.getManager(StatusEffectManager.class)).thenReturn(seManager);
         when(GameManager.getManagerFromInstance(OnScreenMessageManager.class)).thenReturn(onScreenMessageManager);
         when(GameManager.getManagerFromInstance(InputManager.class)).thenReturn(inputManager);
         when(GameManager.getManagerFromInstance(EnemyManager.class)).thenReturn(enemyManager);
         when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
         when(GameManager.getManagerFromInstance(SoundManager.class)).thenReturn(soundManager);
+        when(GameManager.getManagerFromInstance(StatusEffectManager.class)).thenReturn(seManager);
 
         Texture texture = mock(Texture.class);
         when(textureManager.getTexture(anyString())).thenReturn(texture);

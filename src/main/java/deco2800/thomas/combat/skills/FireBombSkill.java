@@ -41,6 +41,7 @@ public class FireBombSkill extends AbstractSkill {
         }
         this.entity = parent;
         setMaxCoolDown(ORIGINAL_MAXCOOLDOWN);
+        setAttackSound("explosion");
     }
 
     /**
@@ -112,7 +113,6 @@ public class FireBombSkill extends AbstractSkill {
      */
     @Override
     protected AbstractTask getTask(float targetX, float targetY) {
-        GameManager.getManagerFromInstance(SoundManager.class).playSound("explosion");
         int damage = (int) (entity.getDamage() * damageMultiplier);
         return new FireBombAttackTask(entity, damage, LIFETIME, TICK_PERIOD, HEIGHT, WIDTH);
     }

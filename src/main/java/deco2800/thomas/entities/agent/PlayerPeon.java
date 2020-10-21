@@ -480,6 +480,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
      */
     @Override
     public void death() {
+        super.death();
         PlayerPeon.buffDamageTotal = 0;
         for (AbstractSkill s : this.getWizardSkills()) {
             s.setCooldownMax();
@@ -487,7 +488,6 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         this.getMechSkill().setCooldownMax();
         GameManager.get().getWorld().removeEntity(this);
         GameManager.get().getWorld().disposeEntity(this.getEntityID());
-        GameManager.getManagerFromInstance(StatusEffectManager.class).getCurrentStatusEffects().clear();
         GameManager.gameOver();
     }
 

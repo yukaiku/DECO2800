@@ -104,7 +104,6 @@ public class FireballSkill extends AbstractSkill {
      */
     @Override
     protected AbstractTask getTask(float targetX, float targetY) {
-        GameManager.getManagerFromInstance(SoundManager.class).playSound("fireball");
         int damage = (int) (entity.getDamage() * damageMultiplier);
         return new FireballAttackTask(entity, targetX, targetY, damage, SPEED, LIFETIME);
     }

@@ -55,6 +55,7 @@ public class ImmuneOrc extends Orc {
      */
     @Override
     public void death() {
+        super.death();
         GameManager.getManagerFromInstance(EnemyManager.class).
                 removeWildEnemy(this);
         GameManager.getManagerFromInstance(PlayerManager.class).grantWizardSkill(WizardSkills.SANDTORNADO);
