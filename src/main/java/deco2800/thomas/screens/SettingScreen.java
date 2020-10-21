@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import deco2800.thomas.ThomasGame;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.managers.TextureManager;
 
 public class SettingScreen implements Screen {
@@ -98,10 +99,20 @@ public class SettingScreen implements Screen {
         highVolumeButton.setPosition(width/5 + 1030, height/2 - 115);
         stage.addActor(highVolumeButton);
 
-        if(Gdx.graphics.isFullscreen()) {
+        if (Gdx.graphics.isFullscreen()) {
             fullScreenButton.setChecked(true);
         } else {
             windowButton.setChecked(true);
+        }
+
+        if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 0f) {
+            offVolumeButton.setChecked(true);
+        } else if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 0.3f) {
+            lowVolumeButton.setChecked(true);
+        } else if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 0.6f) {
+            medVolumeButton.setChecked(true);
+        }else if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 1.0f) {
+            highVolumeButton.setChecked(true);
         }
 
         // Add click listener to buttons
@@ -129,30 +140,69 @@ public class SettingScreen implements Screen {
         offVolumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // turn off the game audio
+                setVolume(offVolumeButton);
             }
         });
 
         lowVolumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // set the volume to low
+                setVolume(lowVolumeButton);
             }
         });
 
         medVolumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // set the volume to medium
+                setVolume(medVolumeButton);
             }
         });
 
         highVolumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // set the volume to high
+                setVolume(highVolumeButton);
             }
         });
+    }
+
+    /**
+     * Set the audio volume
+     */
+    private void setVolume(Button button) {
+        if (button == offVolumeButton) {
+            lowVolumeButton.setChecked(false);
+            medVolumeButton.setChecked(false);
+            highVolumeButton.setChecked(false);
+            if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 0f) {
+                offVolumeButton.setChecked(true);
+            }
+            GameManager.getManagerFromInstance(SoundManager.class).setVolume(0f);
+        } else if (button == lowVolumeButton) {
+            offVolumeButton.setChecked(false);
+            medVolumeButton.setChecked(false);
+            highVolumeButton.setChecked(false);
+            if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 0.3f) {
+                lowVolumeButton.setChecked(true);
+            }
+            GameManager.getManagerFromInstance(SoundManager.class).setVolume(0.3f);
+        } else if (button == medVolumeButton) {
+            offVolumeButton.setChecked(false);
+            lowVolumeButton.setChecked(false);
+            highVolumeButton.setChecked(false);
+            if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 0.6f) {
+                medVolumeButton.setChecked(true);
+            }
+            GameManager.getManagerFromInstance(SoundManager.class).setVolume(0.6f);
+        } else if (button == highVolumeButton) {
+            offVolumeButton.setChecked(false);
+            lowVolumeButton.setChecked(false);
+            medVolumeButton.setChecked(false);
+            if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 1.0f) {
+                highVolumeButton.setChecked(true);
+            }
+            GameManager.getManagerFromInstance(SoundManager.class).setVolume(1.0f);
+        }
     }
 
     /**
