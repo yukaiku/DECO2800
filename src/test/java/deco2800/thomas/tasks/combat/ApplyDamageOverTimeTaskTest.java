@@ -47,6 +47,7 @@ public class ApplyDamageOverTimeTaskTest extends BaseGDXTest {
         // Mock combat entity and agent entity (so that they're on different factions)
         combatEntity = mock(CombatEntity.class);
         when(combatEntity.getFaction()).thenReturn(EntityFaction.EVIL);
+        when(combatEntity.getDamageType()).thenReturn(DamageType.COMMON);
         when(combatEntity.getBounds()).thenReturn(new BoundingBox(new SquareVector(0, 0), 10, 10));
         peon = mock(Peon.class);
         when(peon.getFaction()).thenReturn(EntityFaction.ALLY);

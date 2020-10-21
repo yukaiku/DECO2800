@@ -34,6 +34,7 @@ public class Dummy extends Monster implements PassiveEnemy {
 
     @Override
     public void death() {
+        super.death();
         GameManager.getManagerFromInstance(EnemyManager.class).removeSpecialEnemy(this);
         PlayerPeon.credit(100);
     }

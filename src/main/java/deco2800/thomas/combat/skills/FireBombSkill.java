@@ -2,6 +2,8 @@ package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
 
@@ -39,6 +41,7 @@ public class FireBombSkill extends AbstractSkill {
         }
         this.entity = parent;
         setMaxCoolDown(ORIGINAL_MAXCOOLDOWN);
+        setAttackSound("explosion");
     }
 
     /**

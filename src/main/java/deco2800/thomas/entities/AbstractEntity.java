@@ -2,7 +2,6 @@ package deco2800.thomas.entities;
 
 import com.google.gson.annotations.Expose;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.NetworkManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.Renderable;
 import deco2800.thomas.util.BoundingBox;
@@ -335,7 +334,6 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	}
 
 	public void dispose() {
-		GameManager.get().getManager(NetworkManager.class).deleteEntity(this);
 		GameManager.get().getWorld().getEntities().remove(this);
 	}
 

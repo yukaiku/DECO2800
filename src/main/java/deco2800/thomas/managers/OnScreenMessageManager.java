@@ -64,8 +64,6 @@ public class OnScreenMessageManager extends AbstractManager implements KeyTypedO
 				} else if (unsentMessage.startsWith("/resources")) {
 					// Display resources in the console
 					this.addMessage(String.format("Stone: %s", GameManager.getManagerFromInstance(InventoryManager.class).getStone()));
-				} else {
-					GameManager.get().getManager(NetworkManager.class).sendChatMessage(unsentMessage);
 				}
 				unsentMessage = "";
 			} else {
