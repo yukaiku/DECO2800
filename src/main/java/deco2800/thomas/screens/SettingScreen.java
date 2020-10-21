@@ -119,7 +119,7 @@ public class SettingScreen implements Screen {
         windowButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-//                setWindowedScreen();
+                setWindowedScreen();
             }
         });
 
@@ -209,8 +209,10 @@ public class SettingScreen implements Screen {
      * Set the game to windowed mode
      */
     private void setWindowedScreen() {
-        Gdx.graphics.setWindowedMode( (int)(0.8*Gdx.graphics.getDisplayMode().width),
-                (int)(0.8*Gdx.graphics.getDisplayMode().height));
+        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+            Gdx.graphics.setWindowedMode( (int)(0.8*Gdx.graphics.getDisplayMode().width),
+                    (int)(0.8*Gdx.graphics.getDisplayMode().height));
+        }
         fullScreenButton.setChecked(false);
         if (!Gdx.graphics.isFullscreen()) {
             windowButton.setChecked(true);
