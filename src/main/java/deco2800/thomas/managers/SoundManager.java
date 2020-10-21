@@ -40,6 +40,7 @@ public class SoundManager extends AbstractManager {
 		sounds.put("volcanoAmbience", "resources/sounds/ambience/volcano_ambience.ogg");
 		sounds.put("menuMusic", "resources/sounds/music/menu_music.ogg");
 		sounds.put("menuAmbience", "resources/sounds/ambience/menu_ambience.ogg");
+		sounds.put("boss1", "resources/sounds/music/boss_1.mp3");
 
 		// Sound effects that are preloaded (short duration)
 		soundEffects = new ConcurrentHashMap<>();

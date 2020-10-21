@@ -14,6 +14,7 @@ import deco2800.thomas.entities.enemies.PassiveEnemy;
 import deco2800.thomas.entities.enemies.monsters.Orc;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
@@ -90,7 +91,9 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     @Override
     public int applyDamage(int damage, DamageType damageType) {
         int damageDealt = super.applyDamage(damage, damageType);
-        hitByTarget();
+        if (super.getTarget() == null) {
+            hitByTarget();
+        }
         return damageDealt;
     }
 
@@ -104,6 +107,9 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
             setMovementTask(new MovementTask(this,
                     super.getTarget().getPosition()));
         }
+
+        GameManager.getManagerFromInstance(SoundManager.class).playMusic("boss1");
+        GameManager.getManagerFromInstance(SoundManager.class).setVolume(0.5f);
     }
 
     public void elementalAttack() {
@@ -180,6 +186,8 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
         world.setOrbEntity(new Orb(tile, "orb_" + orbNumber));
 
         PlayerPeon.credit(1500);
+
+        GameManager.getManagerFromInstance(SoundManager.class).stopMusic();
     }
 
     @Override
