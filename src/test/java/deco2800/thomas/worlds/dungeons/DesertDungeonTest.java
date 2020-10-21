@@ -3,30 +3,24 @@ package deco2800.thomas.worlds.dungeons;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.agent.AgentEntity;
-import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.monsters.ImmuneOrc;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.worlds.Tile;
-import deco2800.thomas.worlds.desert.DesertWorld;
 import deco2800.thomas.worlds.dungeons.desert.DesertDungeonDialog;
 import deco2800.thomas.worlds.dungeons.desert.DesertDungeonOpeningDialog;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -41,11 +35,13 @@ import static org.mockito.Mockito.*;
 @PrepareForTest({DesertDungeon.class, GameManager.class, DesertDungeonDialog.class, DesertDungeonOpeningDialog.class})
 public class DesertDungeonTest extends BaseGDXTest {
 
-    // the DesertWorld instance being tested
+    // the DesertDungeon instance being tested
     private DesertDungeon spyWorld;
 
+    // an enemy manager being mocked for some tests
     private EnemyManager enemyManager;
 
+    // a game manager being mocked for some tests
     private GameManager gameManager;
 
     /**
@@ -79,32 +75,29 @@ public class DesertDungeonTest extends BaseGDXTest {
         // sets up some functions for a mock Texture and its manager
         Texture texture = mock(Texture.class);
         when(textureManager.getTexture(anyString())).thenReturn(texture);
-        Array<TextureRegion> playerStand = new Array<>();
-        playerStand.add(new TextureRegion(new Texture("resources/combat/move_right.png"), 262, 256));
-        when(textureManager.getAnimationFrames(anyString())).thenReturn(playerStand);
+        Array<TextureRegion> textureRegion = new Array<>();
+        textureRegion.add(mock(TextureRegion.class));
+        when(textureManager.getAnimationFrames(anyString())).thenReturn(textureRegion);
         when(texture.getWidth()).thenReturn(1);
         when(texture.getHeight()).thenReturn(1);
 
         // sets up mocks for the dialog box
         Stage stage = mock(Stage.class);
         when(gameManager.getStage()).thenReturn(stage);
-
         PowerMockito.mockStatic(DesertDungeonDialog.class);
         PowerMockito.doNothing().when(DesertDungeonDialog.class);
         DesertDungeonDialog.setup(any(Stage.class));
         DesertDungeonDialog dialog = mock(DesertDungeonDialog.class);
-
         DesertDungeonOpeningDialog openingDialog = mock(DesertDungeonOpeningDialog.class);
         when(openingDialog.show()).thenReturn(dialog);
         PowerMockito.whenNew(DesertDungeonOpeningDialog.class).withArguments(anyString()).thenReturn(openingDialog);
 
-        // inits a desert dungeon
         DesertDungeon world = new DesertDungeon();
         spyWorld = spy(world);
     }
 
     /**
-     * Tests that the type returned by a DesertWorld is correct.
+     * Tests that the type returned by a DesertDungeon is correct.
      */
     @Test
     public void getType() {
@@ -112,7 +105,7 @@ public class DesertDungeonTest extends BaseGDXTest {
     }
 
     /**
-     * Tests that the number of tiles in a default DesertWorld is 2500.
+     * Tests that the number of tiles in a default DesertDungeon is 2500.
      */
     @Test
     public void getTilesLength() {
@@ -152,11 +145,17 @@ public class DesertDungeonTest extends BaseGDXTest {
         Assert.assertTrue(allTiles);
     }
 
+    /**
+     * Tests that exactly one ImmuneOrc is spawned during the world's creation.
+     */
     @Test
     public void oneImmuneOrcSpawned() {
         verify(enemyManager, times(1)).spawnSpecialEnemy(eq("immuneOrc"), anyFloat(), anyFloat());
     }
 
+    /**
+     * Tests that the exit portal of the dungeon is not spawned during the world's creation.
+     */
     @Test
     public void portalNotSpawnedAtStart() {
         spyWorld.onTick(anyLong());
@@ -171,14 +170,19 @@ public class DesertDungeonTest extends BaseGDXTest {
         Assert.assertEquals(0, portals.size());
     }
 
+    /**
+     * Tests that the exit portal of the dungeon is successfully
+     * spawned when the ImmuneOrc is killed.
+     */
     @Test
     public void testPortalSpawnsOnOrcDeath() {
+        // mocks managers required to spawn an ImmuneOrc
         PlayerManager playerManager = mock(PlayerManager.class);
         when(GameManager.getManagerFromInstance(PlayerManager.class)).thenReturn(playerManager);
         when(gameManager.getWorld()).thenReturn(spyWorld);
+
         spyWorld.onTick(anyLong());
         ArrayList<AbstractEntity> portals = new ArrayList<>();
-
         ImmuneOrc orc = new ImmuneOrc();
         orc.death();
 

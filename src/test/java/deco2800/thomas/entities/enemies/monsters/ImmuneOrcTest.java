@@ -2,7 +2,6 @@ package deco2800.thomas.entities.enemies.monsters;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
@@ -13,7 +12,6 @@ import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PlayerManager;
 import deco2800.thomas.managers.TextureManager;
-import deco2800.thomas.renderers.OverlayRenderer;
 import deco2800.thomas.renderers.components.FloatingDamageComponent;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.AbstractWorld;
@@ -23,11 +21,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.WildcardMatcher;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.powermock.api.mockito.PowerMockito.spy;
@@ -43,13 +39,19 @@ import static org.powermock.api.mockito.PowerMockito.spy;
 @PrepareForTest({GameManager.class, WorldUtil.class})
 public class ImmuneOrcTest extends BaseGDXTest {
 
+    // the ImmuneOrc instance which will be tested
     private ImmuneOrc spyOrc;
 
+    // a gameManager instance which will be mocked for some tests
     private GameManager gameManager;
 
+    /**
+     * Sets up all tests. All managers and features not specifically related
+     * to the ImmuneOrc MUST be mocked here.
+     */
     @Before
     public void setUp() throws Exception {
-        // set up mocks of all managers used during a world's creation
+        // mocks the game manager and texture manager, so that an ImmuneOrc can be instantiated
         PowerMockito.mockStatic(GameManager.class);
         gameManager = mock(GameManager.class);
         TextureManager textureManager = mock(TextureManager.class);
@@ -59,11 +61,11 @@ public class ImmuneOrcTest extends BaseGDXTest {
         when(texture.getWidth()).thenReturn(1);
         when(texture.getHeight()).thenReturn(1);
         when(textureManager.getTexture(anyString())).thenReturn(texture);
-
         when(GameManager.get()).thenReturn(gameManager);
         when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
         when(textureManager.getAnimationFrames(anyString())).thenReturn(textureRegion);
 
+        // mocks managers and components related to Floating Damage numbers
         PowerMockito.mockStatic(WorldUtil.class);
         FloatingDamageComponent floatingDamageComponent = mock(FloatingDamageComponent.class);
         doNothing().when(floatingDamageComponent).add(anyInt(), eq(Color.RED), any(float[].class), anyInt());
@@ -73,13 +75,25 @@ public class ImmuneOrcTest extends BaseGDXTest {
         spyOrc = spy(new ImmuneOrc());
     }
 
+    /**
+     * Tests that the ImmuneOrc is immune to damage types that are not of
+     * the special type NOT_IMMUNE. This interaction is handled by applyDamage().
+     */
     @Test
     public void applyImmuneDamage() {
         spyOrc.applyDamage(10, DamageType.FIRE);
+        spyOrc.applyDamage(10, DamageType.SWAMPY_WATER);
+        spyOrc.applyDamage(10, DamageType.ICE);
+        spyOrc.applyDamage(10, DamageType.SAND_I_GUESS);
+        spyOrc.applyDamage(10, DamageType.COMMON);
 
         Assert.assertEquals(100, spyOrc.getCurrentHealth());
     }
 
+    /**
+     * Tests that the ImmuneOrc is successfully damaged by the special damage
+     * type NOT_IMMUNE. This interaction is handled by applyDamage().
+     */
     @Test
     public void applyNonImmuneDamage() {
         spyOrc.applyDamage(10, DamageType.NOT_IMMUNE);
@@ -87,8 +101,13 @@ public class ImmuneOrcTest extends BaseGDXTest {
         Assert.assertEquals(90, spyOrc.getCurrentHealth());
     }
 
+    /**
+     * Tests that the ImmuneOrc's overridden death() method successfully
+     * calls for the enemy manager to remove the spyOrc instance.
+     */
     @Test
     public void deathRemovesOrc() {
+        // mocks all managers used in the death() method
         EnemyManager enemyManager = mock(EnemyManager.class);
         PlayerManager playerManager = mock(PlayerManager.class);
         doNothing().when(playerManager).grantWizardSkill(any(WizardSkills.class));
@@ -104,8 +123,13 @@ public class ImmuneOrcTest extends BaseGDXTest {
         verify(enemyManager, times(1)).removeWildEnemy(spyOrc);
     }
 
+    /**
+     * Tests that the ImmuneOrc's overridden death() method successfully calls for
+     * the player manager to grant the player a new skill.
+     */
     @Test
     public void deathGrantsSkill() {
+        // mocks all managers used in the death() method
         EnemyManager enemyManager = mock(EnemyManager.class);
         PlayerManager playerManager = mock(PlayerManager.class);
         doNothing().when(enemyManager).removeWildEnemy(spyOrc);
@@ -121,6 +145,10 @@ public class ImmuneOrcTest extends BaseGDXTest {
         verify(playerManager, times(1)).grantWizardSkill(WizardSkills.SANDTORNADO);
     }
 
+    /**
+     * Tests that the ImmuneOrc's overridden deepCopy() method successfully creates
+     * a new deep copy of an Immune Orc when called.
+     */
     @Test
     public void deepCopy() {
         Orc otherOrc = spyOrc.deepCopy();
