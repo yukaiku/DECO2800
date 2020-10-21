@@ -88,7 +88,6 @@ public class LoadingScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
-        System.out.println("yo");
     }
 
     @Override
