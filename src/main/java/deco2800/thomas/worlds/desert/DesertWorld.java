@@ -105,7 +105,7 @@ public class DesertWorld extends AbstractWorld {
      * Creates the static entities to populate the world and makes some tiles obstructed.
      * This includes sand dunes, cactus plants, dead trees and quicksand.
      */
-    public void createStaticEntities() {
+    protected void createStaticEntities() {
         Random rand = new Random();
         int randIndex;
 
@@ -165,8 +165,10 @@ public class DesertWorld extends AbstractWorld {
             }
         }
 
-        // adds the portal to the Desert Dungeon
-        entities.add(new DesertDungeonPortal(this, -22, -22));
+        if (getType().equals("Desert")) {
+            // adds the portal to the Desert Dungeon
+            entities.add(new DesertDungeonPortal(this, -22, -22));
+        }
     }
 
     /**

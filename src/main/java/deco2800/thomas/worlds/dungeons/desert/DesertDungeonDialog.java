@@ -1,5 +1,6 @@
 package deco2800.thomas.worlds.dungeons.desert;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -13,28 +14,24 @@ public abstract class DesertDungeonDialog extends Dialog {
     protected static Stage stage;
 
     // the skin for the dialog box
-    protected static Skin skin;
+    protected static Skin skin = new Skin(Gdx.files.internal("resources/uiskin.skin"));
 
     /**
-     * Creates a new DesertDungeonDialog with a specified title and skin.
+     * Creates a new DesertDungeonDialog with a specified title.
      *
      * @param title The specified title
-     * @param skin The specified skin
      */
-    public DesertDungeonDialog(String title, Skin skin) {
+    public DesertDungeonDialog(String title) {
         super(title, skin);
-        DesertDungeonDialog.skin = skin;
     }
 
     /**
-     * Sets up the DesertDungeonDialog with a specified stage and skin.
+     * Sets up the DesertDungeonDialog with a specified stage.
      *
      * @param stage The specified stage
-     * @param skin The specified skin
      */
-    public static void setup(Stage stage, Skin skin) {
+    public static void setup(Stage stage) {
         DesertDungeonDialog.stage = stage;
-        DesertDungeonDialog.skin = skin;
     }
 
     @Override

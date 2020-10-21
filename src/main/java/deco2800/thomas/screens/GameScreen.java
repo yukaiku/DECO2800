@@ -31,6 +31,7 @@ import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.TutorialWorld;
 import deco2800.thomas.worlds.desert.DesertWorld;
+import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
