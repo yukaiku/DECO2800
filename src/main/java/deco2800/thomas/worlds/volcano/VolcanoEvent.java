@@ -2,10 +2,7 @@ package deco2800.thomas.worlds.volcano;
 
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.environment.volcano.VolcanoLavaPool;
-import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.util.SquareVector;
-import deco2800.thomas.worlds.AbstractWorld;
-import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.WorldEvent;
 
 import java.util.Random;

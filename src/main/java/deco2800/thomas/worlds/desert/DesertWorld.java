@@ -3,8 +3,6 @@ package deco2800.thomas.worlds.desert;
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.entities.environment.Portal;
-import deco2800.thomas.entities.environment.tundra.TundraDungeonPortal;
 import deco2800.thomas.entities.items.*;
 import deco2800.thomas.entities.npc.DesertNPC;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
@@ -99,6 +97,8 @@ public class DesertWorld extends AbstractWorld {
         difficultyManager.setPlayerEntity((PlayerPeon) this.getPlayerEntity());
         difficultyManager.setDifficultyLevel(getType());
 
+        // Start ambience
+        GameManager.getManagerFromInstance(SoundManager.class).playAmbience("desertAmbience");
     }
 
     /**

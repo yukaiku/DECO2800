@@ -3,7 +3,6 @@ package deco2800.thomas.entities;
 import com.google.gson.annotations.Expose;
 
 import deco2800.thomas.util.SquareVector;
-import deco2800.thomas.worlds.Tile;
 
 public class Part {
 	@Expose
@@ -23,7 +22,7 @@ public class Part {
 		this.obstructed = obstructed;
 	}
 
-	public Part(Tile centre, String textureString, Boolean obstructed) {
+	public Part(String textureString, Boolean obstructed) {
 		this(new SquareVector(0, 0), textureString, obstructed);
 	}
 
