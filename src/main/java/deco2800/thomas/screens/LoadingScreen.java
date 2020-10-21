@@ -66,33 +66,33 @@ public class LoadingScreen implements Screen {
         stage.getRoot().getColor().a = 0;
         SequenceAction sequenceAction = new SequenceAction();
         sequenceAction.addAction(Actions.fadeIn(0.3f));
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading game 1/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading game")));
         sequenceAction.addAction(Actions.run(game::loadMainMenuScreen));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading player 2/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading player 1/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadBaseTextures));
         sequenceAction.addAction(Actions.run(textureManager::loadInventoryTextures));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading enemies 3/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading enemies 2/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadEnemyTextures));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading combats 4/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading combats 3/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadCombatTextures));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading storyline 5/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading storyline 4/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadStorylineTextures));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading NPC 6/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading NPC 5/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadNPCTextures));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading health 7/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading health 6/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadHealthTextures));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading environment 8/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading environment 7/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadEnvironmentTextures));
         sequenceAction.addAction(Actions.run(textureManager::loadMinimapTextures));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading animation 9/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading animation 8/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadAnimationFrames));
 
         sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading sound & music 9/9")));
