@@ -61,7 +61,7 @@ public class PlayerManager extends AbstractManager {
      * @param skill Skill to grant.
      */
     public void grantWizardSkill(WizardSkills skill) {
-        if (currentWizardSkills.size() < MAX_WIZARD_SKILLS && !currentWizardSkills.contains(skill)) {
+        if (currentWizardSkills.size() < MAX_WIZARD_SKILLS) {
             currentWizardSkills.add(skill);
             ((PlayerPeon)GameManager.get().getWorld().getPlayerEntity()).updatePlayerSkills();
         }
