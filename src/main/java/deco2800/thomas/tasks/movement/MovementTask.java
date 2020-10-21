@@ -3,9 +3,11 @@ package deco2800.thomas.tasks.movement;
 import java.util.List;
 
 import deco2800.thomas.combat.DamageType;
+import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PathFindingService;
@@ -84,6 +86,7 @@ public class MovementTask extends AbstractTask {
 			checkForTeleportTile(destination);
 			checkForTrapTile(destination);
 			checkForRewardTile(destination);
+			checkObtainedOrb(destination);
 		}
 
 		if (entity.getPosition().isCloseEnoughToBeTheSame(destination)) {
@@ -260,6 +263,25 @@ public class MovementTask extends AbstractTask {
 			destination.setCol(newCol);
 			destination.setRow(newRow);
 			gameManager.getWorld().getPlayerEntity().setPosition(newCol, newRow, 1);
+		}
+	}
+
+	/**
+	 * Checking if the player has obtained the Orb of the current world then moving the player
+	 * to the next world
+	 *
+	 * @param position
+	 */
+	private void checkObtainedOrb(SquareVector position) {
+		Orb orbEntity = gameManager.getWorld().getOrbEntity();
+		if (orbEntity != null) {
+			if (position.equals(orbEntity.getPosition())) {
+				QuestTracker.increaseOrbs(orbEntity);
+				if(QuestTracker.orbTracker().size() != 4){
+					gameManager.getWorld().removeEntity(gameManager.getWorld().getPlayerEntity());
+					GameManager.get().setNextWorld();
+				}
+			}
 		}
 	}
 

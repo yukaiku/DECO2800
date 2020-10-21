@@ -131,20 +131,11 @@ public abstract class AbstractWorld implements Tickable {
 	}
 
 	/**
-	 * Check if the player's position is same as the orb's position
-	 * Removes orb, add to tracker and jump to next world
+	 * Get the current Orb entity in this world
+	 * @return orbEntity
 	 */
-	protected void checkObtainedOrb() {
-		if (orbEntity != null) {
-			if (playerEntity.getPosition().equals(orbEntity.getPosition())) {
-				QuestTracker.increaseOrbs(orbEntity);
-				if(QuestTracker.orbTracker().size() != 4){
-					this.removeEntity(playerEntity);
-					GameManager.get().setNextWorld();
-				}
-
-			}
-		}
+	public Orb getOrbEntity() {
+		return orbEntity;
 	}
 
 	/**
@@ -414,8 +405,6 @@ public abstract class AbstractWorld implements Tickable {
 	}
 
 	public void onTick(long i) {
-		this.checkObtainedOrb();
-
 		for (AbstractEntity entity : entitiesToRemove) {
 			entities.remove(entity);
 		}
