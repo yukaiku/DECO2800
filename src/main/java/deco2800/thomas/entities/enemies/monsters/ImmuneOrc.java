@@ -15,6 +15,9 @@ import deco2800.thomas.worlds.Tile;
  */
 public class ImmuneOrc extends Orc {
 
+    // whether this orc has died yet
+    private boolean dead = false;
+
     /**
      * Creates a new ImmuneOrc with its default stats.
      */
@@ -54,6 +57,8 @@ public class ImmuneOrc extends Orc {
      */
     @Override
     public void death() {
+        if (dead) return;
+        dead = true;
         super.death();
         GameManager.getManagerFromInstance(PlayerManager.class).grantWizardSkill(WizardSkills.SANDTORNADO);
 
