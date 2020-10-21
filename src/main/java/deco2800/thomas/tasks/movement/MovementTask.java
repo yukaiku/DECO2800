@@ -305,4 +305,33 @@ public class MovementTask extends AbstractTask {
 			gameManager.getWorld().activateRewardTile(tile);
 		}
 	}
+
+	/**
+	 * Check if the tile of the player's current position is a trap tile
+	 *
+	 * @param position
+	 */
+	private void checkForTrapTileWithoutParent(SquareVector position) {
+		Tile tile = gameManager.getWorld().getTile(position);
+
+		if (tile != null && tile.isTrapTile() && !tile.getTrapActivated()) {
+			tile.setTrapActivated(true);
+			gameManager.getWorld().activateTrapTile(tile);
+		}
+	}
+
+	/**
+	 * Check if the tile of the player's current position is a reward tile
+	 *
+	 * @param position
+	 */
+	private void checkForRewardTileWithoutParent(SquareVector position) {
+		Tile tile = gameManager.getWorld().getTile(position);
+
+		if (tile != null && tile.isRewardTile() && !tile.getRewardActivated()) {
+			tile.setRewardActivated(true);
+			gameManager.getWorld().activateRewardTile(tile);
+		}
+	}
+
 }
