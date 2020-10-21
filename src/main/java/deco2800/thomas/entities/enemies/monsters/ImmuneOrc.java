@@ -4,7 +4,6 @@ import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.environment.ExitPortal;
-import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PlayerManager;
 import deco2800.thomas.worlds.AbstractWorld;

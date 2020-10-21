@@ -1,22 +1,14 @@
 package deco2800.thomas.worlds.dungeons;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.entities.environment.desert.*;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.SoundManager;
-import deco2800.thomas.worlds.AbstractWorld;
-import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.desert.DesertWorld;
 import deco2800.thomas.worlds.dungeons.desert.DesertDungeonDialog;
 import deco2800.thomas.worlds.dungeons.desert.DesertDungeonOpeningDialog;
-
-import java.util.Random;
 
 /**
  * A dungeon for the desert world, where a player must use the
