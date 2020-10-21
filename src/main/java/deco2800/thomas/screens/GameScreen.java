@@ -31,6 +31,7 @@ import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.TutorialWorld;
 import deco2800.thomas.worlds.desert.DesertWorld;
+import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,7 +78,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	OrthographicCamera cameraOverlay;
 	OrthographicCamera cameraEvent;
 
-	public Stage stage = new Stage(new ExtendViewport(1920, 1000));
+	private Stage stage = new Stage(new ExtendViewport(1920, 1000));
 
 	long lastGameTick = 0;
 
@@ -86,7 +87,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new TutorialWorld();
-				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
 		},
@@ -94,7 +94,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new TutorialWorld();
-				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
 		},
@@ -102,7 +101,6 @@ public class GameScreen implements Screen, KeyDownObserver {
 			@Override
 			public AbstractWorld method() {
 				AbstractWorld world = new DesertWorld();
-				GameManager.get().getManager(NetworkManager.class).startHosting("host");
 				return world;
 			}
 		};
@@ -112,6 +110,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	/**
 	 * Gets the current OverlayRenderer.
+	 *
 	 * @return OverlayRenderer
 	 */
 	public OverlayRenderer getOverlayRenderer() {
@@ -123,21 +122,21 @@ public class GameScreen implements Screen, KeyDownObserver {
 		switch (startType) {
 			// start new game without debug mode
 			case NEW_GAME:
-				GameManager.get().debugMode = false;
-				GameManager.get().state = GameManager.State.TRANSITION;
-				GameManager.get().tutorial = true;
+				GameManager.get().setDebugMode(false);
+				GameManager.get().setState(GameManager.State.TRANSITION);
+				GameManager.get().setTutorial(true);
 				GameManager.get().setWorld(startType.method());
 				break;
 			// enter environment maps with debugging
 			case ENV_TEAM_GAME:
-				GameManager.get().debugMode = true;
+				GameManager.get().setDebugMode(true);
 				GameManager.get().setWorld(startType.method());
 				break;
 			// start new game with debugging
 			case TEST_WORLD:
-				GameManager.get().debugMode = true;
-				GameManager.get().state = GameManager.State.TRANSITION;
-				GameManager.get().tutorial = true;
+				GameManager.get().setDebugMode(true);
+				GameManager.get().setState(GameManager.State.TRANSITION);
+				GameManager.get().setTutorial(true);
 				GameManager.get().setWorld(startType.method());
 				break;
 			default:
@@ -229,7 +228,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	/**
 	 * Render the game normally
 	 */
-	public void renderGame(float delta ) {
+	public void renderGame(float delta) {
 		handleRenderables();
 
 		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta, GameManager.get().getWorld().getWorldZoomable());
@@ -327,8 +326,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	@Override
 	public void render(float delta) {
-		switch (GameManager.get().state)
-		{
+		switch (GameManager.get().getState()) {
 			case TRANSITION:
 				renderTransitionScreen(delta);
 				break;
@@ -410,73 +408,70 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	@Override
 	public void notifyKeyDown(int keycode) {
-		if (keycode == Input.Keys.ENTER && GameManager.get().state == GameManager.State.TRANSITION) {
-			GameManager.resume();
-		}
-		if (keycode == Input.Keys.F12 && GameManager.get().state == GameManager.State.RUN) {
-			GameManager.get().debugMode = !GameManager.get().debugMode;
-		}
-		if (GameManager.get().debugMode && !GameManager.get().getWorld().getType().equals("World") && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
-				Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
-			if (keycode == Input.Keys.N) {
-				Boss boss = GameManager.getManagerFromInstance(EnemyManager.class).getBoss();
-				PlayerPeon playerPeon = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
-				playerPeon.setPosition(boss.getPosition().getCol(),boss.getPosition().getRow(),boss.getHeight());
-				boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
-			}
-		}
-		if (keycode == Input.Keys.ESCAPE) {
-			if (GameManager.get().state == GameManager.State.RUN) {
-				GameManager.pause();
-			} else if (GameManager.get().state == GameManager.State.PAUSED) {
+		if (keycode == Input.Keys.F12 && GameManager.get().getState() == GameManager.State.RUN) {
+			GameManager.get().setDebugMode(!GameManager.get().getDebugMode());
+			if (keycode == Input.Keys.ENTER && GameManager.get().getState() == GameManager.State.TRANSITION) {
 				GameManager.resume();
 			}
+			if (keycode == Input.Keys.N && GameManager.get().getDebugMode() && !GameManager.get().getWorld().getType().equals("World") && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
+					Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
+				Boss boss = GameManager.getManagerFromInstance(EnemyManager.class).getBoss();
+				PlayerPeon playerPeon = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
+				playerPeon.setPosition(boss.getPosition().getCol(), boss.getPosition().getRow(), boss.getHeight());
+				boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
+			}
+			if (keycode == Input.Keys.ESCAPE && GameManager.get().getState() == GameManager.State.RUN) {
+				GameManager.pause();
+			} else if (keycode == Input.Keys.ESCAPE && GameManager.get().getState() == GameManager.State.PAUSED) {
+				GameManager.resume();
+			}
+
+
+			if (keycode == Input.Keys.F9) {
+				GameManager.get().setTutorial(!GameManager.get().getTutorial());
+			}
+
+			if (keycode == Input.Keys.F5) {
+				world = new TestWorld();
+				AbstractEntity.resetID();
+				Tile.resetID();
+				GameManager gameManager = GameManager.get();
+				gameManager.setWorld(world);
+
+				// Add first peon to the world
+				world.addEntity(new Peon(0f, 0f, 0.05f, 50));
+			}
+
+			if (keycode == Input.Keys.F11) { // F11
+				GameManager.get().setShowCoords(!GameManager.get().getShowCoords());
+				LOG.info("Show coords is now {}", GameManager.get().getShowCoords());
+			}
+
+
+			if (keycode == Input.Keys.C) { // F11
+				GameManager.get().setShowCoords(!GameManager.get().getShowCoords());
+				LOG.info("Show coords is now {}", GameManager.get().getShowCoords());
+			}
+
+			if (keycode == Input.Keys.F10) { // F10
+				GameManager.get().setShowPath(!GameManager.get().getShowPath());
+				LOG.info("Show Path is now {}", GameManager.get().getShowPath());
+			}
+
+			if (keycode == Input.Keys.F3) { // F3
+				// Save the world to the DB
+				DatabaseManager.saveWorld(null);
+			}
+
+			if (keycode == Input.Keys.F4) { // F4
+				// Load the world to the DB
+				DatabaseManager.loadWorld(null);
+			}
+
+			if (keycode == Input.Keys.F6) {
+				DatabaseManager.saveWorldToJsonFile(GameManager.get().getWorld(), "resources/_save_.json");
+			}
 		}
 
-		if (keycode == Input.Keys.F9) {
-			GameManager.get().tutorial = !GameManager.get().tutorial;
-		}
-
-		if (keycode == Input.Keys.F5) {
-			world = new TestWorld();
-			AbstractEntity.resetID();
-			Tile.resetID();
-			GameManager gameManager = GameManager.get();
-			gameManager.setWorld(world);
-
-			// Add first peon to the world
-			world.addEntity(new Peon(0f, 0f, 0.05f, 50));
-		}
-
-		if (keycode == Input.Keys.F11) { // F11
-			GameManager.get().showCoords = !GameManager.get().showCoords;
-			LOG.info("Show coords is now {}", GameManager.get().showCoords);
-		}
-
-
-		if (keycode == Input.Keys.C) { // F11
-			GameManager.get().showCoords = !GameManager.get().showCoords;
-			LOG.info("Show coords is now {}", GameManager.get().showCoords);
-		}
-
-		if (keycode == Input.Keys.F10) { // F10
-			GameManager.get().showPath = !GameManager.get().showPath;
-			LOG.info("Show Path is now {}", GameManager.get().showPath);
-		}
-
-		if (keycode == Input.Keys.F3) { // F3
-			// Save the world to the DB
-			DatabaseManager.saveWorld(null);
-		}
-
-		if (keycode == Input.Keys.F4) { // F4
-			// Load the world to the DB
-			DatabaseManager.loadWorld(null);
-		}
-
-		if (keycode == Input.Keys.F6) {
-			DatabaseManager.saveWorldToJsonFile(GameManager.get().getWorld(), "resources/_save_.json");
-		}
 	}
-
 }

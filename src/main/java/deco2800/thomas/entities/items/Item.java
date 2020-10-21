@@ -57,9 +57,7 @@ public class Item extends StaticEntity implements TouchDownObserver {
     }
 
     public void chargePlayer() {
-        System.out.println("-- Charge player");
         if (PlayerPeon.checkBalance() > 0) {
-            System.out.println(PlayerPeon.checkBalance());
             PlayerPeon.debit(goldValue);
 
             if (this.getItemName().equals("Health Potion")) {
@@ -107,31 +105,12 @@ public class Item extends StaticEntity implements TouchDownObserver {
         float[] mouse = WorldUtil.screenToWorldCoordinates(Gdx.input.getX(),
                 Gdx.input.getY());
         float[] clickedPosition = WorldUtil.worldCoordinatesToColRow(mouse[0], mouse[1]);
-        boolean isCloseCol =
-                (clickedPosition[0] == this.getCol()
-                        || clickedPosition[0] == this.getRow() - 1
-                        || clickedPosition[0] == this.getRow() + 1);
 
-        boolean isCloseRow = (clickedPosition[1] == this.getRow() ||
-                clickedPosition[1] == this.getRow() - 1 ||
-                clickedPosition[1] == this.getRow() + 1);
-        
+        boolean isCloseCol = clickedPosition[0] == this.getCol();
+        boolean isCloseRow = clickedPosition[1] == this.getRow();
+
         if (isCloseCol && isCloseRow) {
-            // item and player position - should be near each other. 
-            float playerCol = this.player.getPosition().getCol();
-            float playerRow = this.player.getPosition().getRow();
-            float itemCol = this.getPosition().getCol();
-            float itemRow = this.getPosition().getRow();
-            if (((itemCol + 0.75) <= playerCol) && ((itemRow + 0.75) <= playerRow)) {
-                interact();
-            }
-            if ((itemCol - 0.75) <= playerCol && ((itemRow - 0.75) <= playerRow)) {
-                interact();
-            }
-            if ((itemCol - 0.75) <= playerCol && ((itemRow + 0.75) <= playerRow)) {
-                interact();
-            }
-            if ((itemCol + 0.75) <= playerCol && ((itemRow - 0.75) <= playerRow)) {
+            if (this.player.getPosition().isCloseEnoughToBeTheSame(this.getPosition(),1.25f)) {
                 interact();
             }
         }

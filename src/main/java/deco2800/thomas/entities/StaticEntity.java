@@ -20,7 +20,7 @@ import deco2800.thomas.worlds.Tile;
 import com.google.gson.annotations.Expose;
 
 public class StaticEntity extends AbstractEntity {
-	transient private final Logger log = LoggerFactory.getLogger(StaticEntity.class);
+	private final transient Logger log = LoggerFactory.getLogger(StaticEntity.class);
 
 	//private transient HashMap<String, Object> dataToSave = new HashMap<>();
 

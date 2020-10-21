@@ -1,6 +1,5 @@
 package deco2800.thomas.entities.agent;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -14,14 +13,10 @@ import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.observers.KeyUpObserver;
 import deco2800.thomas.observers.TouchDownObserver;
 import deco2800.thomas.tasks.movement.MovementTask;
-import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObserver, KeyDownObserver, KeyUpObserver {
     // Animation Testing
@@ -52,6 +47,10 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
 
     // Mech skill
     private AbstractSkill mechSkill;
+
+    // Movement helper
+    private Stack<MovementTask.Direction> movementStack = new Stack<>();
+    private boolean[] activeDirectionKeys = {true, false, false, false, false};
 
     public PlayerPeon(float row, float col, float speed) {
         this(row, col, speed, DEFAULT_HEALTH);
@@ -378,16 +377,20 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
     private void startMovementTask(int keycode) {
         switch (keycode) {
             case Input.Keys.W:
-                this.setMovingDirection(MovementTask.Direction.UP);
+                this.movementStack.push(MovementTask.Direction.UP);
+                this.activeDirectionKeys[1] = true;
                 break;
             case Input.Keys.S:
-                this.setMovingDirection(MovementTask.Direction.DOWN);
+                this.movementStack.push(MovementTask.Direction.DOWN);
+                this.activeDirectionKeys[2] = true;
                 break;
             case Input.Keys.A:
-                this.setMovingDirection(MovementTask.Direction.LEFT);
+                this.movementStack.push(MovementTask.Direction.LEFT);
+                this.activeDirectionKeys[3] = true;
                 break;
             case Input.Keys.D:
-                this.setMovingDirection(MovementTask.Direction.RIGHT);
+                this.movementStack.push(MovementTask.Direction.RIGHT);
+                this.activeDirectionKeys[4] = true;
                 break;
             default:
                 break;
@@ -408,30 +411,37 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
     private void stopMovementTask(int keycode) {
         switch (keycode) {
             case Input.Keys.W:
-                if (this.getMovingDirection() == MovementTask.Direction.UP) {
-                    break;
-                }
-                return;
+                this.activeDirectionKeys[1] = false;
+                break;
             case Input.Keys.S:
-                if (this.getMovingDirection() == MovementTask.Direction.DOWN) {
-                    break;
-                }
-                return;
+                this.activeDirectionKeys[2] = false;
+                break;
             case Input.Keys.A:
-                if (this.getMovingDirection() == MovementTask.Direction.LEFT) {
-                    break;
-                }
-                return;
+                this.activeDirectionKeys[3] = false;
+                break;
             case Input.Keys.D:
-                if (this.getMovingDirection() == MovementTask.Direction.RIGHT) {
-                    break;
-                }
-                return;
+                this.activeDirectionKeys[4] = false;
+                break;
             default:
-                return;
+                break;
         }
-        this.setMovingDirection(MovementTask.Direction.NONE);
-        setCurrentState(State.IDLE);
+    }
+
+    public boolean isDirectionKeyActive(MovementTask.Direction direction) {
+        switch (direction) {
+            case NONE:
+                return activeDirectionKeys[0];
+            case UP:
+                return activeDirectionKeys[1];
+            case DOWN:
+                return activeDirectionKeys[2];
+            case LEFT:
+                return activeDirectionKeys[3];
+            case RIGHT:
+                return activeDirectionKeys[4];
+            default:
+                return false;
+        }
     }
 
     /**
@@ -456,6 +466,10 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         return this.activeWizardSkill;
     }
 
+    public Stack<MovementTask.Direction> getMovementStack() {
+        return this.movementStack;
+    }
+
     public AbstractSkill getMechSkill() {
         return this.mechSkill;
     }
@@ -466,14 +480,14 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
      */
     @Override
     public void death() {
+        super.death();
         PlayerPeon.buffDamageTotal = 0;
-        for (AbstractSkill s : this.getWizardSkills()){
+        for (AbstractSkill s : this.getWizardSkills()) {
             s.setCooldownMax();
         }
         this.getMechSkill().setCooldownMax();
         GameManager.get().getWorld().removeEntity(this);
         GameManager.get().getWorld().disposeEntity(this.getEntityID());
-        GameManager.getManagerFromInstance(StatusEffectManager.class).getCurrentStatusEffects().clear();
         GameManager.gameOver();
     }
 

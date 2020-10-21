@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import deco2800.thomas.ThomasGame;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
-import org.lwjgl.Sys;
 
 public class SettingScreen implements Screen {
     final ThomasGame game;
@@ -52,7 +51,7 @@ public class SettingScreen implements Screen {
     public SettingScreen(final ThomasGame game) {
         this.game = game;
 
-        stage = new Stage(new ExtendViewport(1920, 1000), game.batch);
+        stage = new Stage(new ExtendViewport(1920, 1000), game.getBatch());
         screenWidth = stage.getViewport().getScreenWidth();
         screenHeight = stage.getViewport().getScreenHeight();
 
@@ -109,7 +108,7 @@ public class SettingScreen implements Screen {
         windowButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                setWindowedScreen();
+//                setWindowedScreen();
             }
         });
 

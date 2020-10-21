@@ -44,8 +44,8 @@ public class HealthBarComponent extends OverlayComponent {
         assignPlayerHealth(((Peon)GameManager.get().getWorld()
                 .getPlayerEntity()).getHealthTracker());
 
-        healthTexture.setPosition(overlayRenderer.getX(),
-                overlayRenderer.getY() + 0.9f * overlayRenderer.getHeight());
+        healthTexture.setPosition(overlayRenderer.getX() + 0.8f * overlayRenderer.getWidth(),
+                overlayRenderer.getY() + 0.8f * overlayRenderer.getHeight());
         healthTexture.setSize(0.2f * overlayRenderer.getWidth(),
                 0.1f * overlayRenderer.getHeight());
         healthTexture.draw(batch);

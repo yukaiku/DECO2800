@@ -65,12 +65,8 @@ public class Vector2 {
 			return false;
 		}
 		Vector2 vector = (Vector2) obj;
-		if (vector.getX() == this.getX() && vector.getY() == this.getY()) {
-			return true;
-		}
-
-		return false;
-	}
+        return vector.getX() == this.getX() && vector.getY() == this.getY();
+    }
 
 	@Override
 	public int hashCode() {

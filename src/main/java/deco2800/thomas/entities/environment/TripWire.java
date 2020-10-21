@@ -12,8 +12,4 @@ public class TripWire extends StaticEntity implements Tickable {
         super(tile, RenderConstants.CHEST_RENDER, texture, obstructed);
         this.setObjectName(ENTITY_ID_STRING);
     }
-
-    @Override
-    public void onTick(long i) {
-    }
 }

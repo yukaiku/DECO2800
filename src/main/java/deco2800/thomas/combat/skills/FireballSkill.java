@@ -1,6 +1,8 @@
 package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireballAttackTask;
 

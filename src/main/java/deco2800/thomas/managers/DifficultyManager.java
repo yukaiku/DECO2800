@@ -86,11 +86,7 @@ public class DifficultyManager extends TickableManager{
     public void setPlayerHealth(int difficulty) {
         //Sets the player max health
         playerPeon.setMaxHealth(25*difficulty);
-        int playerMaxHealth = playerPeon.getMaxHealth();
-        if(playerPeon.getCurrentHealth() > playerMaxHealth){
-            //Sets max health based off number of orbs starting from 25 to 100
-            playerPeon.setCurrentHealthValue(playerMaxHealth);
-        }
+        playerPeon.setCurrentHealthValue(25*difficulty);
     }
 
     /***
@@ -102,21 +98,21 @@ public class DifficultyManager extends TickableManager{
         for(AbstractSkill wizardSkill : wizardSkills){
             switch (wizardSkill.getTexture()){
                 case "iceballIcon": // Default 50
-                    ((IceballSkill) wizardSkill).setMaxCooldown(coolDown*2);
+                    IceballSkill.setMaxCooldown(coolDown*2);
                     if(getWorldType().equals("desert")){
                         //More damage to desert with water skill
-                        ((IceballSkill)wizardSkill).setDamageMultiplier(((IceballSkill) wizardSkill).getDamageMultiplier()*2);
+                        IceballSkill.setDamageMultiplier(((IceballSkill) wizardSkill).getDamageMultiplier()*2);
                     }
                     return;
                 case "fireballIcon": //Default 20
-                    ((FireballSkill) wizardSkill).setMaxCooldown(coolDown);
+                    FireballSkill.setMaxCooldown(coolDown);
                     if(getWorldType().equals("tundra")){
                         //More damage to tundra with fire skill
-                        ((FireballSkill)wizardSkill).setDamageMultiplier(((FireballSkill) wizardSkill).getDamageMultiplier()*2);
+                        FireballSkill.setDamageMultiplier(((FireballSkill) wizardSkill).getDamageMultiplier()*2);
                     }
                     return;
                 case "stingIcon": //Default 50
-                    ((ScorpionStingSkill) wizardSkill).setMaxCoolDown(coolDown*2);
+                    ScorpionStingSkill.setMaxCoolDown(coolDown*2);
                     return;
 
             }
@@ -130,9 +126,9 @@ public class DifficultyManager extends TickableManager{
     public void setMechSkillCoolDown(int coolDown){
         AbstractSkill mechSkill = playerPeon.getMechSkill();
         if(mechSkill.getTexture() == "explosionIcon"){ //Default 160
-            ((FireBombSkill) mechSkill).setMaxCoolDown(coolDown);
+            FireBombSkill.setMaxCoolDown(coolDown);
         }else{ //default 200
-            ((WaterShieldSkill) mechSkill).setMaxCoolDown(coolDown*2);
+            WaterShieldSkill.setMaxCoolDown(coolDown*2);
         }
     }
 
@@ -156,29 +152,32 @@ public class DifficultyManager extends TickableManager{
         switch (getWorldType()) {
             // Difficulty Settings for each world
             case "swamp":
-                setPlayerHealth(1);
+                setPlayerHealth(4);
                 setWildSpawnRate(0.05f);
                 enemyManager.getBoss().setMaxHealth(100);
+                enemyManager.setWildEnemyCap(5);
                 setWizardSkillCoolDown(15);
                 break;
             case "tundra":
-                setPlayerHealth(2);
-                setWildSpawnRate(0.05f);
+                setPlayerHealth(4);
+                setWildSpawnRate(0.06f);
                 enemyManager.getBoss().setMaxHealth(150);
+                enemyManager.setWildEnemyCap(6);
                 setWizardSkillCoolDown(15);
                 setMechSkillCoolDown(150);
                 break;
             case "desert":
-                setPlayerHealth(3);
-                setWildSpawnRate(0.05f);
+                setPlayerHealth(4);
+                setWildSpawnRate(0.07f);
                 enemyManager.getBoss().setMaxHealth(300);
                 setWizardSkillCoolDown(15);
                 setMechSkillCoolDown(50);
                 break;
             case "volcano":
                 setPlayerHealth(4);
-                setWildSpawnRate(0.05f);
+                setWildSpawnRate(0.08f);
                 enemyManager.getBoss().setMaxHealth(750);
+                enemyManager.setWildEnemyCap(8);
                 setWizardSkillCoolDown(15);
                 setMechSkillCoolDown(50);
                 break;

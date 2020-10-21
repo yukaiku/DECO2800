@@ -3,6 +3,7 @@ package deco2800.thomas.entities.attacks;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.Tickable;
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.RenderConstants;
@@ -18,6 +19,7 @@ public class SandTornado extends Projectile implements Animatable, Tickable {
         super();
         this.setTexture("explosion");
         this.setObjectName("combatExplosion");
+        this.setDamageType(DamageType.SAND_I_GUESS);
         tornado = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("sandTornado"));
     }
@@ -26,6 +28,7 @@ public class SandTornado extends Projectile implements Animatable, Tickable {
         super(col, row, RenderConstants.PROJECTILE_RENDER, damage, speed, faction);
         this.setTexture("explosion");
         this.setObjectName("combatExplosion");
+        this.setDamageType(DamageType.SAND_I_GUESS);
         tornado = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("sandTornado"));
     }

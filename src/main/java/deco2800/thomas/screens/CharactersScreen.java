@@ -59,7 +59,7 @@ public class CharactersScreen implements Screen {
     public CharactersScreen(ThomasGame game) {
         this.game = game;
 
-        stage = new Stage(new ExtendViewport(width, height), game.batch);
+        stage = new Stage(new ExtendViewport(width, height), game.getBatch());
 
         cameraOverlay = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 

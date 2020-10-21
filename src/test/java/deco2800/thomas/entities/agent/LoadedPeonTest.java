@@ -78,19 +78,19 @@ public class LoadedPeonTest extends BaseGDXTest {
     @Test
     public void debit() {
         PlayerPeon.debit(1000);
-        assertEquals((int)PlayerPeon.checkBalance(), -1000);
+        assertEquals(PlayerPeon.checkBalance(), -1000);
 
         PlayerPeon.debit(-1000);
-        assertEquals((int)PlayerPeon.checkBalance(), -1000);
+        assertEquals(PlayerPeon.checkBalance(), -1000);
     }
 
     @Test
     public void credit() {
         PlayerPeon.credit(1000);
-        assertEquals((int)PlayerPeon.checkBalance(), 1000);
+        assertEquals(PlayerPeon.checkBalance(), 1000);
 
         PlayerPeon.credit(-1000);
-        assertEquals((int)PlayerPeon.checkBalance(), 1000);
+        assertEquals(PlayerPeon.checkBalance(), 1000);
     }
 
     @Test

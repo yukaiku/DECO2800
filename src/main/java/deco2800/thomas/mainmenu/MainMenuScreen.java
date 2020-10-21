@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import deco2800.thomas.screens.CharactersScreen;
 import deco2800.thomas.screens.GameScreen;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.ThomasGame;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
@@ -35,7 +36,7 @@ public class MainMenuScreen implements Screen {
 	public MainMenuScreen(final ThomasGame game) {
 		this.game = game;
 
-		stage = new Stage(new ExtendViewport(1920, 1000), game.batch);
+		stage = new Stage(new ExtendViewport(1920, 1000), game.getBatch());
 		skin = GameManager.get().getSkin();
 
 		Image background = new Image(GameManager.get().getManager(TextureManager.class).getTexture("background"));
@@ -150,6 +151,8 @@ public class MainMenuScreen implements Screen {
 		stage.getRoot().getColor().a = 0;
 		stage.getRoot().addAction(Actions.fadeIn(0.8f));
 		Gdx.input.setInputProcessor(stage);
+		GameManager.getManagerFromInstance(SoundManager.class).playAmbience("menuAmbience");
+		GameManager.getManagerFromInstance(SoundManager.class).stopMusic();
 	}
 
 	/**

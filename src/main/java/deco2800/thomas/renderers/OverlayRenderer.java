@@ -30,13 +30,13 @@ public class OverlayRenderer implements Renderer {
      */
     public void setUpComponents() {
         this.getComponents().add(new HealthBarComponent(this));
+        this.getComponents().add(new MinimapComponent(this));
         this.getComponents().add(new DebugComponent(this));
         this.getComponents().add(new HotbarComponent(this));
         this.getComponents().add(new CurrencyComponent(this));
         this.getComponents().add(new QuestTrackerComponent(this));
         this.getComponents().add(new GuidelineComponent(this));
         this.getComponents().add(new FloatingDamageComponent(this));
-        this.getComponents().add(new MinimapComponent(this));
     }
 
     @Override

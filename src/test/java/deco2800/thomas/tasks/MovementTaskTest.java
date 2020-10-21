@@ -14,6 +14,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.util.Stack;
+
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
@@ -26,6 +28,7 @@ public class MovementTaskTest extends BaseGDXTest {
     private MovementTask spyMovementTask;
     private PlayerPeon playerPeon;
     private SquareVector destination;
+    private Stack<MovementTask.Direction> movementStack;
 
     /**
      * Setup the static method and variables to use in each test
@@ -52,7 +55,17 @@ public class MovementTaskTest extends BaseGDXTest {
         MovementTask movementTask = new MovementTask(playerPeon, destination);
         spyMovementTask = spy(movementTask);
 
+        movementStack = new Stack<>();
+
         PowerMockito.mockStatic(WorldUtil.class);
+    }
+
+    private void setUpDirection(MovementTask.Direction direction, boolean isWalkable){
+        movementStack.add(direction);
+        when(WorldUtil.isWalkable(anyFloat(), anyFloat())).thenReturn(isWalkable);
+        when(playerPeon.getMovementStack()).thenReturn(movementStack);
+        when(playerPeon.getMovingDirection()).thenReturn(direction);
+        when(playerPeon.isDirectionKeyActive(direction)).thenReturn(true);
     }
 
     /**
@@ -60,13 +73,13 @@ public class MovementTaskTest extends BaseGDXTest {
      */
     @Test
     public void testNormalMovementMoveUpToAWalkablePlace() {
-        when(WorldUtil.isWalkable(anyFloat(), anyFloat())).thenReturn(true);
-        when(playerPeon.getMovingDirection()).thenReturn(MovementTask.Direction.UP);
+        this.setUpDirection(MovementTask.Direction.UP, true);
 
         spyMovementTask.onTick(anyLong());
 
         assertEquals(11f, destination.getRow(), 0.1f);
         verify(playerPeon, atLeastOnce()).moveTowards(any(SquareVector.class));
+        verify(playerPeon).setMovingDirection(MovementTask.Direction.UP);
     }
 
     /**
@@ -74,13 +87,13 @@ public class MovementTaskTest extends BaseGDXTest {
      */
     @Test
     public void testNormalMovementMoveDownToAWalkablePlace() {
-        when(WorldUtil.isWalkable(anyFloat(), anyFloat())).thenReturn(true);
-        when(playerPeon.getMovingDirection()).thenReturn(MovementTask.Direction.DOWN);
+        setUpDirection(MovementTask.Direction.DOWN, true);
 
         spyMovementTask.onTick(anyLong());
 
         assertEquals(9f, destination.getRow(), 0.1f);
         verify(playerPeon, atLeastOnce()).moveTowards(any(SquareVector.class));
+        verify(playerPeon).setMovingDirection(MovementTask.Direction.DOWN);
     }
 
     /**
@@ -88,13 +101,13 @@ public class MovementTaskTest extends BaseGDXTest {
      */
     @Test
     public void testNormalMovementMoveLeftToAWalkablePlace() {
-        when(WorldUtil.isWalkable(anyFloat(), anyFloat())).thenReturn(true);
-        when(playerPeon.getMovingDirection()).thenReturn(MovementTask.Direction.LEFT);
+        setUpDirection(MovementTask.Direction.LEFT, true);
 
         spyMovementTask.onTick(anyLong());
 
         assertEquals(9f, destination.getCol(), 0.1f);
         verify(playerPeon, atLeastOnce()).moveTowards(any(SquareVector.class));
+        verify(playerPeon).setMovingDirection(MovementTask.Direction.LEFT);
     }
 
     /**
@@ -102,13 +115,13 @@ public class MovementTaskTest extends BaseGDXTest {
      */
     @Test
     public void testNormalMovementMoveRightToAWalkablePlace() {
-        when(WorldUtil.isWalkable(anyFloat(), anyFloat())).thenReturn(true);
-        when(playerPeon.getMovingDirection()).thenReturn(MovementTask.Direction.RIGHT);
+        setUpDirection(MovementTask.Direction.RIGHT, true);
 
         spyMovementTask.onTick(anyLong());
 
         assertEquals(11f, destination.getCol(), 0.1f);
         verify(playerPeon, atLeastOnce()).moveTowards(any(SquareVector.class));
+        verify(playerPeon).setMovingDirection(MovementTask.Direction.RIGHT);
     }
 
     /**
@@ -116,8 +129,7 @@ public class MovementTaskTest extends BaseGDXTest {
      */
     @Test
     public void testNormalMovementMoveToANoneWalkablePlace() {
-        when(WorldUtil.isWalkable(anyFloat(), anyFloat())).thenReturn(false);
-        when(playerPeon.getMovingDirection()).thenReturn(MovementTask.Direction.UP);
+        setUpDirection(MovementTask.Direction.UP, false);
 
         spyMovementTask.onTick(anyLong());
 
@@ -132,12 +144,28 @@ public class MovementTaskTest extends BaseGDXTest {
     @Test
     public void testPlayerNotMove() {
         when(WorldUtil.isWalkable(anyFloat(), anyFloat())).thenReturn(true);
+        when(playerPeon.getMovementStack()).thenReturn(movementStack);
         when(playerPeon.getMovingDirection()).thenReturn(MovementTask.Direction.NONE);
 
         spyMovementTask.onTick(anyLong());
 
         assertEquals(10f, destination.getRow(), 0.1f);
         assertTrue(spyMovementTask.isComplete());
-        verify(playerPeon, atLeastOnce()).moveTowards(any(SquareVector.class));
+    }
+
+    /**
+     * Test the player release all keys
+     */
+    @Test
+    public void testPlayerNotMoveWhenReleaseKeys() {
+        movementStack.add(MovementTask.Direction.UP);
+        when(WorldUtil.isWalkable(anyFloat(), anyFloat())).thenReturn(true);
+        when(playerPeon.getMovementStack()).thenReturn(movementStack);
+        when(playerPeon.getMovingDirection()).thenReturn(MovementTask.Direction.NONE);
+        when(playerPeon.isDirectionKeyActive(any(MovementTask.Direction.class))).thenReturn(false);
+
+        spyMovementTask.onTick(anyLong());
+
+        assertEquals(10f, destination.getRow(), 0.1f);
     }
 }
