@@ -8,10 +8,9 @@ import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.managers.EnemyManager;
-import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.PlayerManager;
-import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.LoadedPeon;
+import deco2800.thomas.managers.*;
 import deco2800.thomas.renderers.components.FloatingDamageComponent;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.AbstractWorld;
@@ -36,7 +35,7 @@ import static org.powermock.api.mockito.PowerMockito.spy;
  * setUp() method below.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({GameManager.class, WorldUtil.class})
+@PrepareForTest({GameManager.class, WorldUtil.class, LoadedPeon.class})
 public class ImmuneOrcTest extends BaseGDXTest {
 
     // the ImmuneOrc instance which will be tested
@@ -64,6 +63,24 @@ public class ImmuneOrcTest extends BaseGDXTest {
         when(GameManager.get()).thenReturn(gameManager);
         when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
         when(textureManager.getAnimationFrames(anyString())).thenReturn(textureRegion);
+
+        // mocks the sound manager
+        SoundManager soundManager = mock(SoundManager.class);
+        when(gameManager.getManager(SoundManager.class)).thenReturn(soundManager);
+        when(GameManager.getManagerFromInstance(SoundManager.class)).thenReturn(soundManager);
+
+        // mocks the loaded peon's credit method
+        PowerMockito.mockStatic(LoadedPeon.class);
+        PowerMockito.doNothing().when(LoadedPeon.class);
+        LoadedPeon.credit(anyInt());
+
+        // mocks the status effect manager
+        StatusEffectManager statusEffectManager = mock(StatusEffectManager.class);
+        doNothing().when(statusEffectManager).removeEffectsOnEntity(any(AgentEntity.class));;
+        when(gameManager.getManager(StatusEffectManager.class)).thenReturn(statusEffectManager);
+        when(GameManager.getManagerFromInstance(StatusEffectManager.class)).thenReturn(statusEffectManager);
+
+
 
         // mocks managers and components related to Floating Damage numbers
         PowerMockito.mockStatic(WorldUtil.class);

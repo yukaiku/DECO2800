@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.enemies.monsters.ImmuneOrc;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.worlds.Tile;
@@ -71,6 +72,9 @@ public class DesertDungeonTest extends BaseGDXTest {
         when(GameManager.getManagerFromInstance(EnemyManager.class)).thenReturn(enemyManager);
         when(GameManager.getManagerFromInstance(DifficultyManager.class)).thenReturn(difficultyManager);
         when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
+        SoundManager soundManager = mock(SoundManager.class);
+        when(gameManager.getManager(SoundManager.class)).thenReturn(soundManager);
+        when(GameManager.getManagerFromInstance(SoundManager.class)).thenReturn(soundManager);
 
         // sets up some functions for a mock Texture and its manager
         Texture texture = mock(Texture.class);
@@ -180,6 +184,12 @@ public class DesertDungeonTest extends BaseGDXTest {
         PlayerManager playerManager = mock(PlayerManager.class);
         when(GameManager.getManagerFromInstance(PlayerManager.class)).thenReturn(playerManager);
         when(gameManager.getWorld()).thenReturn(spyWorld);
+
+        // mocks the status effect manager for the orc's death
+        StatusEffectManager statusEffectManager = mock(StatusEffectManager.class);
+        doNothing().when(statusEffectManager).removeEffectsOnEntity(any(AgentEntity.class));;
+        when(gameManager.getManager(StatusEffectManager.class)).thenReturn(statusEffectManager);
+        when(GameManager.getManagerFromInstance(StatusEffectManager.class)).thenReturn(statusEffectManager);
 
         spyWorld.onTick(anyLong());
         ArrayList<AbstractEntity> portals = new ArrayList<>();

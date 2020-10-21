@@ -9,6 +9,7 @@ import deco2800.thomas.entities.environment.desert.*;
 import deco2800.thomas.managers.DatabaseManager;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.desert.DesertWorld;
@@ -25,9 +26,6 @@ public class DesertDungeon extends DesertWorld {
 
     // the save file location to load this dungeon
     public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/desert/desert_dungeon_map.json";
-
-    // whether the static entities for this world have been generated
-    private boolean notGenerated = true;
 
     /**
      * Creates a Desert Dungeon with size 50x50.
@@ -69,5 +67,8 @@ public class DesertDungeon extends DesertWorld {
         // displays the opening dialog to help kill the enemy
         DesertDungeonOpeningDialog announcementDialog = new DesertDungeonOpeningDialog("The Desert Dungeon");
         announcementDialog.show();
+
+        // Start ambience
+        GameManager.getManagerFromInstance(SoundManager.class).playAmbience("desertAmbience");
     }
 }

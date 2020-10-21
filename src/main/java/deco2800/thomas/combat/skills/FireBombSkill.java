@@ -2,6 +2,8 @@ package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
 
@@ -39,6 +41,7 @@ public class FireBombSkill extends AbstractSkill {
         }
         this.entity = parent;
         setMaxCoolDown(ORIGINAL_MAXCOOLDOWN);
+        setAttackSound("explosion");
     }
 
     /**
@@ -80,13 +83,14 @@ public class FireBombSkill extends AbstractSkill {
     @Override
     public void reduceCooldownMax(float percent){
         if (maxCoolDown > 80) {
-            maxCoolDown = Math.round(maxCoolDown * (1.0f - percent));
+            setMaxCoolDown(Math.round(maxCoolDown * (1.0f - percent)));
         }
     }
 
     @Override
-    public void setCooldownMax(){ maxCoolDown = ORIGINAL_MAXCOOLDOWN;}
-
+    public void setCooldownMax() {
+        // What's the point of this?
+    }
 
     /**
      * Returns a string containing the name of the texture that is used to represent
