@@ -31,9 +31,14 @@ public class SoundManager extends AbstractManager {
 	 */
 	public SoundManager() {
 		logger = LoggerFactory.getLogger(SoundManager.class);
-
-		// Long sound effects, or music that are not preloaded:
 		sounds = new ConcurrentHashMap<>();
+		soundEffects = new ConcurrentHashMap<>();
+		soundEffects.put("explosion", Gdx.audio.newSound(
+				Gdx.files.internal("resources/sounds/sfx/explosion_1.wav")));
+	}
+
+	public void loadSound() {
+		// Long sound effects, or music that are not preloaded:
 		sounds.put("swampAmbience", "resources/sounds/ambience/swamp_ambience.ogg");
 		sounds.put("desertAmbience", "resources/sounds/ambience/desert_ambience.ogg");
 		sounds.put("tundraAmbience", "resources/sounds/ambience/tundra_ambience.ogg");
@@ -42,9 +47,6 @@ public class SoundManager extends AbstractManager {
 		sounds.put("menuAmbience", "resources/sounds/ambience/menu_ambience.ogg");
 
 		// Sound effects that are preloaded (short duration)
-		soundEffects = new ConcurrentHashMap<>();
-		soundEffects.put("explosion", Gdx.audio.newSound(
-				Gdx.files.internal("resources/sounds/sfx/explosion_1.wav")));
 		soundEffects.put("fireball", Gdx.audio.newSound(
 				Gdx.files.internal("resources/sounds/sfx/fireball_5.wav")));
 		soundEffects.put("woodHit", Gdx.audio.newSound(
