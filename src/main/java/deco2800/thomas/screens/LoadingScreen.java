@@ -17,8 +17,6 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.managers.TextureManager;
 
-import java.util.Arrays;
-
 public class LoadingScreen implements Screen {
 
     final ThomasGame game;
@@ -38,7 +36,7 @@ public class LoadingScreen implements Screen {
         titleStyle.fontColor = Color.valueOf("#cccccc");
         Label loadingTitle = new Label("LOADING...", titleStyle);
         loadingTitle.setFontScale(1.4f);
-        loadingTitle.setPosition(120, 140);
+        loadingTitle.setPosition(120, 150);
 
         Texture textTex = new Texture(Gdx.files.internal("resources/fonts/times.png"), true);
         textTex.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.Linear);
@@ -95,7 +93,7 @@ public class LoadingScreen implements Screen {
         sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading animation 8/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadAnimationFrames));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading sound & music 9/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading sounds & musics 9/9")));
         sequenceAction.addAction(Actions.run(soundManager::loadSound));
 
         sequenceAction.addAction(Actions.run(() -> setLoadingText("")));

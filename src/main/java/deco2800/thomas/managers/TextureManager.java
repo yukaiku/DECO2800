@@ -737,13 +737,6 @@ public class TextureManager extends AbstractManager {
             //log.info("Texture map does not contain P{}, returning default texture.", id);
             return textureMap.get("spacman_ded");
         }
-
-//        try {
-//            return textureMap.get(id);
-//        } catch (Exception e) {
-//            // return base texture if not found
-//            return textureMap.get("spacman_ded");
-//        }
     }
 
     /**
