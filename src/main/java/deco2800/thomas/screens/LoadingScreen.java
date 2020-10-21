@@ -77,10 +77,6 @@ public class LoadingScreen implements Screen {
             setLoadingText("Loading environment");
             GameManager.get().getManager(TextureManager.class).addEnvironmentTextures();
         }));
-        sequenceAction.addAction(Actions.run(() -> {
-            setLoadingText("Loading animation");
-            GameManager.get().getManager(TextureManager.class).addAnimationFrames();
-        }));
         sequenceAction.addAction(Actions.run(() -> setLoadingText("")));
         sequenceAction.addAction(Actions.fadeOut(0.2f));
         sequenceAction.addAction(Actions.run(game::setMainMenuScreen));

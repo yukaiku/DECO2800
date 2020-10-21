@@ -169,6 +169,7 @@ public class TextureManager extends AbstractManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+        addAnimationFrames();
 		addMinimapIcons();
 	}
 
@@ -480,7 +481,7 @@ public class TextureManager extends AbstractManager {
      * <p>
      * Note: The initial facing direction should be RIGHT. The flipped version is not needed.
      */
-    public void addAnimationFrames() {
+    private void addAnimationFrames() {
         try {
             // players
             addAnimationFramesCollection("playerIdle", "resources/player/rightmech1_move.png");
