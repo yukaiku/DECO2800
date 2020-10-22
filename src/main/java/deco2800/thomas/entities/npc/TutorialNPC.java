@@ -9,7 +9,7 @@ import deco2800.thomas.util.SquareVector;
 public class TutorialNPC extends NonPlayablePeon implements Interactable {
 
     AbstractDialogBox tutorialDialogueBox;
-    public static int speechStage;
+    private static int speechStage;
     static boolean isActive = false;
 
     public TutorialNPC(String name, SquareVector position, String texture) {
@@ -33,6 +33,10 @@ public class TutorialNPC extends NonPlayablePeon implements Interactable {
     public static void setIsActive(boolean value){
         isActive = value;
     }
+
+    public static int getSpeechStage(){ return speechStage; }
+
+    public static void increaseSpeechStage(){speechStage += 1;}
 
     @Override
     public void interact() {
