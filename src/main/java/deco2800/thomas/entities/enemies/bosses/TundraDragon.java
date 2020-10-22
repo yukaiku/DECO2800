@@ -32,13 +32,4 @@ public class TundraDragon extends Dragon {
         Iceball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
                 getTarget().getRow(), 10, 0.1f, 60, EntityFaction.EVIL);
     }
-
-    /**
-     * On death, perform super death, but also grant the player the Iceball skill.
-     */
-    @Override
-    public void death() {
-        super.death();
-        GameManager.getManagerFromInstance(PlayerManager.class).grantWizardSkill(WizardSkills.ICEBALL);
-    }
 }

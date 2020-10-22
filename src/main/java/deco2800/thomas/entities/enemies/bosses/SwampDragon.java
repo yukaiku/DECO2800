@@ -21,13 +21,4 @@ public class SwampDragon extends Dragon {
     public void elementalAttack() {
         this.setCombatTask(new ScorpionStingAttackTask(this, getTarget().getCol(), getTarget().getRow(), 10, 0.15f, 60));
     }
-
-    /**
-     * On death, perform super death, but also grant the player the Sting skill.
-     */
-    @Override
-    public void death() {
-        super.death();
-        GameManager.getManagerFromInstance(PlayerManager.class).grantWizardSkill(WizardSkills.STING);
-    }
 }
