@@ -82,9 +82,9 @@ public class DragonTest extends BaseGDXTest {
 
         Texture texture = mock(Texture.class);
         when(textureManager.getTexture(anyString())).thenReturn(texture);
-        Array<TextureRegion> playerStand = new Array<>();
-        playerStand.add(new TextureRegion(new Texture("resources/combat/move_right.png"), 262, 256));
-        when(textureManager.getAnimationFrames(anyString())).thenReturn(playerStand);
+        Array<TextureRegion> dragonTexture = new Array<>();
+        dragonTexture.add(new TextureRegion(new Texture("resources/enemies/dragon_volcano.png"), 262, 256));
+        when(textureManager.getAnimationFrames(anyString())).thenReturn(dragonTexture);
         when(texture.getWidth()).thenReturn(1);
         when(texture.getHeight()).thenReturn(1);
 
@@ -192,4 +192,12 @@ public class DragonTest extends BaseGDXTest {
         WorldUtil.removeEntity(any(AbstractEntity.class));
         verify(world, times(1)).setOrbEntity(any(Orb.class));
     }
+
+    @Test
+    public void testAnimationFrame() {
+        Array<TextureRegion> dragonArray = new Array<>();
+        dragonArray.add(new TextureRegion(new Texture("resources/enemies/dragon_volcano.png")));
+        assertEquals(dragonArray.get(0).getTexture().toString(), volcanoDragon.getFrame(0).getTexture().toString());
+    }
+
 }
