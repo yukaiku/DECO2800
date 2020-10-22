@@ -41,7 +41,7 @@ public class ThomasGame extends Game {
 		initUISkin();
 		this.loadingScreen = new LoadingScreen(this);
 		this.setScreen(loadingScreen);
-		loadingScreen.setLoadingText("Loading game resources");
+		loadingScreen.setLoadingText("Loading Game Resources");
 	}
 
 	// load the main menu screen
