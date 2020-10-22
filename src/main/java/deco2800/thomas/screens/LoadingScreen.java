@@ -2,6 +2,7 @@ package deco2800.thomas.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -64,36 +65,36 @@ public class LoadingScreen implements Screen {
         stage.getRoot().getColor().a = 0;
         SequenceAction sequenceAction = new SequenceAction();
         sequenceAction.addAction(Actions.fadeIn(0.3f));
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading game")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading Game")));
         sequenceAction.addAction(Actions.run(game::loadMainMenuScreen));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading player 1/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading Player 1/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadBaseTextures));
         sequenceAction.addAction(Actions.run(textureManager::loadInventoryTextures));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading enemies 2/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading Enemies 2/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadEnemyTextures));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading combats 3/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading Combats 3/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadCombatTextures));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading storyline 4/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading Storyline 4/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadStorylineTextures));
 
         sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading NPC 5/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadNPCTextures));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading health 6/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading Health 6/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadHealthTextures));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading environment 7/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading Environment 7/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadEnvironmentTextures));
         sequenceAction.addAction(Actions.run(textureManager::loadMinimapTextures));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading animation 8/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading Animation 8/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadAnimationFrames));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading sounds & musics 9/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading Sounds & Musics 9/9")));
         sequenceAction.addAction(Actions.run(soundManager::loadSound));
 
         sequenceAction.addAction(Actions.run(() -> setLoadingText("")));
@@ -111,7 +112,7 @@ public class LoadingScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        // do nothing
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
