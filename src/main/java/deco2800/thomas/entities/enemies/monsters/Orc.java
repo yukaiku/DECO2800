@@ -5,6 +5,8 @@ import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.AggressiveEnemy;
 import deco2800.thomas.entities.enemies.EnemyIndex.Variation;
+import deco2800.thomas.entities.enemies.EnemyPeon;
+import deco2800.thomas.entities.items.ItemDropTable;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 
@@ -17,6 +19,7 @@ import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
 import deco2800.thomas.util.SquareVector;
+import deco2800.thomas.worlds.Tile;
 
 /**
  * A class that defines an implementation of an orc.
@@ -135,6 +138,11 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
 
     @Override
     public void death() {
+        Tile diedAt = GameManager.get().getWorld().getTile(Math.round(super.getCol()),Math.round(super.getRow()));
+        ItemDropTable.dropItemForEnemyType(diedAt, this,
+                ((PlayerPeon) GameManager.get().getWorld().getPlayerEntity()), GameManager.get().getWorld());
+
+        //System.out.println(this.getObjectName());
         GameManager.getManagerFromInstance(EnemyManager.class).
                 removeWildEnemy(this);
         PlayerPeon.credit(5);

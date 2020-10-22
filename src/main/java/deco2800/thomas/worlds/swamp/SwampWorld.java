@@ -29,7 +29,7 @@ public class SwampWorld extends AbstractWorld {
     private final Logger logger = LoggerFactory.getLogger(TestWorld.class);
     public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/swamp/swamp-game-map.json";
 
-    private List<AbstractDialogBox> allSwampDialogues;
+    public List<AbstractDialogBox> allSwampDialogues;
 
     public SwampWorld() {
         this(AbstractWorld.DEFAULT_WIDTH, AbstractWorld.DEFAULT_HEIGHT);
@@ -223,7 +223,7 @@ public class SwampWorld extends AbstractWorld {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
 
-                HealthPotion potion = new HealthPotion(tile, false,
+                HealthPotion potion = new HealthPotion(tile,false,
                         (PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
                 entities.add(potion);
                 this.allSwampDialogues.add(potion.getDisplay());
@@ -238,7 +238,7 @@ public class SwampWorld extends AbstractWorld {
             entities.add(ironArmour);
             this.allSwampDialogues.add(ironArmour.getDisplay());
         }
-
+        /*
         for (int i = 0; i < NUM_CHESTS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
@@ -259,7 +259,16 @@ public class SwampWorld extends AbstractWorld {
                 (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,0.5f);
         entities.add(cdring);
         this.allSwampDialogues.add(cdring.getDisplay());
+        */
     }
+
+    public List<AbstractDialogBox> returnAllDialogues(){
+        return this.allSwampDialogues;
+    }
+
+    public void addDialogue(AbstractDialogBox box){ this.allSwampDialogues.add(box);}
+
+    public void removeDialogue(AbstractDialogBox box){ this.allSwampDialogues.remove(box);}
 
     @Override
     public void onTick(long i) {
@@ -267,5 +276,6 @@ public class SwampWorld extends AbstractWorld {
         for (AbstractEntity e : this.getEntities()) {
             e.onTick(0);
         }
+
     }
 }

@@ -160,7 +160,7 @@ public class VolcanoWorld extends AbstractWorld {
         final int NUM_CHESTS = 3;
         final String ITEM_BOX_STYLE = "volcano";
 
-
+        /*
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
@@ -217,6 +217,7 @@ public class VolcanoWorld extends AbstractWorld {
                 (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,10);
         entities.add(attackAmulet);
         this.allVolcanoDialogues.add(attackAmulet.getDisplay());
+        */
     }
 
     /**

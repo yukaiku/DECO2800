@@ -7,6 +7,7 @@ import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.observers.TouchDownObserver;
+import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
 
@@ -27,11 +28,12 @@ public class Item extends StaticEntity implements TouchDownObserver {
     }
 
     public Item(String name, int value, Tile tile, int renderOrder,
-            String texture, boolean obstructed, PlayerPeon player){
+                String texture, boolean obstructed, PlayerPeon player){
         super(tile, RenderConstants.ITEM_RENDER, texture, obstructed);
         this.name = name;
         this.goldValue = value;
         this.setObjectName(ENTITY_ID_STRING);
+        this.setTexture(texture);
         this.player = player; 
         ready = false;
     }
@@ -57,28 +59,32 @@ public class Item extends StaticEntity implements TouchDownObserver {
     }
 
     public void chargePlayer() {
-        if (PlayerPeon.checkBalance() > 0) {
-            PlayerPeon.debit(goldValue);
+        if (PlayerPeon.checkBalance() >= this.getCurrencyValue()) {
+            PlayerPeon.debit(this.getCurrencyValue());
 
-            if (this.getItemName().equals("Health Potion")) {
-                this.player.regenerateHealth(40);
-                this.dispose();
-            }
-            if (this.getItemName().equals("Iron Armour") && this.player.getArmour() < 2000) {
-                this.player.addArmour(1000);
-                this.dispose();
-            }
-            if (this.getItemName().equals("Attack Amulet")){
-                this.player.addDamage(((Amulet) this).getAttackDamage());
-                PlayerPeon.buffDamageTotal += ((Amulet) this).getAttackDamage();
-                this.dispose();
-            }
-            if (this.getItemName().equals("Cooldown Ring")){
-                for (AbstractSkill s: this.player.getWizardSkills()) {
-                    s.reduceCooldownMax(((CooldownRing) this).getReductionvalue());
-                }
-                this.player.getMechSkill().reduceCooldownMax(((CooldownRing) this).getReductionvalue());
-                this.dispose();
+            switch (this.getItemName()){
+                case "Health Potion":
+                    this.player.regenerateHealth(40);
+                    break;
+                case "Small Health Potion":
+                    this.player.regenerateHealth(20);
+                    break;
+                case "Iron Armour":
+                    if (this.player.getArmour() < 2000){
+                        this.player.addArmour(250);
+                    }
+                    break;
+                case "Attack Amulet":
+                    this.player.addDamage(((Amulet) this).getAttackDamage());
+                    PlayerPeon.buffDamageTotal += ((Amulet) this).getAttackDamage();
+                    break;
+                case "Cooldown Ring":
+                    for (AbstractSkill s: this.player.getWizardSkills()) {
+                        s.reduceCooldownMax(((CooldownRing) this).getReductionvalue());
+                    }
+                    this.player.getMechSkill().reduceCooldownMax(((CooldownRing) this).getReductionvalue());
+                    break;
+                default: //Do nothing
             }
         }
     }

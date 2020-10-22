@@ -178,7 +178,7 @@ public class DesertWorld extends AbstractWorld {
         final int NUM_SHIELDS = 4;
         final int NUM_CHESTS = 3;
         final String ITEM_BOX_STYLE = "desert";
-
+        /*
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
@@ -217,6 +217,7 @@ public class DesertWorld extends AbstractWorld {
                 (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,0.5f);
         entities.add(cdring);
         this.allDesertDialogues.add(cdring.getDisplay());
+        */
     }
 
     /**
