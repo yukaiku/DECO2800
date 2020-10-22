@@ -4,7 +4,6 @@ import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.environment.ExitPortal;
-import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PlayerManager;
 import deco2800.thomas.worlds.AbstractWorld;
@@ -15,6 +14,9 @@ import deco2800.thomas.worlds.Tile;
  * Desert Zone environment damage.
  */
 public class ImmuneOrc extends Orc {
+
+    // whether this orc has died yet
+    private boolean dead = false;
 
     /**
      * Creates a new ImmuneOrc with its default stats.
@@ -55,8 +57,9 @@ public class ImmuneOrc extends Orc {
      */
     @Override
     public void death() {
-        GameManager.getManagerFromInstance(EnemyManager.class).
-                removeWildEnemy(this);
+        if (dead) return;
+        dead = true;
+        super.death();
         GameManager.getManagerFromInstance(PlayerManager.class).grantWizardSkill(WizardSkills.SANDTORNADO);
 
         AbstractWorld world = GameManager.get().getWorld();

@@ -1,10 +1,14 @@
 package deco2800.thomas.entities.agent;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Color;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.entities.RenderConstants;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
+import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.WorldUtil;
@@ -132,6 +136,16 @@ public class Peon extends AgentEntity implements Tickable {
 		// Check for death
 		if (isDead()) {
 			death();
+		}
+
+		// Play hit sound
+		switch (damageType) {
+			case COMMON:
+				GameManager.getManagerFromInstance(SoundManager.class).playSound("woodHit");
+				break;
+			default:
+				GameManager.getManagerFromInstance(SoundManager.class).playSound("fireHit");
+				break;
 		}
 
 		return damageApplied;
@@ -343,6 +357,7 @@ public class Peon extends AgentEntity implements Tickable {
 	 * Defines behaviour when an agent entity dies
 	 */
 	public void death() {
-		// Currently no implementation as the Peon is treated as an AbstractClass.
+		// Remove any status effects
+		GameManager.getManagerFromInstance(StatusEffectManager.class).removeEffectsOnEntity(this);
 	}
 }

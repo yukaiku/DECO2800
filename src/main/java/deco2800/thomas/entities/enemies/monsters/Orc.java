@@ -5,7 +5,6 @@ import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.AggressiveEnemy;
 import deco2800.thomas.entities.enemies.EnemyIndex.Variation;
-import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.items.ItemDropTable;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
@@ -141,8 +140,7 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
         Tile diedAt = GameManager.get().getWorld().getTile(Math.round(super.getCol()),Math.round(super.getRow()));
         ItemDropTable.dropItemForEnemyType(diedAt, this,
                 ((PlayerPeon) GameManager.get().getWorld().getPlayerEntity()), GameManager.get().getWorld());
-
-        //System.out.println(this.getObjectName());
+        super.death();
         GameManager.getManagerFromInstance(EnemyManager.class).
                 removeWildEnemy(this);
         PlayerPeon.credit(5);
