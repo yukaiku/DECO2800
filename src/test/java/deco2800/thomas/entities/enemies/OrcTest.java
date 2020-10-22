@@ -135,4 +135,10 @@ public class OrcTest extends BaseGDXTest {
         assertEquals(swampOrc.deepCopy().getSpeed(), swampOrc.getSpeed(), 0.01f);
         assertEquals(swampOrc.deepCopy().getTexture(), swampOrc.getTexture());
     }
+
+    @Test
+    public void testTexture() {
+        Texture texture = new Texture("resources/enemies/orc_swamp_icon.png");
+        assertEquals(texture, swampOrc.getIcon());
+    }
 }

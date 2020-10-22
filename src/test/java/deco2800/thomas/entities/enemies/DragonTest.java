@@ -126,6 +126,7 @@ public class DragonTest extends BaseGDXTest {
 
     @Test
     public void testVolcanoDragonElementalAttack() {
+        volcanoDragon.elementalAttack();
         volcanoDragon.hitByTarget();
         volcanoDragon.elementalAttack();
         assertTrue(volcanoDragon.getCombatTask() instanceof FireBombAttackTask);
