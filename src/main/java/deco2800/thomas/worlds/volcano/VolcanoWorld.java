@@ -158,11 +158,11 @@ public class VolcanoWorld extends AbstractWorld {
      */
     private void generateItemEntities(){
         final int NUM_POTIONS = 6;
-        final int NUM_SHIELDS = 4;
-        final int NUM_CHESTS = 3;
+        final int NUM_IRON_ARMOUR = 2;
+        final int NUM_CHESTS = 2;
         final String ITEM_BOX_STYLE = "volcano";
 
-        /*
+
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
@@ -172,28 +172,23 @@ public class VolcanoWorld extends AbstractWorld {
                         (PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
                 entities.add(potion);
                 this.allVolcanoDialogues.add(potion.getDisplay());
-
             } else {
                 i--;
             }
-
         }
-
-
-        for (int i =0; i < NUM_SHIELDS; i++){
+        for (int i =0; i < NUM_IRON_ARMOUR; i++){
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
             if (Integer.parseInt(tile.getTextureName().split("_")[1]) < 5
                     && !tile.hasParent()) {
                 IronArmour ironArmour = new IronArmour(tile, false,
-                        (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
+                        (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE,200);
                 entities.add(ironArmour);
                 this.allVolcanoDialogues.add(ironArmour.getDisplay());
             } else {
                 i--;
             }
         }
-        
         for (int i = 0; i <NUM_CHESTS; i++){
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
@@ -219,7 +214,7 @@ public class VolcanoWorld extends AbstractWorld {
                 (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,10);
         entities.add(attackAmulet);
         this.allVolcanoDialogues.add(attackAmulet.getDisplay());
-        */
+
     }
 
     /**
@@ -494,4 +489,6 @@ public class VolcanoWorld extends AbstractWorld {
         Tile portalTile = getTile(col, row);
         return new VolcanoPortal(portalTile, false, "VolcanoPortal", "VolcanoDungeonPortal" );
     }
+
+    public void addDialogue(AbstractDialogBox box){ this.allVolcanoDialogues.add(box);}
 }

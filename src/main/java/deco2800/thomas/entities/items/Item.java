@@ -1,13 +1,12 @@
 package deco2800.thomas.entities.items;
 
 import com.badlogic.gdx.Gdx;
-import deco2800.thomas.combat.skills.AbstractSkill;
+import deco2800.thomas.combat.skills.*;
 import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
 import deco2800.thomas.observers.TouchDownObserver;
-import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
 
@@ -71,18 +70,28 @@ public class Item extends StaticEntity implements TouchDownObserver {
                     break;
                 case "Iron Armour":
                     if (this.player.getArmour() < 2000){
-                        this.player.addArmour(250);
+                        this.player.addArmour(((IronArmour) this).getArmourValue());
+                    }
+                    break;
+                case "Wooden Armour":
+                    if (this.player.getArmour() < 2000){
+                        this.player.addArmour(((WoodenArmour) this).getArmourValue());
                     }
                     break;
                 case "Attack Amulet":
                     this.player.addDamage(((Amulet) this).getAttackDamage());
-                    PlayerPeon.buffDamageTotal += ((Amulet) this).getAttackDamage();
+                    PlayerPeon.addBuffDamageTotal(((Amulet) this).getAttackDamage());
                     break;
                 case "Cooldown Ring":
-                    for (AbstractSkill s: this.player.getWizardSkills()) {
-                        s.reduceCooldownMax(((CooldownRing) this).getReductionvalue());
-                    }
-                    this.player.getMechSkill().reduceCooldownMax(((CooldownRing) this).getReductionvalue());
+                    PlayerPeon.setCooldownBuff(true);
+                    FireballSkill.reduceCooldownMax(((CooldownRing) this).getReductionvalue());
+                    FireBombSkill.reduceCooldownMax(((CooldownRing) this).getReductionvalue());
+                    HealSkill.reduceCooldownMax(((CooldownRing) this).getReductionvalue());
+                    IceballSkill.reduceCooldownMax(((CooldownRing) this).getReductionvalue());
+                    IceBreathSkill.reduceCooldownMax(((CooldownRing) this).getReductionvalue());
+                    SandTornadoSkill.reduceCooldownMax(((CooldownRing) this).getReductionvalue());
+                    ScorpionStingSkill.reduceCooldownMax(((CooldownRing) this).getReductionvalue());
+                    WaterShieldSkill.reduceCooldownMax(((CooldownRing) this).getReductionvalue());
                     break;
                 default: //Do nothing
             }
@@ -121,11 +130,6 @@ public class Item extends StaticEntity implements TouchDownObserver {
             }
         }
     }
-
-    public static void dropRandomItem(){
-        /* Currently not implemented */
-    }
-
     
     /**
      * Remove touch down listener.

@@ -2,10 +2,7 @@ package deco2800.thomas.worlds.dungeons;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.managers.DatabaseManager;
-import deco2800.thomas.managers.EnemyManager;
-import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.SoundManager;
+import deco2800.thomas.managers.*;
 import deco2800.thomas.worlds.desert.DesertWorld;
 import deco2800.thomas.worlds.dungeons.desert.DesertDungeonDialog;
 import deco2800.thomas.worlds.dungeons.desert.DesertDungeonOpeningDialog;

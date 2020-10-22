@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.combat.*;
-import deco2800.thomas.combat.skills.AbstractSkill;
+import deco2800.thomas.combat.skills.*;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.managers.*;
@@ -37,6 +37,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
 
     public static final int DEFAULT_HEALTH = 100;
     public static int buffDamageTotal;
+    public static boolean isCoolDownBuffActive = false;
 
     // Player dialogue
     private static final Map<String, String> dialogues = new HashMap<>();
@@ -90,6 +91,17 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerIdle"));
         playerWalk = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("playerWalk"));
+
+        if (isCoolDownBuffActive){
+            FireballSkill.setMaxCooldown(10);
+            FireBombSkill.setMaxCoolDown(80);
+            HealSkill.setMaxCoolDown(100);
+            IceballSkill.setMaxCooldown(25);
+            IceBreathSkill.setMaxCooldown(10);
+            SandTornadoSkill.setMaxCoolDown(15);
+            ScorpionStingSkill.setMaxCoolDown(25);
+            WaterShieldSkill.setMaxCoolDown(100);
+        } else {resetAllSkillCoolDownToOriginal();}
     }
 
     /**
@@ -458,6 +470,16 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         }
     }
 
+    public static int getBuffDamageTotal(){ return buffDamageTotal; }
+
+    public static void addBuffDamageTotal(int damage){ buffDamageTotal += damage;}
+
+    public static void setBuffDamageTotal(int damage){buffDamageTotal = damage;}
+
+    public static void setCooldownBuff(boolean val){ isCoolDownBuffActive = val; }
+
+    public static boolean isCoolDownBuffActive(){ return isCoolDownBuffActive; }
+
     public List<AbstractSkill> getWizardSkills() {
         return this.wizardSkills;
     }
@@ -480,15 +502,27 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
      */
     @Override
     public void death() {
+        resetAllSkillCoolDownToOriginal();
+        setBuffDamageTotal(0);
+        setCooldownBuff(false);
         super.death();
-        PlayerPeon.buffDamageTotal = 0;
-        for (AbstractSkill s : this.getWizardSkills()) {
-            s.setCooldownMax();
-        }
-        this.getMechSkill().setCooldownMax();
         GameManager.get().getWorld().removeEntity(this);
         GameManager.get().getWorld().disposeEntity(this.getEntityID());
         GameManager.gameOver();
+    }
+
+    /**
+     * Resets all player skills' cooldown to their original values
+     */
+    public void resetAllSkillCoolDownToOriginal(){
+        FireballSkill.setMaxCooldown(20);
+        FireBombSkill.setMaxCoolDown(160);
+        HealSkill.setMaxCoolDown(200);
+        IceballSkill.setMaxCooldown(50);
+        IceBreathSkill.setMaxCooldown(20);
+        SandTornadoSkill.setMaxCoolDown(30);
+        ScorpionStingSkill.setMaxCoolDown(50);
+        WaterShieldSkill.setMaxCoolDown(200);
     }
 
     /**

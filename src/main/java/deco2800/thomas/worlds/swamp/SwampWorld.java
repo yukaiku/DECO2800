@@ -47,11 +47,6 @@ public class SwampWorld extends AbstractWorld {
         this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
 
-        /*for (AbstractSkill s :((PlayerPeon) this.getPlayerEntity()).getWizardSkills()){
-            s.setCooldownMax();
-        }
-        ((PlayerPeon) this.getPlayerEntity()).getMechSkill().setCooldownMax();*/
-
         // Creates Items
         this.generateItemEntities();
 
@@ -218,35 +213,31 @@ public class SwampWorld extends AbstractWorld {
      */
     private void generateItemEntities(){
         final int NUM_POTIONS = 6;
-        final int NUM_SHIELDS = 4;
-        final int NUM_CHESTS = 3;
+        final int NUM_IRON_ARMOUR = 2;
+        final int NUM_CHESTS = 2;
         final String ITEM_BOX_STYLE = "swamp";
 
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-
-                HealthPotion potion = new HealthPotion(tile,false,
-                        (PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
-                entities.add(potion);
-                this.allSwampDialogues.add(potion.getDisplay());
-
+            HealthPotion potion = new HealthPotion(tile,false,(PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
+            entities.add(potion);
+            this.allSwampDialogues.add(potion.getDisplay());
         }
 
-        for (int i = 0; i < NUM_SHIELDS; i++) {
+        for (int i = 0; i < NUM_IRON_ARMOUR; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
             IronArmour ironArmour = new IronArmour(tile, false,
-                    (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
+                    (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE,200);
             entities.add(ironArmour);
             this.allSwampDialogues.add(ironArmour.getDisplay());
         }
-        /*
+
         for (int i = 0; i < NUM_CHESTS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            Treasure chest = new Treasure(tile, false,
-                    (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
+            Treasure chest = new Treasure(tile, false,(PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
             entities.add(chest);
             this.allSwampDialogues.add(chest.getDisplay());
         }
@@ -262,7 +253,7 @@ public class SwampWorld extends AbstractWorld {
                 (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,0.5f);
         entities.add(cdring);
         this.allSwampDialogues.add(cdring.getDisplay());
-        */
+
     }
 
     public List<AbstractDialogBox> returnAllDialogues(){

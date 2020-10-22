@@ -16,7 +16,7 @@ public class Amulet extends Item{
                 "attack_buff", obstructed, player);
         this.setObjectName(ENTITY_ID_STRING);
         this.attackDamage = attackDamage;
-        super.display = new ItemBox(this, name, "200",
+        super.display = new ItemBox(this, name, Integer.toString(super.getCurrencyValue()),
                 "Increases player's damage by "+ this.attackDamage + ".", styleType);
     }
 

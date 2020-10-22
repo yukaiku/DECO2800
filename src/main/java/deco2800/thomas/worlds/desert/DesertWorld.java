@@ -179,10 +179,10 @@ public class DesertWorld extends AbstractWorld {
      */
     private void generateItemEntities(){
         final int NUM_POTIONS = 6;
-        final int NUM_SHIELDS = 4;
+        final int NUM_IRON_ARMOUR = 4;
         final int NUM_CHESTS = 3;
         final String ITEM_BOX_STYLE = "desert";
-        /*
+
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
@@ -192,11 +192,11 @@ public class DesertWorld extends AbstractWorld {
             this.allDesertDialogues.add(potion.getDisplay());
         }
 
-        for (int i = 0; i < NUM_SHIELDS; i++) {
+        for (int i = 0; i < NUM_IRON_ARMOUR; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
             IronArmour ironArmour = new IronArmour(tile, false,
-                    (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
+                    (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE,200);
             entities.add(ironArmour);
             this.allDesertDialogues.add(ironArmour.getDisplay());
         }
@@ -221,8 +221,10 @@ public class DesertWorld extends AbstractWorld {
                 (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,0.5f);
         entities.add(cdring);
         this.allDesertDialogues.add(cdring.getDisplay());
-        */
+
     }
+
+    public void addDialogue(AbstractDialogBox box){ this.allDesertDialogues.add(box);}
 
     /**
      * Handles what happens after each tick of the game.

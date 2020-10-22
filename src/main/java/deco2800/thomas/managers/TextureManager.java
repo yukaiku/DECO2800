@@ -234,6 +234,7 @@ public class TextureManager extends AbstractManager {
             textureMap.put("treasure_box", new Texture("resources/inventory/treasure-box.png"));
             textureMap.put("cdreduction_buff", new Texture("resources/inventory/cdreduction_buff.png"));
             textureMap.put("attack_buff", new Texture("resources/inventory/attack_buff.png"));
+            textureMap.put("crown_buff", new Texture("resources/inventory/crown_buff.png"));
 
             // Inventory Menu
             textureMap.put("inventory_menu", new Texture("resources/inventory_menu.png"));

@@ -47,6 +47,7 @@ public class NPCDialog extends AbstractDialogBox {
 		box.reset();
 		box.add(str).expand().center();
 		button = new TextButton("Next", skin);
+		box.row();
 		box.add(button).expand().center();
 		box.pack();
 	}
@@ -56,6 +57,7 @@ public class NPCDialog extends AbstractDialogBox {
 		if (PlayerPeon.checkBalance() >= 100) {
 			button2.addListener(c);
 		}
+		box.row();
 		box.add(button2).expand().center();
 		box.pack();
 	}

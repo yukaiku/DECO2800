@@ -135,6 +135,7 @@ public class ImmuneOrcTest extends BaseGDXTest {
         when(gameManager.getWorld()).thenReturn(world);
         when(GameManager.getManagerFromInstance(EnemyManager.class)).thenReturn(enemyManager);
         when(GameManager.getManagerFromInstance(PlayerManager.class)).thenReturn(playerManager);
+        when(GameManager.get().getWorld().getType()).thenReturn("Test");
 
         spyOrc.death();
         verify(enemyManager, times(1)).removeWildEnemy(spyOrc);
@@ -157,6 +158,7 @@ public class ImmuneOrcTest extends BaseGDXTest {
         when(gameManager.getWorld()).thenReturn(world);
         when(GameManager.getManagerFromInstance(EnemyManager.class)).thenReturn(enemyManager);
         when(GameManager.getManagerFromInstance(PlayerManager.class)).thenReturn(playerManager);
+        when(GameManager.get().getWorld().getType()).thenReturn("Test");
 
         spyOrc.death();
         verify(playerManager, times(1)).grantWizardSkill(WizardSkills.SANDTORNADO);

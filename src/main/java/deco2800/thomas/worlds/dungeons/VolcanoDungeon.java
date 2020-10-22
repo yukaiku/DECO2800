@@ -179,6 +179,12 @@ public class VolcanoDungeon extends AbstractWorld {
     }
 
     /**
+     * Adds a dialog box to this dungeon
+     * @param box
+     */
+    public void addDialogue(AbstractDialogBox box){ this.volcanoDungeonDialogue.add(box);}
+
+    /**
      * Generates the tiles for the world
      */
 

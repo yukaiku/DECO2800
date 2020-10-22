@@ -112,12 +112,12 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
 
     @Override
     public void death() {
-        Tile diedAt = GameManager.get().getWorld().getTile(Math.round(super.getCol()),Math.round(super.getRow()));
-        ItemDropTable.dropItemForEnemyType(diedAt, this,((PlayerPeon) GameManager.get().getWorld().getPlayerEntity()),
-                GameManager.get().getWorld());
         super.death();
         GameManager.getManagerFromInstance(EnemyManager.class).removeSpecialEnemy(this);
         PlayerPeon.credit(2);
+        Tile diedAt = GameManager.get().getWorld().getTile(Math.round(super.getCol()),Math.round(super.getRow()));
+        ItemDropTable.dropItemForEnemyType(diedAt, this,((PlayerPeon) GameManager.get().getWorld().getPlayerEntity()),
+                GameManager.get().getWorld());
     }
 
     @Override

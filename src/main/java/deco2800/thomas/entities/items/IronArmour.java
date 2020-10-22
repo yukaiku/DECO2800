@@ -6,14 +6,20 @@ import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.worlds.Tile;
 
 public class IronArmour extends Item {
-    public static final String ENTITY_ID_STRING = "shield";
+    public static final String ENTITY_ID_STRING = "iron_armour";
+    private int armourValue;
 
     public IronArmour(Tile tile, boolean obstructed, PlayerPeon player,
-                      String styleType){
-        super("Iron Armour",1, tile, RenderConstants.ITEM_RENDER,
+                      String styleType, int armourValue){
+        super("Iron Armour",100, tile, RenderConstants.ITEM_RENDER,
                 "armour_iron", obstructed, player);
         this.setObjectName(ENTITY_ID_STRING);
-        super.display = new ItemBox(this, name, "80", "Protects " +
-                "against fireballs", styleType);
+        this.armourValue = armourValue;
+        super.display = new ItemBox(this, name, Integer.toString(super.getCurrencyValue()),
+                "Adds " + getArmourValue() +  "armour to the player", styleType);
+    }
+
+    public int getArmourValue(){
+        return this.armourValue;
     }
 }
