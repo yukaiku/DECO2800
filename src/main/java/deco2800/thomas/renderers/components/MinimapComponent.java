@@ -16,6 +16,9 @@ import java.util.List;
 
 public class MinimapComponent extends OverlayComponent {
     private static final int MAP_WIDTH = 49;
+    // The column offsets to render each entity at on the x coordinate
+    private static final int COLUMN_OFFSET = 310;
+    private static final int ENEMY_COLUMN_OFFSET = 350;
     // The number of positive columns and rows
     private static final int POSITIVE_COLUMN_NUMBER = 25;
     private static final int POSITIVE_ROW_NUMBER = 24;
@@ -26,7 +29,7 @@ public class MinimapComponent extends OverlayComponent {
     private static final float ENEMY_SIZE_SCALAR = 0.2f;
     private static final float TILE_SIZE_SCALAR = 0.02f;
     private static final float PLAYER_SIZE_SCALAR = 0.1f;
-    private static final float BOSS_SIZE_SCALAR = 0.07f;
+    private static final float BOSS_SIZE_SCALAR = 0.035f;
 
 
 
@@ -101,8 +104,9 @@ public class MinimapComponent extends OverlayComponent {
     private void renderPlayer(SpriteBatch batch, PlayerPeon player) {
         Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(player.getTexture());
         float x = overlayRenderer.getX() + ENTITY_POSITION_SCALAR * (player.getCol() + POSITIVE_COLUMN_NUMBER);
-        System.out.println(x);
-        float y = overlayRenderer.getY() + overlayRenderer.getHeight() - 30 + ENTITY_POSITION_SCALAR * (player.getRow() - POSITIVE_ROW_NUMBER);
+//        System.out.println(x);
+        float y = overlayRenderer.getY() + overlayRenderer.getHeight() + ENTITY_POSITION_SCALAR * (player.getRow() - POSITIVE_ROW_NUMBER);
+
         batch.draw(tex, x, y, tex.getWidth() * PLAYER_SIZE_SCALAR,
                 tex.getHeight() * PLAYER_SIZE_SCALAR);
     }

@@ -1,7 +1,11 @@
 package deco2800.thomas.renderers.components;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.entities.enemies.bosses.Boss;
 import deco2800.thomas.entities.enemies.bosses.Dragon;
 import deco2800.thomas.managers.GameManager;
@@ -20,6 +24,7 @@ public class BossHealthComponent extends OverlayComponent {
     // Cached health bar images
     private final HashMap<String, Sprite> cachedHealthSprites = new HashMap<>();
     private float scaleFactor;
+    private final BitmapFont font;
 
     public BossHealthComponent(OverlayRenderer overlayRenderer) {
         super(overlayRenderer);
@@ -30,6 +35,10 @@ public class BossHealthComponent extends OverlayComponent {
                         new Sprite(textureManager.getTexture(String.format("bossHealth-%s%d", type, i))));
             }
         }
+        Texture textTex = new Texture(Gdx.files.internal("resources/fonts/title.png"), true);
+        textTex.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.Linear);
+        font = new BitmapFont(Gdx.files.internal("resources/fonts/title.fnt"),
+                new TextureRegion(textTex), false);
     }
 
     public void onBossStart(Boss boss) {
@@ -64,6 +73,15 @@ public class BossHealthComponent extends OverlayComponent {
         sprite.setSize(scaleFactor * 0.15f * ratio * overlayRenderer.getWidth(),
                 scaleFactor * 0.15f * overlayRenderer.getWidth());
         sprite.draw(batch);
+
+        font.getData().setScale(1f);
+        font.draw(batch, String.format("%s", boss.getObjectName()),
+                overlayRenderer.getX() + 550,
+                overlayRenderer.getY() + overlayRenderer.getHeight() - 24);
+        font.getData().setScale(0.4f);
+        font.draw(batch, String.format("%d/%d", boss.getCurrentHealth(), boss.getMaxHealth()),
+                overlayRenderer.getX() + 620,
+                overlayRenderer.getY() + overlayRenderer.getHeight() - 70);
         batch.end();
     }
 }
