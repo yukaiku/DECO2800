@@ -495,7 +495,7 @@ public class VolcanoWorld extends AbstractWorld {
         Tile portalTile = getTile(col, row);
         return new VolcanoPortal(portalTile, false, "VolcanoPortal", "VolcanoDungeonPortal" );
     }
-
+    
     /**
      * Adds dialogue to the volcano zone.
      * @param box The box ADT containing the dialogue
@@ -529,5 +529,9 @@ public class VolcanoWorld extends AbstractWorld {
                 tile.setTexture("Volcano_" + (random.nextInt(4) + 5));
             }
         }
+    }
+    
+    public List<AbstractDialogBox> returnAllDialogues(){
+        return this.allVolcanoDialogues;
     }
 }

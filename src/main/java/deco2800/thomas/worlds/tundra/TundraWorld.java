@@ -202,6 +202,9 @@ public class TundraWorld extends AbstractWorld {
 
 	public void addDialogue(AbstractDialogBox box){ this.allTundraDialogues.add(box);}
 
+	public List<AbstractDialogBox> returnAllDialogues(){
+		return this.allTundraDialogues;
+	}
 
 	private void addCampfire(float col, float row) {
 		Tile tile = getTile(col, row);

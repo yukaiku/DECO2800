@@ -229,6 +229,7 @@ public class TextureManager extends AbstractManager {
             // Items
             textureMap.put("potion_small", new Texture("resources/inventory/potion-small.png"));
             textureMap.put("potion_large", new Texture("resources/inventory/potion-large.png"));
+            textureMap.put("poison", new Texture("resources/inventory/potion-poison.png"));
             textureMap.put("armour_iron", new Texture("resources/inventory/armour-iron.png"));
             textureMap.put("armour_wood", new Texture("resources/inventory/armour-wood.png"));
             textureMap.put("treasure_box", new Texture("resources/inventory/treasure-box.png"));
@@ -277,27 +278,27 @@ public class TextureManager extends AbstractManager {
         try {
             // Health
             // Player health & game over screen
-            textureMap.put("health0", new Texture("resources/healthResources/health-bar-0.png"));
-            textureMap.put("health5", new Texture("resources/healthResources/health-bar-5.png"));
-            textureMap.put("health10", new Texture("resources/healthResources/health-bar-10.png"));
-            textureMap.put("health15", new Texture("resources/healthResources/health-bar-15.png"));
-            textureMap.put("health20", new Texture("resources/healthResources/health-bar-20.png"));
-            textureMap.put("health25", new Texture("resources/healthResources/health-bar-25.png"));
-            textureMap.put("health30", new Texture("resources/healthResources/health-bar-30.png"));
-            textureMap.put("health35", new Texture("resources/healthResources/health-bar-35.png"));
-            textureMap.put("health40", new Texture("resources/healthResources/health-bar-40.png"));
-            textureMap.put("health45", new Texture("resources/healthResources/health-bar-45.png"));
-            textureMap.put("health50", new Texture("resources/healthResources/health-bar-50.png"));
-            textureMap.put("health55", new Texture("resources/healthResources/health-bar-55.png"));
-            textureMap.put("health60", new Texture("resources/healthResources/health-bar-60.png"));
-            textureMap.put("health65", new Texture("resources/healthResources/health-bar-65.png"));
-            textureMap.put("health70", new Texture("resources/healthResources/health-bar-70.png"));
-            textureMap.put("health75", new Texture("resources/healthResources/health-bar-75.png"));
-            textureMap.put("health80", new Texture("resources/healthResources/health-bar-80.png"));
-            textureMap.put("health85", new Texture("resources/healthResources/health-bar-85.png"));
-            textureMap.put("health90", new Texture("resources/healthResources/health-bar-90.png"));
-            textureMap.put("health95", new Texture("resources/healthResources/health-bar-95.png"));
-            textureMap.put("health100", new Texture("resources/healthResources/health-bar-100.png"));
+            textureMap.put("health0", new Texture("resources/healthResources/health-bar-update-0.png"));
+            textureMap.put("health5", new Texture("resources/healthResources/health-bar-update-5.png"));
+            textureMap.put("health10", new Texture("resources/healthResources/health-bar-update-10.png"));
+            textureMap.put("health15", new Texture("resources/healthResources/health-bar-update-15.png"));
+            textureMap.put("health20", new Texture("resources/healthResources/health-bar-update-20.png"));
+            textureMap.put("health25", new Texture("resources/healthResources/health-bar-update-25.png"));
+            textureMap.put("health30", new Texture("resources/healthResources/health-bar-update-30.png"));
+            textureMap.put("health35", new Texture("resources/healthResources/health-bar-update-35.png"));
+            textureMap.put("health40", new Texture("resources/healthResources/health-bar-update-40.png"));
+            textureMap.put("health45", new Texture("resources/healthResources/health-bar-update-45.png"));
+            textureMap.put("health50", new Texture("resources/healthResources/health-bar-update-50.png"));
+            textureMap.put("health55", new Texture("resources/healthResources/health-bar-update-55.png"));
+            textureMap.put("health60", new Texture("resources/healthResources/health-bar-update-60.png"));
+            textureMap.put("health65", new Texture("resources/healthResources/health-bar-update-65.png"));
+            textureMap.put("health70", new Texture("resources/healthResources/health-bar-update-70.png"));
+            textureMap.put("health75", new Texture("resources/healthResources/health-bar-update-75.png"));
+            textureMap.put("health80", new Texture("resources/healthResources/health-bar-update-80.png"));
+            textureMap.put("health85", new Texture("resources/healthResources/health-bar-update-85.png"));
+            textureMap.put("health90", new Texture("resources/healthResources/health-bar-update-90.png"));
+            textureMap.put("health95", new Texture("resources/healthResources/health-bar-update-95.png"));
+            textureMap.put("health100", new Texture("resources/healthResources/health-bar-update-100.png"));
             textureMap.put("game-over", new Texture("resources/healthResources/game-over.png"));
 
             // boss health
@@ -661,8 +662,8 @@ public class TextureManager extends AbstractManager {
                     8, 162, 192, true);
 
             // dragon attack sprites
-            addAnimationFramesSprite("dragonDesertAttack", "resources/enemies/dragon_desert_sprite_sheet.png",
-                    2, 472, 264, true);
+            addAnimationFramesSprite("dragonDesertAttack", "resources/enemies/desert_dragon_attack_sprites.png",
+                    3, 701, 701, true);
             addAnimationFramesSprite("dragonSwampAttack", "resources/enemies/dragon_swamp_sprite_sheet.png",
                     2, 492, 264, false);
             addAnimationFramesSprite("dragonTundraAttack", "resources/enemies/dragon_tundra_attacking_sprites.png",
@@ -672,9 +673,11 @@ public class TextureManager extends AbstractManager {
 
             // dragon walk sprites
             addAnimationFramesSprite("dragonVolcanoWalk", "resources/enemies/dragon_volcano_walking_sprites.png",
-                    8, 1163, 1100, false);
+            8, 1163, 1100, false);
             addAnimationFramesSprite("dragonTundraWalk", "resources/enemies/dragon_tundra_walking_sprites.png",
                     2, 1363, 1000, false);
+            addAnimationFramesSprite("dragonDesertWalk", "resources/enemies/desert_dragon_tail_sprites.png",
+                    5, 701, 701, true);
 
         } catch (GdxRuntimeException e) {
             e.printStackTrace();

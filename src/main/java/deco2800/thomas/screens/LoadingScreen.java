@@ -18,7 +18,6 @@ import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.managers.TextureManager;
 
 public class LoadingScreen implements Screen {
-
     final ThomasGame game;
     private final Stage stage;
     private final Label loadingText;
@@ -57,6 +56,9 @@ public class LoadingScreen implements Screen {
         loadingText.setText(message);
     }
 
+    /**
+     * Load game resources.
+     */
     @Override
     public void show() {
         TextureManager textureManager = GameManager.get().getManager(TextureManager.class);
@@ -93,7 +95,7 @@ public class LoadingScreen implements Screen {
         sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading Animation 8/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadAnimationFrames));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading Sounds & Musics 9/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading Sounds & Music 9/9")));
         sequenceAction.addAction(Actions.run(soundManager::loadSound));
 
         sequenceAction.addAction(Actions.run(() -> setLoadingText("")));

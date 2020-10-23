@@ -1,6 +1,7 @@
 package deco2800.thomas.worlds;
 
 import deco2800.thomas.Tickable;
+import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.StaticEntity;
@@ -520,4 +521,6 @@ public abstract class AbstractWorld implements Tickable {
 		this.tiles.clear();
 		this.tilesToRemove.clear();
 	}
+
+	public abstract List<AbstractDialogBox> returnAllDialogues();
 }

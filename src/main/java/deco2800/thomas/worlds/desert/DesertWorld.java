@@ -258,4 +258,9 @@ public class DesertWorld extends AbstractWorld {
 
         super.onTick(i);
     }
+
+    @Override
+    public List<AbstractDialogBox> returnAllDialogues() {
+        return allDesertDialogues;
+    }
 }
