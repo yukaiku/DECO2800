@@ -2,7 +2,6 @@ package deco2800.thomas.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,7 +18,6 @@ import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.managers.TextureManager;
 
 public class LoadingScreen implements Screen {
-
     final ThomasGame game;
     private final Stage stage;
     private final Label loadingText;
@@ -58,6 +56,9 @@ public class LoadingScreen implements Screen {
         loadingText.setText(message);
     }
 
+    /**
+     * Load game resources.
+     */
     @Override
     public void show() {
         TextureManager textureManager = GameManager.get().getManager(TextureManager.class);

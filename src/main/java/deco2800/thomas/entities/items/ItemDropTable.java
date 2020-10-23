@@ -42,6 +42,10 @@ public class ItemDropTable {
                             Item item = new Treasure(tile, false, player, styletypeSwamp);
                             world.addEntity(item);
                             ((SwampWorld) world).addDialogue(item.getDisplay());
+                        }  else if (rng > 30 && rng <= 35){
+                            Item item = new Poison(tile, false, player, styletypeDesert);
+                            world.addEntity(item);
+                            ((SwampWorld) world).addDialogue(item.getDisplay());
                         }
                         break;
                     case "Swamp Goblin":
@@ -67,6 +71,10 @@ public class ItemDropTable {
                             ((SwampDungeon) world).addDialogue(item.getDisplay());
                         } else if (rng > 12 && rng <= 14) {
                             Item item = new Treasure(tile, false, player, styletypeSwamp);
+                            world.addEntity(item);
+                            ((SwampDungeon) world).addDialogue(item.getDisplay());
+                        }  else if (rng > 30 && rng <= 35){
+                            Item item = new Poison(tile, false, player, styletypeDesert);
                             world.addEntity(item);
                             ((SwampDungeon) world).addDialogue(item.getDisplay());
                         }
@@ -96,6 +104,10 @@ public class ItemDropTable {
                             Item item = new Treasure(tile, false, player, styletypeTundra);
                             world.addEntity(item);
                             ((TundraWorld) world).addDialogue(item.getDisplay());
+                        } else if (rng > 30 && rng <= 35){
+                            Item item = new Poison(tile, false, player, styletypeDesert);
+                            world.addEntity(item);
+                            ((TundraWorld) world).addDialogue(item.getDisplay());
                         }
                         break;
                     case "Tundra Goblin":
@@ -121,6 +133,10 @@ public class ItemDropTable {
                             ((DesertWorld) world).addDialogue(item.getDisplay());
                         } else if (rng > 25 && rng <= 30) {
                             Item item = new Treasure(tile, false, player, styletypeDesert);
+                            world.addEntity(item);
+                            ((DesertWorld) world).addDialogue(item.getDisplay());
+                        } else if (rng > 30 && rng <= 35){
+                            Item item = new Poison(tile, false, player, styletypeDesert);
                             world.addEntity(item);
                             ((DesertWorld) world).addDialogue(item.getDisplay());
                         }
@@ -150,6 +166,10 @@ public class ItemDropTable {
                             Item item = new Treasure(tile, false, player, styletypeVolcano);
                             world.addEntity(item);
                             ((VolcanoWorld) world).addDialogue(item.getDisplay());
+                        } else if (rng > 30 && rng <= 35){
+                            Item item = new Poison(tile, false, player, styletypeDesert);
+                            world.addEntity(item);
+                            ((VolcanoWorld) world).addDialogue(item.getDisplay());
                         }
                         break;
                     case "Volcano Goblin":
@@ -175,6 +195,10 @@ public class ItemDropTable {
                             ((VolcanoDungeon) world).addDialogue(item.getDisplay());
                         } else if (rng > 12 && rng <= 14) {
                             Item item = new Treasure(tile, false, player, styletypeVolcano);
+                            world.addEntity(item);
+                            ((VolcanoDungeon) world).addDialogue(item.getDisplay());
+                        } else if (rng > 30 && rng <= 35){
+                            Item item = new Poison(tile, false, player, styletypeDesert);
                             world.addEntity(item);
                             ((VolcanoDungeon) world).addDialogue(item.getDisplay());
                         }

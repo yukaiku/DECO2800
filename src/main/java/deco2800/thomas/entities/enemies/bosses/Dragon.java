@@ -5,17 +5,16 @@ import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.Orb;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.enemies.PassiveEnemy;
-import deco2800.thomas.entities.enemies.monsters.Orc;
-import deco2800.thomas.managers.EnemyManager;
-import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.managers.*;
+import deco2800.thomas.renderers.components.BossHealthComponent;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
@@ -53,6 +52,10 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     private float stateTimer = 0;
     Random random = new Random();
 
+    private int goblinSpawnTick = 0;
+    private final int goblinSpawnCycle = 60;
+    private final int goblinCap = 10;
+
     public Dragon(int health, float speed, int orbNumber) {
         super(health, speed);
         this.orbNumber = orbNumber;
@@ -72,7 +75,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
      * if there is less than 10 goblins spawned
      */
     public void summonGoblin() {
-        if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() < 10) {
+        if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() < goblinCap) {
             GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(
                     variation.name().toLowerCase() + "Goblin", this.getCol() + 1, this.getRow() + 2);
         }
@@ -87,7 +90,9 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     @Override
     public int applyDamage(int damage, DamageType damageType) {
         int damageDealt = super.applyDamage(damage, damageType);
-        hitByTarget();
+        if (super.getTarget() == null) {
+            hitByTarget();
+        }
         return damageDealt;
     }
 
@@ -107,6 +112,10 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
             setMovementTask(new MovementTask(this,
                     super.getTarget().getPosition()));
         }
+        GameManager.getManagerFromInstance(ScreenManager.class).getCurrentScreen()
+                .getOverlayRenderer().getComponentByInstance(BossHealthComponent.class).onBossStart(this);
+//        GameManager.getManagerFromInstance(SoundManager.class).playMusic("boss1");
+//        GameManager.getManagerFromInstance(SoundManager.class).setVolume(0.5f);
     }
 
     public void elementalAttack() {
@@ -119,6 +128,10 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     public void breathAttack() {
         Fireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
                 getTarget().getRow(), 10, 0.2f, 60, EntityFaction.EVIL);
+    }
+
+    public String getVariation() {
+        return this.variation.name().toLowerCase();
     }
 
     @Override
@@ -146,13 +159,22 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
                 // tasks
                 currentState = State.ATTACKING;
                 duration = 12;
-                summonGoblin();
                 breathAttack();
                 elementalAttack();
                 setMovementTask(new MovementTask(this, super.getTarget().
                         getPosition()));
             }
             tickFollowing = 0;
+        }
+
+        if (++goblinSpawnTick > goblinSpawnCycle) {
+            if (random.nextBoolean()) {
+                summonGoblin();
+                if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() >= goblinCap) {
+                    goblinSpawnTick -= 300;
+                }
+                goblinSpawnTick = 0;
+            }
         }
 
         // Update tasks and effects
@@ -174,6 +196,10 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
         world.setOrbEntity(new Orb(tile, "orb_" + orbNumber));
 
         PlayerPeon.credit(1500);
+
+        GameManager.getManagerFromInstance(ScreenManager.class).getCurrentScreen()
+                .getOverlayRenderer().getComponentByInstance(BossHealthComponent.class).onBossDefeat();
+//        GameManager.getManagerFromInstance(SoundManager.class).stopMusic();
     }
 
     @Override

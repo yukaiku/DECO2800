@@ -2,7 +2,9 @@ package deco2800.thomas.entities.items;
 
 import com.badlogic.gdx.Gdx;
 import deco2800.thomas.combat.skills.*;
-import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.AbstractDialogBox;
+import deco2800.thomas.entities.RenderConstants;
+import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
@@ -68,6 +70,9 @@ public class Item extends StaticEntity implements TouchDownObserver {
                 case "Small Health Potion":
                     this.player.regenerateHealth(20);
                     break;
+                case "Poison":
+                    this.player.reduceHealth(10);
+                    break; 
                 case "Iron Armour":
                     if (this.player.getArmour() < 2000){
                         this.player.addArmour(((IronArmour) this).getArmourValue());

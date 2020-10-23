@@ -1,7 +1,6 @@
 package deco2800.thomas.managers;
 
 import com.badlogic.gdx.InputProcessor;
-
 import deco2800.thomas.observers.*;
 import deco2800.thomas.util.Vector2;
 

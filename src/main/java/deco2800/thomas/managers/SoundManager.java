@@ -25,6 +25,7 @@ public class SoundManager extends AbstractManager {
 	private long musicId;
 	// Global audio volume
 	private float volume = 1.0f;
+	private boolean soundLoaded = false;
 
 	/**
 	 * Create an instance of the SoundManager.
@@ -37,24 +38,38 @@ public class SoundManager extends AbstractManager {
 				Gdx.files.internal("resources/sounds/sfx/explosion_1.wav")));
 	}
 
+	/**
+	 * Load sound on game start.
+	 */
 	public void loadSound() {
-		// Long sound effects, or music that are not preloaded:
-		sounds.put("swampAmbience", "resources/sounds/ambience/swamp_ambience.ogg");
-		sounds.put("desertAmbience", "resources/sounds/ambience/desert_ambience.ogg");
-		sounds.put("tundraAmbience", "resources/sounds/ambience/tundra_ambience.ogg");
-		sounds.put("volcanoAmbience", "resources/sounds/ambience/volcano_ambience.ogg");
-		sounds.put("menuMusic", "resources/sounds/music/menu_music.ogg");
-		sounds.put("menuAmbience", "resources/sounds/ambience/menu_ambience.ogg");
+		try {
+			// Long sound effects, or music that are not preloaded:
+			sounds.put("swampAmbience", "resources/sounds/ambience/swamp_ambience.ogg");
+			sounds.put("desertAmbience", "resources/sounds/ambience/desert_ambience.ogg");
+			sounds.put("tundraAmbience", "resources/sounds/ambience/tundra_ambience.ogg");
+			sounds.put("volcanoAmbience", "resources/sounds/ambience/volcano_ambience.ogg");
+			sounds.put("menuMusic", "resources/sounds/music/menu_music.ogg");
+			sounds.put("menuAmbience", "resources/sounds/ambience/menu_ambience.ogg");
+			sounds.put("boss1", "resources/sounds/music/boss_1.mp3");
 
-		// Sound effects that are preloaded (short duration)
-		soundEffects.put("fireball", Gdx.audio.newSound(
-				Gdx.files.internal("resources/sounds/sfx/fireball_5.wav")));
-		soundEffects.put("woodHit", Gdx.audio.newSound(
-				Gdx.files.internal("resources/sounds/sfx/mech_hit_3.wav")));
-		soundEffects.put("fireHit", Gdx.audio.newSound(
-				Gdx.files.internal("resources/sounds/sfx/fireball_hit_3.wav")));
-		soundEffects.put("windAttack", Gdx.audio.newSound(
-				Gdx.files.internal("resources/sounds/sfx/wind_1.wav")));
+			// Sound effects that are preloaded (short duration)
+			soundEffects.put("fireball", Gdx.audio.newSound(
+					Gdx.files.internal("resources/sounds/sfx/fireball_5.wav")));
+			soundEffects.put("woodHit", Gdx.audio.newSound(
+					Gdx.files.internal("resources/sounds/sfx/mech_hit_3.wav")));
+			soundEffects.put("fireHit", Gdx.audio.newSound(
+					Gdx.files.internal("resources/sounds/sfx/fireball_hit_3.wav")));
+			soundEffects.put("windAttack", Gdx.audio.newSound(
+					Gdx.files.internal("resources/sounds/sfx/wind_1.wav")));
+			soundEffects.put("button1", Gdx.audio.newSound(
+					Gdx.files.internal("resources/sounds/sfx/button_1.wav")));
+			soundEffects.put("button2", Gdx.audio.newSound(
+					Gdx.files.internal("resources/sounds/sfx/button_2.wav")));
+		} catch (Exception e) {
+			logger.error(Arrays.toString(e.getStackTrace()));
+		} finally {
+			soundLoaded = true;
+		}
 	}
 
 	/**
@@ -92,6 +107,7 @@ public class SoundManager extends AbstractManager {
 	 * @param soundName Name of ambience track.
 	 */
 	public void playAmbience(String soundName) {
+		if (!soundLoaded) loadSound();
 		try {
 			stopSoundResource(ambience);
 			ambience = Gdx.audio.newSound(Gdx.files.internal(sounds.get(soundName)));
@@ -114,6 +130,7 @@ public class SoundManager extends AbstractManager {
 	 * @param soundName Name of music track.
 	 */
 	public void playMusic(String soundName) {
+		if (!soundLoaded) loadSound();
 		try {
 			stopSoundResource(music);
 			music = Gdx.audio.newSound(Gdx.files.internal(sounds.get(soundName)));
@@ -139,6 +156,11 @@ public class SoundManager extends AbstractManager {
 	 * @param soundName ID of sound to play
 	 */
 	public void playSound(String soundName) {
+		playSound(soundName, this.volume);
+	}
+
+	public void playSound(String soundName, float volume) {
+		if (!soundLoaded) loadSound();
 		try {
 			Sound sound = soundEffects.get(soundName);
 			sound.play(volume);
