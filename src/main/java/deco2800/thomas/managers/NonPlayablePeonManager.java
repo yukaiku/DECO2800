@@ -1,7 +1,7 @@
 package deco2800.thomas.managers;
 
-import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.worlds.AbstractWorld;
 
 import java.util.List;

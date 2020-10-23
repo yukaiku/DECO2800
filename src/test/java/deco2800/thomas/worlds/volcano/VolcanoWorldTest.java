@@ -183,44 +183,6 @@ public class VolcanoWorldTest extends BaseGDXTest {
     }
 
     /**
-     * Tests that all fenceE-W, S-W, N-W and N-E parts are correctly added to the new entity
-     * when createGraveYard() is called.
-     */
-    @Test
-    public void createGraveYardFenceCorners() {
-        ArrayList<SquareVector> fenceLocations = new ArrayList<>();
-        boolean allTiles = true;
-        String name;
-        int size = 0;
-
-        float row = 0;
-        float col = 0;
-
-        VolcanoGraveYard graveYard = spyWorld.createGraveYard(col, row);
-
-        // these are the positions selected in the method
-        fenceLocations.add(new SquareVector(0, 0));
-        fenceLocations.add(new SquareVector(13, 0));
-        fenceLocations.add(new SquareVector(0, -7));
-        fenceLocations.add(new SquareVector(13, -7));
-
-        for (SquareVector vec : graveYard.children.keySet()) {
-            name = graveYard.children.get(vec);
-            if (name.equals("fenceS-E") || name.equals("fenceS-W")
-                    || name.equals("fenceN-W") || name.equals("fenceN-E")) {
-                size++;
-                if (!fenceLocations.contains(vec)) {
-                    allTiles = false;
-                    break;
-                }
-            }
-        }
-
-        Assert.assertEquals(fenceLocations.size(), size);
-        Assert.assertTrue(allTiles);
-    }
-
-    /**
      * Tests that all fenceN-S parts are correctly added to the new entity
      * when createGraveYard() is called.
      */

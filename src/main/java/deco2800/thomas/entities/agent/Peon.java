@@ -1,6 +1,5 @@
 package deco2800.thomas.entities.agent;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Color;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.DamageType;

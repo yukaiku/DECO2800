@@ -3,7 +3,6 @@ package deco2800.thomas.renderers.components;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import deco2800.thomas.Tickable;
 import deco2800.thomas.renderers.OverlayComponent;
 import deco2800.thomas.renderers.OverlayRenderer;

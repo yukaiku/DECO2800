@@ -59,18 +59,23 @@ public class DialogManager extends TickableManager {
 		if (GameManager.get().getStage() != null && !ready) {
 			ready = true;
 		}
+
 		if (ready) {
 			int numShowing = 0;
-			for (AbstractDialogBox a: boxes) {
-				if (a.isShowing() && numShowing < 1){
+			for (AbstractDialogBox a : boxes) {
+				if (a.isShowing() && numShowing < 1) {
 					showDialog(a);
 					numShowing++;
 				}
-				if (a.getRemove()){
+			}
+
+			for (int j = 0; j < world.returnAllDialogues().size(); j++) {
+				AbstractDialogBox a = world.returnAllDialogues().get(j);
+				if (a.getRemove()) {
 					a.getBox().setVisible(false);
 					ItemBox b = (ItemBox) a;
+					world.returnAllDialogues().remove(a);
 					world.removeEntity(b.getItem());
-					hideDialog(a);
 				}
 			}
 		}

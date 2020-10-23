@@ -1,9 +1,8 @@
 package deco2800.thomas.tasks.combat;
 
-import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.AbstractTask;

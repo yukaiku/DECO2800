@@ -1,21 +1,23 @@
 package deco2800.thomas.managers;
 
-import deco2800.thomas.entities.*;
-import deco2800.thomas.entities.agent.AgentEntity;
-import deco2800.thomas.entities.agent.LoadedPeon;
-import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.entities.attacks.Fireball;
-import deco2800.thomas.entities.enemies.bosses.SwampDragon;
-import deco2800.thomas.worlds.AbstractWorld;
-import deco2800.thomas.worlds.Tile;
-import deco2800.thomas.util.SquareVector;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.entities.Rock;
+import deco2800.thomas.entities.StaticEntity;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.LoadedPeon;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.attacks.Fireball;
+import deco2800.thomas.entities.enemies.bosses.SwampDragon;
+import deco2800.thomas.util.SquareVector;
+import deco2800.thomas.worlds.AbstractWorld;
+import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.desert.CactusTile;
 import deco2800.thomas.worlds.desert.QuicksandTile;
 import deco2800.thomas.worlds.tundra.TundraWorldIceTile;
@@ -24,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -33,7 +36,6 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.lang.reflect.InvocationTargetException;
 
 
 public final class DatabaseManager extends AbstractManager {
