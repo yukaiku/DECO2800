@@ -3,6 +3,7 @@ package deco2800.thomas.mainmenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -25,8 +26,8 @@ import deco2800.thomas.screens.SettingScreen;
 
 public class MainMenuScreen implements Screen {
 	final ThomasGame game;
-	private Stage stage;
-	private Skin skin;
+	private final Stage stage;
+	private boolean soundPlayed = false;
 
 	/**
 	 * Constructor of the MainMenuScreen.
@@ -35,9 +36,7 @@ public class MainMenuScreen implements Screen {
 	 */
 	public MainMenuScreen(final ThomasGame game) {
 		this.game = game;
-
 		stage = new Stage(new ExtendViewport(1920, 1000), game.getBatch());
-		skin = GameManager.get().getSkin();
 
 		Image background = new Image(GameManager.get().getManager(TextureManager.class).getTexture("background"));
 		background.setFillParent(true);
@@ -51,11 +50,11 @@ public class MainMenuScreen implements Screen {
 		Label logo = new Label("Polyhedron", titleStyle);
 		Label small = new Label("Studio Fd ii", titleStyle);
 		small.setFontScale(0.6f);
-		logo.setFontScale(2.2f);
-		logo.setPosition(200, 540);
-		small.setPosition(250, 495);
-		logo.addAction(Actions.moveTo(300, 540, 0.4f, Interpolation.PowOut.pow3Out));
-		small.addAction(Actions.moveTo(350, 495, 0.4f, Interpolation.PowOut.pow3Out));
+		logo.setFontScale(2.3f);
+		logo.setPosition(200, 640);
+		small.setPosition(250, 590);
+		logo.addAction(Actions.moveTo(300, 640, 0.4f, Interpolation.PowOut.pow3Out));
+		small.addAction(Actions.moveTo(350, 590, 0.4f, Interpolation.PowOut.pow3Out));
 		stage.addActor(logo);
 		stage.addActor(small);
 
@@ -63,39 +62,42 @@ public class MainMenuScreen implements Screen {
 		menuTex.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.Linear);
 		BitmapFont menuFont = new BitmapFont(Gdx.files.internal("resources/fonts/times.fnt"),
 				new TextureRegion(menuTex), false);
-		TextButton.TextButtonStyle menuStyle = new TextButton.TextButtonStyle();
-		menuStyle.font = menuFont;
-		menuStyle.fontColor = Color.valueOf("#cccccc");
 
-		Button envTeamButton = new TextButton("ENV TEAM", menuStyle);
-		envTeamButton.setPosition(200, 330);
-		envTeamButton.addAction(Actions.moveTo(300, 330, 1f, Interpolation.PowOut.pow3Out));
+		Button envTeamButton = new TextButton("ENV TEAM", createButtonStyle(menuFont));
+		envTeamButton.setPosition(200, 430);
+		envTeamButton.addAction(Actions.moveTo(300, 430, 1f, Interpolation.PowOut.pow3Out));
+		addButtonListener(envTeamButton);
 		stage.addActor(envTeamButton);
 
-		Button testWorldBtn = new TextButton("DEBUG START", menuStyle);
-		testWorldBtn.setPosition(200, 280);
-		testWorldBtn.addAction(Actions.moveTo(300, 280, 1f, Interpolation.PowOut.pow3Out));
+		Button testWorldBtn = new TextButton("DEBUG START", createButtonStyle(menuFont));
+		testWorldBtn.setPosition(200, 380);
+		testWorldBtn.addAction(Actions.moveTo(300, 380, 1f, Interpolation.PowOut.pow3Out));
+		addButtonListener(testWorldBtn);
 		stage.addActor(testWorldBtn);
 
-		Button newGameBtn = new TextButton("NEW GAME", menuStyle);
-		newGameBtn.setPosition(200, 210);
-		newGameBtn.addAction(Actions.moveTo(300, 210, 1f, Interpolation.PowOut.pow3Out));
+		Button newGameBtn = new TextButton("NEW GAME", createButtonStyle(menuFont));
+		newGameBtn.setPosition(200, 310);
+		newGameBtn.addAction(Actions.moveTo(300, 310, 1f, Interpolation.PowOut.pow3Out));
+		addButtonListener(newGameBtn);
 		stage.addActor(newGameBtn);
 
-		Button settingBtn = new TextButton("SETTING", menuStyle);
-		settingBtn.setPosition(200, 160);
-		settingBtn.addAction(Actions.moveTo(300, 160, 1f, Interpolation.PowOut.pow3Out));
+		Button settingBtn = new TextButton("SETTING", createButtonStyle(menuFont));
+		settingBtn.setPosition(200, 260);
+		settingBtn.addAction(Actions.moveTo(300, 260, 1f, Interpolation.PowOut.pow3Out));
+		addButtonListener(settingBtn);
 		stage.addActor(settingBtn);
 
-		Button exitBtn = new TextButton("QUIT", menuStyle);
-		exitBtn.setPosition(200, 110);
-		exitBtn.addAction(Actions.moveTo(300, 110, 1f, Interpolation.PowOut.pow3Out));
+		Button exitBtn = new TextButton("QUIT", createButtonStyle(menuFont));
+		exitBtn.setPosition(200, 210);
+		exitBtn.addAction(Actions.moveTo(300, 210, 1f, Interpolation.PowOut.pow3Out));
+		addButtonListener(exitBtn);
 		stage.addActor(exitBtn);
 
 		envTeamButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				switchScreen(GameScreen.gameType.ENV_TEAM_GAME);
+				GameManager.getManagerFromInstance(SoundManager.class).playSound("button2", 0.2f);
 			}
 		});
 
@@ -103,6 +105,7 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				switchScreen(GameScreen.gameType.TEST_WORLD);
+				GameManager.getManagerFromInstance(SoundManager.class).playSound("button2", 0.2f);
 			}
 		});
 
@@ -110,6 +113,7 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				switchScreen(GameScreen.gameType.NEW_GAME);
+				GameManager.getManagerFromInstance(SoundManager.class).playSound("button2", 0.2f);
 			}
 		});
 
@@ -124,7 +128,34 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Gdx.app.exit();
-				System.exit(0);
+//				System.exit(0);
+			}
+		});
+	}
+
+	public TextButton.TextButtonStyle createButtonStyle(BitmapFont menuFont) {
+		TextButton.TextButtonStyle menuStyle = new TextButton.TextButtonStyle();
+		menuStyle.font = menuFont;
+		menuStyle.fontColor = Color.valueOf("#cccccc");
+		return menuStyle;
+	}
+
+	public void addButtonListener(Button button) {
+		button.addListener(new InputListener() {
+			@Override
+			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+				((TextButton.TextButtonStyle)(button.getStyle())).fontColor = Color.valueOf("#ffff00");
+				Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
+				if (!soundPlayed) {
+					GameManager.getManagerFromInstance(SoundManager.class).playSound("button1", 0.1f);
+					soundPlayed = true;
+				}
+			}
+
+			@Override
+			public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+				((TextButton.TextButtonStyle)(button.getStyle())).fontColor = Color.valueOf("#cccccc");
+				soundPlayed = false;
 			}
 		});
 	}
@@ -189,7 +220,7 @@ public class MainMenuScreen implements Screen {
 	/**
 	 * Renders the menu.
 	 *
-	 * @param delta
+	 * @param delta the render interval
 	 */
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
