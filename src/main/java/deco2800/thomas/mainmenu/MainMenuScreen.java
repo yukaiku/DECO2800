@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -53,8 +55,8 @@ public class MainMenuScreen implements Screen {
 		logo.setFontScale(2.3f);
 		logo.setPosition(200, 640);
 		small.setPosition(250, 590);
-		logo.addAction(Actions.moveTo(300, 640, 0.4f, Interpolation.PowOut.pow3Out));
-		small.addAction(Actions.moveTo(350, 590, 0.4f, Interpolation.PowOut.pow3Out));
+		logo.addAction(Actions.moveTo(300, 640, 0.8f, Interpolation.PowOut.pow3Out));
+		small.addAction(Actions.moveTo(350, 590, 0.8f, Interpolation.PowOut.pow3Out));
 		stage.addActor(logo);
 		stage.addActor(small);
 
@@ -65,31 +67,31 @@ public class MainMenuScreen implements Screen {
 
 		Button envTeamButton = new TextButton("ENV TEAM", createButtonStyle(menuFont));
 		envTeamButton.setPosition(200, 430);
-		envTeamButton.addAction(Actions.moveTo(300, 430, 1f, Interpolation.PowOut.pow3Out));
+		envTeamButton.addAction(Actions.moveTo(300, 430, 1.2f, Interpolation.PowOut.pow3Out));
 		addButtonListener(envTeamButton);
 		stage.addActor(envTeamButton);
 
 		Button testWorldBtn = new TextButton("DEBUG START", createButtonStyle(menuFont));
 		testWorldBtn.setPosition(200, 380);
-		testWorldBtn.addAction(Actions.moveTo(300, 380, 1f, Interpolation.PowOut.pow3Out));
+		testWorldBtn.addAction(Actions.moveTo(300, 380, 1.2f, Interpolation.PowOut.pow3Out));
 		addButtonListener(testWorldBtn);
 		stage.addActor(testWorldBtn);
 
 		Button newGameBtn = new TextButton("NEW GAME", createButtonStyle(menuFont));
 		newGameBtn.setPosition(200, 310);
-		newGameBtn.addAction(Actions.moveTo(300, 310, 1f, Interpolation.PowOut.pow3Out));
+		newGameBtn.addAction(Actions.moveTo(300, 310, 1.2f, Interpolation.PowOut.pow3Out));
 		addButtonListener(newGameBtn);
 		stage.addActor(newGameBtn);
 
 		Button settingBtn = new TextButton("SETTING", createButtonStyle(menuFont));
 		settingBtn.setPosition(200, 260);
-		settingBtn.addAction(Actions.moveTo(300, 260, 1f, Interpolation.PowOut.pow3Out));
+		settingBtn.addAction(Actions.moveTo(300, 260, 1.2f, Interpolation.PowOut.pow3Out));
 		addButtonListener(settingBtn);
 		stage.addActor(settingBtn);
 
 		Button exitBtn = new TextButton("QUIT", createButtonStyle(menuFont));
 		exitBtn.setPosition(200, 210);
-		exitBtn.addAction(Actions.moveTo(300, 210, 1f, Interpolation.PowOut.pow3Out));
+		exitBtn.addAction(Actions.moveTo(300, 210, 1.2f, Interpolation.PowOut.pow3Out));
 		addButtonListener(exitBtn);
 		stage.addActor(exitBtn);
 
