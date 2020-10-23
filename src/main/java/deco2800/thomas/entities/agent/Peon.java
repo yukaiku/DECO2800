@@ -327,6 +327,14 @@ public class Peon extends AgentEntity implements Tickable {
 	}
 
 	/**
+	 * Decreases the health of this AgentEntity. by the given amount.
+	 * @param damage The amount of health to decrease for this AgentEntity. 
+	 */
+	public void reduceHealth(int damage) {
+		health.reduceHealth(damage);
+	}
+	
+	/**
 	 * Checks if the given AgentEntity has died (health reduced to 0 or below);
 	 * @return True if AgentEntity is dead, False otherwise
 	 */

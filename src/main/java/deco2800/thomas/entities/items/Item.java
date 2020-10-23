@@ -70,6 +70,9 @@ public class Item extends StaticEntity implements TouchDownObserver {
                 case "Small Health Potion":
                     this.player.regenerateHealth(20);
                     break;
+                case "Poison":
+                    this.player.reduceHealth(10);
+                    break; 
                 case "Iron Armour":
                     if (this.player.getArmour() < 2000){
                         this.player.addArmour(((IronArmour) this).getArmourValue());
