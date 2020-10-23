@@ -1,6 +1,9 @@
 package deco2800.thomas.worlds;
 
+import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.managers.DatabaseManager;
+
+import java.util.List;
 
 public class EnvTeamWorld extends AbstractWorld {
 	public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/tundra/tundra-map.json";
@@ -22,5 +25,10 @@ public class EnvTeamWorld extends AbstractWorld {
 	@Override
 	public void onTick(long i) {
 		super.onTick(i);
+	}
+
+	@Override
+	public List<AbstractDialogBox> returnAllDialogues() {
+		return null;
 	}
 }
