@@ -180,6 +180,11 @@ public class VolcanoDungeon extends AbstractWorld {
         }
     }
 
+    @Override
+    public List<AbstractDialogBox> returnAllDialogues() {
+        return null;
+    }
+
     /**
      * Adds a dialog box to this dungeon
      * @param box
