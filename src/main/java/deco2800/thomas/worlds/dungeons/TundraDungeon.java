@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import deco2800.thomas.combat.WizardSkills;
+import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Rock;
 import deco2800.thomas.entities.agent.PlayerPeon;
@@ -45,12 +46,15 @@ public class TundraDungeon extends AbstractWorld {
 	SquareVector exitPortalCoordinates;
 	String playerAnswer;
 
+	private List<AbstractDialogBox> allTundraDungeonDialogs;
+
 	public TundraDungeon() {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 
 	public TundraDungeon(int width, int height) {
 		super(width, height);
+		this.allTundraDungeonDialogs = new ArrayList<>();
 
 		for (int col = -width; col < width; col++) {
 			for (int row = -height; row < height; row++) {
@@ -265,6 +269,15 @@ public class TundraDungeon extends AbstractWorld {
 		}
 	}
 
+	/**
+	 * Adds a dialog box to this world
+	 * @param box
+	 */
+	public void addDialogue(AbstractDialogBox box){ this.allTundraDungeonDialogs.add(box);}
+
+	@Override
+	public String getType(){ return "TundraDungeon"; }
+
 	@Override
 	public void onTick(long i) {
 		super.onTick(i);
@@ -281,5 +294,10 @@ public class TundraDungeon extends AbstractWorld {
 		for (AbstractEntity e : this.getEntities()) {
 			e.onTick(0);
 		}
+	}
+
+	@Override
+	public List<AbstractDialogBox> returnAllDialogues() {
+		return null;
 	}
 }

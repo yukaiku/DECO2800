@@ -38,10 +38,6 @@ public abstract class AbstractSkill implements Tickable {
      */
     public abstract int getCooldownMax();
 
-    public abstract void reduceCooldownMax(float percent);
-
-    public abstract void setCooldownMax();
-
     /**
      * Sets the attack sound for this skill.
      * @param sound Name of sound.

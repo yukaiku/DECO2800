@@ -2,10 +2,8 @@ package deco2800.thomas;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-
 import deco2800.thomas.mainmenu.MainMenuScreen;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.screens.GameScreen;
@@ -41,7 +39,7 @@ public class ThomasGame extends Game {
 		initUISkin();
 		this.loadingScreen = new LoadingScreen(this);
 		this.setScreen(loadingScreen);
-		loadingScreen.setLoadingText("Loading game resources");
+		loadingScreen.setLoadingText("Loading Game Resources");
 	}
 
 	// load the main menu screen

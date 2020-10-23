@@ -1,17 +1,15 @@
 package deco2800.thomas.entities.enemies.bosses;
 
-import deco2800.thomas.entities.agent.AgentEntity;
-import deco2800.thomas.entities.agent.PlayerPeon;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.Orb;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.enemies.PassiveEnemy;
-import deco2800.thomas.entities.enemies.monsters.Orc;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.SoundManager;

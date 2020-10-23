@@ -6,9 +6,12 @@ import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.minions.Goblin;
+import deco2800.thomas.entities.items.Item;
+import deco2800.thomas.entities.items.ItemDropTable;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.worlds.AbstractWorld;
+import deco2800.thomas.worlds.Tile;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,6 +74,9 @@ public class GoblinTest extends BaseGDXTest {
         playerPeon = mock(PlayerPeon.class);
         when(GameManager.get().getWorld()).thenReturn(world);
         when(GameManager.get().getWorld().getPlayerEntity()).thenReturn(playerPeon);
+        when(GameManager.get().getWorld().getType()).thenReturn("Test");
+
+
 
         volcanoGoblin = new Goblin(EnemyIndex.Variation.VOLCANO, 100, 0.1f, 1, 1, 1);
         desertGoblin = new Goblin(EnemyIndex.Variation.DESERT, 100, 0.1f, 1, 1, 1);
