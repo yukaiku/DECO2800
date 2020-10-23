@@ -55,5 +55,5 @@ public class RenderConstants {
 	public static final int TUNDRA_ENCRYPTION_MACHINE = 1;
 
 	// All Item Entities render with a value of 2
-	public static final int ITEM_RENDER = 2;
+	public static final int ITEM_RENDER = 1;
 }

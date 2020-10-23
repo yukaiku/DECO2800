@@ -47,6 +47,7 @@ public class NPCDialog extends AbstractDialogBox {
 		box.reset();
 		box.add(str).expand().center();
 		button = new TextButton("Next", skin);
+		box.row();
 		box.add(button).expand().center();
 		box.pack();
 	}
@@ -56,6 +57,7 @@ public class NPCDialog extends AbstractDialogBox {
 		if (PlayerPeon.checkBalance() >= 100) {
 			button2.addListener(c);
 		}
+		box.row();
 		box.add(button2).expand().center();
 		box.pack();
 	}
@@ -64,10 +66,10 @@ public class NPCDialog extends AbstractDialogBox {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
 			if (TutorialNPC.getIsActive()) {
-				if (TutorialNPC.speechStage < 4) {
-					TutorialNPC.speechStage += 1;
+				if (TutorialNPC.getSpeechStage() < 4) {
+					TutorialNPC.increaseSpeechStage();
 				}
-				switch (TutorialNPC.speechStage) {
+				switch (TutorialNPC.getSpeechStage()) {
 					case 1:
 						setString(PlayerPeon.getDialogue("WASD"));
 						button.setText("next");

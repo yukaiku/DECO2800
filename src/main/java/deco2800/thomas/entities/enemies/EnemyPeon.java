@@ -51,13 +51,6 @@ public abstract class EnemyPeon extends Peon implements Animatable {
         super.setRow(y);
     }
 
-    private boolean faceRight() {
-        if (getTarget() != null) {
-            return (getTarget().getCol() > this.getCol());
-        }
-        return true;
-    }
-
     /**
      * Returns the AgentEntity this enemy is currently targeting.
      * @return the target

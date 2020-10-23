@@ -19,7 +19,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.util.ArrayList;
 
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
 
 /**
  * Tests the DesertWorld class and its methods.
@@ -49,17 +48,20 @@ public class DesertWorldTest extends BaseGDXTest {
         InputManager inputManager = mock(InputManager.class);
         OnScreenMessageManager onScreenMessageManager = mock(OnScreenMessageManager.class);
         TextureManager textureManager = mock(TextureManager.class);
+        SoundManager soundManager = mock(SoundManager.class);
         when(GameManager.get()).thenReturn(gameManager);
         when(gameManager.getManager(OnScreenMessageManager.class)).thenReturn(onScreenMessageManager);
         when(gameManager.getManager(InputManager.class)).thenReturn(inputManager);
         when(gameManager.getManager(EnemyManager.class)).thenReturn(enemyManager);
         when(gameManager.getManager(DifficultyManager.class)).thenReturn(difficultyManager);
         when(gameManager.getManager(TextureManager.class)).thenReturn(textureManager);
+        when(gameManager.getManager(SoundManager.class)).thenReturn(soundManager);
         when(GameManager.getManagerFromInstance(OnScreenMessageManager.class)).thenReturn(onScreenMessageManager);
         when(GameManager.getManagerFromInstance(InputManager.class)).thenReturn(inputManager);
         when(GameManager.getManagerFromInstance(EnemyManager.class)).thenReturn(enemyManager);
         when(GameManager.getManagerFromInstance(DifficultyManager.class)).thenReturn(difficultyManager);
         when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
+        when(GameManager.getManagerFromInstance(SoundManager.class)).thenReturn(soundManager);
 
         // sets up some functions for a mock Texture and its manager
         Texture texture = mock(Texture.class);

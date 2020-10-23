@@ -61,17 +61,12 @@ public class TutorialWorld extends AbstractWorld{
             }
         }
 
-        PlayerPeon.buffDamageTotal = 0;
+        PlayerPeon.setBuffDamageTotal(0);
+        PlayerPeon.setCooldownBuff(false);
         PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f, 50);
             addEntity(player);
         this.setPlayerEntity(player);
         addEntity(this.getPlayerEntity());
-
-        for (AbstractSkill s :((PlayerPeon) this.getPlayerEntity()).getWizardSkills()){
-            s.setCooldownMax();
-        }
-        ((PlayerPeon) this.getPlayerEntity()).getMechSkill().setCooldownMax();
-
 
         // Spawn dummy
         EnemyManager enemyManager = new EnemyManager(this);

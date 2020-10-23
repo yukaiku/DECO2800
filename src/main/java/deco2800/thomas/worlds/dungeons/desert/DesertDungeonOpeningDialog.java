@@ -23,8 +23,8 @@ public class DesertDungeonOpeningDialog extends DesertDungeonDialog {
      * @param title The specified title
      * @param skin The specified skin
      */
-    public DesertDungeonOpeningDialog(String title, Skin skin) {
-        super(title, skin);
+    public DesertDungeonOpeningDialog(String title) {
+        super(title);
         text("This Orc has grown super strong and is immune to your attacks.\n Find another way to damage him!");
         button("OK");
     }

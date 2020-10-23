@@ -169,14 +169,20 @@ public class VolcanoDungeon extends AbstractWorld {
     public void activateRewardTile(Tile tile) {
         if (tile.getRewardActivated()) {
             Tile rewardTile = getTile(24f, 24f);
-            Treasure rewardBox = new Treasure(rewardTile, true, (PlayerPeon) getPlayerEntity(), "volcano" );
-            tile.setParent(rewardBox);
-            entities.add(rewardBox);
-            volcanoDungeonDialogue.add(rewardBox.getDisplay());
+            //Treasure rewardBox = new Treasure(rewardTile, true, (PlayerPeon) getPlayerEntity(), "volcano" );
+            //tile.setParent(rewardBox);
+            //entities.add(rewardBox);
+            //volcanoDungeonDialogue.add(rewardBox.getDisplay());
             GameManager.getManagerFromInstance(PlayerManager.class).grantWizardSkill(WizardSkills.FIREBALL);
 
         }
     }
+
+    /**
+     * Adds a dialog box to this dungeon
+     * @param box
+     */
+    public void addDialogue(AbstractDialogBox box){ this.volcanoDungeonDialogue.add(box);}
 
     /**
      * Generates the tiles for the world

@@ -135,6 +135,19 @@ public class SwampDungeon extends AbstractWorld {
         }
     }
 
+    /**
+     * Adds a dialog box to this world
+     * @param box
+     */
+    public void addDialogue(AbstractDialogBox box){
+        this.allSwampDungeonDialogues.add(box);
+    }
+
+    @Override
+    public String getType() {
+        return "SwampDungeon";
+    }
+
     @Override
     public void onTick(long i) {
         activateTrap();

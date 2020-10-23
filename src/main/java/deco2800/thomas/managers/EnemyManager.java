@@ -55,8 +55,8 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
     private final float spawnRangeMax;
     private final Random random;
     private int tick = 0;
-    private static final int spawnTicks = 3;
-    private static final int packSpawns = 3;
+    private static final int SPAWN_TICKS = 3;
+    private static final int PACK_SPAWNS = 3;
 
     /**
      * Initialise an enemy manager with wild enemies and boss configured.
@@ -79,6 +79,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
             try {
                 enemyConfigs.put(index, EnemyIndex.getEnemy(index));
             } catch (InvalidEnemyException ignored) {
+                // ignored
             }
         }
         this.wildEnemiesAlive = new ArrayList<>();
@@ -181,7 +182,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
      * @return the number of enemies alive.
      */
     public int getEnemyCount() {
-        return wildEnemiesAlive.size() + specialEnemiesAlive.size() + (boss == null ? 0 : boss.isDead() ? 0 : 1);
+        return wildEnemiesAlive.size() + specialEnemiesAlive.size() + ((boss != null && !boss.isDead()) ? 1 : 0);
     }
 
     /** Get the current wild enemies alive in the map. */
@@ -255,7 +256,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
         EnemyPeon enemyBlueprint = enemyConfigs.get(wildEnemyIndexes.get(random.nextInt(wildEnemyIndexes.size())));
         // spawn rate of the enemy
         if (enemyBlueprint instanceof Orc && random.nextFloat() < ((Orc) enemyBlueprint).getSpawnRate()) {
-            int spawnCount = Math.min(random.nextInt(packSpawns - 1),
+            int spawnCount = Math.min(random.nextInt(PACK_SPAWNS - 1),
                     getWildEnemyCap() - getWildEnemiesAlive().size() - 1);
             for (int i = 0; i <= spawnCount; i++) {
                 for (int j = 0; j < 5; j++) {
@@ -332,7 +333,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
 
     @Override
     public void onTick(long i) {
-        if (++tick > spawnTicks) {
+        if (++tick > SPAWN_TICKS) {
             if (wildSpawning && wildEnemiesAlive.size() < wildEnemyCap) {
                 spawnRandomWildEnemy();
             }

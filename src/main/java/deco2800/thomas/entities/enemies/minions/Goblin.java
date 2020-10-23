@@ -5,6 +5,7 @@ import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.AggressiveEnemy;
 import deco2800.thomas.entities.enemies.EnemyIndex.Variation;
+import deco2800.thomas.entities.items.ItemDropTable;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -15,6 +16,7 @@ import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
 import deco2800.thomas.util.SquareVector;
+import deco2800.thomas.worlds.Tile;
 
 /**
  * A class that defines an implementation of a minion enemy type called a Goblin.
@@ -110,8 +112,12 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
 
     @Override
     public void death() {
+        super.death();
         GameManager.getManagerFromInstance(EnemyManager.class).removeSpecialEnemy(this);
         PlayerPeon.credit(2);
+        Tile diedAt = GameManager.get().getWorld().getTile(Math.round(super.getCol()),Math.round(super.getRow()));
+        ItemDropTable.dropItemForEnemyType(diedAt, this,((PlayerPeon) GameManager.get().getWorld().getPlayerEntity()),
+                GameManager.get().getWorld());
     }
 
     @Override

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("Duplicates")
 public class TundraWorld extends AbstractWorld {
 	private final Logger logger = LoggerFactory.getLogger(TundraWorld.class);
 
@@ -74,6 +75,8 @@ public class TundraWorld extends AbstractWorld {
 		difficultyManager.setPlayerEntity((PlayerPeon) this.getPlayerEntity());
 		difficultyManager.setDifficultyLevel(getType());
 
+		// Start ambience
+		GameManager.getManagerFromInstance(SoundManager.class).playAmbience("tundraAmbience");
 	}
 
 	@Override
@@ -142,41 +145,32 @@ public class TundraWorld extends AbstractWorld {
 	 */
 	private void generateItemEntities(){
 		final int NUM_POTIONS = 6;
-		final int NUM_SHIELDS = 4;
-		final int NUM_CHESTS = 3;
+		final int NUM_IRON_ARMOUR = 2;
+		final int NUM_CHESTS = 2;
 		final String ITEM_BOX_STYLE = "tundra";
 		
 
 		for (int i = 0; i < NUM_POTIONS; i++) {
 			Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
 					Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-
-				HealthPotion potion = new HealthPotion(tile, false,
-						(PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
-				entities.add(potion);
-				this.allTundraDialogues.add(potion.getDisplay());
-
+			HealthPotion potion = new HealthPotion(tile, false,(PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
+			entities.add(potion);
+			this.allTundraDialogues.add(potion.getDisplay());
 		}
-
-		for (int i = 0; i < NUM_SHIELDS; i++) {
+		for (int i = 0; i < NUM_IRON_ARMOUR; i++) {
 			Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
 					Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-
-				IronArmour ironArmour = new IronArmour(tile, false,
-						(PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
-				entities.add(ironArmour);
-				this.allTundraDialogues.add(ironArmour.getDisplay());
-
+			IronArmour ironArmour = new IronArmour(tile, false,
+					(PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE,200);
+			entities.add(ironArmour);
+			this.allTundraDialogues.add(ironArmour.getDisplay());
 		}
-
 		for (int i = 0; i < NUM_CHESTS; i++) {
 			Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
 					Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-
-				Treasure chest = new Treasure(tile, false,
-						(PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
-				entities.add(chest);
-				this.allTundraDialogues.add(chest.getDisplay());
+			Treasure chest = new Treasure(tile, false,(PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
+			entities.add(chest);
+			this.allTundraDialogues.add(chest.getDisplay());
 		}
 
 		Tile cooldownring = getTile(18,17);
@@ -190,7 +184,10 @@ public class TundraWorld extends AbstractWorld {
 				(PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,10);
 		entities.add(attackAmulet);
 		this.allTundraDialogues.add(attackAmulet.getDisplay());
+
 	}
+
+	public void addDialogue(AbstractDialogBox box){ this.allTundraDialogues.add(box);}
 
 
 	private void addCampfire(float col, float row) {

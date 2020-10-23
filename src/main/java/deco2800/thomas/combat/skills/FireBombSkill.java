@@ -2,6 +2,9 @@ package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
 
@@ -38,7 +41,10 @@ public class FireBombSkill extends AbstractSkill {
             throw new NullPointerException();
         }
         this.entity = parent;
-        setMaxCoolDown(ORIGINAL_MAXCOOLDOWN);
+        if (!PlayerPeon.isCoolDownBuffActive()) {
+            setMaxCoolDown(ORIGINAL_MAXCOOLDOWN);
+        }
+        setAttackSound("explosion");
     }
 
     /**
@@ -77,16 +83,10 @@ public class FireBombSkill extends AbstractSkill {
         FireBombSkill.damageMultiplier = damageMultiplier;
     }
 
-    @Override
-    public void reduceCooldownMax(float percent){
+    public static void reduceCooldownMax(float percent){
         if (maxCoolDown > 80) {
             setMaxCoolDown(Math.round(maxCoolDown * (1.0f - percent)));
         }
-    }
-
-    @Override
-    public void setCooldownMax() {
-        // What's the point of this?
     }
 
     /**

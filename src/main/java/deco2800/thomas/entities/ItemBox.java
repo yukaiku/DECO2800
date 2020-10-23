@@ -5,8 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.items.HealthPotionSmall;
 import deco2800.thomas.entities.items.Item;
 import deco2800.thomas.entities.items.Treasure;
+import deco2800.thomas.entities.items.WoodenArmour;
 
 import java.util.Random;
 
@@ -31,12 +33,15 @@ public class ItemBox extends AbstractDialogBox {
 		close = new TextButton("Close",skin);
 		
 		if (item.getClass() == Treasure.class){
-			box.add("Open the box!").expand().center();
+			box.add("Open the box to retrieve a random amount of gold.").expand().center();
 			box.row();
 			button.setText("Open");
-		}
-		else{
+		} else {
 			setup(description, price);
+		}
+		if (item.getClass() == HealthPotionSmall.class || item.getClass() == WoodenArmour.class){
+			box.row();
+			button.setText("Use");
 		}
 		button.addListener(primary);
 		close.addListener(secondary);
@@ -111,7 +116,7 @@ public class ItemBox extends AbstractDialogBox {
 		 */
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			if ((PlayerPeon.checkBalance() > 0) && (PlayerPeon.checkBalance() > item.getCurrencyValue())) {
+			if ((PlayerPeon.checkBalance() > 0) && (PlayerPeon.checkBalance() >= item.getCurrencyValue())) {
 				ItemBox.super.setShowing(false);
 				ItemBox.super.setRemove(true);
 				box.remove();
@@ -121,7 +126,7 @@ public class ItemBox extends AbstractDialogBox {
 				ItemBox.super.setShowing(false);
 				ItemBox.super.setRemove(true);
 				box.remove();
-				int randomCredit = new Random().nextInt(60-30) + 30;
+				int randomCredit = new Random().nextInt(100-50) + 50;
 				PlayerPeon.credit(randomCredit);
 			}
 		}

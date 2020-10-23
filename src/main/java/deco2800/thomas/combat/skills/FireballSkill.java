@@ -1,6 +1,9 @@
 package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireballAttackTask;
 
@@ -33,7 +36,9 @@ public class FireballSkill extends AbstractSkill {
             throw new NullPointerException();
         }
         this.entity = parent;
-        setMaxCooldown(ORIGINAL_COOLDOWN);
+        if (!PlayerPeon.isCoolDownBuffActive()) {
+            setMaxCooldown(ORIGINAL_COOLDOWN);
+        }
     }
 
     /**
@@ -72,15 +77,11 @@ public class FireballSkill extends AbstractSkill {
         FireballSkill.damageMultiplier = damageMultiplier;
     }
 
-    @Override
-    public void reduceCooldownMax(float percent){
+    public static void reduceCooldownMax(float percent){
         if (cooldown > 10) {
             cooldown = Math.round(cooldown * (1.0f - percent));
         }
     }
-
-    @Override
-    public void setCooldownMax(){ cooldown = ORIGINAL_COOLDOWN; }
 
     /**
      * Returns a string containing the name of the texture that is used to represent
