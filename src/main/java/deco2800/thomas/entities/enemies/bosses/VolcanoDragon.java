@@ -17,7 +17,6 @@ public class VolcanoDragon extends Dragon {
         super(health, speed, orbNumber);
         this.variation = EnemyIndex.Variation.VOLCANO;
         this.identifier = "dragonVolcano";
-        this.setTexture("dragonVolcano");
         this.setObjectName("Chusulth");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));

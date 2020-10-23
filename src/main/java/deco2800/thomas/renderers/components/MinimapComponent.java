@@ -16,15 +16,9 @@ import java.util.List;
 
 public class MinimapComponent extends OverlayComponent {
     private static final int MAP_WIDTH = 49;
-    // The column offsets to render each entity at on the x coordinate
-    private static final int COLUMN_OFFSET = 310;
-    private static final int ENEMY_COLUMN_OFFSET = 350;
     // The number of positive columns and rows
     private static final int POSITIVE_COLUMN_NUMBER = 25;
     private static final int POSITIVE_ROW_NUMBER = 24;
-    // THe row offsets to render each entity at on the y coordinate
-    private static final int ROW_OFFSET = 775;
-    private static final int ENEMY_ROW_OFFSET = 795;
     // The scalar to render each entity at relative to its position on the map
     private static final float ENTITY_POSITION_SCALAR = 6.3F;
     // Scalars to reduce the size of each entity texture by to fit each
@@ -32,7 +26,7 @@ public class MinimapComponent extends OverlayComponent {
     private static final float ENEMY_SIZE_SCALAR = 0.2f;
     private static final float TILE_SIZE_SCALAR = 0.02f;
     private static final float PLAYER_SIZE_SCALAR = 0.1f;
-    private static final float BOSS_SIZE_SCALAR = 0.035f;
+    private static final float BOSS_SIZE_SCALAR = 0.07f;
 
 
 
@@ -108,14 +102,13 @@ public class MinimapComponent extends OverlayComponent {
         Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(player.getTexture());
         float x = overlayRenderer.getX() + ENTITY_POSITION_SCALAR * (player.getCol() + POSITIVE_COLUMN_NUMBER);
         System.out.println(x);
-        float y = overlayRenderer.getY() + overlayRenderer.getHeight() + ENTITY_POSITION_SCALAR * (player.getRow() - POSITIVE_ROW_NUMBER);
-
+        float y = overlayRenderer.getY() + overlayRenderer.getHeight() - 30 + ENTITY_POSITION_SCALAR * (player.getRow() - POSITIVE_ROW_NUMBER);
         batch.draw(tex, x, y, tex.getWidth() * PLAYER_SIZE_SCALAR,
                 tex.getHeight() * PLAYER_SIZE_SCALAR);
     }
 
     private void renderBoss(SpriteBatch batch, EnemyPeon boss) {
-        Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(boss.getTexture());
+        Texture tex = boss.getIcon();
         float x = overlayRenderer.getX() + ENTITY_POSITION_SCALAR * (boss.getCol() + POSITIVE_COLUMN_NUMBER);
         float y = overlayRenderer.getY() + overlayRenderer.getHeight() -20 + ENTITY_POSITION_SCALAR * (boss.getRow() - POSITIVE_ROW_NUMBER);
         batch.draw(tex, x, y,

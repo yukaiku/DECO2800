@@ -14,7 +14,6 @@ public class DesertDragon extends Dragon {
         super(health, speed, orbNumber);
         this.variation = EnemyIndex.Variation.DESERT;
         this.identifier = "dragonDesert";
-        this.setTexture("dragonDesert");
         this.setObjectName("Doavnaen");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
