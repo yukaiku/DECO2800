@@ -53,6 +53,9 @@ public class SoundManager extends AbstractManager {
 			sounds.put("menuMusic", "resources/sounds/music/menu_music.ogg");
 			sounds.put("menuAmbience", "resources/sounds/ambience/menu_ambience.ogg");
 
+			// boss musics need to be preloaded to avoid lag mid game.
+			bossMusic = Gdx.audio.newSound(Gdx.files.internal("resources/sounds/music/boss_1.mp3"));
+
 			// Sound effects that are preloaded (short duration)
 			soundEffects.put("fireball", Gdx.audio.newSound(
 					Gdx.files.internal("resources/sounds/sfx/fireball_5.wav")));
@@ -66,9 +69,8 @@ public class SoundManager extends AbstractManager {
 					Gdx.files.internal("resources/sounds/sfx/button_1.wav")));
 			soundEffects.put("button2", Gdx.audio.newSound(
 					Gdx.files.internal("resources/sounds/sfx/button_2.wav")));
-
-			// boss musics need to be preloaded to avoid lag mid game.
-			bossMusic = Gdx.audio.newSound(Gdx.files.internal("resources/sounds/music/boss_1.mp3"));
+			soundEffects.put("dragon1", Gdx.audio.newSound(
+					Gdx.files.internal("resources/sounds/sfx/dragon_fire.mp3")));
 
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));

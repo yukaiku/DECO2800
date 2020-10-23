@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.Orb;
-import deco2800.thomas.entities.agent.AgentEntity;
-import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.enemies.PassiveEnemy;
@@ -52,6 +50,8 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     private float stateTimer = 0;
     Random random = new Random();
 
+    private int roarTick = 0;
+    private int roarTickNext = 800;
     private int goblinSpawnTick = 0;
     private final int goblinSpawnCycle = 60;
     private final int goblinCap = 10;
@@ -178,6 +178,13 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
                     goblinSpawnTick -= 300;
                 }
                 goblinSpawnTick = 0;
+            }
+        }
+
+        if (this instanceof VolcanoDragon && super.getTarget() != null) {
+            if (++roarTick > roarTickNext) {
+                GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon1", 0.8f);
+                roarTick = 0;
             }
         }
 

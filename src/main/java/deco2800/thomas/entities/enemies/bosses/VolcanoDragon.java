@@ -5,6 +5,7 @@ import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.VolcanoFireball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
 import deco2800.thomas.util.EnemyUtil;
@@ -19,6 +20,12 @@ public class VolcanoDragon extends Dragon {
         this.setObjectName("Chusulth");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
+    }
+
+    @Override
+    public void hitByTarget() {
+        super.hitByTarget();
+        GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon1", 0.8f);
     }
 
     @Override
