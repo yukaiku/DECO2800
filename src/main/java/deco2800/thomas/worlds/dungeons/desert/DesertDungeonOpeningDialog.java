@@ -1,7 +1,6 @@
 package deco2800.thomas.worlds.dungeons.desert;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * A dialog box which is shown upon entering the Desert Dungeon. This dialog

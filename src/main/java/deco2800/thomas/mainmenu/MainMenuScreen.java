@@ -8,19 +8,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-
-import deco2800.thomas.managers.SoundManager;
-import deco2800.thomas.screens.CharactersScreen;
-import deco2800.thomas.screens.GameScreen;
 import deco2800.thomas.ThomasGame;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.screens.CharactersScreen;
+import deco2800.thomas.screens.GameScreen;
 import deco2800.thomas.screens.SettingScreen;
 
 public class MainMenuScreen implements Screen {

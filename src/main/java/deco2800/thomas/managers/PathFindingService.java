@@ -1,11 +1,10 @@
 package deco2800.thomas.managers;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
-
-
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.tasks.movement.PathFindingServiceThread;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class PathFindingService extends TickableManager {
 

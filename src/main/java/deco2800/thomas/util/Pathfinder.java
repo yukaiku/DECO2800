@@ -1,9 +1,9 @@
 package deco2800.thomas.util;
 
-import java.util.List;
-
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
+
+import java.util.List;
 
 public abstract class Pathfinder {
 

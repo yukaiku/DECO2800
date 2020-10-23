@@ -1,15 +1,14 @@
 package deco2800.thomas.entities.environment;
 
 import deco2800.thomas.entities.Part;
+import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
-import deco2800.thomas.entities.RenderConstants;
-
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class Tree extends StaticEntity {
 	public static final String ENTITY_ID_STRING = "Tree";

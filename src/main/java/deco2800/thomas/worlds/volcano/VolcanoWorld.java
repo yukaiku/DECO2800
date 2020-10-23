@@ -1,26 +1,24 @@
 package deco2800.thomas.worlds.volcano;
 
-import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.AbstractDialogBox;
+import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.Part;
+import deco2800.thomas.entities.Rock;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.environment.volcano.*;
 import deco2800.thomas.entities.items.*;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.VolcanoNPC;
-import deco2800.thomas.entities.environment.volcano.VolcanoDragonSkull;
-import deco2800.thomas.entities.environment.volcano.VolcanoGraveYard;
-import deco2800.thomas.entities.environment.volcano.VolcanoRuins;
-import deco2800.thomas.entities.environment.volcano.VolcanoBurningTree;
 import deco2800.thomas.managers.*;
-import deco2800.thomas.entities.environment.volcano.*;
-import deco2800.thomas.managers.DatabaseManager;
-import deco2800.thomas.managers.EnemyManager;
-import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Implemented subclass of Abstract world for the Volcano Zone in Polyhedron.

@@ -1,20 +1,15 @@
 package deco2800.thomas.worlds.swamp;
 
-import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.AbstractDialogBox;
+import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.environment.Portal;
+import deco2800.thomas.entities.environment.swamp.*;
 import deco2800.thomas.entities.items.*;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.SwampNPC;
-import deco2800.thomas.entities.environment.swamp.SwampDeadTree;
-import deco2800.thomas.entities.environment.swamp.SwampFallenTree;
-import deco2800.thomas.entities.environment.swamp.SwampPond;
-import deco2800.thomas.entities.environment.swamp.SwampTreeLog;
-import deco2800.thomas.entities.environment.swamp.SwampTreeStub;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
-import deco2800.thomas.managers.DatabaseManager;
-import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
