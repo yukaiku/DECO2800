@@ -37,6 +37,7 @@ public class OverlayRenderer implements Renderer {
         this.getComponents().add(new QuestTrackerComponent(this));
         this.getComponents().add(new GuidelineComponent(this));
         this.getComponents().add(new FloatingDamageComponent(this));
+        this.getComponents().add(new BossHealthComponent(this));
     }
 
     @Override

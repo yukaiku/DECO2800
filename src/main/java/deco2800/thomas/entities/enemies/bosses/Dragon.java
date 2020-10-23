@@ -10,10 +10,8 @@ import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.enemies.PassiveEnemy;
-import deco2800.thomas.managers.EnemyManager;
-import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.SoundManager;
-import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.managers.*;
+import deco2800.thomas.renderers.components.BossHealthComponent;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
 import deco2800.thomas.util.EnemyUtil;
@@ -105,9 +103,10 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
             setMovementTask(new MovementTask(this,
                     super.getTarget().getPosition()));
         }
-
-        GameManager.getManagerFromInstance(SoundManager.class).playMusic("boss1");
-        GameManager.getManagerFromInstance(SoundManager.class).setVolume(0.5f);
+        GameManager.getManagerFromInstance(ScreenManager.class).getCurrentScreen()
+                .getOverlayRenderer().getComponentByInstance(BossHealthComponent.class).onBossStart(this);
+//        GameManager.getManagerFromInstance(SoundManager.class).playMusic("boss1");
+//        GameManager.getManagerFromInstance(SoundManager.class).setVolume(0.5f);
     }
 
     public void elementalAttack() {
@@ -120,6 +119,10 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     public void breathAttack() {
         Fireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
                 getTarget().getRow(), 10, 0.2f, 60, EntityFaction.EVIL);
+    }
+
+    public String getVariation() {
+        return this.variation.name().toLowerCase();
     }
 
     @Override
@@ -185,7 +188,9 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
 
         PlayerPeon.credit(1500);
 
-        GameManager.getManagerFromInstance(SoundManager.class).stopMusic();
+        GameManager.getManagerFromInstance(ScreenManager.class).getCurrentScreen()
+                .getOverlayRenderer().getComponentByInstance(BossHealthComponent.class).onBossDefeat();
+//        GameManager.getManagerFromInstance(SoundManager.class).stopMusic();
     }
 
     @Override
