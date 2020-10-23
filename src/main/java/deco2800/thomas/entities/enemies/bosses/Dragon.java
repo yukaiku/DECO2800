@@ -107,6 +107,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
                 .getOverlayRenderer().getComponentByInstance(BossHealthComponent.class).onBossStart(this);
 //        GameManager.getManagerFromInstance(SoundManager.class).playMusic("boss1");
 //        GameManager.getManagerFromInstance(SoundManager.class).setVolume(0.5f);
+        GameManager.getManagerFromInstance(SoundManager.class).playBossMusic(0.5f);
     }
 
     public void elementalAttack() {
@@ -159,7 +160,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
         }
 
         if (++goblinSpawnTick > goblinSpawnCycle) {
-            if (random.nextBoolean()) {
+            if (random.nextBoolean() && super.getTarget() != null) {
                 summonGoblin();
                 if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() >= goblinCap) {
                     goblinSpawnTick -= 300;
@@ -190,7 +191,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
 
         GameManager.getManagerFromInstance(ScreenManager.class).getCurrentScreen()
                 .getOverlayRenderer().getComponentByInstance(BossHealthComponent.class).onBossDefeat();
-//        GameManager.getManagerFromInstance(SoundManager.class).stopMusic();
+        GameManager.getManagerFromInstance(SoundManager.class).stopBossMusic();
     }
 
     @Override

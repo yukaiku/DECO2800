@@ -188,6 +188,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 				dispose();
 				// Set main menu screen
 				game.setMainMenuScreen();
+				GameManager.getManagerFromInstance(SoundManager.class).stopBossMusic();
 			}
 		});
 		enterButton.addListener(new ClickListener() {

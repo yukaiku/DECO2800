@@ -23,6 +23,8 @@ public class SoundManager extends AbstractManager {
 	private long ambienceId;
 	private Sound music = null;
 	private long musicId;
+	private Sound bossMusic = null;
+	private long bossMusicId;
 	// Global audio volume
 	private float volume = 1.0f;
 	private boolean soundLoaded = false;
@@ -50,7 +52,6 @@ public class SoundManager extends AbstractManager {
 			sounds.put("volcanoAmbience", "resources/sounds/ambience/volcano_ambience.ogg");
 			sounds.put("menuMusic", "resources/sounds/music/menu_music.ogg");
 			sounds.put("menuAmbience", "resources/sounds/ambience/menu_ambience.ogg");
-			sounds.put("boss1", "resources/sounds/music/boss_1.mp3");
 
 			// Sound effects that are preloaded (short duration)
 			soundEffects.put("fireball", Gdx.audio.newSound(
@@ -65,6 +66,10 @@ public class SoundManager extends AbstractManager {
 					Gdx.files.internal("resources/sounds/sfx/button_1.wav")));
 			soundEffects.put("button2", Gdx.audio.newSound(
 					Gdx.files.internal("resources/sounds/sfx/button_2.wav")));
+
+			// boss musics need to be preloaded to avoid lag mid game.
+			bossMusic = Gdx.audio.newSound(Gdx.files.internal("resources/sounds/music/boss_1.mp3"));
+
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		} finally {
@@ -138,6 +143,35 @@ public class SoundManager extends AbstractManager {
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		}
+	}
+
+	/**
+	 * Pause (not compose) the ambience and play boss music
+	 * @param volume The volume of the music
+	 */
+	public void playBossMusic(float volume) {
+		if (ambience != null) {
+			ambience.stop();
+		}
+		bossMusicId = bossMusic.loop(volume);
+	}
+
+	/**
+	 * Stop (not compose) the boss music and resume the ambience.
+	 */
+	public void stopBossMusic() {
+		bossMusic.stop();
+		if (ambience != null) {
+			ambience.play();
+		}
+	}
+
+	/**
+	 * Avoid interrupting ambience and master volume.
+	 * @param volume The volume of the music
+	 */
+	public void setBossMusicVolume(float volume) {
+		bossMusic.setVolume(bossMusicId, volume);
 	}
 
 	/**
