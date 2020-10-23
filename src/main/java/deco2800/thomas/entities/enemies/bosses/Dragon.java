@@ -77,7 +77,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     public void summonGoblin() {
         if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() < goblinCap) {
             GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(
-                    variation.name().toLowerCase() + "Goblin", this.getCol() + 1, this.getRow() + 2);
+                    variation.name().toLowerCase() + "Goblin", this.getCol(), this.getRow());
         }
     }
 
@@ -162,7 +162,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
                 // goblin, and attempts to initialise movement and combat
                 // tasks
                 currentState = State.ATTACKING;
-                duration = 12;
+                duration = 24;
                 breathAttack();
                 elementalAttack();
                 setMovementTask(new MovementTask(this, super.getTarget().

@@ -94,7 +94,7 @@ public class EnemyManagerTest extends BaseGDXTest {
         em.spawnSpecialEnemy("dummy", 1, 1);
         em.spawnSpecialEnemy("summonGoblin", 1, 1);
         em.spawnSpecialEnemy("testDragon", 1, 1);
-        assertEquals(8, em.getEnemyCount());
+        assertEquals(9, em.getEnemyCount());
     }
 
     @Test
