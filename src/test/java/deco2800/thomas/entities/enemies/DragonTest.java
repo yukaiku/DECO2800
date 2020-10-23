@@ -17,7 +17,10 @@ import deco2800.thomas.entities.enemies.bosses.TundraDragon;
 import deco2800.thomas.entities.enemies.bosses.VolcanoDragon;
 import deco2800.thomas.entities.enemies.minions.Goblin;
 import deco2800.thomas.managers.*;
+import deco2800.thomas.renderers.OverlayRenderer;
+import deco2800.thomas.renderers.components.BossHealthComponent;
 import deco2800.thomas.renderers.components.FloatingDamageComponent;
+import deco2800.thomas.screens.GameScreen;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
 import deco2800.thomas.tasks.combat.IceBreathTask;
 import deco2800.thomas.tasks.combat.SandTornadoAttackTask;
@@ -64,6 +67,7 @@ public class DragonTest extends BaseGDXTest {
         TextureManager textureManager = mock(TextureManager.class);
         SoundManager soundManager = mock(SoundManager.class);
         StatusEffectManager seManager = mock(StatusEffectManager.class);
+        ScreenManager screenManager = mock(ScreenManager.class);
 
         gameManager = mock(GameManager.class);
         when(GameManager.get()).thenReturn(gameManager);
@@ -79,6 +83,7 @@ public class DragonTest extends BaseGDXTest {
         when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
         when(GameManager.getManagerFromInstance(SoundManager.class)).thenReturn(soundManager);
         when(GameManager.getManagerFromInstance(StatusEffectManager.class)).thenReturn(seManager);
+        when(GameManager.getManagerFromInstance(ScreenManager.class)).thenReturn(screenManager);
 
         Texture texture = mock(Texture.class);
         when(textureManager.getTexture(anyString())).thenReturn(texture);
@@ -87,6 +92,13 @@ public class DragonTest extends BaseGDXTest {
         when(textureManager.getAnimationFrames(anyString())).thenReturn(playerStand);
         when(texture.getWidth()).thenReturn(1);
         when(texture.getHeight()).thenReturn(1);
+
+        GameScreen screen = mock(GameScreen.class);
+        when(screenManager.getCurrentScreen()).thenReturn(screen);
+        OverlayRenderer renderer = mock(OverlayRenderer.class);
+        when(screen.getOverlayRenderer()).thenReturn(renderer);
+        BossHealthComponent component = mock(BossHealthComponent.class);
+        when(renderer.getComponentByInstance(any())).thenReturn(component);
 
         world = mock(AbstractWorld.class);
         Tile tile = new Tile("quicksand", 0, 0);
