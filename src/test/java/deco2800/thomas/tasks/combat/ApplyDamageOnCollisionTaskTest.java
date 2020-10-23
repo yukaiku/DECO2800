@@ -53,6 +53,7 @@ public class ApplyDamageOnCollisionTaskTest extends BaseGDXTest {
         CombatEntity combatEntity = mock(CombatEntity.class);
         when(combatEntity.getFaction()).thenReturn(EntityFaction.EVIL);
         when(combatEntity.getBounds()).thenReturn(new BoundingBox(new SquareVector(0, 0), 10, 10));
+        when(combatEntity.getDamageType()).thenReturn(DamageType.COMMON);
         Peon peon = mock(Peon.class);
         when(peon.getFaction()).thenReturn(EntityFaction.ALLY);
 

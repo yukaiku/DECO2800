@@ -110,6 +110,7 @@ public class Goblin extends Minion implements AggressiveEnemy, Animatable {
 
     @Override
     public void death() {
+        super.death();
         GameManager.getManagerFromInstance(EnemyManager.class).removeSpecialEnemy(this);
         PlayerPeon.credit(2);
     }

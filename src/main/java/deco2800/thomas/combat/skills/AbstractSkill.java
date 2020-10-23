@@ -2,6 +2,8 @@ package deco2800.thomas.combat.skills;
 
 import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.SkillOnCooldownException;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.tasks.AbstractTask;
 
 /**
@@ -11,6 +13,9 @@ import deco2800.thomas.tasks.AbstractTask;
 public abstract class AbstractSkill implements Tickable {
     /* Tracks the cooldown of this skill */
     private int cooldownRemaining;
+    /* Audio to play when using skill */
+    private String attackSound = "fireball";
+    private boolean attackSoundEnabled = true;
 
     /**
      * Returns (in ticks) how long is remaining on the cooldown.
@@ -38,6 +43,22 @@ public abstract class AbstractSkill implements Tickable {
     public abstract void setCooldownMax();
 
     /**
+     * Sets the attack sound for this skill.
+     * @param sound Name of sound.
+     */
+    public void setAttackSound(String sound) {
+        attackSound = sound;
+    }
+
+    /**
+     * Sets whether this skill should play a sound when used.
+     * @param enabled True = play sound, false = no sound
+     */
+    public void setAttackSoundEnabled(boolean enabled) {
+        attackSoundEnabled = enabled;
+    }
+
+    /**
      * Returns a string containing the name of the texture that is used to represent
      * this skill on the skill bar.
      * @return Texture id
@@ -62,6 +83,9 @@ public abstract class AbstractSkill implements Tickable {
      */
     public AbstractTask getNewSkillTask(float targetX, float targetY) throws SkillOnCooldownException {
         if (getCooldownRemaining() <= 0) {
+            if (attackSoundEnabled) {
+                GameManager.getManagerFromInstance(SoundManager.class).playSound(attackSound);
+            }
             startCooldown();
             return getTask(targetX, targetY);
         }

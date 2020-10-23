@@ -27,6 +27,7 @@ public class Explosion extends CombatEntity implements Animatable {
         super();
         this.setTexture("explosion");
         this.setObjectName("combatExplosion");
+        this.setDamageType(DamageType.FIRE);
         animationFrames = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
     }
@@ -43,6 +44,7 @@ public class Explosion extends CombatEntity implements Animatable {
         super(col, row, RenderConstants.PROJECTILE_RENDER, damage, faction, DamageType.COMMON);
         this.setTexture("explosion");
         this.setObjectName("combatExplosion");
+        this.setDamageType(DamageType.FIRE);
         animationFrames = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
     }

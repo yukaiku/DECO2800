@@ -2,6 +2,7 @@ package deco2800.thomas.entities.attacks;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.RenderConstants;
@@ -28,6 +29,7 @@ public class Freeze extends Projectile implements Animatable {
         this.setColRenderLength(0.3f);
         this.setRowRenderLength(1.0f);
         this.setTexture("explosion");
+        this.setDamageType(DamageType.ICE);
         this.setDefaultState(new Animation<>(0.02f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("freezeTile")));
     }
