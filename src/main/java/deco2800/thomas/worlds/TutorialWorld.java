@@ -58,6 +58,7 @@ public class TutorialWorld extends AbstractWorld{
 
         PlayerPeon.setBuffDamageTotal(0);
         PlayerPeon.setCooldownBuff(false);
+        PlayerPeon.setWallet(0);
         PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f, 50);
             addEntity(player);
         this.setPlayerEntity(player);
@@ -132,6 +133,11 @@ public class TutorialWorld extends AbstractWorld{
         entities.add(new Notify(t, false));
     }
 
+
+    public List<AbstractDialogBox> returnAllDialogues() {
+        return this.allDialogBoxes;
+    }
+    
     @Override
     public void onTick(long i) {
         super.onTick(i);
