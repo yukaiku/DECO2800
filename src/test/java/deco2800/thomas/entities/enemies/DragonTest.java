@@ -132,6 +132,7 @@ public class DragonTest extends BaseGDXTest {
 
     @Test
     public void testOnHit() {
+        assertEquals(desertDragon.applyDamage(1, DamageType.COMMON), 0);
         assertEquals(desertDragon.applyDamage(1, DamageType.COMMON), 1);
         assertNotNull(desertDragon.getTarget());
     }
