@@ -34,6 +34,8 @@ public class VolcanoWorld extends AbstractWorld {
     private static final int ORB_COLUMN = 21;
     private static final int ORB_ROW = 20;
 
+    private long timeLastTick;
+
     private boolean notGenerated = true;
 
     private List<AbstractDialogBox> allVolcanoDialogues;
@@ -94,6 +96,8 @@ public class VolcanoWorld extends AbstractWorld {
 
         // Start ambience
         GameManager.getManagerFromInstance(SoundManager.class).playAmbience("volcanoAmbience");
+
+        timeLastTick = System.currentTimeMillis();
     }
 
     @Override
@@ -116,6 +120,8 @@ public class VolcanoWorld extends AbstractWorld {
         for (AbstractEntity e : this.getEntities()) {
             e.onTick(0);
         }
+
+        checkLavaTileUpdates();
 
         if (notGenerated) {
             createStaticEntities();
@@ -347,15 +353,12 @@ public class VolcanoWorld extends AbstractWorld {
         parts.add(new Part(new SquareVector(1, 0), "fenceE-W", true));
         parts.add(new Part(new SquareVector(2, 0), "fenceE-W", true));
         parts.add(new Part(new SquareVector(3,  0), "fenceE-W", true));
-        //Corner
-        parts.add(new Part(new SquareVector(0, 0), "fenceS-E", true));
         //Top right
         parts.add(new Part(new SquareVector(9, 0), "fenceE-W", true));
         parts.add(new Part(new SquareVector(10, 0), "fenceE-W", true));
         parts.add(new Part(new SquareVector(11,  0), "fenceE-W", true));
         parts.add(new Part(new SquareVector(12, 0), "fenceE-W", true));
         //Corner
-        parts.add(new Part(new SquareVector(13, 0), "fenceS-W", true));
 
         // Bottom Left
         parts.add(new Part(new SquareVector(1, -7), "fenceE-W", true));
@@ -369,8 +372,6 @@ public class VolcanoWorld extends AbstractWorld {
         parts.add(new Part(new SquareVector(10, -7), "fenceE-W", true));
         parts.add(new Part(new SquareVector(11,  -7), "fenceE-W", true));
         parts.add(new Part(new SquareVector(12, -7), "fenceE-W", true));
-        //Bottom right corner
-        parts.add(new Part(new SquareVector(13, -7), "fenceN-W", true));
 
         //Vertical sides Left
         parts.add(new Part(new SquareVector(0, -6), "fenceN-S", true));
@@ -485,10 +486,50 @@ public class VolcanoWorld extends AbstractWorld {
         return lavaPool;
     }
 
+    /**
+     * Creates a static portal entity which is teleports the player upon collision
+     *
+     * @param col - The specified column coordinate of the orb.
+     * @param row - The specified row coordinate of the orb.
+     * @return  A static entity for the Volcano Zone
+     */
     public VolcanoPortal createDungeonPortal(float col, float row){
         Tile portalTile = getTile(col, row);
         return new VolcanoPortal(portalTile, false, "VolcanoPortal", "VolcanoDungeonPortal" );
     }
 
-    public void addDialogue(AbstractDialogBox box){ this.allVolcanoDialogues.add(box);}
+    /**
+     * Adds dialogue to the volcano zone.
+     * @param box The box ADT containing the dialogue
+     */
+    public void addDialogue(AbstractDialogBox box){
+        this.allVolcanoDialogues.add(box);
+    }
+
+    /**
+     * Checks for whether lava-tile updates should occur
+     */
+    public void checkLavaTileUpdates() {
+        // 1 second (1 bn nanoseconds) between each tick
+        long timeBetweenTicks = 1000;
+        long newTime = System.currentTimeMillis();
+
+        // if it has been 1 second: decrement ticks, set a new time and return true
+        if (newTime - timeLastTick >= timeBetweenTicks) {
+            timeLastTick = newTime;
+            updateLavaTiles();
+        }
+    }
+
+    /**
+     * Creates tile-Updates that act like a active lava-flow animation
+     */
+    public void updateLavaTiles() {
+        for (Tile tile : getTiles()) {
+            Random random = new Random();
+            if (tile.getType().matches("BurnTile")) {
+                tile.setTexture("Volcano_" + (random.nextInt(4) + 5));
+            }
+        }
+    }
 }

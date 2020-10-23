@@ -153,24 +153,38 @@ public class TundraWorld extends AbstractWorld {
 		for (int i = 0; i < NUM_POTIONS; i++) {
 			Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
 					Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-			HealthPotion potion = new HealthPotion(tile, false,(PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
-			entities.add(potion);
-			this.allTundraDialogues.add(potion.getDisplay());
+			if (!tile.hasParent()) {
+				HealthPotion potion = new HealthPotion(tile, false,(PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
+				entities.add(potion);
+				this.allTundraDialogues.add(potion.getDisplay());
+			} else {
+				i--;
+			}
+
 		}
 		for (int i = 0; i < NUM_IRON_ARMOUR; i++) {
 			Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
 					Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-			IronArmour ironArmour = new IronArmour(tile, false,
-					(PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE,200);
-			entities.add(ironArmour);
-			this.allTundraDialogues.add(ironArmour.getDisplay());
+			if (!tile.hasParent()) {
+				IronArmour ironArmour = new IronArmour(tile, false,
+						(PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE,200);
+				entities.add(ironArmour);
+				this.allTundraDialogues.add(ironArmour.getDisplay());
+			} else {
+				i--;
+			}
+
 		}
 		for (int i = 0; i < NUM_CHESTS; i++) {
 			Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
 					Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-			Treasure chest = new Treasure(tile, false,(PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
-			entities.add(chest);
-			this.allTundraDialogues.add(chest.getDisplay());
+			if (!tile.hasParent()) {
+				Treasure chest = new Treasure(tile, false,(PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
+				entities.add(chest);
+				this.allTundraDialogues.add(chest.getDisplay());
+			} else {
+				i--;
+			}
 		}
 
 		Tile cooldownring = getTile(18,17);

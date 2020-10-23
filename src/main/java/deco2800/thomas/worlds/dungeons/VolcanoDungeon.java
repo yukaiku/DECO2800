@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Implemented subclass of Abstract world for bonus dungeon within the Volcano
@@ -35,6 +36,7 @@ public class VolcanoDungeon extends AbstractWorld {
     private ArrayList<AbstractDialogBox> volcanoDungeonDialogue;
     private boolean notGenerated = true;
 
+    private long timeLastTick;
     /**
      * Default Constructor for volcano world.
      */
@@ -58,6 +60,7 @@ public class VolcanoDungeon extends AbstractWorld {
         this.volcanoDungeonDialogue = new ArrayList<>();
         setupPuzzle();
 
+        timeLastTick = System.currentTimeMillis();
     }
 
     /**
@@ -201,6 +204,9 @@ public class VolcanoDungeon extends AbstractWorld {
         for (AbstractEntity e : this.getEntities()) {
             e.onTick(0);
         }
+
+        checkLavaTileUpdates();
+
         if (notGenerated) {
             notGenerated = false;
         }
@@ -210,5 +216,32 @@ public class VolcanoDungeon extends AbstractWorld {
     @Override
     public String getType() {
         return "VolcanoDungeon";
+    }
+
+    /**
+     * Checks for whether lava-tile updates should occur
+     */
+    public void checkLavaTileUpdates() {
+        // 1 second (1 bn nanoseconds) between each tick
+        long timeBetweenTicks = 1000;
+        long newTime = System.currentTimeMillis();
+
+        // if it has been 1 second: decrement ticks, set a new time and return true
+        if (newTime - timeLastTick >= timeBetweenTicks) {
+            timeLastTick = newTime;
+            updateLavaTiles();
+        }
+    }
+
+    /**
+     * Creates tile-Updates that act like a active lava-flow animation
+     */
+    public void updateLavaTiles() {
+        for (Tile tile : getTiles()) {
+            Random random = new Random();
+            if (tile.getType().matches("BurnTile")) {
+                tile.setTexture("Volcano_" + (random.nextInt(4) + 5));
+            }
+        }
     }
 }
