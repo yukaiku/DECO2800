@@ -6,7 +6,6 @@ import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.environment.ExitPortal;
 import deco2800.thomas.entities.environment.TripWire;
-import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.VolcanoDungeonNPC;
 import deco2800.thomas.managers.*;

@@ -1,18 +1,20 @@
 package deco2800.thomas.worlds;
 
-import deco2800.thomas.entities.*;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.Orb;
+import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.QuestTracker;
-import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.*;
+import java.util.stream.Collectors;
 
 /**
  * AbstractWorld is the Game AbstractWorld

@@ -1,6 +1,9 @@
 package deco2800.thomas.entities.enemies.minions;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.AggressiveEnemy;
@@ -8,9 +11,6 @@ import deco2800.thomas.entities.enemies.EnemyIndex.Variation;
 import deco2800.thomas.entities.items.ItemDropTable;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;

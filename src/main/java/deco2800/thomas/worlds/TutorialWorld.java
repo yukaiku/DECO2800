@@ -1,27 +1,22 @@
 package deco2800.thomas.worlds;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import deco2800.thomas.screens.GameScreen;
-import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.AbstractDialogBox;
+import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.entities.environment.tutorial.Barrel;
 import deco2800.thomas.entities.environment.Portal;
-import deco2800.thomas.entities.environment.tutorial.Stash;
-import deco2800.thomas.entities.environment.tutorial.Target;
+import deco2800.thomas.entities.environment.tutorial.*;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.TutorialNPC;
-import deco2800.thomas.entities.environment.tutorial.*;
 import deco2800.thomas.managers.DialogManager;
 import deco2800.thomas.managers.EnemyManager;
-import deco2800.thomas.managers.NonPlayablePeonManager;
-
-import deco2800.thomas.util.SquareVector;
-import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.NonPlayablePeonManager;
+import deco2800.thomas.screens.GameScreen;
+import deco2800.thomas.util.SquareVector;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TutorialWorld extends AbstractWorld{
 

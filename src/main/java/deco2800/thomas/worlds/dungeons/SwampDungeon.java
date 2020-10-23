@@ -1,15 +1,14 @@
 package deco2800.thomas.worlds.dungeons;
 
 import deco2800.thomas.combat.WizardSkills;
-import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.AbstractDialogBox;
+import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.SwampDungeonNPC;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
-import deco2800.thomas.managers.DatabaseManager;
-import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;

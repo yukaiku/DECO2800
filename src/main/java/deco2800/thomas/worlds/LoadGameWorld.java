@@ -1,9 +1,8 @@
 package deco2800.thomas.worlds;
 
+import deco2800.thomas.entities.AbstractEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import deco2800.thomas.entities.AbstractEntity;
 
 @SuppressWarnings("unused")
 public class LoadGameWorld extends AbstractWorld {
