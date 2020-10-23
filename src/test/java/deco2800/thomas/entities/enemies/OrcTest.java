@@ -126,7 +126,7 @@ public class OrcTest extends BaseGDXTest {
     public void testAnimationFrame() {
         Array<TextureRegion> orcArray = new Array<>();
         orcArray.add(new TextureRegion(new Texture("resources/enemies/orc_tundra.png")));
-        assertTrue(orcArray.get(0).getTexture().toString().equals(tundraOrc.getFrame(0).getTexture().toString()));
+        assertEquals(orcArray.get(0).getTexture().toString(), tundraOrc.getFrame(0).getTexture().toString());
     }
 
     @Test
@@ -134,5 +134,11 @@ public class OrcTest extends BaseGDXTest {
         assertEquals(swampOrc.deepCopy().getMaxHealth(), swampOrc.getMaxHealth());
         assertEquals(swampOrc.deepCopy().getSpeed(), swampOrc.getSpeed(), 0.01f);
         assertEquals(swampOrc.deepCopy().getTexture(), swampOrc.getTexture());
+    }
+
+    @Test
+    public void testTexture() {
+        Texture texture = new Texture("resources/enemies/orc_swamp_icon.png");
+        assertEquals(texture, swampOrc.getIcon());
     }
 }

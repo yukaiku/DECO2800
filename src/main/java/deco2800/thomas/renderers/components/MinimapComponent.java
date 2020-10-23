@@ -22,9 +22,6 @@ public class MinimapComponent extends OverlayComponent {
     // The number of positive columns and rows
     private static final int POSITIVE_COLUMN_NUMBER = 25;
     private static final int POSITIVE_ROW_NUMBER = 24;
-    // THe row offsets to render each entity at on the y coordinate
-    private static final int ROW_OFFSET = 775;
-    private static final int ENEMY_ROW_OFFSET = 795;
     // The scalar to render each entity at relative to its position on the map
     private static final float ENTITY_POSITION_SCALAR = 6.3F;
     // Scalars to reduce the size of each entity texture by to fit each
@@ -115,7 +112,7 @@ public class MinimapComponent extends OverlayComponent {
     }
 
     private void renderBoss(SpriteBatch batch, EnemyPeon boss) {
-        Texture tex = GameManager.getManagerFromInstance(TextureManager.class).getTexture(boss.getTexture());
+        Texture tex = boss.getIcon();
         float x = overlayRenderer.getX() + ENTITY_POSITION_SCALAR * (boss.getCol() + POSITIVE_COLUMN_NUMBER);
         float y = overlayRenderer.getY() + overlayRenderer.getHeight() -20 + ENTITY_POSITION_SCALAR * (boss.getRow() - POSITIVE_ROW_NUMBER);
         batch.draw(tex, x, y,

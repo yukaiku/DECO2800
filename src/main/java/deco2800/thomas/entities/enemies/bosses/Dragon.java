@@ -1,5 +1,8 @@
 package deco2800.thomas.entities.enemies.bosses;
 
+import com.badlogic.gdx.graphics.Texture;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.combat.DamageType;
@@ -94,6 +97,12 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
             damageDealt = super.applyDamage(damage, damageType);
         }
         return damageDealt;
+    }
+
+
+    @Override
+    public Texture getIcon() {
+         return dragonIdle.getKeyFrame(0).getTexture();
     }
 
     /**
