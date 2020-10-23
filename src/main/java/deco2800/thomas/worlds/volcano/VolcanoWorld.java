@@ -491,4 +491,9 @@ public class VolcanoWorld extends AbstractWorld {
     }
 
     public void addDialogue(AbstractDialogBox box){ this.allVolcanoDialogues.add(box);}
+
+    public List<AbstractDialogBox> returnAllDialogues(){
+        return this.allVolcanoDialogues;
+    }
+
 }

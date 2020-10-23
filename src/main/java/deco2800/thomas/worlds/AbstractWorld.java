@@ -518,4 +518,6 @@ public abstract class AbstractWorld implements Tickable {
 		this.tiles.clear();
 		this.tilesToRemove.clear();
 	}
+
+	public abstract List<AbstractDialogBox> returnAllDialogues();
 }

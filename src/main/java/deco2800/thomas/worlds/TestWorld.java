@@ -156,6 +156,10 @@ public class TestWorld extends AbstractWorld {
 		super.onTick(i);
 	}
 
+	public List<AbstractDialogBox> returnAllDialogues(){
+		return null; 
+	}; 
+
 }
 
 /*
