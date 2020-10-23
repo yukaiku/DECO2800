@@ -14,7 +14,7 @@ public class EnvTeamWorld extends AbstractWorld {
 
 	public EnvTeamWorld(int width, int height) {
 		DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
-		System.out.println(this.entities);
+//		System.out.println(this.entities);
 		System.out.flush();
 	}
 
