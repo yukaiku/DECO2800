@@ -1,9 +1,6 @@
 package deco2800.thomas.worlds;
 
-import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Part;
-import deco2800.thomas.entities.Rock;
-import deco2800.thomas.entities.StaticEntity;
+import deco2800.thomas.entities.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.environment.Tree;
 import deco2800.thomas.managers.EnemyManager;
