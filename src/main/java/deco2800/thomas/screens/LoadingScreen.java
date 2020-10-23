@@ -95,7 +95,7 @@ public class LoadingScreen implements Screen {
         sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading Animation 8/9")));
         sequenceAction.addAction(Actions.run(textureManager::loadAnimationFrames));
 
-        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading Sounds & Musics 9/9")));
+        sequenceAction.addAction(Actions.run(() -> setLoadingText("Loading Sounds & Music 9/9")));
         sequenceAction.addAction(Actions.run(soundManager::loadSound));
 
         sequenceAction.addAction(Actions.run(() -> setLoadingText("")));

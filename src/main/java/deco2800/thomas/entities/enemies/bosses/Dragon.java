@@ -86,9 +86,12 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
      */
     @Override
     public int applyDamage(int damage, DamageType damageType) {
-        int damageDealt = super.applyDamage(damage, damageType);
+        int damageDealt = 0;
+        // first hit is immune
         if (super.getTarget() == null) {
             hitByTarget();
+        } else {
+            damageDealt = super.applyDamage(damage, damageType);
         }
         return damageDealt;
     }

@@ -76,11 +76,11 @@ public class BossHealthComponent extends OverlayComponent {
 
         font.getData().setScale(1f);
         font.draw(batch, String.format("%s", boss.getObjectName()),
-                overlayRenderer.getX() + 550,
+                overlayRenderer.getX() + 0.44f * overlayRenderer.getWidth(),
                 overlayRenderer.getY() + overlayRenderer.getHeight() - 24);
         font.getData().setScale(0.4f);
         font.draw(batch, String.format("%d/%d", boss.getCurrentHealth(), boss.getMaxHealth()),
-                overlayRenderer.getX() + 620,
+                overlayRenderer.getX() + 0.48f * overlayRenderer.getWidth(),
                 overlayRenderer.getY() + overlayRenderer.getHeight() - 70);
         batch.end();
     }
