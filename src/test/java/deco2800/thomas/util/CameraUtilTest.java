@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.Rock;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.worlds.AbstractWorld;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;
@@ -133,5 +134,97 @@ public class CameraUtilTest {
         CameraUtil.zoomableCamera(spyCamera, zoomInKey, zoomOutKey, 30f, true);
 
         assertEquals(10f, spyCamera.zoom, 0.1f);
+    }
+
+    @Test
+    public void testLeftBoundaryInWorld() {
+        OrthographicCamera camera = new OrthographicCamera();
+        camera.viewportWidth = 100;
+        camera.viewportHeight = 50;
+        OrthographicCamera spyCamera = spy(camera);
+
+        AbstractWorld world = mock(AbstractWorld.class);
+        // Width = 25 * 96 * 0.75 * 2 = 3600 (Convert in world util)
+        when(world.getWidth()).thenReturn(25);
+        // Height = 20 * 83.4 * 2 = 3336 (Convert in world util)
+        when(world.getHeight()).thenReturn(20);
+
+        camera.position.x = 0 - 1800 + 10;
+
+        doNothing().when(spyCamera).update();
+
+        CameraUtil.cameraBoundaryInWorld(spyCamera, world);
+
+        assertEquals(0 - 1800 + 50, spyCamera.position.x, 0.1f);
+        verify(spyCamera, times(1)).update();
+    }
+
+    @Test
+    public void testRightBoundaryInWorld() {
+        OrthographicCamera camera = new OrthographicCamera();
+        camera.viewportWidth = 100;
+        camera.viewportHeight = 50;
+        OrthographicCamera spyCamera = spy(camera);
+
+        AbstractWorld world = mock(AbstractWorld.class);
+        // Width = 25 * 96 * 0.75 * 2 = 3600 (Convert in world util)
+        when(world.getWidth()).thenReturn(25);
+        // Height = 20 * 83.4 * 2 = 3336 (Convert in world util)
+        when(world.getHeight()).thenReturn(20);
+
+        camera.position.x = 0 + 1800 * 2 - 10;
+
+        doNothing().when(spyCamera).update();
+
+        CameraUtil.cameraBoundaryInWorld(spyCamera, world);
+
+        assertEquals(0 + 1800 - 50, spyCamera.position.x, 0.1f);
+        verify(spyCamera, times(1)).update();
+    }
+
+    @Test
+    public void testBottomBoundaryInWorld() {
+        OrthographicCamera camera = new OrthographicCamera();
+        camera.viewportWidth = 100;
+        camera.viewportHeight = 50;
+        OrthographicCamera spyCamera = spy(camera);
+
+        AbstractWorld world = mock(AbstractWorld.class);
+        // Width = 25 * 96 * 0.75 * 2 = 3600 (Convert in world util)
+        when(world.getWidth()).thenReturn(25);
+        // Height = 20 * 83.4 * 2 = 3336 (Convert in world util)
+        when(world.getHeight()).thenReturn(20);
+
+        camera.position.y = 0 - 1668 + 10;
+
+        doNothing().when(spyCamera).update();
+
+        CameraUtil.cameraBoundaryInWorld(spyCamera, world);
+
+        assertEquals(0 - 1668 + 25, spyCamera.position.y, 0.1f);
+        verify(spyCamera, times(1)).update();
+    }
+
+    @Test
+    public void testTopBoundaryInWorld() {
+        OrthographicCamera camera = new OrthographicCamera();
+        camera.viewportWidth = 100;
+        camera.viewportHeight = 50;
+        OrthographicCamera spyCamera = spy(camera);
+
+        AbstractWorld world = mock(AbstractWorld.class);
+        // Width = 25 * 96 * 0.75 * 2 = 3600 (Convert in world util)
+        when(world.getWidth()).thenReturn(25);
+        // Height = 20 * 83.4 * 2 = 3336 (Convert in world util)
+        when(world.getHeight()).thenReturn(20);
+
+        camera.position.y = 0 + 1668 * 2 - 10;
+
+        doNothing().when(spyCamera).update();
+
+        CameraUtil.cameraBoundaryInWorld(spyCamera, world);
+
+        assertEquals(0 + 1668 - 25, spyCamera.position.y, 0.1f);
+        verify(spyCamera, times(1)).update();
     }
 }
