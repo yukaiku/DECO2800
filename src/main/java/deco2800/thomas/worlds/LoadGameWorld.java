@@ -11,6 +11,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class LoadGameWorld extends AbstractWorld {
 	private final Logger logger = LoggerFactory.getLogger(LoadGameWorld.class);
+	private List<AbstractDialogBox> dialogues; 
 
 
 	public LoadGameWorld() {
@@ -33,7 +34,7 @@ public class LoadGameWorld extends AbstractWorld {
 	}
 	
 	public List<AbstractDialogBox> returnAllDialogues(){
-		return null;
+		return dialogues;
 	};
 
 }
