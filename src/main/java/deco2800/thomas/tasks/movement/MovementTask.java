@@ -1,9 +1,11 @@
 package deco2800.thomas.tasks.movement;
 
 import deco2800.thomas.combat.DamageType;
+import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PathFindingService;
@@ -77,14 +79,15 @@ public class MovementTask extends AbstractTask {
         }
         entity.moveTowards(destination);
 
-        // if we have moved to the new tile, check for statuses
-        if (entity.getPosition().tileEquals(destination)) {
-            checkForValidPortal(destination);
-            checkForTileStatus(destination);
-            checkForTeleportTile(destination);
-            checkForTrapTile(destination);
-            checkForRewardTile(destination);
-        }
+		// if we have moved to the new tile, check for statuses
+		if (entity.getPosition().tileEquals(destination)) {
+			checkForValidPortal(destination);
+			checkForTileStatus(destination);
+			checkForTeleportTile(destination);
+			checkForTrapTile(destination);
+			checkForRewardTile(destination);
+			checkObtainedOrb(destination);
+		}
 
         if (entity.getPosition().isCloseEnoughToBeTheSame(destination)) {
             if (!this.updateMovingDirection((PlayerPeon) this.entity)) {
@@ -281,15 +284,34 @@ public class MovementTask extends AbstractTask {
         }
     }
 
-    /**
-     * Checks whether the tile at the new position is a trap tile &
-     * initiates the tile's respective trap should there be one.
-     *
-     * @param position - Square Vector of upcoming position of the entity.
-     */
-    private void checkForTrapTile(SquareVector position) {
-        // get the next tile
-        Tile tile = gameManager.getWorld().getTile(position);
+	/**
+	 * Checking if the player has obtained the Orb of the current world then moving the player
+	 * to the next world
+	 *
+	 * @param position
+	 */
+	private void checkObtainedOrb(SquareVector position) {
+		Orb orbEntity = gameManager.getWorld().getOrbEntity();
+		if (orbEntity != null) {
+			if (position.equals(orbEntity.getPosition())) {
+				QuestTracker.increaseOrbs(orbEntity);
+				if(QuestTracker.orbTracker().size() != 4){
+					gameManager.getWorld().removeEntity(gameManager.getWorld().getPlayerEntity());
+					GameManager.get().setNextWorld();
+				}
+			}
+		}
+	}
+
+	/**
+	 * Checks whether the tile at the new position is a trap tile &
+	 * initiates the tile's respective trap should there be one.
+	 *
+	 * @param position - Square Vector of upcoming position of the entity.
+	 */
+	private void checkForTrapTile(SquareVector position) {
+		// get the next tile
+		Tile tile = gameManager.getWorld().getTile(position);
 
         if (tile != null && tile.isTrapTile() && !tile.getTrapActivated()) {
 
@@ -318,9 +340,10 @@ public class MovementTask extends AbstractTask {
             gameManager.getWorld().removeEntity(tile.getParent());
             tile.setParent(null);
 
-            //Update trap to be triggered & activate outcome
-            tile.setRewardActivated(true);
-            gameManager.getWorld().activateRewardTile(tile);
-        }
-    }
+			//Update trap to be triggered & activate outcome
+			tile.setRewardActivated(true);
+			gameManager.getWorld().activateRewardTile(tile);
+		}
+	}
+
 }

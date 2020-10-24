@@ -251,7 +251,6 @@ public class TextureManagerTest extends BaseGDXTest {
         assertNotNull(m.getTexture("dungeon-black"));
         assertNotNull(m.getTexture("desert_1"));
 
-
         m.loadInventoryTextures();
         assertNotNull(m.getTexture("potion_small"));
 

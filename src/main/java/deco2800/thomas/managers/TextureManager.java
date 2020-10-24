@@ -448,7 +448,8 @@ public class TextureManager extends AbstractManager {
             textureMap.put("tundra-rock-3", new Texture("resources/environment/tundra/entities/rock-3.png"));
             textureMap.put("tundra-rock-4", new Texture("resources/environment/tundra/entities/rock-4.png"));
             textureMap.put("tundra-rock-5", new Texture("resources/environment/tundra/entities/rock-5.png"));
-
+            textureMap.put("tundra-encryption-machine", new Texture("resources/environment/tundra/entities/typewriter.png"));
+            textureMap.put("tundra-dungeon-help", new Texture("resources/environment/tundra/entities/questionmark.png"));
         } catch (GdxRuntimeException e) {
             e.printStackTrace();
         }

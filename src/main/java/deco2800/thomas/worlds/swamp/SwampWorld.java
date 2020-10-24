@@ -31,9 +31,8 @@ public class SwampWorld extends AbstractWorld {
     }
 
     public SwampWorld(int width, int height) {
+        super(width, height);
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
-        this.generateTileMap();
-        this.generateTileIndices();
         this.generateStaticEntities();
         this.allSwampDialogues = new ArrayList<>();
 
