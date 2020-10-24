@@ -11,7 +11,7 @@ import static org.mockito.Mockito.spy;
 
 public class TundraDungeonTest extends BaseGDXTest {
 	/**
-	 * Instance being tested
+	 * Instance being tested.
 	 */
 	private static AbstractWorld spyTundraDungeon;
 
