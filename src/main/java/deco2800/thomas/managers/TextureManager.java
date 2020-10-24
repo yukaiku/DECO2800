@@ -738,19 +738,8 @@ public class TextureManager extends AbstractManager {
         if (textureMap.containsKey(id)) {
             return textureMap.get(id);
         } else {
-            //log.info("Texture map does not contain P{}, returning default texture.", id);
             return textureMap.get("spacman_ded");
         }
-    }
-
-    /**
-     * Checks whether or not a texture is available.
-     *
-     * @param id Texture identifier
-     * @return If texture is available or not.
-     */
-    public boolean hasTexture(String id) {
-        return textureMap.containsKey(id);
     }
 
     /**
