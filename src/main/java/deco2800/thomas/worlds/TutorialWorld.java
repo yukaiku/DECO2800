@@ -1,22 +1,28 @@
 package deco2800.thomas.worlds;
 
-import deco2800.thomas.entities.AbstractDialogBox;
-import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.agent.AgentEntity;
-import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.entities.environment.Portal;
-import deco2800.thomas.entities.environment.tutorial.*;
-import deco2800.thomas.entities.npc.NonPlayablePeon;
-import deco2800.thomas.entities.npc.TutorialNPC;
-import deco2800.thomas.managers.DialogManager;
-import deco2800.thomas.managers.EnemyManager;
-import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.NonPlayablePeonManager;
-import deco2800.thomas.screens.GameScreen;
-import deco2800.thomas.util.SquareVector;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import deco2800.thomas.entities.items.*;
+import deco2800.thomas.screens.GameScreen;
+import deco2800.thomas.combat.skills.AbstractSkill;
+import deco2800.thomas.entities.AbstractDialogBox;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.environment.tutorial.Barrel;
+import deco2800.thomas.entities.environment.Portal;
+import deco2800.thomas.entities.environment.tutorial.Stash;
+import deco2800.thomas.entities.environment.tutorial.Target;
+import deco2800.thomas.entities.npc.NonPlayablePeon;
+import deco2800.thomas.entities.npc.TutorialNPC;
+import deco2800.thomas.entities.environment.tutorial.*;
+import deco2800.thomas.managers.DialogManager;
+import deco2800.thomas.managers.EnemyManager;
+import deco2800.thomas.managers.NonPlayablePeonManager;
+
+import deco2800.thomas.util.SquareVector;
+import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.managers.GameManager;
 
 public class TutorialWorld extends AbstractWorld{
 
@@ -56,12 +62,17 @@ public class TutorialWorld extends AbstractWorld{
             }
         }
 
-        PlayerPeon.setBuffDamageTotal(0);
-        PlayerPeon.setCooldownBuff(false);
+        PlayerPeon.buffDamageTotal = 0;
         PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f, 50);
             addEntity(player);
         this.setPlayerEntity(player);
         addEntity(this.getPlayerEntity());
+
+        for (AbstractSkill s :((PlayerPeon) this.getPlayerEntity()).getWizardSkills()){
+            s.setCooldownMax();
+        }
+        ((PlayerPeon) this.getPlayerEntity()).getMechSkill().setCooldownMax();
+
 
         // Spawn dummy
         EnemyManager enemyManager = new EnemyManager(this);
@@ -81,6 +92,8 @@ public class TutorialWorld extends AbstractWorld{
         dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
                 this.allDialogBoxes);
         GameManager.get().addManager(dialog);
+
+        generateItemEntities();
     }
 
     public void generateEntities() {
@@ -132,6 +145,51 @@ public class TutorialWorld extends AbstractWorld{
         entities.add(new Notify(t, false));
     }
 
+    /**
+     * Generates items for swamp region, all positions of item are randomized
+     * every time player loads into swamp zone.
+     *
+     * Items: Health potions, Iron shields etc.
+     */
+    private void generateItemEntities(){
+        final String ITEM_BOX_STYLE = "tutorial";
+
+        Tile healthPotionTile = getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
+                Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
+        HealthPotion potion = new HealthPotion(healthPotionTile, false,
+                (PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
+        entities.add(potion);
+        this.allDialogBoxes.add(potion.getDisplay());
+
+        Tile shieldTile = getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
+                Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
+        IronArmour ironArmour = new IronArmour(shieldTile, false,
+                (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
+        entities.add(ironArmour);
+        this.allDialogBoxes.add(ironArmour.getDisplay());
+
+        Tile treasureTile = getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
+                Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
+        Treasure chest = new Treasure(treasureTile, false,
+                (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
+        entities.add(chest);
+        this.allDialogBoxes.add(chest.getDisplay());
+
+        Tile attackAmuletTile = getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
+                Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
+        Amulet attackAmulet = new Amulet(attackAmuletTile, false,
+                (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,10);
+        entities.add(attackAmulet);
+        this.allDialogBoxes.add(attackAmulet.getDisplay());
+
+        Tile coolDownRingTile = getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
+                Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
+        CooldownRing cooldownRing = new CooldownRing(coolDownRingTile, false,
+                (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,0.5f);
+        entities.add(cooldownRing);
+        this.allDialogBoxes.add(cooldownRing.getDisplay());
+    }
+
     @Override
     public void onTick(long i) {
         super.onTick(i);
@@ -141,6 +199,7 @@ public class TutorialWorld extends AbstractWorld{
 
         if (notGenerated) {
             generateEntities();
+            PlayerPeon.credit(1000);
             notGenerated = false;
         }
 
@@ -157,8 +216,8 @@ public class TutorialWorld extends AbstractWorld{
 
 
             GameManager.get().setNextWorld();
-            // Keep $$ on world change.
-            PlayerPeon.credit(((PlayerPeon) player).getWallet());
+            // Change wallet to 0 on world change.
+            PlayerPeon.credit(0);
         }
     }
 }

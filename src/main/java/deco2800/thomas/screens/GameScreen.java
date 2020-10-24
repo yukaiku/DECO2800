@@ -109,6 +109,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	/**
 	 * Gets the current OverlayRenderer.
+	 *
 	 * @return OverlayRenderer
 	 */
 	public OverlayRenderer getOverlayRenderer() {
@@ -226,7 +227,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	/**
 	 * Render the game normally
 	 */
-	public void renderGame(float delta ) {
+	public void renderGame(float delta) {
 		handleRenderables();
 
 		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta, GameManager.get().getWorld().getWorldZoomable());
@@ -324,8 +325,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	@Override
 	public void render(float delta) {
-		switch (GameManager.get().getState())
-		{
+		switch (GameManager.get().getState()) {
 			case TRANSITION:
 				renderTransitionScreen(delta);
 				break;
@@ -407,6 +407,9 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	@Override
 	public void notifyKeyDown(int keycode) {
+		if (keycode == Input.Keys.ENTER && GameManager.get().getState() == GameManager.State.TRANSITION) {
+			GameManager.resume();
+		}
 		if (keycode == Input.Keys.F12 && GameManager.get().getState() == GameManager.State.RUN) {
 			GameManager.get().setDebugMode(!GameManager.get().getDebugMode());
 		}
