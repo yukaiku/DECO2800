@@ -197,7 +197,12 @@ public class MovementTask extends AbstractTask {
      */
     private void checkForTileStatus(SquareVector position) {
         // we don't want to duplicate effects from the same tile
-        if (currentPos.tileEquals(entity.getPosition())) return;
+        if (currentPos.tileEquals(entity.getPosition())) {
+            return;
+        }
+        if (!(entity instanceof PlayerPeon || entity.getObjectName().equals("ImmuneOrc"))) {
+            return;
+        }
         setCurrentPos();
 
         // check if the tile has an effect, apply the effect if so

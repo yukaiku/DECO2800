@@ -120,6 +120,10 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
          return dragonIdle.getKeyFrame(0).getTexture();
     }
 
+    public String getVariation() {
+        return this.variation.name().toLowerCase();
+    }
+
     /**
      * Targets the player if the boss's health is reduced
      */
