@@ -2,6 +2,7 @@ package deco2800.thomas.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,15 +17,16 @@ public class SoundManager extends AbstractManager {
 	// Logger
 	private final Logger logger;
 	// Maps of sound effects
-	private final Map<String, String> sounds;
-	private final Map<String, Sound> soundEffects;
+	private final Map<String, Pair<String, Float>> sounds;
+	private final Map<String, Pair<Sound, Float>> soundEffects;
 	// Looping sound resource references
 	private Sound ambience = null;
+	private float ambienceVolume;
 	private long ambienceId;
 	private Sound music = null;
+	private float musicVolume;
 	private long musicId;
-	private Sound bossMusic = null;
-	private long bossMusicId;
+	private Sound bossMusic;
 	// Global audio volume
 	private float volume = 1.0f;
 	private boolean soundLoaded = false;
@@ -44,34 +46,24 @@ public class SoundManager extends AbstractManager {
 	public void loadSound() {
 		try {
 			// Long sound effects, or music that are not preloaded:
-			sounds.put("swampAmbience", "resources/sounds/ambience/swamp_ambience.ogg");
-			sounds.put("desertAmbience", "resources/sounds/ambience/desert_ambience.ogg");
-			sounds.put("tundraAmbience", "resources/sounds/ambience/tundra_ambience.ogg");
-			sounds.put("volcanoAmbience", "resources/sounds/ambience/volcano_ambience.ogg");
-			sounds.put("menuMusic", "resources/sounds/music/menu_music.ogg");
-			sounds.put("menuAmbience", "resources/sounds/ambience/menu_ambience.ogg");
+			addNewSong("swampAmbience", "resources/sounds/ambience/swamp_ambience.ogg", 1);
+			addNewSong("desertAmbience", "resources/sounds/ambience/desert_ambience.ogg", 1);
+			addNewSong("tundraAmbience", "resources/sounds/ambience/tundra_ambience.ogg", 1);
+			addNewSong("volcanoAmbience", "resources/sounds/ambience/volcano_ambience.ogg", 0.8f);
+			addNewSong("menuAmbience", "resources/sounds/ambience/menu_ambience.ogg", 1);
 
-			// boss musics need to be preloaded to avoid lag mid game.
-			bossMusic = Gdx.audio.newSound(Gdx.files.internal("resources/sounds/music/boss_1.mp3"));
+			// Boss music is the exception to the rule, and is preloaded
+			addNewSound("bossMusic", "resources/sounds/music/boss_1.mp3", 0.3f);
 
 			// Sound effects that are preloaded (short duration)
-			soundEffects.put("fireball", Gdx.audio.newSound(
-					Gdx.files.internal("resources/sounds/sfx/fireball_5.wav")));
-			soundEffects.put("woodHit", Gdx.audio.newSound(
-					Gdx.files.internal("resources/sounds/sfx/mech_hit_3.wav")));
-			soundEffects.put("fireHit", Gdx.audio.newSound(
-					Gdx.files.internal("resources/sounds/sfx/fireball_hit_3.wav")));
-			soundEffects.put("windAttack", Gdx.audio.newSound(
-					Gdx.files.internal("resources/sounds/sfx/wind_1.wav")));
-			soundEffects.put("explosion", Gdx.audio.newSound(
-					Gdx.files.internal("resources/sounds/sfx/explosion_1.wav")));
-			soundEffects.put("button1", Gdx.audio.newSound(
-					Gdx.files.internal("resources/sounds/sfx/button_1.wav")));
-			soundEffects.put("button2", Gdx.audio.newSound(
-					Gdx.files.internal("resources/sounds/sfx/button_2.wav")));
-			soundEffects.put("dragon1", Gdx.audio.newSound(
-					Gdx.files.internal("resources/sounds/sfx/dragon_fire.mp3")));
-
+			addNewSound("fireball", "resources/sounds/sfx/fireball_5.wav", 1);
+			addNewSound("woodHit", "resources/sounds/sfx/mech_hit_3.wav", 0.8f);
+			addNewSound("fireHit", "resources/sounds/sfx/fireball_hit_3.wav", 1);
+			addNewSound("windAttack", "resources/sounds/sfx/wind_1.wav", 1);
+			addNewSound("explosion", "resources/sounds/sfx/explosion_1.wav", 0.7f);
+			addNewSound("button1", "resources/sounds/sfx/button_1.wav", 0.1f);
+			addNewSound("button2", "resources/sounds/sfx/button_2.wav", 0.2f);
+			addNewSound("dragon1", "resources/sounds/sfx/dragon_fire.mp3", 0.8f);
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		} finally {
@@ -86,10 +78,10 @@ public class SoundManager extends AbstractManager {
 	public void setVolume(float volume) {
 		this.volume = volume;
 		if (ambience != null) {
-			ambience.setVolume(ambienceId, volume);
+			ambience.setVolume(ambienceId, volume * ambienceVolume);
 		}
 		if (music != null) {
-			music.setVolume(musicId, volume);
+			music.setVolume(musicId, volume * musicVolume);
 		}
 	}
 
@@ -117,8 +109,10 @@ public class SoundManager extends AbstractManager {
 		if (!soundLoaded) loadSound();
 		try {
 			stopSoundResource(ambience);
-			ambience = Gdx.audio.newSound(Gdx.files.internal(sounds.get(soundName)));
-			ambienceId = ambience.loop(volume);
+			Pair<String, Float> songPair = sounds.get(soundName);
+			ambience = Gdx.audio.newSound(Gdx.files.internal(songPair.getValue0()));
+			ambienceVolume = songPair.getValue1();
+			ambienceId = ambience.loop(volume * ambienceVolume);
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		}
@@ -140,8 +134,10 @@ public class SoundManager extends AbstractManager {
 		if (!soundLoaded) loadSound();
 		try {
 			stopSoundResource(music);
-			music = Gdx.audio.newSound(Gdx.files.internal(sounds.get(soundName)));
-			musicId = music.loop(volume);
+			Pair<String, Float> songPair = sounds.get(soundName);
+			music = Gdx.audio.newSound(Gdx.files.internal(songPair.getValue0()));
+			musicVolume = songPair.getValue1();
+			musicId = music.loop(volume * musicVolume);
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		}
@@ -149,31 +145,26 @@ public class SoundManager extends AbstractManager {
 
 	/**
 	 * Pause (not compose) the ambience and play boss music
-	 * @param volume The volume of the music
+	 * @param sound Id of song resource
 	 */
-	public void playBossMusic(float volume) {
+	public void playBossMusic(String sound) {
 		if (ambience != null) {
 			ambience.stop();
 		}
-		bossMusicId = bossMusic.loop(volume);
+		bossMusic = loopSound(sound);
 	}
 
 	/**
 	 * Stop (not compose) the boss music and resume the ambience.
 	 */
 	public void stopBossMusic() {
-		bossMusic.stop();
-		if (ambience != null) {
-			ambience.play();
+		if (bossMusic != null) {
+			bossMusic.stop();
+			bossMusic = null;
 		}
-	}
-
-	/**
-	 * Avoid interrupting ambience and master volume.
-	 * @param volume The volume of the music
-	 */
-	public void setBossMusicVolume(float volume) {
-		bossMusic.setVolume(bossMusicId, volume);
+		if (ambience != null) {
+			ambienceId = ambience.loop(volume * ambienceVolume);
+		}
 	}
 
 	/**
@@ -192,14 +183,57 @@ public class SoundManager extends AbstractManager {
 	 * @param soundName ID of sound to play
 	 */
 	public void playSound(String soundName) {
-		playSound(soundName, this.volume);
-	}
-
-	public void playSound(String soundName, float volume) {
 		if (!soundLoaded) loadSound();
 		try {
-			Sound sound = soundEffects.get(soundName);
-			sound.play(volume);
+			Pair<Sound, Float> soundPair = soundEffects.get(soundName);
+			soundPair.getValue0().play(volume * soundPair.getValue1());
+		} catch (Exception e) {
+			logger.error(Arrays.toString(e.getStackTrace()));
+		}
+	}
+
+	/**
+	 * Loops a sound that has been preloaded.
+	 * @param soundName ID of sound to play
+	 * @return Returns LibGDX sound of looping sound
+	 */
+	public Sound loopSound(String soundName) {
+		if (!soundLoaded) loadSound();
+		try {
+			Pair<Sound, Float> soundPair = soundEffects.get(soundName);
+			soundPair.getValue0().loop(volume * soundPair.getValue1());
+			return soundPair.getValue0();
+		} catch (Exception e) {
+			logger.error(Arrays.toString(e.getStackTrace()));
+		}
+		return null;
+	}
+
+	/**
+	 * Preloads a sound resource from an internal file.
+	 * @param sound Sound ID
+	 * @param filename Relative file path and name
+	 * @param volume Base volume of sound resource
+	 */
+	private void addNewSound(String sound, String filename, float volume) {
+		try {
+			Sound soundResource = Gdx.audio.newSound(Gdx.files.internal(filename));
+			soundEffects.put(sound, new Pair<>(soundResource, volume));
+		} catch (Exception e) {
+			logger.error(Arrays.toString(e.getStackTrace()));
+		}
+	}
+
+	/**
+	 * Adds a song filepath that can be accessed later to play
+	 * ambience or music. Does not preload.
+	 * @param song Sound ID
+	 * @param filename Relative file path and name
+	 * @param volume Base volume of song resource
+	 */
+	private void addNewSong(String song, String filename, float volume) {
+		try {
+			sounds.put(song, new Pair<>(filename, volume));
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		}

@@ -99,7 +99,7 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				switchScreen(GameScreen.gameType.ENV_TEAM_GAME);
-				GameManager.getManagerFromInstance(SoundManager.class).playSound("button2", 0.2f);
+				GameManager.getManagerFromInstance(SoundManager.class).playSound("button2");
 			}
 		});
 
@@ -107,7 +107,7 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				switchScreen(GameScreen.gameType.TEST_WORLD);
-				GameManager.getManagerFromInstance(SoundManager.class).playSound("button2", 0.2f);
+				GameManager.getManagerFromInstance(SoundManager.class).playSound("button2");
 			}
 		});
 
@@ -115,7 +115,7 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				switchScreen(GameScreen.gameType.NEW_GAME);
-				GameManager.getManagerFromInstance(SoundManager.class).playSound("button2", 0.2f);
+				GameManager.getManagerFromInstance(SoundManager.class).playSound("button2");
 			}
 		});
 
@@ -149,7 +149,7 @@ public class MainMenuScreen implements Screen {
 				((TextButton.TextButtonStyle)(button.getStyle())).fontColor = Color.valueOf("#ffff00");
 				Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
 				if (!soundPlayed) {
-					GameManager.getManagerFromInstance(SoundManager.class).playSound("button1", 0.1f);
+					GameManager.getManagerFromInstance(SoundManager.class).playSound("button1");
 					soundPlayed = true;
 				}
 			}
