@@ -30,6 +30,12 @@ public class CameraUtil {
         camera.update();
     }
 
+    /**
+     * Set the limit boundary for the camera in a world.
+     *
+     * @param camera the target camera
+     * @param world  the world we would like to set boundary
+     */
     public static void cameraBoundaryInWorld(OrthographicCamera camera, AbstractWorld world) {
         float[] worldSize = WorldUtil.colRowToWorldCords(world.getWidth(), world.getHeight());
         float startX = 0 - worldSize[0];
@@ -37,19 +43,27 @@ public class CameraUtil {
         float width = worldSize[0] * 2;
         float height = worldSize[1] * 2;
 
-        if (camera.viewportWidth < width && camera.viewportHeight < height) {
+        System.out.println(WorldUtil.TILE_WIDTH + " " + WorldUtil.TILE_HEIGHT);
+        if (camera.viewportWidth < width) {
+            // Left bound
             if (camera.position.x - (camera.viewportWidth / 2) < startX) {
                 camera.position.set(startX + camera.viewportWidth / 2, camera.position.y, camera.position.z);
             }
 
+            // Right bound
+            if (camera.position.x + (camera.viewportWidth / 2) > startX + width) {
+                camera.position.set(startX + width - camera.viewportWidth / 2, camera.position.y, camera.position.z);
+            }
+        }
+
+
+        if (camera.viewportHeight < height) {
+            // Bottom bound
             if ((camera.position.y - (camera.viewportHeight / 2)) < startY) {
                 camera.position.set(camera.position.x, startY + (camera.viewportHeight / 2), camera.position.z);
             }
 
-            if (camera.position.x + (camera.viewportWidth / 2) > startX + width) {
-                camera.position.set(startX + width - camera.viewportWidth / 2, camera.position.y, camera.position.z);
-            }
-
+            // Top bound
             if (camera.position.y + (camera.viewportHeight / 2) > startY + height) {
                 camera.position.set(camera.position.x, startY + height - camera.viewportHeight / 2, camera.position.z);
             }
