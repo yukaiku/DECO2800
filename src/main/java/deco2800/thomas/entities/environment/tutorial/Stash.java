@@ -6,7 +6,7 @@ import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.worlds.Tile;
 
 public class Stash extends StaticEntity implements Tickable {
-    public static final String ENTITY_ID_STRING = "target";
+    public static final String ENTITY_ID_STRING = "stash";
 
     public Stash(Tile tile, boolean obstructed) {
         super(tile, RenderConstants.STASH_RENDER, "stash", obstructed);
