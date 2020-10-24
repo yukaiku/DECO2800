@@ -10,6 +10,7 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.OverlayComponent;
 import deco2800.thomas.renderers.OverlayRenderer;
+import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 
 import java.util.List;
@@ -31,8 +32,6 @@ public class MinimapComponent extends OverlayComponent {
     private static final float PLAYER_SIZE_SCALAR = 0.1f;
     private static final float BOSS_SIZE_SCALAR = 0.035f;
 
-
-
     public MinimapComponent(OverlayRenderer overlayRenderer) {
         super(overlayRenderer);
     }
@@ -49,6 +48,13 @@ public class MinimapComponent extends OverlayComponent {
         }
         List<Tile> tileMap = GameManager.get().getWorld().getTiles();
         batch.begin();
+
+        // Make minimap semi-transparent when player moves to the top-left corner.
+        AbstractWorld world = GameManager.get().getWorld();
+        PlayerPeon player = (PlayerPeon) world.getPlayerEntity();
+        if (player.getRow() > (float) world.getHeight() - 3 || player.getCol() < -(float) world.getWidth() + 5) {
+            batch.setColor(255, 255, 255, 0.4f);
+        }
 
         for (Tile t : tileMap) {
             if (width > MAP_WIDTH) {
@@ -78,6 +84,8 @@ public class MinimapComponent extends OverlayComponent {
         if (playerPeon != null) {
             renderPlayer(batch, playerPeon);
         }
+
+        batch.setColor(255, 255, 255, 1f);
         batch.end();
     }
 
