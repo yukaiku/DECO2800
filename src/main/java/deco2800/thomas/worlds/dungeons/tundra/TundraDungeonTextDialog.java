@@ -13,11 +13,21 @@ public class TundraDungeonTextDialog extends TundraDungeonDialog {
 	private static final int POS_Y = Gdx.graphics.getHeight() / 2;
 	private static final int TEXTFIELD_LENGTH = 150;
 
-	TundraDungeon tundraDungeon;
-	TextField textField;
+	private TundraDungeon tundraDungeon;
+	private TextField textField;
 
+	/**
+	 * Lock mechanism to ensure that instances of the class do not show when not allowed
+	 * (in the onTick() method of the dungeon class)
+	 */
 	private static boolean lock;
 
+	/**
+	 * Create a TundraDungeonTextDialog
+	 * @param tundraDungeon the tundra dungeon
+	 * @param title title of the dialog
+	 * @param skin skin of the dialog
+	 */
 	public TundraDungeonTextDialog(TundraDungeon tundraDungeon, String title, Skin skin) {
 		super(title, skin);
 		this.tundraDungeon = tundraDungeon;
@@ -28,14 +38,24 @@ public class TundraDungeonTextDialog extends TundraDungeonDialog {
 		button("Guess");
 	}
 
+	/**
+	 * Check if an instance of the class is allowed to show
+	 * @return true if all instances of the the class is locked from showing
+	 */
 	public static boolean isLocked() {
 		return lock;
 	}
 
+	/**
+	 * Lock all instances of the class from showing
+	 */
 	public static void lock() {
 		lock = true;
 	}
 
+	/**
+	 * Release the lock - allowing an instance of the class to show
+	 */
 	public static void release() {
 		lock = false;
 	}
