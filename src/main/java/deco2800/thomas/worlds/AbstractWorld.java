@@ -6,11 +6,9 @@ import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.entities.agent.AgentEntity;
-import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

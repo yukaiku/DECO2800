@@ -10,16 +10,12 @@ import deco2800.thomas.entities.npc.SwampDungeonNPC;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
-import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SwampDungeon extends AbstractWorld {
-    private final Logger logger = LoggerFactory.getLogger(TestWorld.class);
     public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/swamp_dungeon/swamp_dungeon_map.json";
 
     private final SquareVector topTrap;
@@ -28,17 +24,16 @@ public class SwampDungeon extends AbstractWorld {
 
     private final SquareVector correctTile;
 
-    private List<AbstractDialogBox> allSwampDungeonDialogues;
+    private final List<AbstractDialogBox> allSwampDungeonDialogues;
 
     public SwampDungeon() {
         this(12, 7);
     }
 
     public SwampDungeon(int width, int height) {
+        super(width, height);
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
         this.generateTiles();
-        this.generateTileMap();
-        this.generateTileIndices();
         this.allSwampDungeonDialogues = new ArrayList<>();
 
         // Create the player entity
@@ -69,7 +64,8 @@ public class SwampDungeon extends AbstractWorld {
         this.allSwampDungeonDialogues.add(npc4.getBox());
         this.allSwampDungeonDialogues.add(npc5.getBox());
         this.allSwampDungeonDialogues.add(npc6.getBox());
-        NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
+        NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity,
+                npnSpawns);
         GameManager.get().addManager(npcManager);
 
         // Creates dialogue manager
@@ -85,6 +81,22 @@ public class SwampDungeon extends AbstractWorld {
 
     @Override
     protected void generateTiles() {
+    }
+
+    public List<AbstractDialogBox> getAllSwampDungeonDialogues() {
+        return allSwampDungeonDialogues;
+    }
+
+    public SquareVector getTopTrap() {
+        return topTrap;
+    }
+
+    public SquareVector getMidTrap() {
+        return midTrap;
+    }
+
+    public SquareVector getCorrectTile() {
+        return correctTile;
     }
 
     private void setUpPlatforms() {
@@ -139,7 +151,7 @@ public class SwampDungeon extends AbstractWorld {
 
     /**
      * Adds a dialog box to this world
-     * @param box
+     * @param box: an AbstractDialogBox instance
      */
     public void addDialogue(AbstractDialogBox box){
         this.allSwampDungeonDialogues.add(box);

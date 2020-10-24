@@ -5,6 +5,7 @@ import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PathFindingService;
@@ -340,34 +341,6 @@ public class MovementTask extends AbstractTask {
             tile.setParent(null);
 
 			//Update trap to be triggered & activate outcome
-			tile.setRewardActivated(true);
-			gameManager.getWorld().activateRewardTile(tile);
-		}
-	}
-
-	/**
-	 * Check if the tile of the player's current position is a trap tile
-	 *
-	 * @param position
-	 */
-	private void checkForTrapTileWithoutParent(SquareVector position) {
-		Tile tile = gameManager.getWorld().getTile(position);
-
-		if (tile != null && tile.isTrapTile() && !tile.getTrapActivated()) {
-			tile.setTrapActivated(true);
-			gameManager.getWorld().activateTrapTile(tile);
-		}
-	}
-
-	/**
-	 * Check if the tile of the player's current position is a reward tile
-	 *
-	 * @param position
-	 */
-	private void checkForRewardTileWithoutParent(SquareVector position) {
-		Tile tile = gameManager.getWorld().getTile(position);
-
-		if (tile != null && tile.isRewardTile() && !tile.getRewardActivated()) {
 			tile.setRewardActivated(true);
 			gameManager.getWorld().activateRewardTile(tile);
 		}
