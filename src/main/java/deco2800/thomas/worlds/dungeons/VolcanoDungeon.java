@@ -182,7 +182,7 @@ public class VolcanoDungeon extends AbstractWorld {
 
     @Override
     public List<AbstractDialogBox> returnAllDialogues() {
-        return null;
+        return volcanoDungeonDialogue;
     }
 
     /**
