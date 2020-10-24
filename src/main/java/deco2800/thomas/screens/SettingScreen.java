@@ -71,38 +71,41 @@ public class SettingScreen implements Screen {
         clickedButtonStyle.fontColor = Color.valueOf("#ff1100");
 
         // Initialize buttons
-        windowButton = new TextButton("WINDOW", buttonStyle);
-        windowButton.setPosition(width/5 + 400, height/2 + 100);
-        stage.addActor(windowButton);
+        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+            windowButton = new TextButton("WINDOW", buttonStyle);
+            windowButton.setPosition(width / 5 + 400, height / 2 - 100);
+            stage.addActor(windowButton);
 
-        fullScreenButton = new TextButton("FULLSCREEN", buttonStyle);
-        fullScreenButton.setPosition(width/5 + 800, height/2 + 100);
-        stage.addActor(fullScreenButton);
+            fullScreenButton = new TextButton("FULLSCREEN", buttonStyle);
+            fullScreenButton.setPosition(width / 5 + 800, height / 2 - 100);
+            stage.addActor(fullScreenButton);
+        }
 
         Button backButton = new TextButton("BACK", buttonStyle);
         backButton.setPosition(width/2 - backButton.getWidth()/2, 90);
         stage.addActor(backButton);
 
         offVolumeButton = new TextButton("OFF", buttonStyle);
-        offVolumeButton.setPosition(width/5 + 400, height/2 - 115);
+        offVolumeButton.setPosition(width/5 + 400, height/2 + 175);
         stage.addActor(offVolumeButton);
 
         lowVolumeButton = new TextButton("LOW", buttonStyle);
-        lowVolumeButton.setPosition(width/5 + 600, height/2 - 115);
+        lowVolumeButton.setPosition(width/5 + 600, height/2 + 175);
         stage.addActor(lowVolumeButton);
 
         medVolumeButton = new TextButton("MEDIUM", buttonStyle);
-        medVolumeButton.setPosition(width/5 + 800, height/2 - 115);
+        medVolumeButton.setPosition(width/5 + 800, height/2 + 175);
         stage.addActor(medVolumeButton);
 
         highVolumeButton = new TextButton("HIGH", buttonStyle);
-        highVolumeButton.setPosition(width/5 + 1030, height/2 - 115);
+        highVolumeButton.setPosition(width/5 + 1030, height/2 + 175);
         stage.addActor(highVolumeButton);
-
-        if (Gdx.graphics.isFullscreen()) {
-            fullScreenButton.setChecked(true);
-        } else {
-            windowButton.setChecked(true);
+        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+            if (Gdx.graphics.isFullscreen()) {
+                fullScreenButton.setChecked(true);
+            } else {
+                windowButton.setChecked(true);
+            }
         }
 
         if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 0f) {
@@ -116,20 +119,21 @@ public class SettingScreen implements Screen {
         }
 
         // Add click listener to buttons
-        windowButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                setWindowedScreen();
-            }
-        });
+        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+            windowButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    setWindowedScreen();
+                }
+            });
 
-        fullScreenButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                setFullScreen();
-            }
-        });
-
+            fullScreenButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    setFullScreen();
+                }
+            });
+        }
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -252,8 +256,10 @@ public class SettingScreen implements Screen {
         stage.draw();
         spriteBatch.begin();
         font.getData().setScale(1.8f);
-        font.draw(spriteBatch, "SCREEN", screenWidth/5, screenHeight/2 + 100);
-        font.draw(spriteBatch, "AUDIO", screenWidth/5, screenHeight/2 - 100);
+        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+            font.draw(spriteBatch, "SCREEN", screenWidth / 5, screenHeight / 2 - 100);
+        }
+        font.draw(spriteBatch, "AUDIO", screenWidth/5, screenHeight/2 + 100);
         spriteBatch.end();
     }
 
