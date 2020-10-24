@@ -1,15 +1,11 @@
 package deco2800.thomas.managers;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.InvalidEnemyException;
 import deco2800.thomas.entities.enemies.bosses.Boss;
 import deco2800.thomas.entities.enemies.monsters.Monster;
 import deco2800.thomas.entities.enemies.monsters.Orc;
-import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.worlds.AbstractWorld;
 
 import java.util.*;
@@ -300,32 +296,6 @@ public class EnemyManager extends TickableManager {
             world.disposeEntity(boss.getEntityID());
         }
     }
-
-    /*
-    public String getWorldName() {
-        return world.toString().substring(world.toString().lastIndexOf('.') + 1);
-    }
-    @Override
-    public void notifyKeyDown(int keycode) {
-        if (GameManager.get().getDebugMode() && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
-                Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
-            if (keycode == Input.Keys.P) {
-                // Ctrl + P: Toggle wild enemy spawning
-                wildSpawning = !wildSpawning;
-            } else if (keycode == Input.Keys.K) {
-                // Ctrl + K: kill all wild and special enemies (excludes boss)
-                new ArrayList<>(wildEnemiesAlive).forEach(this::removeWildEnemy);
-                new ArrayList<>(specialEnemiesAlive).forEach(this::removeSpecialEnemy);
-                // Ctrl + L: Kill the dragon
-            } else if (keycode == Input.Keys.L && boss != null) {
-                boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
-                boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
-            } else if (keycode == Input.Keys.S) {
-                // Ctrl + S: Spawn a special enemy
-                spawnSpecialEnemy("swampGoblin", 0, 0);
-            }
-        }
-    }*/
 
     @Override
     public void onTick(long i) {

@@ -1,6 +1,7 @@
 package deco2800.thomas.managers;
 
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.DragonTest;
 import deco2800.thomas.entities.enemies.InvalidEnemyException;
 import deco2800.thomas.entities.enemies.bosses.Dragon;
@@ -32,6 +33,7 @@ public class EnemyManagerTest extends BaseGDXTest {
     @Test
     public void testConstructors() {
         EnemyManager em1 = new EnemyManager(world);
+        em1.removeBoss();
         assertEquals(em1.getWildEnemyCap(), 0);
         EnemyManager em2 = new EnemyManager(world, null, 10);
         assertEquals(em2.getWildEnemyCap(), 10);
@@ -122,14 +124,26 @@ public class EnemyManagerTest extends BaseGDXTest {
     }
 
     @Test
-    public void testWildEnemies() {
+    public void testWildEnemies() throws InvalidEnemyException {
         EnemyManager em4 = new EnemyManager(world, 10, "tundraOrc");
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 250; i++) {
             em4.spawnRandomWildEnemy();
         }
         assertEquals(em4.getWildEnemiesAlive().size(), 10);
         em4.removeWildEnemy(em4.getWildEnemiesAlive().get(0));
         assertEquals(em4.getWildEnemiesAlive().size(), 9);
+        em4.addEnemyConfigs("desertGoblin");
+        for (int i = 0; i < 60; i++) {
+            em4.spawnRandomWildEnemy();
+        }
+        PlayerPeon playerPeon = new PlayerPeon(50, 50, 10f);
+        world.setPlayerEntity(playerPeon);
+        for (int i = 0; i < 60; i++) {
+            em4.spawnRandomWildEnemy();
+        }
+        for (int i = 0; i < 6; i++) {
+            em4.onTick(0);
+        }
     }
 
     @Test
@@ -145,6 +159,8 @@ public class EnemyManagerTest extends BaseGDXTest {
         em.spawnBoss(0, 0);
         assertEquals(em.getBoss().getCol(), 0, 0.001);
         assertEquals(em.getBoss().getRow(), 0, 0.001);
+        em.removeBoss();
+        assertEquals(0, em.getEnemyCount());
     }
 
     @After
