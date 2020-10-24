@@ -24,7 +24,7 @@ import deco2800.thomas.managers.TextureManager;
 public class SettingScreen implements Screen {
     final ThomasGame game;
     private final Stage stage;
-    private final String osName = "os.name";
+    private static final String osName = "os.name";
     static float width = 1920;
     static float height = 1000;
     static float screenWidth;

@@ -6,7 +6,7 @@ import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.worlds.Tile;
 
 public class Portal extends StaticEntity implements Tickable {
-    private static final String ENTITY_ID_STRING = "target";
+    private static final String ENTITY_ID_STRING = "portal";
 
     public Portal(Tile tile, boolean obstructed) {
         super(tile, RenderConstants.PORTAL_RENDER, "portal", obstructed);
