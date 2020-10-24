@@ -201,7 +201,7 @@ public class SoundManager extends AbstractManager {
 		if (!soundLoaded) loadSound();
 		try {
 			Pair<Sound, Float> soundPair = soundEffects.get(soundName);
-			soundPair.getValue0().play(volume * soundPair.getValue1());
+			soundPair.getValue0().loop(volume * soundPair.getValue1());
 			return soundPair.getValue0();
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
