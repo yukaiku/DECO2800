@@ -46,14 +46,14 @@ public class SoundManager extends AbstractManager {
 	public void loadSound() {
 		try {
 			// Long sound effects, or music that are not preloaded:
-			addNewSong("swampAmbience", "resources/sounds/ambience/swamp_ambience.ogg", 1);
-			addNewSong("desertAmbience", "resources/sounds/ambience/desert_ambience.ogg", 1);
-			addNewSong("tundraAmbience", "resources/sounds/ambience/tundra_ambience.ogg", 1);
+			addNewSong("swampAmbience", "resources/sounds/ambience/swamp_ambience.ogg", 0.8f);
+			addNewSong("desertAmbience", "resources/sounds/ambience/desert_ambience.ogg", 0.1f);
+			addNewSong("tundraAmbience", "resources/sounds/ambience/tundra_ambience.ogg", 0.8f);
 			addNewSong("volcanoAmbience", "resources/sounds/ambience/volcano_ambience.ogg", 0.8f);
 			addNewSong("menuAmbience", "resources/sounds/ambience/menu_ambience.ogg", 1);
 
 			// Boss music is the exception to the rule, and is preloaded
-			addNewSound("bossMusic", "resources/sounds/music/boss_1.mp3", 0.3f);
+			addNewSound("bossMusic", "resources/sounds/music/boss_1.mp3", 0.8f);
 
 			// Sound effects that are preloaded (short duration)
 			addNewSound("fireball", "resources/sounds/sfx/fireball_5.wav", 1);
@@ -65,6 +65,8 @@ public class SoundManager extends AbstractManager {
 			addNewSound("button2", "resources/sounds/sfx/button_2.wav", 0.2f);
 			addNewSound("dragon1", "resources/sounds/sfx/dragon_fire.mp3", 0.8f);
 			addNewSound("dragon2", "resources/sounds/sfx/dragon_swamp.wav", 0.8f);
+			addNewSound("gameOver", "resources/sounds/sfx/game_over.ogg", 0.7f);
+			addNewSound("victory", "resources/sounds/sfx/victory_sound.ogg", 1.0f);
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		} finally {
@@ -150,7 +152,7 @@ public class SoundManager extends AbstractManager {
 	 */
 	public void playBossMusic(String sound) {
 		if (ambience != null) {
-			ambience.stop();
+			ambience.pause();
 		}
 		bossMusic = loopSound(sound);
 	}
@@ -164,7 +166,7 @@ public class SoundManager extends AbstractManager {
 			bossMusic = null;
 		}
 		if (ambience != null) {
-			ambienceId = ambience.loop(volume * ambienceVolume);
+			ambience.resume();
 		}
 	}
 

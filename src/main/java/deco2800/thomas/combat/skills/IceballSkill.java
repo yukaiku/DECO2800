@@ -14,7 +14,7 @@ public class IceballSkill extends AbstractSkill {
     /* Speed of projectile */
     private static final float SPEED = 0.5f;
     /* Lifetime of projectile */
-    private static final int LIFETIME = 60;
+    private static final int LIFETIME = 20;
     /* Speed multiplier to apply */
     private final float speedMultiplier;
     /* Duration of slow effect */
