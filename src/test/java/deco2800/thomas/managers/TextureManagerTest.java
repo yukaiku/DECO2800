@@ -10,10 +10,12 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
+import java.util.HashMap;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({Texture.class, TextureManager.class})
@@ -21,11 +23,16 @@ public class TextureManagerTest extends BaseGDXTest {
     // Stores state of missing files during test
     public class FileExistsResult {
         private boolean allFilesExist = true;
+        private int fileCount = 0;
         private String missingFiles = "Missing Files:\n";
 
         public void recordMissingFile(String filename) {
             allFilesExist = false;
             missingFiles += filename + "\n";
+        }
+
+        public void recordExistingFile() {
+            fileCount++;
         }
 
         public boolean testAllFilesExist() {
@@ -34,6 +41,10 @@ public class TextureManagerTest extends BaseGDXTest {
 
         public String getMissingFiles() {
             return missingFiles;
+        }
+
+        public int getFileCount() {
+            return fileCount;
         }
     }
 
@@ -52,6 +63,8 @@ public class TextureManagerTest extends BaseGDXTest {
             File f = new File((String)invocation.getArgument(0));
             if (!f.exists()) {
                 result.recordMissingFile(invocation.getArgument(0));
+            } else {
+                result.recordExistingFile();
             }
             return t;
         });
@@ -61,99 +74,146 @@ public class TextureManagerTest extends BaseGDXTest {
      * Tests all base textures exist.
      */
     @Test
-    public void testLoadBaseTextures() {
+    public void testLoadBaseTextures() throws Exception {
+        // Mock HashMap constructor
+        HashMap<String, Texture> hm = mock(HashMap.class);
+        PowerMockito.whenNew(HashMap.class).withAnyArguments().thenReturn(hm);
+
+        // Try load base textures
         TextureManager m = new TextureManager();
         m.loadBaseTextures();
 
+        // Verify all exist and were added to map
         assertTrue(result.getMissingFiles(), result.testAllFilesExist());
+        verify(hm, times(result.getFileCount())).put(anyString(), any(Texture.class));
     }
 
     /**
      * Tests all enemy textures exist.
      */
     @Test
-    public void testLoadEnemyTextures() {
+    public void testLoadEnemyTextures() throws Exception {
+        // Mock HashMap constructor
+        HashMap<String, Texture> hm = mock(HashMap.class);
+        PowerMockito.whenNew(HashMap.class).withAnyArguments().thenReturn(hm);
+
         TextureManager m = new TextureManager();
         m.loadEnemyTextures();
 
         assertTrue(result.getMissingFiles(), result.testAllFilesExist());
+        verify(hm, times(result.getFileCount())).put(anyString(), any(Texture.class));
     }
 
     /**
      * Tests all combat textures exist.
      */
     @Test
-    public void testLoadCombatTextures() {
+    public void testLoadCombatTextures() throws Exception {
+        // Mock HashMap constructor
+        HashMap<String, Texture> hm = mock(HashMap.class);
+        PowerMockito.whenNew(HashMap.class).withAnyArguments().thenReturn(hm);
+
         TextureManager m = new TextureManager();
         m.loadCombatTextures();
 
         assertTrue(result.getMissingFiles(), result.testAllFilesExist());
+        verify(hm, times(result.getFileCount())).put(anyString(), any(Texture.class));
     }
 
     /**
      * Tests all storyline textures exist.
      */
     @Test
-    public void testLoadStorylineTextures() {
+    public void testLoadStorylineTextures() throws Exception {
+        // Mock HashMap constructor
+        HashMap<String, Texture> hm = mock(HashMap.class);
+        PowerMockito.whenNew(HashMap.class).withAnyArguments().thenReturn(hm);
+
         TextureManager m = new TextureManager();
         m.loadStorylineTextures();
 
         assertTrue(result.getMissingFiles(), result.testAllFilesExist());
+        verify(hm, times(result.getFileCount())).put(anyString(), any(Texture.class));
     }
 
     /**
      * Tests all NPC textures exist.
      */
     @Test
-    public void testLoadNPCTextures() {
+    public void testLoadNPCTextures() throws Exception {
+        // Mock HashMap constructor
+        HashMap<String, Texture> hm = mock(HashMap.class);
+        PowerMockito.whenNew(HashMap.class).withAnyArguments().thenReturn(hm);
+
         TextureManager m = new TextureManager();
         m.loadNPCTextures();
 
         assertTrue(result.getMissingFiles(), result.testAllFilesExist());
+        verify(hm, times(result.getFileCount())).put(anyString(), any(Texture.class));
     }
 
     /**
      * Tests all inventory textures exist.
      */
     @Test
-    public void testLoadInventoryTextures() {
+    public void testLoadInventoryTextures() throws Exception {
+        // Mock HashMap constructor
+        HashMap<String, Texture> hm = mock(HashMap.class);
+        PowerMockito.whenNew(HashMap.class).withAnyArguments().thenReturn(hm);
+
         TextureManager m = new TextureManager();
         m.loadInventoryTextures();
 
         assertTrue(result.getMissingFiles(), result.testAllFilesExist());
+        verify(hm, times(result.getFileCount())).put(anyString(), any(Texture.class));
     }
 
     /**
      * Tests all mini map textures exist.
      */
     @Test
-    public void testLoadMinimapTextures() {
+    public void testLoadMinimapTextures() throws Exception {
+        // Mock HashMap constructor
+        HashMap<String, Texture> hm = mock(HashMap.class);
+        PowerMockito.whenNew(HashMap.class).withAnyArguments().thenReturn(hm);
+
         TextureManager m = new TextureManager();
         m.loadMinimapTextures();
 
         assertTrue(result.getMissingFiles(), result.testAllFilesExist());
+        verify(hm, times(result.getFileCount())).put(anyString(), any(Texture.class));
     }
 
     /**
      * Tests all health textures exist.
      */
     @Test
-    public void testLoadHealthTextures() {
+    public void testLoadHealthTextures() throws Exception {
+        // Mock HashMap constructor
+        HashMap<String, Texture> hm = mock(HashMap.class);
+        PowerMockito.whenNew(HashMap.class).withAnyArguments().thenReturn(hm);
+
         TextureManager m = new TextureManager();
         m.loadHealthTextures();
 
         assertTrue(result.getMissingFiles(), result.testAllFilesExist());
+        verify(hm, times(result.getFileCount())).put(anyString(), any(Texture.class));
     }
 
     /**
      * Tests all environment textures exist.
      */
     @Test
-    public void testLoadEnvironmentTextures() {
+    public void testLoadEnvironmentTextures() throws Exception {
+        // Mock HashMap constructor
+        HashMap<String, Texture> hm = mock(HashMap.class);
+        PowerMockito.whenNew(HashMap.class).withAnyArguments().thenReturn(hm);
+
         TextureManager m = new TextureManager();
         m.loadEnvironmentTextures();
 
         assertTrue(result.getMissingFiles(), result.testAllFilesExist());
+        verify(hm, times(result.getFileCount())).put(anyString(), any(Texture.class));
     }
 
     /**
