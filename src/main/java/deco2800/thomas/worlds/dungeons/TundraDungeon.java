@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Rock;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.environment.Portal;
@@ -19,11 +18,8 @@ import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PlayerManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
-import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.dungeons.tundra.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -31,28 +27,48 @@ import java.io.IOException;
 import java.util.*;
 
 public class TundraDungeon extends AbstractWorld {
-	private final Logger logger = LoggerFactory.getLogger(TestWorld.class);
 	static final int DEFAULT_WIDTH = 5;
 	static final int DEFAULT_HEIGHT = 5;
 
+	/**
+	 * Skin - for creating dialogs
+	 */
 	private final Skin skin;
 
+	/**
+	 * Dialogs that are managed by the Dialog Manager (not actually used)
+	 */
+	private List<AbstractDialogBox> allTundraDungeonDialogs;
+
+	/**
+	 * This boolean variable is used to initialize the dungeon when the onTick() method is called the first time
+	 */
 	boolean initialized = false;
 
+	/**
+	 * Special coordinates
+	 */
+	SquareVector helpCoordinates;
+	SquareVector encryptionMachineCoordinates;
+	SquareVector exitPortalCoordinates;
+
+	/**
+	 * The puzzle
+	 */
 	String keyword;
 	HashMap<SquareVector, Character> puzzle;
 	HashSet<SquareVector> usedCoordinates;
-	SquareVector helpCoordinates;
-	SquareVector machineCoordinates;
-	SquareVector exitPortalCoordinates;
 	String playerAnswer;
-
-	private List<AbstractDialogBox> allTundraDungeonDialogs;
 
 	public TundraDungeon() {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 
+	/**
+	 * Constructor
+	 * @param width width of the dungeon
+	 * @param height height of the dungeon
+	 */
 	public TundraDungeon(int width, int height) {
 		super(width, height);
 		this.allTundraDungeonDialogs = new ArrayList<>();
@@ -82,26 +98,42 @@ public class TundraDungeon extends AbstractWorld {
 
 		this.skin = new Skin(Gdx.files.internal("resources/uiskin.skin"));
 
+		createSpecialTiles();
+		createPuzzle();
+	}
+
+	/**
+	 * Create special tiles for the dungeon. These includes:
+	 * - A help tile: the player can invoke the help dialog when moving to this tile
+	 * - An encryption machine tile: the player can enter the answer for the puzzle by moving to this tile
+	 * - An exit portal tile: the player can exit from the dungeon by moving to this tile (after they have already solved the puzzle)
+	 */
+	private void createSpecialTiles() {
 		helpCoordinates = new SquareVector(-5, -5);
 		entities.add(new StaticEntity(getTile(helpCoordinates), 1, "tundra-dungeon-help", false));
 		usedCoordinates.add(helpCoordinates);
 
-		machineCoordinates = new SquareVector(2, 0);
-		entities.add(new TundraEncryptionMachine(getTile(machineCoordinates)));
-		usedCoordinates.add(machineCoordinates);
+		encryptionMachineCoordinates = new SquareVector(2, 0);
+		entities.add(new TundraEncryptionMachine(getTile(encryptionMachineCoordinates)));
+		usedCoordinates.add(encryptionMachineCoordinates);
 
 		exitPortalCoordinates = new SquareVector(4, 0);
 		usedCoordinates.add(exitPortalCoordinates);
-
-		createPuzzle();
-		System.err.println("keyword: " + keyword);
 	}
 
+	/**
+	 * Spawn the exit portal
+	 */
 	private void spawnExitPortal() {
 		Tile portalTile = getTile(4, 0);
 		entities.add(new Portal(portalTile, false, "portal", "ExitPortal"));
 	}
 
+	/**
+	 * Create the puzzle
+	 * The puzzle requires a 5-letter word, which is read and selected from a text file.
+	 * Then each letter is put at a random position in the dungeon.
+	 */
 	private void createPuzzle() {
 		ArrayList<String> words = readWords();
 		if (words == null) {
@@ -144,6 +176,10 @@ public class TundraDungeon extends AbstractWorld {
 		this.playerAnswer = playerAnswer;
 	}
 
+	/**
+	 * Read all words from a text file that saves 5-letter English words
+	 * @return a list of all words in the text file
+	 */
 	private ArrayList<String> readWords() {
 		ArrayList<String> words = new ArrayList<>();
 		String filePath = "resources/environment/tundra/tundra-dungeon-words.txt";
@@ -171,6 +207,9 @@ public class TundraDungeon extends AbstractWorld {
 
 	}
 
+	/**
+	 * Initialize the dungeon. This method is called the first time onTick() is called.
+	 */
 	private void initialize() {
 		Stage stage = GameManager.get().getStage();
 
@@ -196,22 +235,28 @@ public class TundraDungeon extends AbstractWorld {
 		initialized = true;
 	}
 
+	/**
+	 * Check if the puzzle is solved. This method is called in onTick()
+	 */
 	private void checkPuzzleSolved() {
 		if (playerAnswer != null) {
 			if (playerAnswer.equals(keyword)) {
 				GameManager.getManagerFromInstance(PlayerManager.class).grantWizardSkill(WizardSkills.ICEBALL);
 				spawnExitPortal();
-				playerAnswer = null;
 			} else {
 				TundraDungeonAnnouncementDialog announcementDialog = new TundraDungeonAnnouncementDialog("Oops", skin);
 				announcementDialog.show();
-				playerAnswer = null;
 			}
+
+			playerAnswer = null;
 		}
 	}
 
+	/**
+	 * Handle the text dialog. This method is called in onTick()
+	 */
 	private void handleTextDialog() {
-		if (getPlayerEntity().getPosition().isCloseEnoughToBeTheSame(machineCoordinates) && !TundraDungeonTextDialog.isLocked()) {
+		if (getPlayerEntity().getPosition().isCloseEnoughToBeTheSame(encryptionMachineCoordinates) && !TundraDungeonTextDialog.isLocked()) {
 			PlayerPeon playerPeon = (PlayerPeon) getPlayerEntity();
 			if (playerPeon.getMovementTask() != null) {
 				playerPeon.getMovementTask().stopTask();
@@ -219,11 +264,14 @@ public class TundraDungeon extends AbstractWorld {
 			TundraDungeonTextDialog textDialog = new TundraDungeonTextDialog(this, "Your answer", skin);
 			textDialog.show();
 			TundraDungeonTextDialog.lock();
-		} else if (!getPlayerEntity().getPosition().isCloseEnoughToBeTheSame(machineCoordinates) && TundraDungeonTextDialog.isLocked()) {
+		} else if (!getPlayerEntity().getPosition().isCloseEnoughToBeTheSame(encryptionMachineCoordinates) && TundraDungeonTextDialog.isLocked()) {
 			TundraDungeonTextDialog.release();
 		}
 	}
 
+	/**
+	 * Handle the hint dialog. This method is called in onTick()
+	 */
 	private void handleHintDialog() {
 		if (!TundraDungeonHintDialog.isLocked()) {
 			for (SquareVector coordinates : puzzle.keySet()) {
@@ -253,6 +301,9 @@ public class TundraDungeon extends AbstractWorld {
 		}
 	}
 
+	/**
+	 * Handle the instruction dialog. This method is called in onTick()
+	 */
 	private void handleInstructionDialog() {
 		if (TundraDungeonInstructionDialog.isToShow()) {
 			TundraDungeonInstructionDialog.showDialog();
@@ -272,7 +323,7 @@ public class TundraDungeon extends AbstractWorld {
 
 	/**
 	 * Adds a dialog box to this world
-	 * @param box
+	 * @param box dialog box
 	 */
 	public void addDialogue(AbstractDialogBox box){ this.allTundraDungeonDialogs.add(box);}
 
