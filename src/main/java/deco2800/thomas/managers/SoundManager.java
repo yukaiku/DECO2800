@@ -26,6 +26,7 @@ public class SoundManager extends AbstractManager {
 	private Sound music = null;
 	private float musicVolume;
 	private long musicId;
+	private Sound bossMusic;
 	// Global audio volume
 	private float volume = 1.0f;
 	private boolean soundLoaded = false;
@@ -48,21 +49,21 @@ public class SoundManager extends AbstractManager {
 			addNewSong("swampAmbience", "resources/sounds/ambience/swamp_ambience.ogg", 1);
 			addNewSong("desertAmbience", "resources/sounds/ambience/desert_ambience.ogg", 1);
 			addNewSong("tundraAmbience", "resources/sounds/ambience/tundra_ambience.ogg", 1);
-			addNewSong("volcanoAmbience", "resources/sounds/ambience/volcano_ambience.ogg", 1);
+			addNewSong("volcanoAmbience", "resources/sounds/ambience/volcano_ambience.ogg", 0.8f);
 			addNewSong("menuAmbience", "resources/sounds/ambience/menu_ambience.ogg", 1);
 
 			// Boss music is the exception to the rule, and is preloaded
-			addNewSong("bossMusic", "resources/sounds/music/boss_1.mp3", 1);
+			addNewSound("bossMusic", "resources/sounds/music/boss_1.mp3", 0.3f);
 
 			// Sound effects that are preloaded (short duration)
 			addNewSound("fireball", "resources/sounds/sfx/fireball_5.wav", 1);
-			addNewSound("woodHit", "resources/sounds/sfx/mech_hit_3.wav", 1);
+			addNewSound("woodHit", "resources/sounds/sfx/mech_hit_3.wav", 0.8f);
 			addNewSound("fireHit", "resources/sounds/sfx/fireball_hit_3.wav", 1);
 			addNewSound("windAttack", "resources/sounds/sfx/wind_1.wav", 1);
-			addNewSound("explosion", "resources/sounds/sfx/explosion_1.wav", 1);
-			addNewSound("button1", "resources/sounds/sfx/button_1.wav", 1);
-			addNewSound("button2", "resources/sounds/sfx/button_2.wav", 1);
-			addNewSound("dragon1", "resources/sounds/sfx/dragon_fire.mp3", 1);
+			addNewSound("explosion", "resources/sounds/sfx/explosion_1.wav", 0.7f);
+			addNewSound("button1", "resources/sounds/sfx/button_1.wav", 0.1f);
+			addNewSound("button2", "resources/sounds/sfx/button_2.wav", 0.2f);
+			addNewSound("dragon1", "resources/sounds/sfx/dragon_fire.mp3", 0.8f);
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		} finally {
@@ -126,25 +127,16 @@ public class SoundManager extends AbstractManager {
 	}
 
 	/**
-	 * Sets, and starts playing a new music track. If the soundName
-	 * specified isn't found as a Song track, then it will check if
-	 * the soundName is a preloaded sfx and loop that.
+	 * Sets, and starts playing a new music track.
 	 * @param soundName Name of music track.
 	 */
 	public void playMusic(String soundName) {
 		if (!soundLoaded) loadSound();
 		try {
 			stopSoundResource(music);
-			Sound music;
-			if (sounds.containsKey(soundName)) {
-				Pair<String, Float> songPair = sounds.get(soundName);
-				music = Gdx.audio.newSound(Gdx.files.internal(songPair.getValue0()));
-				musicVolume = songPair.getValue1();
-			} else {
-				Pair<Sound, Float> soundPair = soundEffects.get(soundName);
-				music = soundPair.getValue0();
-				musicVolume = soundPair.getValue1();
-			}
+			Pair<String, Float> songPair = sounds.get(soundName);
+			music = Gdx.audio.newSound(Gdx.files.internal(songPair.getValue0()));
+			musicVolume = songPair.getValue1();
 			musicId = music.loop(volume * musicVolume);
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
@@ -159,16 +151,19 @@ public class SoundManager extends AbstractManager {
 		if (ambience != null) {
 			ambience.stop();
 		}
-		playMusic(sound);
+		bossMusic = loopSound(sound);
 	}
 
 	/**
 	 * Stop (not compose) the boss music and resume the ambience.
 	 */
 	public void stopBossMusic() {
-		stopMusic();
+		if (bossMusic != null) {
+			bossMusic.stop();
+			bossMusic = null;
+		}
 		if (ambience != null) {
-			ambience.play();
+			ambienceId = ambience.loop(volume * ambienceVolume);
 		}
 	}
 
@@ -195,6 +190,23 @@ public class SoundManager extends AbstractManager {
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		}
+	}
+
+	/**
+	 * Loops a sound that has been preloaded.
+	 * @param soundName ID of sound to play
+	 * @return Returns LibGDX sound of looping sound
+	 */
+	public Sound loopSound(String soundName) {
+		if (!soundLoaded) loadSound();
+		try {
+			Pair<Sound, Float> soundPair = soundEffects.get(soundName);
+			soundPair.getValue0().play(volume * soundPair.getValue1());
+			return soundPair.getValue0();
+		} catch (Exception e) {
+			logger.error(Arrays.toString(e.getStackTrace()));
+		}
+		return null;
 	}
 
 	/**

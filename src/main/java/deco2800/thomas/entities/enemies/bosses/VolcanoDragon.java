@@ -25,7 +25,7 @@ public class VolcanoDragon extends Dragon {
     @Override
     public void hitByTarget() {
         super.hitByTarget();
-        GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon1", 0.8f);
+        GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon1");
     }
 
     @Override

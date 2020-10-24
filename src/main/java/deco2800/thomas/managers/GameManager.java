@@ -449,12 +449,10 @@ public class GameManager {
 
 
 	public static void resume() {
-		getManagerFromInstance(SoundManager.class).setBossMusicVolume(0.5f);
 		GameManager.get().state = GameManager.State.RUN;
 	}
 
 	public static void pause() {
-		getManagerFromInstance(SoundManager.class).setBossMusicVolume(0.1f);
 		GameManager.get().state = State.PAUSED;
 	}
 

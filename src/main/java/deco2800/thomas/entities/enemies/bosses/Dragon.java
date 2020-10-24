@@ -183,7 +183,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
 
         if (this instanceof VolcanoDragon && super.getTarget() != null) {
             if (++roarTick > roarTickNext) {
-                GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon1", 0.8f);
+                GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon1");
                 roarTick = 0;
             }
         }
