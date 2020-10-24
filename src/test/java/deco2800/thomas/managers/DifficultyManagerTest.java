@@ -131,7 +131,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         assertEquals(12,enemyManager.getEnemyConfig("swampOrc").getMaxHealth());
         EnemyPeon orc = enemyManager.getEnemyConfig("swampOrc");
         Orc orc1 = (Orc)orc;
-        assertEquals(0.05f,orc1.getSpawnRate(), 0.01);
+        assertEquals(0.09f,orc1.getSpawnRate(), 0.01);
         assertEquals(5,enemyManager.getWildEnemyCap());
     }
 
@@ -145,7 +145,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         assertEquals(25,enemyManager.getEnemyConfig("tundraOrc").getMaxHealth());
         EnemyPeon orc = enemyManager.getEnemyConfig("tundraOrc");
         Orc orc1 = (Orc)orc;
-        assertEquals(0.06f,orc1.getSpawnRate(), 0.01);
+        assertEquals(0.1f,orc1.getSpawnRate(), 0.01);
         assertEquals(6,enemyManager.getWildEnemyCap());
 
         //Test Wizard Skill in Tundra
@@ -173,7 +173,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         assertEquals(12,enemyManager.getEnemyConfig("desertOrc").getMaxHealth());
         EnemyPeon orc = enemyManager.getEnemyConfig("desertOrc");
         Orc orc1 = (Orc)orc;
-        assertEquals(0.07f,orc1.getSpawnRate(), 0.01);
+        assertEquals(0.12f,orc1.getSpawnRate(), 0.01);
 
         //Test Wizard Skill in Desert
         List<AbstractSkill> wizardSkills4 = playerPeon.getWizardSkills();
@@ -195,7 +195,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         assertEquals(12,enemyManager.getEnemyConfig("volcanoOrc").getMaxHealth());
         EnemyPeon orc = enemyManager.getEnemyConfig("volcanoOrc");
         Orc orc1 = (Orc)orc;
-        assertEquals(0.08f,orc1.getSpawnRate(), 0.01);
+        assertEquals(0.12f,orc1.getSpawnRate(), 0.01);
         assertEquals(8,enemyManager.getWildEnemyCap());
     }
 
