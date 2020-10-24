@@ -1,11 +1,8 @@
 package deco2800.thomas.worlds.dungeons;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
@@ -27,8 +24,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class TundraDungeon extends AbstractWorld {
-	static final int DEFAULT_WIDTH = 5;
-	static final int DEFAULT_HEIGHT = 5;
+	public static final int DEFAULT_WIDTH = 5;
+	public static final int DEFAULT_HEIGHT = 5;
 
 	/**
 	 * Skin - for creating dialogs
@@ -43,22 +40,23 @@ public class TundraDungeon extends AbstractWorld {
 	/**
 	 * This boolean variable is used to initialize the dungeon when the onTick() method is called the first time
 	 */
-	boolean initialized = false;
+	private boolean initialized = false;
 
 	/**
 	 * Special coordinates
 	 */
-	SquareVector helpCoordinates;
-	SquareVector encryptionMachineCoordinates;
-	SquareVector exitPortalCoordinates;
+	private SquareVector helpCoordinates;
+	private SquareVector encryptionMachineCoordinates;
+	private SquareVector exitPortalCoordinates;
 
 	/**
 	 * The puzzle
 	 */
-	String keyword;
-	HashMap<SquareVector, Character> puzzle;
-	HashSet<SquareVector> usedCoordinates;
-	String playerAnswer;
+	private final String WORD_FILE_PATH = "resources/environment/tundra/tundra-dungeon-words.txt";
+	private String keyword;
+	private HashMap<SquareVector, Character> puzzle;
+	private HashSet<SquareVector> usedCoordinates;
+	private String playerAnswer;
 
 	public TundraDungeon() {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -125,7 +123,7 @@ public class TundraDungeon extends AbstractWorld {
 	 * Spawn the exit portal
 	 */
 	private void spawnExitPortal() {
-		Tile portalTile = getTile(4, 0);
+		Tile portalTile = getTile(exitPortalCoordinates);
 		entities.add(new Portal(portalTile, false, "portal", "ExitPortal"));
 	}
 
@@ -176,15 +174,18 @@ public class TundraDungeon extends AbstractWorld {
 		this.playerAnswer = playerAnswer;
 	}
 
+	public String getWordFilePath() {
+		return WORD_FILE_PATH;
+	}
+
 	/**
 	 * Read all words from a text file that saves 5-letter English words
 	 * @return a list of all words in the text file
 	 */
-	private ArrayList<String> readWords() {
+	public ArrayList<String> readWords() {
 		ArrayList<String> words = new ArrayList<>();
-		String filePath = "resources/environment/tundra/tundra-dungeon-words.txt";
 
-		try(BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+		try(BufferedReader reader = new BufferedReader(new FileReader(WORD_FILE_PATH))) {
 			String line = reader.readLine();
 
 			while (line != null) {
@@ -212,18 +213,6 @@ public class TundraDungeon extends AbstractWorld {
 	 */
 	private void initialize() {
 		Stage stage = GameManager.get().getStage();
-
-		// Add help button
-		TextButton helpButton = new TextButton("?", skin);
-		helpButton.setPosition((Gdx.graphics.getWidth() >> 1) + helpButton.getWidth() / 2,
-				(Gdx.graphics.getHeight() >> 1) + helpButton.getHeight() / 2);
-		helpButton.setSize(100, 50);
-		helpButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				TundraDungeonInstructionDialog.launch();
-			}
-		});
 
 		// Set up all types of dialogs
 		TundraDungeonDialog.setup(stage, skin);
@@ -328,7 +317,9 @@ public class TundraDungeon extends AbstractWorld {
 	public void addDialogue(AbstractDialogBox box){ this.allTundraDungeonDialogs.add(box);}
 
 	@Override
-	public String getType(){ return "TundraDungeon"; }
+	public String getType() {
+		return "TundraDungeon";
+	}
 
 	@Override
 	public void onTick(long i) {

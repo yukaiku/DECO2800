@@ -13,8 +13,8 @@ public class TundraDungeonTextDialog extends TundraDungeonDialog {
 	private static final int POS_Y = Gdx.graphics.getHeight() / 2;
 	private static final int TEXTFIELD_LENGTH = 150;
 
-	TundraDungeon tundraDungeon;
-	TextField textField;
+	private TundraDungeon tundraDungeon;
+	private TextField textField;
 
 	/**
 	 * Lock mechanism to ensure that instances of the class do not show when not allowed
