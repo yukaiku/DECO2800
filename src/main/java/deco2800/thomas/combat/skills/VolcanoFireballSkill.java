@@ -32,14 +32,12 @@ public class VolcanoFireballSkill extends AbstractSkill {
         return maxCoolDown;
     }
 
-    @Override
     public void reduceCooldownMax(float percent) {
         if (cooldown > 10) {
             cooldown = Math.round(cooldown * (1.0f - percent));
         }
     }
 
-    @Override
     public void setCooldownMax() {
         cooldown = ORIGINAL_COOLDOWN;
     }

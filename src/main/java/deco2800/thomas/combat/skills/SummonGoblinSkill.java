@@ -31,14 +31,12 @@ public class SummonGoblinSkill extends AbstractSkill{
         return maxCoolDown;
     }
 
-    @Override
     public void reduceCooldownMax(float percent) {
         if (maxCoolDown > 25) {
             maxCoolDown = Math.round(maxCoolDown * (1.0f - percent));
         }
     }
 
-    @Override
     public void setCooldownMax() {
         maxCoolDown = ORIGINAL_MAXCOOLDOWN;
     }

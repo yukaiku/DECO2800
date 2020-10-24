@@ -1,13 +1,12 @@
 package deco2800.thomas.entities.enemies.bosses;
 
 import com.badlogic.gdx.graphics.Texture;
-import deco2800.thomas.entities.agent.AgentEntity;
-import deco2800.thomas.entities.agent.PlayerPeon;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.combat.skills.AbstractSkill;
+import deco2800.thomas.combat.skills.SummonGoblinSkill;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.Orb;
 import deco2800.thomas.entities.agent.AgentEntity;
@@ -16,7 +15,9 @@ import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.enemies.PassiveEnemy;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.*;
+import deco2800.thomas.managers.ScreenManager;
+import deco2800.thomas.managers.SoundManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.components.BossHealthComponent;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
@@ -76,6 +77,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("dragonVolcanoWalk"));
         this.currentState = State.IDLE;
         this.previousState = State.IDLE;
+        this.summonGoblin = new SummonGoblinSkill(this);
     }
 
     /**
@@ -145,8 +147,12 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
                 getTarget().getRow(), 10, 0.2f, 60, EntityFaction.EVIL);
     }
 
-    public String getVariation() {
+    public String getVariationString() {
         return this.variation.name().toLowerCase();
+    }
+
+    public EnemyIndex.Variation getVariation() {
+        return this.variation;
     }
 
     @Override

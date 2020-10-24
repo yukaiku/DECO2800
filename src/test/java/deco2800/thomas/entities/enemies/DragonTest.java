@@ -1,30 +1,24 @@
 package deco2800.thomas.entities.enemies;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.Orb;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.attacks.*;
 import deco2800.thomas.entities.enemies.bosses.DesertDragon;
 import deco2800.thomas.entities.enemies.bosses.SwampDragon;
 import deco2800.thomas.entities.enemies.bosses.TundraDragon;
 import deco2800.thomas.entities.enemies.bosses.VolcanoDragon;
-import deco2800.thomas.entities.enemies.minions.Goblin;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.renderers.OverlayRenderer;
 import deco2800.thomas.renderers.components.BossHealthComponent;
 import deco2800.thomas.renderers.components.FloatingDamageComponent;
 import deco2800.thomas.screens.GameScreen;
-import deco2800.thomas.tasks.combat.FireBombAttackTask;
-import deco2800.thomas.tasks.combat.IceBreathTask;
-import deco2800.thomas.tasks.combat.SandTornadoAttackTask;
-import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
+import deco2800.thomas.tasks.combat.*;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
@@ -126,7 +120,9 @@ public class DragonTest extends BaseGDXTest {
 
     @Test
     public void testSummonGoblin() {
+        swampDragon.hitByTarget();
         swampDragon.summonGoblin();
+        swampDragon.getCombatTask().onTick(1);
         verify(enemyManager, times(1)).spawnSpecialEnemy(eq("swampGoblin"), anyFloat(), anyFloat());
     }
 
@@ -174,6 +170,7 @@ public class DragonTest extends BaseGDXTest {
     public void testVolcanoBreathAttack() {
         volcanoDragon.hitByTarget();
         volcanoDragon.breathAttack();
+        volcanoDragon.getCombatTask().onTick(1);
         verify(world, times(3)).addEntity(any(VolcanoFireball.class));
     }
 
@@ -181,13 +178,15 @@ public class DragonTest extends BaseGDXTest {
     public void testSwampBreathAttack() {
         swampDragon.hitByTarget();
         swampDragon.breathAttack();
-        verify(world, times(1)).addEntity(any(Fireball.class));
+        swampDragon.getCombatTask().onTick(1);
+        verify(world, times(1)).addEntity(any(PlayerFireball.class));
     }
 
     @Test
     public void testDesertBreathAttack() {
         desertDragon.hitByTarget();
         desertDragon.breathAttack();
+        desertDragon.getCombatTask().onTick(1);
         verify(world, times(1)).addEntity(any(DesertFireball.class));
     }
 
@@ -195,6 +194,7 @@ public class DragonTest extends BaseGDXTest {
     public void testTundraBreathAttack() {
         tundraDragon.hitByTarget();
         tundraDragon.breathAttack();
+        tundraDragon.getCombatTask().onTick(1);
         verify(world, times(1)).addEntity(any(Iceball.class));
     }
 

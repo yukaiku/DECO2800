@@ -2,12 +2,9 @@ package deco2800.thomas.entities.enemies.bosses;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.combat.WizardSkills;
-import deco2800.thomas.combat.skills.FireballSkill;
 import deco2800.thomas.combat.skills.IceBreathSkill;
+import deco2800.thomas.combat.skills.IceballSkill;
 import deco2800.thomas.combat.skills.SummonGoblinSkill;
-import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.attacks.Iceball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
@@ -22,7 +19,7 @@ public class TundraDragon extends Dragon {
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
 
         this.elementalAttack = new IceBreathSkill(this, 0.2f, 3);
-        this.breathAttack = new FireballSkill(this);
+        this.breathAttack = new IceballSkill(this, 0.2f, 5);
         this.summonGoblin = new SummonGoblinSkill(this);
 
         this.dragonAttacking = new Animation<>(0.2f,

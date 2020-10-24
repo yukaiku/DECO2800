@@ -46,7 +46,7 @@ public class BossHealthComponent extends OverlayComponent {
 
     public void onBossStart(Boss boss) {
         this.boss = boss;
-        this.bossType = ((Dragon) boss).getVariation();
+        this.bossType = ((Dragon) boss).getVariationString();
         this.render = true;
         switch (this.bossType) {
             case "swamp":
