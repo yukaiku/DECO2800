@@ -1,13 +1,10 @@
 package deco2800.thomas.entities.enemies.bosses;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-
-import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.Iceball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.PlayerManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.IceBreathTask;
 
@@ -16,10 +13,13 @@ public class TundraDragon extends Dragon {
         super(health, speed, orbNumber);
         this.variation = EnemyIndex.Variation.TUNDRA;
         this.identifier = "dragonTundra";
-        this.setTexture("dragonTundra");
         this.setObjectName("Diokiedes");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
+        this.dragonAttacking = new Animation<>(0.2f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
+        this.dragonWalking = new Animation<>(0.25f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Walk"));
     }
 
     @Override

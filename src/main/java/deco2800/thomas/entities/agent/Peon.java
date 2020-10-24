@@ -1,6 +1,5 @@
 package deco2800.thomas.entities.agent;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Color;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.DamageType;
@@ -327,6 +326,14 @@ public class Peon extends AgentEntity implements Tickable {
 		health.regenerateHealth(regen);
 	}
 
+	/**
+	 * Decreases the health of this AgentEntity. by the given amount.
+	 * @param damage The amount of health to decrease for this AgentEntity. 
+	 */
+	public void reduceHealth(int damage) {
+		health.reduceHealth(damage);
+	}
+	
 	/**
 	 * Checks if the given AgentEntity has died (health reduced to 0 or below);
 	 * @return True if AgentEntity is dead, False otherwise

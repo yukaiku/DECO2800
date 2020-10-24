@@ -1,9 +1,5 @@
 package deco2800.thomas.util;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
-
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import deco2800.thomas.entities.AbstractEntity;
@@ -13,6 +9,10 @@ import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.OverlayComponent;
 import deco2800.thomas.renderers.components.FloatingDamageComponent;
 import deco2800.thomas.worlds.Tile;
+
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
 /**
  * A utility class for the World instances.

@@ -1,11 +1,9 @@
 package deco2800.thomas.tasks.movement;
 
-import java.util.List;
-
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.agent.AgentEntity;
-import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PathFindingService;
@@ -17,6 +15,8 @@ import deco2800.thomas.tasks.status.SpeedStatus;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
+
+import java.util.List;
 
 
 public class MovementTask extends AbstractTask {

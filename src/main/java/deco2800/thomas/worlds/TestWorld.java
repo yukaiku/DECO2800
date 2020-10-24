@@ -1,24 +1,15 @@
 package deco2800.thomas.worlds;
-import deco2800.thomas.entities.*;
 
+import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.environment.Tree;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.util.SquareVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.Part;
-import deco2800.thomas.entities.StaticEntity;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class TestWorld extends AbstractWorld {
@@ -32,7 +23,8 @@ public class TestWorld extends AbstractWorld {
 	boolean notGenerated = true;
 	private static final int WORLD_WIDTH = 25; // Height and width vars for the map size; constrains tile gen
 	private static final int WORLD_HEIGHT = 25; // Note the map will double these numbers (bounds are +/- these limits)
-
+	private List<AbstractDialogBox> dialogues;
+	
 	public TestWorld() {
 		super();
 		this.width = WORLD_WIDTH;
@@ -155,6 +147,10 @@ public class TestWorld extends AbstractWorld {
 		}
 		super.onTick(i);
 	}
+
+	public List<AbstractDialogBox> returnAllDialogues(){
+		return dialogues; 
+	}; 
 
 }
 

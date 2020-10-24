@@ -1,26 +1,24 @@
 package deco2800.thomas.worlds.volcano;
 
-import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.AbstractDialogBox;
+import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.Part;
+import deco2800.thomas.entities.Rock;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.environment.volcano.*;
 import deco2800.thomas.entities.items.*;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.VolcanoNPC;
-import deco2800.thomas.entities.environment.volcano.VolcanoDragonSkull;
-import deco2800.thomas.entities.environment.volcano.VolcanoGraveYard;
-import deco2800.thomas.entities.environment.volcano.VolcanoRuins;
-import deco2800.thomas.entities.environment.volcano.VolcanoBurningTree;
 import deco2800.thomas.managers.*;
-import deco2800.thomas.entities.environment.volcano.*;
-import deco2800.thomas.managers.DatabaseManager;
-import deco2800.thomas.managers.EnemyManager;
-import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Implemented subclass of Abstract world for the Volcano Zone in Polyhedron.
@@ -33,6 +31,8 @@ public class VolcanoWorld extends AbstractWorld {
 
     private static final int ORB_COLUMN = 21;
     private static final int ORB_ROW = 20;
+
+    private long timeLastTick;
 
     private boolean notGenerated = true;
 
@@ -94,6 +94,8 @@ public class VolcanoWorld extends AbstractWorld {
 
         // Start ambience
         GameManager.getManagerFromInstance(SoundManager.class).playAmbience("volcanoAmbience");
+
+        timeLastTick = System.currentTimeMillis();
     }
 
     @Override
@@ -116,6 +118,8 @@ public class VolcanoWorld extends AbstractWorld {
         for (AbstractEntity e : this.getEntities()) {
             e.onTick(0);
         }
+
+        checkLavaTileUpdates();
 
         if (notGenerated) {
             createStaticEntities();
@@ -158,8 +162,8 @@ public class VolcanoWorld extends AbstractWorld {
      */
     private void generateItemEntities(){
         final int NUM_POTIONS = 6;
-        final int NUM_SHIELDS = 4;
-        final int NUM_CHESTS = 3;
+        final int NUM_IRON_ARMOUR = 2;
+        final int NUM_CHESTS = 2;
         final String ITEM_BOX_STYLE = "volcano";
 
 
@@ -172,28 +176,23 @@ public class VolcanoWorld extends AbstractWorld {
                         (PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
                 entities.add(potion);
                 this.allVolcanoDialogues.add(potion.getDisplay());
-
             } else {
                 i--;
             }
-
         }
-
-
-        for (int i =0; i < NUM_SHIELDS; i++){
+        for (int i =0; i < NUM_IRON_ARMOUR; i++){
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
             if (Integer.parseInt(tile.getTextureName().split("_")[1]) < 5
                     && !tile.hasParent()) {
                 IronArmour ironArmour = new IronArmour(tile, false,
-                        (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
+                        (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE,200);
                 entities.add(ironArmour);
                 this.allVolcanoDialogues.add(ironArmour.getDisplay());
             } else {
                 i--;
             }
         }
-        
         for (int i = 0; i <NUM_CHESTS; i++){
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
@@ -219,6 +218,7 @@ public class VolcanoWorld extends AbstractWorld {
                 (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,10);
         entities.add(attackAmulet);
         this.allVolcanoDialogues.add(attackAmulet.getDisplay());
+
     }
 
     /**
@@ -351,15 +351,12 @@ public class VolcanoWorld extends AbstractWorld {
         parts.add(new Part(new SquareVector(1, 0), "fenceE-W", true));
         parts.add(new Part(new SquareVector(2, 0), "fenceE-W", true));
         parts.add(new Part(new SquareVector(3,  0), "fenceE-W", true));
-        //Corner
-        parts.add(new Part(new SquareVector(0, 0), "fenceS-E", true));
         //Top right
         parts.add(new Part(new SquareVector(9, 0), "fenceE-W", true));
         parts.add(new Part(new SquareVector(10, 0), "fenceE-W", true));
         parts.add(new Part(new SquareVector(11,  0), "fenceE-W", true));
         parts.add(new Part(new SquareVector(12, 0), "fenceE-W", true));
         //Corner
-        parts.add(new Part(new SquareVector(13, 0), "fenceS-W", true));
 
         // Bottom Left
         parts.add(new Part(new SquareVector(1, -7), "fenceE-W", true));
@@ -373,8 +370,6 @@ public class VolcanoWorld extends AbstractWorld {
         parts.add(new Part(new SquareVector(10, -7), "fenceE-W", true));
         parts.add(new Part(new SquareVector(11,  -7), "fenceE-W", true));
         parts.add(new Part(new SquareVector(12, -7), "fenceE-W", true));
-        //Bottom right corner
-        parts.add(new Part(new SquareVector(13, -7), "fenceN-W", true));
 
         //Vertical sides Left
         parts.add(new Part(new SquareVector(0, -6), "fenceN-S", true));
@@ -489,8 +484,54 @@ public class VolcanoWorld extends AbstractWorld {
         return lavaPool;
     }
 
+    /**
+     * Creates a static portal entity which is teleports the player upon collision
+     *
+     * @param col - The specified column coordinate of the orb.
+     * @param row - The specified row coordinate of the orb.
+     * @return  A static entity for the Volcano Zone
+     */
     public VolcanoPortal createDungeonPortal(float col, float row){
         Tile portalTile = getTile(col, row);
         return new VolcanoPortal(portalTile, false, "VolcanoPortal", "VolcanoDungeonPortal" );
+    }
+    
+    /**
+     * Adds dialogue to the volcano zone.
+     * @param box The box ADT containing the dialogue
+     */
+    public void addDialogue(AbstractDialogBox box){
+        this.allVolcanoDialogues.add(box);
+    }
+
+    /**
+     * Checks for whether lava-tile updates should occur
+     */
+    public void checkLavaTileUpdates() {
+        // 1 second (1 bn nanoseconds) between each tick
+        long timeBetweenTicks = 1000;
+        long newTime = System.currentTimeMillis();
+
+        // if it has been 1 second: decrement ticks, set a new time and return true
+        if (newTime - timeLastTick >= timeBetweenTicks) {
+            timeLastTick = newTime;
+            updateLavaTiles();
+        }
+    }
+
+    /**
+     * Creates tile-Updates that act like a active lava-flow animation
+     */
+    public void updateLavaTiles() {
+        for (Tile tile : getTiles()) {
+            Random random = new Random();
+            if (tile.getType().matches("BurnTile")) {
+                tile.setTexture("Volcano_" + (random.nextInt(4) + 5));
+            }
+        }
+    }
+    
+    public List<AbstractDialogBox> returnAllDialogues(){
+        return this.allVolcanoDialogues;
     }
 }

@@ -1,6 +1,6 @@
 package deco2800.thomas.renderers;
 
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import deco2800.thomas.renderers.components.*;
 
@@ -37,6 +37,7 @@ public class OverlayRenderer implements Renderer {
         this.getComponents().add(new QuestTrackerComponent(this));
         this.getComponents().add(new GuidelineComponent(this));
         this.getComponents().add(new FloatingDamageComponent(this));
+        this.getComponents().add(new BossHealthComponent(this));
     }
 
     @Override

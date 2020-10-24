@@ -71,6 +71,7 @@ public class OrcTest extends BaseGDXTest {
         playerPeon = mock(PlayerPeon.class);
         when(GameManager.get().getWorld()).thenReturn(world);
         when(GameManager.get().getWorld().getPlayerEntity()).thenReturn(playerPeon);
+        when(GameManager.get().getWorld().getType()).thenReturn("Test");
 
         volcanoOrc = new Orc(EnemyIndex.Variation.VOLCANO, 100, 0.1f, 1, 1, 1, 1);
         desertOrc = new Orc(EnemyIndex.Variation.DESERT, 100, 0.1f, 1, 1, 1, 1);
@@ -125,7 +126,7 @@ public class OrcTest extends BaseGDXTest {
     public void testAnimationFrame() {
         Array<TextureRegion> orcArray = new Array<>();
         orcArray.add(new TextureRegion(new Texture("resources/enemies/orc_tundra.png")));
-        assertTrue(orcArray.get(0).getTexture().toString().equals(tundraOrc.getFrame(0).getTexture().toString()));
+        assertEquals(orcArray.get(0).getTexture().toString(), tundraOrc.getFrame(0).getTexture().toString());
     }
 
     @Test

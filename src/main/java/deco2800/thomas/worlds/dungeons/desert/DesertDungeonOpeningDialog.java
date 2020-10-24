@@ -1,7 +1,6 @@
 package deco2800.thomas.worlds.dungeons.desert;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * A dialog box which is shown upon entering the Desert Dungeon. This dialog
@@ -23,8 +22,8 @@ public class DesertDungeonOpeningDialog extends DesertDungeonDialog {
      * @param title The specified title
      * @param skin The specified skin
      */
-    public DesertDungeonOpeningDialog(String title, Skin skin) {
-        super(title, skin);
+    public DesertDungeonOpeningDialog(String title) {
+        super(title);
         text("This Orc has grown super strong and is immune to your attacks.\n Find another way to damage him!");
         button("OK");
     }

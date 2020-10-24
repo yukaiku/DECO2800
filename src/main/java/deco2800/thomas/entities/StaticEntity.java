@@ -1,23 +1,19 @@
 package deco2800.thomas.entities;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.badlogic.gdx.graphics.Texture;
+import com.google.gson.annotations.Expose;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.util.SquareVector;
+import deco2800.thomas.util.WorldUtil;
+import deco2800.thomas.worlds.Tile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
-
-import com.badlogic.gdx.graphics.Texture;
-
-import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.TextureManager;
-import deco2800.thomas.util.WorldUtil;
-import deco2800.thomas.worlds.Tile;
-
-import com.google.gson.annotations.Expose;
 
 public class StaticEntity extends AbstractEntity {
 	private final transient Logger log = LoggerFactory.getLogger(StaticEntity.class);

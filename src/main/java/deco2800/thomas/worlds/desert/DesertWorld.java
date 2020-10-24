@@ -3,10 +3,10 @@ package deco2800.thomas.worlds.desert;
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
+import deco2800.thomas.entities.environment.desert.*;
 import deco2800.thomas.entities.items.*;
 import deco2800.thomas.entities.npc.DesertNPC;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
-import deco2800.thomas.entities.environment.desert.*;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
@@ -105,7 +105,7 @@ public class DesertWorld extends AbstractWorld {
      * Creates the static entities to populate the world and makes some tiles obstructed.
      * This includes sand dunes, cactus plants, dead trees and quicksand.
      */
-    public void createStaticEntities() {
+    protected void createStaticEntities() {
         Random rand = new Random();
         int randIndex;
 
@@ -165,8 +165,10 @@ public class DesertWorld extends AbstractWorld {
             }
         }
 
-        // adds the portal to the Desert Dungeon
-        entities.add(new DesertDungeonPortal(this, -22, -22));
+        if (getType().equals("Desert")) {
+            // adds the portal to the Desert Dungeon
+            entities.add(new DesertDungeonPortal(this, -22, -22));
+        }
     }
 
     /**
@@ -177,35 +179,50 @@ public class DesertWorld extends AbstractWorld {
      */
     private void generateItemEntities(){
         final int NUM_POTIONS = 6;
-        final int NUM_SHIELDS = 4;
+        final int NUM_IRON_ARMOUR = 4;
         final int NUM_CHESTS = 3;
         final String ITEM_BOX_STYLE = "desert";
 
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            HealthPotion potion = new HealthPotion(tile,false,
-                    (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
-            entities.add(potion);
-            this.allDesertDialogues.add(potion.getDisplay());
+            if (!tile.hasParent()) {
+                HealthPotion potion = new HealthPotion(tile,false,
+                        (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
+                entities.add(potion);
+                this.allDesertDialogues.add(potion.getDisplay());
+            } else {
+                i--;
+            }
+
         }
 
-        for (int i = 0; i < NUM_SHIELDS; i++) {
+        for (int i = 0; i < NUM_IRON_ARMOUR; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            IronArmour ironArmour = new IronArmour(tile, false,
-                    (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
-            entities.add(ironArmour);
-            this.allDesertDialogues.add(ironArmour.getDisplay());
+            if (!tile.hasParent()) {
+                IronArmour ironArmour = new IronArmour(tile, false,
+                        (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE,200);
+                entities.add(ironArmour);
+                this.allDesertDialogues.add(ironArmour.getDisplay());
+            } else {
+                i--;
+            }
+
         }
 
         for (int i = 0; i < NUM_CHESTS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            Treasure chest = new Treasure(tile, false,
-                    (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
-            entities.add(chest);
-            this.allDesertDialogues.add(chest.getDisplay());
+            if (!tile.hasParent()) {
+                Treasure chest = new Treasure(tile, false,
+                        (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
+                entities.add(chest);
+                this.allDesertDialogues.add(chest.getDisplay());
+            } else {
+                i--;
+            }
+
         }
 
         Tile attackAmuletTile = getTile(4,-9);
@@ -219,7 +236,10 @@ public class DesertWorld extends AbstractWorld {
                 (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,0.5f);
         entities.add(cdring);
         this.allDesertDialogues.add(cdring.getDisplay());
+
     }
+
+    public void addDialogue(AbstractDialogBox box){ this.allDesertDialogues.add(box);}
 
     /**
      * Handles what happens after each tick of the game.
@@ -237,5 +257,10 @@ public class DesertWorld extends AbstractWorld {
         }
 
         super.onTick(i);
+    }
+
+    @Override
+    public List<AbstractDialogBox> returnAllDialogues() {
+        return allDesertDialogues;
     }
 }
