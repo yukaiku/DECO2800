@@ -3,8 +3,10 @@ package deco2800.thomas.managers;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.Knight;
 import deco2800.thomas.combat.Wizard;
-import deco2800.thomas.combat.WizardSkills;
-import deco2800.thomas.combat.skills.*;
+import deco2800.thomas.combat.skills.AbstractSkill;
+import deco2800.thomas.combat.skills.FireBombSkill;
+import deco2800.thomas.combat.skills.FireballSkill;
+import deco2800.thomas.combat.skills.IceballSkill;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.InvalidEnemyException;
@@ -43,7 +45,6 @@ public class DifficultyManagerTest extends BaseGDXTest {
         enemyManager.addEnemyConfigs("desertOrc");
         enemyManager.addEnemyConfigs("volcanoOrc");
         difficultyManager.setPlayerEntity((PlayerPeon) swampWorld.getPlayerEntity());
-
     }
 
     /***
@@ -98,6 +99,29 @@ public class DifficultyManagerTest extends BaseGDXTest {
     }
 
     /***
+     * Test wizard skills
+     */
+    @Test
+    public void testOriginalWizardSkills() {
+        playerManager.setWizard(Wizard.FIRE);
+        playerPeon.updatePlayerSkills();
+        List<AbstractSkill> wizardSkills = playerPeon.getWizardSkills();
+        for (AbstractSkill wizardSkill : wizardSkills) {
+            if(wizardSkill.getTexture().equals("fireballIcon")) {
+                assertEquals(0.4, ((FireballSkill) wizardSkill).getDamageMultiplier(), 0.01);
+            }
+        }
+        playerManager.setWizard(Wizard.WATER);
+        playerPeon.updatePlayerSkills();
+        List<AbstractSkill> wizardSkills2 = playerPeon.getWizardSkills();
+        for (AbstractSkill wizardSkill : wizardSkills2) {
+            if(wizardSkill.getTexture().equals("iceballIcon")) {
+                assertEquals(0.4, ((IceballSkill) wizardSkill).getDamageMultiplier(), 0.01);
+            }
+        }
+    }
+
+    /***
      * Testing swamp difficulty settings
      */
     @Test
@@ -115,14 +139,24 @@ public class DifficultyManagerTest extends BaseGDXTest {
      * Testing tundra difficulty settings
      */
     @Test
-    public void testTundraDifficulty() {
+    public void testTundraDifficulty(){
         difficultyManager.setDifficultyLevel("Tundra");
-        assertEquals("tundra", difficultyManager.getWorldType());
-        assertEquals(25, enemyManager.getEnemyConfig("tundraOrc").getMaxHealth());
+        assertEquals("tundra",difficultyManager.getWorldType());
+        assertEquals(25,enemyManager.getEnemyConfig("tundraOrc").getMaxHealth());
         EnemyPeon orc = enemyManager.getEnemyConfig("tundraOrc");
-        Orc orc1 = (Orc) orc;
-        assertEquals(0.06f, orc1.getSpawnRate(), 0.01);
-        assertEquals(6, enemyManager.getWildEnemyCap());
+        Orc orc1 = (Orc)orc;
+        assertEquals(0.06f,orc1.getSpawnRate(), 0.01);
+        assertEquals(6,enemyManager.getWildEnemyCap());
+
+        //Test Wizard Skill in Tundra
+        List<AbstractSkill> wizardSkills3 = playerPeon.getWizardSkills();
+        for(AbstractSkill wizardSkill : wizardSkills3){
+            switch (wizardSkill.getTexture()){
+                case "fireballIcon": //Default 20
+                    assertEquals(0.8,((FireballSkill) wizardSkill).getDamageMultiplier(), 0.01);
+
+            }
+        }
     }
 
     /***
@@ -130,12 +164,25 @@ public class DifficultyManagerTest extends BaseGDXTest {
      */
     @Test
     public void testDesertDifficulty(){
+        playerManager.setWizard(Wizard.WATER);
+        playerPeon.updatePlayerSkills();
+        System.out.println(playerPeon.getWizardSkills());
+        difficultyManager.setPlayerEntity(playerPeon);
         difficultyManager.setDifficultyLevel("Desert");
         assertEquals("desert",difficultyManager.getWorldType());
         assertEquals(12,enemyManager.getEnemyConfig("desertOrc").getMaxHealth());
         EnemyPeon orc = enemyManager.getEnemyConfig("desertOrc");
         Orc orc1 = (Orc)orc;
         assertEquals(0.07f,orc1.getSpawnRate(), 0.01);
+
+        //Test Wizard Skill in Desert
+        List<AbstractSkill> wizardSkills4 = playerPeon.getWizardSkills();
+        for(AbstractSkill wizardSkill : wizardSkills4){
+            switch (wizardSkill.getTexture()){
+                case "iceballIcon":
+                    assertEquals(0.8, ((IceballSkill) wizardSkill).getDamageMultiplier(), 0.01);
+            }
+        }
     }
 
     /***

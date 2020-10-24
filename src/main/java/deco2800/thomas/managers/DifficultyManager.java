@@ -1,6 +1,9 @@
 package deco2800.thomas.managers;
 
-import deco2800.thomas.combat.skills.*;
+import deco2800.thomas.combat.skills.AbstractSkill;
+import deco2800.thomas.combat.skills.FireBombSkill;
+import deco2800.thomas.combat.skills.FireballSkill;
+import deco2800.thomas.combat.skills.IceballSkill;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.entities.enemies.EnemyPeon;
@@ -24,6 +27,7 @@ public class DifficultyManager extends TickableManager{
     private PlayerPeon playerPeon;
     private String type = "";
     private EnemyManager enemyManager;
+    private Float originalDamageMultiplier = 0.4f;
     /***
      * Constructs a DifficultyManager manager.
      */
@@ -95,24 +99,20 @@ public class DifficultyManager extends TickableManager{
     public void setWizardSkill(){
         List<AbstractSkill> wizardSkills = playerPeon.getWizardSkills();
         for(AbstractSkill wizardSkill : wizardSkills){
-            switch (wizardSkill.getTexture()){
-                case "iceballIcon": // Default 50
-                    if(getWorldType().equals("desert")){
-                        //More damage to desert with water skill
-                        IceballSkill.setDamageMultiplier(((IceballSkill) wizardSkill).getDamageMultiplier()*2);
-                    }
-                    return;
-                case "fireballIcon": //Default 20
-                    if(getWorldType().equals("tundra")){
-                        //More damage to tundra with fire skill
-                        FireballSkill.setDamageMultiplier(((FireballSkill) wizardSkill).getDamageMultiplier()*2);
-                    }
-                    return;
-                case "stingIcon": //Default 50
-                    return;
-                default:
-                    return;
-
+            if(wizardSkill.getTexture().equals("iceballIcon")){
+                if(getWorldType().equals("desert")){
+                    //More damage to desert with water skill
+                    IceballSkill.setDamageMultiplier(originalDamageMultiplier*2);
+                }else{
+                    IceballSkill.setDamageMultiplier(originalDamageMultiplier);
+                }
+            }else if(wizardSkill.getTexture().equals("fireballIcon")) {
+                if(getWorldType().equals("tundra")){
+                    //More damage to tundra with fire skill
+                    FireballSkill.setDamageMultiplier(originalDamageMultiplier*2);
+                }else{
+                    FireballSkill.setDamageMultiplier(originalDamageMultiplier);
+                }
             }
         }
     }
@@ -125,7 +125,7 @@ public class DifficultyManager extends TickableManager{
         if(mechSkill.getTexture() == "explosionIcon"){ //Default 160
             if(getWorldType().equals("tundra")){
                 //More damage to tundra with fire skill
-                FireBombSkill.setDamageMultiplier(((FireBombSkill) mechSkill).getDamageMultiplier()*2);
+                FireBombSkill.setDamageMultiplier(originalDamageMultiplier*2);
             }
         }
     }
