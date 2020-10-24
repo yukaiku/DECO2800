@@ -122,7 +122,6 @@ public class DebugComponent extends OverlayComponent {
 
         if (enemyManager != null) {
             debugLine(batch, ++line, "== Enemies ==");
-            debugLine(batch, ++line, String.format("World: %s", enemyManager.getWorldName()));
             debugLine(batch, ++line, String.format("Wild Spawning: %s",
                     enemyManager.checkWildEnemySpawning() ? "active" : "disabled"));
             debugLine(batch, ++line, String.format("Current Enemies: %d", enemyManager.getEnemyCount()));

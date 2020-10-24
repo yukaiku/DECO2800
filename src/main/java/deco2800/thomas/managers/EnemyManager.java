@@ -25,7 +25,7 @@ import java.util.*;
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/enemy-manager
  */
-public class EnemyManager extends TickableManager implements KeyDownObserver {
+public class EnemyManager extends TickableManager {
     // the target world
     private final AbstractWorld world;
 
@@ -92,8 +92,8 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
         }
         this.spawnRangeMin = 8;
         this.spawnRangeMax = 14;
-        this.random = new Random();
-        GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
+        // Seeding for testing purposes
+        this.random = new Random(world.getType().length());
     }
 
     /**
@@ -206,7 +206,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
     }
 
     /** Spawn the wild enemy at the given position. This should be automatically called by the configuration. */
-    private void spawnWildEnemy(EnemyPeon enemy, float x, float y) {
+    public void spawnWildEnemy(EnemyPeon enemy, float x, float y) {
         if (wildSpawning && wildEnemiesAlive.size() < wildEnemyCap) {
             enemy.setPosition(x, y);
             world.addEntity(enemy);
@@ -252,7 +252,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
     }
 
     /** Spawns a random enemy from the configuration list. Normally it will be called automatically by the manager. */
-    private void spawnRandomWildEnemy() {
+    public void spawnRandomWildEnemy() {
         EnemyPeon enemyBlueprint = enemyConfigs.get(wildEnemyIndexes.get(random.nextInt(wildEnemyIndexes.size())));
         // spawn rate of the enemy
         if (enemyBlueprint instanceof Orc && random.nextFloat() < ((Orc) enemyBlueprint).getSpawnRate()) {
@@ -301,15 +301,10 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
         }
     }
 
-    /** Get the world name the manager is operating on */
+    /*
     public String getWorldName() {
         return world.toString().substring(world.toString().lastIndexOf('.') + 1);
     }
-
-    /**
-     * Keyboard inputs (in debug mode only)
-     * @param keycode the key being pressed
-     */
     @Override
     public void notifyKeyDown(int keycode) {
         if (GameManager.get().getDebugMode() && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
@@ -330,7 +325,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
                 spawnSpecialEnemy("swampGoblin", 0, 0);
             }
         }
-    }
+    }*/
 
     @Override
     public void onTick(long i) {
