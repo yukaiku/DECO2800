@@ -1,6 +1,8 @@
 package deco2800.thomas.entities.enemies.bosses;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
@@ -15,6 +17,12 @@ public class SwampDragon extends Dragon {
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
     }
+
+    @Override
+    public void breathAttack() {
+            Fireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
+                    getTarget().getRow(), 10, 0.2f, 60, EntityFaction.EVIL);
+        }
 
     @Override
     public void elementalAttack() {

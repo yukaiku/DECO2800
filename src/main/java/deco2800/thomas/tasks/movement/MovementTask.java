@@ -200,6 +200,7 @@ public class MovementTask extends AbstractTask {
         if (currentPos.tileEquals(entity.getPosition())) {
             return;
         }
+        // Bosses and enemies should not die to their own environmental effects
         if (!(entity instanceof PlayerPeon || entity.getObjectName().equals("ImmuneOrc"))) {
             return;
         }
