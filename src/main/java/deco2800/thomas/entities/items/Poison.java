@@ -10,10 +10,11 @@ public class Poison extends Item {
 
 	public Poison(Tile tile, boolean obstructed, PlayerPeon player,
 			String styleType){
-		super("Poison",0, tile, RenderConstants.ITEM_RENDER,
+		super("Mysterious Vial",0, tile, RenderConstants.ITEM_RENDER,
 				"poison", obstructed, player);
 		this.setObjectName(ENTITY_ID_STRING);
 		super.display = new ItemBox(this, name, Integer.toString(super.getCurrencyValue()),
-				"Tops up player health", styleType);
+				"A mysterious glowing vial, emits a fragrant aroma. " +
+						"Drink it to gain some new powers, or perhaps to your own detriment?", styleType);
 	}
 }

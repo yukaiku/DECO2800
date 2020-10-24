@@ -230,6 +230,9 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
             mechSkill.onTick(i);
         }
 
+        if (this.getCurrentHealth() == 0){
+            death();
+        }
         // Update tasks and effects
         super.onTick(i);
     }

@@ -24,6 +24,7 @@ import deco2800.thomas.managers.TextureManager;
 public class SettingScreen implements Screen {
     final ThomasGame game;
     private final Stage stage;
+    private final String osName = "os.name";
     static float width = 1920;
     static float height = 1000;
     static float screenWidth;
@@ -71,7 +72,7 @@ public class SettingScreen implements Screen {
         clickedButtonStyle.fontColor = Color.valueOf("#ff1100");
 
         // Initialize buttons
-        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+        if (!System.getProperty(osName).toLowerCase().contains("mac")) {
             windowButton = new TextButton("WINDOW", buttonStyle);
             windowButton.setPosition(width / 5 + 400, height / 2 - 100);
             stage.addActor(windowButton);
@@ -100,7 +101,7 @@ public class SettingScreen implements Screen {
         highVolumeButton = new TextButton("HIGH", buttonStyle);
         highVolumeButton.setPosition(width/5 + 1030, height/2 + 175);
         stage.addActor(highVolumeButton);
-        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+        if (!System.getProperty(osName).toLowerCase().contains("mac")) {
             if (Gdx.graphics.isFullscreen()) {
                 fullScreenButton.setChecked(true);
             } else {
@@ -119,7 +120,7 @@ public class SettingScreen implements Screen {
         }
 
         // Add click listener to buttons
-        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+        if (!System.getProperty(osName).toLowerCase().contains("mac")) {
             windowButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -213,7 +214,7 @@ public class SettingScreen implements Screen {
      * Set the game to windowed mode
      */
     private void setWindowedScreen() {
-        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+        if (!System.getProperty(osName).toLowerCase().contains("mac")) {
             Gdx.graphics.setWindowedMode( (int)(0.8*Gdx.graphics.getDisplayMode().width),
                     (int)(0.8*Gdx.graphics.getDisplayMode().height));
         }
@@ -256,7 +257,7 @@ public class SettingScreen implements Screen {
         stage.draw();
         spriteBatch.begin();
         font.getData().setScale(1.8f);
-        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+        if (!System.getProperty(osName).toLowerCase().contains("mac")) {
             font.draw(spriteBatch, "SCREEN", screenWidth / 5, screenHeight / 2 - 100);
         }
         font.draw(spriteBatch, "AUDIO", screenWidth/5, screenHeight/2 + 100);
