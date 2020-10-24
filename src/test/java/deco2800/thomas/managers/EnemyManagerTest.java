@@ -86,8 +86,6 @@ public class EnemyManagerTest extends BaseGDXTest {
         em4.removeBoss();
         em4.removeBoss();
         assertFalse(world.getEntities().contains(dragon));
-        assertEquals(em4.getBoss().getCol(), 0, 0.001);
-        assertEquals(em4.getBoss().getRow(), 0, 0.001);
     }
 
     @Test
@@ -166,7 +164,6 @@ public class EnemyManagerTest extends BaseGDXTest {
         assertEquals(em.getBoss().getCol(), 0, 0.001);
         assertEquals(em.getBoss().getRow(), 0, 0.001);
         em.removeBoss();
-        System.out.println(em.getBoss().getObjectName());
     }
 
     @After
