@@ -233,8 +233,39 @@ public class TextureManagerTest extends BaseGDXTest {
     @Test
     public void testGetTexture() {
         TextureManager m = new TextureManager();
-        m.loadBaseTextures();
         assertNotNull(m.getTexture("spacman_ded"));
+
+        m.loadBaseTextures();
+        assertNotNull(m.getTexture("player_left"));
+
+        m.loadCombatTextures();
+        assertNotNull(m.getTexture("fireball_right"));
+
+        m.loadEnemyTextures();
+        assertNotNull(m.getTexture("enemyDefault"));
+
+        m.loadEnvironmentTextures();
+        assertNotNull(m.getTexture("Volcano_1"));
+        assertNotNull(m.getTexture("tundra-tile-1"));
+        assertNotNull(m.getTexture("swamp_1"));
+        assertNotNull(m.getTexture("dungeon-black"));
+        assertNotNull(m.getTexture("desert_1"));
+
+
+        m.loadInventoryTextures();
+        assertNotNull(m.getTexture("potion_small"));
+
+        m.loadHealthTextures();
+        assertNotNull(m.getTexture("health0"));
+
+        m.loadMinimapTextures();
+        assertNotNull(m.getTexture("iconDefault"));
+
+        m.loadNPCTextures();
+        assertNotNull(m.getTexture("tutorial_npc"));
+
+        m.loadStorylineTextures();
+        assertNotNull(m.getTexture("portal"));
     }
 
     /**
