@@ -16,18 +16,15 @@ import java.util.List;
  * DifficultyManager is intialised once and the instance is get every time a new world is
  * made to update the variables
  *
- * It handles the manipulation of:
- * Wildspawn health
- * Player health
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/Difficulty%20Curve
  */
-//:todo Update player damage, and skill cooldown. Update spawnrate.
 public class DifficultyManager extends TickableManager{
     private PlayerPeon playerPeon;
     private String type = "";
     private EnemyManager enemyManager;
     private Float originalDamageMultiplier = 0.4f;
+    private static final String tundra = "tundra";
     /***
      * Constructs a DifficultyManager manager.
      */
@@ -107,7 +104,7 @@ public class DifficultyManager extends TickableManager{
                     IceballSkill.setDamageMultiplier(originalDamageMultiplier);
                 }
             }else if(wizardSkill.getTexture().equals("fireballIcon")) {
-                if(getWorldType().equals("tundra")){
+                if(getWorldType().equals(tundra)){
                     //More damage to tundra with fire skill
                     FireballSkill.setDamageMultiplier(originalDamageMultiplier*2);
                 }else{
@@ -122,11 +119,9 @@ public class DifficultyManager extends TickableManager{
      */
     public void setMechSkill(){
         AbstractSkill mechSkill = playerPeon.getMechSkill();
-        if(mechSkill.getTexture() == "explosionIcon"){ //Default 160
-            if(getWorldType().equals("tundra")){
-                //More damage to tundra with fire skill
-                FireBombSkill.setDamageMultiplier(originalDamageMultiplier*2);
-            }
+        if(mechSkill.getTexture() == "explosionIcon" && getWorldType().equals(tundra)){
+            //More damage to tundra with fire skill
+            FireBombSkill.setDamageMultiplier(originalDamageMultiplier*2);
         }
     }
 
@@ -159,7 +154,7 @@ public class DifficultyManager extends TickableManager{
                 enemyManager.getBoss().setMaxHealth(100);
                 enemyManager.setWildEnemyCap(5);
                 break;
-            case "tundra":
+            case tundra:
                 setPlayerHealth(4);
                 setWildSpawnRate(0.1f);
                 enemyManager.getBoss().setMaxHealth(150);
