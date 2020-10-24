@@ -11,21 +11,33 @@ import deco2800.thomas.worlds.swamp.SwampWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class ItemDropTable {
 
-    public ItemDropTable(){
+    private ItemDropTable(){
         // Do nothing
     }
 
-
+    /**
+     * Drops an item based on the given enemy types, using cryptographically strong random numbers to determine
+     * which item is dropped by the enemy.
+     * @param tile The tile position where the enemy died at
+     * @param enemy The enemy in the current world
+     * @param player The player character
+     * @param world The currently loaded world
+     */
     public static void dropItemForEnemyType(Tile tile, EnemyPeon enemy, PlayerPeon player, AbstractWorld world) {
+        // The randomly generated number
         int rng = generateRNG();
+
+        // Style type for different worlds
         String styletypeSwamp = "swamp";
         String styletypeTundra = "tundra";
         String styletypeDesert = "desert";
         String styletypeVolcano = "volcano";
+
+        // Cases for various types of enemies
         switch (world.getType()) {
             case "Swamp":
                 switch (enemy.getObjectName()) {
@@ -61,26 +73,26 @@ public class ItemDropTable {
             case "SwampDungeon":
                 switch (enemy.getObjectName()) {
                     case "Swamp Orc":
-                        if (rng <= 10) {
+                        if (rng <= 15) {
                             Item item = new HealthPotionSmall(tile, false, player, styletypeSwamp);
                             world.addEntity(item);
                             ((SwampDungeon) world).addDialogue(item.getDisplay());
-                        } else if (rng > 10 && rng <= 12) {
+                        } else if (rng > 15 && rng <= 18) {
                             Item item = new WoodenArmour(tile, false, player, styletypeSwamp, 100);
                             world.addEntity(item);
                             ((SwampDungeon) world).addDialogue(item.getDisplay());
-                        } else if (rng > 12 && rng <= 14) {
+                        } else if (rng > 18 && rng <= 21) {
                             Item item = new Treasure(tile, false, player, styletypeSwamp);
                             world.addEntity(item);
                             ((SwampDungeon) world).addDialogue(item.getDisplay());
-                        }  else if (rng > 30 && rng <= 35){
+                        }  else if (rng > 21 && rng <= 24){
                             Item item = new Poison(tile, false, player, styletypeDesert);
                             world.addEntity(item);
                             ((SwampDungeon) world).addDialogue(item.getDisplay());
                         }
                         break;
                     case "Swamp Goblin":
-                        if (rng <= 2) {
+                        if (rng <= 3) {
                             HealthPotionSmall item = new HealthPotionSmall(tile, false, player, styletypeSwamp);
                             world.addEntity(item);
                             ((SwampDungeon) world).addDialogue(item.getDisplay());
@@ -185,26 +197,26 @@ public class ItemDropTable {
             case "VolcanoDungeon":
                 switch (enemy.getObjectName()) {
                     case "Volcano Orc":
-                        if (rng <= 10) {
+                        if (rng <= 15) {
                             Item item = new HealthPotionSmall(tile, false, player, styletypeVolcano);
                             world.addEntity(item);
                             ((VolcanoDungeon) world).addDialogue(item.getDisplay());
-                        } else if (rng > 10 && rng <= 12) {
+                        } else if (rng > 15 && rng <= 18) {
                             Item item = new WoodenArmour(tile, false, player, styletypeVolcano, 100);
                             world.addEntity(item);
                             ((VolcanoDungeon) world).addDialogue(item.getDisplay());
-                        } else if (rng > 12 && rng <= 14) {
+                        } else if (rng > 18 && rng <= 21) {
                             Item item = new Treasure(tile, false, player, styletypeVolcano);
                             world.addEntity(item);
                             ((VolcanoDungeon) world).addDialogue(item.getDisplay());
-                        } else if (rng > 30 && rng <= 35){
+                        } else if (rng > 21 && rng <= 24){
                             Item item = new Poison(tile, false, player, styletypeDesert);
                             world.addEntity(item);
                             ((VolcanoDungeon) world).addDialogue(item.getDisplay());
                         }
                         break;
                     case "Volcano Goblin":
-                        if (rng <= 2) {
+                        if (rng <= 3) {
                             HealthPotionSmall item = new HealthPotionSmall(tile, false, player, styletypeVolcano);
                             world.addEntity(item);
                             ((VolcanoDungeon) world).addDialogue(item.getDisplay());
@@ -217,7 +229,11 @@ public class ItemDropTable {
         }
     }
 
+    /**
+     * Generates a strong random number using cryptographic statistics.
+     * @return A strong random number
+     */
     public static int generateRNG(){
-        return new Random().nextInt(100-0) + 1;
+        return new SecureRandom().nextInt(100-0) + 1;
     }
 }
