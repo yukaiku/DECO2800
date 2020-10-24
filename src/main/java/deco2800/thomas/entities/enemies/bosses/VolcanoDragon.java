@@ -1,9 +1,10 @@
 package deco2800.thomas.entities.enemies.bosses;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-
-import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.attacks.VolcanoFireball;
+import deco2800.thomas.combat.SkillOnCooldownException;
+import deco2800.thomas.combat.skills.FireBombSkill;
+import deco2800.thomas.combat.skills.SummonGoblinSkill;
+import deco2800.thomas.combat.skills.VolcanoFireballSkill;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
@@ -21,6 +22,9 @@ public class VolcanoDragon extends Dragon {
         this.setObjectName("Chusulth");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
+        this.breathAttack = new VolcanoFireballSkill(this);
+        this.elementalAttack = new FireBombSkill(this);
+        this.summonGoblin = new SummonGoblinSkill(this);
     }
 
     @Override
@@ -32,13 +36,12 @@ public class VolcanoDragon extends Dragon {
 
     @Override
     public void breathAttack() {
-        VolcanoFireball.spawn(this.getCol() + 1, this.getRow() + 1, getTarget().getCol(),
-                getTarget().getRow(), 20, 0.15f, 60, EntityFaction.EVIL);
-
-        VolcanoFireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
-                getTarget().getRow(), 20, 0.15f, 60, EntityFaction.EVIL);
-
-        VolcanoFireball.spawn(this.getCol() - 1, this.getRow() - 1, getTarget().getCol(),
-                getTarget().getRow(), 20, 0.15f, 60, EntityFaction.EVIL);
+        if (breathAttack.getCooldownRemaining() <= 0) {
+            try {
+                this.setCombatTask(breathAttack.getNewSkillTask(getTarget().getCol(), getTarget().getRow()));
+            } catch (SkillOnCooldownException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

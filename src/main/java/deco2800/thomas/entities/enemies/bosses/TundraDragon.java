@@ -1,15 +1,15 @@
 package deco2800.thomas.entities.enemies.bosses;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-
+import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.combat.WizardSkills;
-import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.attacks.Iceball;
+import deco2800.thomas.combat.skills.FireballSkill;
+import deco2800.thomas.combat.skills.IceBreathSkill;
+import deco2800.thomas.combat.skills.SummonGoblinSkill;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PlayerManager;
 import deco2800.thomas.managers.TextureManager;
-import deco2800.thomas.tasks.combat.IceBreathTask;
 
 public class TundraDragon extends Dragon {
     public TundraDragon(int health, float speed, int orbNumber) {
@@ -20,17 +20,42 @@ public class TundraDragon extends Dragon {
         this.setObjectName("Diokiedes");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
+        this.elementalAttack = new IceBreathSkill(this, 0.2f, 3);
+        this.breathAttack = new FireballSkill(this);
+        this.summonGoblin = new SummonGoblinSkill(this);
     }
 
     @Override
     public void elementalAttack() {
-        setCombatTask(new IceBreathTask(this, getTarget().getCol(), getTarget().getRow(), 20, 0.2f, 4));
+        if (elementalAttack.getCooldownRemaining() <= 0) {
+            try {
+                this.setCombatTask(elementalAttack.getNewSkillTask(getTarget().getCol(), getTarget().getRow()));
+            } catch (SkillOnCooldownException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void breathAttack() {
-        Iceball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
-                getTarget().getRow(), 10, 0.1f, 60, EntityFaction.EVIL);
+        if (breathAttack.getCooldownRemaining() <= 0) {
+            try {
+                this.setCombatTask(breathAttack.getNewSkillTask(getTarget().getCol(), getTarget().getRow()));
+            } catch (SkillOnCooldownException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void summonGoblin() {
+        if (summonGoblin.getCooldownRemaining() <= 0) {
+            try {
+                this.setCombatTask(summonGoblin.getNewSkillTask(getTarget().getCol(), getTarget().getRow()));
+            } catch (SkillOnCooldownException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

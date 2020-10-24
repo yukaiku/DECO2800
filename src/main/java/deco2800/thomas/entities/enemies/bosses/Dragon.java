@@ -1,17 +1,17 @@
 package deco2800.thomas.entities.enemies.bosses;
 
-import deco2800.thomas.entities.agent.AgentEntity;
-import deco2800.thomas.entities.agent.PlayerPeon;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 import deco2800.thomas.combat.DamageType;
+import deco2800.thomas.combat.SkillOnCooldownException;
+import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.Orb;
+import deco2800.thomas.entities.agent.AgentEntity;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.enemies.PassiveEnemy;
-import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
@@ -34,6 +34,9 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     private MovementTask.Direction facingDirection;
     protected Animation<TextureRegion> dragonIdle;
     protected EnemyIndex.Variation variation;
+    protected AbstractSkill elementalAttack;
+    protected AbstractSkill breathAttack;
+    protected AbstractSkill summonGoblin;
     protected int duration = 0;
     private int tickFollowing = 60;
     // Range at which the dragon will attempt to melee attack the player
@@ -55,9 +58,12 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
      * if there is less than 10 goblins spawned
      */
     public void summonGoblin() {
-        if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() < 10) {
-            GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(
-                    variation.name().toLowerCase() + "Goblin", this.getCol() + 1, this.getRow() + 2);
+        if (summonGoblin.getCooldownRemaining() <= 0) {
+            try {
+                this.setCombatTask(summonGoblin.getNewSkillTask(getTarget().getCol(), getTarget().getRow()));
+            } catch (SkillOnCooldownException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -112,17 +118,25 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
                 // Throws a fireball at the player, and attempts to summon a
                 // goblin, and attempts to initialise movement and combat
                 // tasks
-                summonGoblin();
-                breathAttack();
-                elementalAttack();
                 setMovementTask(new MovementTask(this, super.getTarget().
                         getPosition()));
             }
             tickFollowing = 0;
         }
 
+
         // Update tasks and effects
         super.onTick(i);
+        if (super.getTarget() != null) {
+            if (combatTask == null) {
+                summonGoblin();
+                elementalAttack();
+                breathAttack();
+            }
+        }
+        elementalAttack.onTick(i);
+        breathAttack.onTick(i);
+        summonGoblin.onTick(i);
     }
 
     /**
@@ -154,5 +168,9 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
             facingDirection = MovementTask.Direction.RIGHT;
         }
         return region;
+    }
+
+    public EnemyIndex.Variation getVariation() {
+        return variation;
     }
 }
