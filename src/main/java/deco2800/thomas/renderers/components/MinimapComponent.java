@@ -1,6 +1,7 @@
 package deco2800.thomas.renderers.components;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.EnemyPeon;
@@ -36,6 +37,7 @@ public class MinimapComponent extends OverlayComponent {
     private static final float SMALL_BOSS_SIZE_SCALAR = 0.1f;
     private static final float LARGE_BOSS_SIZE_SCALAR = 0.05f;
 
+    BitmapFont font;
     public MinimapComponent(OverlayRenderer overlayRenderer) {
         super(overlayRenderer);
     }
@@ -49,6 +51,10 @@ public class MinimapComponent extends OverlayComponent {
         if (!(worldType.equals("Desert") || worldType.equals("Tundra") ||
                 worldType.equals("Volcano") || worldType.equals("Swamp"))) {
             return;
+        }
+        if (font == null) {
+            font = new BitmapFont();
+            font.getData().setScale(2f);
         }
         List<Tile> tileMap = GameManager.get().getWorld().getTiles();
         batch.begin();
@@ -87,6 +93,10 @@ public class MinimapComponent extends OverlayComponent {
         PlayerPeon playerPeon = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
         if (playerPeon != null) {
             renderPlayer(batch, playerPeon);
+            font.draw(batch, String.format("Current World: %s \nCoordinates: (%d, %d)", worldType,
+                    (int) playerPeon.getCol(), (int) playerPeon.getRow()),
+                    overlayRenderer.getX(),
+                    overlayRenderer.getY() + overlayRenderer.getHeight() - 340);
         }
         batch.setColor(255, 255, 255, 1f);
         batch.end();
