@@ -51,6 +51,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     Random random = new Random();
 
     private int roarTick = 0;
+    private int roarTickNext = 800;
     private int goblinSpawnTick = 0;
     private static final int goblinSpawnCycle = 60;
     private static final int goblinCap = 10;
@@ -116,9 +117,14 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
         }
         GameManager.getManagerFromInstance(ScreenManager.class).getCurrentScreen()
                 .getOverlayRenderer().getComponentByInstance(BossHealthComponent.class).onBossStart(this);
-//        GameManager.getManagerFromInstance(SoundManager.class).playMusic("boss1");
-//        GameManager.getManagerFromInstance(SoundManager.class).setVolume(0.5f);
         GameManager.getManagerFromInstance(SoundManager.class).playBossMusic("bossMusic");
+
+        float pan = EnemyUtil.playerLRDistance(this, super.getTarget());
+        if (this instanceof SwampDragon) {
+            GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon2", pan);
+        } else if (this instanceof VolcanoDragon) {
+            GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon1", pan);
+        }
     }
 
     public void elementalAttack() {
@@ -180,12 +186,14 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
             }
         }
 
-        if (this instanceof VolcanoDragon && super.getTarget() != null) {
-            int roarTickNext = 800;
-            if (++roarTick > roarTickNext) {
-                GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon1");
-                roarTick = 0;
+        if (super.getTarget() != null && ++roarTick > roarTickNext) {
+            float pan = EnemyUtil.playerLRDistance(this, super.getTarget());
+            if (this instanceof SwampDragon) {
+                GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon2", pan);
+            } else if (this instanceof VolcanoDragon) {
+                GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon1", pan);
             }
+            roarTick = 0;
         }
 
         // Update tasks and effects

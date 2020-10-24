@@ -3,6 +3,8 @@ package deco2800.thomas.util;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.worlds.AbstractWorld;
 
 /**
  * A utility class for controlling the camera.
@@ -25,6 +27,46 @@ public class CameraUtil {
         float[] targetPosition = WorldUtil.colRowToWorldCords(target.getCol(), target.getRow());
         float[] targetRenderSize = WorldUtil.colRowToWorldCords(target.getColRenderLength(), target.getRowRenderLength());
         camera.position.set(targetPosition[0] + targetRenderSize[0] / 2, targetPosition[1] + targetRenderSize[1] / 2, 0);
+        camera.update();
+    }
+
+    /**
+     * Set the limit boundary for the camera in a world.
+     *
+     * @param camera the target camera
+     * @param world  the world we would like to set boundary
+     */
+    public static void cameraBoundaryInWorld(OrthographicCamera camera, AbstractWorld world) {
+        float[] worldSize = WorldUtil.colRowToWorldCords(world.getWidth(), world.getHeight());
+        float startX = 0 - worldSize[0];
+        float startY = 0 - worldSize[1];
+        float width = worldSize[0] * 2;
+        float height = worldSize[1] * 2;
+
+        if (camera.viewportWidth <= width) {
+            // Left bound
+            if (camera.position.x - (camera.viewportWidth / 2) < startX) {
+                camera.position.set(startX + camera.viewportWidth / 2, camera.position.y, camera.position.z);
+            }
+
+            // Right bound
+            if (camera.position.x + (camera.viewportWidth / 2) > startX + width) {
+                camera.position.set(startX + width - camera.viewportWidth / 2, camera.position.y, camera.position.z);
+            }
+        }
+
+
+        if (camera.viewportHeight <= height) {
+            // Bottom bound
+            if ((camera.position.y - (camera.viewportHeight / 2)) < startY) {
+                camera.position.set(camera.position.x, startY + (camera.viewportHeight / 2), camera.position.z);
+            }
+
+            // Top bound
+            if (camera.position.y + (camera.viewportHeight / 2) > startY + height) {
+                camera.position.set(camera.position.x, startY + height - camera.viewportHeight / 2, camera.position.z);
+            }
+        }
         camera.update();
     }
 
