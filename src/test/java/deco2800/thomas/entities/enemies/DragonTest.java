@@ -201,6 +201,7 @@ public class DragonTest extends BaseGDXTest {
 
     @Test
     public void testDeath() {
+        volcanoDragon.hitByTarget();
         volcanoDragon.death();
         PowerMockito.verifyStatic(WorldUtil.class);
         WorldUtil.removeEntity(any(AbstractEntity.class));
