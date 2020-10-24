@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import deco2800.thomas.ThomasGame;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.managers.TextureManager;
 
 public class SettingScreen implements Screen {
@@ -38,6 +39,10 @@ public class SettingScreen implements Screen {
     //Buttons
     Button windowButton;
     Button fullScreenButton;
+    Button offVolumeButton;
+    Button lowVolumeButton;
+    Button medVolumeButton;
+    Button highVolumeButton;
 
     /**
      * Constructor of the MainMenuScreen.
@@ -66,53 +71,152 @@ public class SettingScreen implements Screen {
         clickedButtonStyle.fontColor = Color.valueOf("#ff1100");
 
         // Initialize buttons
-        windowButton = new TextButton("WINDOW", buttonStyle);
-        windowButton.setPosition(width/5 + 400, height/2 + 100);
-        stage.addActor(windowButton);
+        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+            windowButton = new TextButton("WINDOW", buttonStyle);
+            windowButton.setPosition(width / 5 + 400, height / 2 - 100);
+            stage.addActor(windowButton);
 
-        fullScreenButton = new TextButton("FULLSCREEN", buttonStyle);
-        fullScreenButton.setPosition(width/5 + 800, height/2 + 100);
-        stage.addActor(fullScreenButton);
+            fullScreenButton = new TextButton("FULLSCREEN", buttonStyle);
+            fullScreenButton.setPosition(width / 5 + 800, height / 2 - 100);
+            stage.addActor(fullScreenButton);
+        }
 
         Button backButton = new TextButton("BACK", buttonStyle);
         backButton.setPosition(width/2 - backButton.getWidth()/2, 90);
         stage.addActor(backButton);
 
-        if(Gdx.graphics.isFullscreen()) {
-            fullScreenButton.setChecked(true);
-        } else {
-            windowButton.setChecked(true);
+        offVolumeButton = new TextButton("OFF", buttonStyle);
+        offVolumeButton.setPosition(width/5 + 400, height/2 + 175);
+        stage.addActor(offVolumeButton);
+
+        lowVolumeButton = new TextButton("LOW", buttonStyle);
+        lowVolumeButton.setPosition(width/5 + 600, height/2 + 175);
+        stage.addActor(lowVolumeButton);
+
+        medVolumeButton = new TextButton("MEDIUM", buttonStyle);
+        medVolumeButton.setPosition(width/5 + 800, height/2 + 175);
+        stage.addActor(medVolumeButton);
+
+        highVolumeButton = new TextButton("HIGH", buttonStyle);
+        highVolumeButton.setPosition(width/5 + 1030, height/2 + 175);
+        stage.addActor(highVolumeButton);
+        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+            if (Gdx.graphics.isFullscreen()) {
+                fullScreenButton.setChecked(true);
+            } else {
+                windowButton.setChecked(true);
+            }
+        }
+
+        if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 0f) {
+            offVolumeButton.setChecked(true);
+        } else if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 0.3f) {
+            lowVolumeButton.setChecked(true);
+        } else if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 0.6f) {
+            medVolumeButton.setChecked(true);
+        }else if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 1.0f) {
+            highVolumeButton.setChecked(true);
         }
 
         // Add click listener to buttons
-        windowButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-//                setWindowedScreen();
-            }
-        });
+        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+            windowButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    setWindowedScreen();
+                }
+            });
 
-        fullScreenButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                setFullScreen();
-            }
-        });
-
+            fullScreenButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    setFullScreen();
+                }
+            });
+        }
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setMainMenuScreen();
             }
         });
+
+        offVolumeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                setVolume(offVolumeButton);
+            }
+        });
+
+        lowVolumeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                setVolume(lowVolumeButton);
+            }
+        });
+
+        medVolumeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                setVolume(medVolumeButton);
+            }
+        });
+
+        highVolumeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                setVolume(highVolumeButton);
+            }
+        });
+    }
+
+    /**
+     * Set the audio volume
+     */
+    private void setVolume(Button button) {
+        if (button == offVolumeButton) {
+            lowVolumeButton.setChecked(false);
+            medVolumeButton.setChecked(false);
+            highVolumeButton.setChecked(false);
+            if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 0f) {
+                offVolumeButton.setChecked(true);
+            }
+            GameManager.getManagerFromInstance(SoundManager.class).setVolume(0f);
+        } else if (button == lowVolumeButton) {
+            offVolumeButton.setChecked(false);
+            medVolumeButton.setChecked(false);
+            highVolumeButton.setChecked(false);
+            if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 0.3f) {
+                lowVolumeButton.setChecked(true);
+            }
+            GameManager.getManagerFromInstance(SoundManager.class).setVolume(0.3f);
+        } else if (button == medVolumeButton) {
+            offVolumeButton.setChecked(false);
+            lowVolumeButton.setChecked(false);
+            highVolumeButton.setChecked(false);
+            if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 0.6f) {
+                medVolumeButton.setChecked(true);
+            }
+            GameManager.getManagerFromInstance(SoundManager.class).setVolume(0.6f);
+        } else if (button == highVolumeButton) {
+            offVolumeButton.setChecked(false);
+            lowVolumeButton.setChecked(false);
+            medVolumeButton.setChecked(false);
+            if (GameManager.getManagerFromInstance(SoundManager.class).getVolume() == 1.0f) {
+                highVolumeButton.setChecked(true);
+            }
+            GameManager.getManagerFromInstance(SoundManager.class).setVolume(1.0f);
+        }
     }
 
     /**
      * Set the game to windowed mode
      */
     private void setWindowedScreen() {
-        Gdx.graphics.setWindowedMode( (int)(0.8*Gdx.graphics.getDisplayMode().width),
-                (int)(0.8*Gdx.graphics.getDisplayMode().height));
+        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+            Gdx.graphics.setWindowedMode( (int)(0.8*Gdx.graphics.getDisplayMode().width),
+                    (int)(0.8*Gdx.graphics.getDisplayMode().height));
+        }
         fullScreenButton.setChecked(false);
         if (!Gdx.graphics.isFullscreen()) {
             windowButton.setChecked(true);
@@ -152,8 +256,10 @@ public class SettingScreen implements Screen {
         stage.draw();
         spriteBatch.begin();
         font.getData().setScale(1.8f);
-        font.draw(spriteBatch, "SCREEN", screenWidth/5, screenHeight/2 + 100);
-        font.draw(spriteBatch, "AUDIO", screenWidth/5, screenHeight/2 - 100);
+        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+            font.draw(spriteBatch, "SCREEN", screenWidth / 5, screenHeight / 2 - 100);
+        }
+        font.draw(spriteBatch, "AUDIO", screenWidth/5, screenHeight/2 + 100);
         spriteBatch.end();
     }
 
