@@ -44,6 +44,11 @@ public class BossHealthComponent extends OverlayComponent {
                 new TextureRegion(textTex), false);
     }
 
+    public boolean setRender(boolean render) {
+        this.render = render && this.boss != null;
+        return this.boss != null;
+    }
+
     public void onBossStart(Boss boss) {
         this.boss = boss;
         this.bossType = ((Dragon) boss).getVariation();
@@ -62,6 +67,7 @@ public class BossHealthComponent extends OverlayComponent {
 
     public void onBossDefeat() {
         this.render = false;
+        this.boss = null;
     }
 
     @Override

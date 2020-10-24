@@ -7,6 +7,7 @@ import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
+import deco2800.thomas.renderers.components.BossHealthComponent;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.desert.DesertWorld;
@@ -415,6 +416,10 @@ public class GameManager {
 				this.setWorld(new DesertDungeon());
 				break;
 		}
+		// pause boss battle
+		boolean bossOnGoing = getManager(ScreenManager.class).getCurrentScreen().getOverlayRenderer().
+				getComponentByInstance(BossHealthComponent.class).setRender(false);
+		if (bossOnGoing) getManager(SoundManager.class).toggleBossMusic(false);
 	}
 
 	/**
@@ -445,6 +450,11 @@ public class GameManager {
 		this.setWorld(worldOutsideDungeon);
 		((PlayerPeon)this.worldOutsideDungeon.getPlayerEntity()).updatePlayerSkills();
 		this.worldOutsideDungeon = null;
+
+		// resume boss battle
+		boolean bossOnGoing = getManager(ScreenManager.class).getCurrentScreen().getOverlayRenderer().
+				getComponentByInstance(BossHealthComponent.class).setRender(true);
+		if (bossOnGoing) getManager(SoundManager.class).toggleBossMusic(true);
 	}
 
 

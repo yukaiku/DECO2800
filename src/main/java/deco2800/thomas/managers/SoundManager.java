@@ -168,6 +168,22 @@ public class SoundManager extends AbstractManager {
 	}
 
 	/**
+	 * Toggles boss music if player enters/leaves dungeons
+	 * @param play Play or pause the music
+	 */
+	public void toggleBossMusic(boolean play) {
+		if (bossMusic != null) {
+			if (play) {
+				if (ambience != null) ambience.stop();
+				bossMusic.resume();
+			} else {
+				if (ambience != null) ambienceId = ambience.loop(volume * ambienceVolume);
+				bossMusic.pause();
+			}
+		}
+	}
+
+	/**
 	 * Stops the given sound resource, and disposes of it.
 	 * @param sound Sound resource to dispose..
 	 */
