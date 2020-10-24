@@ -458,10 +458,15 @@ public class GameManager {
 
 	public static void victory() {
 		GameManager.get().state = State.VICTORY;
+		GameManager.getManagerFromInstance(SoundManager.class).stopBossMusic();
+		GameManager.getManagerFromInstance(SoundManager.class).stopAmbience();
 	}
 
 	public static void gameOver() {
 		GameManager.get().state = State.GAMEOVER;
+		GameManager.getManagerFromInstance(SoundManager.class).stopBossMusic();
+		GameManager.getManagerFromInstance(SoundManager.class).stopAmbience();
+		GameManager.getManagerFromInstance(SoundManager.class).playSound("gameOver");
 	}
 
 	public void setCamera(OrthographicCamera camera) {
