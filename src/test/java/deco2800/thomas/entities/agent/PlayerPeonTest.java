@@ -68,10 +68,15 @@ public class PlayerPeonTest extends BaseGDXTest {
         playerPressS.notifyKeyDown(Input.Keys.S);
         playerPressD.notifyKeyDown(Input.Keys.D);
 
-        assertEquals(MovementTask.Direction.UP, playerPressW.getMovingDirection());
-        assertEquals(MovementTask.Direction.DOWN, playerPressS.getMovingDirection());
-        assertEquals(MovementTask.Direction.LEFT, playerPressA.getMovingDirection());
-        assertEquals(MovementTask.Direction.RIGHT, playerPressD.getMovingDirection());
+        assertTrue(playerPressW.isDirectionKeyActive(MovementTask.Direction.UP));
+        assertTrue(playerPressS.isDirectionKeyActive(MovementTask.Direction.DOWN));
+        assertTrue(playerPressA.isDirectionKeyActive(MovementTask.Direction.LEFT));
+        assertTrue(playerPressD.isDirectionKeyActive(MovementTask.Direction.RIGHT));
+
+        assertEquals(MovementTask.Direction.UP, playerPressW.getMovementStack().peek());
+        assertEquals(MovementTask.Direction.DOWN, playerPressS.getMovementStack().peek());
+        assertEquals(MovementTask.Direction.LEFT, playerPressA.getMovementStack().peek());
+        assertEquals(MovementTask.Direction.RIGHT, playerPressD.getMovementStack().peek());
 
         assertNotNull(playerPressW.getMovementTask());
         assertNotNull(playerPressS.getMovementTask());
@@ -89,10 +94,10 @@ public class PlayerPeonTest extends BaseGDXTest {
         playerPressS.notifyKeyUp(Input.Keys.S);
         playerPressD.notifyKeyUp(Input.Keys.D);
 
-        assertEquals(MovementTask.Direction.NONE, playerPressW.getMovingDirection());
-        assertEquals(MovementTask.Direction.NONE, playerPressS.getMovingDirection());
-        assertEquals(MovementTask.Direction.NONE, playerPressA.getMovingDirection());
-        assertEquals(MovementTask.Direction.NONE, playerPressD.getMovingDirection());
+        assertFalse(playerPressW.isDirectionKeyActive(MovementTask.Direction.UP));
+        assertFalse(playerPressA.isDirectionKeyActive(MovementTask.Direction.DOWN));
+        assertFalse(playerPressS.isDirectionKeyActive(MovementTask.Direction.LEFT));
+        assertFalse(playerPressD.isDirectionKeyActive(MovementTask.Direction.RIGHT));
     }
 
     /**
@@ -120,11 +125,18 @@ public class PlayerPeonTest extends BaseGDXTest {
         playerPeon.notifyKeyDown(Input.Keys.S);
         playerPeon.notifyKeyUp(Input.Keys.D);
 
-        assertEquals(MovementTask.Direction.DOWN, playerPeon.getMovingDirection());
+        assertEquals(MovementTask.Direction.DOWN, playerPeon.getMovementStack().pop());
+        assertEquals(MovementTask.Direction.RIGHT, playerPeon.getMovementStack().pop());
+        assertEquals(MovementTask.Direction.UP, playerPeon.getMovementStack().pop());
+
         assertNotNull(playerPeon.getMovementTask());
 
+        assertFalse(playerPeon.isDirectionKeyActive(MovementTask.Direction.UP));
+        assertFalse(playerPeon.isDirectionKeyActive(MovementTask.Direction.RIGHT));
+        assertTrue(playerPeon.isDirectionKeyActive(MovementTask.Direction.DOWN));
+
         playerPeon.notifyKeyUp(Input.Keys.S);
-        assertEquals(MovementTask.Direction.NONE, playerPeon.getMovingDirection());
+        assertFalse(playerPeon.isDirectionKeyActive(MovementTask.Direction.DOWN));
     }
 
     /**

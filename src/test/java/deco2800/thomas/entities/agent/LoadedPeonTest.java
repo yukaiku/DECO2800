@@ -29,6 +29,7 @@ public class LoadedPeonTest extends BaseGDXTest {
     @Before
     public void setUp() throws Exception {
         player = new PlayerPeon(0f, 0f, 0.05f);
+        player.setWallet(0);
 
         world = new TestWorld();
         world.setPlayerEntity(player);
@@ -78,19 +79,19 @@ public class LoadedPeonTest extends BaseGDXTest {
     @Test
     public void debit() {
         PlayerPeon.debit(1000);
-        assertEquals((int)PlayerPeon.checkBalance(), -1000);
+        assertEquals(PlayerPeon.checkBalance(), -1000);
 
         PlayerPeon.debit(-1000);
-        assertEquals((int)PlayerPeon.checkBalance(), -1000);
+        assertEquals(PlayerPeon.checkBalance(), -1000);
     }
 
     @Test
     public void credit() {
         PlayerPeon.credit(1000);
-        assertEquals((int)PlayerPeon.checkBalance(), 1000);
+        assertEquals(PlayerPeon.checkBalance(), 1000);
 
         PlayerPeon.credit(-1000);
-        assertEquals((int)PlayerPeon.checkBalance(), 1000);
+        assertEquals(PlayerPeon.checkBalance(), 1000);
     }
 
     @Test

@@ -50,17 +50,20 @@ public class VolcanoWorldTest extends BaseGDXTest {
         InputManager inputManager = mock(InputManager.class);
         OnScreenMessageManager onScreenMessageManager = mock(OnScreenMessageManager.class);
         TextureManager textureManager = mock(TextureManager.class);
+        SoundManager soundManager = mock(SoundManager.class);
         when(GameManager.get()).thenReturn(gameManager);
         when(gameManager.getManager(OnScreenMessageManager.class)).thenReturn(onScreenMessageManager);
         when(gameManager.getManager(InputManager.class)).thenReturn(inputManager);
         when(gameManager.getManager(EnemyManager.class)).thenReturn(enemyManager);
         when(gameManager.getManager(DifficultyManager.class)).thenReturn(difficultyManager);
         when(gameManager.getManager(TextureManager.class)).thenReturn(textureManager);
+        when(gameManager.getManager(SoundManager.class)).thenReturn(soundManager);
         when(GameManager.getManagerFromInstance(OnScreenMessageManager.class)).thenReturn(onScreenMessageManager);
         when(GameManager.getManagerFromInstance(InputManager.class)).thenReturn(inputManager);
         when(GameManager.getManagerFromInstance(EnemyManager.class)).thenReturn(enemyManager);
         when(GameManager.getManagerFromInstance(DifficultyManager.class)).thenReturn(difficultyManager);
         when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
+        when(GameManager.getManagerFromInstance(SoundManager.class)).thenReturn(soundManager);
 
         // sets up some functions for a mock Texture and its manager
         Texture texture = mock(Texture.class);
@@ -167,44 +170,6 @@ public class VolcanoWorldTest extends BaseGDXTest {
 
         for (SquareVector vec : graveYard.children.keySet()) {
             if (graveYard.children.get(vec).equals("fenceE-W")) {
-                size++;
-                if (!fenceLocations.contains(vec)) {
-                    allTiles = false;
-                    break;
-                }
-            }
-        }
-
-        Assert.assertEquals(fenceLocations.size(), size);
-        Assert.assertTrue(allTiles);
-    }
-
-    /**
-     * Tests that all fenceE-W, S-W, N-W and N-E parts are correctly added to the new entity
-     * when createGraveYard() is called.
-     */
-    @Test
-    public void createGraveYardFenceCorners() {
-        ArrayList<SquareVector> fenceLocations = new ArrayList<>();
-        boolean allTiles = true;
-        String name;
-        int size = 0;
-
-        float row = 0;
-        float col = 0;
-
-        VolcanoGraveYard graveYard = spyWorld.createGraveYard(col, row);
-
-        // these are the positions selected in the method
-        fenceLocations.add(new SquareVector(0, 0));
-        fenceLocations.add(new SquareVector(13, 0));
-        fenceLocations.add(new SquareVector(0, -7));
-        fenceLocations.add(new SquareVector(13, -7));
-
-        for (SquareVector vec : graveYard.children.keySet()) {
-            name = graveYard.children.get(vec);
-            if (name.equals("fenceS-E") || name.equals("fenceS-W")
-                    || name.equals("fenceN-W") || name.equals("fenceN-E")) {
                 size++;
                 if (!fenceLocations.contains(vec)) {
                     allTiles = false;

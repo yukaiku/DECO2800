@@ -1,27 +1,22 @@
 package deco2800.thomas.worlds;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import deco2800.thomas.screens.GameScreen;
-import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.AbstractDialogBox;
+import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.entities.environment.tutorial.Barrel;
 import deco2800.thomas.entities.environment.Portal;
-import deco2800.thomas.entities.environment.tutorial.Stash;
-import deco2800.thomas.entities.environment.tutorial.Target;
+import deco2800.thomas.entities.environment.tutorial.*;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.TutorialNPC;
-import deco2800.thomas.entities.environment.tutorial.*;
 import deco2800.thomas.managers.DialogManager;
 import deco2800.thomas.managers.EnemyManager;
-import deco2800.thomas.managers.NonPlayablePeonManager;
-
-import deco2800.thomas.util.SquareVector;
-import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.NonPlayablePeonManager;
+import deco2800.thomas.screens.GameScreen;
+import deco2800.thomas.util.SquareVector;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TutorialWorld extends AbstractWorld{
 
@@ -61,17 +56,13 @@ public class TutorialWorld extends AbstractWorld{
             }
         }
 
-        PlayerPeon.buffDamageTotal = 0;
+        PlayerPeon.setBuffDamageTotal(0);
+        PlayerPeon.setCooldownBuff(false);
+        PlayerPeon.setWallet(0);
         PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f, 50);
             addEntity(player);
         this.setPlayerEntity(player);
         addEntity(this.getPlayerEntity());
-
-        for (AbstractSkill s :((PlayerPeon) this.getPlayerEntity()).getWizardSkills()){
-            s.setCooldownMax();
-        }
-        ((PlayerPeon) this.getPlayerEntity()).getMechSkill().setCooldownMax();
-
 
         // Spawn dummy
         EnemyManager enemyManager = new EnemyManager(this);
@@ -80,8 +71,7 @@ public class TutorialWorld extends AbstractWorld{
 
         // Add NPC
         List<NonPlayablePeon> npnSpawns = new ArrayList<>();
-        TutorialNPC npc = new TutorialNPC("Master", new SquareVector(0,
-                2),"tutorial_npc");
+        TutorialNPC npc = new TutorialNPC("Master", new SquareVector(0, 2),"tutorial_npc");
         npnSpawns.add(npc);
         this.allDialogBoxes = new ArrayList<>();
         this.allDialogBoxes.add(npc.getBox());
@@ -143,6 +133,11 @@ public class TutorialWorld extends AbstractWorld{
         entities.add(new Notify(t, false));
     }
 
+
+    public List<AbstractDialogBox> returnAllDialogues() {
+        return this.allDialogBoxes;
+    }
+    
     @Override
     public void onTick(long i) {
         super.onTick(i);

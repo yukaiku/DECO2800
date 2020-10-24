@@ -3,7 +3,7 @@ package deco2800.thomas.worlds.dungeons.tundra;
 import com.badlogic.gdx.Gdx;
 
 public class TundraDungeonInstructionDialog extends TundraDungeonDialog {
-	final private static String TITLE = "Instruction";
+	private static final String TITLE = "Instruction";
 
 	private static final int WIDTH = 1000;
 	private static final int HEIGHT = 500;
@@ -13,7 +13,7 @@ public class TundraDungeonInstructionDialog extends TundraDungeonDialog {
 	private static boolean toShow = false;
 	private static boolean lock = true;
 
-	final private String[] instructions = new String[] {
+	private final String[] instructions = new String[] {
 			"To get out of this dungeon, you will need to obtain a secret key.",
 			"The secret key is a meaningful English word.",
 			"Letters of this word are hidden inside this dungeon. Move around to find them!",

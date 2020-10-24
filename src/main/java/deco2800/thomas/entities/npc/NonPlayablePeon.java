@@ -1,13 +1,13 @@
 package deco2800.thomas.entities.npc;
 
 import com.badlogic.gdx.Gdx;
-import deco2800.thomas.screens.GameScreen;
 import deco2800.thomas.ThomasGame;
 import deco2800.thomas.entities.Interactable;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.InputManager;
+import deco2800.thomas.screens.GameScreen;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
@@ -22,7 +22,7 @@ public class NonPlayablePeon extends Peon implements Interactable {
         super();
         this.setPosition(position.getCol(), position.getRow(), 1);
         this.name = name;
-        this.save = false; // Don't save NPC's as they're loaded automatically.
+        setSave(false); // Don't save NPC's as they're loaded automatically.
         this.setTexture(texture);
         setup();
     }

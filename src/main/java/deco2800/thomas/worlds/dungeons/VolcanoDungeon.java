@@ -6,7 +6,6 @@ import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.environment.ExitPortal;
 import deco2800.thomas.entities.environment.TripWire;
-import deco2800.thomas.entities.items.Treasure;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.VolcanoDungeonNPC;
 import deco2800.thomas.managers.*;
@@ -19,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Implemented subclass of Abstract world for bonus dungeon within the Volcano
@@ -32,9 +32,10 @@ public class VolcanoDungeon extends AbstractWorld {
     private final Logger logger = LoggerFactory.getLogger(VolcanoWorld.class);
     public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/dungeons/VolcanoDungeonMaze.json";
 
-    private ArrayList<AbstractDialogBox> VolcanoDungeonDialogue;
+    private ArrayList<AbstractDialogBox> volcanoDungeonDialogue;
     private boolean notGenerated = true;
 
+    private long timeLastTick;
     /**
      * Default Constructor for volcano world.
      */
@@ -55,9 +56,10 @@ public class VolcanoDungeon extends AbstractWorld {
         addEntity(this.getPlayerEntity());
 
         GameManager.get().addManager(new EnemyManager(this));
-        this.VolcanoDungeonDialogue = new ArrayList<>();
+        this.volcanoDungeonDialogue = new ArrayList<>();
         setupPuzzle();
 
+        timeLastTick = System.currentTimeMillis();
     }
 
     /**
@@ -82,14 +84,14 @@ public class VolcanoDungeon extends AbstractWorld {
         //Sets up NPC
         VolcanoDungeonNPC lavaMazeNpc = new VolcanoDungeonNPC("npc_lava_maze", new SquareVector(-2f, 0f),"volcano_npc1");
         npnSpawns.add(lavaMazeNpc);
-        this.VolcanoDungeonDialogue.add(lavaMazeNpc.getBox());
+        this.volcanoDungeonDialogue.add(lavaMazeNpc.getBox());
 
         //Adds Npc manager
         NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
         GameManager.get().addManager(npcManager);
 
         DialogManager dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
-                this.VolcanoDungeonDialogue);
+                this.volcanoDungeonDialogue);
         GameManager.get().addManager(dialog);
 
 
@@ -169,14 +171,25 @@ public class VolcanoDungeon extends AbstractWorld {
     public void activateRewardTile(Tile tile) {
         if (tile.getRewardActivated()) {
             Tile rewardTile = getTile(24f, 24f);
-            Treasure rewardBox = new Treasure(rewardTile, true, (PlayerPeon) getPlayerEntity(), "volcano" );
-            tile.setParent(rewardBox);
-            entities.add(rewardBox);
-            VolcanoDungeonDialogue.add(rewardBox.getDisplay());
+            //Treasure rewardBox = new Treasure(rewardTile, true, (PlayerPeon) getPlayerEntity(), "volcano" );
+            //tile.setParent(rewardBox);
+            //entities.add(rewardBox);
+            //volcanoDungeonDialogue.add(rewardBox.getDisplay());
             GameManager.getManagerFromInstance(PlayerManager.class).grantWizardSkill(WizardSkills.FIREBALL);
 
         }
     }
+
+    @Override
+    public List<AbstractDialogBox> returnAllDialogues() {
+        return volcanoDungeonDialogue;
+    }
+
+    /**
+     * Adds a dialog box to this dungeon
+     * @param box
+     */
+    public void addDialogue(AbstractDialogBox box){ this.volcanoDungeonDialogue.add(box);}
 
     /**
      * Generates the tiles for the world
@@ -195,6 +208,9 @@ public class VolcanoDungeon extends AbstractWorld {
         for (AbstractEntity e : this.getEntities()) {
             e.onTick(0);
         }
+
+        checkLavaTileUpdates();
+
         if (notGenerated) {
             notGenerated = false;
         }
@@ -204,5 +220,32 @@ public class VolcanoDungeon extends AbstractWorld {
     @Override
     public String getType() {
         return "VolcanoDungeon";
+    }
+
+    /**
+     * Checks for whether lava-tile updates should occur
+     */
+    public void checkLavaTileUpdates() {
+        // 1 second (1 bn nanoseconds) between each tick
+        long timeBetweenTicks = 1000;
+        long newTime = System.currentTimeMillis();
+
+        // if it has been 1 second: decrement ticks, set a new time and return true
+        if (newTime - timeLastTick >= timeBetweenTicks) {
+            timeLastTick = newTime;
+            updateLavaTiles();
+        }
+    }
+
+    /**
+     * Creates tile-Updates that act like a active lava-flow animation
+     */
+    public void updateLavaTiles() {
+        for (Tile tile : getTiles()) {
+            Random random = new Random();
+            if (tile.getType().matches("BurnTile")) {
+                tile.setTexture("Volcano_" + (random.nextInt(4) + 5));
+            }
+        }
     }
 }

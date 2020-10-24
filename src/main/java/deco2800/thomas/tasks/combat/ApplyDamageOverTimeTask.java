@@ -1,9 +1,8 @@
 package deco2800.thomas.tasks.combat;
 
-import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.AbstractTask;
@@ -16,8 +15,6 @@ import java.util.List;
  * it applies damage over time.
  */
 public class ApplyDamageOverTimeTask extends AbstractTask {
-    // Reference to current game world
-    private final AbstractWorld world;
     // Lifetime of task
     private final long lifetime;
     private long currentLifetime;
@@ -38,7 +35,6 @@ public class ApplyDamageOverTimeTask extends AbstractTask {
         super(entity);
 
         this.taskComplete = false;
-        world = GameManager.get().getWorld();
 
         this.lifetime = lifetime;
         this.currentLifetime = 0;
@@ -71,6 +67,7 @@ public class ApplyDamageOverTimeTask extends AbstractTask {
      */
     @Override
     public void onTick(long tick) {
+        AbstractWorld world = GameManager.get().getWorld();
         if (--this.tick <= 0) {
             this.tick = this.tickPeriod;
             List<AbstractEntity> collidingEntities = world.getEntitiesInBounds(entity.getBounds());
@@ -98,7 +95,7 @@ public class ApplyDamageOverTimeTask extends AbstractTask {
         if (e instanceof Peon) {
             Peon peon = (Peon) e;
 
-            peon.applyDamage(((CombatEntity) entity).getDamage(), DamageType.COMMON);
+            peon.applyDamage(((CombatEntity) entity).getDamage(), ((CombatEntity)entity).getDamageType());
             this.taskComplete = true;
         }
     }

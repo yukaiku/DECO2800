@@ -2,7 +2,6 @@ package deco2800.thomas.entities;
 
 import com.google.gson.annotations.Expose;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.NetworkManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.Renderable;
 import deco2800.thomas.util.BoundingBox;
@@ -18,35 +17,21 @@ import java.util.Objects;
  */
 public abstract class AbstractEntity implements Comparable<AbstractEntity>, Renderable {
 	private static final String ENTITY_ID_STRING = "entityID";
+	static int nextID = 0;
+	private boolean save = true;
+	protected BoundingBox bounds;
+	private int height;
+	private float colRenderLength;
+	private float rowRenderLength;
 
 	@Expose
 	private String objectName = null;
 
-	static int nextID = 0;
-
-	public boolean save = true;
-
-	public static void resetID() {
-		nextID = 0;
-	}
-
-	static int getNextID() {
-		return nextID++;
-	}
-
 	@Expose
-	protected String texture = "error_box";
+	protected String texture = "spacman_ded";
 
 	@Expose
 	protected SquareVector position;
-
-	protected BoundingBox bounds;
-
-	private int height;
-
-	private float colRenderLength;
-
-	private float rowRenderLength;
 
 	@Expose
 	private int entityID = 0;
@@ -60,6 +45,13 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	private boolean collidable = true;
 
 	private int renderOrder = 0;
+
+	public static void resetID() {
+		nextID = 0;
+	}
+	static int getNextID() {
+		return nextID++;
+	}
 
 	/**
 	 * Constructor for an abstract entity.
@@ -259,6 +251,19 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 		setBounds();
 	}
 
+	/**
+	 * Determine if this entity should be saved.
+	 */
+	public boolean isSave() {
+		return save;
+	}
+
+	/**
+	 * Determine if this entity should be saved.
+	 */
+	public void setSave(boolean save) {
+		this.save = save;
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -329,7 +334,6 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	}
 
 	public void dispose() {
-		GameManager.get().getManager(NetworkManager.class).deleteEntity(this);
 		GameManager.get().getWorld().getEntities().remove(this);
 	}
 

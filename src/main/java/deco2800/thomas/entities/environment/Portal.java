@@ -1,8 +1,9 @@
 package deco2800.thomas.entities.environment;
+
 import deco2800.thomas.Tickable;
+import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.worlds.Tile;
-import deco2800.thomas.entities.RenderConstants;
 
 public class Portal extends StaticEntity implements Tickable {
     private static final String ENTITY_ID_STRING = "target";
@@ -26,8 +27,4 @@ public class Portal extends StaticEntity implements Tickable {
         this.setObjectName(name);
     }
 
-    @Override
-    public void onTick(long i) {
-
-    }
 }

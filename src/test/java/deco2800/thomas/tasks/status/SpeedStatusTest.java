@@ -82,7 +82,7 @@ public class SpeedStatusTest extends BaseGDXTest {
     public void multipleEffects() {
         float startSpeed = entity.getSpeed();
         float otherMultiplier = 0.1f;
-        SpeedStatus speed2 = new SpeedStatus((Peon)entity, otherMultiplier, 1);
+        SpeedStatus speed2 = new SpeedStatus(entity, otherMultiplier, 1);
 
         speed.applyEffect();
         speed2.applyEffect();

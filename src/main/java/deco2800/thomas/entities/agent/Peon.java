@@ -5,6 +5,9 @@ import deco2800.thomas.Tickable;
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.HealthTracker;
 import deco2800.thomas.entities.RenderConstants;
+import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
+import deco2800.thomas.managers.StatusEffectManager;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.status.StatusEffect;
 import deco2800.thomas.util.WorldUtil;
@@ -41,8 +44,8 @@ public class Peon extends AgentEntity implements Tickable {
 		this.setTexture("spacman_ded");
 		this.setObjectName("Peon");
 		this.setHeight(1);
+		setSave(true);
 		this.speed = 0.05f;
-		this.save = true;
 		this.effects = new CopyOnWriteArrayList<>();
 		this.damage = 10;
 		this.armour = ARMOUR_CONSTANT; // No damage reduction
@@ -132,6 +135,16 @@ public class Peon extends AgentEntity implements Tickable {
 		// Check for death
 		if (isDead()) {
 			death();
+		}
+
+		// Play hit sound
+		switch (damageType) {
+			case COMMON:
+				GameManager.getManagerFromInstance(SoundManager.class).playSound("woodHit");
+				break;
+			default:
+				GameManager.getManagerFromInstance(SoundManager.class).playSound("fireHit");
+				break;
 		}
 
 		return damageApplied;
@@ -314,6 +327,14 @@ public class Peon extends AgentEntity implements Tickable {
 	}
 
 	/**
+	 * Decreases the health of this AgentEntity. by the given amount.
+	 * @param damage The amount of health to decrease for this AgentEntity. 
+	 */
+	public void reduceHealth(int damage) {
+		health.reduceHealth(damage);
+	}
+	
+	/**
 	 * Checks if the given AgentEntity has died (health reduced to 0 or below);
 	 * @return True if AgentEntity is dead, False otherwise
 	 */
@@ -343,6 +364,7 @@ public class Peon extends AgentEntity implements Tickable {
 	 * Defines behaviour when an agent entity dies
 	 */
 	public void death() {
-		// Currently no implementation as the Peon is treated as an AbstractClass.
+		// Remove any status effects
+		GameManager.getManagerFromInstance(StatusEffectManager.class).removeEffectsOnEntity(this);
 	}
 }

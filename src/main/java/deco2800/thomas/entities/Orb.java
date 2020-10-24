@@ -3,20 +3,19 @@ package deco2800.thomas.entities;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
-
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 public class Orb extends StaticEntity implements Tickable {
-    private final Logger LOG = LoggerFactory.getLogger(Orb.class);
+    private final Logger logger = LoggerFactory.getLogger(Orb.class);
 
     AbstractWorld world;
 
     public Orb(float col, float row, String texture, int renderOrder, List<Part> parts) {
         super(col, row, renderOrder, parts);
-        LOG.info("Making a orb at {}, {}", col, row);
+        logger.info("Making a orb at {}, {}", col, row);
     }
 
     public Orb(Tile t, String texture) {
@@ -51,14 +50,6 @@ public class Orb extends StaticEntity implements Tickable {
         return (int) result;
     }
 
-    /**
-     * Animates the orbs on every game tick.
-
-     * @param tick current game tick
-     */
-    @Override
-    public void onTick(long tick) {
-    }
 
     @Override
     public String toString() {
