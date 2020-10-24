@@ -7,7 +7,7 @@ import deco2800.thomas.worlds.Tile;
 public class TundraEncryptionMachine extends StaticEntity {
 	public static final String ENTITY_ID_STRING = "TundraEncryptionMachine";
 
-	private static final String TEXTURE = "tundra-campfire";
+	private static final String TEXTURE = "tundra-encryption-machine";
 	private static final boolean OBSTRUCTED = false;
 
 	private TundraEncryptionMachine() {
