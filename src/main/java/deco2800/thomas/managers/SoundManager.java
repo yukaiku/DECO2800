@@ -36,8 +36,6 @@ public class SoundManager extends AbstractManager {
 		logger = LoggerFactory.getLogger(SoundManager.class);
 		sounds = new ConcurrentHashMap<>();
 		soundEffects = new ConcurrentHashMap<>();
-		soundEffects.put("explosion", Gdx.audio.newSound(
-				Gdx.files.internal("resources/sounds/sfx/explosion_1.wav")));
 	}
 
 	/**
@@ -65,6 +63,8 @@ public class SoundManager extends AbstractManager {
 					Gdx.files.internal("resources/sounds/sfx/fireball_hit_3.wav")));
 			soundEffects.put("windAttack", Gdx.audio.newSound(
 					Gdx.files.internal("resources/sounds/sfx/wind_1.wav")));
+			soundEffects.put("explosion", Gdx.audio.newSound(
+					Gdx.files.internal("resources/sounds/sfx/explosion_1.wav")));
 			soundEffects.put("button1", Gdx.audio.newSound(
 					Gdx.files.internal("resources/sounds/sfx/button_1.wav")));
 			soundEffects.put("button2", Gdx.audio.newSound(
