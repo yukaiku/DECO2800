@@ -1,8 +1,6 @@
 package deco2800.thomas.managers;
 
-import deco2800.thomas.combat.skills.AbstractSkill;
-import deco2800.thomas.combat.skills.FireballSkill;
-import deco2800.thomas.combat.skills.IceballSkill;
+import deco2800.thomas.combat.skills.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
 import deco2800.thomas.entities.enemies.EnemyPeon;
@@ -92,29 +90,27 @@ public class DifficultyManager extends TickableManager{
     }
 
     /***
-     * Changes the wizard skill cooldown and damage
-     * @param coolDown cooldown time of skills
+     * Changes the wizard skill damage
      */
-    public void setWizardSkillCoolDown(int coolDown){
+    public void setWizardSkill(){
         List<AbstractSkill> wizardSkills = playerPeon.getWizardSkills();
         for(AbstractSkill wizardSkill : wizardSkills){
             switch (wizardSkill.getTexture()){
                 case "iceballIcon": // Default 50
-                    //IceballSkill.setMaxCooldown(coolDown*2);
                     if(getWorldType().equals("desert")){
                         //More damage to desert with water skill
                         IceballSkill.setDamageMultiplier(((IceballSkill) wizardSkill).getDamageMultiplier()*2);
                     }
                     return;
                 case "fireballIcon": //Default 20
-                    //FireballSkill.setMaxCooldown(coolDown);
                     if(getWorldType().equals("tundra")){
                         //More damage to tundra with fire skill
                         FireballSkill.setDamageMultiplier(((FireballSkill) wizardSkill).getDamageMultiplier()*2);
                     }
                     return;
                 case "stingIcon": //Default 50
-                    //ScorpionStingSkill.setMaxCoolDown(coolDown*2);
+                    return;
+                default:
                     return;
 
             }
@@ -123,14 +119,14 @@ public class DifficultyManager extends TickableManager{
 
     /***
      * Changes the mech cooldown time
-     * @param coolDown cooldown time of skill
      */
-    public void setMechSkillCoolDown(int coolDown){
+    public void setMechSkill(){
         AbstractSkill mechSkill = playerPeon.getMechSkill();
         if(mechSkill.getTexture() == "explosionIcon"){ //Default 160
-            //FireBombSkill.setMaxCoolDown(coolDown);
-        }else{ //default 200
-            //WaterShieldSkill.setMaxCoolDown(coolDown*2);
+            if(getWorldType().equals("tundra")){
+                //More damage to tundra with fire skill
+                FireBombSkill.setDamageMultiplier(((FireBombSkill) mechSkill).getDamageMultiplier()*2);
+            }
         }
     }
 
@@ -151,6 +147,10 @@ public class DifficultyManager extends TickableManager{
             setWildSpawnMaxHealth(enemyManager.getEnemyConfig(orcType).getMaxHealth() /(5-getDifficultyLevel()));
         }
 
+        //Set skills damage multiplier
+        setWizardSkill();
+        setMechSkill();
+
         switch (getWorldType()) {
             // Difficulty Settings for each world
             case "swamp":
@@ -158,30 +158,23 @@ public class DifficultyManager extends TickableManager{
                 setWildSpawnRate(0.05f);
                 enemyManager.getBoss().setMaxHealth(100);
                 enemyManager.setWildEnemyCap(5);
-                setWizardSkillCoolDown(15);
                 break;
             case "tundra":
                 setPlayerHealth(4);
                 setWildSpawnRate(0.06f);
                 enemyManager.getBoss().setMaxHealth(150);
                 enemyManager.setWildEnemyCap(6);
-                setWizardSkillCoolDown(15);
-                setMechSkillCoolDown(150);
                 break;
             case "desert":
                 setPlayerHealth(4);
                 setWildSpawnRate(0.07f);
                 enemyManager.getBoss().setMaxHealth(300);
-                setWizardSkillCoolDown(15);
-                setMechSkillCoolDown(50);
                 break;
             case "volcano":
                 setPlayerHealth(4);
                 setWildSpawnRate(0.08f);
                 enemyManager.getBoss().setMaxHealth(750);
                 enemyManager.setWildEnemyCap(8);
-                setWizardSkillCoolDown(15);
-                setMechSkillCoolDown(50);
                 break;
         }
 

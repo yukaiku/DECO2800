@@ -2,9 +2,9 @@ package deco2800.thomas.managers;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.Knight;
-import deco2800.thomas.combat.skills.AbstractSkill;
-import deco2800.thomas.combat.skills.FireBombSkill;
-import deco2800.thomas.combat.skills.WaterShieldSkill;
+import deco2800.thomas.combat.Wizard;
+import deco2800.thomas.combat.WizardSkills;
+import deco2800.thomas.combat.skills.*;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.InvalidEnemyException;
@@ -13,6 +13,8 @@ import deco2800.thomas.worlds.swamp.SwampWorld;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -41,6 +43,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         enemyManager.addEnemyConfigs("desertOrc");
         enemyManager.addEnemyConfigs("volcanoOrc");
         difficultyManager.setPlayerEntity((PlayerPeon) swampWorld.getPlayerEntity());
+
     }
 
     /***
@@ -84,42 +87,15 @@ public class DifficultyManagerTest extends BaseGDXTest {
      */
     @Test
     public void testMechSkills(){
-        playerManager.setKnight(Knight.WATER);
-        difficultyManager.setDifficultyLevel("Swamp");
-        AbstractSkill mechSkill = playerPeon.getMechSkill();
-        WaterShieldSkill.setMaxCoolDown(0);
-        assertEquals(0, mechSkill.getCooldownMax());
         playerManager.setKnight(Knight.FIRE);
         playerPeon.updatePlayerSkills();
+        difficultyManager.setDifficultyLevel("Swamp");
+        AbstractSkill mechSkill = playerPeon.getMechSkill();
+        assertEquals(0.4, ((FireBombSkill) mechSkill).getDamageMultiplier(), 0.01);
+        difficultyManager.setDifficultyLevel("Tundra");
         AbstractSkill mechSkill2 = playerPeon.getMechSkill();
-        FireBombSkill.setMaxCoolDown(0);
-        assertEquals(0, mechSkill2.getCooldownMax());
+        assertEquals(0.8, ((FireBombSkill) mechSkill).getDamageMultiplier(), 0.01);
     }
-
-    /***
-     * Test wizard skills
-     */
-//    @Test
-//    public void testWizardSkills(){
-//        difficultyManager.setDifficultyLevel("Swamp");
-//        playerManager.resetPlayer();
-//        playerManager.grantWizardSkill(WizardSkills.FIREBALL);
-//        playerManager.grantWizardSkill(WizardSkills.ICEBALL);
-//        playerManager.grantWizardSkill(WizardSkills.STING);
-//        difficultyManager.setWizardSkillCoolDown(1);
-//        List<AbstractSkill> wizardSkills = playerPeon.getWizardSkills();
-//        for(AbstractSkill wizardSkill : wizardSkills){
-//            switch (wizardSkill.getTexture()){
-//                case "iceballIcon": // Default 50
-//                    assertEquals(2,((IceballSkill) wizardSkill).getCooldownMax());
-//                case "fireballIcon": //Default 20
-//                    assertEquals(1,((FireballSkill) wizardSkill).getCooldownMax());
-//                case "stingIcon": //Default 50
-//                    assertEquals(2,((ScorpionStingSkill) wizardSkill).getCooldownMax());
-//
-//            }
-//        }
-//    }
 
     /***
      * Testing swamp difficulty settings
@@ -139,14 +115,14 @@ public class DifficultyManagerTest extends BaseGDXTest {
      * Testing tundra difficulty settings
      */
     @Test
-    public void testTundraDifficulty(){
+    public void testTundraDifficulty() {
         difficultyManager.setDifficultyLevel("Tundra");
-        assertEquals("tundra",difficultyManager.getWorldType());
-        assertEquals(25,enemyManager.getEnemyConfig("tundraOrc").getMaxHealth());
+        assertEquals("tundra", difficultyManager.getWorldType());
+        assertEquals(25, enemyManager.getEnemyConfig("tundraOrc").getMaxHealth());
         EnemyPeon orc = enemyManager.getEnemyConfig("tundraOrc");
-        Orc orc1 = (Orc)orc;
-        assertEquals(0.06f,orc1.getSpawnRate(), 0.01);
-        assertEquals(6,enemyManager.getWildEnemyCap());
+        Orc orc1 = (Orc) orc;
+        assertEquals(0.06f, orc1.getSpawnRate(), 0.01);
+        assertEquals(6, enemyManager.getWildEnemyCap());
     }
 
     /***
