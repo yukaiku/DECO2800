@@ -49,7 +49,7 @@ public class SoundManager extends AbstractManager {
 			addNewSong("swampAmbience", "resources/sounds/ambience/swamp_ambience.ogg", 1);
 			addNewSong("desertAmbience", "resources/sounds/ambience/desert_ambience.ogg", 1);
 			addNewSong("tundraAmbience", "resources/sounds/ambience/tundra_ambience.ogg", 1);
-			addNewSong("volcanoAmbience", "resources/sounds/ambience/volcano_ambience.ogg", 0.8f);
+			addNewSong("volcanoAmbience", "resources/sounds/ambience/volcano_ambience.ogg", 0.6f);
 			addNewSong("menuAmbience", "resources/sounds/ambience/menu_ambience.ogg", 1);
 
 			// Boss music is the exception to the rule, and is preloaded
@@ -63,8 +63,12 @@ public class SoundManager extends AbstractManager {
 			addNewSound("explosion", "resources/sounds/sfx/explosion_1.wav", 0.7f);
 			addNewSound("button1", "resources/sounds/sfx/button_1.wav", 0.1f);
 			addNewSound("button2", "resources/sounds/sfx/button_2.wav", 0.2f);
-			addNewSound("dragon1", "resources/sounds/sfx/dragon_fire.mp3", 0.8f);
-			addNewSound("dragon2", "resources/sounds/sfx/dragon_swamp.wav", 0.8f);
+			addNewSound("orcGrowl", "resources/sounds/sfx/orc_growl.wav", 0.5f);
+			addNewSound("volcanoDragon", "resources/sounds/sfx/dragon_volcano.mp3", 0.8f);
+			addNewSound("desertDragon", "resources/sounds/sfx/dragon_desert.mp3", 0.6f);
+			addNewSound("tundraDragon", "resources/sounds/sfx/dragon_tundra.wav", 0.5f);
+			addNewSound("swampDragon", "resources/sounds/sfx/dragon_swamp.wav", 0.8f);
+			addNewSound("dragonGrowl", "resources/sounds/sfx/dragon_growl.wav", 0.8f);
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		} finally {
