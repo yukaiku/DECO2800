@@ -1,5 +1,6 @@
 package deco2800.thomas.managers;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -460,6 +461,7 @@ public class GameManager {
 		GameManager.get().state = State.VICTORY;
 		GameManager.getManagerFromInstance(SoundManager.class).stopBossMusic();
 		GameManager.getManagerFromInstance(SoundManager.class).stopAmbience();
+		GameManager.getManagerFromInstance(SoundManager.class).playSound("victory");
 	}
 
 	public static void gameOver() {

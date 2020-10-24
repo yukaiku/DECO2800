@@ -65,6 +65,7 @@ public class SoundManager extends AbstractManager {
 			addNewSound("button2", "resources/sounds/sfx/button_2.wav", 0.2f);
 			addNewSound("dragon1", "resources/sounds/sfx/dragon_fire.mp3", 0.8f);
 			addNewSound("gameOver", "resources/sounds/sfx/game_over.ogg", 0.7f);
+			addNewSound("victory", "resources/sounds/sfx/victory_sound.ogg", 1.0f);
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		} finally {
