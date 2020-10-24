@@ -13,7 +13,7 @@ public class SandTornadoSkill extends AbstractSkill {
     /* Speed of sand tornado */
     private static final float SPEED = 0.2f;
     /* Lifetime of sand tornado */
-    private static final int LIFETIME = 60;
+    private static final int LIFETIME = 20;
 
     /* Reference to parent entity */
     private final Peon entity;
