@@ -155,24 +155,24 @@ public class DifficultyManager extends TickableManager{
             // Difficulty Settings for each world
             case "swamp":
                 setPlayerHealth(4);
-                setWildSpawnRate(0.05f);
+                setWildSpawnRate(0.09f);
                 enemyManager.getBoss().setMaxHealth(100);
                 enemyManager.setWildEnemyCap(5);
                 break;
             case "tundra":
                 setPlayerHealth(4);
-                setWildSpawnRate(0.06f);
+                setWildSpawnRate(0.1f);
                 enemyManager.getBoss().setMaxHealth(150);
                 enemyManager.setWildEnemyCap(6);
                 break;
             case "desert":
                 setPlayerHealth(4);
-                setWildSpawnRate(0.07f);
+                setWildSpawnRate(0.12f);
                 enemyManager.getBoss().setMaxHealth(300);
                 break;
             case "volcano":
                 setPlayerHealth(4);
-                setWildSpawnRate(0.08f);
+                setWildSpawnRate(0.12f);
                 enemyManager.getBoss().setMaxHealth(750);
                 enemyManager.setWildEnemyCap(8);
                 break;
