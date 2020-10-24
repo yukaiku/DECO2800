@@ -299,6 +299,6 @@ public class TundraDungeon extends AbstractWorld {
 
 	@Override
 	public List<AbstractDialogBox> returnAllDialogues() {
-		return null;
+		return allTundraDungeonDialogs;
 	}
 }

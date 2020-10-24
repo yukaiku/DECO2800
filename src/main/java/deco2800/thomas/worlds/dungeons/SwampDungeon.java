@@ -159,6 +159,6 @@ public class SwampDungeon extends AbstractWorld {
 
     @Override
     public List<AbstractDialogBox> returnAllDialogues() {
-        return null;
+        return allSwampDungeonDialogues;
     }
 }

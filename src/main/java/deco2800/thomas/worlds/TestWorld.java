@@ -23,7 +23,8 @@ public class TestWorld extends AbstractWorld {
 	boolean notGenerated = true;
 	private static final int WORLD_WIDTH = 25; // Height and width vars for the map size; constrains tile gen
 	private static final int WORLD_HEIGHT = 25; // Note the map will double these numbers (bounds are +/- these limits)
-
+	private List<AbstractDialogBox> dialogues;
+	
 	public TestWorld() {
 		super();
 		this.width = WORLD_WIDTH;
@@ -148,7 +149,7 @@ public class TestWorld extends AbstractWorld {
 	}
 
 	public List<AbstractDialogBox> returnAllDialogues(){
-		return null; 
+		return dialogues; 
 	}; 
 
 }
