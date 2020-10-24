@@ -119,7 +119,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
                 .getOverlayRenderer().getComponentByInstance(BossHealthComponent.class).onBossStart(this);
 //        GameManager.getManagerFromInstance(SoundManager.class).playMusic("boss1");
 //        GameManager.getManagerFromInstance(SoundManager.class).setVolume(0.5f);
-        GameManager.getManagerFromInstance(SoundManager.class).playBossMusic(0.5f);
+        GameManager.getManagerFromInstance(SoundManager.class).playBossMusic("bossMusic");
     }
 
     public void elementalAttack() {
