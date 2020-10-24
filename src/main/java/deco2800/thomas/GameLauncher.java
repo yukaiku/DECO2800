@@ -18,15 +18,16 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 	/**
 	 * Main function for the game.
 	 *
-	 * @param arg Command line arguments (we won't use these)ssss
+	 * @param arg Command line arguments (we won't use these)
 	 */
 	@SuppressWarnings("unused")
 	public static void main(String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 1920;
 		config.height = 1000;
-		config.fullscreen = true;
-		config.resizable = false;
+		config.fullscreen = false;
+		config.resizable = true;
+		config.forceExit = true;
 		config.title = "DECO2800 2020: Polyhedron";
 		LwjglApplication app = new LwjglApplication(new ThomasGame(), config);
 	}

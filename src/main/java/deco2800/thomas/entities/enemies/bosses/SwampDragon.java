@@ -10,6 +10,7 @@ public class SwampDragon extends Dragon {
     public SwampDragon(int health, float speed, int orbNumber) {
         super(health, speed, orbNumber);
         this.variation = EnemyIndex.Variation.SWAMP;
+        this.identifier = "dragonSwamp";
         this.setObjectName("Siendiadut");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));

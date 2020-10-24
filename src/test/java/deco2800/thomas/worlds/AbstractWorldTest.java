@@ -1,6 +1,7 @@
 package deco2800.thomas.worlds;
 
 import deco2800.thomas.BaseGDXTest;
+import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
@@ -42,6 +43,11 @@ public class AbstractWorldTest extends BaseGDXTest {
 
         protected void generateTiles() {
 
+        }
+
+        @Override
+        public List<AbstractDialogBox> returnAllDialogues() {
+            return null;
         }
     }
 
