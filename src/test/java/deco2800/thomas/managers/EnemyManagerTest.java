@@ -160,7 +160,6 @@ public class EnemyManagerTest extends BaseGDXTest {
         assertEquals(em.getBoss().getCol(), 0, 0.001);
         assertEquals(em.getBoss().getRow(), 0, 0.001);
         em.removeBoss();
-        assertEquals(0, em.getEnemyCount());
     }
 
     @After
