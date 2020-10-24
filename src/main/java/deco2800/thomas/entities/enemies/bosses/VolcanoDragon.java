@@ -5,8 +5,6 @@ import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.combat.skills.FireBombSkill;
 import deco2800.thomas.combat.skills.SummonGoblinSkill;
 import deco2800.thomas.combat.skills.VolcanoFireballSkill;
-import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.attacks.VolcanoFireball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.SoundManager;
