@@ -1,6 +1,7 @@
 package deco2800.thomas.renderers.components;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -25,6 +26,8 @@ public class BossHealthComponent extends OverlayComponent {
     private final HashMap<String, Sprite> cachedHealthSprites = new HashMap<>();
     private float scaleFactor;
     private final BitmapFont font;
+    private float blinkAlpha = 0f;
+    private boolean blinkUp = true;
 
     public BossHealthComponent(OverlayRenderer overlayRenderer) {
         super(overlayRenderer);
@@ -64,24 +67,60 @@ public class BossHealthComponent extends OverlayComponent {
     @Override
     public void render(SpriteBatch batch) {
         if (!this.render) return;
-        batch.begin();
+        float overlayRendererX = overlayRenderer.getX();
+        float overlayRendererY = overlayRenderer.getY();
+        float overlayRendererWidth = overlayRenderer.getWidth();
+        float overlayRendererHeight = overlayRenderer.getHeight();
         int percentage = (int) Math.round(((float) boss.getCurrentHealth() / boss.getMaxHealth()) * 100.0);
+
+        batch.begin();
+
+        // boss health bar
         Sprite sprite = cachedHealthSprites.get(String.format("%s%d", this.bossType, percentage - (percentage % 5)));
-        sprite.setPosition(overlayRenderer.getX() + 0.3f * overlayRenderer.getWidth(),
-                overlayRenderer.getY() + 0.85f * overlayRenderer.getHeight());
+        sprite.setPosition(overlayRendererX + 0.3f * overlayRendererWidth,
+                overlayRendererY + 0.85f * overlayRendererHeight);
         float ratio = sprite.getWidth() / sprite.getHeight();
-        sprite.setSize(scaleFactor * 0.15f * ratio * overlayRenderer.getWidth(),
-                scaleFactor * 0.15f * overlayRenderer.getWidth());
+        sprite.setSize(scaleFactor * 0.15f * ratio * overlayRendererWidth,
+                scaleFactor * 0.15f * overlayRendererWidth);
         sprite.draw(batch);
 
+        // boss name and drop shadow
+        font.setColor(Color.valueOf("#000000"));
         font.getData().setScale(1f);
-        font.draw(batch, String.format("%s", boss.getObjectName()),
-                overlayRenderer.getX() + 0.44f * overlayRenderer.getWidth(),
-                overlayRenderer.getY() + overlayRenderer.getHeight() - 24);
+        font.draw(batch, String.format("%s", boss.getObjectName()), overlayRendererX + 0.43f *
+                overlayRendererWidth + 1, overlayRendererY + overlayRendererHeight - 24 - 1);
+        font.setColor(Color.valueOf("#ffffff"));
+        font.draw(batch, String.format("%s", boss.getObjectName()), overlayRendererX + 0.43f * overlayRendererWidth,
+                overlayRendererY + overlayRendererHeight - 24);
+
+        // boss health value and drop shadow
         font.getData().setScale(0.4f);
+        font.setColor(Color.valueOf("#000000"));
         font.draw(batch, String.format("%d/%d", boss.getCurrentHealth(), boss.getMaxHealth()),
-                overlayRenderer.getX() + 0.48f * overlayRenderer.getWidth(),
-                overlayRenderer.getY() + overlayRenderer.getHeight() - 70);
+                overlayRendererX + 0.48f * overlayRendererWidth + 1,
+                overlayRendererY + overlayRendererHeight - 70 - 1);
+        font.setColor(Color.valueOf("#ffffff"));
+        font.draw(batch, String.format("%d/%d", boss.getCurrentHealth(), boss.getMaxHealth()),
+                overlayRendererX + 0.48f * overlayRendererWidth,
+                overlayRendererY + overlayRendererHeight - 70);
+
+        // blinking effect overlay
+        if (percentage <= 20) {
+            float alpha;
+            if (blinkUp) {
+                blinkAlpha += 0.04f;
+                if (blinkAlpha >= 1.3f) blinkUp = false;
+                alpha = Math.min(1f, blinkAlpha);
+            } else {
+                blinkAlpha -= 0.04f;
+                if (blinkAlpha <= -0.3f) blinkUp = true;
+                alpha = Math.max(0f, blinkAlpha);
+            }
+            font.setColor(255f, 0, 0, alpha);
+            font.draw(batch, String.format("%d/%d", boss.getCurrentHealth(), boss.getMaxHealth()),
+                    overlayRendererX + 0.48f * overlayRendererWidth,
+                    overlayRendererY + overlayRendererHeight - 70);
+        }
         batch.end();
     }
 }
