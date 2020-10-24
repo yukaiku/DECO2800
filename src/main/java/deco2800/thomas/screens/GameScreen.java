@@ -232,8 +232,8 @@ public class GameScreen implements Screen, KeyDownObserver {
 	public void renderGame(float delta) {
 		handleRenderables();
 
-		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta, GameManager.get().getWorld().getWorldZoomable());
 		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
+		CameraUtil.cameraBoundaryInWorld(camera, GameManager.get().getWorld());
 
 		cameraEvent.position.set(camera.position);
 		cameraEvent.update();

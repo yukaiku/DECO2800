@@ -133,7 +133,7 @@ public class DifficultyManager extends TickableManager{
         if(!getWorldType().equals(type)){
             setWorldType(type);
             int wildEnemyCap = enemyManager.getWildEnemyCap();
-            String orcType = getWorldType()+"Orc";
+            String orcType = getWorldType().toLowerCase() + "Orc";
 
             //Set Wild Enemy Cap
             enemyManager.setWildEnemyCap(wildEnemyCap+getDifficultyLevel());

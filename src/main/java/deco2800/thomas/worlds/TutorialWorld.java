@@ -6,6 +6,7 @@ import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.entities.environment.tutorial.*;
+import deco2800.thomas.entities.items.*;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.TutorialNPC;
 import deco2800.thomas.managers.DialogManager;
@@ -36,17 +37,27 @@ public class TutorialWorld extends AbstractWorld{
     @Override
     protected void generateTiles() {
         for (int col = -TUTORIAL_WORLD_WIDTH; col < TUTORIAL_WORLD_WIDTH; col++) {
-            for (int row = -TUTORIAL_WORLD_HEIGHT; row < TUTORIAL_WORLD_HEIGHT; row++) {
-                String type = "stone-3";
-                tiles.add(new Tile(type, col, row));
-            }
+            String type = "stone-3";
+            tiles.add(new Tile(type, col, TUTORIAL_WORLD_HEIGHT - 1));
+            tiles.add(new Tile(type, col, -TUTORIAL_WORLD_HEIGHT));
+        }
+
+        for (int row = -TUTORIAL_WORLD_HEIGHT + 1; row < TUTORIAL_WORLD_HEIGHT - 1; row++) {
+            String type = "stone-3";
+            tiles.add(new Tile(type, TUTORIAL_WORLD_WIDTH - 1, row));
+            tiles.add(new Tile(type, -TUTORIAL_WORLD_WIDTH, row));
         }
 
         for (int col = -TUTORIAL_WORLD_WIDTH+1; col < TUTORIAL_WORLD_WIDTH-1; col++) {
-            for (int row = -TUTORIAL_WORLD_HEIGHT+1; row < TUTORIAL_WORLD_HEIGHT-1; row++) {
-                String type = "stone-2";
-                tiles.add(new Tile(type, col, row));
-            }
+            String type = "stone-2";
+            tiles.add(new Tile(type, col, TUTORIAL_WORLD_HEIGHT - 2));
+            tiles.add(new Tile(type, col, -TUTORIAL_WORLD_HEIGHT + 1));
+        }
+
+        for (int row = -TUTORIAL_WORLD_HEIGHT + 2; row < TUTORIAL_WORLD_HEIGHT - 2; row++) {
+            String type = "stone-2";
+            tiles.add(new Tile(type, TUTORIAL_WORLD_WIDTH - 2, row));
+            tiles.add(new Tile(type, -TUTORIAL_WORLD_WIDTH + 1, row));
         }
 
         for (int col = -TUTORIAL_WORLD_WIDTH+2; col < TUTORIAL_WORLD_WIDTH-2; col++) {
@@ -59,10 +70,11 @@ public class TutorialWorld extends AbstractWorld{
         PlayerPeon.setBuffDamageTotal(0);
         PlayerPeon.setCooldownBuff(false);
         PlayerPeon.setWallet(0);
-        PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f, 50);
+        PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f, 100);
             addEntity(player);
         this.setPlayerEntity(player);
         addEntity(this.getPlayerEntity());
+        player.setCurrentHealthValue(50);
 
         // Spawn dummy
         EnemyManager enemyManager = new EnemyManager(this);
@@ -82,12 +94,61 @@ public class TutorialWorld extends AbstractWorld{
         dialog = new DialogManager(this, (PlayerPeon) this.getPlayerEntity(),
                 this.allDialogBoxes);
         GameManager.get().addManager(dialog);
+
+        generateItemEntities();
+        generateEntities();
     }
+
+    /**
+     * Generates items for tutorial, all positions of item are randomized
+     * every time player loads into the tutorial.
+     *
+     * Items: Health potions, Iron shields etc.
+     */
+    private void generateItemEntities(){
+        final String ITEM_BOX_STYLE = "tutorial";
+
+        Tile healthPotionTile = getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
+                Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
+        HealthPotion potion = new HealthPotion(healthPotionTile, false,
+                (PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
+        entities.add(potion);
+        this.allDialogBoxes.add(potion.getDisplay());
+
+        Tile shieldTile = getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
+                Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
+        IronArmour ironArmour = new IronArmour(shieldTile, false,
+                (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE, 100);
+        entities.add(ironArmour);
+        this.allDialogBoxes.add(ironArmour.getDisplay());
+
+        Tile treasureTile = getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
+                Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
+        Treasure chest = new Treasure(treasureTile, false,
+                (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
+        entities.add(chest);
+        this.allDialogBoxes.add(chest.getDisplay());
+
+        Tile attackAmuletTile = getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
+                Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
+        Amulet attackAmulet = new Amulet(attackAmuletTile, false,
+                (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,10);
+        entities.add(attackAmulet);
+        this.allDialogBoxes.add(attackAmulet.getDisplay());
+
+        Tile coolDownRingTile = getTile(Item.randomItemPositionGenerator(TUTORIAL_WORLD_WIDTH),
+                Item.randomItemPositionGenerator(TUTORIAL_WORLD_HEIGHT));
+        CooldownRing cooldownRing = new CooldownRing(coolDownRingTile, false,
+                (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,0.5f);
+        entities.add(cooldownRing);
+        this.allDialogBoxes.add(cooldownRing.getDisplay());
+    }
+
 
     public void generateEntities() {
         // Add stashes
         for (int i = -6; i < 6 + 1; i = i + 3) {
-            Tile t = GameManager.get().getWorld().getTile(i, TUTORIAL_WORLD_HEIGHT - 1);
+            Tile t = getTile(i, TUTORIAL_WORLD_HEIGHT - 1);
             if (t != null) {
                 entities.add(new Stash(t, true));
             }
@@ -97,7 +158,7 @@ public class TutorialWorld extends AbstractWorld{
             if (i == 0 || i == -2 || i == 2) {
                 continue;
             }
-            Tile t = GameManager.get().getWorld().getTile(i, -TUTORIAL_WORLD_HEIGHT);
+            Tile t = getTile(i, -TUTORIAL_WORLD_HEIGHT);
             if (t != null) {
                 entities.add(new Target(t, true));
             }
@@ -105,31 +166,31 @@ public class TutorialWorld extends AbstractWorld{
 
         Tile t;
         // Add barrels
-        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH - 1, TUTORIAL_WORLD_HEIGHT - 2);
+        t = getTile(TUTORIAL_WORLD_WIDTH - 1, TUTORIAL_WORLD_HEIGHT - 2);
         entities.add(new Barrel(t, true));
 
-        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH - 1, -TUTORIAL_WORLD_HEIGHT + 1);
+        t = getTile(TUTORIAL_WORLD_WIDTH - 1, -TUTORIAL_WORLD_HEIGHT + 1);
         entities.add(new Barrel(t, true));
 
-        t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, TUTORIAL_WORLD_HEIGHT - 2);
+        t = getTile(-TUTORIAL_WORLD_WIDTH, TUTORIAL_WORLD_HEIGHT - 2);
         entities.add(new Barrel(t, true));
 
-        t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, -TUTORIAL_WORLD_HEIGHT + 1);
+        t = getTile(-TUTORIAL_WORLD_WIDTH, -TUTORIAL_WORLD_HEIGHT + 1);
         entities.add(new Barrel(t, true));
 
         // Add chest
-        t = GameManager.get().getWorld().getTile(-TUTORIAL_WORLD_WIDTH, 0);
+        t = getTile(-TUTORIAL_WORLD_WIDTH, 0);
         entities.add(new Chest(t, true));
 
-        t = GameManager.get().getWorld().getTile(TUTORIAL_WORLD_WIDTH -1, 0);
+        t = getTile(TUTORIAL_WORLD_WIDTH -1, 0);
         entities.add(new Chest(t, true));
 
         // Add portal
-        t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW);
+        t = getTile(PORTAL_COL, PORTAL_ROW);
         entities.add(new Portal(t, false));
 
         // Add message on how to leave tutorial (temporary)
-        t = GameManager.get().getWorld().getTile(PORTAL_COL, PORTAL_ROW + 2);
+        t = getTile(PORTAL_COL, PORTAL_ROW + 2);
         entities.add(new Notify(t, false));
     }
 
@@ -146,7 +207,7 @@ public class TutorialWorld extends AbstractWorld{
         }
 
         if (notGenerated) {
-            generateEntities();
+            PlayerPeon.credit(1000);
             notGenerated = false;
         }
 
@@ -163,8 +224,8 @@ public class TutorialWorld extends AbstractWorld{
 
 
             GameManager.get().setNextWorld();
-            // Keep $$ on world change.
-            PlayerPeon.credit(((PlayerPeon) player).getWallet());
+            // Change wallet to 0 on world change.
+            PlayerPeon.credit(0);
         }
     }
 }

@@ -11,6 +11,7 @@ import deco2800.thomas.entities.enemies.EnemyIndex.Variation;
 import deco2800.thomas.entities.items.ItemDropTable;
 import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
+import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.tasks.movement.MovementTask;
@@ -28,10 +29,9 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
     public enum State {
         IDLE, WALK, ATTACK_MELEE
     }
-    public State currentState;
-    public State previousState;
+    private State currentState;
+    private State previousState;
     private final Variation variation;
-    private final Animation<TextureRegion> orcIdle;
     private final Animation<TextureRegion> orcAttacking;
     private final Animation<TextureRegion> orcWalking;
     private final Texture icon;
@@ -43,6 +43,8 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
     private int tickDetecting = 15;
 
     private float spawnRate;
+    private int growlTick = 0;
+    private static final int GROWL_CYCLE = 400;
 
     // Range at which the orc will begin to chase the player
     private final int followRange;
@@ -94,8 +96,6 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
         currentState = State.IDLE;
         previousState = State.IDLE;
         facingDirection = MovementTask.Direction.RIGHT;
-        this.orcIdle = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
         this.orcAttacking = new Animation<> (0.02f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
         this.orcWalking = new Animation<> (0.1f,
@@ -187,6 +187,17 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
             }
             tickDetecting = 0;
         }
+
+        // growl sounds
+        if (++growlTick > GROWL_CYCLE) {
+            PlayerPeon player = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
+            if (EnemyUtil.playerInRadius(this, player, 8)) {
+                float pan = EnemyUtil.playerLRDistance(this, player);
+                GameManager.getManagerFromInstance(SoundManager.class).playSound("orcGrowl", pan);
+            }
+            growlTick = 0;
+        }
+
         // Update tasks and effects
         super.onTick(i);
     }
