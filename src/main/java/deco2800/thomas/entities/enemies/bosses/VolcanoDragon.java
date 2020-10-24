@@ -23,12 +23,6 @@ public class VolcanoDragon extends Dragon {
     }
 
     @Override
-    public void hitByTarget() {
-        super.hitByTarget();
-        GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon1");
-    }
-
-    @Override
     public void elementalAttack() {
         if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange)) {
             setCombatTask(new FireBombAttackTask(this, 20, 8, 20, 5, 5));
