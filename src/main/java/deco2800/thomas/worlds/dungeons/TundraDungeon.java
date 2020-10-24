@@ -10,6 +10,7 @@ import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.Rock;
+import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.entities.environment.tundra.TundraEncryptionMachine;
@@ -82,7 +83,7 @@ public class TundraDungeon extends AbstractWorld {
 		this.skin = new Skin(Gdx.files.internal("resources/uiskin.skin"));
 
 		helpCoordinates = new SquareVector(-5, -5);
-		entities.add(new Rock(getTile(helpCoordinates), false));
+		entities.add(new StaticEntity(getTile(helpCoordinates), 1, "tundra-dungeon-help", false));
 		usedCoordinates.add(helpCoordinates);
 
 		machineCoordinates = new SquareVector(2, 0);
