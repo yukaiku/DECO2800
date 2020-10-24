@@ -43,8 +43,7 @@ public class CameraUtil {
         float width = worldSize[0] * 2;
         float height = worldSize[1] * 2;
 
-        System.out.println(WorldUtil.TILE_WIDTH + " " + WorldUtil.TILE_HEIGHT);
-        if (camera.viewportWidth < width) {
+        if (camera.viewportWidth <= width) {
             // Left bound
             if (camera.position.x - (camera.viewportWidth / 2) < startX) {
                 camera.position.set(startX + camera.viewportWidth / 2, camera.position.y, camera.position.z);
@@ -57,7 +56,7 @@ public class CameraUtil {
         }
 
 
-        if (camera.viewportHeight < height) {
+        if (camera.viewportHeight <= height) {
             // Bottom bound
             if ((camera.position.y - (camera.viewportHeight / 2)) < startY) {
                 camera.position.set(camera.position.x, startY + (camera.viewportHeight / 2), camera.position.z);
