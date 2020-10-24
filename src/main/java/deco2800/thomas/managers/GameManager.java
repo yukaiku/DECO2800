@@ -1,5 +1,6 @@
 package deco2800.thomas.managers;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -7,6 +8,7 @@ import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.QuestTracker;
+import deco2800.thomas.renderers.components.BossHealthComponent;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.desert.DesertWorld;
@@ -415,6 +417,10 @@ public class GameManager {
 				this.setWorld(new DesertDungeon());
 				break;
 		}
+		// pause boss battle
+		boolean bossOnGoing = getManager(ScreenManager.class).getCurrentScreen().getOverlayRenderer().
+				getComponentByInstance(BossHealthComponent.class).setRender(false);
+		if (bossOnGoing) getManager(SoundManager.class).toggleBossMusic(false);
 	}
 
 	/**
@@ -445,25 +451,34 @@ public class GameManager {
 		this.setWorld(worldOutsideDungeon);
 		((PlayerPeon)this.worldOutsideDungeon.getPlayerEntity()).updatePlayerSkills();
 		this.worldOutsideDungeon = null;
+
+		// resume boss battle
+		boolean bossOnGoing = getManager(ScreenManager.class).getCurrentScreen().getOverlayRenderer().
+				getComponentByInstance(BossHealthComponent.class).setRender(true);
+		if (bossOnGoing) getManager(SoundManager.class).toggleBossMusic(true);
 	}
 
 
 	public static void resume() {
-		getManagerFromInstance(SoundManager.class).setBossMusicVolume(0.5f);
 		GameManager.get().state = GameManager.State.RUN;
 	}
 
 	public static void pause() {
-		getManagerFromInstance(SoundManager.class).setBossMusicVolume(0.1f);
 		GameManager.get().state = State.PAUSED;
 	}
 
 	public static void victory() {
 		GameManager.get().state = State.VICTORY;
+		GameManager.getManagerFromInstance(SoundManager.class).stopBossMusic();
+		GameManager.getManagerFromInstance(SoundManager.class).stopAmbience();
+		GameManager.getManagerFromInstance(SoundManager.class).playSound("victory");
 	}
 
 	public static void gameOver() {
 		GameManager.get().state = State.GAMEOVER;
+		GameManager.getManagerFromInstance(SoundManager.class).stopBossMusic();
+		GameManager.getManagerFromInstance(SoundManager.class).stopAmbience();
+		GameManager.getManagerFromInstance(SoundManager.class).playSound("gameOver");
 	}
 
 	public void setCamera(OrthographicCamera camera) {

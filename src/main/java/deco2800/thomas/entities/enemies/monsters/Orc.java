@@ -28,10 +28,9 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
     public enum State {
         IDLE, WALK, ATTACK_MELEE
     }
-    public State currentState;
-    public State previousState;
+    private State currentState;
+    private State previousState;
     private final Variation variation;
-    private final Animation<TextureRegion> orcIdle;
     private final Animation<TextureRegion> orcAttacking;
     private final Animation<TextureRegion> orcWalking;
     private final Texture icon;
@@ -94,8 +93,6 @@ public class Orc extends Monster implements AggressiveEnemy, Animatable {
         currentState = State.IDLE;
         previousState = State.IDLE;
         facingDirection = MovementTask.Direction.RIGHT;
-        this.orcIdle = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
         this.orcAttacking = new Animation<> (0.02f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
         this.orcWalking = new Animation<> (0.1f,

@@ -36,8 +36,8 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     }
     protected Animation<TextureRegion> dragonAttacking;
     protected Animation<TextureRegion> dragonWalking;
-    public State currentState;
-    public State previousState;
+    private State currentState;
+    private State previousState;
     private MovementTask.Direction facingDirection;
     protected Animation<TextureRegion> dragonIdle;
     protected EnemyIndex.Variation variation;
@@ -53,8 +53,8 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     private int roarTick = 0;
     private int roarTickNext = 800;
     private int goblinSpawnTick = 0;
-    private final int goblinSpawnCycle = 60;
-    private final int goblinCap = 10;
+    private static final int goblinSpawnCycle = 60;
+    private static final int goblinCap = 10;
 
     public Dragon(int health, float speed, int orbNumber) {
         super(health, speed);
@@ -117,9 +117,14 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
         }
         GameManager.getManagerFromInstance(ScreenManager.class).getCurrentScreen()
                 .getOverlayRenderer().getComponentByInstance(BossHealthComponent.class).onBossStart(this);
-//        GameManager.getManagerFromInstance(SoundManager.class).playMusic("boss1");
-//        GameManager.getManagerFromInstance(SoundManager.class).setVolume(0.5f);
-        GameManager.getManagerFromInstance(SoundManager.class).playBossMusic(0.5f);
+        GameManager.getManagerFromInstance(SoundManager.class).playBossMusic("bossMusic");
+
+        float pan = EnemyUtil.playerLRDistance(this, super.getTarget());
+        if (this instanceof SwampDragon) {
+            GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon2", pan);
+        } else if (this instanceof VolcanoDragon) {
+            GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon1", pan);
+        }
     }
 
     public void elementalAttack() {
@@ -181,11 +186,14 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
             }
         }
 
-        if (this instanceof VolcanoDragon && super.getTarget() != null) {
-            if (++roarTick > roarTickNext) {
-                GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon1", 0.8f);
-                roarTick = 0;
+        if (super.getTarget() != null && ++roarTick > roarTickNext) {
+            float pan = EnemyUtil.playerLRDistance(this, super.getTarget());
+            if (this instanceof SwampDragon) {
+                GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon2", pan);
+            } else if (this instanceof VolcanoDragon) {
+                GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon1", pan);
             }
+            roarTick = 0;
         }
 
         // Update tasks and effects

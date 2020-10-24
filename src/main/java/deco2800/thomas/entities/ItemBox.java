@@ -5,10 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.entities.items.HealthPotionSmall;
-import deco2800.thomas.entities.items.Item;
-import deco2800.thomas.entities.items.Treasure;
-import deco2800.thomas.entities.items.WoodenArmour;
+import deco2800.thomas.entities.items.*;
 
 import java.util.Random;
 
@@ -39,7 +36,8 @@ public class ItemBox extends AbstractDialogBox {
 		} else {
 			setup(description, price);
 		}
-		if (item.getClass() == HealthPotionSmall.class || item.getClass() == WoodenArmour.class){
+		if (item.getClass() == HealthPotionSmall.class || item.getClass() == WoodenArmour.class
+		|| item.getClass() == Poison.class){
 			box.row();
 			button.setText("Use");
 		}

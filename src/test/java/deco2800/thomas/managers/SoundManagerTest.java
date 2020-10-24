@@ -144,7 +144,10 @@ public class SoundManagerTest extends BaseGDXTest {
 
 		/* This sound must exist */
 		s.playSound("explosion");
-		verify(sm).play(anyFloat());
+		verify(sm).play(anyFloat(), anyFloat(), eq(0.0f));
+
+		s.playSound("explosion", -1.0f);
+		verify(sm).play(anyFloat(), anyFloat(), eq(-1.0f));
 	}
 
 	/**
@@ -170,8 +173,8 @@ public class SoundManagerTest extends BaseGDXTest {
 		when(Gdx.audio.newSound(Gdx.files.internal(anyString()))).thenReturn(sm);
 
 		SoundManager s = new SoundManager();
-		s.playAmbience("placeholder");
-		s.playMusic("placeholder");
+		s.playAmbience("menuAmbience");
+		s.playMusic("menuAmbience");
 		s.setVolume(0.5f);
 		verify(sm, times(2)).setVolume(1L, 0.5f);
 	}
@@ -188,7 +191,7 @@ public class SoundManagerTest extends BaseGDXTest {
 		when(Gdx.audio.newSound(Gdx.files.internal(anyString()))).thenReturn(sm);
 
 		SoundManager s = new SoundManager();
-		s.playAmbience("placeholder");
+		s.playAmbience("swampAmbience");
 		s.stopAmbience();
 		verify(sm).stop();
 		verify(sm).dispose();
@@ -206,9 +209,74 @@ public class SoundManagerTest extends BaseGDXTest {
 		when(Gdx.audio.newSound(Gdx.files.internal(anyString()))).thenReturn(sm);
 
 		SoundManager s = new SoundManager();
-		s.playMusic("placeholder");
+		s.playMusic("swampAmbience");
 		s.stopMusic();
 		verify(sm).stop();
 		verify(sm).dispose();
+	}
+
+	/**
+	 * Tests that playing boss music invokes the correct sound.loop
+	 * and sound.stop methods.
+	 */
+	@Test
+	public void testPlayBossMusic() {
+		Gdx.audio = mock(Audio.class);
+		Gdx.files = mock(Files.class);
+		Sound sm = mock(Sound.class);
+		when(Gdx.files.internal(anyString())).thenReturn(null);
+		when(Gdx.audio.newSound(Gdx.files.internal(anyString()))).thenReturn(sm);
+
+		SoundManager s = new SoundManager();
+		s.playAmbience("swampAmbience");
+		s.playBossMusic("bossMusic");
+
+		verify(sm, times(1)).pause();
+		verify(sm, times(2)).loop(anyFloat());
+	}
+
+	/**
+	 * Tests that stopping  boss music invokes the correct sound.loop
+	 * and sound.stop invocations.
+	 */
+	@Test
+	public void testStopBossMusic() {
+		Gdx.audio = mock(Audio.class);
+		Gdx.files = mock(Files.class);
+		Sound sm = mock(Sound.class);
+		when(Gdx.files.internal(anyString())).thenReturn(null);
+		when(Gdx.audio.newSound(Gdx.files.internal(anyString()))).thenReturn(sm);
+
+		SoundManager s = new SoundManager();
+		s.playAmbience("swampAmbience");
+		s.playBossMusic("bossMusic");
+		s.stopBossMusic();
+
+		verify(sm, times(1)).stop();
+		verify(sm, times(2)).loop(anyFloat());
+		verify(sm, times(1)).resume();
+	}
+
+	/**
+	 * Tests toggling boss music.
+	 */
+	@Test
+	public void testToggleBossMusic() {
+		Gdx.audio = mock(Audio.class);
+		Gdx.files = mock(Files.class);
+		Sound sm = mock(Sound.class);
+		when(Gdx.files.internal(anyString())).thenReturn(null);
+		when(Gdx.audio.newSound(Gdx.files.internal(anyString()))).thenReturn(sm);
+		SoundManager s = new SoundManager();
+
+		s.toggleBossMusic(false);
+		verify(sm, never()).resume();
+		verify(sm, never()).pause();
+
+		s.playBossMusic("bossMusic");
+		s.toggleBossMusic(false);
+		verify(sm).pause();
+		s.toggleBossMusic(true);
+		verify(sm).resume();
 	}
 }

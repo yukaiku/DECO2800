@@ -117,9 +117,14 @@ public class OrcTest extends BaseGDXTest {
 
     @Test
     public void testAttack() {
+        tundraOrc.attackPlayer();
         tundraOrc.detectTarget();
         tundraOrc.attackPlayer();
         assertTrue(tundraOrc.getCombatTask() instanceof MeleeAttackTask);
+        tundraOrc.pursueTarget();
+        playerPeon = null;
+        tundraOrc.pursueTarget();
+        tundraOrc.attackPlayer();
     }
 
     @Test

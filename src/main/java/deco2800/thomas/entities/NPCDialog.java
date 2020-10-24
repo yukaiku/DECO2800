@@ -10,9 +10,14 @@ import deco2800.thomas.entities.npc.*;
 
 public class NPCDialog extends AbstractDialogBox {
 
+	// Text button
 	private TextButton button;
 
-	// constructs NPC DialogBox.
+	/**
+	 * Constructs NPC dialogue with a string
+	 * @param entity The NPC entity
+	 * @param string The string in the dialog
+	 */
 	public NPCDialog(Object entity, String string) {
 		super(entity, "PolyHedron: Tutorial", "tutorial");
 		// add first dialogue.
@@ -28,6 +33,12 @@ public class NPCDialog extends AbstractDialogBox {
 		box.setPosition((Gdx.graphics.getWidth() - box.getWidth())/2,(Gdx.graphics.getHeight() - box.getHeight())/2 );
 	}
 
+	/**
+	 * Constructs NPC dialogue with a string and a box title
+	 * @param entity The NPC entity
+	 * @param string The string in the dialog
+	 * @param boxName The box title
+	 */
 	public NPCDialog(Object entity, String string, String boxName) {
 		super(entity, boxName, "tutorial");
 		// add first dialogue.
@@ -43,6 +54,10 @@ public class NPCDialog extends AbstractDialogBox {
 		box.setPosition((Gdx.graphics.getWidth() - box.getWidth())/2,(Gdx.graphics.getHeight() - box.getHeight())/2 );
 	}
 
+	/**
+	 * Sets the string in the dialogue box
+	 * @param str The string in the dialogue box
+	 */
 	public void setString(String str) {
 		box.reset();
 		box.add(str).expand().center();
@@ -52,6 +67,9 @@ public class NPCDialog extends AbstractDialogBox {
 		box.pack();
 	}
 
+	/**
+	 * Adds a healer button to the dialogue box
+	 */
 	public void addHealer(){
 		TextButton button2 = new TextButton("Heal: 100 Gold", skin);
 		if (PlayerPeon.checkBalance() >= 100) {
@@ -62,6 +80,9 @@ public class NPCDialog extends AbstractDialogBox {
 		box.pack();
 	}
 
+	/**
+	 * Changes listener based on clicking the text button "Next"
+	 */
 	ChangeListener a = new ChangeListener() {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
@@ -122,6 +143,9 @@ public class NPCDialog extends AbstractDialogBox {
 		}
 	};
 
+	/**
+	 * Changes listener based on interacting with the text button "Close"
+	 */
 	ChangeListener b = new ChangeListener() {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
@@ -137,6 +161,9 @@ public class NPCDialog extends AbstractDialogBox {
 		}
 	};
 
+	/**
+	 * changes listener based on clicking the text button "Heal"
+	 */
 	ChangeListener c = new ChangeListener() {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {

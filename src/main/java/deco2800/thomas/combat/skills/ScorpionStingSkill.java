@@ -17,7 +17,7 @@ public class ScorpionStingSkill extends AbstractSkill {
     /* Speed of projectile */
     private static final float SPEED = 0.5f;
     /* Lifetime of projectile */
-    private static final int LIFETIME = 60;
+    private static final int LIFETIME = 20;
 
     /* Reference to parent entity */
     private final Peon entity;
