@@ -70,6 +70,8 @@ public class EnemyManagerTest extends BaseGDXTest {
         EnemyManager em6 = new EnemyManager(world, "swampDragon", 10, "swampOrc");
         em6.spawnBoss(0, 0);
         assertEquals(1, em6.getEnemyCount());
+        em6.removeBoss();
+        assertEquals(0, em6.getEnemyCount());
     }
 
     @Test
@@ -133,17 +135,21 @@ public class EnemyManagerTest extends BaseGDXTest {
         em4.removeWildEnemy(em4.getWildEnemiesAlive().get(0));
         assertEquals(em4.getWildEnemiesAlive().size(), 9);
         em4.addEnemyConfigs("desertGoblin");
-        for (int i = 0; i < 60; i++) {
+        for (int i = 0; i < 90; i++) {
             em4.spawnRandomWildEnemy();
         }
         PlayerPeon playerPeon = new PlayerPeon(50, 50, 10f);
         world.setPlayerEntity(playerPeon);
-        for (int i = 0; i < 60; i++) {
+        for (int i = 0; i < 120; i++) {
             em4.spawnRandomWildEnemy();
         }
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 200; i++) {
             em4.onTick(0);
         }
+        em4.disableWildEnemySpawning();
+        em4.spawnRandomWildEnemy();
+        em4.onTick(0);
+        assertEquals(em4.getWildEnemiesAlive().size(), 10);
     }
 
     @Test
@@ -160,6 +166,7 @@ public class EnemyManagerTest extends BaseGDXTest {
         assertEquals(em.getBoss().getCol(), 0, 0.001);
         assertEquals(em.getBoss().getRow(), 0, 0.001);
         em.removeBoss();
+        System.out.println(em.getBoss().getObjectName());
     }
 
     @After

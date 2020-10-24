@@ -178,7 +178,7 @@ public class EnemyManager extends TickableManager {
      * @return the number of enemies alive.
      */
     public int getEnemyCount() {
-        return wildEnemiesAlive.size() + specialEnemiesAlive.size() + ((boss != null && !boss.isDead()) ? 1 : 0);
+        return wildEnemiesAlive.size() + specialEnemiesAlive.size() + ((boss != null) ? 1 : 0);
     }
 
     /** Get the current wild enemies alive in the map. */
@@ -294,6 +294,7 @@ public class EnemyManager extends TickableManager {
         if (boss != null) {
             world.removeEntity(boss);
             world.disposeEntity(boss.getEntityID());
+            boss = null;
         }
     }
 
