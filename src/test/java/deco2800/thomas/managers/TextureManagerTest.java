@@ -18,7 +18,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Texture.class, TextureManager.class})
+@PrepareForTest({Texture.class, TextureManager.class, HashMap.class})
 public class TextureManagerTest extends BaseGDXTest {
     // Stores state of missing files during test
     public class FileExistsResult {
