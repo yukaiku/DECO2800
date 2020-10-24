@@ -122,6 +122,7 @@ public class DragonTest extends BaseGDXTest {
 
         assertEquals(volcanoDragon.getSpeed(), 0.1f, 0.01);
         assertEquals(volcanoDragon.getCurrentHealth(), 1000);
+        assertEquals(volcanoDragon.getVariation(), "volcano");
     }
 
     @Test
@@ -135,6 +136,7 @@ public class DragonTest extends BaseGDXTest {
         assertEquals(desertDragon.applyDamage(1, DamageType.COMMON), 0);
         assertEquals(desertDragon.applyDamage(1, DamageType.COMMON), 1);
         assertNotNull(desertDragon.getTarget());
+        desertDragon.onTick(0);
     }
 
     @Test

@@ -53,8 +53,8 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     private int roarTick = 0;
     private int roarTickNext = 800;
     private int goblinSpawnTick = 0;
-    private static final int goblinSpawnCycle = 60;
-    private static final int goblinCap = 10;
+    private static final int GOBLIN_SPAWN_CYCLE = 60;
+    private static final int GOBLIN_CAP = 10;
 
     public Dragon(int health, float speed, int orbNumber) {
         super(health, speed);
@@ -75,7 +75,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
      * if there is less than 10 goblins spawned
      */
     public void summonGoblin() {
-        if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() < goblinCap) {
+        if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() < GOBLIN_CAP) {
             GameManager.get().getManager(EnemyManager.class).spawnSpecialEnemy(
                     variation.name().toLowerCase() + "Goblin", this.getCol(), this.getRow());
         }
@@ -128,15 +128,9 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     }
 
     public void elementalAttack() {
-        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange)) {
-            SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
-            setCombatTask(new MeleeAttackTask(this, origin, 8, 8, 20));
-        }
     }
 
     public void breathAttack() {
-        Fireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
-                getTarget().getRow(), 10, 0.2f, 60, EntityFaction.EVIL);
     }
 
     public String getVariation() {
@@ -176,10 +170,10 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
             tickFollowing = 0;
         }
 
-        if (++goblinSpawnTick > goblinSpawnCycle) {
+        if (++goblinSpawnTick > GOBLIN_SPAWN_CYCLE) {
             if (random.nextBoolean() && super.getTarget() != null) {
                 summonGoblin();
-                if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() >= goblinCap) {
+                if (GameManager.get().getManager(EnemyManager.class).getSpecialEnemiesAlive().size() >= GOBLIN_CAP) {
                     goblinSpawnTick -= 300;
                 }
                 goblinSpawnTick = 0;

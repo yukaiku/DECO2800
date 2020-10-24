@@ -112,7 +112,8 @@ public class EnemyManagerTest extends BaseGDXTest {
         em.spawnSpecialEnemy("summonGoblin", 1, 1);
         em.spawnSpecialEnemy("testDragon", 1, 1);
         assertEquals(9, em.getEnemyCount());
-        EnemyManager em2 = new EnemyManager(world, "swampDragon", 10, "swampGoblin");
+        EnemyManager em2 = new EnemyManager(world, "swampDragon",
+                10, "swampGoblin");
         em2.spawnSpecialEnemy("swampGoblin", 1, 1);
         assertEquals(1, em2.getSpecialEnemiesAlive().size());
     }
@@ -122,7 +123,6 @@ public class EnemyManagerTest extends BaseGDXTest {
         EnemyManager em = new EnemyManager(world, null, 10);
         em.setWildEnemyCap(20);
         assertEquals(em.getWildEnemyCap(), 20);
-        System.out.println(em.getWorldName());
     }
 
     @Test
