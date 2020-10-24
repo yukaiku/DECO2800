@@ -21,4 +21,12 @@ public class EnemyUtil {
         return Math.sqrt(Math.pow(Math.round(enemy.getCol()) - Math.round(player.getCol()), 2) +
                 Math.pow(Math.round(enemy.getRow()) - Math.round(player.getRow()), 2)) < attackRange;
     }
+
+    public static float playerLRDistance(EnemyPeon enemy, AgentEntity player) {
+        float diff = enemy.getCol() - player.getCol();
+        if (Math.abs(diff) > 10) {
+            return diff / Math.abs(diff);
+        }
+        return diff / 10;
+    }
 }

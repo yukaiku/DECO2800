@@ -2,6 +2,7 @@ package deco2800.thomas.managers;
 
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.enemies.DragonTest;
+import deco2800.thomas.entities.enemies.InvalidEnemyException;
 import deco2800.thomas.entities.enemies.bosses.Dragon;
 import deco2800.thomas.entities.enemies.minions.Goblin;
 import deco2800.thomas.entities.enemies.bosses.SwampDragon;
@@ -36,6 +37,16 @@ public class EnemyManagerTest extends BaseGDXTest {
         assertEquals(em3.getBoss().getClass(), SwampDragon.class);
         EnemyManager em4 = new EnemyManager(world, 10, "tundraOrc");
         assertEquals(em4.getWildEnemyCap(), 10);
+        EnemyManager em5 = new EnemyManager(world, "badBossName", 10, "badWildEnemy");
+        assertEquals(em5.getEnemyCount(), 0);
+        try {
+            em5.addEnemyConfigs("tundraOrc");
+        } catch (InvalidEnemyException io) {
+            fail();
+        }
+        for (int i = 0; i < 6; i++) {
+            em4.onTick(0);
+        }
     }
 
     @Test
@@ -43,12 +54,17 @@ public class EnemyManagerTest extends BaseGDXTest {
         EnemyManager em4 = new EnemyManager(world, 10, "tundraOrc");
         em4.removeEnemyConfigs("tundraOrc");
         assertNull(em4.getEnemyConfig("tundraOrc"));
+        em4.spawnSpecialEnemy("swampGoblin", 1, 1);
+        em4.removeSpecialEnemy(em4.getSpecialEnemiesAlive().get(0));
     }
 
     @Test
     public void testCount() {
         EnemyManager em4 = new EnemyManager(world, 10, "tundraOrc");
         assertEquals(0, em4.getEnemyCount());
+        EnemyManager em6 = new EnemyManager(world, "swampDragon", 10, "swampOrc");
+        em6.spawnBoss(0, 0);
+        assertEquals(1, em6.getEnemyCount());
     }
 
     @Test
@@ -60,6 +76,7 @@ public class EnemyManagerTest extends BaseGDXTest {
         em4.setBoss(dragon);
         em4.spawnBoss(0, 0);
         assertTrue(world.getEntities().contains(dragon));
+        em4.removeBoss();
         em4.removeBoss();
         assertFalse(world.getEntities().contains(dragon));
         assertEquals(em4.getBoss().getCol(), 0, 0.001);
@@ -95,6 +112,9 @@ public class EnemyManagerTest extends BaseGDXTest {
         em.spawnSpecialEnemy("summonGoblin", 1, 1);
         em.spawnSpecialEnemy("testDragon", 1, 1);
         assertEquals(9, em.getEnemyCount());
+        EnemyManager em2 = new EnemyManager(world, "swampDragon", 10, "swampGoblin");
+        em2.spawnSpecialEnemy("swampGoblin", 1, 1);
+        assertEquals(1, em2.getSpecialEnemiesAlive().size());
     }
 
     @Test
@@ -102,6 +122,7 @@ public class EnemyManagerTest extends BaseGDXTest {
         EnemyManager em = new EnemyManager(world, null, 10);
         em.setWildEnemyCap(20);
         assertEquals(em.getWildEnemyCap(), 20);
+        System.out.println(em.getWorldName());
     }
 
     @Test
