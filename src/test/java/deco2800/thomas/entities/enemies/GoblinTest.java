@@ -6,9 +6,12 @@ import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.minions.Goblin;
+import deco2800.thomas.entities.items.Item;
+import deco2800.thomas.entities.items.ItemDropTable;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.tasks.combat.MeleeAttackTask;
 import deco2800.thomas.worlds.AbstractWorld;
+import deco2800.thomas.worlds.Tile;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +43,9 @@ public class GoblinTest extends BaseGDXTest {
         enemyManager = mock(EnemyManager.class);
         InputManager inputManager = mock(InputManager.class);
         OnScreenMessageManager onScreenMessageManager = mock(OnScreenMessageManager.class);
-        textureManager = mock(TextureManager.class);
+        TextureManager textureManager = mock(TextureManager.class);
+        SoundManager soundManager = mock(SoundManager.class);
+        StatusEffectManager seManager = mock(StatusEffectManager.class);
 
         gameManager = mock(GameManager.class);
         when(GameManager.get()).thenReturn(gameManager);
@@ -48,10 +53,14 @@ public class GoblinTest extends BaseGDXTest {
         when(gameManager.getManager(InputManager.class)).thenReturn(inputManager);
         when(gameManager.getManager(EnemyManager.class)).thenReturn(enemyManager);
         when(gameManager.getManager(TextureManager.class)).thenReturn(textureManager);
+        when(gameManager.getManager(SoundManager.class)).thenReturn(soundManager);
+        when(gameManager.getManager(StatusEffectManager.class)).thenReturn(seManager);
         when(GameManager.getManagerFromInstance(OnScreenMessageManager.class)).thenReturn(onScreenMessageManager);
         when(GameManager.getManagerFromInstance(InputManager.class)).thenReturn(inputManager);
         when(GameManager.getManagerFromInstance(EnemyManager.class)).thenReturn(enemyManager);
         when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
+        when(GameManager.getManagerFromInstance(SoundManager.class)).thenReturn(soundManager);
+        when(GameManager.getManagerFromInstance(StatusEffectManager.class)).thenReturn(seManager);
 
         Texture texture = mock(Texture.class);
         when(textureManager.getTexture(anyString())).thenReturn(texture);
@@ -65,6 +74,9 @@ public class GoblinTest extends BaseGDXTest {
         playerPeon = mock(PlayerPeon.class);
         when(GameManager.get().getWorld()).thenReturn(world);
         when(GameManager.get().getWorld().getPlayerEntity()).thenReturn(playerPeon);
+        when(GameManager.get().getWorld().getType()).thenReturn("Test");
+
+
 
         volcanoGoblin = new Goblin(EnemyIndex.Variation.VOLCANO, 100, 0.1f, 1, 1, 1);
         desertGoblin = new Goblin(EnemyIndex.Variation.DESERT, 100, 0.1f, 1, 1, 1);

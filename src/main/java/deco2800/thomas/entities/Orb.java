@@ -3,11 +3,10 @@ package deco2800.thomas.entities;
 import deco2800.thomas.Tickable;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.Tile;
-
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class Orb extends StaticEntity implements Tickable {
     private final Logger logger = LoggerFactory.getLogger(Orb.class);

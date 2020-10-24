@@ -29,6 +29,7 @@ public class LoadedPeonTest extends BaseGDXTest {
     @Before
     public void setUp() throws Exception {
         player = new PlayerPeon(0f, 0f, 0.05f);
+        player.setWallet(0);
 
         world = new TestWorld();
         world.setPlayerEntity(player);

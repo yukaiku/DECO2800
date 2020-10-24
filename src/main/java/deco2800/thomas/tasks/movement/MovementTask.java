@@ -1,11 +1,9 @@
 package deco2800.thomas.tasks.movement;
 
-import java.util.List;
-
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.agent.AgentEntity;
-import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.agent.Peon;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.environment.Portal;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.PathFindingService;
@@ -17,6 +15,8 @@ import deco2800.thomas.tasks.status.SpeedStatus;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.util.WorldUtil;
 import deco2800.thomas.worlds.Tile;
+
+import java.util.List;
 
 
 public class MovementTask extends AbstractTask {
@@ -87,20 +87,10 @@ public class MovementTask extends AbstractTask {
         }
 
         if (entity.getPosition().isCloseEnoughToBeTheSame(destination)) {
-            Direction movingDirection = Direction.NONE;
-            ((PlayerPeon) entity).setCurrentState(PlayerPeon.State.IDLE);
-            
-            if (!((PlayerPeon) entity).movementStack.empty()) {
-                movingDirection = ((PlayerPeon) entity).movementStack.peek();
-                if (((PlayerPeon) entity).isDirectionKeyActive(movingDirection)) {
-                    entity.setMovingDirection(movingDirection);
-                } else {
-                    ((PlayerPeon) entity).movementStack.pop();
-                    return;
-                }
+            if (!this.updateMovingDirection((PlayerPeon) this.entity)) {
+                return;
             }
-
-            switch (movingDirection) {
+            switch (entity.getMovingDirection()) {
                 case UP:
                     destination.setRow(destination.getRow() + 1f);
                     break;
@@ -118,6 +108,21 @@ public class MovementTask extends AbstractTask {
                     break;
             }
         }
+    }
+
+    private boolean updateMovingDirection(PlayerPeon entity) {
+        entity.setMovingDirection(Direction.NONE);
+        if (!entity.getMovementStack().empty()) {
+            Direction movingDirection = entity.getMovementStack().peek();
+            if (entity.isDirectionKeyActive(movingDirection)) {
+                entity.setMovingDirection(movingDirection);
+            } else {
+                entity.setCurrentState(PlayerPeon.State.IDLE);
+                entity.getMovementStack().pop();
+                return false;
+            }
+        }
+        return true;
     }
 
     private void autoMovement() {

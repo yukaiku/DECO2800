@@ -17,7 +17,10 @@ import deco2800.thomas.entities.enemies.bosses.TundraDragon;
 import deco2800.thomas.entities.enemies.bosses.VolcanoDragon;
 import deco2800.thomas.entities.enemies.minions.Goblin;
 import deco2800.thomas.managers.*;
+import deco2800.thomas.renderers.OverlayRenderer;
+import deco2800.thomas.renderers.components.BossHealthComponent;
 import deco2800.thomas.renderers.components.FloatingDamageComponent;
+import deco2800.thomas.screens.GameScreen;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
 import deco2800.thomas.tasks.combat.IceBreathTask;
 import deco2800.thomas.tasks.combat.SandTornadoAttackTask;
@@ -63,6 +66,8 @@ public class DragonTest extends BaseGDXTest {
         OnScreenMessageManager onScreenMessageManager = mock(OnScreenMessageManager.class);
         TextureManager textureManager = mock(TextureManager.class);
         SoundManager soundManager = mock(SoundManager.class);
+        StatusEffectManager seManager = mock(StatusEffectManager.class);
+        ScreenManager screenManager = mock(ScreenManager.class);
 
         gameManager = mock(GameManager.class);
         when(GameManager.get()).thenReturn(gameManager);
@@ -71,19 +76,29 @@ public class DragonTest extends BaseGDXTest {
         when(gameManager.getManager(EnemyManager.class)).thenReturn(enemyManager);
         when(gameManager.getManager(TextureManager.class)).thenReturn(textureManager);
         when(gameManager.getManager(SoundManager.class)).thenReturn(soundManager);
+        when(gameManager.getManager(StatusEffectManager.class)).thenReturn(seManager);
         when(GameManager.getManagerFromInstance(OnScreenMessageManager.class)).thenReturn(onScreenMessageManager);
         when(GameManager.getManagerFromInstance(InputManager.class)).thenReturn(inputManager);
         when(GameManager.getManagerFromInstance(EnemyManager.class)).thenReturn(enemyManager);
         when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
         when(GameManager.getManagerFromInstance(SoundManager.class)).thenReturn(soundManager);
+        when(GameManager.getManagerFromInstance(StatusEffectManager.class)).thenReturn(seManager);
+        when(GameManager.getManagerFromInstance(ScreenManager.class)).thenReturn(screenManager);
 
         Texture texture = mock(Texture.class);
         when(textureManager.getTexture(anyString())).thenReturn(texture);
-        Array<TextureRegion> playerStand = new Array<>();
-        playerStand.add(new TextureRegion(new Texture("resources/combat/move_right.png"), 262, 256));
-        when(textureManager.getAnimationFrames(anyString())).thenReturn(playerStand);
+        Array<TextureRegion> dragonTexture = new Array<>();
+        dragonTexture.add(new TextureRegion(new Texture("resources/enemies/dragon_volcano.png"), 262, 256));
+        when(textureManager.getAnimationFrames(anyString())).thenReturn(dragonTexture);
         when(texture.getWidth()).thenReturn(1);
         when(texture.getHeight()).thenReturn(1);
+
+        GameScreen screen = mock(GameScreen.class);
+        when(screenManager.getCurrentScreen()).thenReturn(screen);
+        OverlayRenderer renderer = mock(OverlayRenderer.class);
+        when(screen.getOverlayRenderer()).thenReturn(renderer);
+        BossHealthComponent component = mock(BossHealthComponent.class);
+        when(renderer.getComponentByInstance(any())).thenReturn(component);
 
         world = mock(AbstractWorld.class);
         Tile tile = new Tile("quicksand", 0, 0);
@@ -117,12 +132,14 @@ public class DragonTest extends BaseGDXTest {
 
     @Test
     public void testOnHit() {
+        assertEquals(desertDragon.applyDamage(1, DamageType.COMMON), 0);
         assertEquals(desertDragon.applyDamage(1, DamageType.COMMON), 1);
         assertNotNull(desertDragon.getTarget());
     }
 
     @Test
     public void testVolcanoDragonElementalAttack() {
+        volcanoDragon.elementalAttack();
         volcanoDragon.hitByTarget();
         volcanoDragon.elementalAttack();
         assertTrue(volcanoDragon.getCombatTask() instanceof FireBombAttackTask);
@@ -188,4 +205,12 @@ public class DragonTest extends BaseGDXTest {
         WorldUtil.removeEntity(any(AbstractEntity.class));
         verify(world, times(1)).setOrbEntity(any(Orb.class));
     }
+
+    @Test
+    public void testAnimationFrame() {
+        Array<TextureRegion> dragonArray = new Array<>();
+        dragonArray.add(new TextureRegion(new Texture("resources/enemies/dragon_volcano.png")));
+        assertEquals(dragonArray.get(0).getTexture().toString(), volcanoDragon.getFrame(0).getTexture().toString());
+    }
+
 }

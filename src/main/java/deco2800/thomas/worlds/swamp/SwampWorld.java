@@ -1,20 +1,15 @@
 package deco2800.thomas.worlds.swamp;
 
-import deco2800.thomas.entities.*;
+import deco2800.thomas.entities.AbstractDialogBox;
+import deco2800.thomas.entities.AbstractEntity;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.environment.Portal;
+import deco2800.thomas.entities.environment.swamp.*;
 import deco2800.thomas.entities.items.*;
 import deco2800.thomas.entities.npc.NonPlayablePeon;
 import deco2800.thomas.entities.npc.SwampNPC;
-import deco2800.thomas.entities.environment.swamp.SwampDeadTree;
-import deco2800.thomas.entities.environment.swamp.SwampFallenTree;
-import deco2800.thomas.entities.environment.swamp.SwampPond;
-import deco2800.thomas.entities.environment.swamp.SwampTreeLog;
-import deco2800.thomas.entities.environment.swamp.SwampTreeStub;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
-import deco2800.thomas.managers.DatabaseManager;
-import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
@@ -29,7 +24,7 @@ public class SwampWorld extends AbstractWorld {
     private final Logger logger = LoggerFactory.getLogger(TestWorld.class);
     public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/swamp/swamp-game-map.json";
 
-    private List<AbstractDialogBox> allSwampDialogues;
+    public List<AbstractDialogBox> allSwampDialogues;
 
     public SwampWorld() {
         this(AbstractWorld.DEFAULT_WIDTH, AbstractWorld.DEFAULT_HEIGHT);
@@ -46,11 +41,6 @@ public class SwampWorld extends AbstractWorld {
         PlayerPeon.buffDamageTotal = 0;
         this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
-
-        /*for (AbstractSkill s :((PlayerPeon) this.getPlayerEntity()).getWizardSkills()){
-            s.setCooldownMax();
-        }
-        ((PlayerPeon) this.getPlayerEntity()).getMechSkill().setCooldownMax();*/
 
         // Creates Items
         this.generateItemEntities();
@@ -218,37 +208,46 @@ public class SwampWorld extends AbstractWorld {
      */
     private void generateItemEntities(){
         final int NUM_POTIONS = 6;
-        final int NUM_SHIELDS = 4;
-        final int NUM_CHESTS = 3;
+        final int NUM_IRON_ARMOUR = 2;
+        final int NUM_CHESTS = 2;
         final String ITEM_BOX_STYLE = "swamp";
 
         for (int i = 0; i < NUM_POTIONS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-
-                HealthPotion potion = new HealthPotion(tile, false,
-                        (PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
+            if (!tile.hasParent()) {
+                HealthPotion potion = new HealthPotion(tile,false,(PlayerPeon) getPlayerEntity(), ITEM_BOX_STYLE);
                 entities.add(potion);
                 this.allSwampDialogues.add(potion.getDisplay());
+            } else {
+                i--;
+            }
 
         }
 
-        for (int i = 0; i < NUM_SHIELDS; i++) {
+        for (int i = 0; i < NUM_IRON_ARMOUR; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            IronArmour ironArmour = new IronArmour(tile, false,
-                    (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
-            entities.add(ironArmour);
-            this.allSwampDialogues.add(ironArmour.getDisplay());
+            if (!tile.hasParent()) {
+                IronArmour ironArmour = new IronArmour(tile, false,
+                        (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE,200);
+                entities.add(ironArmour);
+                this.allSwampDialogues.add(ironArmour.getDisplay());
+            } else {
+                i--;
+            }
         }
 
         for (int i = 0; i < NUM_CHESTS; i++) {
             Tile tile = getTile(Item.randomItemPositionGenerator(DEFAULT_WIDTH),
                     Item.randomItemPositionGenerator(DEFAULT_HEIGHT));
-            Treasure chest = new Treasure(tile, false,
-                    (PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
-            entities.add(chest);
-            this.allSwampDialogues.add(chest.getDisplay());
+            if (!tile.hasParent()) {
+                Treasure chest = new Treasure(tile, false,(PlayerPeon) getPlayerEntity(),ITEM_BOX_STYLE);
+                entities.add(chest);
+                this.allSwampDialogues.add(chest.getDisplay());
+            } else {
+                i--;
+            }
         }
 
         Tile attackAmuletTile = getTile(23,14);
@@ -262,7 +261,16 @@ public class SwampWorld extends AbstractWorld {
                 (PlayerPeon) this.getPlayerEntity(), ITEM_BOX_STYLE,0.5f);
         entities.add(cdring);
         this.allSwampDialogues.add(cdring.getDisplay());
+
     }
+
+    public List<AbstractDialogBox> returnAllDialogues(){
+        return this.allSwampDialogues;
+    }
+
+    public void addDialogue(AbstractDialogBox box){ this.allSwampDialogues.add(box);}
+
+    public void removeDialogue(AbstractDialogBox box){ this.allSwampDialogues.remove(box);}
 
     @Override
     public void onTick(long i) {
@@ -270,5 +278,6 @@ public class SwampWorld extends AbstractWorld {
         for (AbstractEntity e : this.getEntities()) {
             e.onTick(0);
         }
+
     }
 }

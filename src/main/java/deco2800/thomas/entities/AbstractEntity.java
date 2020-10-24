@@ -28,7 +28,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Rend
 	private String objectName = null;
 
 	@Expose
-	protected String texture = "error_box";
+	protected String texture = "spacman_ded";
 
 	@Expose
 	protected SquareVector position;

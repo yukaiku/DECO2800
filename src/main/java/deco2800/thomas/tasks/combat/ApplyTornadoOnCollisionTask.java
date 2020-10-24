@@ -2,9 +2,9 @@ package deco2800.thomas.tasks.combat;
 
 import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.AbstractEntity;
+import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.agent.PlayerPeon;
-import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.AbstractTask;
@@ -14,9 +14,6 @@ import deco2800.thomas.worlds.AbstractWorld;
 import java.util.List;
 
 public class ApplyTornadoOnCollisionTask extends AbstractTask {
-
-    // Reference to current game world
-    private AbstractWorld world;
     // Lifetime of task
     private long lifetime;
     private long currentLifetime;
@@ -29,7 +26,6 @@ public class ApplyTornadoOnCollisionTask extends AbstractTask {
         super(entity);
 
         this.taskComplete = false;
-        world = GameManager.get().getWorld();
 
         this.lifetime = lifetime;
         this.currentLifetime = 0;
@@ -47,6 +43,7 @@ public class ApplyTornadoOnCollisionTask extends AbstractTask {
 
     @Override
     public void onTick(long tick) {
+        AbstractWorld world = GameManager.get().getWorld();
         if (taskAlive) {
             List<AbstractEntity> collidingEntities = world.getEntitiesInBounds(entity.getBounds());
             if (collidingEntities.size() > 1) { // Own bounding box should always be present

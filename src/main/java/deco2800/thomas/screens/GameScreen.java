@@ -30,6 +30,8 @@ import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
 import deco2800.thomas.worlds.TutorialWorld;
+import deco2800.thomas.worlds.desert.DesertWorld;
+
 import deco2800.thomas.worlds.volcano.VolcanoWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,6 +111,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	/**
 	 * Gets the current OverlayRenderer.
+	 *
 	 * @return OverlayRenderer
 	 */
 	public OverlayRenderer getOverlayRenderer() {
@@ -188,6 +191,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 				dispose();
 				// Set main menu screen
 				game.setMainMenuScreen();
+				GameManager.getManagerFromInstance(SoundManager.class).stopBossMusic();
 			}
 		});
 		enterButton.addListener(new ClickListener() {
@@ -226,11 +230,11 @@ public class GameScreen implements Screen, KeyDownObserver {
 	/**
 	 * Render the game normally
 	 */
-	public void renderGame(float delta ) {
+	public void renderGame(float delta) {
 		handleRenderables();
 
-		CameraUtil.zoomableCamera(camera, Input.Keys.EQUALS, Input.Keys.MINUS, delta, GameManager.get().getWorld().getWorldZoomable());
 		CameraUtil.lockCameraOnTarget(camera, GameManager.get().getWorld().getPlayerEntity());
+		CameraUtil.cameraBoundaryInWorld(camera, GameManager.get().getWorld());
 
 		cameraEvent.position.set(camera.position);
 		cameraEvent.update();
@@ -324,8 +328,7 @@ public class GameScreen implements Screen, KeyDownObserver {
 	 */
 	@Override
 	public void render(float delta) {
-		switch (GameManager.get().getState())
-		{
+		switch (GameManager.get().getState()) {
 			case TRANSITION:
 				renderTransitionScreen(delta);
 				break;
@@ -407,15 +410,19 @@ public class GameScreen implements Screen, KeyDownObserver {
 
 	@Override
 	public void notifyKeyDown(int keycode) {
+		if (keycode == Input.Keys.ENTER && GameManager.get().getState() == GameManager.State.TRANSITION) {
+			GameManager.resume();
+		}
 		if (keycode == Input.Keys.F12 && GameManager.get().getState() == GameManager.State.RUN) {
 			GameManager.get().setDebugMode(!GameManager.get().getDebugMode());
 		}
 		if (keycode == Input.Keys.N && GameManager.get().getDebugMode() && !GameManager.get().getWorld().getType().equals("World") && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
 				Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
 			Boss boss = GameManager.getManagerFromInstance(EnemyManager.class).getBoss();
+			boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
+			boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
 			PlayerPeon playerPeon = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
 			playerPeon.setPosition(boss.getPosition().getCol(),boss.getPosition().getRow(),boss.getHeight());
-			boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
 		}
 		if (keycode == Input.Keys.ESCAPE && GameManager.get().getState() == GameManager.State.RUN ) {
 			GameManager.pause();

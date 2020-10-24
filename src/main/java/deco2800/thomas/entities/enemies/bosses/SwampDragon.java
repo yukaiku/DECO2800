@@ -5,9 +5,10 @@ import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.combat.skills.FireballSkill;
 import deco2800.thomas.combat.skills.ScorpionStingSkill;
 import deco2800.thomas.combat.skills.SummonGoblinSkill;
+
+import com.badlogic.gdx.graphics.g2d.Animation;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.PlayerManager;
 import deco2800.thomas.managers.TextureManager;
 
 public class SwampDragon extends Dragon {
@@ -15,6 +16,7 @@ public class SwampDragon extends Dragon {
     public SwampDragon(int health, float speed, int orbNumber) {
         super(health, speed, orbNumber);
         this.variation = EnemyIndex.Variation.SWAMP;
+        this.identifier = "dragonSwamp";
         this.setObjectName("Siendiadut");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
@@ -56,14 +58,5 @@ public class SwampDragon extends Dragon {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * On death, perform super death, but also grant the player the Sting skill.
-     */
-    @Override
-    public void death() {
-        super.death();
-        GameManager.getManagerFromInstance(PlayerManager.class).grantWizardSkill(WizardSkills.STING);
     }
 }

@@ -1,16 +1,15 @@
 package deco2800.thomas.worlds;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.google.gson.annotations.Expose;
-
 import deco2800.thomas.entities.StaticEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.util.SquareVector;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Tile {
 

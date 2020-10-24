@@ -1,9 +1,9 @@
 package deco2800.thomas.entities.npc;
 
 import deco2800.thomas.entities.AbstractDialogBox;
-import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.Interactable;
 import deco2800.thomas.entities.NPCDialog;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.util.SquareVector;
 
 public class DesertNPC extends NonPlayablePeon implements Interactable {

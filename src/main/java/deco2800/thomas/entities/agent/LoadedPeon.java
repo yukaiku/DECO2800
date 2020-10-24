@@ -4,7 +4,7 @@ import deco2800.thomas.managers.GameManager;
 
 public class LoadedPeon extends Peon {
 
-    private int wallet = 0;
+    private static int wallet = 0;
 
     public LoadedPeon(){
         this.wallet = 0;
@@ -15,8 +15,12 @@ public class LoadedPeon extends Peon {
         super(row, col, speed, health);
     }
 
-    public int getWallet() {
+    public static int getWallet() {
         return wallet;
+    }
+    
+    public static void setWallet(int money){
+        wallet = money; 
     }
 
     public static int checkBalance() {
@@ -48,11 +52,11 @@ public class LoadedPeon extends Peon {
         }
     }
 
-    public void takeMoney(int amount) {
+    public static void takeMoney(int amount) {
         wallet -= amount;
     }
 
-    public void addMoney(int amount) {
+    public static void addMoney(int amount) {
         wallet += amount;
     }
 }

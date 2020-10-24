@@ -6,9 +6,10 @@ import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.combat.skills.FireballSkill;
 import deco2800.thomas.combat.skills.IceBreathSkill;
 import deco2800.thomas.combat.skills.SummonGoblinSkill;
+import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.entities.attacks.Iceball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.PlayerManager;
 import deco2800.thomas.managers.TextureManager;
 
 public class TundraDragon extends Dragon {
@@ -16,13 +17,18 @@ public class TundraDragon extends Dragon {
         super(health, speed, orbNumber);
         this.variation = EnemyIndex.Variation.TUNDRA;
         this.identifier = "dragonTundra";
-        this.setTexture("dragonTundra");
         this.setObjectName("Diokiedes");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
+
         this.elementalAttack = new IceBreathSkill(this, 0.2f, 3);
         this.breathAttack = new FireballSkill(this);
         this.summonGoblin = new SummonGoblinSkill(this);
+
+        this.dragonAttacking = new Animation<>(0.2f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
+        this.dragonWalking = new Animation<>(0.25f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Walk"));
     }
 
     @Override
@@ -56,14 +62,5 @@ public class TundraDragon extends Dragon {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * On death, perform super death, but also grant the player the Iceball skill.
-     */
-    @Override
-    public void death() {
-        super.death();
-        GameManager.getManagerFromInstance(PlayerManager.class).grantWizardSkill(WizardSkills.ICEBALL);
     }
 }

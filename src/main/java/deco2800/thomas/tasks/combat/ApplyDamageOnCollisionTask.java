@@ -1,8 +1,8 @@
 package deco2800.thomas.tasks.combat;
 
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.attacks.CombatEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.tasks.AbstractTask;
@@ -15,8 +15,6 @@ import java.util.List;
  * it applies damage.
  */
 public class ApplyDamageOnCollisionTask extends AbstractTask {
-    // Reference to current game world
-    private AbstractWorld world;
     // Lifetime of task
     private long lifetime;
     private long currentLifetime;
@@ -33,7 +31,6 @@ public class ApplyDamageOnCollisionTask extends AbstractTask {
         super(entity);
 
         this.taskComplete = false;
-        world = GameManager.get().getWorld();
 
         this.lifetime = lifetime;
         this.currentLifetime = 0;
@@ -63,6 +60,7 @@ public class ApplyDamageOnCollisionTask extends AbstractTask {
      */
     @Override
     public void onTick(long tick) {
+        AbstractWorld world = GameManager.get().getWorld();
         if (!taskComplete) {
             List<AbstractEntity> collidingEntities = world.getEntitiesInBounds(entity.getBounds());
             if (collidingEntities.size() > 1) { // Own bounding box should always be present

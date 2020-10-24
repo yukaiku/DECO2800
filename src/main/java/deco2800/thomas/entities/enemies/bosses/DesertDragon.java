@@ -5,6 +5,8 @@ import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.combat.skills.DesertFireballSkill;
 import deco2800.thomas.combat.skills.SandTornadoSkill;
 import deco2800.thomas.combat.skills.SummonGoblinSkill;
+import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.entities.attacks.DesertFireball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
@@ -14,13 +16,18 @@ public class DesertDragon extends Dragon {
         super(health, speed, orbNumber);
         this.variation = EnemyIndex.Variation.DESERT;
         this.identifier = "dragonDesert";
-        this.setTexture("dragonDesert");
         this.setObjectName("Doavnaen");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
         this.elementalAttack = new SandTornadoSkill(this);
         this.breathAttack = new DesertFireballSkill(this);
         this.summonGoblin = new SummonGoblinSkill(this);
+
+        this.dragonAttacking = new Animation<>(0.2f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
+        this.dragonWalking = new Animation<>(0.25f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Walk"));
+
     }
 
     @Override
