@@ -36,8 +36,8 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     }
     protected Animation<TextureRegion> dragonAttacking;
     protected Animation<TextureRegion> dragonWalking;
-    public State currentState;
-    public State previousState;
+    private State currentState;
+    private State previousState;
     private MovementTask.Direction facingDirection;
     protected Animation<TextureRegion> dragonIdle;
     protected EnemyIndex.Variation variation;
@@ -51,10 +51,9 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     Random random = new Random();
 
     private int roarTick = 0;
-    private int roarTickNext = 800;
     private int goblinSpawnTick = 0;
-    private final int goblinSpawnCycle = 60;
-    private final int goblinCap = 10;
+    private static final int goblinSpawnCycle = 60;
+    private static final int goblinCap = 10;
 
     public Dragon(int health, float speed, int orbNumber) {
         super(health, speed);
@@ -182,6 +181,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
         }
 
         if (this instanceof VolcanoDragon && super.getTarget() != null) {
+            int roarTickNext = 800;
             if (++roarTick > roarTickNext) {
                 GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon1");
                 roarTick = 0;
