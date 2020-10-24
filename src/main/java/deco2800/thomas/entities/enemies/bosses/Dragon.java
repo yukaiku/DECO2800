@@ -72,10 +72,6 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
         this.variation = EnemyIndex.Variation.SWAMP; // default
         this.identifier = "dragonSwamp";
         this.setTexture("dragonSwamp");
-        this.dragonAttacking = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("dragonVolcanoAttack"));
-        this.dragonWalking = new Animation<>(0.2f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("dragonVolcanoWalk"));
         this.currentState = State.IDLE;
         this.previousState = State.IDLE;
     }
@@ -148,6 +144,9 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
      */
     @Override
     public void death() {
+        float pan = EnemyUtil.playerLRDistance(this, super.getTarget());
+        GameManager.getManagerFromInstance(SoundManager.class).playSound(String.format("%sDragon",
+                this.getVariation()), pan);
         super.death();
         AbstractWorld world = GameManager.get().getWorld();
         Tile tile = world.getTile((float) Math.ceil((this.getCol())),

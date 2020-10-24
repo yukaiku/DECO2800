@@ -618,7 +618,7 @@ public class TextureManager extends AbstractManager {
             addAnimationFramesCollection("orcTundraIdle", "resources/enemies/orc_tundra.png");
             addAnimationFramesCollection("orcVolcanoIdle", "resources/enemies/orc_volcano.png");
             addAnimationFramesCollection("dragonDesertIdle", "resources/enemies/dragon_desert.png");
-            addAnimationFramesCollection("dragonSwampIdle", "resources/enemies/dragon_swamp.png");
+            addAnimationFramesCollection("dragonSwampIdle", "resources/enemies/dragon_swamp_2.png");
             addAnimationFramesCollection("dragonTundraIdle", "resources/enemies/dragon_tundra.png");
             addAnimationFramesCollection("dragonVolcanoIdle", "resources/enemies/dragon_volcano.png");
 
@@ -665,8 +665,8 @@ public class TextureManager extends AbstractManager {
             // dragon attack sprites
             addAnimationFramesSprite("dragonDesertAttack", "resources/enemies/desert_dragon_attack_sprites.png",
                     3, 701, 701, true);
-            addAnimationFramesSprite("dragonSwampAttack", "resources/enemies/dragon_swamp_sprite_sheet.png",
-                    2, 492, 264, false);
+            addAnimationFramesSprite("dragonSwampAttack", "resources/enemies/dragon_swamp_attacking_sprites.png",
+                    2, 635, 635, true);
             addAnimationFramesSprite("dragonTundraAttack", "resources/enemies/dragon_tundra_attacking_sprites.png",
                     4, 1363, 1000, true);
             addAnimationFramesSprite("dragonVolcanoAttack", "resources/enemies/dragon_volcano_fireball_sprites.png",
@@ -679,6 +679,8 @@ public class TextureManager extends AbstractManager {
                     2, 1363, 1000, false);
             addAnimationFramesSprite("dragonDesertWalk", "resources/enemies/desert_dragon_tail_sprites.png",
                     5, 701, 701, true);
+            addAnimationFramesSprite("dragonSwampWalk", "resources/enemies/dragon_swamp_walking_sprites.png",
+                    2, 635, 635, true);
 
         } catch (GdxRuntimeException e) {
             e.printStackTrace();

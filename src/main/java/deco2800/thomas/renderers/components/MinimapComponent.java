@@ -16,9 +16,6 @@ import java.util.List;
 
 public class MinimapComponent extends OverlayComponent {
     private static final int MAP_WIDTH = 49;
-    // The column offsets to render each entity at on the x coordinate
-    private static final int COLUMN_OFFSET = 310;
-    private static final int ENEMY_COLUMN_OFFSET = 350;
     // The number of positive columns and rows
     private static final int POSITIVE_COLUMN_NUMBER = 25;
     private static final int POSITIVE_ROW_NUMBER = 24;
@@ -29,7 +26,8 @@ public class MinimapComponent extends OverlayComponent {
     private static final float ENEMY_SIZE_SCALAR = 0.2f;
     private static final float TILE_SIZE_SCALAR = 0.02f;
     private static final float PLAYER_SIZE_SCALAR = 0.1f;
-    private static final float BOSS_SIZE_SCALAR = 0.035f;
+    private static final float SMALL_BOSS_SIZE_SCALAR = 0.1f;
+    private static final float LARGE_BOSS_SIZE_SCALAR = 0.05f;
 
 
 
@@ -49,7 +47,6 @@ public class MinimapComponent extends OverlayComponent {
         }
         List<Tile> tileMap = GameManager.get().getWorld().getTiles();
         batch.begin();
-
         for (Tile t : tileMap) {
             if (width > MAP_WIDTH) {
                 height++;
@@ -58,7 +55,6 @@ public class MinimapComponent extends OverlayComponent {
             renderTile(batch, t, height, width);
             width++;
         }
-
         if (GameManager.getManagerFromInstance(EnemyManager.class) != null) {
             List<EnemyPeon> enemyList = GameManager.getManagerFromInstance(EnemyManager.class).getWildEnemiesAlive();
             List<EnemyPeon> specialEnemyList = GameManager.getManagerFromInstance(EnemyManager.class).getSpecialEnemiesAlive();
@@ -112,10 +108,15 @@ public class MinimapComponent extends OverlayComponent {
 
     private void renderBoss(SpriteBatch batch, EnemyPeon boss) {
         Texture tex = boss.getIcon();
+        // The volcano and tundra dragons are much bigger so need to be rendered smaller
         float x = overlayRenderer.getX() + ENTITY_POSITION_SCALAR * (boss.getCol() + POSITIVE_COLUMN_NUMBER);
         float y = overlayRenderer.getY() + overlayRenderer.getHeight() - 20 + ENTITY_POSITION_SCALAR * (boss.getRow() - POSITIVE_ROW_NUMBER);
-        batch.draw(tex, x, y,
-                tex.getWidth() * BOSS_SIZE_SCALAR,
-                tex.getHeight() * BOSS_SIZE_SCALAR);
+        if (boss.getObjectName().equals("Chusulth") || boss.getObjectName().equals("Diokiedes")) {
+            batch.draw(tex, x, y, tex.getWidth() * LARGE_BOSS_SIZE_SCALAR,
+                    tex.getHeight() * LARGE_BOSS_SIZE_SCALAR);
+        } else {
+            batch.draw(tex, x, y, tex.getWidth() * SMALL_BOSS_SIZE_SCALAR,
+                    tex.getHeight() * SMALL_BOSS_SIZE_SCALAR);
+        }
     }
 }
