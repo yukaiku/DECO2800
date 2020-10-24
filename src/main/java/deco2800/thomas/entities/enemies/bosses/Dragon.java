@@ -110,15 +110,9 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     }
 
     public void elementalAttack() {
-        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), ATTACK_RANGE)) {
-            SquareVector origin = new SquareVector(this.getCol() - 1, this.getRow() - 1);
-            setCombatTask(new MeleeAttackTask(this, origin, 8, 8, 20));
-        }
     }
 
     public void breathAttack() {
-        Fireball.spawn(this.getCol(), this.getRow(), getTarget().getCol(),
-                getTarget().getRow(), 10, 0.2f, 60, EntityFaction.EVIL);
     }
 
     @Override
@@ -164,7 +158,6 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
 
         PlayerPeon.credit(1500);
 
-        // Stop boss health bar rendering and boss music
         GameManager.getManagerFromInstance(ScreenManager.class).getCurrentScreen()
                 .getOverlayRenderer().getComponentByInstance(BossHealthComponent.class).onBossDefeat();
         GameManager.getManagerFromInstance(SoundManager.class).stopBossMusic();

@@ -99,15 +99,13 @@ public class OrcTest extends BaseGDXTest {
     public void testDetection() {
         tundraOrc.detectTarget();
         assertNotNull(tundraOrc.getTarget());
+        tundraOrc.pursueTarget();
+        playerPeon = null;
+        tundraOrc.pursueTarget();
+        tundraOrc.attackPlayer();
+        tundraOrc.detectTarget();
     }
 
-    /*
-    @Test
-    public void testPursuit() {
-        tundraOrc.detectTarget();
-        assertNotNull(tundraOrc.getTarget());
-    }
-     */
 
     @Test
     public void testDeath() {
@@ -121,10 +119,6 @@ public class OrcTest extends BaseGDXTest {
         tundraOrc.detectTarget();
         tundraOrc.attackPlayer();
         assertTrue(tundraOrc.getCombatTask() instanceof MeleeAttackTask);
-        tundraOrc.pursueTarget();
-        playerPeon = null;
-        tundraOrc.pursueTarget();
-        tundraOrc.attackPlayer();
     }
 
     @Test

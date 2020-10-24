@@ -6,11 +6,14 @@ import deco2800.thomas.entities.enemies.InvalidEnemyException;
 import deco2800.thomas.entities.enemies.bosses.Dragon;
 import deco2800.thomas.entities.enemies.minions.Goblin;
 import deco2800.thomas.entities.enemies.bosses.SwampDragon;
+import deco2800.thomas.entities.enemies.monsters.Orc;
 import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.tundra.TundraWorld;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static deco2800.thomas.entities.enemies.EnemyIndex.Variation.SWAMP;
 import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
@@ -112,9 +115,21 @@ public class EnemyManagerTest extends BaseGDXTest {
         em.spawnSpecialEnemy("summonGoblin", 1, 1);
         em.spawnSpecialEnemy("testDragon", 1, 1);
         assertEquals(9, em.getEnemyCount());
-        EnemyManager em2 = new EnemyManager(world, "swampDragon", 10, "swampGoblin");
+        EnemyManager em2 = new EnemyManager(world, "swampDragon",
+                10, "swampGoblin");
         em2.spawnSpecialEnemy("swampGoblin", 1, 1);
         assertEquals(1, em2.getSpecialEnemiesAlive().size());
+    }
+
+    @Test
+    public void testWildEnemies() {
+        EnemyManager em4 = new EnemyManager(world, 10, "tundraOrc");
+        for (int i = 0; i < 200; i++) {
+            em4.spawnRandomWildEnemy();
+        }
+        assertEquals(em4.getWildEnemiesAlive().size(), 10);
+        em4.removeWildEnemy(em4.getWildEnemiesAlive().get(0));
+        assertEquals(em4.getWildEnemiesAlive().size(), 9);
     }
 
     @Test
@@ -122,7 +137,6 @@ public class EnemyManagerTest extends BaseGDXTest {
         EnemyManager em = new EnemyManager(world, null, 10);
         em.setWildEnemyCap(20);
         assertEquals(em.getWildEnemyCap(), 20);
-        System.out.println(em.getWorldName());
     }
 
     @Test
