@@ -33,6 +33,11 @@ public class AbstractSkillTest extends BaseGDXTest {
             return MAX_COOLDOWN;
         }
 
+        @Override
+        public void setCooldownMax(int cooldownMax) {
+
+        }
+
 
         public void reduceCooldownMax(float percent){
             if (MAX_COOLDOWN > 5){
