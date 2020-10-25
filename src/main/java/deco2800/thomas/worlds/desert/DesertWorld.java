@@ -179,8 +179,8 @@ public class DesertWorld extends AbstractWorld {
      */
     private void generateItemEntities(){
         final int NUM_POTIONS = 6;
-        final int NUM_IRON_ARMOUR = 4;
-        final int NUM_CHESTS = 3;
+        final int NUM_IRON_ARMOUR = 1;
+        final int NUM_CHESTS = 2;
         final String ITEM_BOX_STYLE = "desert";
 
         for (int i = 0; i < NUM_POTIONS; i++) {

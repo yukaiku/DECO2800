@@ -145,7 +145,7 @@ public class TundraWorld extends AbstractWorld {
 	 */
 	private void generateItemEntities(){
 		final int NUM_POTIONS = 6;
-		final int NUM_IRON_ARMOUR = 2;
+		final int NUM_IRON_ARMOUR = 1;
 		final int NUM_CHESTS = 2;
 		final String ITEM_BOX_STYLE = "tundra";
 		

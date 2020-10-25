@@ -11,7 +11,7 @@ public class CooldownRing extends Item{
 
     public CooldownRing(Tile tile, boolean obstructed, PlayerPeon player,
                   String styleType, float reductionvalue){
-        super("Cooldown Ring",500, tile, RenderConstants.ITEM_RENDER,
+        super("Cooldown Ring",1000, tile, RenderConstants.ITEM_RENDER,
                 "cdreduction_buff", obstructed, player);
         this.setObjectName(ENTITY_ID_STRING);
         this.reductionvalue = reductionvalue;

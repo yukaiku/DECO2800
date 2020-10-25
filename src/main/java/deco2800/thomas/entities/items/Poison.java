@@ -15,6 +15,7 @@ public class Poison extends Item {
 		this.setObjectName(ENTITY_ID_STRING);
 		super.display = new ItemBox(this, name, Integer.toString(super.getCurrencyValue()),
 				"A mysterious glowing vial, emits a fragrant aroma. " +
-						"Drink it to gain some new powers, or perhaps to your own detriment?", styleType);
+						"Drinking it has a chance of giving some new powers, " +
+						"or perhaps to your own detriment.", styleType);
 	}
 }

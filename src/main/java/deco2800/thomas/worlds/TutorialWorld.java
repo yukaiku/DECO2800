@@ -70,6 +70,7 @@ public class TutorialWorld extends AbstractWorld{
         PlayerPeon.setBuffDamageTotal(0);
         PlayerPeon.setCooldownBuff(false);
         PlayerPeon.setWallet(0);
+        PlayerPeon.setBuffArmourTotal(0);
         PlayerPeon player = new PlayerPeon(-2f, -2f, 0.1f, 100);
             addEntity(player);
         this.setPlayerEntity(player);
