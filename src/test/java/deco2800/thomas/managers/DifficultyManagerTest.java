@@ -1,5 +1,8 @@
 package deco2800.thomas.managers;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import deco2800.thomas.BaseGDXTest;
 import deco2800.thomas.combat.Knight;
 import deco2800.thomas.combat.Wizard;
@@ -11,23 +14,30 @@ import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.InvalidEnemyException;
 import deco2800.thomas.entities.enemies.monsters.Orc;
+import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.swamp.SwampWorld;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(GameManager.class)
 public class DifficultyManagerTest extends BaseGDXTest {
     private DifficultyManager difficultyManager;
     private EnemyManager enemyManager;
     private PlayerManager playerManager;
-    private SwampWorld swampWorld;
     private PlayerPeon playerPeon;
 
     /***
@@ -36,24 +46,63 @@ public class DifficultyManagerTest extends BaseGDXTest {
      */
     @Before
     public void setUp() throws InvalidEnemyException {
+        // Mock managers
+        PowerMockito.mockStatic(GameManager.class);
         GameManager gameManager = mock(GameManager.class);
-        difficultyManager = mock(DifficultyManager.class);
-        gameManager.addManager(difficultyManager);
-        difficultyManager = gameManager.getManagerFromInstance(DifficultyManager.class);
-        playerManager = mock(PlayerManager.class);
-        gameManager.addManagerToInstance(playerManager);
-        playerManager = gameManager.getManagerFromInstance(PlayerManager.class);
+        InputManager inputManager = mock(InputManager.class);
+        OnScreenMessageManager onScreenMessageManager = mock(OnScreenMessageManager.class);
+        TextureManager textureManager = mock(TextureManager.class);
+        SoundManager soundManager = mock(SoundManager.class);
+        when(GameManager.get()).thenReturn(gameManager);
+        when(gameManager.getManager(OnScreenMessageManager.class)).thenReturn(onScreenMessageManager);
+        when(gameManager.getManager(InputManager.class)).thenReturn(inputManager);
+        when(gameManager.getManager(TextureManager.class)).thenReturn(textureManager);
+        when(gameManager.getManager(SoundManager.class)).thenReturn(soundManager);
+        when(GameManager.getManagerFromInstance(OnScreenMessageManager.class)).thenReturn(onScreenMessageManager);
+        when(GameManager.getManagerFromInstance(InputManager.class)).thenReturn(inputManager);
+        when(GameManager.getManagerFromInstance(TextureManager.class)).thenReturn(textureManager);
+        when(GameManager.getManagerFromInstance(SoundManager.class)).thenReturn(soundManager);
+
+        // sets up some functions for a mock Texture and its manager
+        Texture texture = mock(Texture.class);
+        when(textureManager.getTexture(anyString())).thenReturn(texture);
+        Array<TextureRegion> playerStand = new Array<>();
+        playerStand.add(new TextureRegion(new Texture("resources/combat/move_right.png"), 262, 256));
+        when(textureManager.getAnimationFrames(anyString())).thenReturn(playerStand);
+        when(texture.getWidth()).thenReturn(1);
+        when(texture.getHeight()).thenReturn(1);
+
+        // Setup GameManager to return instances of DifficultyManager,
+        // PlayerManager, EnemyManager and SwampWorld.
+        difficultyManager = new DifficultyManager();
+        when(gameManager.getManager(DifficultyManager.class)).thenReturn(difficultyManager);
+        when(GameManager.getManagerFromInstance(DifficultyManager.class)).thenReturn(difficultyManager);
+
+        playerManager = new PlayerManager();
+        when(gameManager.getManager(PlayerManager.class)).thenReturn(playerManager);
+        when(gameManager.getManagerFromInstance(PlayerManager.class)).thenReturn(playerManager);
+
+        // Need the player peon for SwampWorld
         playerPeon = new PlayerPeon(10f,5f,0.15f);
-        swampWorld = new SwampWorld();
+        SwampWorld swampWorld = mock(SwampWorld.class);
+        when(swampWorld.getPlayerEntity()).thenReturn(playerPeon);
+        when(swampWorld.getType()).thenReturn("Swamp");
+        /*SwampWorld swampWorld = new SwampWorld();
         swampWorld.setPlayerEntity(playerPeon);
-        swampWorld.addEntity(swampWorld.getPlayerEntity());
-        enemyManager = mock(EnemyManager.class);
-        gameManager.addManagerToInstance(enemyManager);
-        enemyManager = gameManager.getManagerFromInstance(EnemyManager.class);
+        swampWorld.addEntity(swampWorld.getPlayerEntity());*/
+        when(gameManager.getWorld()).thenReturn(swampWorld);
+
+        enemyManager = new EnemyManager(swampWorld, "swampDragon", 7, "swampOrc");
+        when(gameManager.getManager(EnemyManager.class)).thenReturn(enemyManager);
+        when(GameManager.getManagerFromInstance(EnemyManager.class)).thenReturn(enemyManager);
+
+        // Set up enemyManager
         enemyManager.addEnemyConfigs("swampOrc");
         enemyManager.addEnemyConfigs("tundraOrc");
         enemyManager.addEnemyConfigs("desertOrc");
         enemyManager.addEnemyConfigs("volcanoOrc");
+
+        // Setup difficulty manager
         difficultyManager.setPlayerEntity((PlayerPeon) swampWorld.getPlayerEntity());
     }
 
@@ -113,6 +162,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
      */
     @Test
     public void testOriginalWizardSkills() {
+        difficultyManager.setDifficultyLevel("Swamp");
         playerManager.setWizard(Wizard.FIRE);
         playerPeon.updatePlayerSkills();
         List<AbstractSkill> wizardSkills = playerPeon.getWizardSkills();
