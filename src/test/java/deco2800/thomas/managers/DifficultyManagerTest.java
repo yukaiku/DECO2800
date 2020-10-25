@@ -26,15 +26,15 @@ import static org.mockito.Mockito.mock;
 
 
 public class DifficultyManagerTest extends BaseGDXTest {
-    @Spy
+    @Mock
     private DifficultyManager difficultyManager;
-    @Spy
+    @Mock
     private EnemyManager enemyManager;
-    @Spy
+    @Mock
     private PlayerManager playerManager;
-    @Spy
+    @Mock
     private SwampWorld swampWorld;
-    @Spy
+    @Mock
     private PlayerPeon playerPeon;
 
     /***
@@ -44,12 +44,18 @@ public class DifficultyManagerTest extends BaseGDXTest {
     @Before
     public void setUp() throws InvalidEnemyException {
         GameManager gameManager = mock(GameManager.class);
-        difficultyManager = new DifficultyManager();
+        difficultyManager = mock(DifficultyManager.class);
+        gameManager.addManager(difficultyManager);
+        difficultyManager = gameManager.getManagerFromInstance(DifficultyManager.class);
+        playerManager = mock(PlayerManager.class);
+        gameManager.addManagerToInstance(playerManager);
         playerManager = gameManager.getManagerFromInstance(PlayerManager.class);
         playerPeon = new PlayerPeon(10f,5f,0.15f);
         swampWorld = new SwampWorld();
         swampWorld.setPlayerEntity(playerPeon);
         swampWorld.addEntity(swampWorld.getPlayerEntity());
+        enemyManager = mock(EnemyManager.class);
+        gameManager.addManagerToInstance(enemyManager);
         enemyManager = gameManager.getManagerFromInstance(EnemyManager.class);
         enemyManager.addEnemyConfigs("swampOrc");
         enemyManager.addEnemyConfigs("tundraOrc");
