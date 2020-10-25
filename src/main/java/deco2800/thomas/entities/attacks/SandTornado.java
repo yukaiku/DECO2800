@@ -9,6 +9,7 @@ import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.util.WorldUtil;
 
 public class SandTornado extends Projectile implements Animatable, Tickable {
     private final Animation<TextureRegion> tornado;
@@ -30,5 +31,17 @@ public class SandTornado extends Projectile implements Animatable, Tickable {
             stateTimer = 0;
         }
         return tornado.getKeyFrame(stateTimer);
+    }
+
+    /**
+     * Updates the projectile, and removes it from world if the explosion is over.
+     * @param i current game tick
+     */
+    @Override
+    public void onTick(long i) {
+        super.onTick(i);
+        if (this.getCombatTask().isComplete()) {
+            WorldUtil.removeEntity(this);
+        }
     }
 }

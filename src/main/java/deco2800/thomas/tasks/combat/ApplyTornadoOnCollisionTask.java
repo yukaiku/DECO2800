@@ -44,7 +44,7 @@ public class ApplyTornadoOnCollisionTask extends AbstractTask {
     @Override
     public void onTick(long tick) {
         AbstractWorld world = GameManager.get().getWorld();
-        if (taskAlive) {
+        if (!taskComplete) {
             List<AbstractEntity> collidingEntities = world.getEntitiesInBounds(entity.getBounds());
             if (collidingEntities.size() > 1) { // Own bounding box should always be present
                 for (AbstractEntity e : collidingEntities) {
@@ -52,7 +52,6 @@ public class ApplyTornadoOnCollisionTask extends AbstractTask {
                     if (faction != EntityFaction.NONE && faction != entity.getFaction()) {
                         applyDamage(e);
                         applyTornado(e);
-
                     }
                 }
             }
@@ -71,15 +70,16 @@ public class ApplyTornadoOnCollisionTask extends AbstractTask {
     private void applyDamage (AbstractEntity e) {
         if (e instanceof Peon) {
             Peon peon = (Peon) e;
-            taskAlive = false;
             peon.applyDamage(((CombatEntity) entity).getDamage(), DamageType.COMMON);
+            this.taskComplete = true;
         }
     }
 
     private void applyTornado (AbstractEntity e) {
         if (e instanceof PlayerPeon) {
             PlayerPeon playerPeon = (PlayerPeon) e;
-            playerPeon.addEffect(new TornadoStatus(playerPeon, 10));
+            playerPeon.addEffect(new TornadoStatus(playerPeon, 1));
+            this.taskComplete = true;
         }
     }
 }

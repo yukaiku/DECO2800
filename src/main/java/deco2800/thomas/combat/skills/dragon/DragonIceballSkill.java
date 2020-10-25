@@ -7,7 +7,7 @@ import deco2800.thomas.tasks.combat.IceballAttackTask;
 
 public class DragonIceballSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static int maxCoolDown = 120;
+    private static int maxCoolDown = 180;
     /* Damage multiplier to apply to the iceball.
     Multiplies the peon base damage value. */
     private static float damageMultiplier = 0.4f;

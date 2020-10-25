@@ -19,7 +19,7 @@ public class TundraDragon extends Dragon {
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
 
         this.elementalAttack = new DragonIceBreathSkill(this, 0.2f, 3);
-        this.breathAttack = new DragonIceballSkill(this, 0.2f, 5);
+        this.breathAttack = new DragonIceballSkill(this, 0.5f, 2);
         this.summonGoblin = new SummonGoblinSkill(this);
 
         this.dragonAttacking = new Animation<>(0.2f,

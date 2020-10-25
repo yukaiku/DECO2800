@@ -16,7 +16,7 @@ public class DesertFireballSkill extends AbstractSkill {
     /* Speed of fireball */
     private static final float SPEED = 0.4f;
     /* Lifetime of fireball */
-    private static final int LIFETIME = 60;
+    private static final int LIFETIME = 40;
 
     /* Reference to parent entity */
     private final Peon entity;
