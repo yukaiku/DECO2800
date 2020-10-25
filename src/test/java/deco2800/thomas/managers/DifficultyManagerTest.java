@@ -14,7 +14,6 @@ import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.InvalidEnemyException;
 import deco2800.thomas.entities.enemies.monsters.Orc;
-import deco2800.thomas.worlds.AbstractWorld;
 import deco2800.thomas.worlds.swamp.SwampWorld;
 import org.junit.After;
 import org.junit.Before;
@@ -27,7 +26,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -40,7 +38,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
     private PlayerManager playerManager;
     private PlayerPeon playerPeon;
 
-    /***
+    /**
      * Sets up the entities and info needed for testing the manager
      * @throws InvalidEnemyException when invalid enemy is created
      */
@@ -87,9 +85,6 @@ public class DifficultyManagerTest extends BaseGDXTest {
         SwampWorld swampWorld = mock(SwampWorld.class);
         when(swampWorld.getPlayerEntity()).thenReturn(playerPeon);
         when(swampWorld.getType()).thenReturn("Swamp");
-        /*SwampWorld swampWorld = new SwampWorld();
-        swampWorld.setPlayerEntity(playerPeon);
-        swampWorld.addEntity(swampWorld.getPlayerEntity());*/
         when(gameManager.getWorld()).thenReturn(swampWorld);
 
         enemyManager = new EnemyManager(swampWorld, "swampDragon", 7, "swampOrc");
@@ -106,7 +101,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         difficultyManager.setPlayerEntity((PlayerPeon) swampWorld.getPlayerEntity());
     }
 
-    /***
+    /**
      * Test if the difficulty level is returning the right value
      */
     @Test
@@ -114,7 +109,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         assertEquals(1,difficultyManager.getDifficultyLevel());
     }
 
-    /***
+    /**
      * Test if the setting of max health is working
      */
     @Test
@@ -131,7 +126,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         assertEquals(50,playerPeon.getCurrentHealth());
     }
 
-    /***
+    /**
      * Testing the method of setting player health
      */
     @Test
@@ -142,7 +137,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         assertEquals(playerPeon.getCurrentHealth(), playerPeon.getMaxHealth());
     }
 
-    /***
+    /**
      * Test mech skills
      */
     @Test
@@ -157,7 +152,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         assertEquals(0.8, ((FireBombSkill) mechSkill).getDamageMultiplier(), 0.01);
     }
 
-    /***
+    /**
      * Test wizard skills
      */
     @Test
@@ -181,7 +176,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         }
     }
 
-    /***
+    /**
      * Testing swamp difficulty settings
      */
     @Test
@@ -195,7 +190,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         assertEquals(5,enemyManager.getWildEnemyCap());
     }
 
-    /***
+    /**
      * Testing tundra difficulty settings
      */
     @Test
@@ -219,7 +214,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         }
     }
 
-    /***
+    /**
      * Testing desert difficulty settings
      */
     @Test
@@ -245,7 +240,7 @@ public class DifficultyManagerTest extends BaseGDXTest {
         }
     }
 
-    /***
+    /**
      * Testing volcano difficulty settings
      */
     @Test
@@ -265,5 +260,4 @@ public class DifficultyManagerTest extends BaseGDXTest {
         enemyManager = null;
         playerManager = null;
     }
-
 }
