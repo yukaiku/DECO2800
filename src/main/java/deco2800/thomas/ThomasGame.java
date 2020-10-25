@@ -17,8 +17,8 @@ public class ThomasGame extends Game {
 	 * The SpriteBatch for the game.
 	 */
 	private SpriteBatch batch;
-	//public static final String SAVE_ROOT_DIR = "thomas-saves";
-	//private FileHandle saveRootHandle;
+
+	// Screens
 	private MainMenuScreen mainMenuScreen;
 	private LoadingScreen loadingScreen;
 
@@ -34,7 +34,6 @@ public class ThomasGame extends Game {
 	 * Creates the main menu screen.
 	 */
 	public void create() {
-		//saveRootHandle = Gdx.files.local(SAVE_ROOT_DIR);
 		batch = new SpriteBatch();
 		initUISkin();
 		this.loadingScreen = new LoadingScreen(this);
