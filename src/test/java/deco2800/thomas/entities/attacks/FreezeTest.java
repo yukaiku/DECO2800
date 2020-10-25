@@ -25,16 +25,17 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 /**
- * Tests the Iceball class.
+ * Tests the Freeze class.
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({GameManager.class, WorldUtil.class})
-public class IceballTest extends BaseGDXTest {
+public class FreezeTest extends BaseGDXTest {
     private GameManager gameManager;
 
     @Before
@@ -58,41 +59,59 @@ public class IceballTest extends BaseGDXTest {
     }
 
     /**
-     * Tests that the slow is correctly applied to any entities it collides with.
+     * Tests that only the combat task is updated.
      */
     @Test
-    public void testApplySlow() {
+    public void testTasksTick() {
         // Mock the tasks
         AbstractTask movementTask = mock(AbstractTask.class);
         when(movementTask.isComplete()).thenReturn(false);
         AbstractTask combatTask = mock(AbstractTask.class);
+        when(combatTask.isComplete()).thenReturn(false).thenReturn(true);
+
+        // Create test class and tick it
+        Freeze freeze = new Freeze(0, 0, 0, EntityFaction.ALLY, 0f);
+        freeze.setCombatTask(combatTask);
+        freeze.setMovementTask(movementTask);
+        freeze.onTick(0);
+        freeze.onTick(0);
+        freeze.onTick(0);
+
+        // Verify only the combat task ticks, and only while combat task is not complete
+        verify(combatTask, times(2)).onTick(anyLong());
+        verify(movementTask, never()).onTick(anyLong());
+    }
+
+    /**
+     * Verifies entity is remove after its animation is done.
+     */
+    @Test
+    public void testEntityDeath() {
+        // Mock the tasks
+        AbstractTask combatTask = mock(AbstractTask.class);
         when(combatTask.isComplete()).thenReturn(true);
 
-        // Create Iceball to test on
-        Iceball iceball = new Iceball(1, 1, 10, 1, EntityFaction.ALLY);
-        iceball.setMovementTask(movementTask);
-        iceball.setCombatTask(combatTask);
+        // Create test class, run animation and tick it
+        Freeze freeze = new Freeze(0, 0, 0, EntityFaction.ALLY, 0f);
+        freeze.setCombatTask(combatTask);
+        freeze.getFrame(100f);
+        freeze.onTick(0);
 
-        // Mock dummy peon to collide with, and dummy list to return
-        Peon peon = mock(Peon.class);
-        ArrayList<AbstractEntity> list = new ArrayList<>();
-        list.add(iceball);
-        list.add(peon);
+        // Verify it was removed
+        verifyStatic(WorldUtil.class);
+        WorldUtil.removeEntity(freeze);
+    }
 
-        // Mock collision to return dummy entity
-        AbstractWorld world = mock(AbstractWorld.class);
-        when(world.getEntitiesInBounds(any(BoundingBox.class))).thenReturn(list);
-        when(gameManager.getWorld()).thenReturn(world);
-
-        // Tick iceball once, and verify slow is applied to peon
-        iceball.onTick(0);
-        verify(peon).addEffect(any(SpeedStatus.class));
-        verify(peon).applyDamage(10, DamageType.ICE);
-
-        // Tick iceball to completion and verify it is removed from world
-        iceball.getFrame(100f);
-        iceball.onTick(0);
-        verifyStatic(WorldUtil.class, atLeastOnce());
-        WorldUtil.removeEntity(iceball);
+    /**
+     * Tests getFrame returns valid texture region.
+     */
+    @Test
+    public void testGetFrame() {
+        // Create test class, and run animation
+        Freeze freeze = new Freeze(0, 0, 0, EntityFaction.ALLY, 0f);
+        assertNotNull(freeze.getFrame(0.1f));
+        assertNotNull(freeze.getFrame(1f));
+        assertNotNull(freeze.getFrame(10f));
+        assertNotNull(freeze.getFrame(100f));
     }
 }
