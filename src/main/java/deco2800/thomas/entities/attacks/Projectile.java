@@ -133,7 +133,7 @@ public class Projectile extends CombatEntity implements Animatable, Tickable {
         if (movementTask != null && !movementTask.isComplete()) {
             movementTask.onTick(i);
         }
-        
+
         // Update combat task
         if (combatTask != null) {
             if (combatTask.isComplete() && currentState == State.DEFAULT) {
