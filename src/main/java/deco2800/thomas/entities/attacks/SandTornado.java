@@ -14,16 +14,6 @@ public class SandTornado extends Projectile implements Animatable, Tickable {
     private final Animation<TextureRegion> tornado;
     private float stateTimer = 0f;
 
-
-    public SandTornado() {
-        super();
-        this.setTexture("explosion");
-        this.setObjectName("combatExplosion");
-        this.setDamageType(DamageType.SAND_I_GUESS);
-        tornado = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("sandTornado"));
-    }
-
     public SandTornado(float col, float row, int damage, float speed, EntityFaction faction) {
         super(col, row, RenderConstants.PROJECTILE_RENDER, damage, speed, faction);
         this.setTexture("explosion");

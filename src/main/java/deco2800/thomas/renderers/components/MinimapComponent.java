@@ -54,8 +54,9 @@ public class MinimapComponent extends OverlayComponent {
         }
         if (font == null) {
             font = new BitmapFont();
-            font.getData().setScale(2f);
         }
+        float alpha = 1f;
+        font.setColor(255, 255, 255, alpha);
         List<Tile> tileMap = GameManager.get().getWorld().getTiles();
         batch.begin();
 
@@ -64,7 +65,8 @@ public class MinimapComponent extends OverlayComponent {
         PlayerPeon player = (PlayerPeon) world.getPlayerEntity();
         if (player.getRow() > (float) world.getHeight() - 3 || player.getCol()
                 < -(float) world.getWidth() + 5) {
-            batch.setColor(255, 255, 255, 0.4f);
+            alpha = 0.4f;
+            batch.setColor(255, 255, 255, alpha);
         }
 
         for (Tile t : tileMap) {
@@ -93,9 +95,9 @@ public class MinimapComponent extends OverlayComponent {
         PlayerPeon playerPeon = (PlayerPeon) GameManager.get().getWorld().getPlayerEntity();
         if (playerPeon != null) {
             renderPlayer(batch, playerPeon);
-            font.draw(batch, String.format("Current World: %s \nCoordinates: (%d, %d)", worldType,
-                    (int) playerPeon.getCol(), (int) playerPeon.getRow()),
-                    overlayRenderer.getX(),
+            font.setColor(255, 255, 255, alpha);
+            font.draw(batch, String.format("%s   x: %d, y: %d", worldType, (int) playerPeon.getCol(),
+                    (int) playerPeon.getRow()), overlayRenderer.getX() + 10,
                     overlayRenderer.getY() + overlayRenderer.getHeight() - 340);
         }
         batch.setColor(255, 255, 255, 1f);

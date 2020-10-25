@@ -19,13 +19,6 @@ import deco2800.thomas.util.SquareVector;
  */
 public class Fireball extends Projectile implements Animatable, Tickable {
     /**
-     * Default constructor should not be called.
-     */
-    public Fireball() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
      * Parametric constructor, that sets the initial conditions of the projectile
      * as well as texture and name.
      * @param col Initial X position

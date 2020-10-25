@@ -21,18 +21,6 @@ public class Explosion extends CombatEntity implements Animatable {
     private float stateTimer = 0f;
 
     /**
-     * Default constructor, sets texture and object name.
-     */
-    public Explosion() {
-        super();
-        this.setTexture("explosion");
-        this.setObjectName("combatExplosion");
-        this.setDamageType(DamageType.FIRE);
-        animationFrames = new Animation<>(0.1f,
-                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames("fireballExplosion"));
-    }
-
-    /**
      * Parametric constructor, that sets the initial conditions of the explosion
      * as well as texture and name.
      * @param col X position

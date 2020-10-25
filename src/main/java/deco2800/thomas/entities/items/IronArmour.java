@@ -11,7 +11,7 @@ public class IronArmour extends Item {
 
     public IronArmour(Tile tile, boolean obstructed, PlayerPeon player,
                       String styleType, int armourValue){
-        super("Iron Armour",100, tile, RenderConstants.ITEM_RENDER,
+        super("Iron Armour",250, tile, RenderConstants.ITEM_RENDER,
                 "armour_iron", obstructed, player);
         this.setObjectName(ENTITY_ID_STRING);
         this.armourValue = armourValue;

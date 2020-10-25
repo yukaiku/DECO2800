@@ -39,8 +39,9 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
     private int duration = 0;
 
     public static final int DEFAULT_HEALTH = 100;
-    public static int buffDamageTotal;
-    public static boolean isCoolDownBuffActive = false;
+    private static int buffDamageTotal;
+    private static boolean isCoolDownBuffActive = false;
+    private static int buffArmourTotal;
 
     // Player dialogue
     private static final Map<String, String> dialogues = new HashMap<>();
@@ -69,6 +70,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         this.setRowRenderLength(1.8f);
         this.setFaction(EntityFaction.ALLY);
         this.addDamage(buffDamageTotal);
+        this.addArmour(buffArmourTotal);
         // Subscribe listeners
         GameManager.getManagerFromInstance(InputManager.class).addTouchDownListener(this);
         GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
@@ -476,11 +478,13 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
         }
     }
 
-    public static int getBuffDamageTotal(){ return buffDamageTotal; }
-
     public static void addBuffDamageTotal(int damage){ buffDamageTotal += damage;}
 
     public static void setBuffDamageTotal(int damage){buffDamageTotal = damage;}
+
+    public static void addBuffArmourTotal(int armour){ buffArmourTotal += armour;}
+
+    public static void setBuffArmourTotal(int armour){buffArmourTotal = armour;}
 
     public static void setCooldownBuff(boolean val){ isCoolDownBuffActive = val; }
 
@@ -510,6 +514,7 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
     public void death() {
         resetAllSkillCoolDownToOriginal();
         setBuffDamageTotal(0);
+        setBuffArmourTotal(0);
         setCooldownBuff(false);
         super.death();
         GameManager.getManagerFromInstance(SoundManager.class).stopBossMusic();
