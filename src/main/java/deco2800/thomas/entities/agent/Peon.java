@@ -138,15 +138,12 @@ public class Peon extends AgentEntity implements Tickable {
 		}
 
 		// Play hit sound
-		switch (damageType) {
-			case COMMON:
-				GameManager.getManagerFromInstance(SoundManager.class).playSound("woodHit");
-				break;
-			default:
-				GameManager.getManagerFromInstance(SoundManager.class).playSound("fireHit");
-				break;
+		if (damageType == DamageType.COMMON) {
+			GameManager.getManagerFromInstance(SoundManager.class).playSound("woodHit");
+		} else {
+			GameManager.getManagerFromInstance(SoundManager.class).playSound("fireHit");
 		}
-
+		
 		return damageApplied;
 	}
 

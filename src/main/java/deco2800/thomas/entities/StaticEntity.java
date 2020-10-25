@@ -18,8 +18,6 @@ import java.util.Set;
 public class StaticEntity extends AbstractEntity {
 	private final transient Logger log = LoggerFactory.getLogger(StaticEntity.class);
 
-	//private transient HashMap<String, Object> dataToSave = new HashMap<>();
-
 	private static final String ENTITY_ID_STRING = "staticEntityID";
 
 	//pos, texture MUST BE A VALID POSITION ELSE IT WILL NULL!
@@ -66,7 +64,6 @@ public class StaticEntity extends AbstractEntity {
 			Tile tile = textureToTile(part.getPosition(), this.getPosition());
 			if (tile != null) {
 				children.put(tile.getCoordinates(), part.textureString);
-				//Tile child = GameManager.get().getWorld().getTile(part.getPostion());
 				tile.setObstructed(part.isObstructed());
 			}
 		}
