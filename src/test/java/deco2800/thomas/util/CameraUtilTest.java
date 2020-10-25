@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.Rock;
-import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.worlds.AbstractWorld;
 import org.junit.Test;
 

@@ -207,6 +207,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
         world.setOrbEntity(new Orb(tile, "orb_" + orbNumber));
 
         PlayerPeon.credit(1500);
+        PlayerPeon.healPlayer(100);
 
         GameManager.getManagerFromInstance(ScreenManager.class).getCurrentScreen()
                 .getOverlayRenderer().getComponentByInstance(BossHealthComponent.class).onBossDefeat();
