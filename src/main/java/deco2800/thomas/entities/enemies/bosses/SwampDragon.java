@@ -37,7 +37,7 @@ public class SwampDragon extends Dragon {
             try {
                 this.setCombatTask(elementalAttack.getNewSkillTask(getTarget().getCol(), getTarget().getRow()));
             } catch (SkillOnCooldownException e) {
-                e.printStackTrace();
+
             }
         }
     }
@@ -48,7 +48,7 @@ public class SwampDragon extends Dragon {
             try {
                 this.setCombatTask(breathAttack.getNewSkillTask(getTarget().getCol(), getTarget().getRow()));
             } catch (SkillOnCooldownException e) {
-                e.printStackTrace();
+
             }
         }
     }
@@ -59,10 +59,8 @@ public class SwampDragon extends Dragon {
             try {
                 this.setCombatTask(summonGoblin.getNewSkillTask(getTarget().getCol(), getTarget().getRow()));
             } catch (SkillOnCooldownException e) {
-                e.printStackTrace();
+
             }
-        } else {
-            System.out.println(summonGoblin.getCooldownRemaining());
         }
     }
 }
