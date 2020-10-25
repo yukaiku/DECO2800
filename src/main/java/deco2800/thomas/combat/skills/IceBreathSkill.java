@@ -29,6 +29,11 @@ public class IceBreathSkill extends AbstractSkill {
         return coolDown;
     }
 
+    @Override
+    public void setCooldownMax(int cooldownMax) {
+        coolDown = cooldownMax;
+    }
+
     public static void setMaxCooldown(int maxCooldown){
         IceBreathSkill.coolDown = maxCooldown;
     }
