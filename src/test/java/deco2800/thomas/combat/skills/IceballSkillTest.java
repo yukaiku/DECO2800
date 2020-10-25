@@ -24,7 +24,7 @@ public class IceballSkillTest extends BaseGDXTest {
         IceballSkill testSkill = new IceballSkill(mockedEntity, 0.4f, 4);
 
         assertEquals(0, testSkill.getCooldownRemaining());
-        assertEquals(40, testSkill.getCooldownMax());
+        assertEquals(50, testSkill.getCooldownMax());
         assertNotNull(testSkill.getTexture());
     }
 
