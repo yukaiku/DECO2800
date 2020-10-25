@@ -24,7 +24,7 @@ public class DifficultyManager extends TickableManager{
     private String type = "";
     private EnemyManager enemyManager;
     private Float originalDamageMultiplier = 0.4f;
-    private static final String tundra = "tundra";
+    private static final String TUNDRA = "tundra";
     /***
      * Constructs a DifficultyManager manager.
      */
@@ -104,7 +104,7 @@ public class DifficultyManager extends TickableManager{
                     IceballSkill.setDamageMultiplier(originalDamageMultiplier);
                 }
             }else if(wizardSkill.getTexture().equals("fireballIcon")) {
-                if(getWorldType().equals(tundra)){
+                if(getWorldType().equals(TUNDRA)){
                     //More damage to tundra with fire skill
                     FireballSkill.setDamageMultiplier(originalDamageMultiplier*2);
                 }else{
@@ -119,7 +119,7 @@ public class DifficultyManager extends TickableManager{
      */
     public void setMechSkill(){
         AbstractSkill mechSkill = playerPeon.getMechSkill();
-        if(mechSkill.getTexture() == "explosionIcon" && getWorldType().equals(tundra)){
+        if(mechSkill.getTexture() == "explosionIcon" && getWorldType().equals(TUNDRA)){
             //More damage to tundra with fire skill
             FireBombSkill.setDamageMultiplier(originalDamageMultiplier*2);
         }
@@ -145,32 +145,23 @@ public class DifficultyManager extends TickableManager{
         //Set skills damage multiplier
         setWizardSkill();
         setMechSkill();
-
-        switch (getWorldType()) {
-            // Difficulty Settings for each world
-            case "swamp":
-                setPlayerHealth(4);
-                setWildSpawnRate(0.09f);
-                enemyManager.getBoss().setMaxHealth(100);
-                enemyManager.setWildEnemyCap(5);
-                break;
-            case tundra:
-                setPlayerHealth(4);
-                setWildSpawnRate(0.1f);
-                enemyManager.getBoss().setMaxHealth(150);
-                enemyManager.setWildEnemyCap(6);
-                break;
-            case "desert":
-                setPlayerHealth(4);
-                setWildSpawnRate(0.12f);
-                enemyManager.getBoss().setMaxHealth(300);
-                break;
-            case "volcano":
-                setPlayerHealth(4);
-                setWildSpawnRate(0.12f);
-                enemyManager.getBoss().setMaxHealth(750);
-                enemyManager.setWildEnemyCap(8);
-                break;
+        String worldType = getWorldType();
+        setPlayerHealth(4);
+        if(worldType.equals("swamp")){
+            setWildSpawnRate(0.09f);
+            enemyManager.getBoss().setMaxHealth(100);
+            enemyManager.setWildEnemyCap(5);
+        }else if(worldType.equals(TUNDRA)){
+            setWildSpawnRate(0.1f);
+            enemyManager.getBoss().setMaxHealth(150);
+            enemyManager.setWildEnemyCap(6);
+        }else if(worldType.equals("desert")){
+            setWildSpawnRate(0.12f);
+            enemyManager.getBoss().setMaxHealth(300);
+        }else if(worldType.equals("volcano")){
+            setWildSpawnRate(0.12f);
+            enemyManager.getBoss().setMaxHealth(750);
+            enemyManager.setWildEnemyCap(8);
         }
 
     }
