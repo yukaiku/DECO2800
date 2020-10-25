@@ -28,12 +28,8 @@ public class EffectRenderer implements Renderer {
         String filePath = effect + "/" + effect + ".p";
         String textureDir = effect;
 
-        try {
-            particleEffect.load(Gdx.files.internal(COMMON_DIR_PATH + filePath),
-                    Gdx.files.internal(COMMON_DIR_PATH + textureDir));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        particleEffect.load(Gdx.files.internal(COMMON_DIR_PATH + filePath),
+                Gdx.files.internal(COMMON_DIR_PATH + textureDir));
     }
 
     /**

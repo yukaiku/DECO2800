@@ -5,10 +5,8 @@ import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.entities.attacks.VolcanoFireball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
-import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.tasks.combat.FireBombAttackTask;
-import deco2800.thomas.util.EnemyUtil;
 
 public class VolcanoDragon extends Dragon {
     int attackRange = 4;
