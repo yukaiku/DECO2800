@@ -23,7 +23,7 @@ public class SwampDragon extends Dragon {
         this.breathAttack = new DragonFireballSkill(this, 120, 0.4f, 0.3f, 40);
 
         this.summonGoblin = new SummonGoblinSkill(this);
-        this.summonGoblin.setCooldownMax(240);
+        this.summonGoblin.setCooldownMax(500);
 
         this.dragonAttacking = new Animation<>(0.2f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));

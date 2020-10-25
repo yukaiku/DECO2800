@@ -6,8 +6,8 @@ import deco2800.thomas.tasks.combat.SpawnGoblinTask;
 
 public class SummonGoblinSkill extends AbstractSkill{
     /* Maximum time of cooldown in ticks */
-    private static int maxCoolDown = 240;
-    private static final int ORIGINAL_MAXCOOLDOWN = 240;
+    private static int maxCoolDown = 500;
+    private static final int ORIGINAL_MAXCOOLDOWN = 500;
     /* Damage multiplier to apply to the ice tile.
     Multiplies the peon base damage value. */
     private static float damageMultiplier = 0.4f;
