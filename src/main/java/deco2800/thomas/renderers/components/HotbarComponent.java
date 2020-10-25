@@ -49,7 +49,7 @@ public class HotbarComponent extends OverlayComponent {
 
         batch.begin();
 
-        wizardIcon.setPosition(overlayRenderer.getX() + 0.05f * overlayRenderer.getWidth(), overlayRenderer.getY());
+        wizardIcon.setPosition(overlayRenderer.getX() + 0.15f * overlayRenderer.getWidth(), overlayRenderer.getY());
         wizardIcon.draw(batch);
         lastRenderedSprite = wizardIcon;
 

@@ -3,7 +3,6 @@ package deco2800.thomas.util;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import deco2800.thomas.entities.AbstractEntity;
-import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.worlds.AbstractWorld;
 
 /**

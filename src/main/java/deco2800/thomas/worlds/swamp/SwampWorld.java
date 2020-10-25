@@ -37,7 +37,6 @@ public class SwampWorld extends AbstractWorld {
         this.allSwampDialogues = new ArrayList<>();
 
         // Create the player entity
-        PlayerPeon.buffDamageTotal = 0;
         this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
 
@@ -207,7 +206,7 @@ public class SwampWorld extends AbstractWorld {
      */
     private void generateItemEntities(){
         final int NUM_POTIONS = 6;
-        final int NUM_IRON_ARMOUR = 2;
+        final int NUM_IRON_ARMOUR = 1;
         final int NUM_CHESTS = 2;
         final String ITEM_BOX_STYLE = "swamp";
 

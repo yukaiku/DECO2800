@@ -449,8 +449,6 @@ public final class DatabaseManager extends AbstractManager {
 		}
 		File f = new File(saveLocationAndFilename);
 		if (!f.exists()) {
-			GameManager.get().getManager(OnScreenMessageManager.class).
-					addMessage(fileErrorMessage);
 			logger.info(fileErrorMessage);
 		}
 
@@ -487,10 +485,10 @@ public final class DatabaseManager extends AbstractManager {
 
         world.setTiles(newTiles);
         world.assignTileNeighbours();
-        world.setEntities(new ArrayList<AbstractEntity>(newEntities.values()));
+        world.setEntities(new ArrayList<>(newEntities.values()));
         logger.info("Load succeeded");
         if (GameManager.get().getDebugMode()) {
-            GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Loaded game from the database.");
+            logger.info("Loaded game from the database.");
         }
     }
 
@@ -577,7 +575,7 @@ public final class DatabaseManager extends AbstractManager {
 
         entireJsonAsString.append("]}");
         writeToJson(entireJsonAsString.toString());
-        GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Game saved to the database.");
+        logger.info("Game saved to the database.");
     }
 
 	/**
@@ -724,7 +722,7 @@ public final class DatabaseManager extends AbstractManager {
 	    serializeTiles(world, outputBuilder);
 	    outputBuilder.append("]}");
         writeToJsonFile(outputBuilder.toString(), filepath);
-        GameManager.get().getManager(OnScreenMessageManager.class).addMessage("Game saved to the database.");
+        logger.info("Game saved to the database.");
     }
 
     /**
@@ -796,8 +794,6 @@ public final class DatabaseManager extends AbstractManager {
     public static void loadWorldFromJsonFile(AbstractWorld world, String filepath) {
         File f = new File(filepath);
         if (!f.exists()) {
-            GameManager.get().getManager(OnScreenMessageManager.class).
-                    addMessage(fileErrorMessage);
             logger.info(fileErrorMessage);
         }
 

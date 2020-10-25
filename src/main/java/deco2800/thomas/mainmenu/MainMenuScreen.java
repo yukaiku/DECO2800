@@ -15,7 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import deco2800.thomas.ThomasGame;
@@ -51,12 +54,12 @@ public class MainMenuScreen implements Screen {
 		Label.LabelStyle titleStyle = new Label.LabelStyle(titleFont, Color.WHITE);
 		Label logo = new Label("Polyhedron", titleStyle);
 		Label small = new Label("Studio Fd ii", titleStyle);
-		small.setFontScale(0.6f);
-		logo.setFontScale(2.3f);
-		logo.setPosition(200, 640);
-		small.setPosition(250, 590);
-		logo.addAction(Actions.moveTo(300, 640, 0.8f, Interpolation.PowOut.pow3Out));
-		small.addAction(Actions.moveTo(350, 590, 0.8f, Interpolation.PowOut.pow3Out));
+		small.setFontScale(0.8f);
+		logo.setFontScale(3.4f);
+		logo.setPosition(200, 770);
+		small.setPosition(268, 700);
+		logo.addAction(Actions.moveTo(300, 770, 0.8f, Interpolation.PowOut.pow3Out));
+		small.addAction(Actions.moveTo(368, 700, 0.8f, Interpolation.PowOut.pow3Out));
 		stage.addActor(logo);
 		stage.addActor(small);
 
@@ -65,51 +68,57 @@ public class MainMenuScreen implements Screen {
 		BitmapFont menuFont = new BitmapFont(Gdx.files.internal("resources/fonts/times.fnt"),
 				new TextureRegion(menuTex), false);
 
-		Button envTeamButton = new TextButton("ENV TEAM", createButtonStyle(menuFont));
-		envTeamButton.setPosition(200, 430);
-		envTeamButton.addAction(Actions.moveTo(300, 430, 1.2f, Interpolation.PowOut.pow3Out));
-		addButtonListener(envTeamButton);
-		stage.addActor(envTeamButton);
-
-		Button testWorldBtn = new TextButton("DEBUG START", createButtonStyle(menuFont));
-		testWorldBtn.setPosition(200, 380);
-		testWorldBtn.addAction(Actions.moveTo(300, 380, 1.2f, Interpolation.PowOut.pow3Out));
-		addButtonListener(testWorldBtn);
-		stage.addActor(testWorldBtn);
+//		Button envTeamButton = new TextButton("ENV TEAM", createButtonStyle(menuFont));
+//		envTeamButton.setPosition(200, 430);
+//		envTeamButton.addAction(Actions.moveTo(300, 430, 1.2f, Interpolation.PowOut.pow3Out));
+//		addButtonListener(envTeamButton);
+//		stage.addActor(envTeamButton);
+//
+//		Button testWorldBtn = new TextButton("DEBUG START", createButtonStyle(menuFont));
+//		testWorldBtn.setPosition(200, 380);
+//		testWorldBtn.addAction(Actions.moveTo(300, 380, 1.2f, Interpolation.PowOut.pow3Out));
+//		addButtonListener(testWorldBtn);
+//		stage.addActor(testWorldBtn);
 
 		Button newGameBtn = new TextButton("NEW GAME", createButtonStyle(menuFont));
-		newGameBtn.setPosition(200, 310);
-		newGameBtn.addAction(Actions.moveTo(300, 310, 1.2f, Interpolation.PowOut.pow3Out));
+		newGameBtn.setTransform(true);
+		newGameBtn.setPosition(200, 480);
+		newGameBtn.setScale(1.4f);
+		newGameBtn.addAction(Actions.moveTo(300, 480, 1.2f, Interpolation.PowOut.pow3Out));
 		addButtonListener(newGameBtn);
 		stage.addActor(newGameBtn);
 
 		Button settingBtn = new TextButton("SETTING", createButtonStyle(menuFont));
-		settingBtn.setPosition(200, 260);
-		settingBtn.addAction(Actions.moveTo(300, 260, 1.2f, Interpolation.PowOut.pow3Out));
+		settingBtn.setTransform(true);
+		settingBtn.setPosition(200, 410);
+		settingBtn.setScale(1.4f);
+		settingBtn.addAction(Actions.moveTo(300, 410, 1.2f, Interpolation.PowOut.pow3Out));
 		addButtonListener(settingBtn);
 		stage.addActor(settingBtn);
 
 		Button exitBtn = new TextButton("QUIT", createButtonStyle(menuFont));
-		exitBtn.setPosition(200, 210);
-		exitBtn.addAction(Actions.moveTo(300, 210, 1.2f, Interpolation.PowOut.pow3Out));
+		exitBtn.setTransform(true);
+		exitBtn.setPosition(200, 340);
+		exitBtn.setScale(1.4f);
+		exitBtn.addAction(Actions.moveTo(300, 340, 1.2f, Interpolation.PowOut.pow3Out));
 		addButtonListener(exitBtn);
 		stage.addActor(exitBtn);
 
-		envTeamButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				switchScreen(GameScreen.gameType.ENV_TEAM_GAME);
-				GameManager.getManagerFromInstance(SoundManager.class).playSound("button2");
-			}
-		});
-
-		testWorldBtn.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				switchScreen(GameScreen.gameType.TEST_WORLD);
-				GameManager.getManagerFromInstance(SoundManager.class).playSound("button2");
-			}
-		});
+//		envTeamButton.addListener(new ClickListener() {
+//			@Override
+//			public void clicked(InputEvent event, float x, float y) {
+//				switchScreen(GameScreen.gameType.ENV_TEAM_GAME);
+//				GameManager.getManagerFromInstance(SoundManager.class).playSound("button2");
+//			}
+//		});
+//
+//		testWorldBtn.addListener(new ClickListener() {
+//			@Override
+//			public void clicked(InputEvent event, float x, float y) {
+//				switchScreen(GameScreen.gameType.TEST_WORLD);
+//				GameManager.getManagerFromInstance(SoundManager.class).playSound("button2");
+//			}
+//		});
 
 		newGameBtn.addListener(new ClickListener() {
 			@Override

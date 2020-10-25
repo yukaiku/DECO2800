@@ -148,11 +148,13 @@ public class Item extends StaticEntity implements TouchDownObserver {
                 case "Iron Armour":
                     if (this.player.getArmour() < 2000){
                         this.player.addArmour(((IronArmour) this).getArmourValue());
+                        PlayerPeon.addBuffArmourTotal(((IronArmour) this).getArmourValue());
                     }
                     break;
                 case "Wooden Armour":
                     if (this.player.getArmour() < 2000){
                         this.player.addArmour(((WoodenArmour) this).getArmourValue());
+                        PlayerPeon.addBuffArmourTotal(((WoodenArmour) this).getArmourValue());
                     }
                     break;
                 case "Attack Amulet":

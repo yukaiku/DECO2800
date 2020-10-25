@@ -15,14 +15,16 @@ import deco2800.thomas.worlds.swamp.SwampWorld;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-
+import static org.mockito.Mockito.mock;
 
 public class DifficultyManagerTest extends BaseGDXTest {
-    /**
+/*
+ */
     private DifficultyManager difficultyManager;
     private EnemyManager enemyManager;
     private PlayerManager playerManager;
@@ -35,13 +37,20 @@ public class DifficultyManagerTest extends BaseGDXTest {
 
     @Before
     public void setUp() throws InvalidEnemyException {
-        difficultyManager = new DifficultyManager();
-        playerManager = GameManager.getManagerFromInstance(PlayerManager.class);
+        GameManager gameManager = mock(GameManager.class);
+        difficultyManager = mock(DifficultyManager.class);
+        gameManager.addManager(difficultyManager);
+        difficultyManager = gameManager.getManagerFromInstance(DifficultyManager.class);
+        playerManager = mock(PlayerManager.class);
+        gameManager.addManagerToInstance(playerManager);
+        playerManager = gameManager.getManagerFromInstance(PlayerManager.class);
         playerPeon = new PlayerPeon(10f,5f,0.15f);
         swampWorld = new SwampWorld();
         swampWorld.setPlayerEntity(playerPeon);
         swampWorld.addEntity(swampWorld.getPlayerEntity());
-        enemyManager = GameManager.getManagerFromInstance(EnemyManager.class);
+        enemyManager = mock(EnemyManager.class);
+        gameManager.addManagerToInstance(enemyManager);
+        enemyManager = gameManager.getManagerFromInstance(EnemyManager.class);
         enemyManager.addEnemyConfigs("swampOrc");
         enemyManager.addEnemyConfigs("tundraOrc");
         enemyManager.addEnemyConfigs("desertOrc");
@@ -207,5 +216,5 @@ public class DifficultyManagerTest extends BaseGDXTest {
         enemyManager = null;
         playerManager = null;
     }
-    */
+*/
 }

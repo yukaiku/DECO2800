@@ -72,9 +72,17 @@ public class HealthBarComponent extends OverlayComponent {
 
         // Get most recent Health Value
         int health = playerHealth.getCurrentHealthValue();
+        int maxHealth = playerHealth.getMaxHealthValue();
+        int percentValue =
+                (int) Math.round(((float) health / maxHealth) * 100.0);
 
         // Round down to nearest multiple of 5
-        int healthValueRounded = health - (health % 5);
+        int healthValueRounded;
+        try {
+            healthValueRounded = percentValue - (percentValue % 5);
+        } catch (ArithmeticException err) {
+            healthValueRounded = 0;
+        }
 
         // Append to textureId
         textureId.append(healthValueRounded);

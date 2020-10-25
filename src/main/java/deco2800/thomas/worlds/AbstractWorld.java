@@ -9,6 +9,7 @@ import deco2800.thomas.entities.agent.AgentEntity;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.util.BoundingBox;
 import deco2800.thomas.util.SquareVector;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

@@ -10,7 +10,7 @@ public class HealthPotion extends Item {
 
     public HealthPotion(Tile tile, boolean obstructed, PlayerPeon player,
             String styleType){
-        super("Health Potion",50, tile, RenderConstants.ITEM_RENDER,
+        super("Health Potion",30, tile, RenderConstants.ITEM_RENDER,
                 "potion_large", obstructed, player);
         this.setObjectName(ENTITY_ID_STRING);
         super.display = new ItemBox(this, name, Integer.toString(super.getCurrencyValue()),

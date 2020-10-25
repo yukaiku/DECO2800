@@ -14,6 +14,9 @@ import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.enemies.PassiveEnemy;
+import deco2800.thomas.entities.enemies.EnemyIndex;
+import deco2800.thomas.entities.enemies.PassiveEnemy;
+import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.ScreenManager;
 import deco2800.thomas.managers.SoundManager;
@@ -69,7 +72,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     private int growlTick = 0;
     private int roarTick = 0;
     private static final int FOLLOW_CYCLE = 80;
-    private static final int GOBLIN_SPAWN_CYCLE = 60;
+    private static final int GOBLIN_SPAWN_CYCLE = 70;
     private static final int GROWL_CYCLE = 180;
     private static final int ROAR_CYCLE = 800;
 
@@ -208,7 +211,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
             case IDLE:
             default:
                 stateTimer = 0;
-                region = dragonIdle.getKeyFrame(stateTimer);
+                region = dragonWalking.getKeyFrame(0);
         }
         if ((getMovingDirection() == MovementTask.Direction.LEFT ||
                 facingDirection == MovementTask.Direction.LEFT) && !region.isFlipX()) {
