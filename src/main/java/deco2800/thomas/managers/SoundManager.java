@@ -63,9 +63,16 @@ public class SoundManager extends AbstractManager {
 			addNewSound("explosion", "resources/sounds/sfx/explosion_1.wav", 0.7f);
 			addNewSound("button1", "resources/sounds/sfx/button_1.wav", 0.1f);
 			addNewSound("button2", "resources/sounds/sfx/button_2.wav", 0.2f);
-			addNewSound("dragon1", "resources/sounds/sfx/dragon_fire.mp3", 0.8f);
 			addNewSound("gameOver", "resources/sounds/sfx/game_over.ogg", 0.7f);
 			addNewSound("victory", "resources/sounds/sfx/victory_sound.ogg", 1.0f);
+
+			// Enemy sounds
+			addNewSound("orcGrowl", "resources/sounds/sfx/orc_growl.wav", 0.5f);
+			addNewSound("volcanoDragon", "resources/sounds/sfx/dragon_volcano.mp3", 0.8f);
+			addNewSound("desertDragon", "resources/sounds/sfx/dragon_desert.mp3", 0.6f);
+			addNewSound("tundraDragon", "resources/sounds/sfx/dragon_tundra.wav", 0.5f);
+			addNewSound("swampDragon", "resources/sounds/sfx/dragon_swamp.wav", 0.8f);
+			addNewSound("dragonGrowl", "resources/sounds/sfx/dragon_growl.wav", 0.8f);
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		} finally {
@@ -170,6 +177,22 @@ public class SoundManager extends AbstractManager {
 	}
 
 	/**
+	 * Toggles boss music if player enters/leaves dungeons
+	 * @param play Play or pause the music
+	 */
+	public void toggleBossMusic(boolean play) {
+		if (bossMusic != null) {
+			if (play) {
+				if (ambience != null) ambience.stop();
+				bossMusic.resume();
+			} else {
+				if (ambience != null) ambienceId = ambience.loop(volume * ambienceVolume);
+				bossMusic.pause();
+			}
+		}
+	}
+
+	/**
 	 * Stops the given sound resource, and disposes of it.
 	 * @param sound Sound resource to dispose..
 	 */
@@ -185,14 +208,24 @@ public class SoundManager extends AbstractManager {
 	 * @param soundName ID of sound to play
 	 */
 	public void playSound(String soundName) {
+		playSound(soundName, 0);
+	}
+
+	/**
+	 * Plays a sound effect that has been preloaded.
+	 * @param soundName ID of sound to play
+	 * @param pan L/R channel, -1 is full left, 1 is full right and 0 is center.
+	 */
+	public void playSound(String soundName, float pan) {
 		if (!soundLoaded) loadSound();
 		try {
 			Pair<Sound, Float> soundPair = soundEffects.get(soundName);
-			soundPair.getValue0().play(volume * soundPair.getValue1());
+			soundPair.getValue0().play(volume * soundPair.getValue1(), 1f, pan);
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		}
 	}
+
 
 	/**
 	 * Loops a sound that has been preloaded.

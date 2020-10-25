@@ -116,6 +116,7 @@ public class DragonTest extends BaseGDXTest {
 
         assertEquals(volcanoDragon.getSpeed(), 0.1f, 0.01);
         assertEquals(volcanoDragon.getCurrentHealth(), 1000);
+        assertEquals(volcanoDragon.getVariationString(), "volcano");
     }
 
     @Test
@@ -200,6 +201,7 @@ public class DragonTest extends BaseGDXTest {
 
     @Test
     public void testDeath() {
+        volcanoDragon.hitByTarget();
         volcanoDragon.death();
         PowerMockito.verifyStatic(WorldUtil.class);
         WorldUtil.removeEntity(any(AbstractEntity.class));

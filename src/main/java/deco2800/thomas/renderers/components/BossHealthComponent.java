@@ -1,33 +1,45 @@
 package deco2800.thomas.renderers.components;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.enemies.bosses.Boss;
 import deco2800.thomas.entities.enemies.bosses.Dragon;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.renderers.OverlayComponent;
 import deco2800.thomas.renderers.OverlayRenderer;
+import deco2800.thomas.worlds.AbstractWorld;
 
 import java.util.Arrays;
 import java.util.HashMap;
 
 public class BossHealthComponent extends OverlayComponent {
     private boolean render = false;
-    // the tracked boss
+
+    // Tracked boss
     private Boss boss = null;
     private String bossType = "";
+
     // Cached health bar images
     private final HashMap<String, Sprite> cachedHealthSprites = new HashMap<>();
     private float scaleFactor;
     private final BitmapFont font;
     private float blinkAlpha = 0f;
     private boolean blinkUp = true;
+
+    // Render constants
+    private final static float BOSS_NAME_LEFT_ANCHOR = 0.43f;
+    private final static float BOSS_NAME_TOP_MARGIN = 24;
+    private final static float HEALTH_VALUE_LEFT_ANCHOR = 0.48f;
+    private final static float HEALTH_VALUE_TOP_MARGIN = 70;
+    private final static float HEALTH_BAR_LEFT_ANCHOR = 0.3f;
+    private final static float HEALTH_BAR_TOP_ANCHOR = 0.85f;
+    private final static float HEALTH_BAR_BASE_SCALE = 0.15f;
 
     public BossHealthComponent(OverlayRenderer overlayRenderer) {
         super(overlayRenderer);
@@ -42,6 +54,11 @@ public class BossHealthComponent extends OverlayComponent {
         textTex.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.Linear);
         font = new BitmapFont(Gdx.files.internal("resources/fonts/title.fnt"),
                 new TextureRegion(textTex), false);
+    }
+
+    public boolean setRender(boolean render) {
+        this.render = render && this.boss != null;
+        return this.boss != null;
     }
 
     public void onBossStart(Boss boss) {
@@ -62,6 +79,7 @@ public class BossHealthComponent extends OverlayComponent {
 
     public void onBossDefeat() {
         this.render = false;
+        this.boss = null;
     }
 
     @Override
@@ -74,53 +92,63 @@ public class BossHealthComponent extends OverlayComponent {
         int percentage = (int) Math.round(((float) boss.getCurrentHealth() / boss.getMaxHealth()) * 100.0);
 
         batch.begin();
+        float alpha = 1f;
+
+        // Make component semi-transparent when player moves to the top.
+        AbstractWorld world = GameManager.get().getWorld();
+        PlayerPeon player = (PlayerPeon) world.getPlayerEntity();
+        if (player.getRow() > (float) world.getHeight() - 3) {
+            alpha = 0.4f;
+        }
 
         // boss health bar
         Sprite sprite = cachedHealthSprites.get(String.format("%s%d", this.bossType, percentage - (percentage % 5)));
-        sprite.setPosition(overlayRendererX + 0.3f * overlayRendererWidth,
-                overlayRendererY + 0.85f * overlayRendererHeight);
+        sprite.setPosition(overlayRendererX + HEALTH_BAR_LEFT_ANCHOR * overlayRendererWidth,
+                overlayRendererY + HEALTH_BAR_TOP_ANCHOR * overlayRendererHeight);
         float ratio = sprite.getWidth() / sprite.getHeight();
-        sprite.setSize(scaleFactor * 0.15f * ratio * overlayRendererWidth,
-                scaleFactor * 0.15f * overlayRendererWidth);
+        sprite.setSize(scaleFactor * HEALTH_BAR_BASE_SCALE * ratio * overlayRendererWidth,
+                scaleFactor * HEALTH_BAR_BASE_SCALE * overlayRendererWidth);
+        sprite.setAlpha(alpha);
         sprite.draw(batch);
 
         // boss name and drop shadow
-        font.setColor(Color.valueOf("#000000"));
+        font.setColor(0, 0, 0, alpha);
         font.getData().setScale(1f);
-        font.draw(batch, String.format("%s", boss.getObjectName()), overlayRendererX + 0.43f *
-                overlayRendererWidth + 1, overlayRendererY + overlayRendererHeight - 24 - 1);
-        font.setColor(Color.valueOf("#ffffff"));
-        font.draw(batch, String.format("%s", boss.getObjectName()), overlayRendererX + 0.43f * overlayRendererWidth,
-                overlayRendererY + overlayRendererHeight - 24);
+        font.draw(batch, String.format("%s", boss.getObjectName()), overlayRendererX + BOSS_NAME_LEFT_ANCHOR *
+                overlayRendererWidth + 1, overlayRendererY + overlayRendererHeight - BOSS_NAME_TOP_MARGIN - 1);
+        font.setColor(255, 255, 255, alpha);
+        font.draw(batch, String.format("%s", boss.getObjectName()), overlayRendererX + BOSS_NAME_LEFT_ANCHOR *
+                overlayRendererWidth, overlayRendererY + overlayRendererHeight - BOSS_NAME_TOP_MARGIN);
 
         // boss health value and drop shadow
         font.getData().setScale(0.4f);
-        font.setColor(Color.valueOf("#000000"));
+        font.setColor(0, 0, 0, alpha);
         font.draw(batch, String.format("%d/%d", boss.getCurrentHealth(), boss.getMaxHealth()),
-                overlayRendererX + 0.48f * overlayRendererWidth + 1,
-                overlayRendererY + overlayRendererHeight - 70 - 1);
-        font.setColor(Color.valueOf("#ffffff"));
+                overlayRendererX + HEALTH_VALUE_LEFT_ANCHOR * overlayRendererWidth + 1,
+                overlayRendererY + overlayRendererHeight - HEALTH_VALUE_TOP_MARGIN - 1);
+        font.setColor(255, 255, 255, alpha);
         font.draw(batch, String.format("%d/%d", boss.getCurrentHealth(), boss.getMaxHealth()),
-                overlayRendererX + 0.48f * overlayRendererWidth,
-                overlayRendererY + overlayRendererHeight - 70);
+                overlayRendererX + HEALTH_VALUE_LEFT_ANCHOR * overlayRendererWidth,
+                overlayRendererY + overlayRendererHeight - HEALTH_VALUE_TOP_MARGIN);
 
         // blinking effect overlay
         if (percentage <= 20) {
-            float alpha;
+            float overlayBlinkAlpha;
             if (blinkUp) {
                 blinkAlpha += 0.04f;
                 if (blinkAlpha >= 1.3f) blinkUp = false;
-                alpha = Math.min(1f, blinkAlpha);
+                overlayBlinkAlpha = Math.min(alpha, blinkAlpha);
             } else {
                 blinkAlpha -= 0.04f;
                 if (blinkAlpha <= -0.3f) blinkUp = true;
-                alpha = Math.max(0f, blinkAlpha);
+                overlayBlinkAlpha = Math.max(0f, Math.min(alpha, blinkAlpha));
             }
-            font.setColor(255f, 0, 0, alpha);
+            font.setColor(255, 0, 0, overlayBlinkAlpha);
             font.draw(batch, String.format("%d/%d", boss.getCurrentHealth(), boss.getMaxHealth()),
-                    overlayRendererX + 0.48f * overlayRendererWidth,
-                    overlayRendererY + overlayRendererHeight - 70);
+                    overlayRendererX + HEALTH_VALUE_LEFT_ANCHOR * overlayRendererWidth,
+                    overlayRendererY + overlayRendererHeight - HEALTH_VALUE_TOP_MARGIN);
         }
+        batch.setColor(255, 255, 255, 1f);
         batch.end();
     }
 }

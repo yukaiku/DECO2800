@@ -1,15 +1,11 @@
 package deco2800.thomas.managers;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import deco2800.thomas.combat.DamageType;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.enemies.EnemyPeon;
 import deco2800.thomas.entities.enemies.InvalidEnemyException;
 import deco2800.thomas.entities.enemies.bosses.Boss;
 import deco2800.thomas.entities.enemies.monsters.Monster;
 import deco2800.thomas.entities.enemies.monsters.Orc;
-import deco2800.thomas.observers.KeyDownObserver;
 import deco2800.thomas.worlds.AbstractWorld;
 
 import java.util.*;
@@ -25,7 +21,7 @@ import java.util.*;
  *
  * Wiki: https://gitlab.com/uqdeco2800/2020-studio-2/2020-studio2-henry/-/wikis/enemies/enemy-manager
  */
-public class EnemyManager extends TickableManager implements KeyDownObserver {
+public class EnemyManager extends TickableManager {
     // the target world
     private final AbstractWorld world;
 
@@ -92,8 +88,8 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
         }
         this.spawnRangeMin = 8;
         this.spawnRangeMax = 14;
-        this.random = new Random();
-        GameManager.getManagerFromInstance(InputManager.class).addKeyDownListener(this);
+        // Seeding for testing purposes
+        this.random = new Random(world.getType().length());
     }
 
     /**
@@ -182,7 +178,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
      * @return the number of enemies alive.
      */
     public int getEnemyCount() {
-        return wildEnemiesAlive.size() + specialEnemiesAlive.size() + ((boss != null && !boss.isDead()) ? 1 : 0);
+        return wildEnemiesAlive.size() + specialEnemiesAlive.size() + ((boss != null) ? 1 : 0);
     }
 
     /** Get the current wild enemies alive in the map. */
@@ -206,7 +202,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
     }
 
     /** Spawn the wild enemy at the given position. This should be automatically called by the configuration. */
-    private void spawnWildEnemy(EnemyPeon enemy, float x, float y) {
+    public void spawnWildEnemy(EnemyPeon enemy, float x, float y) {
         if (wildSpawning && wildEnemiesAlive.size() < wildEnemyCap) {
             enemy.setPosition(x, y);
             world.addEntity(enemy);
@@ -252,7 +248,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
     }
 
     /** Spawns a random enemy from the configuration list. Normally it will be called automatically by the manager. */
-    private void spawnRandomWildEnemy() {
+    public void spawnRandomWildEnemy() {
         EnemyPeon enemyBlueprint = enemyConfigs.get(wildEnemyIndexes.get(random.nextInt(wildEnemyIndexes.size())));
         // spawn rate of the enemy
         if (enemyBlueprint instanceof Orc && random.nextFloat() < ((Orc) enemyBlueprint).getSpawnRate()) {
@@ -298,37 +294,7 @@ public class EnemyManager extends TickableManager implements KeyDownObserver {
         if (boss != null) {
             world.removeEntity(boss);
             world.disposeEntity(boss.getEntityID());
-        }
-    }
-
-    /** Get the world name the manager is operating on */
-    public String getWorldName() {
-        return world.toString().substring(world.toString().lastIndexOf('.') + 1);
-    }
-
-    /**
-     * Keyboard inputs (in debug mode only)
-     * @param keycode the key being pressed
-     */
-    @Override
-    public void notifyKeyDown(int keycode) {
-        if (GameManager.get().getDebugMode() && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) ||
-                Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
-            if (keycode == Input.Keys.P) {
-                // Ctrl + P: Toggle wild enemy spawning
-                wildSpawning = !wildSpawning;
-            } else if (keycode == Input.Keys.K) {
-                // Ctrl + K: kill all wild and special enemies (excludes boss)
-                new ArrayList<>(wildEnemiesAlive).forEach(this::removeWildEnemy);
-                new ArrayList<>(specialEnemiesAlive).forEach(this::removeSpecialEnemy);
-                // Ctrl + L: Kill the dragon
-            } else if (keycode == Input.Keys.L && boss != null) {
-                boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
-                boss.applyDamage(boss.getCurrentHealth(), DamageType.COMMON);
-            } else if (keycode == Input.Keys.S) {
-                // Ctrl + S: Spawn a special enemy
-                spawnSpecialEnemy("swampGoblin", 0, 0);
-            }
+            boss = null;
         }
     }
 

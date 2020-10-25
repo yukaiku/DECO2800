@@ -39,6 +39,7 @@ public class TundraWorld extends AbstractWorld {
 	}
 
 	public TundraWorld(int width, int height) {
+		super(width, height);
 		DatabaseManager.loadWorld(this, MAP_FILE_TILES_ONLY);
 		this.allTundraDialogues = new ArrayList<>();
 

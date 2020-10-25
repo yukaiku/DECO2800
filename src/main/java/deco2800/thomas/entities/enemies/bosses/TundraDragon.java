@@ -8,6 +8,7 @@ import deco2800.thomas.combat.skills.SummonGoblinSkill;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
+import deco2800.thomas.tasks.combat.IceBreathTask;
 
 public class TundraDragon extends Dragon {
     public TundraDragon(int health, float speed, int orbNumber) {
@@ -37,6 +38,8 @@ public class TundraDragon extends Dragon {
                 e.printStackTrace();
             }
         }
+        setCombatTask(new IceBreathTask(this, getTarget().getCol(), getTarget().getRow(),
+                20, 0.2f, 4));
     }
 
     @Override

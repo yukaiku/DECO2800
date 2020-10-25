@@ -22,6 +22,7 @@ public class VolcanoDragon extends Dragon {
         this.setObjectName("Chusulth");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
+
         this.breathAttack = new VolcanoFireballSkill(this);
         this.elementalAttack = new FireBombSkill(this);
         this.summonGoblin = new SummonGoblinSkill(this);
@@ -31,13 +32,16 @@ public class VolcanoDragon extends Dragon {
     public void hitByTarget() {
         super.hitByTarget();
         GameManager.getManagerFromInstance(SoundManager.class).playSound("dragon1");
+
+        this.dragonAttacking = new Animation<>(0.1f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
+        this.dragonWalking = new Animation<>(0.2f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Walk"));
     }
 
     @Override
     public void elementalAttack() {
-        if (super.getTarget() != null && EnemyUtil.playerInRange(this, getTarget(), attackRange)) {
-            setCombatTask(new FireBombAttackTask(this, 20, 8, 20, 5, 5));
-        }
+        setCombatTask(new FireBombAttackTask(this, 20, 8, 20, 5, 5));
     }
 
     @Override

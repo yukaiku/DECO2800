@@ -7,6 +7,8 @@ import deco2800.thomas.combat.skills.ScorpionStingSkill;
 import deco2800.thomas.combat.skills.SummonGoblinSkill;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import deco2800.thomas.entities.EntityFaction;
+import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
@@ -23,6 +25,10 @@ public class SwampDragon extends Dragon {
         this.elementalAttack = new ScorpionStingSkill(this);
         this.breathAttack = new FireballSkill(this);
         this.summonGoblin = new SummonGoblinSkill(this);
+        this.dragonAttacking = new Animation<>(0.2f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
+        this.dragonWalking = new Animation<>(0.5f,
+                GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Walk"));
     }
 
     @Override

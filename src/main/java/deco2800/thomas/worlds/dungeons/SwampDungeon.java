@@ -10,38 +10,30 @@ import deco2800.thomas.entities.npc.SwampDungeonNPC;
 import deco2800.thomas.managers.*;
 import deco2800.thomas.util.SquareVector;
 import deco2800.thomas.worlds.AbstractWorld;
-import deco2800.thomas.worlds.TestWorld;
 import deco2800.thomas.worlds.Tile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SwampDungeon extends AbstractWorld {
-    private final Logger logger = LoggerFactory.getLogger(TestWorld.class);
     public static final String SAVE_LOCATION_AND_FILE_NAME = "resources/environment/swamp_dungeon/swamp_dungeon_map.json";
 
-    private SquareVector topTrap;
-    private boolean topTrapActivated = false;
+    private final SquareVector topTrap;
 
-    private SquareVector midTrap;
-    private boolean midTrapActivated = false;
+    private final SquareVector midTrap;
 
-    private SquareVector correctTile;
-    private boolean correctTileActivated = false;
+    private final SquareVector correctTile;
 
-    private List<AbstractDialogBox> allSwampDungeonDialogues;
+    private final List<AbstractDialogBox> allSwampDungeonDialogues;
 
     public SwampDungeon() {
         this(12, 7);
     }
 
     public SwampDungeon(int width, int height) {
+        super(width, height);
         DatabaseManager.loadWorld(this, SAVE_LOCATION_AND_FILE_NAME);
         this.generateTiles();
-        this.generateTileMap();
-        this.generateTileIndices();
         this.allSwampDungeonDialogues = new ArrayList<>();
 
         // Create the player entity
@@ -72,7 +64,8 @@ public class SwampDungeon extends AbstractWorld {
         this.allSwampDungeonDialogues.add(npc4.getBox());
         this.allSwampDungeonDialogues.add(npc5.getBox());
         this.allSwampDungeonDialogues.add(npc6.getBox());
-        NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity, npnSpawns);
+        NonPlayablePeonManager npcManager = new NonPlayablePeonManager(this, (PlayerPeon) this.playerEntity,
+                npnSpawns);
         GameManager.get().addManager(npcManager);
 
         // Creates dialogue manager
@@ -83,10 +76,41 @@ public class SwampDungeon extends AbstractWorld {
         topTrap = new SquareVector(7, 1);
         midTrap = new SquareVector(7, -1);
         correctTile = new SquareVector(7, -3);
+        setUpPlatforms();
     }
 
     @Override
     protected void generateTiles() {
+    }
+
+    public List<AbstractDialogBox> getAllSwampDungeonDialogues() {
+        return allSwampDungeonDialogues;
+    }
+
+    public SquareVector getTopTrap() {
+        return topTrap;
+    }
+
+    public SquareVector getMidTrap() {
+        return midTrap;
+    }
+
+    public SquareVector getCorrectTile() {
+        return correctTile;
+    }
+
+    private void setUpPlatforms() {
+        Tile topTrapTile = this.getTile(topTrap);
+        topTrapTile.setTrapTile(true);
+        topTrapTile.setTrapActivated(false);
+
+        Tile midTrapTile = this.getTile(midTrap);
+        midTrapTile.setTrapTile(true);
+        midTrapTile.setTrapActivated(false);
+
+        Tile rewardTile = this.getTile(correctTile);
+        rewardTile.setRewardTile(true);
+        rewardTile.setRewardActivated(false);
     }
 
     private void spawnEnemies() {
@@ -107,17 +131,10 @@ public class SwampDungeon extends AbstractWorld {
         }
     }
 
-    private void activateTrap() {
-        if (this.getPlayerEntity().getPosition().isCloseEnoughToBeTheSame(topTrap) && !topTrapActivated) {
-            this.getTile(topTrap).setTexture("dungeon-light-black");
-            spawnEnemies();
-            topTrapActivated = true;
-        }
-        if (this.getPlayerEntity().getPosition().isCloseEnoughToBeTheSame(midTrap) && !midTrapActivated) {
-            this.getTile(midTrap).setTexture("dungeon-light-black");
-            spawnEnemies();
-            midTrapActivated = true;
-        }
+    @Override
+    public void activateTrapTile(Tile tile) {
+        tile.setTexture("dungeon-light-black");
+        spawnEnemies();
     }
 
     private void spawnExitPortal() {
@@ -125,18 +142,16 @@ public class SwampDungeon extends AbstractWorld {
         entities.add(new Portal(portalTile, false, "swamp_portal", "ExitPortal"));
     }
 
-    private void activateReward() {
-        if (this.getPlayerEntity().getPosition().isCloseEnoughToBeTheSame(correctTile) && !correctTileActivated) {
-            this.getTile(correctTile).setTexture("dungeon-light-black");
-            GameManager.getManagerFromInstance(PlayerManager.class).grantWizardSkill(WizardSkills.HEAL);
-            spawnExitPortal();
-            correctTileActivated = true;
-        }
+    @Override
+    public void activateRewardTile(Tile tile) {
+        tile.setTexture("dungeon-light-black");
+        GameManager.getManagerFromInstance(PlayerManager.class).grantWizardSkill(WizardSkills.HEAL);
+        spawnExitPortal();
     }
 
     /**
      * Adds a dialog box to this world
-     * @param box
+     * @param box: an AbstractDialogBox instance
      */
     public void addDialogue(AbstractDialogBox box){
         this.allSwampDungeonDialogues.add(box);
@@ -149,8 +164,6 @@ public class SwampDungeon extends AbstractWorld {
 
     @Override
     public void onTick(long i) {
-        activateTrap();
-        activateReward();
         super.onTick(i);
         for (AbstractEntity e : this.getEntities()) {
             e.onTick(0);
