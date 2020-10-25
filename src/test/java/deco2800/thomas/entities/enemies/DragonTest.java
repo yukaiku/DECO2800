@@ -211,6 +211,7 @@ public class DragonTest extends BaseGDXTest {
 
     @Test
     public void testAnimationFrame() {
+        volcanoDragon.hitByTarget();
         Array<TextureRegion> dragonArray = new Array<>();
         dragonArray.add(new TextureRegion(new Texture("resources/enemies/dragon_volcano.png")));
         assertEquals(dragonArray.get(0).getTexture().toString(), volcanoDragon.getFrame(0).getTexture().toString());
