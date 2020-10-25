@@ -178,7 +178,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
             case IDLE:
             default:
                 stateTimer = 0;
-                region = dragonIdle.getKeyFrame(stateTimer);
+                region = dragonWalking.getKeyFrame(0);
         }
         if ((getMovingDirection() == MovementTask.Direction.LEFT ||
                 facingDirection == MovementTask.Direction.LEFT) && !region.isFlipX()) {

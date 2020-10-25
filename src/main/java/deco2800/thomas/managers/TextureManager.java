@@ -705,7 +705,7 @@ public class TextureManager extends AbstractManager {
             addAnimationFramesSprite("dragonDesertAttack", "resources/enemies/desert_dragon_attack_sprites.png",
                     3, 701, 701, true);
             addAnimationFramesSprite("dragonSwampAttack", "resources/enemies/dragon_swamp_attacking_sprites.png",
-                    2, 673, 593, true);
+                    2, 652, 531, true);
             addAnimationFramesSprite("dragonTundraAttack", "resources/enemies/dragon_tundra_attacking_sprites.png",
                     4, 1363, 1000, true);
             addAnimationFramesSprite("dragonVolcanoAttack", "resources/enemies/dragon_volcano_fireball_sprites.png",
@@ -719,7 +719,7 @@ public class TextureManager extends AbstractManager {
             addAnimationFramesSprite("dragonDesertWalk", "resources/enemies/desert_dragon_tail_sprites.png",
                     5, 701, 701, true);
             addAnimationFramesSprite("dragonSwampWalk", "resources/enemies/dragon_swamp_walking_sprites.png",
-                    2, 658, 640, true);
+                    2, 652, 531, true);
 
         } catch (GdxRuntimeException e) {
             e.printStackTrace();
