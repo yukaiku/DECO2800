@@ -11,17 +11,14 @@ public abstract class CombatEntity extends AbstractEntity {
     protected AbstractTask movementTask;
     protected AbstractTask combatTask;
 
-    public CombatEntity() {
-        super();
-    }
-
     /**
-     *  @param col
-     * @param row
-     * @param renderOrder
-     * @param damage
-     * @param faction
-     * @param damageType
+     * Creates a new instance of a CombatEntity.
+     * @param col X position
+     * @param row Y position
+     * @param renderOrder Render constant
+     * @param damage Damage to deal
+     * @param faction EntityFaction of entity
+     * @param damageType DamageType to apply
      */
     public CombatEntity(float col, float row, int renderOrder, int damage, EntityFaction faction, DamageType damageType) {
         super(col, row, renderOrder);

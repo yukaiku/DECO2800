@@ -11,9 +11,6 @@ import deco2800.thomas.managers.TextureManager;
 import deco2800.thomas.util.WorldUtil;
 
 public class Freeze extends Projectile implements Animatable {
-    private float stateTimer = 0f;
-    private float direction;
-
     /**
      * Parametric constructor, that sets the initial conditions of the explosion
      * as well as texture and name.
@@ -25,7 +22,7 @@ public class Freeze extends Projectile implements Animatable {
     public Freeze (float col, float row, int damage, EntityFaction faction, float direction) {
         super(col, row, RenderConstants.PROJECTILE_RENDER, damage, 0, faction);
         this.setObjectName("freezeWave");
-        this.direction = direction;
+        this.setDirection(direction);
         this.setColRenderLength(0.3f);
         this.setRowRenderLength(1.0f);
         this.setTexture("explosion");
@@ -35,14 +32,9 @@ public class Freeze extends Projectile implements Animatable {
     }
 
     /**
-     * Returns the direction this entity is moving.
-     * @return Direction entity is moving.
+     * Only update the combat task, not the movement task.
+     * @param i current game tick
      */
-    @Override
-    public float getDirection() {
-        return this.direction;
-    }
-
     @Override
     public void onTick(long i) {
         // Update combat task
@@ -52,14 +44,21 @@ public class Freeze extends Projectile implements Animatable {
                 combatTask = null;
             }
         }
-    }
 
-    @Override
-    public TextureRegion getFrame(float delta) {
-        TextureRegion region;
+        // Remove entity if timer exceeds lifetime
         if (stateTimer >= defaultState.getAnimationDuration()) {
             WorldUtil.removeEntity(this);
         }
+    }
+
+    /**
+     * Override getFrame to prevent it from looping.
+     * @param delta the interval of the ticks
+     * @return TextureRegion of current frame to render
+     */
+    @Override
+    public TextureRegion getFrame(float delta) {
+        TextureRegion region;
         region = defaultState.getKeyFrame(stateTimer);
         stateTimer = stateTimer + delta;
         return region;
