@@ -14,9 +14,6 @@ import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.enemies.PassiveEnemy;
-import deco2800.thomas.entities.enemies.EnemyIndex;
-import deco2800.thomas.entities.enemies.PassiveEnemy;
-import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.ScreenManager;
 import deco2800.thomas.managers.SoundManager;
@@ -59,7 +56,6 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     protected AbstractSkill elementalAttack;
     protected AbstractSkill breathAttack;
     protected AbstractSkill summonGoblin;
-    private int tickFollowing = 60;
     // Range at which the dragon will attempt to melee attack the player
     protected int attackRange = 4;
 
@@ -68,18 +64,12 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
     // Ticks
     protected int duration = 0;
     private int followTick = 60;
-    private int goblinSpawnTick = 0;
     private int growlTick = 0;
     private int roarTick = 0;
     private static final int FOLLOW_CYCLE = 80;
-    private static final int GOBLIN_SPAWN_CYCLE = 70;
     private static final int GROWL_CYCLE = 180;
     private static final int ROAR_CYCLE = 800;
 
-    // Constants
-    private static final int GOBLIN_CAP = 10;
-    // Range at which the dragon will attempt to melee attack the player
-    protected static final int ATTACK_RANGE = 4;
     Random random = new Random();
 
     public Dragon(int health, float speed, int orbNumber) {
@@ -125,12 +115,10 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
         return damageDealt;
     }
 
-
     @Override
     public Texture getIcon() {
          return dragonIdle.getKeyFrame(0).getTexture();
     }
-
 
     /**
      * Targets the player if the boss's health is reduced
@@ -146,7 +134,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
                 .getOverlayRenderer().getComponentByInstance(BossHealthComponent.class).onBossStart(this);
         float pan = EnemyUtil.playerLRDistance(this, super.getTarget());
         GameManager.getManagerFromInstance(SoundManager.class).playSound(String.format("%sDragon",
-                this.getVariation()), pan);
+                this.getVariation().name().toLowerCase()), pan);
         GameManager.getManagerFromInstance(SoundManager.class).playBossMusic("bossMusic");
     }
 
@@ -176,10 +164,10 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
      */
     @Override
     public void death() {
+        super.death();
         float pan = EnemyUtil.playerLRDistance(this, super.getTarget());
         GameManager.getManagerFromInstance(SoundManager.class).playSound(String.format("%sDragon",
-                this.getVariation()), pan);
-        super.death();
+                this.getVariation().name().toLowerCase()), pan);
         AbstractWorld world = GameManager.get().getWorld();
         Tile tile = world.getTile((float) Math.ceil((this.getCol())),
                 (float) Math.ceil((this.getRow())));
@@ -254,7 +242,7 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
             if (++roarTick > ROAR_CYCLE) {
                 float pan = EnemyUtil.playerLRDistance(this, super.getTarget());
                 GameManager.getManagerFromInstance(SoundManager.class).playSound(String.format("%sDragon",
-                        this.getVariation()), pan);
+                        this.getVariation().name().toLowerCase()), pan);
                 roarTick = 0;
             }
         } else {
@@ -297,6 +285,5 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
         summonGoblin.onTick(i);
         elementalAttack.onTick(i);
         breathAttack.onTick(i);
-
     }
 }
