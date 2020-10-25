@@ -39,9 +39,9 @@ public class PlayerPeon extends LoadedPeon implements Animatable, TouchDownObser
     private int duration = 0;
 
     public static final int DEFAULT_HEALTH = 100;
-    public static int buffDamageTotal;
-    public static boolean isCoolDownBuffActive = false;
-    public static int buffArmourTotal;
+    private static int buffDamageTotal;
+    private static boolean isCoolDownBuffActive = false;
+    private static int buffArmourTotal;
 
     // Player dialogue
     private static final Map<String, String> dialogues = new HashMap<>();

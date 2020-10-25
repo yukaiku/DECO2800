@@ -37,7 +37,6 @@ public class SwampWorld extends AbstractWorld {
         this.allSwampDialogues = new ArrayList<>();
 
         // Create the player entity
-        PlayerPeon.buffDamageTotal = 0;
         this.setPlayerEntity(new PlayerPeon(10f, 5f, 0.15f));
         addEntity(this.getPlayerEntity());
 
