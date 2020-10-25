@@ -3,10 +3,8 @@ package deco2800.thomas.entities.enemies.bosses;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.combat.skills.DesertFireballSkill;
-import deco2800.thomas.combat.skills.SandTornadoSkill;
 import deco2800.thomas.combat.skills.SummonGoblinSkill;
-import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.attacks.DesertFireball;
+import deco2800.thomas.combat.skills.dragon.DragonSandTornadoSkill;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
@@ -19,7 +17,7 @@ public class DesertDragon extends Dragon {
         this.setObjectName("Doavnaen");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
-        this.elementalAttack = new SandTornadoSkill(this);
+        this.elementalAttack = new DragonSandTornadoSkill(this);
         this.breathAttack = new DesertFireballSkill(this);
         this.summonGoblin = new SummonGoblinSkill(this);
 

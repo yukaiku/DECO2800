@@ -1,5 +1,6 @@
-package deco2800.thomas.combat.skills;
+package deco2800.thomas.combat.skills.dragon;
 
+import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
@@ -8,16 +9,16 @@ import deco2800.thomas.tasks.combat.ScorpionStingAttackTask;
  * Launches a sting projectile that deals damage when it hits a target, and
  * then applies damage over time.
  */
-public class ScorpionStingSkill extends AbstractSkill {
+public class DragonScorpionStingSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static int maxCoolDown = 50;
+    private static int cooldown = 300;
     /* Damage multiplier to apply to the ice tile.
     Multiplies the peon base damage value. */
     private static float damageMultiplier = 0.4f;
     /* Speed of projectile */
     private static final float SPEED = 0.5f;
     /* Lifetime of projectile */
-    private static final int LIFETIME = 20;
+    private static final int LIFETIME = 40;
 
     /* Reference to parent entity */
     private final Peon entity;
@@ -27,7 +28,7 @@ public class ScorpionStingSkill extends AbstractSkill {
      * @param parent Parent entity of skill.
      * @throws NullPointerException when parent is null
      */
-    public ScorpionStingSkill(Peon parent) {
+    public DragonScorpionStingSkill(Peon parent) {
         if (parent == null) {
             throw new NullPointerException();
         }
@@ -41,20 +42,20 @@ public class ScorpionStingSkill extends AbstractSkill {
      */
     @Override
     public int getCooldownMax() {
-        return maxCoolDown;
+        return cooldown;
     }
 
     @Override
     public void setCooldownMax(int cooldownMax) {
-        maxCoolDown = cooldownMax;
+        cooldown = cooldownMax;
     }
 
     /***
      * Sets coooldown of skill
-     * @param maxCoolDown cooldown of skill
+     * @param cooldown cooldown of skill
      */
-    public static void setMaxCoolDown(int maxCoolDown){
-        ScorpionStingSkill.maxCoolDown = maxCoolDown;
+    public static void setCooldown(int cooldown){
+        DragonScorpionStingSkill.cooldown = cooldown;
     }
 
     /**
@@ -72,12 +73,12 @@ public class ScorpionStingSkill extends AbstractSkill {
      * @param damageMultiplier multiplier of skill
      */
     public static void setDamageMultiplier(float damageMultiplier){
-        ScorpionStingSkill.damageMultiplier = damageMultiplier;
+        DragonScorpionStingSkill.damageMultiplier = damageMultiplier;
     }
 
     public static void reduceCooldownMax(float percent){
-        if (maxCoolDown > 25) {
-            maxCoolDown = Math.round(maxCoolDown * (1.0f - percent));
+        if (cooldown > 25) {
+            cooldown = Math.round(cooldown * (1.0f - percent));
         }
     }
 

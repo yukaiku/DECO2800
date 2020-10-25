@@ -284,8 +284,11 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
         if (super.getTarget() != null) {
             if (combatTask == null) {
                 summonGoblin();
-                elementalAttack();
-                breathAttack();
+                if (combatTask == null) {
+                    elementalAttack();
+                } if (combatTask == null) {
+                    breathAttack();
+                }
             }
         }
         summonGoblin.onTick(i);

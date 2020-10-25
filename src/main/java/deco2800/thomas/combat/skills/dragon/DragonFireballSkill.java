@@ -1,25 +1,24 @@
-package deco2800.thomas.combat.skills;
+package deco2800.thomas.combat.skills.dragon;
 
+import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.agent.Peon;
-import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.FireballAttackTask;
 
 /**
  * Launches a fireball that deals damage when it hits a target. 
  */
-public class FireballSkill extends AbstractSkill {
+public class DragonFireballSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static int maxCoolDown = 20;
-    private static int cooldown = 20;
-    private static final int ORIGINAL_COOLDOWN = 20;
+    private int cooldown;
+
     /* Damage multiplier to apply to the fireball.
     Multiplies the peon base damage value. */
-    private static float damageMultiplier = 0.4f;
+    private float damageMultiplier;
     /* Speed of fireball */
-    private static final float SPEED = 0.5f;
+    private final float speed;
     /* Lifetime of fireball */
-    private static final int LIFETIME = 20;
+    private final int lifetime;
 
     /* Reference to parent entity */
     private final Peon entity;
@@ -29,14 +28,15 @@ public class FireballSkill extends AbstractSkill {
      * @param parent Parent entity of skill.
      * @throws NullPointerException when parent is null
      */
-    public FireballSkill(Peon parent) {
+    public DragonFireballSkill(Peon parent, int cooldown, float damageMultiplier, float speed, int lifetime) {
         if (parent == null) {
             throw new NullPointerException();
         }
         this.entity = parent;
-        if (!PlayerPeon.isCoolDownBuffActive()) {
-            setMaxCooldown(ORIGINAL_COOLDOWN);
-        }
+        this.cooldown = cooldown;
+        this.damageMultiplier = damageMultiplier;
+        this.speed = speed;
+        this.lifetime = lifetime;
     }
 
     /**
@@ -46,20 +46,12 @@ public class FireballSkill extends AbstractSkill {
      */
     @Override
     public int getCooldownMax() {
-        return maxCoolDown;
+        return cooldown;
     }
 
     @Override
     public void setCooldownMax(int cooldownMax) {
-        maxCoolDown = cooldownMax;
-    }
-
-    /***
-     * Sets coooldown of skill
-     * @param maxCoolDown cooldown of skill
-     */
-    public static void setMaxCooldown(int maxCoolDown){
-        FireballSkill.maxCoolDown = maxCoolDown;
+        cooldown = cooldownMax;
     }
 
     /**
@@ -76,11 +68,11 @@ public class FireballSkill extends AbstractSkill {
      *
      * @param damageMultiplier multiplier of skill
      */
-    public static void setDamageMultiplier(float damageMultiplier){
-        FireballSkill.damageMultiplier = damageMultiplier;
+    public void setDamageMultiplier(float damageMultiplier){
+        this.damageMultiplier = damageMultiplier;
     }
 
-    public static void reduceCooldownMax(float percent){
+    public void reduceCooldownMax(float percent){
         if (cooldown > 10) {
             cooldown = Math.round(cooldown * (1.0f - percent));
         }
@@ -107,6 +99,6 @@ public class FireballSkill extends AbstractSkill {
     @Override
     protected AbstractTask getTask(float targetX, float targetY) {
         int damage = (int) (entity.getDamage() * damageMultiplier);
-        return new FireballAttackTask(entity, targetX, targetY, damage, SPEED, LIFETIME);
+        return new FireballAttackTask(entity, targetX, targetY, damage, speed, lifetime);
     }
 }

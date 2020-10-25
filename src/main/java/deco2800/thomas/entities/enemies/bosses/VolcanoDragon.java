@@ -2,15 +2,13 @@ package deco2800.thomas.entities.enemies.bosses;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.combat.skills.FireBombSkill;
 import deco2800.thomas.combat.skills.SummonGoblinSkill;
 import deco2800.thomas.combat.skills.VolcanoFireballSkill;
+import deco2800.thomas.combat.skills.dragon.DragonFireBombSkill;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.SoundManager;
 import deco2800.thomas.managers.TextureManager;
-import deco2800.thomas.tasks.combat.FireBombAttackTask;
-import deco2800.thomas.util.EnemyUtil;
 
 public class VolcanoDragon extends Dragon {
     int attackRange = 4;
@@ -24,7 +22,7 @@ public class VolcanoDragon extends Dragon {
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
 
         this.breathAttack = new VolcanoFireballSkill(this);
-        this.elementalAttack = new FireBombSkill(this);
+        this.elementalAttack = new DragonFireBombSkill(this);
         this.summonGoblin = new SummonGoblinSkill(this);
     }
 
@@ -41,7 +39,13 @@ public class VolcanoDragon extends Dragon {
 
     @Override
     public void elementalAttack() {
-        setCombatTask(new FireBombAttackTask(this, 20, 8, 20, 5, 5));
+        if (elementalAttack.getCooldownRemaining() <= 0) {
+            try {
+                this.setCombatTask(elementalAttack.getNewSkillTask(getTarget().getCol(), getTarget().getRow()));
+            } catch (SkillOnCooldownException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

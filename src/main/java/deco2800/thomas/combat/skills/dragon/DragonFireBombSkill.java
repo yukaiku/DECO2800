@@ -1,6 +1,7 @@
-package deco2800.thomas.combat.skills;
+package deco2800.thomas.combat.skills.dragon;
 
 import deco2800.thomas.combat.SkillOnCooldownException;
+import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.tasks.AbstractTask;
@@ -9,16 +10,16 @@ import deco2800.thomas.tasks.combat.FireBombAttackTask;
 /**
  * Launches a fireball that deals damage when it hits a target.
  */
-public class FireBombSkill extends AbstractSkill {
+public class DragonFireBombSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static int maxCoolDown = 160;
+    private static int maxCoolDown = 500;
     private static final int ORIGINAL_MAXCOOLDOWN = 160;
 
     /* Damage multiplier to apply to the explosion.
     Multiplies the peon base damage value. */
     private static float damageMultiplier = 0.4f;
     /* Lifetime of explosion */
-    private static final int LIFETIME = 60;
+    private static final int LIFETIME = 30;
     /* Tick period of explosion */
     private static final int TICK_PERIOD = 20;
     /* Height of explosion */
@@ -34,7 +35,7 @@ public class FireBombSkill extends AbstractSkill {
      * @param parent Parent entity of skill.
      * @throws NullPointerException when parent is null
      */
-    public FireBombSkill(Peon parent) {
+    public DragonFireBombSkill(Peon parent) {
         if (parent == null) {
             throw new NullPointerException();
         }
@@ -65,7 +66,7 @@ public class FireBombSkill extends AbstractSkill {
      * @param maxCooldown cooldown of skill
      */
     public static void setMaxCoolDown(int maxCooldown){
-        FireBombSkill.maxCoolDown = maxCooldown;
+        DragonFireBombSkill.maxCoolDown = maxCooldown;
     }
 
     /**
@@ -83,7 +84,7 @@ public class FireBombSkill extends AbstractSkill {
      * @param damageMultiplier multiplier of skill
      */
     public static void setDamageMultiplier(float damageMultiplier){
-        FireBombSkill.damageMultiplier = damageMultiplier;
+        DragonFireBombSkill.damageMultiplier = damageMultiplier;
     }
 
     public static void reduceCooldownMax(float percent){

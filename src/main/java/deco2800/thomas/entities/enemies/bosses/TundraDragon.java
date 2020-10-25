@@ -2,13 +2,12 @@ package deco2800.thomas.entities.enemies.bosses;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.combat.skills.IceBreathSkill;
-import deco2800.thomas.combat.skills.IceballSkill;
 import deco2800.thomas.combat.skills.SummonGoblinSkill;
+import deco2800.thomas.combat.skills.dragon.DragonIceBreathSkill;
+import deco2800.thomas.combat.skills.dragon.DragonIceballSkill;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
-import deco2800.thomas.tasks.combat.IceBreathTask;
 
 public class TundraDragon extends Dragon {
     public TundraDragon(int health, float speed, int orbNumber) {
@@ -19,8 +18,8 @@ public class TundraDragon extends Dragon {
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
 
-        this.elementalAttack = new IceBreathSkill(this, 0.2f, 3);
-        this.breathAttack = new IceballSkill(this, 0.2f, 5);
+        this.elementalAttack = new DragonIceBreathSkill(this, 0.2f, 3);
+        this.breathAttack = new DragonIceballSkill(this, 0.2f, 5);
         this.summonGoblin = new SummonGoblinSkill(this);
 
         this.dragonAttacking = new Animation<>(0.2f,
@@ -38,8 +37,6 @@ public class TundraDragon extends Dragon {
                 e.printStackTrace();
             }
         }
-        setCombatTask(new IceBreathTask(this, getTarget().getCol(), getTarget().getRow(),
-                20, 0.2f, 4));
     }
 
     @Override

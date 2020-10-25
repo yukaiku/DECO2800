@@ -1,20 +1,21 @@
-package deco2800.thomas.combat.skills;
+package deco2800.thomas.combat.skills.dragon;
 
+import deco2800.thomas.combat.skills.AbstractSkill;
 import deco2800.thomas.entities.agent.Peon;
 import deco2800.thomas.tasks.AbstractTask;
 import deco2800.thomas.tasks.combat.IceballAttackTask;
 
-public class IceballSkill extends AbstractSkill {
+public class DragonIceballSkill extends AbstractSkill {
     /* Maximum time of cooldown in ticks */
-    private static int maxCoolDown = 50;
+    private static int maxCoolDown = 120;
     /* Damage multiplier to apply to the iceball.
     Multiplies the peon base damage value. */
     private static float damageMultiplier = 0.4f;
     /* Lifetime of explosion */
     /* Speed of projectile */
-    private static final float SPEED = 0.5f;
+    private static final float SPEED = 0.3f;
     /* Lifetime of projectile */
-    private static final int LIFETIME = 20;
+    private static final int LIFETIME = 40;
     /* Speed multiplier to apply */
     private final float speedMultiplier;
     /* Duration of slow effect */
@@ -23,7 +24,7 @@ public class IceballSkill extends AbstractSkill {
     /* Reference to parent entity */
     private final Peon entity;
 
-    public IceballSkill(Peon parent, float speedMultiplier, int slowDuration) {
+    public DragonIceballSkill(Peon parent, float speedMultiplier, int slowDuration) {
         if (parent == null) {
             throw new NullPointerException();
         }
@@ -47,7 +48,7 @@ public class IceballSkill extends AbstractSkill {
      * @param maxCoolDown cooldown of skill
      */
     public static void setMaxCooldown(int maxCoolDown){
-        IceballSkill.maxCoolDown = maxCoolDown;
+        DragonIceballSkill.maxCoolDown = maxCoolDown;
     }
 
     /**
@@ -65,7 +66,7 @@ public class IceballSkill extends AbstractSkill {
      * @param damageMultiplier multiplier of skill
      */
     public static void setDamageMultiplier(float damageMultiplier){
-        IceballSkill.damageMultiplier = damageMultiplier;
+        DragonIceballSkill.damageMultiplier = damageMultiplier;
     }
 
     public static void reduceCooldownMax(float percent){

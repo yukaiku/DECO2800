@@ -7,8 +7,8 @@ import deco2800.thomas.tasks.combat.VolcanoFireballAttackTask;
 public class VolcanoFireballSkill extends AbstractSkill {
 
     /* Maximum time of cooldown in ticks */
-    private static int maxCoolDown = 300;
-    private static int cooldown = 300;
+    private static int maxCoolDown = 180;
+    private static int cooldown = 180;
     private static final int ORIGINAL_COOLDOWN = 300;
     /* Damage multiplier to apply to the fireball.
     Multiplies the peon base damage value. */
