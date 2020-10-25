@@ -32,6 +32,11 @@ public class DesertFireballSkill extends AbstractSkill {
         return maxCoolDown;
     }
 
+    @Override
+    public void setCooldownMax(int cooldownMax) {
+        cooldown = cooldownMax;
+    }
+
     public void reduceCooldownMax(float percent) {
         if (cooldown > 10) {
             cooldown = Math.round(cooldown * (1.0f - percent));

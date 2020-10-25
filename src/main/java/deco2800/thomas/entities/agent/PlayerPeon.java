@@ -9,6 +9,7 @@ import deco2800.thomas.combat.PlayerSkills;
 import deco2800.thomas.combat.SkillOnCooldownException;
 import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.combat.skills.*;
+import deco2800.thomas.combat.skills.IceBreathSkill;
 import deco2800.thomas.entities.Animatable;
 import deco2800.thomas.entities.EntityFaction;
 import deco2800.thomas.managers.*;

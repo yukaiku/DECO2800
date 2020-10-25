@@ -37,9 +37,14 @@ public class IceballSkill extends AbstractSkill {
         return maxCoolDown;
     }
 
+    @Override
+    public void setCooldownMax(int cooldownMax) {
+        maxCoolDown = cooldownMax;
+    }
+
     /***
      * Sets coooldown of skill
-     * @param maxCooldown cooldown of skill
+     * @param maxCoolDown cooldown of skill
      */
     public static void setMaxCooldown(int maxCoolDown){
         IceballSkill.maxCoolDown = maxCoolDown;

@@ -30,6 +30,11 @@ public class SandTornadoSkill extends AbstractSkill {
         return coolDown;
     }
 
+    @Override
+    public void setCooldownMax(int cooldownMax) {
+        coolDown = cooldownMax;
+    }
+
     public static void setMaxCoolDown(int maxCoolDown){
         SandTornadoSkill.coolDown = maxCoolDown;
     }

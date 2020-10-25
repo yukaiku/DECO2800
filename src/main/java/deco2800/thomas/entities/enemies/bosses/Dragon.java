@@ -14,7 +14,6 @@ import deco2800.thomas.entities.agent.PlayerPeon;
 import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.entities.enemies.PassiveEnemy;
-import deco2800.thomas.managers.EnemyManager;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.ScreenManager;
 import deco2800.thomas.managers.SoundManager;
@@ -242,23 +241,10 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
                 // goblin, and attempts to initialise movement and combat tasks
                 currentState = State.ATTACKING;
                 duration = 24;
-                breathAttack();
-                elementalAttack();
+
                 setMovementTask(new MovementTask(this, super.getTarget().
                         getPosition()));
                 followTick = 0;
-            }
-
-            // goblin spawn
-            if (++goblinSpawnTick > GOBLIN_SPAWN_CYCLE) {
-                if (random.nextBoolean() && super.getTarget() != null) {
-                    summonGoblin();
-                    if (GameManager.get().getManager(EnemyManager.class).
-                            getSpecialEnemiesAlive().size() >= GOBLIN_CAP) {
-                        goblinSpawnTick -= 300;
-                    }
-                    goblinSpawnTick = 0;
-                }
             }
 
             // roar sounds
@@ -302,8 +288,9 @@ public abstract class Dragon extends Boss implements PassiveEnemy {
                 breathAttack();
             }
         }
+        summonGoblin.onTick(i);
         elementalAttack.onTick(i);
         breathAttack.onTick(i);
-        summonGoblin.onTick(i);
+
     }
 }

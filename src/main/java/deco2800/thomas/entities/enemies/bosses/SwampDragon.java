@@ -1,14 +1,9 @@
 package deco2800.thomas.entities.enemies.bosses;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import deco2800.thomas.combat.SkillOnCooldownException;
-import deco2800.thomas.combat.WizardSkills;
 import deco2800.thomas.combat.skills.FireballSkill;
 import deco2800.thomas.combat.skills.ScorpionStingSkill;
 import deco2800.thomas.combat.skills.SummonGoblinSkill;
-
-import com.badlogic.gdx.graphics.g2d.Animation;
-import deco2800.thomas.entities.EntityFaction;
-import deco2800.thomas.entities.attacks.Fireball;
 import deco2800.thomas.entities.enemies.EnemyIndex;
 import deco2800.thomas.managers.GameManager;
 import deco2800.thomas.managers.TextureManager;
@@ -22,9 +17,14 @@ public class SwampDragon extends Dragon {
         this.setObjectName("Siendiadut");
         this.dragonIdle = new Animation<>(0.1f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Idle"));
+
         this.elementalAttack = new ScorpionStingSkill(this);
+        this.elementalAttack.setCooldownMax(300);
         this.breathAttack = new FireballSkill(this);
+        this.breathAttack.setCooldownMax(500);
         this.summonGoblin = new SummonGoblinSkill(this);
+        this.summonGoblin.setCooldownMax(240);
+
         this.dragonAttacking = new Animation<>(0.2f,
                 GameManager.getManagerFromInstance(TextureManager.class).getAnimationFrames(identifier + "Attack"));
         this.dragonWalking = new Animation<>(0.5f,
@@ -39,6 +39,8 @@ public class SwampDragon extends Dragon {
             } catch (SkillOnCooldownException e) {
                 e.printStackTrace();
             }
+        } else {
+            System.out.println(breathAttack.getCooldownRemaining());
         }
     }
 
@@ -50,8 +52,6 @@ public class SwampDragon extends Dragon {
             } catch (SkillOnCooldownException e) {
                 e.printStackTrace();
             }
-        } else {
-            System.out.println(breathAttack.getCooldownRemaining());
         }
     }
 

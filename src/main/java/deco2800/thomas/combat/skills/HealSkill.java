@@ -28,6 +28,11 @@ public class HealSkill extends AbstractSkill {
         return maxCoolDown;
     }
 
+    @Override
+    public void setCooldownMax(int cooldownMax) {
+        maxCoolDown = cooldownMax;
+    }
+
     public static void setMaxCoolDown(int maxCoolDown){
         HealSkill.maxCoolDown = maxCoolDown;
     }

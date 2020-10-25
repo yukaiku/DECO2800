@@ -2,6 +2,7 @@ package deco2800.thomas.entities.items;
 
 import com.badlogic.gdx.Gdx;
 import deco2800.thomas.combat.skills.*;
+import deco2800.thomas.combat.skills.IceBreathSkill;
 import deco2800.thomas.entities.AbstractDialogBox;
 import deco2800.thomas.entities.RenderConstants;
 import deco2800.thomas.entities.StaticEntity;

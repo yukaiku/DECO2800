@@ -55,6 +55,11 @@ public class FireBombSkill extends AbstractSkill {
         return maxCoolDown;
     }
 
+    @Override
+    public void setCooldownMax(int cooldownMax) {
+        maxCoolDown = cooldownMax;
+    }
+
     /***
      * Sets coooldown of skill
      * @param maxCooldown cooldown of skill

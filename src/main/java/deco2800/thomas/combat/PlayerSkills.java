@@ -1,6 +1,7 @@
 package deco2800.thomas.combat;
 
 import deco2800.thomas.combat.skills.*;
+import deco2800.thomas.combat.skills.IceBreathSkill;
 import deco2800.thomas.entities.agent.Peon;
 
 import java.util.HashMap;

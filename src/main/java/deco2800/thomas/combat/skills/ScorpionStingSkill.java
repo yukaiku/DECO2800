@@ -44,6 +44,11 @@ public class ScorpionStingSkill extends AbstractSkill {
         return maxCoolDown;
     }
 
+    @Override
+    public void setCooldownMax(int cooldownMax) {
+        maxCoolDown = cooldownMax;
+    }
+
     /***
      * Sets coooldown of skill
      * @param maxCoolDown cooldown of skill
