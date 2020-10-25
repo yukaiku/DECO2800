@@ -173,7 +173,7 @@ public class SoundManagerTest extends BaseGDXTest {
 		when(Gdx.audio.newSound(Gdx.files.internal(anyString()))).thenReturn(sm);
 
 		SoundManager s = new SoundManager();
-		s.playAmbience("menuAmbience");
+		s.playAmbience("menuAmbience"); // Track must have base volume of 1.0f
 		s.playMusic("menuAmbience");
 		s.setVolume(0.5f);
 		verify(sm, times(2)).setVolume(1L, 0.5f);

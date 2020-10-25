@@ -4,7 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +22,7 @@ import java.util.Map;
  * of reference counting
  */
 public class TextureManager extends AbstractManager {
-    // private final Logger log = LoggerFactory.getLogger(TextureManager.class);
+    private final Logger log = LoggerFactory.getLogger(TextureManager.class);
     // width of the tile to use then positioning the tile
     public static final int TILE_WIDTH = 320;
 
@@ -47,13 +50,17 @@ public class TextureManager extends AbstractManager {
             textureMap.put("background", new Texture("resources/background.jpg"));
             // you can load textures inside of individual methods below
 		} catch (GdxRuntimeException e) {
-			e.printStackTrace();
+			log.error(Arrays.toString(e.getStackTrace()));
 		}
 	}
 
     /* ------------------------------------------------------------------------
      * 				             BASE TEXTURES
      * ------------------------------------------------------------------------ */
+
+    /**
+     * Preloads base textures.
+     */
 	public void loadBaseTextures() {
         try {
             // Player
@@ -78,13 +85,17 @@ public class TextureManager extends AbstractManager {
             textureMap.put("fenceS-E", new Texture("resources/fence_S-E.png"));
 
         } catch (GdxRuntimeException e) {
-            e.printStackTrace();
+            log.error(Arrays.toString(e.getStackTrace()));
         }
     }
 
     /* ------------------------------------------------------------------------
      * 				             ENEMY TEXTURES
      * ------------------------------------------------------------------------ */
+
+    /**
+     * Preloads enemy textures.
+     */
     public void loadEnemyTextures() {
         try {
             textureMap.put("dummy", new Texture("resources/enemies/dummy.png"));
@@ -105,13 +116,17 @@ public class TextureManager extends AbstractManager {
             textureMap.put("dragonVolcano", new Texture("resources/enemies/dragon_volcano.png"));
 
         } catch (GdxRuntimeException e) {
-            e.printStackTrace();
+            log.error(Arrays.toString(e.getStackTrace()));
         }
     }
 
     /* ------------------------------------------------------------------------
      * 				             COMBAT TEXTURES
      * ------------------------------------------------------------------------ */
+
+    /**
+     * Preloads combat textures.
+     */
     public void loadCombatTextures() {
         try {
             // Attacks
@@ -132,13 +147,17 @@ public class TextureManager extends AbstractManager {
             textureMap.put("iceBreathIcon", new Texture("resources/combat/ice-wave4.png"));
 
         } catch (GdxRuntimeException e) {
-            e.printStackTrace();
+            log.error(Arrays.toString(e.getStackTrace()));
         }
     }
 
     /* ------------------------------------------------------------------------
      * 				             STORYLINE TEXTURES
      * ------------------------------------------------------------------------ */
+
+    /**
+     * Preloads storyline textures.
+     */
     public void loadStorylineTextures() {
         try {
             // tutorial_world
@@ -188,13 +207,17 @@ public class TextureManager extends AbstractManager {
             textureMap.put("orb_4qt", new Texture("resources/orbs/orbbar4.png"));
 
         } catch (GdxRuntimeException e) {
-            e.printStackTrace();
+            log.error(Arrays.toString(e.getStackTrace()));
         }
     }
 
     /* ------------------------------------------------------------------------
      * 				               NPC TEXTURES
      * ------------------------------------------------------------------------ */
+
+    /**
+     * Preloads all NPC textures.
+     */
     public void loadNPCTextures() {
         try {
             textureMap.put("tutorial_npc", new Texture("resources/npcs/tutorial_npc.png"));
@@ -217,13 +240,17 @@ public class TextureManager extends AbstractManager {
             textureMap.put("npc_swamp_dungeon_yellow", new Texture("resources/npcs/npc_swamp_dungeon_yellow.png"));
 
         } catch (GdxRuntimeException e) {
-            e.printStackTrace();
+            log.error(Arrays.toString(e.getStackTrace()));
         }
     }
 
     /* ------------------------------------------------------------------------
      * 				             INVENTORY TEXTURES
      * ------------------------------------------------------------------------ */
+
+    /**
+     * Preloads all inventory textures.
+     */
     public void loadInventoryTextures() {
         try {
             // Items
@@ -241,13 +268,17 @@ public class TextureManager extends AbstractManager {
             textureMap.put("inventory_menu", new Texture("resources/inventory_menu.png"));
 
         } catch (GdxRuntimeException e) {
-            e.printStackTrace();
+            log.error(Arrays.toString(e.getStackTrace()));
         }
     }
 
     /* ------------------------------------------------------------------------
      * 				             MINIMAP TEXTURES
      * ------------------------------------------------------------------------ */
+
+    /**
+     * Preloads all minimap textures.
+     */
 	public void loadMinimapTextures() {
         try {
             textureMap.put("iconDefault", new Texture("resources/enemies/orc_swamp_icon.png"));
@@ -267,13 +298,17 @@ public class TextureManager extends AbstractManager {
             textureMap.put("dragonDesertIcon", new Texture("resources/enemies/dragon_desert_icon.png"));
 
         } catch (GdxRuntimeException e) {
-            e.printStackTrace();
+            log.error(Arrays.toString(e.getStackTrace()));
         }
     }
 
     /* ------------------------------------------------------------------------
      * 				             HEALTH TEXTURES
      * ------------------------------------------------------------------------ */
+
+    /**
+     * Preloads all health textures.
+     */
 	public void loadHealthTextures() {
         try {
             // Health
@@ -391,13 +426,17 @@ public class TextureManager extends AbstractManager {
             textureMap.put("bossHealth-swamp0", new Texture("resources/healthResources/bossHealthBar-Swamp-0.png"));
 
         } catch (GdxRuntimeException e) {
-            e.printStackTrace();
+            log.error(Arrays.toString(e.getStackTrace()));
         }
     }
 
     /* ------------------------------------------------------------------------
      * 				           ENVIRONMENT TEXTURES
      * ------------------------------------------------------------------------ */
+
+    /**
+     * Preloads all environment textures.
+     */
     public void loadEnvironmentTextures() {
         addDesertTextures();
         addSwampTextures();
@@ -430,7 +469,7 @@ public class TextureManager extends AbstractManager {
             textureMap.put("VolcanoPortal", new Texture("resources/environment/portals/volcano_portal.png"));
 
         } catch (GdxRuntimeException e) {
-            e.printStackTrace();
+            log.error(Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -451,7 +490,7 @@ public class TextureManager extends AbstractManager {
             textureMap.put("tundra-encryption-machine", new Texture("resources/environment/tundra/entities/typewriter.png"));
             textureMap.put("tundra-dungeon-help", new Texture("resources/environment/tundra/entities/questionmark.png"));
         } catch (GdxRuntimeException e) {
-            e.printStackTrace();
+            log.error(Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -476,7 +515,7 @@ public class TextureManager extends AbstractManager {
             textureMap.put("swamp_portal", new Texture("resources/environment/portals/swamp_portal.png"));
 
         } catch (GdxRuntimeException e) {
-            e.printStackTrace();
+            log.error(Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -489,7 +528,7 @@ public class TextureManager extends AbstractManager {
             textureMap.put("dungeon-yellow", new Texture("resources/environment/swamp_dungeon/tile/dungeon-yellow.png"));
 
         } catch (GdxRuntimeException e) {
-            e.printStackTrace();
+            log.error(Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -522,7 +561,7 @@ public class TextureManager extends AbstractManager {
             textureMap.put("oasisTree2", new Texture("resources/environment/desert/entities/oasis_tree2.png"));
 
         } catch (GdxRuntimeException e) {
-            e.printStackTrace();
+            log.error(Arrays.toString(e.getStackTrace()));
         }
     }
 
