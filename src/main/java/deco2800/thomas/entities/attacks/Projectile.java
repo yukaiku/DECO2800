@@ -38,13 +38,6 @@ public class Projectile extends CombatEntity implements Animatable, Tickable {
     protected float stateTimer = 0;
 
     /**
-     * Default constructor, just an empty projectile.
-     */
-    public Projectile() {
-        super();
-    }
-
-    /**
      * Creates a projectile with position, renderOrder, damage and movement speed.
      * @param col Initial X position
      * @param row Initial Y position
@@ -137,11 +130,10 @@ public class Projectile extends CombatEntity implements Animatable, Tickable {
     @Override
     public void onTick(long i) {
         // Update movement task
-        if (movementTask != null) {
-            if(!movementTask.isComplete()) {
-                movementTask.onTick(i);
-            }
+        if (movementTask != null && !movementTask.isComplete()) {
+            movementTask.onTick(i);
         }
+
         // Update combat task
         if (combatTask != null) {
             if (combatTask.isComplete() && currentState == State.DEFAULT) {

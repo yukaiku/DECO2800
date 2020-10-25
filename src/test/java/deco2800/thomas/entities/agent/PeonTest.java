@@ -208,4 +208,79 @@ public class PeonTest extends BaseGDXTest {
         assertEquals(75, p.getCurrentHealth());
         assertEquals(25, damage);
     }
+
+    /**
+     * Tests getter and setters for vulnerability
+     */
+    @Test
+    public void testGetSetVulnerability() {
+        Peon p = new Peon(1, 1, 1, 100);
+        p.setVulnerability(DamageType.FIRE);
+        assertEquals(DamageType.FIRE, p.getVulnerability());
+    }
+
+    /**
+     * Tests adding armour to the peon.
+     */
+    @Test
+    public void testAddArmour() {
+        Peon p = new Peon(1, 1, 1, 100);
+        p.setArmour(1000);
+        p.addArmour(1000);
+        assertEquals(2000f, p.getArmour(), 0.001f);
+    }
+
+    /**
+     * Tests reduce health applies damage ignoring armour and damage types.
+     */
+    @Test
+    public void testReduceHealth() {
+        Peon p = new Peon(1, 1, 1, 100);
+        p.setArmour(2000f);
+        p.reduceHealth(50);
+        assertEquals(50, p.getCurrentHealth());
+    }
+
+    /**
+     * Tests isDead.
+     */
+    @Test
+    public void testIsDead() {
+        Peon p = new Peon(1, 1, 1, 100);
+        p.reduceHealth(200);
+        assertEquals(true, p.isDead());
+    }
+
+    /**
+     * Tests that getHealthTracker returns valid HealthTracker instance.
+     */
+    @Test
+    public void testGetHealthTracker() {
+        Peon p = new Peon(1, 1, 1, 99);
+        assertNotNull(p.getHealthTracker());
+        assertEquals(99, p.getHealthTracker().getCurrentHealthValue());
+    }
+
+    /**
+     * Tests that locking the health prevents incoming damage.
+     */
+    @Test
+    public void testLockHealth() {
+        Peon p = new Peon(1, 1, 1, 100);
+        p.lockHealth();
+        p.applyDamage(50, DamageType.COMMON);
+        assertEquals(100, p.getCurrentHealth());
+    }
+
+    /**
+     * Tests that unlocking health allows incoming damage.
+     */
+    @Test
+    public void testUnlockHealth() {
+        Peon p = new Peon(1, 1, 1, 100);
+        p.lockHealth();
+        p.unlockHealth();
+        p.applyDamage(50, DamageType.COMMON);
+        assertEquals(50, p.getCurrentHealth());
+    }
 }
