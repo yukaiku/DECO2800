@@ -1,1 +1,0 @@
-The design for the shield.
